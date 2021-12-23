@@ -278,7 +278,7 @@ public class FiQuery {
 
 		for (String param : listParamToConvertMulti) {
 			List value = (List) getMapParams().get(param);
-			convertListParamToMultiParam(param, value);
+			convertSqlAsListParamToMultiParam(param, value);
 		}
 
 	}
@@ -297,10 +297,10 @@ public class FiQuery {
 
 				if (FiBoolean.isTrue(finalFiQueryConf.getBoActivateOnlyFullParams())) {
 					if (!checkParamValueEmpty(value)) {
-						convertListParamToMultiParam(param, (List) value);
+						convertSqlAsListParamToMultiParam(param, (List) value);
 					}
 				} else {
-					convertListParamToMultiParam(param, (List) value);
+					convertSqlAsListParamToMultiParam(param, (List) value);
 				}
 			}
 		});
@@ -314,26 +314,15 @@ public class FiQuery {
 	 * @param param
 	 * @param listData
 	 */
-	private void convertListParamToMultiParam(String param, List listData) {
-
-		//Map<String, List> mapParamMulti = new HashMap<>();
-		// List listData = value;
-		//Loghelperr.getInstance(getClass()).debug("Field List:"+param.toString());
-		//mapParamMulti.put(param, listData);
+	private void convertSqlAsListParamToMultiParam(String param, List listData) {
 
 		// şablona göre yeni parametre listesi ve değeri map koleksiyonuna atılır
 		Map<String, Object> mapParamNew = new HashMap<>();
+
 		for (int index = 0; index < listData.size(); index++) {
 			String sablonParam = FiQuery.genTemplateMultiParam(param, index);
 			mapParamNew.put(sablonParam, listData.get(index));
 		}
-
-//		for (Map.Entry<String, List> entry : mapParamMulti.entrySet()) {
-		//System.out.println(entry.getKey() + "/" + entry.getValue());
-//			String sqlNew = fhrConvertSqlForMultiParamByTemplate(getTxQuery(), entry.getKey(), entry.getValue().size());
-//			setTxQuery(sqlNew);
-//			getMapParams().remove(entry.getKey());
-//		}
 
 		// Sorgu cümlesi güncellenir (eski parametre , yeni parametre ile değiştirilir.)
 		setTxQuery(fhrConvertSqlForMultiParamByTemplate(getTxQuery(), param, listData.size()));
@@ -349,7 +338,7 @@ public class FiQuery {
 	}
 
 	/**
-	 * sql sorgu içindeki parametreyi, parametre_index şeklinde multi parametreye çevirir.
+	 * sql sorgu içindeki parametreyi, parametre_index (genTem şeklinde multi parametreye çevirir.
 	 * <p>
 	 * param_1 param_2 gibi
 	 */
@@ -362,6 +351,7 @@ public class FiQuery {
 		StringBuilder customParam = new StringBuilder();
 
 		Integer indexParam = getMultiParamStartIndex();
+
 		for (int index = 0; index < count; index++) {
 			if (index != 0) customParam.append(",");
 			String sablon = genTemplateMultiParam(param, indexParam);
@@ -369,8 +359,7 @@ public class FiQuery {
 			indexParam++;
 		}
 
-		String sqlNew = sql.replaceAll(regex, String.format("%s", customParam.toString())); //(%s)
-
+		String sqlNew = sql.replaceAll(regex, customParam.toString()); //(%s)
 		return sqlNew;
 	}
 

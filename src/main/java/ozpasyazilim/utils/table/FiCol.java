@@ -256,7 +256,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 		List<FiCol> fiTableColList = new ArrayList<>();
 
 		for (FiField fiField : listFiFieldsSummary) {
-			if(FiBoolean.isTrue(fiField.getBoExcludeFromAutoColList())) continue;
+			if (FiBoolean.isTrue(fiField.getBoExcludeFromAutoColList())) continue;
 			FiCol fiTableCol = new FiCol(fiField.getName(), fiField.getName());
 			fiTableCol.setColType(convertOzColType(fiField.getClassNameSimple()));
 			fiTableColList.add(fiTableCol);
@@ -476,9 +476,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 	}
 
 
-
 	/**
-	 *
 	 * @param fnEditorNodeRendererAfterLoad
 	 * @return
 	 */
@@ -487,7 +485,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 		return this;
 	}
 
-	public FiCol buildAfterFormLoadRenderer2(TriConsumer<Object, Node,List<FiCol>> fnEditorNodeRendererAfterLoad2) {
+	public FiCol buildAfterFormLoadRenderer2(TriConsumer<Object, Node, List<FiCol>> fnEditorNodeRendererAfterLoad2) {
 		this.fnEditorNodeRendererAfterFormLoad2 = fnEditorNodeRendererAfterLoad2;
 		return this;
 	}
@@ -600,7 +598,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 
 	public ObjectProperty<Double> prefSizeProperty() {
 		if (prefSize == null) {
-			prefSize =  new SimpleObjectProperty<>();
+			prefSize = new SimpleObjectProperty<>();
 		}
 		return prefSize;
 	}
@@ -790,6 +788,13 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 	}
 
 	public String getColEditorClass() {
+		return colEditorClass;
+	}
+
+	public String getColEditorClassInit() {
+		if (colEditorClass == null) {
+			colEditorClass = "";
+		}
 		return colEditorClass;
 	}
 
@@ -1167,9 +1172,13 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 		this.childClazz = childClazz;
 	}
 
-	public Boolean getBoFilterLike() {return boFilterLike;}
+	public Boolean getBoFilterLike() {
+		return boFilterLike;
+	}
 
-	public void setBoFilterLike(Boolean boFilterLike) {this.boFilterLike = boFilterLike;}
+	public void setBoFilterLike(Boolean boFilterLike) {
+		this.boFilterLike = boFilterLike;
+	}
 
 	public TriConsumer<Object, Node, List<FiCol>> getFnEditorNodeRendererAfterFormLoad2() {
 		return fnEditorNodeRendererAfterFormLoad2;

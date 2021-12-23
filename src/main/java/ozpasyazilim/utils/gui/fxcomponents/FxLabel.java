@@ -1,5 +1,6 @@
 package ozpasyazilim.utils.gui.fxcomponents;
 
+import de.jensd.fx.glyphs.icons525.Icons525;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.Pos;
@@ -48,6 +49,10 @@ public class FxLabel extends Label implements IFxComp {
 	public FxLabel buildsetPrefHeight(double prefHeight) {
 		setPrefHeight(prefHeight);
 		return this;
+	}
+
+	public void setFxIcon(Icons525 icon) {
+		new FxAwesomeIcon().loadIcon525ToFxLabel(this, icon, 12, "white", "black");
 	}
 
 	@Override

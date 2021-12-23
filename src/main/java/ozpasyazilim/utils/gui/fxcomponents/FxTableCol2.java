@@ -73,7 +73,7 @@ public class FxTableCol2<EntClazz> extends TableColumn implements IFxTableCol<En
 	}
 
 
-	public void fiStyleAlignCenter() {
+	public void styleAlignCenterFi() {
 		setStyle("-fx-alignment: CENTER");
 	}
 

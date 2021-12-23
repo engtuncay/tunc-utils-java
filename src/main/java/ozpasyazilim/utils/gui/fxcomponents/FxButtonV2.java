@@ -139,7 +139,7 @@ public class FxButtonV2<EntClazz> extends Button implements IFxSecureNode {
 	}
 
 	public void setFxIcon(Icons525 icon) {
-		new FxAwesomeIcon().genIcon525(this, icon, 12, "white", null);
+		new FxAwesomeIcon().loadIcon525ToFxButton(this, icon, 12, "white", null);
 	}
 
 	//public Integer getTiState() {return tiState;}

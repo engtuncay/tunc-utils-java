@@ -3,14 +3,12 @@ package ozpasyazilim.utils.gui.fxcomponents;
 import de.jensd.fx.glyphs.icons525.Icons525;
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
 import ozpasyazilim.utils.core.FiThread;
-import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.security.SecurityRight;
 
 import java.util.ArrayList;
@@ -153,7 +151,7 @@ public class FxButton extends Button implements IFxSecureNode {
 	}
 
 	public void setFxIcon(Icons525 icon) {
-		new FxAwesomeIcon().genIcon525(this, icon, 12, "white", null);
+		new FxAwesomeIcon().loadIcon525ToFxButton(this, icon, 12, "white", null);
 	}
 
 	public String getModuleCode() {
