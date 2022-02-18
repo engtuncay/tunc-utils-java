@@ -235,7 +235,7 @@ public class FiCodeHelper {
 
 	public static String codeFiTableColsGeneraterMethodsByFiFields(Class entclazz) {
 
-		List<FiField> listFields = FiEntityHelper.getListFiFieldsSummary(entclazz, true);
+		List<FiField> listFields = FiEntity.getListFieldsWoutStatic(entclazz, true);
 
 		StringBuilder query = new StringBuilder();
 
@@ -282,7 +282,7 @@ public class FiCodeHelper {
 
 	public static String codeClassFieldList(Class clazz) {
 
-		List<FiField> fieldListFilterAnno = FiEntityHelper.getListFiFieldsShortWithId(clazz);
+		List<FiField> fieldListFilterAnno = FiEntity.getListFieldsShortWithId(clazz);
 
 		StringBuilder txFieldList = new StringBuilder();
 		for (FiField fiField : fieldListFilterAnno) {
@@ -294,7 +294,7 @@ public class FiCodeHelper {
 
 	public static String codeClassFieldListWithValue(Class clazz) {
 
-		List<FiField> fieldListFilterAnno = FiEntityHelper.getListFiFieldsShortWithId(clazz);
+		List<FiField> fieldListFilterAnno = FiEntity.getListFieldsShortWithId(clazz);
 
 		StringBuilder txFieldList = new StringBuilder();
 		for (FiField fiField : fieldListFilterAnno) {

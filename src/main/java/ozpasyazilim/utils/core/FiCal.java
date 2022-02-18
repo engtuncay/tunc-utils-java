@@ -20,7 +20,7 @@ public class FiCal {
 
 		Date date = FiDate.strToDateYmd("20210815");
 
-		System.out.println("Ayın Günü:"+ FiCal.getDay());
+		System.out.println("Ayın Günü:"+ FiCal.getDayNumber());
 
 		if (FiCal.getMonth(date) < FiCal.getMonth()) {
 			System.out.println("ay önceki");
@@ -48,6 +48,10 @@ public class FiCal {
 
 	public static Integer getPrevMonth() {
 		return ((FiCal.getMonthBegin0()-1)%12)+1; // 0-1=-1%12=11 + 1 = 12
+	}
+
+	public static Integer getPrevMonth(Date dtNow) {
+		return ((FiCal.getMonthBegin0(dtNow)-1)%12)+1; // 0-1=-1%12=11 + 1 = 12
 	}
 
 	public FiCal buildDateDiffNow(int dayDifference) {
@@ -103,12 +107,22 @@ public class FiCal {
 		return Calendar.getInstance().get(Calendar.MONTH);
 	}
 
+	public static Integer getMonthBegin0(Date dtNow) {
+		Calendar calendar = convertToCal(dtNow);
+		return calendar.get(Calendar.MONTH);
+	}
+
 	public static Integer getMonth(Date dateGiven) {
 		return convertToCal(dateGiven).get(Calendar.MONTH)+1;
 	}
 
-	public static Integer getDay() {
+	public static Integer getDayNumber() {
 		return Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+	}
+
+	public static Integer getDayNumber(Date dtNow) {
+		Calendar calendar = convertToCal(dtNow);
+		return calendar.get(Calendar.DAY_OF_MONTH);
 	}
 
 	public static Integer getHour() {
@@ -278,7 +292,6 @@ public class FiCal {
 
 
 	public static Date getDatePrevMonthBegin() {
-
 		// geçen ayı bulmak
 		Calendar calendar = Calendar.getInstance();
 		clearTime(calendar);
@@ -286,9 +299,16 @@ public class FiCal {
 		calendar.add(Calendar.MONTH, -1);
 		// set Date to 1, so first date of previous month
 		calendar.set(Calendar.DATE, 1);
-
 		return calendar.getTime();
+	}
 
+	public static Date getDatePrevMonthBegin(Date dtNow) {
+		Calendar calendar = convertToCal(dtNow);
+		clearTime(calendar);
+		calendar.add(Calendar.MONTH, -1);
+		// set Date to 1, so first date of previous month
+		calendar.set(Calendar.DATE, 1);
+		return calendar.getTime();
 	}
 
 	public static Date addMonth(Date date, Integer amount) {

@@ -2,7 +2,7 @@ package ozpasyazilim.utils.core;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.util.ReflectionUtils;
-import ozpasyazilim.utils.fidborm.FiEntityHelper;
+import ozpasyazilim.utils.fidborm.FiEntity;
 import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.table.OzColType;
@@ -628,7 +628,7 @@ public class FiReflection {
 
 	public static <EntClazz> Object getCandId(EntClazz next,Class<EntClazz> clazz) {
 
-		List<FiField> listFiFieldsCandId = FiEntityHelper.getListFiFieldsCandId(clazz);
+		List<FiField> listFiFieldsCandId = FiEntity.getListFieldsCandId(clazz);
 
 		if(listFiFieldsCandId.size()==1){
 			Object property = getProperty(next, listFiFieldsCandId.get(0).getName());

@@ -13,7 +13,7 @@ import static ozpasyazilim.utils.fidborm.FiQuery.fhrConvertSqlForMultiParamByTem
 /**
  * Sql Sorgularında named parametrelere bind etmek için kullanılır.
  */
-public class FiMapParams extends FiMapStro {
+public class FiMapParams extends FiMapStrobj {
 
 	Set<String> activateParamSet;
 	Set<String> deActivateParamSet;

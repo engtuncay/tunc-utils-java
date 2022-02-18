@@ -14,7 +14,7 @@ import org.reactfx.EventStreams;
 import ozpasyazilim.utils.core.*;
 
 import ozpasyazilim.utils.datatypes.FiMapParams;
-import ozpasyazilim.utils.fidborm.FiEntityHelper;
+import ozpasyazilim.utils.fidborm.FiEntity;
 import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.gui.components.ComboItem;
 import ozpasyazilim.utils.log.Loghelper;
@@ -64,7 +64,7 @@ public class FxEditorFactory {
 
 		Class<?> aClass = entity.getClass();
 
-		List<FiField> fiFieldList = FiEntityHelper.getListFiFieldsShortWithId(aClass);
+		List<FiField> fiFieldList = FiEntity.getListFieldsShortWithId(aClass);
 		Fdr fdr = new Fdr();
 		fdr.setBoResult(true);
 
@@ -116,7 +116,7 @@ public class FxEditorFactory {
 
 		Boolean boTrimIfNeed = true;
 
-		List<FiField> fiFieldList = FiEntityHelper.getListFiFieldsShortWithId(aClass);
+		List<FiField> fiFieldList = FiEntity.getListFieldsShortWithId(aClass);
 		Fdr fdr = new Fdr();
 		fdr.setBoResult(true);
 
@@ -1089,6 +1089,11 @@ public class FxEditorFactory {
 		if (ozColType == OzColType.Date) {
 			Object cellvalue = FiDate.strToDateGeneric(textValue);
 			return cellvalue;
+		}
+
+		if (ozColType == OzColType.CommaSeperatedStr) {
+			List<String> listData = FiCollection.commaSeperatedParseToStrList(textValue);
+			return listData;
 		}
 
 		return textValue;

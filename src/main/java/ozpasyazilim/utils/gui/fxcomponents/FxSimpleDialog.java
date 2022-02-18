@@ -8,7 +8,7 @@ import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
 import ozpasyazilim.utils.core.FiString;
 import ozpasyazilim.utils.core.FxPredicateString;
-import ozpasyazilim.utils.fidborm.FiEntityHelper;
+import ozpasyazilim.utils.fidborm.FiEntity;
 import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.mvc.AbsFxSimpleCont;
 import ozpasyazilim.utils.table.FiCol;
@@ -250,7 +250,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 		fxFormMig = new FxFormMig();
 
-		List<FiField> listFiFieldsCandId = FiEntityHelper.getListFiFieldsCandId(getEntityClass());
+		List<FiField> listFiFieldsCandId = FiEntity.getListFieldsCandId(getEntityClass());
 
 		List<FiCol> fiTableColList = FiCol.convertListFiField(listFiFieldsCandId);
 		setFiTableColList(fiTableColList);

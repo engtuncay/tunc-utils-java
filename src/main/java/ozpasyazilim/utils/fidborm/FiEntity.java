@@ -20,8 +20,7 @@ import java.util.Map;
 
 import static java.util.stream.Collectors.toList;
 
-public class FiEntityHelper {
-
+public class FiEntity {
 
 	/**
 	 * Transient alanlar dahil degil.
@@ -33,16 +32,13 @@ public class FiEntityHelper {
 	 * @param clazz
 	 * @return
 	 */
-	public static List<FiField> getListFiFieldsShortWithId(Class clazz) {
+	public static List<FiField> getListFieldsShortWithId(Class clazz) {
 
-		Field[] fields = clazz.getDeclaredFields(); // returns all members including private members but not inherited members.
+		// returns all members including private members but not inherited members.
+		Field[] fields = clazz.getDeclaredFields();
 
-		//To filter only the public fields from the above list (based on requirement) use below code:
-		//List<Field> fieldList = Arrays.asList(fields).stream().filter(field -> Modifier.isPublic(field.getModifiers())).collect(
-		//Collectors.toList());
-
-		//List<Field> fieldListFilterAnno = Arrays.asList(fields).stream().filter(field -> !field.isAnnotationPresent(Transient.class))
-		//.collect(Collectors.toList());
+		//To know the public fields :
+		//Modifier.isPublic(field.getModifiers())
 
 		List<FiField> listFields = new ArrayList<>();
 
@@ -50,17 +46,15 @@ public class FiEntityHelper {
 
 			if (field.isAnnotationPresent(Transient.class)) continue;
 			if (field.isAnnotationPresent(FiTransient.class)) continue;
+
 			// Static alanlar alınmaz
 			if (Modifier.isStatic(field.getModifiers())) continue;
 
 			FiField fiField = new FiField();
-
-			listFields.add(setupFiFieldShort(field, fiField));
-
+			listFields.add(setupFiFieldAll(field, fiField));
 		}
 
 		return listFields;
-
 	}
 
 	/**
@@ -69,8 +63,8 @@ public class FiEntityHelper {
 	 * @param clazz
 	 * @return
 	 */
-	public static Map<String, FiField> getMapFiFieldsShort(Class clazz) {
-		return getMapFiFieldsShortMain(clazz, null);
+	public static Map<String, FiField> getMapFieldsShort(Class clazz) {
+		return getMapFieldsShortMain(clazz, null);
 	}
 
 	/**
@@ -79,8 +73,8 @@ public class FiEntityHelper {
 	 * @param clazz
 	 * @return
 	 */
-	public static Map<String, FiField> getMapFiFieldsExtra(Class clazz) {
-		return getMapFiFieldsShortMain(clazz, true);
+	public static Map<String, FiField> getMapFieldsExtra(Class clazz) {
+		return getMapFieldsShortMain(clazz, true);
 	}
 
 	/**
@@ -90,9 +84,10 @@ public class FiEntityHelper {
 	 * @param includeExtra
 	 * @return
 	 */
-	public static Map<String, FiField> getMapFiFieldsShortMain(Class clazz, Boolean includeExtra) {
+	public static Map<String, FiField> getMapFieldsShortMain(Class clazz, Boolean includeExtra) {
 
-		Field[] fields = clazz.getDeclaredFields(); // returns all members including private members but not inherited members.
+		// returns all members including private members but not inherited members.
+		Field[] fields = clazz.getDeclaredFields();
 
 		Map<String, FiField> mapFiFields = new HashMap<>();
 
@@ -104,7 +99,7 @@ public class FiEntityHelper {
 			if (Modifier.isStatic(field.getModifiers())) continue;
 
 			FiField fiField = new FiField();
-			setupFiFieldShort(field, fiField);
+			setupFiFieldAll(field, fiField);
 
 			if (FiBoolean.isTrue(includeExtra)) {
 				assignFiFieldExtraRelatedDb(field, fiField);
@@ -118,7 +113,7 @@ public class FiEntityHelper {
 
 	}
 
-	public static List<FiField> getListFiFieldsShortWithNotID(Class clazz) {
+	public static List<FiField> getListFieldsShortWithNotID(Class clazz) {
 
 		Field[] fields = clazz.getDeclaredFields();
 
@@ -134,7 +129,7 @@ public class FiEntityHelper {
 			if (Modifier.isStatic(field.getModifiers())) continue;
 
 			FiField fiField = new FiField();
-			listFields.add(setupFiFieldShort(field, fiField));
+			listFields.add(setupFiFieldAll(field, fiField));
 
 		}
 
@@ -148,12 +143,12 @@ public class FiEntityHelper {
 	 * @param clazz
 	 * @return
 	 */
-	public static List<FiField> getListFiFieldsSummary(Class clazz) {
-		return getListFiFieldsSummaryMain(clazz, null, null);
+	public static List<FiField> getListFieldsWoutStatic(Class clazz) {
+		return getListFieldsWoutStaticMain(clazz, null, null);
 	}
 
-	public static List<FiField> getListFiFieldsCandId(Class clazz) {
-		List<FiField> listFiFieldsSummary = getListFiFieldsSummary(clazz, false);
+	public static List<FiField> getListFieldsCandId(Class clazz) {
+		List<FiField> listFiFieldsSummary = getListFieldsWoutStaticMain(clazz, false,null);
 
 		List<FiField> fiFieldList = new ArrayList<>();
 
@@ -166,10 +161,19 @@ public class FiEntityHelper {
 		return fiFieldList;
 	}
 
-	public static List<FiField> getListFiFieldsCandId2(Class clazz) {
+	/**
+	 *
+	 * @param clazz
+	 * @param boIncTransient boIncludeTransient Fields
+	 * @return
+	 */
+	public static List<FiField> getListFieldsWoutStatic(Class clazz, Boolean boIncTransient) {
+		return getListFieldsWoutStaticMain(clazz, boIncTransient, null);
+	}
 
-		List<FiField> listFiFieldsSummary = getListFiFieldsSummary(clazz, false);
+	public static List<FiField> getListFieldsCandId2(Class clazz) {
 
+		List<FiField> listFiFieldsSummary = getListFieldsWoutStatic(clazz, false);
 		List<FiField> fiFieldList = new ArrayList<>();
 
 		for (FiField fiField : listFiFieldsSummary) {
@@ -181,9 +185,7 @@ public class FiEntityHelper {
 		return fiFieldList;
 	}
 
-	public static List<FiField> getListFiFieldsSummary(Class clazz, Boolean includeTransient) {
-		return getListFiFieldsSummaryMain(clazz, includeTransient, null);
-	}
+
 
 	/**
 	 * Transient Dahil Edilmedi
@@ -191,8 +193,8 @@ public class FiEntityHelper {
 	 * @param clazz
 	 * @return
 	 */
-	public static List<FiField> getListFiFieldsExtra(Class clazz) {
-		return getListFiFieldsSummaryMain(clazz, false, true);
+	public static List<FiField> getListFieldsExtra(Class clazz) {
+		return getListFieldsWoutStaticMain(clazz, false, true);
 	}
 
 	/**
@@ -201,7 +203,7 @@ public class FiEntityHelper {
 	 * @param clazz
 	 * @return
 	 */
-	public static List<FiField> getListFiFieldsSummaryMain(Class clazz, Boolean includeTransient, Boolean includeExtra) {
+	public static List<FiField> getListFieldsWoutStaticMain(Class clazz, Boolean includeTransient, Boolean includeExtra) {
 
 		Field[] fields = clazz.getDeclaredFields();
 		List<FiField> listFields = new ArrayList<>();
@@ -218,7 +220,7 @@ public class FiEntityHelper {
 			if (Modifier.isStatic(field.getModifiers())) continue;
 
 			FiField fiField = new FiField();
-			setupFiFieldForSummaryAttributes(field, fiField);
+			setupFiFieldAll(field, fiField);
 
 			if (FiBoolean.isTrue(includeExtra)) {
 				assignFiFieldExtraRelatedDb(field, fiField);
@@ -228,13 +230,12 @@ public class FiEntityHelper {
 		}
 
 		return listFields;
-
 	}
 
 
 	public static List<FiField> getListFieldsNotNullable(Class clazz, Boolean includeTransient) {
 
-		List<FiField> listFields = getListFiFieldsSummary(clazz, includeTransient);
+		List<FiField> listFields = getListFieldsWoutStatic(clazz, includeTransient);
 
 		return listFields.stream().filter(fiField -> {
 			if (FiBoolean.isFalse(fiField.getNullable())) return true;
@@ -243,7 +244,7 @@ public class FiEntityHelper {
 
 	}
 
-	public static List<FiField> getListFiFieldsAll(Class clazz) {
+	public static List<FiField> getListFieldsAll(Class clazz) {
 
 		Field[] fields = clazz.getDeclaredFields(); // returns all members including private members but not inherited members.
 
@@ -251,67 +252,41 @@ public class FiEntityHelper {
 
 		for (Field field : fields) {
 
-			if (field.isAnnotationPresent(Transient.class)) continue;
-
-			if (field.isAnnotationPresent(FiTransient.class)) continue;
+			if (field.isAnnotationPresent(Transient.class) || field.isAnnotationPresent(FiTransient.class)) continue;
 
 			FiField fiField = new FiField();
-			listFields.add(setupFiFieldForAllAttributes(field, fiField));
-
+			listFields.add(setupFiFieldAll(field, fiField));
 		}
 
 		return listFields;
 
 	}
 
-	public static FiField setupFiFieldShort(Field field, FiField fiField) {
-
-		if (fiField == null) fiField = new FiField();
-
-		assignFiFieldReflection(field, fiField);
-		assignFiFieldRelatedDb(field, fiField);
-
-//		if (field.isAnnotationPresent(FiColumn.class)) {
-//
-//			FiColumn column = field.getAnnotation(FiColumn.class);
-//
-//			//if (!FiString.isEmpty(column.label())) fiField.setLabel(column.label());
-//			if (FiBoolean.isFalse(column.isNullable())) fiField.setNullable(false);
-//
-//		}
-
-		return fiField;
-	}
-
-	public static void assignFiFieldReflection(Field field, FiField fiField) {
-
+	/**
+	 * fieldName, dbFieldName, ClassNameSimple alanlarını doldurur.
+	 *
+	 * @param field
+	 * @param fiField
+	 */
+	public static void assignFiFieldBasic(Field field, FiField fiField) {
 		fiField.setName(field.getName());
-
 		if (fiField.getDbFieldName() == null) fiField.setDbFieldName(field.getName());
-
 		fiField.setClassNameSimple(field.getType().getSimpleName());
-
 	}
 
 	public static void assignFiFieldExtraRelatedDb(Field field, FiField fiField) {
-
 		if (field.isAnnotationPresent(FiComment.class)) {
-
 			FiComment column = field.getAnnotation(FiComment.class);
-
 			if (!FiString.isEmpty(column.txComment())) {
 				fiField.setTxComment(column.txComment());
 			}
-
 		}
 	}
 
-	public static void assignFiFieldRelatedDb(Field field, FiField fiField) {
+	public static void assignFiFieldDatabase(Field field, FiField fiField) {
 
 		if (field.isAnnotationPresent(Column.class)) {
-
 			Column column = field.getAnnotation(Column.class);
-
 			fiField.setPrecision(column.precision());
 			fiField.setScale(column.scale());
 			fiField.setLength(column.length());
@@ -471,33 +446,20 @@ public class FiEntityHelper {
 
 	}
 
-	public static FiField setupFiFieldForSummaryAttributes(Field field, FiField fiField) {
-
-		assignFiFieldReflection(field, fiField);
-		assignFiFieldRelatedDb(field, fiField);
-
-//		if (field.isAnnotationPresent(FiColumn.class)) {
-//
-//			FiColumn column = field.getAnnotation(FiColumn.class);
-//
-//			if (!FiString.isEmpty(column.label())) fiField.setLabel(column.label());
-//
-//			if (FiBoolean.isFalse(column.isNullable())) fiField.setNullable(false);
-//
-//		}
-
+	/**
+	 * Field ile ilgili tüm alanlar (extra hariç) doldurulur.
+	 * @param field
+	 * @param fiField
+	 * @return
+	 */
+	public static FiField setupFiFieldAll(Field field, FiField fiField) {
+		if (fiField == null) fiField = new FiField();
+		assignFiFieldBasic(field, fiField);
+		assignFiFieldDatabase(field, fiField);
 		return fiField;
 	}
 
-	public static FiField setupFiFieldForAllAttributes(Field field, FiField fiField) {
-
-		assignFiFieldReflection(field, fiField);
-		assignFiFieldRelatedDb(field, fiField);
-
-		return fiField;
-	}
-
-	public static List<FiField> getListFiFieldsNotNull(Class clazz, Object objectt) {
+	public static List<FiField> getListFieldsNotNull(Class clazz, Object objectt) {
 
 		Field[] fields = clazz.getDeclaredFields(); // returns all members including private members but not inherited members.
 
@@ -513,24 +475,8 @@ public class FiEntityHelper {
 			Object fieldValue = FiReflection.getProperty(objectt, field.getName());
 
 			if (fieldValue != null) {
-
 				FiField fiField = new FiField();
-
-//				fiField.setName(field.getName());
-//
-//				//System.out.println(" Field:"+field.getName());
-//				if (field.isAnnotationPresent(FiCandId1.class)) {
-//					//System.out.println("fiid selected true");
-//					fiField.setBoCandidateId1(true);
-//				}
-//
-//				if (field.isAnnotationPresent(FiId.class) || field.isAnnotationPresent(Id.class)) {
-//					//System.out.println("fiid selected true");
-//					fiField.setBoIdField(true);
-//				}
-
-				listFields.add(setupFiFieldShort(field, fiField));
-
+				listFields.add(setupFiFieldAll(field, fiField));
 			}
 
 		}
@@ -539,7 +485,7 @@ public class FiEntityHelper {
 
 	}
 
-	public static List<FiField> getListFiFieldsNotNullWithId(Class clazz, Object objectt) {
+	public static List<FiField> getListFieldsNotNullWithId(Class clazz, Object objectt) {
 
 		Field[] fields = clazz.getDeclaredFields(); // returns all members including private members but not inherited members.
 
@@ -557,24 +503,8 @@ public class FiEntityHelper {
 			Object fieldValue = FiReflection.getProperty(objectt, field.getName());
 
 			if (fieldValue != null) {
-
 				FiField fiField = new FiField();
-
-//				fiField.setName(field.getName());
-//
-//				//System.out.println(" Field:"+field.getName());
-//				if (field.isAnnotationPresent(FiCandId1.class)) {
-//					//System.out.println("fiid selected true");
-//					fiField.setBoCandidateId1(true);
-//				}
-//
-//				if (field.isAnnotationPresent(FiId.class) || field.isAnnotationPresent(Id.class)) {
-//					//System.out.println("fiid selected true");
-//					fiField.setBoIdField(true);
-//				}
-
-				listFields.add(setupFiFieldShort(field, fiField));
-
+				listFields.add(setupFiFieldAll(field, fiField));
 			}
 
 		}
@@ -583,7 +513,7 @@ public class FiEntityHelper {
 
 	}
 
-	public static List<FiField> getListFiFieldsNotNullWithCandId1(Class clazz, Object objectt) {
+	public static List<FiField> getListFieldsNotNullWithCandId1(Class clazz, Object objectt) {
 
 		List<FiField> listFields = new ArrayList<>();
 
@@ -597,7 +527,7 @@ public class FiEntityHelper {
 			Object fieldValue = FiReflection.getProperty(objectt, field.getName());
 
 			if (fieldValue != null || field.isAnnotationPresent(FiCandId1.class)) {
-				listFields.add(setupFiFieldShort(field, null));
+				listFields.add(setupFiFieldAll(field, null));
 			}
 		}
 
@@ -605,11 +535,15 @@ public class FiEntityHelper {
 
 	}
 
-	public static <T> Boolean checkIdFieldsNullOrFull(T entity, Class<T> entityClass) {
+	/**
+	 * @param entity
+	 * @param entityClass
+	 * @param <T>
+	 * @return
+	 */
+	public static <T> Boolean checkIdFieldsAnyNull(T entity, Class<T> entityClass) {
 
-		List<FiField> listFiFieldsShort = getListFiFieldsShortWithId(entityClass);
-
-		//Stream<FiField> listIdFields = listFiFieldsShort.stream().filter(fiField -> FiBoolean.isTrue(fiField.getBoIdField()));
+		List<FiField> listFiFieldsShort = getListFieldsShortWithId(entityClass);
 
 		Boolean isNull = null;
 
@@ -632,7 +566,7 @@ public class FiEntityHelper {
 
 	public static <T> Boolean assignIdFields(T fromEntity, T toEntity, Class<T> entityClass) {
 
-		List<FiField> listFiFieldsShort = getListFiFieldsShortWithId(entityClass);
+		List<FiField> listFiFieldsShort = getListFieldsShortWithId(entityClass);
 
 		//Stream<FiField> listIdFields = listFiFieldsShort.stream().filter(fiField -> FiBoolean.isTrue(fiField.getBoIdField()));
 
@@ -661,7 +595,7 @@ public class FiEntityHelper {
 
 		List<String> listIdFields = new ArrayList<>();
 
-		for (FiField field : getListFiFieldsShortWithId(entityClazz)) {
+		for (FiField field : getListFieldsShortWithId(entityClazz)) {
 
 			if (FiBoolean.isTrue(field.getBoIdField())) {
 				//Loghelperr.staticLogDebug("Id Field:"+field.getName());
@@ -708,10 +642,10 @@ public class FiEntityHelper {
 	}
 
 	public static List<FiCol> getListFiTableCol(Class entityClass) {
-		return FiCol.convertListFiField(getListFiFieldsSummary(entityClass));
+		return FiCol.convertListFiField(getListFieldsWoutStatic(entityClass));
 	}
 
 	public static List<FiCol> getListFiTableColWithTransient(Class entityClass) {
-		return FiCol.convertListFiField(getListFiFieldsSummary(entityClass, true));
+		return FiCol.convertListFiField(getListFieldsWoutStatic(entityClass, true));
 	}
 }

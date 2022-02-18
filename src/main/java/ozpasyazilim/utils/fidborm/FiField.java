@@ -73,7 +73,6 @@ public class FiField {
 	Boolean boWhere1;
 
 	FiIdGenerationType idGenerationType;
-
 	Boolean boExcludeFromAutoColList;
 
 	public FiField() {
@@ -211,10 +210,6 @@ public class FiField {
 	public String getDefaultValue() {return defaultValue;}
 
 	public void setDefaultValue(String defaultValue) {this.defaultValue = defaultValue;}
-
-//	public String getTypeSimpleName() {return typeSimpleName;}
-//
-//	public void setTypeSimpleName(String typeSimpleName) {this.typeSimpleName = typeSimpleName;}
 
 	public String getLabel() {return label;}
 
@@ -360,4 +355,5 @@ public class FiField {
 	public void setBoFirmField(Boolean boFirmField) {
 		this.boFirmField = boFirmField;
 	}
+
 }

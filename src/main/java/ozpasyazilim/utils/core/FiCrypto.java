@@ -1,13 +1,13 @@
 package ozpasyazilim.utils.core;
 
+import ozpasyazilim.utils.log.Loghelper;
+
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
+import javax.xml.bind.DatatypeConverter;
+import java.security.*;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.Base64;
@@ -67,7 +67,7 @@ public class FiCrypto {
 		return Base64.getEncoder().encodeToString(cipherText);
 	}
 
-	public static String decrypt(String algorithm, String cipherText, SecretKey key,IvParameterSpec iv) throws NoSuchPaddingException, NoSuchAlgorithmException,InvalidAlgorithmParameterException, InvalidKeyException,			BadPaddingException, IllegalBlockSizeException {
+	public static String decrypt(String algorithm, String cipherText, SecretKey key, IvParameterSpec iv) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
 
 		Cipher cipher = Cipher.getInstance(algorithm);
 		cipher.init(Cipher.DECRYPT_MODE, key, iv);
@@ -75,5 +75,21 @@ public class FiCrypto {
 		return new String(plainText);
 	}
 
+
+	public static String getMd5(String stringToHash) {
+		//public static void main(String args[]) throws NoSuchAlgorithmException
+		try {
+			//String stringToHash = "MyJavaCode";
+			MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+			messageDigest.update(stringToHash.getBytes());
+			byte[] digiest = messageDigest.digest();
+			String hashedOutput = DatatypeConverter.printHexBinary(digiest);
+			//System.out.println(hashedOutput);
+			return hashedOutput;
+		} catch (NoSuchAlgorithmException ex) {
+			Loghelper.debugException(FiCrypto.class,ex);
+		}
+		return null;
+	}
 
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FiArrayListMap extends ArrayList<HashMap<String,Object>> {
+public class FiListMap extends ArrayList<HashMap<String,Object>> {
 
 	Map<String,Object> mapData;
 

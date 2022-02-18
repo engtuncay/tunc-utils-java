@@ -3,6 +3,7 @@ package ozpasyazilim.utils.fidborm;
 import org.jdbi.v3.core.Jdbi;
 import ozpasyazilim.utils.annotations.FiDraft;
 import ozpasyazilim.utils.core.*;
+import ozpasyazilim.utils.datatypes.FiMapParams;
 import ozpasyazilim.utils.gui.fxcomponents.FxEditorFactory;
 import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.fidbanno.*;
@@ -27,7 +28,7 @@ public class FiQueryGenerator {
 
 	public static String deleteById(Class clazz) {
 
-		List<FiField> fieldListFilterAnno = FiEntityHelper.getListFiFieldsShortWithId(clazz);
+		List<FiField> fieldListFilterAnno = FiEntity.getListFieldsShortWithId(clazz);
 
 		String tableName = getTableName(clazz);
 
@@ -60,7 +61,7 @@ public class FiQueryGenerator {
 
 	public static String deleteByCandId1(Class clazz) {
 
-		List<FiField> fieldListFilterAnno = FiEntityHelper.getListFiFieldsShortWithId(clazz);
+		List<FiField> fieldListFilterAnno = FiEntity.getListFieldsShortWithId(clazz);
 
 		String tableName = getTableName(clazz);
 
@@ -93,7 +94,7 @@ public class FiQueryGenerator {
 
 	public static String deleteByCandId2(Class clazz) {
 
-		List<FiField> fieldListFilterAnno = FiEntityHelper.getListFiFieldsShortWithId(clazz);
+		List<FiField> fieldListFilterAnno = FiEntity.getListFieldsShortWithId(clazz);
 
 		String tableName = getTableName(clazz);
 
@@ -126,7 +127,7 @@ public class FiQueryGenerator {
 
 	public static String deleteByCandId2ByInFormat(Class clazz) {
 
-		List<FiField> fieldListFilterAnno = FiEntityHelper.getListFiFieldsShortWithId(clazz);
+		List<FiField> fieldListFilterAnno = FiEntity.getListFieldsShortWithId(clazz);
 
 		String tableName = getTableName(clazz);
 
@@ -159,7 +160,7 @@ public class FiQueryGenerator {
 
 	public static String selectQuery20ById(Class clazz) {
 
-		List<FiField> fieldListFilterAnno = FiEntityHelper.getListFiFieldsShortWithId(clazz);
+		List<FiField> fieldListFilterAnno = FiEntity.getListFieldsShortWithId(clazz);
 
 		//String idField = getIdFieldSingle(fieldListFilterAnno);
 
@@ -205,7 +206,7 @@ public class FiQueryGenerator {
 
 	public static FiQuery selectQueryByCandIds1Fi(Class clazz) {
 
-		List<FiField> fieldListFilterAnno = FiEntityHelper.getListFiFieldsShortWithId(clazz);
+		List<FiField> fieldListFilterAnno = FiEntity.getListFieldsShortWithId(clazz);
 		FiQuery fiQuery = new FiQuery();
 
 		String tableName = getTableName(clazz);
@@ -240,7 +241,7 @@ public class FiQueryGenerator {
 
 	public static FiQuery selectQueryByCandIds2(Class clazz) {
 
-		List<FiField> selectFieldList = FiEntityHelper.getListFiFieldsShortWithId(clazz);
+		List<FiField> selectFieldList = FiEntity.getListFieldsShortWithId(clazz);
 		List<FiField> fieldsWhere = new ArrayList<>();
 
 		FiQuery fiQuery = new FiQuery();
@@ -319,7 +320,7 @@ public class FiQueryGenerator {
 
 	public static String selectAllDtoByFiSelectFields(Class clazz) {
 
-		List<FiField> fieldListFilterAnno = FiEntityHelper.getListFiFieldsShortWithId(clazz);
+		List<FiField> fieldListFilterAnno = FiEntity.getListFieldsShortWithId(clazz);
 
 		//String idField = getIdFieldSingle(fieldListFilterAnno);
 
@@ -363,7 +364,7 @@ public class FiQueryGenerator {
 
 	public static String selectAllByFiSelectFields(Class clazz) {
 
-		List<FiField> fieldListFilterAnno = FiEntityHelper.getListFiFieldsShortWithId(clazz);
+		List<FiField> fieldListFilterAnno = FiEntity.getListFieldsShortWithId(clazz);
 
 		//String idField = getIdFieldSingle(fieldListFilterAnno);
 
@@ -403,7 +404,7 @@ public class FiQueryGenerator {
 
 	public static String select1FieldsByCandId(Class clazz) {
 
-		List<FiField> fieldListFilterAnno = FiEntityHelper.getListFiFieldsShortWithId(clazz);
+		List<FiField> fieldListFilterAnno = FiEntity.getListFieldsShortWithId(clazz);
 
 		String tableName = getTableName(clazz);
 
@@ -438,7 +439,7 @@ public class FiQueryGenerator {
 
 	public static String selectQuery20ByIdFiSelect(Class clazz) {
 
-		List<FiField> fieldList = FiEntityHelper.getListFiFieldsShortWithId(clazz);
+		List<FiField> fieldList = FiEntity.getListFieldsShortWithId(clazz);
 
 		String tableName = getTableName(clazz);
 
@@ -476,7 +477,7 @@ public class FiQueryGenerator {
 
 	public static String selectQueryFiSelect(Class clazz, Integer rowCount) {
 
-		List<FiField> fieldList = FiEntityHelper.getListFiFieldsShortWithId(clazz);
+		List<FiField> fieldList = FiEntity.getListFieldsShortWithId(clazz);
 
 		String tableName = getTableName(clazz);
 
@@ -514,7 +515,7 @@ public class FiQueryGenerator {
 	 */
 	public static String selectQueryFiSelect1WithTop(Class clazz, Integer rowCount) {
 
-		List<FiField> fieldList = FiEntityHelper.getListFiFieldsShortWithId(clazz);
+		List<FiField> fieldList = FiEntity.getListFieldsShortWithId(clazz);
 
 		String tableName = getTableName(clazz);
 
@@ -547,7 +548,7 @@ public class FiQueryGenerator {
 
 	public static String selectTopQuery(Class clazz, Integer rowCount) {
 
-		List<FiField> fieldList = FiEntityHelper.getListFiFieldsShortWithId(clazz);
+		List<FiField> fieldList = FiEntity.getListFieldsShortWithId(clazz);
 		String tableName = getTableName(clazz);
 
 		StringBuilder query = new StringBuilder();
@@ -571,7 +572,7 @@ public class FiQueryGenerator {
 
 	public static String selectTopQueryLike(Class clazz, Integer rowCount, Object objectt) {
 
-		List<FiField> fieldList = FiEntityHelper.getListFiFieldsSummary(clazz);
+		List<FiField> fieldList = FiEntity.getListFieldsWoutStatic(clazz);
 
 		String tableName = getTableName(clazz);
 
@@ -627,7 +628,7 @@ public class FiQueryGenerator {
 
 	public static String selectQueryCountWherAllFields(Class clazz, Object objectt) {
 
-		List<FiField> fieldList = FiEntityHelper.getListFiFieldsSummary(clazz);
+		List<FiField> fieldList = FiEntity.getListFieldsWoutStatic(clazz);
 
 		String tableName = getTableName(clazz);
 
@@ -689,7 +690,7 @@ public class FiQueryGenerator {
 	public static FiQuery selectDtoEntityByCandId1Fi(Class clazz) {
 
 		FiQuery fiQuery = new FiQuery();
-		List<FiField> fieldList = FiEntityHelper.getListFiFieldsShortWithId(clazz);
+		List<FiField> fieldList = FiEntity.getListFieldsShortWithId(clazz);
 
 		String tableName = getTableName(clazz);
 
@@ -729,7 +730,7 @@ public class FiQueryGenerator {
 
 	public static String selectIdByGuid(Class clazz) {
 
-		List<FiField> fieldList = FiEntityHelper.getListFiFieldsShortWithId(clazz);
+		List<FiField> fieldList = FiEntity.getListFieldsShortWithId(clazz);
 
 		String tableName = getTableName(clazz);
 
@@ -776,7 +777,7 @@ public class FiQueryGenerator {
 	 */
 	public static String selectDtoFieldsBySeperatedField(Class clazz) {
 
-		List<FiField> fieldList = FiEntityHelper.getListFiFieldsShortWithId(clazz);
+		List<FiField> fieldList = FiEntity.getListFieldsShortWithId(clazz);
 
 		String tableName = getTableName(clazz);
 
@@ -815,7 +816,7 @@ public class FiQueryGenerator {
 
 	public static String selectDtoFieldsWoutWhere(Class clazz) {
 
-		List<FiField> fieldList = FiEntityHelper.getListFiFieldsShortWithId(clazz);
+		List<FiField> fieldList = FiEntity.getListFieldsShortWithId(clazz);
 
 		String tableName = getTableName(clazz);
 
@@ -843,7 +844,7 @@ public class FiQueryGenerator {
 
 	public static String selectDtoFieldsWithWhere1(Class clazz) {
 
-		List<FiField> fieldList = FiEntityHelper.getListFiFieldsShortWithId(clazz);
+		List<FiField> fieldList = FiEntity.getListFieldsShortWithId(clazz);
 
 		String tableName = getTableName(clazz);
 
@@ -879,7 +880,7 @@ public class FiQueryGenerator {
 
 	public static String selectDtoFieldsByTxFirmCode(Class clazz) {
 
-		List<FiField> fieldList = FiEntityHelper.getListFiFieldsShortWithId(clazz);
+		List<FiField> fieldList = FiEntity.getListFieldsShortWithId(clazz);
 
 		String tableName = getTableName(clazz);
 
@@ -915,7 +916,7 @@ public class FiQueryGenerator {
 
 	public static String selectComboFieldsBySeperatedField(Class clazz) {
 
-		List<FiField> fieldList = FiEntityHelper.getListFiFieldsShortWithId(clazz);
+		List<FiField> fieldList = FiEntity.getListFieldsShortWithId(clazz);
 
 		String tableName = getTableName(clazz);
 
@@ -953,7 +954,7 @@ public class FiQueryGenerator {
 
 	public static String selectQueryCountByCandIdFirst(Class clazz) {
 
-		List<FiField> fieldList = FiEntityHelper.getListFiFieldsSummary(clazz);
+		List<FiField> fieldList = FiEntity.getListFieldsWoutStatic(clazz);
 
 		String candId1FirstField = getCandId1FirstField(fieldList);
 
@@ -979,7 +980,7 @@ public class FiQueryGenerator {
 
 	public static String selectQueryCountByCandId1s(Class clazz) {
 
-		List<FiField> fieldList = FiEntityHelper.getListFiFieldsSummary(clazz);
+		List<FiField> fieldList = FiEntity.getListFieldsWoutStatic(clazz);
 
 		String candId1FirstField = getCandId1FirstField(fieldList);
 
@@ -1021,7 +1022,7 @@ public class FiQueryGenerator {
 	@Deprecated
 	public static String selectQueryCountByCandId(Class clazz) {
 
-		List<FiField> fieldList = FiEntityHelper.getListFiFieldsSummary(clazz);
+		List<FiField> fieldList = FiEntity.getListFieldsWoutStatic(clazz);
 
 		String candId1FirstField = getCandId1FirstField(fieldList);
 
@@ -1055,13 +1056,13 @@ public class FiQueryGenerator {
 	@Deprecated
 	public static String insertQueryJParamWoutId(Class clazz) {
 
-		List<FiField> fieldListFilterAnno = FiEntityHelper.getListFiFieldsShortWithNotID(clazz);
+		List<FiField> fieldListFilterAnno = FiEntity.getListFieldsShortWithNotID(clazz);
 
 		StringBuilder query = new StringBuilder();
 
 		query.append("INSERT INTO " + getTableName(clazz) + " ( ");
 
-		query.append(String.join(", ", FiEntityHelper.getListDbFieldName(fieldListFilterAnno)));
+		query.append(String.join(", ", FiEntity.getListDbFieldName(fieldListFilterAnno)));
 
 		query.append(" ) VALUES ( ");
 
@@ -1081,13 +1082,13 @@ public class FiQueryGenerator {
 	 */
 	public static String insertQueryWoutId(Class clazz) {
 
-		List<FiField> fieldListFilterAnno = FiEntityHelper.getListFiFieldsShortWithNotID(clazz);
+		List<FiField> fieldListFilterAnno = FiEntity.getListFieldsShortWithNotID(clazz);
 
 		StringBuilder query = new StringBuilder();
 
 		query.append("INSERT INTO " + getTableName(clazz) + " ( ");
 
-		query.append(String.join(", ", FiEntityHelper.getListDbFieldName(fieldListFilterAnno)));
+		query.append(String.join(", ", FiEntity.getListDbFieldName(fieldListFilterAnno)));
 
 		query.append(" ) VALUES ( ");
 
@@ -1101,13 +1102,13 @@ public class FiQueryGenerator {
 
 	public static String insertQueryWoutIdWithFieldName(Class clazz) {
 
-		List<FiField> fieldListFilterAnno = FiEntityHelper.getListFiFieldsShortWithNotID(clazz);
+		List<FiField> fieldListFilterAnno = FiEntity.getListFieldsShortWithNotID(clazz);
 
 		StringBuilder query = new StringBuilder();
 
 		query.append("INSERT INTO " + getTableName(clazz) + " ( ");
 
-		query.append(String.join(", ", FiEntityHelper.getListDbFieldName(fieldListFilterAnno)));
+		query.append(String.join(", ", FiEntity.getListDbFieldName(fieldListFilterAnno)));
 
 		query.append(" ) VALUES ( ");
 
@@ -1126,11 +1127,11 @@ public class FiQueryGenerator {
 //		-- SELECT
 //				--     (SELECT MAX(no)+1  FROM PERSON), @name
 
-		List<FiField> fieldListFilterAnno = FiEntityHelper.getListFiFieldsShortWithNotID(clazz);
+		List<FiField> fieldListFilterAnno = FiEntity.getListFieldsShortWithNotID(clazz);
 		StringBuilder query = new StringBuilder();
 		String tableName = getTableName(clazz);
 		query.append("INSERT INTO " + tableName + " ( ");
-		query.append(String.join(", ", FiEntityHelper.getListDbFieldName(fieldListFilterAnno)));
+		query.append(String.join(", ", FiEntity.getListDbFieldName(fieldListFilterAnno)));
 		query.append(" ) SELECT ");
 
 		Integer index = 0;
@@ -1168,13 +1169,13 @@ public class FiQueryGenerator {
 	 */
 	public static String insertQueryRtDbName(Class clazz, IRepoJdbi iRepoJdbi) {
 
-		List<FiField> listField = FiEntityHelper.getListFiFieldsShortWithNotID(clazz);
+		List<FiField> listField = FiEntity.getListFieldsShortWithNotID(clazz);
 
 		StringBuilder query = new StringBuilder();
 
 		query.append(String.format("INSERT INTO %s.dbo.%s ( ", iRepoJdbi.getDatabaseName(), getTableName(clazz)));
 
-		query.append(String.join(", ", FiEntityHelper.getListDbFieldName(listField)));
+		query.append(String.join(", ", FiEntity.getListDbFieldName(listField)));
 
 		query.append(" ) VALUES ( ");
 
@@ -1194,13 +1195,13 @@ public class FiQueryGenerator {
 	 */
 	public static String insertQueryWithId(Class clazz) {
 
-		List<FiField> fieldListFilterAnno = FiEntityHelper.getListFiFieldsShortWithId(clazz);
+		List<FiField> fieldListFilterAnno = FiEntity.getListFieldsShortWithId(clazz);
 
 		StringBuilder query = new StringBuilder();
 
 		query.append("INSERT INTO " + getTableName(clazz) + " ( ");
 
-		query.append(String.join(", ", FiEntityHelper.getListDbFieldName(fieldListFilterAnno)));
+		query.append(String.join(", ", FiEntity.getListDbFieldName(fieldListFilterAnno)));
 
 		query.append(" ) VALUES ( ");
 
@@ -1214,7 +1215,7 @@ public class FiQueryGenerator {
 
 	public static String updateQueryNotNullFieldsWoutIdFieldByCandId1(Class clazz, Object objectt) {
 
-		List<FiField> fieldListFilterAnno = FiEntityHelper.getListFiFieldsNotNullWithCandId1(clazz, objectt);
+		List<FiField> fieldListFilterAnno = FiEntity.getListFieldsNotNullWithCandId1(clazz, objectt);
 
 		StringBuilder query = new StringBuilder();
 		StringBuilder queryWhere = new StringBuilder();
@@ -1259,7 +1260,7 @@ public class FiQueryGenerator {
 	 */
 	public static String updateQueryByCandId1(Class clazz, Boolean includeOnlyFirstInsertFields) {
 
-		List<FiField> fieldListFilterAnno = FiEntityHelper.getListFiFieldsShortWithId(clazz);
+		List<FiField> fieldListFilterAnno = FiEntity.getListFieldsShortWithId(clazz);
 
 		StringBuilder query = new StringBuilder();
 		StringBuilder queryWhere = new StringBuilder();
@@ -1301,7 +1302,7 @@ public class FiQueryGenerator {
 
 	public static String updateQuery20NotNullById(Class clazz, Object objectt) {
 
-		List<FiField> fieldListFilterAnno = FiEntityHelper.getListFiFieldsNotNullWithId(clazz, objectt);
+		List<FiField> fieldListFilterAnno = FiEntity.getListFieldsNotNullWithId(clazz, objectt);
 
 		StringBuilder query = new StringBuilder();
 		StringBuilder queryWhere = new StringBuilder();
@@ -1347,7 +1348,7 @@ public class FiQueryGenerator {
 	 */
 	public static String updateQueryWithFiColsByIdFieldInClass(Class clazz, List<? extends IFiCol> listFields) {
 
-		List<FiField> listClassFields = FiEntityHelper.getListFiFieldsShortWithId(clazz);
+		List<FiField> listClassFields = FiEntity.getListFieldsShortWithId(clazz);
 
 		StringBuilder query = new StringBuilder();
 		StringBuilder queryWhere = new StringBuilder();
@@ -1392,7 +1393,7 @@ public class FiQueryGenerator {
 	 */
 	public static String updateQueryWithFiColListByIdFiCol(Class clazz, List<? extends IFiCol> listFields) {
 
-		Map<String, FiField> listClassFields = FiEntityHelper.getMapFiFieldsShort(clazz);
+		Map<String, FiField> listClassFields = FiEntity.getMapFieldsShort(clazz);
 
 		StringBuilder query = new StringBuilder();
 		StringBuilder queryWhere = new StringBuilder();
@@ -1455,7 +1456,7 @@ public class FiQueryGenerator {
 	 */
 	public static String updateQueryWithFiTableColByCandId(Class clazz, List<? extends IFiCol> listFields) {
 
-		List<FiField> listClassFields = FiEntityHelper.getListFiFieldsShortWithId(clazz);
+		List<FiField> listClassFields = FiEntity.getListFieldsShortWithId(clazz);
 
 		StringBuilder query = new StringBuilder();
 		StringBuilder queryWhere = new StringBuilder();
@@ -1489,6 +1490,48 @@ public class FiQueryGenerator {
 
 	}
 
+	/**
+	 * Key alanlarını class alanlarındaki Id annotasyonuna göre alır
+	 *
+	 * @param clazz
+	 * @param fiMapParams
+	 * @return
+	 */
+	public static String updateQueryWithFiMapParamByCandId(Class clazz, FiMapParams fiMapParams) {
+
+		List<FiField> listClassFields = FiEntity.getListFieldsShortWithId(clazz);
+
+		StringBuilder query = new StringBuilder();
+		StringBuilder queryWhere = new StringBuilder();
+
+		query.append("UPDATE " + getTableName(clazz) + " SET ");
+
+		Integer index = 0;
+		Integer indexWhere = 0;
+
+		for (String key : fiMapParams.keySet()) {
+			index++;
+			if (index != 1) query.append(", ");
+			query.append(key + " = @" + key);
+		}
+
+		for (FiField fiField : listClassFields) {
+			if (FiBoolean.isTrue(fiField.getBoCandidateId1())) {
+				indexWhere++;
+				if (indexWhere != 1) queryWhere.append(" AND ");
+				queryWhere.append(fiField.getName() + " = @" + fiField.getDbParamName());
+				continue;
+			}
+		}
+
+		query.append(" WHERE " + queryWhere);
+
+		if (queryWhere.length() < 1) {
+			query = new StringBuilder();
+		}
+
+		return query.toString();
+	}
 
 	private static List<String> getListSqlParam(List<FiField> fieldListFilterAnno) {
 		return fieldListFilterAnno.stream().map(fiField -> ":" + fiField.getName()).collect(toList());
@@ -1574,7 +1617,7 @@ public class FiQueryGenerator {
 
 	public static String codeFormFields(Class clazz) {
 
-		List<FiField> listFields = FiEntityHelper.getListFiFieldsSummary(clazz, true);
+		List<FiField> listFields = FiEntity.getListFieldsWoutStatic(clazz, true);
 
 		StringBuilder query = new StringBuilder();
 
@@ -1613,7 +1656,7 @@ public class FiQueryGenerator {
 
 	public static String codeTableColsV1(Class clazz) {
 
-		List<FiField> listFields = FiEntityHelper.getListFiFieldsSummary(clazz, true);
+		List<FiField> listFields = FiEntity.getListFieldsWoutStatic(clazz, true);
 
 		StringBuilder query = new StringBuilder();
 
@@ -1645,7 +1688,7 @@ public class FiQueryGenerator {
 
 	public static String codeTableColsV2(Class clazz, Boolean includeTransients, String fieldEnumClass) {
 
-		List<FiField> listFields = FiEntityHelper.getListFiFieldsSummary(clazz, includeTransients);
+		List<FiField> listFields = FiEntity.getListFieldsWoutStatic(clazz, includeTransients);
 
 		StringBuilder query = new StringBuilder();
 
@@ -1681,7 +1724,7 @@ public class FiQueryGenerator {
 
 	public static String codeTableColsSimple(Class clazz, Boolean includeTransients) {
 
-		List<FiField> listFields = FiEntityHelper.getListFiFieldsSummary(clazz, includeTransients);
+		List<FiField> listFields = FiEntity.getListFieldsWoutStatic(clazz, includeTransients);
 
 		StringBuilder query = new StringBuilder();
 
@@ -1716,7 +1759,7 @@ public class FiQueryGenerator {
 
 	public static String codeColsEnum(Class clazz, Boolean includeTransients) {
 
-		List<FiField> listFields = FiEntityHelper.getListFiFieldsSummary(clazz, includeTransients);
+		List<FiField> listFields = FiEntity.getListFieldsWoutStatic(clazz, includeTransients);
 
 		StringBuilder query = new StringBuilder();
 
@@ -1787,7 +1830,7 @@ public class FiQueryGenerator {
 		return sqlPageble;
 	}
 
-	public static String codeEntityClass(String tableName, Jdbi jdbi) {
+	public static String tableToEntityClass(String tableName, Jdbi jdbi) {
 
 		List<TableScheme> result = getDbTableScheme(tableName, jdbi);
 
@@ -1797,7 +1840,6 @@ public class FiQueryGenerator {
 
 		Map<String, String> mapTypeConvertorSqlserverToJava = getMapTypeConvertorSqlserverToJava();
 		// https://docs.microsoft.com/en-us/sql/connect/jdbc/using-basic-data-types?view=sql-server-2017
-
 
 		entitycode.append("\n\nimport java.util.Date;\n");
 		entitycode.append("\n");
@@ -2258,7 +2300,7 @@ public class FiQueryGenerator {
 
 	public static String createQuery20(Class clazz) {
 
-		List<FiField> listFields = FiEntityHelper.getListFiFieldsAll(clazz);
+		List<FiField> listFields = FiEntity.getListFieldsAll(clazz);
 
 		StringBuilder query = new StringBuilder();
 
@@ -2292,7 +2334,7 @@ public class FiQueryGenerator {
 
 	public static List<FiField> getFieldsWithDbDefinitionFromCode(Class clazz) {
 
-		List<FiField> listFields = FiEntityHelper.getListFiFieldsAll(clazz);
+		List<FiField> listFields = FiEntity.getListFieldsAll(clazz);
 
 		assignSqlTypeAndDef(listFields);
 
@@ -2578,7 +2620,7 @@ public class FiQueryGenerator {
 
 		//String sqlUpRecId = "\nUPDATE CARI_HESAPLAR SET cari_RECid_RECno = cari_RECno WHERE cari_RECno = SCOPE_IDENTITY();\nSELECT SCOPE_IDENTITY();";
 
-		List<FiField> fieldListFilterAnno = FiEntityHelper.getListFiFieldsShortWithId(clazz);
+		List<FiField> fieldListFilterAnno = FiEntity.getListFieldsShortWithId(clazz);
 
 		StringBuilder query = new StringBuilder();
 		StringBuilder queryWhere = new StringBuilder();
@@ -2616,7 +2658,7 @@ public class FiQueryGenerator {
 
 	public static String updateScopeIdFieldWithSIdById(Class clazz, String fieldForScopeEntity) {
 
-		List<FiField> fieldListFilterAnno = FiEntityHelper.getListFiFieldsShortWithId(clazz);
+		List<FiField> fieldListFilterAnno = FiEntity.getListFieldsShortWithId(clazz);
 
 		StringBuilder query = new StringBuilder();
 		StringBuilder queryWhere = new StringBuilder();
@@ -2654,7 +2696,7 @@ public class FiQueryGenerator {
 
 	public static String getIdField(Class clazz) {
 
-		List<FiField> fieldList = FiEntityHelper.getListFiFieldsShortWithId(clazz);
+		List<FiField> fieldList = FiEntity.getListFieldsShortWithId(clazz);
 
 		for (FiField fiField : fieldList) {
 			if (FiBoolean.isTrue(fiField.getBoIdField())) {
@@ -2667,7 +2709,7 @@ public class FiQueryGenerator {
 
 	public static String getCandIdFieldFirst(Class clazz) {
 
-		List<FiField> fieldList = FiEntityHelper.getListFiFieldsShortWithId(clazz);
+		List<FiField> fieldList = FiEntity.getListFieldsShortWithId(clazz);
 
 		for (FiField fiField : fieldList) {
 			if (FiBoolean.isTrue(fiField.getBoCandidateId1())) {
@@ -2680,7 +2722,7 @@ public class FiQueryGenerator {
 
 	public static String getCandId1FirstField(Class clazz) {
 
-		List<FiField> fieldList = FiEntityHelper.getListFiFieldsShortWithId(clazz);
+		List<FiField> fieldList = FiEntity.getListFieldsShortWithId(clazz);
 		return getCandId1FirstField(fieldList);
 
 	}
@@ -2698,7 +2740,7 @@ public class FiQueryGenerator {
 
 	public static <EntClazz> String getScopeIdentityFirstField(Class<EntClazz> entityClass) {
 
-		List<FiField> fieldList = FiEntityHelper.getListFiFieldsShortWithId(entityClass);
+		List<FiField> fieldList = FiEntity.getListFieldsShortWithId(entityClass);
 
 		for (FiField fiField : fieldList) {
 			if (FiBoolean.isTrue(fiField.getBoScopeIdField())) {

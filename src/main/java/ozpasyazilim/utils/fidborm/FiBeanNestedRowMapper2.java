@@ -3,8 +3,8 @@ package ozpasyazilim.utils.fidborm;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.jdbi.v3.core.mapper.RowMapper;
 import org.jdbi.v3.core.statement.StatementContext;
+import ozpasyazilim.utils.annotations.FiDraft;
 import ozpasyazilim.utils.core.FiReflection;
-import ozpasyazilim.utils.log.Loghelper;
 
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
@@ -18,16 +18,17 @@ import java.util.List;
  *
  * @param <T>
  */
-public class FiBeanNestedRowMapper<T> implements RowMapper<T> {
+@FiDraft
+public class FiBeanNestedRowMapper2<T> implements RowMapper<T> {
 
 	private final Class<T> type;
 	List<String> listPrefixes;
 
-	public FiBeanNestedRowMapper(Class<T> type) {
+	public FiBeanNestedRowMapper2(Class<T> type) {
 		this.type = type;
 	}
 
-	public FiBeanNestedRowMapper(Class<T> type, String... prefixes) {
+	public FiBeanNestedRowMapper2(Class<T> type, String... prefixes) {
 		this.type = type;
 		this.listPrefixes = Arrays.asList(prefixes);
 	}
@@ -45,7 +46,8 @@ public class FiBeanNestedRowMapper<T> implements RowMapper<T> {
 			try {
 				Object obj = rs.getObject(columnName);
 
-				// sütun ismi prefix ile başlıyor ise column isminin başına prefix i ekler.
+				// sütun alanının ismi prefix ile başlıyor ise column isminin başına prefix i ekler.
+				// kkoAbc --> kko__kkoAbc ye çevirir
 				if (getListPrefixes() != null) {
 					for (String prefix : getListPrefixes()) {
 						// FIXME tek regex düşültülebilr

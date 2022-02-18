@@ -743,7 +743,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		String sql = FiQueryGenerator.deleteByCandId2ByInFormat(getEntityClass());
 
-		String dbFieldName = FiEntityHelper.getListFiFieldsCandId2(getEntityClass()).get(0).getDbFieldName();
+		String dbFieldName = FiEntity.getListFieldsCandId2(getEntityClass()).get(0).getDbFieldName();
 
 		FiMapParams fiMapParams = FiMapParams.build().buildPut(dbFieldName, listData);
 
@@ -759,7 +759,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 //		Loghelper.get(getClass()).debug("Delete query:" + sql);
 
-		String dbFieldName = FiEntityHelper.getListFiFieldsCandId2(getEntityClass()).get(0).getDbFieldName();
+		String dbFieldName = FiEntity.getListFieldsCandId2(getEntityClass()).get(0).getDbFieldName();
 
 		FiMapParams fiMapParams = FiMapParams.build().buildPut(dbFieldName, listData);
 
@@ -776,7 +776,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		String sql = FiQueryGenerator.deleteByCandId2ByInFormat(getEntityClass());
 
-		String dbFieldName = FiEntityHelper.getListFiFieldsCandId2(getEntityClass()).get(0).getDbFieldName();
+		String dbFieldName = FiEntity.getListFieldsCandId2(getEntityClass()).get(0).getDbFieldName();
 
 		FiMapParams fiMapParams = FiMapParams.build().buildPut(dbFieldName, listData);
 
@@ -1337,6 +1337,10 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		return jdUpdateBindObjectMain(updateQuery, bindEntity);
 	}
 
+	public Fdr jdUpdateBindMapThenEntityMain(String updateQuery, EntClazz bindEntity, FiMapParams fiMapParams) {
+		return jdUpdateBindMapThenObjectMapMain(updateQuery, bindEntity,fiMapParams);
+	}
+
 	/**
 	 * jdO - jd Operation
 	 *
@@ -1353,6 +1357,42 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		try {
 			Integer rowCountUpdate = jdbi.withHandle(handle -> {
 				return handle.createUpdate(FiQuery.stoj(updateQuery))
+						.bindBean(bindEntity)
+						.execute(); // returns row count updated
+			});
+			//fiDbResult.setRowsAffectedWithUpBoResult(rowCountUpdate);
+			fdr.setBoResultAndRowsAff(true, rowCountUpdate); // 16-01-20 çevrildi.
+			//fdr.setTxQueryType(QueryType.bui().update);
+			if (rowCountUpdate > 0) {
+				fdr.setLnUpdatedRows(rowCountUpdate);
+			}
+			//Loghelper.get(getClass()).debug("Row Affected:"+rowCountUpdate);
+
+		} catch (Exception ex) {
+			Loghelper.debugException(getClass(), ex);
+			fdr.setBoResult(false, ex);
+		}
+
+		return fdr;
+	}
+
+	/**
+	 * önce Map bind eder,sonra entity (map de varsa,entity dekini almaz)
+	 *
+	 * @param updateQuery
+	 * @param bindEntity
+	 * @return
+	 */
+	public Fdr jdUpdateBindMapThenObjectMapMain(String updateQuery, Object bindEntity, FiMapParams fiMapParams) {
+
+		Jdbi jdbi = getJdbi();
+
+		Fdr fdr = new Fdr();
+
+		try {
+			Integer rowCountUpdate = jdbi.withHandle(handle -> {
+				return handle.createUpdate(FiQuery.stoj(updateQuery))
+						.bindMap(fiMapParams)
 						.bindBean(bindEntity)
 						.execute(); // returns row count updated
 			});
@@ -1631,9 +1671,17 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		return jdInsertOrUpdateListMain(listEntity, sqlUpdate, null, null, boBindGeneratedKey);
 	}
 
+	/**
+	 *
+	 * Entity'nin herhangi bir id alanının null olup olmamadığına göre insert veya update işlemi yapar.
+	 *
+	 * @param entity
+	 * @param fiTableColList
+	 * @return
+	 */
 	public Fdr jdInsertEntityOrUpdateFiTableColsBindEntityByIds(EntClazz entity, List<FiCol> fiTableColList) {
 
-		Boolean boIdNull = FiEntityHelper.checkIdFieldsNullOrFull(entity, getEntityClass());
+		Boolean boIdNull = FiEntity.checkIdFieldsAnyNull(entity, getEntityClass());
 
 		if (FiBoolean.isTrue(boIdNull)) { // insert
 			return jdInsertEntityMain(entity);
@@ -1672,7 +1720,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 					listEntity.forEach(ent -> {
 
 						// check id field is null or not
-						Boolean boIdNull = FiEntityHelper.checkIdFieldsNullOrFull(ent, getEntityClass());
+						Boolean boIdNull = FiEntity.checkIdFieldsAnyNull(ent, getEntityClass());
 						//Loghelperr.getInstance(getClass()).debug("Is Null:"+boIdNull.toString());
 
 						// id null ise insert yap
@@ -1682,7 +1730,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 							if (FiBoolean.isTrue(boBindGeneratedKey)) {
 
-								String idField = FiEntityHelper.getListIdFields(getEntityClass()).get(0);
+								String idField = FiEntity.getListIdFields(getEntityClass()).get(0);
 								Class idClazz = FiReflection.getFieldClassType(getEntityClass(), idField);
 
 								Optional opId = handle.createUpdate(FiQuery.stoj(FiQueryGenerator.insertQueryJParamWoutId(getEntityClass())))
@@ -1900,7 +1948,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 					listEntity.forEach(ent -> {
 
 						// check id field is null or not
-						Boolean boIdNull = FiEntityHelper.checkIdFieldsNullOrFull(ent, getEntityClass());
+						Boolean boIdNull = FiEntity.checkIdFieldsAnyNull(ent, getEntityClass());
 						//Loghelperr.getInstance(getClass()).debug("Is Null:"+boIdNull.toString());
 
 						// id null ise insert yap
@@ -1995,7 +2043,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 	}
 
 
-	public Fdr<Optional<String>> jdSelectStringValue(String sql, Map<String, Object> mapParam) {
+	public Fdr<Optional<String>> jdSelectStringOpValue(String sql, Map<String, Object> mapParam) {
 
 		Jdbi jdbi = getJdbi();
 		Optional<String> result = null;
@@ -2596,7 +2644,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		if (FiBoolean.isTrue(boBindGeneratedKey)) { // generated key'de alınacak
 
-			String idField = FiEntityHelper.getListIdFields(getEntityClass()).get(0);
+			String idField = FiEntity.getListIdFields(getEntityClass()).get(0);
 			Class idClazz = FiReflection.getFieldClassType(getEntityClass(), idField);
 
 			Optional opId = handle.createUpdate(FiQuery.stoj(sql1 + ";SET NOCOUNT ON;" + sql2))
@@ -2688,7 +2736,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 					//String sql2 = FiQueryHelper.updateScopeIdFieldWithSIdById(getEntityClass(), fieldForScopeEntity);
 					String sql2 = FiQueryGenerator.updateScopeIdFieldWithScopeIdFnById(getEntityClass(), fieldForScopeEntity);
 
-					String idField = FiEntityHelper.getListIdFields(getEntityClass()).get(0);
+					String idField = FiEntity.getListIdFields(getEntityClass()).get(0);
 					Class idClazz = FiReflection.getFieldClassType(getEntityClass(), idField);
 
 					//Loghelper.debug(getClass(), "idField:" + idField);
@@ -2775,7 +2823,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 			//String sql2 = FiQueryGenerator.updateScopeIdFieldWithSIdById(getEntityClass(), fieldForScopeEntity);
 			String sql2 = FiQueryGenerator.updateScopeIdFieldWithScopeIdFnById(getEntityClass(), fieldForScopeEntity);
 
-			String idField = FiEntityHelper.getListIdFields(getEntityClass()).get(0);
+			String idField = FiEntity.getListIdFields(getEntityClass()).get(0);
 			Class idClazz = FiReflection.getFieldClassType(getEntityClass(), idField);
 
 			//Loghelper.debug(getClass(), "idField:" + idField);
@@ -2849,7 +2897,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 			// transactions
 			if (FiBoolean.isTrue(boBindGeneratedKey)) {
 
-				String idField = FiEntityHelper.getListIdFields(getEntityClass()).get(0);
+				String idField = FiEntity.getListIdFields(getEntityClass()).get(0);
 				Class idClazz = FiReflection.getFieldClassType(getEntityClass(), idField);
 
 				Optional opId = handle.createUpdate(FiQuery.stoj(sql1 + ";SET NOCOUNT ON;" + sql2))

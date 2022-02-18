@@ -60,7 +60,7 @@
                 <groupId>org.jdbi</groupId>
                 <artifactId>jdbi3-bom</artifactId>
                 <type>pom</type>
-                <version>3.3.0</version>
+                <version>3.8.1</version>
                 <scope>import</scope>
             </dependency>
         </dependencies>
@@ -145,7 +145,7 @@
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
-            <version>3.12</version>
+            <version>3.10-FINAL</version>
         </dependency>
 
         <dependency>
@@ -193,11 +193,12 @@
         </dependency>
 
         <!-- object table model için eklendi - dinamik annotation oluşturabilir
+        1.3 -> 1.3.7 yapıldı. 3-02-22
         https://github.com/leangen/geantyref#maven -->
         <dependency>
             <groupId>io.leangen.geantyref</groupId>
             <artifactId>geantyref</artifactId>
-            <version>1.3.0</version>
+            <version>1.3.7</version>
         </dependency>
 
         <!-- Controllerfx - java fx component library-->
@@ -210,14 +211,7 @@
         <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
-            <version>1.9.3</version> <!--<version>20030211.134440</version>-->
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.miglayout</groupId>
-            <artifactId>miglayout-javafx</artifactId>
-            <version>5.2</version>
+            <version>1.9.3</version>
             <scope>compile</scope>
         </dependency>
 
@@ -232,6 +226,13 @@
             <artifactId>junit-jupiter-api</artifactId>
             <version>5.2.0</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.miglayout</groupId>
+            <artifactId>miglayout-javafx</artifactId>
+            <version>5.2</version>
+            <scope>compile</scope>
         </dependency>
 
         <!-- MigLayout Swing Library-->
@@ -387,21 +388,13 @@
             <scope>compile</scope>
         </dependency>
 
-        <!-- MigLayout Java Fx-->
-        <!-- https://mvnrepository.com/artifact/com.miglayout/miglayout-javafx -->
-        <dependency>
-            <groupId>com.miglayout</groupId>
-            <artifactId>miglayout-javafx</artifactId>
-            <version>5.2</version>
-        </dependency>
-
         <!--org.json Json Parse Deparse-->
         <!-- https://mvnrepository.com/artifact/org.json/json -->
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20210307</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.json</groupId>-->
+<!--            <artifactId>json</artifactId>-->
+<!--            <version>20210307</version>-->
+<!--        </dependency>-->
 
         <!--xml format FiXml için eklendi codehaus castor-->
 

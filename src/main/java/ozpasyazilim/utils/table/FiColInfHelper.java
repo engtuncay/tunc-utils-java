@@ -2,9 +2,8 @@ package ozpasyazilim.utils.table;
 
 import ozpasyazilim.utils.core.FiBoolean;
 import ozpasyazilim.utils.core.FiString;
-import ozpasyazilim.utils.fidborm.FiEntityHelper;
+import ozpasyazilim.utils.fidborm.FiEntity;
 import ozpasyazilim.utils.fidborm.FiField;
-import ozpasyazilim.utils.gui.fxcomponents.FxTableCol;
 import ozpasyazilim.utils.gui.fxcomponents.FxTreeTableCol;
 import ozpasyazilim.utils.mvc.IFiCol;
 
@@ -49,7 +48,7 @@ public class FiColInfHelper {
 
 	public static <PrmClazz> void autoComment(List<FiCol> listFiCol, Class<PrmClazz> tblurunClass) {
 
-		Map<String, FiField> mapFiFieldsShort = FiEntityHelper.getMapFiFieldsExtra(tblurunClass);
+		Map<String, FiField> mapFiFieldsShort = FiEntity.getMapFieldsExtra(tblurunClass);
 
 		for (FiCol fiTableCol : listFiCol) {
 

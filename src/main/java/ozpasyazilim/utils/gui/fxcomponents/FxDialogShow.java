@@ -1129,6 +1129,11 @@ public class FxDialogShow {
 		showDbResult(dbResult, null);
 	}
 
+	public static void showDbResult2(Fdr dbResult,Runnable runIfTrue) {
+		showDbResult(dbResult, null);
+		if(dbResult.isTrueBoResult())runIfTrue.run();
+	}
+
 	public static void showDbResult(Fdr dbResult, String title) {
 
 		if (dbResult == null) {
