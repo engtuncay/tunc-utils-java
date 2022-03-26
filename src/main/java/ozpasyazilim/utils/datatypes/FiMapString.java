@@ -1,6 +1,11 @@
 package ozpasyazilim.utils.datatypes;
 
+import ozpasyazilim.utils.core.FiString;
+import ozpasyazilim.utils.table.FiCol;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Custom Data Type
@@ -14,6 +19,38 @@ public class FiMapString extends HashMap<String, String> {
 
 	public static FiMapString build() {
 		return new FiMapString();
+	}
+
+	public void clearEmptyKeys() {
+		List<String> listToDelete = new ArrayList<>();
+		this.forEach((key,value) -> {
+			if(FiString.isEmpty(value)){
+				listToDelete.add(key);
+			}
+		});
+		for (String key : listToDelete) {
+			this.remove(key);
+		}
+	}
+
+	public Boolean isEmptyKey(String txKey) {
+		if(this.containsKey(txKey)){
+			if (FiString.isEmpty(this.get(txKey))) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public String getTos(Object txKey) {
+		if(txKey==null) return null;
+		return get(txKey.toString());
+	}
+
+	public String getTosOrEmpty(Object txKey) {
+		if(txKey==null) return "";
+		if(!containsKey(txKey.toString())) return "";
+		return FiString.orEmpty(get(txKey.toString()));
 	}
 
 //	public FiMapStr buildPut(Object fieldName, Object value) {

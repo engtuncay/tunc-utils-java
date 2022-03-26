@@ -3,7 +3,6 @@ package ozpasyazilim.utils.fidborm;
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 import org.reactfx.util.TriConsumer;
-import ozpasyazilim.utils.core.FiConsole;
 import ozpasyazilim.utils.core.FiString;
 import ozpasyazilim.utils.datatypes.FiMapParams;
 import ozpasyazilim.utils.mvc.IFiCol;
@@ -26,8 +25,8 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 	// Taslak olduğunu belirtmek için deprecated anno kullanılabilir. Depraceted For Draft
 
-	private Class<EntClazz> entityClass;
-	private Handle handleRepo;
+	protected Class<EntClazz> entityClass;
+	protected Handle handleRepo;
 
 	public AbsRepoJdbi() {
 		setAutoClass();
@@ -39,8 +38,8 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 	}
 
 	public AbsRepoJdbi(Jdbi jdbi, Class clazz) {
-		setJdbi(jdbi);
-		setEntityClass(clazz);
+		this.jdbi = jdbi;
+		this.entityClass = clazz;
 	}
 
 	public AbsRepoJdbi(Class clazz) {
@@ -239,6 +238,25 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 			fdr.setBoResult(false, ex);
 		}
 
+		return fdr;
+	}
+
+	public Fdr<List<EntClazz>> jdSelectListMain(String sqlQuery) {
+		if (entityClass == null) setAutoClass();
+		Fdr<List<EntClazz>> fdr = new Fdr<>();
+		fdr.setValue(new ArrayList<>());
+		try {
+			List<EntClazz> result = getJdbi().withHandle(handle -> {
+				return handle.createQuery(FiQuery.stoj(sqlQuery))
+						.mapToBean(getEntityClass())
+						.list();
+			});
+			fdr.setBoResultAndValue(true, result, 1);
+		} catch (Exception ex) {
+			Loghelper.errorLog(getClass(), "Query Problem");
+			Loghelper.errorException(getClass(), ex);
+			fdr.setBoResult(false, ex);
+		}
 		return fdr;
 	}
 
@@ -654,6 +672,29 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 			Optional<Integer> result = getJdbi().withHandle(handle -> {
 				return handle.select(fimSqlQueryWithDeActType1(sqlQuery))
 						.bindMap(map)
+						.mapTo(Integer.class)
+						.findFirst();
+			});
+			fdr.setBoResultAndValue(true, result, 1);
+		} catch (Exception ex) {
+			Loghelper.errorLog(getClass(), "Query Problem");
+			Loghelper.errorException(getClass(), ex);
+			fdr.setBoResult(false, ex);
+			fdr.setValue(Optional.empty());
+		}
+
+		return fdr;
+
+	}
+
+	public Fdr<Optional<Integer>> jdSelectSingleIntOptBindEntity(String sqlQuery, EntClazz entClazz) {
+
+		Fdr<Optional<Integer>> fdr = new Fdr<>();
+
+		try {
+			Optional<Integer> result = getJdbi().withHandle(handle -> {
+				return handle.select(fimSqlQueryWithDeActType1(sqlQuery))
+						.bindBean(entClazz)
 						.mapTo(Integer.class)
 						.findFirst();
 			});
@@ -1338,7 +1379,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 	}
 
 	public Fdr jdUpdateBindMapThenEntityMain(String updateQuery, EntClazz bindEntity, FiMapParams fiMapParams) {
-		return jdUpdateBindMapThenObjectMapMain(updateQuery, bindEntity,fiMapParams);
+		return jdUpdateBindMapThenObjectMapMain(updateQuery, bindEntity, fiMapParams);
 	}
 
 	/**
@@ -1672,7 +1713,6 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 	}
 
 	/**
-	 *
 	 * Entity'nin herhangi bir id alanının null olup olmamadığına göre insert veya update işlemi yapar.
 	 *
 	 * @param entity
@@ -2403,31 +2443,24 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		}
 
 		Jdbi jdbi = getJdbi();
-
 		Fdr fdrBatch = new Fdr();
-
 		String sql1 = FiQueryGenerator.insertQueryWoutId(getEntityClass());
 		String sql2 = FiQueryGenerator.updateScopeIdFieldWithScopeIdFnById(getEntityClass(), fieldForScopeEntity);
 
 		try {
-
 			jdbi.useTransaction(handle -> {
-
 				//try {
 				handle.begin();
 				if (beforeMainGeneral != null) {
 					Fdr fdrBeforeMainGeneral = beforeMainGeneral.apply(handle);
-
 					if (fdrBeforeMainGeneral != null && fdrBeforeMainGeneral.getException() != null) {
 						throw fdrBeforeMainGeneral.getException();
 					}
-
 					fdrBatch.combineAnd(fdrBeforeMainGeneral);
 				}
-
 				// transactions
 				for (EntClazz ent : listEntity) {
-					Loghelper.get(getClass()).debug(FiConsole.textObjectFieldsSimple(ent,false));
+					//Loghelper.get(getClass()).debug(FiConsole.textObjectFieldsSimple(ent, false));
 					jdhrEntityTransactionsForInsertWithScopeId(beforeMainByEntity, boBindGeneratedKey, afterMainByEntity, fdrBatch, sql1, sql2, handle, ent);
 					//Loghelperr.getInstance(getClass()).debug("Rows Affected: " + execute);
 				}
@@ -2441,7 +2474,6 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 					//fiDbResultBatch.combine(fdrExtraWorks);
 				}
-
 				handle.commit();
 				//return true;
 //				} catch (Exception e) {
@@ -2450,11 +2482,8 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 //					fiDbResultBatch.setBoResultAndException(false, e);
 //					return false;
 //				}
-
 			});
-
 			//fiDbResultBatch.setBoResult(boResult);
-
 		} catch (Exception ex) {
 			Loghelper.debugException(getClass(), ex);
 			Loghelper.get(getClass()).debug("Genel Catch de Yakalandı");
@@ -2462,10 +2491,8 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 			fdrBatch.setException(ex);
 			return fdrBatch;
 		}
-
 		//fiDbResultBatch.setBoResult(boResult);
 		return fdrBatch;
-
 	}
 
 	public Fdr jdQueryTransactions(List<EntClazz> listEntity

@@ -8,27 +8,27 @@ import java.util.Map;
  * <p>
  * Map<String,Object> DataTYpe
  */
-public class FiMapStrobj extends HashMap<String, Object> {
+public class FiMapStrob extends HashMap<String, Object> {
 
-	public FiMapStrobj() {
+	public FiMapStrob() {
 	}
 
-	public FiMapStrobj(Map<? extends String, ?> m) {
+	public FiMapStrob(Map<? extends String, ?> m) {
 		super(m);
 	}
 
-	public static FiMapStrobj build() {
-		return new FiMapStrobj();
+	public static FiMapStrob build() {
+		return new FiMapStrob();
 	}
 
-	public FiMapStrobj buildPut(Object fieldName, Object value) {
+	public FiMapStrob buildPut(Object fieldName, Object value) {
 		if (fieldName == null) return this;
 
 		this.put(fieldName.toString(), value);
 		return this;
 	}
 
-	public FiMapStrobj buildPutIfNotNull(Object fieldName, Object value) {
+	public FiMapStrob buildPutIfNotNull(Object fieldName, Object value) {
 		if (fieldName == null) return this;
 		if (value == null) return this;
 
@@ -50,7 +50,7 @@ public class FiMapStrobj extends HashMap<String, Object> {
 		}
 	}
 
-	public FiMapStrobj bind(Object key, Object value) {
+	public FiMapStrob bind(Object key, Object value) {
 		if (key == null) return this;
 		put(key.toString(), value);
 		return this;

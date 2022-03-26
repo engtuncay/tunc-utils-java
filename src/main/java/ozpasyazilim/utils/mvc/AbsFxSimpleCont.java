@@ -1,6 +1,8 @@
 package ozpasyazilim.utils.mvc;
 
 import javafx.stage.Stage;
+import ozpasyazilim.utils.gui.fxcomponents.DialogConfig;
+import ozpasyazilim.utils.gui.fxcomponents.FxDialogShow;
 import ozpasyazilim.utils.gui.fxcomponents.FxStage;
 
 public abstract class AbsFxSimpleCont implements IFxSimpleCont {
@@ -61,13 +63,13 @@ public abstract class AbsFxSimpleCont implements IFxSimpleCont {
 		this.closeReason = closeReason;
 	}
 
-	protected void closeStageWithDoneReason() {
+	public void closeStageWithDoneReason() {
 		closeStage("done");
 	}
-	protected void closeStageWithCancelReason() {
+
+	public void closeStageWithCancelReason() {
 		closeStage("cancel");
 	}
-
 
 	protected void closeStage(String closeReason) {
 		if (getFxStage() != null) {
@@ -76,6 +78,47 @@ public abstract class AbsFxSimpleCont implements IFxSimpleCont {
 			}
 			getFxStage().close();
 		}
+	}
+
+	public Boolean checkClosedWithDone() {
+
+		if (getCloseReason().equals("done")) {
+			return true;
+		}
+		return false;
+	}
+
+	public void openAsNonModal() {
+		openAsNonModalMain(null);
+	}
+
+	public void openAsNonModalMain(DialogConfig dialogConfig) {
+		if(dialogConfig ==null){
+			dialogConfig = new DialogConfig();
+		}
+		dialogConfig.setBoNonModal(true);
+		openAsWindowMain(dialogConfig);
+	}
+
+	public void openAsModalMain(DialogConfig dialogConfig) {
+		if(dialogConfig ==null){
+			dialogConfig = new DialogConfig();
+		}
+		dialogConfig.setBoNonModal(false);
+		openAsWindowMain(dialogConfig);
+	}
+
+	public void openAsWindowMain(DialogConfig dialogConfig) {
+
+		FxDialogShow fxDialogShow = new FxDialogShow();
+
+		if (getModView() == null || getModView().getRootPane()==null) {
+			//Loghelper.debug(getClass(), "init çalıştırıldı openas den");
+			initCont();
+		}
+
+		dialogConfig.setCssFileName("main.css");
+		fxDialogShow.nodeModalBySimpleCont(this, dialogConfig);
 	}
 
 }

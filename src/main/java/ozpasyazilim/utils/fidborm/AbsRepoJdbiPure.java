@@ -2,7 +2,6 @@ package ozpasyazilim.utils.fidborm;
 
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
-import ozpasyazilim.utils.annotations.FiDraft;
 import ozpasyazilim.utils.core.FiString;
 import ozpasyazilim.utils.datatypes.FiMapParams;
 import ozpasyazilim.utils.log.Loghelper;
@@ -12,23 +11,22 @@ import java.util.*;
 
 import static ozpasyazilim.utils.core.OzFormatter.*;
 
-@FiDraft // abstract den çıkarıldı
-public abstract class AbsRepoJdbiNoClass extends RepoGeneralJdbi implements IRepoJdbi {
+public abstract class AbsRepoJdbiPure extends RepoGeneralJdbi implements IRepoJdbi {
 
 	private Handle handleRepo;
 
-	public AbsRepoJdbiNoClass() {
+	public AbsRepoJdbiPure() {
 	}
 
-	public AbsRepoJdbiNoClass(String connProfile) {
+	public AbsRepoJdbiPure(String connProfile) {
 		this.connProfile = connProfile;
 	}
 
-	public AbsRepoJdbiNoClass(Jdbi jdbi) {
+	public AbsRepoJdbiPure(Jdbi jdbi) {
 		setJdbi(jdbi);
 	}
 
-	public AbsRepoJdbiNoClass(Handle handleRepo) {
+	public AbsRepoJdbiPure(Handle handleRepo) {
 		setHandleRepo(handleRepo);
 	}
 
@@ -235,18 +233,14 @@ public abstract class AbsRepoJdbiNoClass extends RepoGeneralJdbi implements IRep
 	}
 
 	/**
-	 * @_ ile başlayan değişkenleri named parametreye çevirir (:)
-	 *
 	 * @param updateQuery
 	 * @param fiMapParams
 	 * @return
+	 * @_ ile başlayan değişkenleri named parametreye çevirir (:)
 	 */
 	public Fdr jdUpdateBindMapViaAtTire(String updateQuery, Map<String, Object> fiMapParams) {
-
 		Jdbi jdbi = getJdbi();
-
 		Fdr fdr = new Fdr();
-
 		try {
 			Integer rowCountUpdate = jdbi.withHandle(handle -> {
 				return handle.createUpdate(fimSqlAtTire(updateQuery))
@@ -263,11 +257,8 @@ public abstract class AbsRepoJdbiNoClass extends RepoGeneralJdbi implements IRep
 	}
 
 	public Fdr jdUpdate(String updateQuery) {
-
 		Jdbi jdbi = getJdbi();
-
 		Fdr fdr = new Fdr();
-
 		try {
 			Integer rowCountUpdate = jdbi.withHandle(handle -> {
 				return handle.createUpdate(updateQuery)
@@ -283,17 +274,20 @@ public abstract class AbsRepoJdbiNoClass extends RepoGeneralJdbi implements IRep
 	}
 
 	public Fdr<Integer> jdSelectSingleInt(String sql, FiMapParams fiMapParams) {
-		return jdSelectSingleIntBindMapNotNull(sql, fiMapParams);
+		return jdSelectSingleIntBindMapOrMinus1(sql, fiMapParams);
 	}
 
-	public Fdr<Integer> jdSelectSingleIntBindMapNotNull(String sql, Map<String
-			, Object> mapParam) {
-
+	/**
+	 * null ve hatalı sorgularda değer -1 olarak döner
+	 *
+	 * @param sql
+	 * @param mapParam
+	 * @return
+	 */
+	public Fdr<Integer> jdSelectSingleIntBindMapOrMinus1(String sql, Map<String, Object> mapParam) {
 		Jdbi jdbi = getJdbi();
-
-		Fdr<Integer> fdr = new Fdr<>();
-		fdr.setValue(null);
-
+		Fdr<Integer> fdrResult = new Fdr<>();
+//		Loghelper.get(getClass()).debug("Sql:" + FiQuery.stoj(sql));
 		try {
 			Optional<Integer> result = jdbi.withHandle(handle -> {
 				return handle.select(FiQuery.stoj(sql))
@@ -302,22 +296,51 @@ public abstract class AbsRepoJdbiNoClass extends RepoGeneralJdbi implements IRep
 						.findFirst();
 			});
 
-			if(result.isPresent()) {
-				fdr.setValue(result.get());
-			}else{
-				fdr.setValue(-1);
+			if (result.isPresent()) {
+				fdrResult.setValue(result.get());
+			} else {
+				fdrResult.setValue(-1);
 			}
-			fdr.setBoResult(true);
+			fdrResult.setBoResult(true);
+			return fdrResult;
 		} catch (Exception ex) {
+//			System.out.println("Query Problem:"+ FiException.exceptionIfToStr(ex));
 			Loghelper.errorLog(getClass(), "Query Problem");
 			Loghelper.errorException(getClass(), ex);
-			fdr.setBoResult(false);
-			fdr.setValue(-1);
+			fdrResult.setValue(-1);
+			fdrResult.setBoResult(false);
+			return fdrResult;
 		}
-
-		return fdr;
 	}
 
+	public Fdr<Integer> jdSelectSingleIntBindMapOrMinusOne2(String sql, Map<String, Object> mapParam) {
+		Fdr<Integer> fdrResult = new Fdr<>();
+		//Loghelper.get(getClass()).debug("Sql:" + FiQuery.stoj(sql));
+		try {
+			List<Map<String,Integer>> result = getJdbi().withHandle(handle ->
+					handle.select(FiQuery.stoj(sql))
+					.bindMap(mapParam)
+					.mapToMap(Integer.class)
+					.list());
+
+			if(result!=null){
+				result.get(0).forEach((s, intResult) -> {
+					fdrResult.setValue(intResult);
+				});
+			}else{
+				fdrResult.setValue(-1);
+			}
+			fdrResult.setBoResult(true);
+			return fdrResult;
+		} catch (Exception ex) {
+			//System.out.println("Query Problem:"+ FiException.exceptionIfToStr(ex));
+			Loghelper.errorLog(getClass(), "Query Problem");
+			Loghelper.errorException(getClass(), ex);
+			fdrResult.setValue(-1);
+			fdrResult.setBoResult(false);
+			return fdrResult;
+		}
+	}
 	public <PrmEnt> Fdr<PrmEnt> jdSelectSingleCustomEntityBindMap(String sql, Map<String
 			, Object> mapParam, Class<PrmEnt> resultClazz) {
 
@@ -334,7 +357,7 @@ public abstract class AbsRepoJdbiNoClass extends RepoGeneralJdbi implements IRep
 						.findFirst();
 			});
 
-			if(result.isPresent()) {
+			if (result.isPresent()) {
 				fdr.setValue(result.get());
 			}
 			fdr.setBoResult(true);

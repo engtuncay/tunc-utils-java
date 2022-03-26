@@ -1,6 +1,7 @@
 package ozpasyazilim.utils.fidborm;
 
 import org.jdbi.v3.core.Jdbi;
+import org.jdbi.v3.core.statement.SqlStatements;
 import org.jdbi.v3.sqlobject.SqlObjectPlugin;
 import ozpasyazilim.utils.log.Loghelper;
 
@@ -14,6 +15,7 @@ public class FiJdbiFactory {
 
 		Jdbi jdbi = Jdbi.create(url, user, pass);
 		jdbi.installPlugin(new SqlObjectPlugin());
+		jdbi.getConfig(SqlStatements.class).setUnusedBindingAllowed(true);
 
 		if(jdbi==null){
 			String uyari= "Server:" + (server==null?"":server) + " Db: "+ (dbName==null?"":dbName) + " için bağlantı bilgilerinde hata var.";

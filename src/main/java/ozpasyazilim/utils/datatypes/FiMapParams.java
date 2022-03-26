@@ -2,9 +2,13 @@ package ozpasyazilim.utils.datatypes;
 
 import javafx.beans.property.StringProperty;
 import ozpasyazilim.utils.core.*;
+import ozpasyazilim.utils.fidborm.FiEntity;
+import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.fidborm.FiQuery;
 import ozpasyazilim.utils.log.Loghelper;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -13,7 +17,7 @@ import static ozpasyazilim.utils.fidborm.FiQuery.fhrConvertSqlForMultiParamByTem
 /**
  * Sql Sorgularında named parametrelere bind etmek için kullanılır.
  */
-public class FiMapParams extends FiMapStrobj {
+public class FiMapParams extends FiMapStrob {
 
 	Set<String> activateParamSet;
 	Set<String> deActivateParamSet;
@@ -64,12 +68,12 @@ public class FiMapParams extends FiMapStrobj {
 		if (FiType.isEmptyGen(value)) return this;
 
 		if (FiBoolean.isTrue(addPercentage)) {
-			if(value instanceof String){
-				this.put(fieldName.toString(), "%"+ value +"%");
-			}else {
+			if (value instanceof String) {
+				this.put(fieldName.toString(), "%" + value + "%");
+			} else {
 				this.put(fieldName.toString(), value);
 			}
-		}else{
+		} else {
 			this.put(fieldName.toString(), value);
 		}
 		return this;
@@ -161,7 +165,7 @@ public class FiMapParams extends FiMapStrobj {
 //			Loghelper.get(getClass()).debug("Aktive edildi Param:" + objKey.toString());
 			this.put(objKey.toString(), value);
 			FiQuery.fsmActivateOptParamForProp(sql, objKey.toString());
-		}else{
+		} else {
 //			Loghelper.get(getClass()).debug("Aktive edilmedi Param:" + objKey.toString());
 		}
 		return this;
@@ -235,5 +239,47 @@ public class FiMapParams extends FiMapStrobj {
 
 	public void setDeActivateParamSet(Set<String> deActivateParamSet) {
 		this.deActivateParamSet = deActivateParamSet;
+	}
+
+	/**
+	 * Included Not Null Fields
+	 * <p>
+	 * Included Transient Fields
+	 *
+	 * @param entity
+	 * @param clazz
+	 * @return
+	 */
+	public FiMapParams genFiMapParamsDb(Object entity, Class clazz) {
+
+		FiMapParams fiMapParams = new FiMapParams();
+		Field[] fields = clazz.getDeclaredFields(); // returns all members including private members but not inherited members.
+
+		for (Field field : fields) {
+
+//			if (field.isAnnotationPresent(Transient.class)) continue;
+//			if (field.isAnnotationPresent(FiTransient.class)) continue;
+			// Static alanlar alınmaz
+			if (Modifier.isStatic(field.getModifiers())) continue;
+
+			Object fieldValue = FiReflection.getProperty(entity, field.getName());
+
+			if (fieldValue != null) {
+				FiField fiField = FiEntity.setupFiFieldBasic(field, null);
+
+				if(FiBoolean.isTrue(fiField.getBoFilterLike())){
+					String txValue = (String) fieldValue;
+					txValue = "%" + txValue + "%";
+					fiMapParams.add(fiField.getDbFieldName(),txValue);
+				}else{
+					fiMapParams.add(fiField.getDbFieldName(), fieldValue);
+				}
+
+
+			}
+
+		}
+
+		return fiMapParams;
 	}
 }

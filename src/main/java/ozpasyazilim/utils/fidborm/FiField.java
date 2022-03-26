@@ -75,6 +75,12 @@ public class FiField {
 	FiIdGenerationType idGenerationType;
 	Boolean boExcludeFromAutoColList;
 
+	// true olur FiMapParam a alan eklenirken % işareti ekler
+	Boolean boFilterLike;
+
+	// Inser Select sorguların where alanında kullanıcak alan (tarih genelde)
+	Boolean boDateSeperatorField;
+
 	public FiField() {
 	}
 
@@ -356,4 +362,12 @@ public class FiField {
 		this.boFirmField = boFirmField;
 	}
 
+	public Boolean getBoFilterLike() {return boFilterLike;}
+
+	public void setBoFilterLike(Boolean boFilterLike) {this.boFilterLike = boFilterLike;}
+
+	public Boolean getBoDateSeperatorField() {return boDateSeperatorField;}
+
+	public void setBoDateSeperatorField(Boolean boDateSeperatorField) {this.boDateSeperatorField = boDateSeperatorField;
+	}
 }

@@ -20,7 +20,7 @@ import java.util.*;
  */
 public class FiQuery {
 
-	String txQuery;  //StringProperty string yapıldı 5-10-21
+	String txQuery;
 	String txCandIdFieldName;
 	String txPrimaryKeyFieldName;
 	FiMapParams mapParams; // Map<String,Object>
@@ -28,11 +28,11 @@ public class FiQuery {
 	List<FiField> queryWhereList;
 
 	public FiQuery(String sql) {
-		this.txQuery = sql; //new SimpleStringProperty(sql);
+		this.txQuery = sql;
 	}
 
 	public FiQuery(String sql, FiMapParams fiMapParams) {
-		this.txQuery = sql;  //new SimpleStringProperty(sql);
+		this.txQuery = sql;
 		this.mapParams = fiMapParams;
 	}
 
@@ -61,8 +61,8 @@ public class FiQuery {
 		return sql.replaceAll(regex, subst);
 	}
 
-	public void deActivateSqlOptParam(String param) {
-		setTxQuery(deActivateOptParamMain(getTxQuery(), param));
+	public void deActivateOptParam(String txOptParamName) {
+		setTxQuery(deActivateOptParamMain(getTxQuery(), txOptParamName));
 	}
 
 	public void deActivateSqlAtParam(String param) {
@@ -135,6 +135,7 @@ public class FiQuery {
 	 * @return
 	 */
 	public static String fhrFixSqlProblems(String sql) {
+		// yorum satırların @ varsa # diyeze çevirir.
 		return sql.replaceAll("(--.*)(@)", "$1#");
 	}
 
@@ -189,10 +190,9 @@ public class FiQuery {
 	}
 
 	/**
-	 * @ leri : çevirir.
-	 *
 	 * @param sql
 	 * @return
+	 * @ leri : çevirir.
 	 */
 	public static String fhrConvertSqlParamToJdbiParamMain(String sql) {
 		return sql.replaceAll("@", ":");
@@ -209,10 +209,13 @@ public class FiQuery {
 
 	/**
 	 * Convert Sql Param(@) To Java Param (:)
+	 * <p>
+	 * s(sql) to j(ava)
+	 * <p>
+	 * sorgudaki @ ifadeleri : ye çevirir.
 	 *
 	 * @param sqlQuery
 	 * @return
-	 * @ ifadelerini : ye çevirir.
 	 */
 	public static String stoj(String sqlQuery) {
 		if (sqlQuery == null) return null;
@@ -222,16 +225,11 @@ public class FiQuery {
 	}
 
 	public String getTxQuery() {
-		return txQuery; //txQuery.get();
+		return txQuery;
 	}
 
-//	public StringProperty txQueryProperty() {
-//		return txQuery;
-//	}
-
 	public FiQuery setTxQuery(String txQueryPrm) {
-		//if (txQuery == null) {txQuery = new SimpleStringProperty();}
-		this.txQuery = txQueryPrm; //.set(txQueryPrm);
+		this.txQuery = txQueryPrm;
 		return this;
 	}
 
@@ -251,8 +249,8 @@ public class FiQuery {
 		this.txPrimaryKeyFieldName = txPrimaryKeyFieldName;
 	}
 
-	public void activateOptParam(String fieldName) {
-		setTxQuery(activateOptParamMain(getTxQuery(), fieldName));
+	public void activateOptParam(String txOptParamName) {
+		setTxQuery(activateOptParamMain(getTxQuery(), txOptParamName));
 	}
 
 	public void activateSqlAtParam(String fieldName) {
@@ -308,7 +306,6 @@ public class FiQuery {
 	}
 
 	/**
-	 *
 	 * List değerindeki parametreyi abc_1,abc_2 gibi multi parametreye çevirir
 	 *
 	 * @param param
@@ -435,23 +432,33 @@ public class FiQuery {
 	 * FiMapde olan parametreleri aktif eder
 	 */
 	public void activateParamsByFiMap() {
-		activateParamsByFiMapMain(false);
+		activateParamsMain(false);
 	}
 
+	/**
+	 * use activateParamsMain
+	 *
+	 * @param boActivateOnlyFullParams
+	 */
+	@Deprecated
+	public void activateParamsNotEmptyDep(Boolean boActivateOnlyFullParams) {
+		activateParamsMain(boActivateOnlyFullParams);
+	}
+
+	public void activateParamsNotEmpty() {
+		activateParamsMain(true);
+	}
 
 	/**
 	 * FiMapParam'da olan parametreleri aktive eder.
 	 * <p>
 	 * boActivateOnlyFullParams true olursa dolu olan parametreleri aktif eder
 	 */
-	public void activateParamsByFiMapMain(Boolean boActivateOnlyFullParams) {
-
+	public void activateParamsMain(Boolean boActivateOnlyFullParams) {
 		if (getMapParams() != null) {
-
+			List<String> deActivatedParamList = new ArrayList<>();
 			getMapParams().forEach((key, value) -> {
-
 				if (FiBoolean.isTrue(boActivateOnlyFullParams)) {
-
 					// Dolu olanları aktif edecek, boş olanları deaktif edecek
 					if (value instanceof String) {
 						if (!FiString.isEmpty((String) value)) {
@@ -460,6 +467,7 @@ public class FiQuery {
 						} else {
 							String newQuery = deActivateOptParamMain(getTxQuery(), key);
 							setTxQuery(newQuery);
+							deActivatedParamList.add(key);
 						}
 					} else { // string tipinden dışında olanlar
 						if (value != null) {
@@ -468,6 +476,7 @@ public class FiQuery {
 						} else {
 							String newQuery = deActivateOptParamMain(getTxQuery(), key);
 							setTxQuery(newQuery);
+							deActivatedParamList.add(key);
 						}
 					}
 				} else { // boActivateOnlyFullParams false veya null ise, tüm parametreleri aktif eder
@@ -476,6 +485,40 @@ public class FiQuery {
 				}
 			});
 
+			for (String deActivatedParam : deActivatedParamList) {
+				getMapParams().remove(deActivatedParam);
+			}
+		}
+	}
+
+	/**
+	 * FiMapParam'da olan parametreleri aktive eder.
+	 * <p>
+	 * boActivateOnlyFullParams true olursa dolu olan parametreleri aktif eder
+	 */
+	public void activateParamsNotNull(Boolean boActivateNotNullParams) {
+		if (getMapParams() != null) {
+			List<String> deActivatedParamList = new ArrayList<>();
+			getMapParams().forEach((key, value) -> {
+				if (FiBoolean.isTrue(boActivateNotNullParams)) {
+					// Null olanlar deaktif olacak
+					if (value != null) {
+						String newQuery = fsmActivatedOptParamV1Main(getTxQuery(), key);
+						setTxQuery(newQuery);
+					} else {
+						String newQuery = deActivateOptParamMain(getTxQuery(), key);
+						setTxQuery(newQuery);
+						deActivatedParamList.add(key);
+					}
+				} else { // boActivateNotNullParams false veya null ise, tüm parametreleri aktif eder
+					String newQuery = fsmActivatedOptParamV1Main(getTxQuery(), key);
+					setTxQuery(newQuery);
+				}
+			});
+
+			for (String deActivatedParam : deActivatedParamList) {
+				getMapParams().remove(deActivatedParam);
+			}
 		}
 	}
 
@@ -506,7 +549,7 @@ public class FiQuery {
 				if (!checkParamValueEmpty(value)) {
 					activateOptParam(key);
 				} else {
-					deActivateSqlOptParam(key);
+					deActivateOptParam(key);
 				}
 			} else {
 				activateOptParam(key);
@@ -523,7 +566,7 @@ public class FiQuery {
 		}
 
 		for (String deActivateParam : getMapParams().getDeActivateParamSet()) {
-			deActivateSqlOptParam(deActivateParam);
+			deActivateOptParam(deActivateParam);
 		}
 
 		// FiMapParam'da olmayan parametreleri pasif eder
@@ -531,7 +574,7 @@ public class FiQuery {
 		for (String setParam : setParams) {
 			if (!getMapParams().containsKey(setParam)) {
 //				fhrDeActivateOptParam(txQuery, setParam);
-				deActivateSqlOptParam(setParam);
+				deActivateOptParam(setParam);
 			}
 		}
 
@@ -682,7 +725,7 @@ public class FiQuery {
 			}
 
 			for (String deActivateParam : getMapParams().getDeActivateParamSet()) {
-				deActivateSqlOptParam(deActivateParam);
+				deActivateOptParam(deActivateParam);
 			}
 
 			// FiMapParam'da olmayan parametreleri pasif eder
@@ -690,7 +733,7 @@ public class FiQuery {
 			for (String setParam : setParams) {
 				if (!getMapParams().containsKey(setParam)) {
 //					fhrDeActivateOptParam(txQuery, setParam);
-					deActivateSqlOptParam(setParam);
+					deActivateOptParam(setParam);
 				}
 			}
 

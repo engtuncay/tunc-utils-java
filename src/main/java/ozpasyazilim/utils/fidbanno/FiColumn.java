@@ -55,5 +55,8 @@ public @interface FiColumn {
 
 	boolean boExcludeFromAutoColList() default false;
 
+	// True olursa alan FiMapParama eklenirken başına sonuna % işareti ekler
+	boolean boFilterLike() default false;
+
 	//enum SqlDateTypes {datetime, shortdate}
 }

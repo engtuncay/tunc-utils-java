@@ -666,6 +666,61 @@ public class FxDialogShow {
 
 	}
 
+	public void nodeModalBySimpleCont(IFxSimpleCont fxModCont, DialogConfig dialogConfig) {
+
+		if (dialogConfig == null) dialogConfig = new DialogConfig();
+
+		if (!FiString.isEmpty(dialogConfig.getCssFileName())) {
+			fxModCont.getModView().getRootPane().getStylesheets().add(dialogConfig.getCssFileName());
+		}
+
+		Stage stage = fxModCont.getFxStage();
+
+		if (stage == null) {
+			stage = new FxStage();
+			fxModCont.setFxStage(stage);
+		}
+
+		if (!FiString.isEmpty(dialogConfig.getTitle())) {
+			stage.setTitle(dialogConfig.getTitle());
+		}
+
+		FxScene scene = null;
+
+		if (dialogConfig.getWidth() != null && dialogConfig.getHeight() != null) {
+			scene = new FxScene(fxModCont.getModView().getRootPane(), dialogConfig.getWidth(), dialogConfig.getHeight());  //,width,height
+		} else {
+			scene = new FxScene(fxModCont.getModView().getRootPane());  //,width,height
+		}
+
+
+		if (dialogConfig.getNodeRelative() != null) {
+			Bounds bounds = dialogConfig.getNodeRelative().localToScreen(dialogConfig.getNodeRelative().getBoundsInLocal());
+			stage.setX(bounds.getMaxX());
+			stage.setY(bounds.getMinY());
+		}
+
+		stage.setScene(scene);
+		//stage.sizeToScene();
+
+		if (dialogConfig.getWidth() != null) {
+			//Loghelper.debug(getClass(), "width ayarlanıyor" + dialogContext.getWidth());
+			stage.setWidth(dialogConfig.getWidth());
+		}
+
+		if (dialogConfig.getWidth() == null && dialogConfig.getHeight() == null) {
+			stage.sizeToScene();
+		}
+
+		if (FiBoolean.isTrue(dialogConfig.getBoNonModal())) {
+			stage.initModality(Modality.WINDOW_MODAL);
+		} else {
+			stage.initModality(Modality.APPLICATION_MODAL);
+		}
+		stage.showAndWait();
+
+	}
+
 	public void nodeModalByIFxMod(Node nodeRelative, IFxSimpleCont fxSimpleCont, Integer width, Integer height, Boolean isNonModal) {
 
 		Stage stage = fxSimpleCont.getFxStage();

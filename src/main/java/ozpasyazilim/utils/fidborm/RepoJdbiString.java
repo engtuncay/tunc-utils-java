@@ -2,7 +2,7 @@ package ozpasyazilim.utils.fidborm;
 
 import org.jdbi.v3.core.Jdbi;
 
-public class RepoJdbiString extends AbsRepoJdbiNoClass {
+public class RepoJdbiString extends AbsRepoJdbiPure {
 
 	public RepoJdbiString(Jdbi jdbi) {
 		super(jdbi);

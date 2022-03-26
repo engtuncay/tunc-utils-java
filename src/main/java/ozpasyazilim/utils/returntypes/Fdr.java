@@ -365,6 +365,7 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 			setBoResult(false);
 			setLnFailureOpCount(getLnFailureOpCount() + 1);
 			setException(fdr.getException());
+			// exception listesine eklenebilir - birden fazla olma ihtimali var.
 		}
 
 		if (FiBoolean.isTrue(fdr.getBoResult())) {

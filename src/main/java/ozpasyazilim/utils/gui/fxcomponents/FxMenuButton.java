@@ -22,4 +22,7 @@ public class FxMenuButton extends MenuButton {
 		super(text, graphic, items);
 	}
 
+	public void addItem(FxMenuItem fxMenuItem) {
+		getItems().add(fxMenuItem);
+	}
 }

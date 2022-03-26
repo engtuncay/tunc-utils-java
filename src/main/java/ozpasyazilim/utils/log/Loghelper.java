@@ -4,6 +4,7 @@ import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import ozpasyazilim.utils.core.FiBoolean;
 import ozpasyazilim.utils.core.FiException;
 
 import java.util.Set;
@@ -13,7 +14,7 @@ import static org.apache.log4j.Logger.getLogger;
 public class Loghelper {
 
 	private static final Logger logGlobal = Logger.getLogger("GLOBAL");
-	private static boolean DEBUG_MODE = false;
+//	private static boolean DEBUG_MODE = false;
 	private static Set<String> setSingle;
 	private Class clazz;
 
@@ -23,10 +24,9 @@ public class Loghelper {
 	}
 
 	public static void installLogger(Boolean debugmode) {
+		System.out.println("Logger Util yüklenecek. Logger.installLogger()");
 
-		System.out.println("Logger Util will start to install");
-
-		if (debugmode || Loghelper.DEBUG_MODE) {
+		if (FiBoolean.isTrue(debugmode)) { // || Loghelper.DEBUG_MODE
 			PropertyConfigurator.configure("log4jd.properties");
 			//System.out.println("Logger installing...(debug mode) (Log4jd)");
 			Loghelper.get(Loghelper.class).info("Log4jd (Debug) Mode");
@@ -125,23 +125,6 @@ public class Loghelper {
 		Loghelper.get(logClass).error(message);
 	}
 
-
-//	public static void logSingle(String key, Class logClass, String message) {
-//		if (getSetSingle().contains(key)) {
-//			return;
-//		} else {
-//			getSetSingle().add(key);
-//			debugLog(logClass, message);
-//		}
-//	}
-
-//	public static Set<String> getSetSingle() {
-//		if (setSingle == null) {
-//			setSingle = new HashSet<>();
-//		}
-//		return setSingle;
-//	}
-
 	public static void info(Class clazz, String message) {
 		Loghelper.get(clazz).info(message);
 	}
@@ -189,3 +172,19 @@ public class Loghelper {
 // static private SimpleFormatter formatterTxt;
 // static private FileHandler fileHTML;
 // static private Formatter formatterHTML;
+
+//	public static void logSingle(String key, Class logClass, String message) {
+//		if (getSetSingle().contains(key)) {
+//			return;
+//		} else {
+//			getSetSingle().add(key);
+//			debugLog(logClass, message);
+//		}
+//	}
+
+//	public static Set<String> getSetSingle() {
+//		if (setSingle == null) {
+//			setSingle = new HashSet<>();
+//		}
+//		return setSingle;
+//	}

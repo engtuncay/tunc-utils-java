@@ -31,6 +31,10 @@ public class FxDatePickerCore extends DatePicker {
 		this.setValue(FiDate.convertLocalDate(FiDate.getDatewithTimeZero()));
 	}
 
+	public void setDate(Date date) {
+		this.setValue(FiDate.convertLocalDate(date));
+	}
+
 	public void setDefaultConverter() {
 		setConverter(getStrConverter());
 	}

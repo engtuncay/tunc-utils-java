@@ -65,7 +65,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 	private Boolean enableRemoteFilterEditor;
 	private Boolean enableSummaryHeader;
 
-	private List<Consumer<FiCol>> listenerBoSecim;
+	private List<Consumer<FiCol>> listenerBoSelection;
 
 	// Sayfalama için yapıldı.
 	private Integer pageViewRowCount;
@@ -254,11 +254,11 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 	 *
 	 * @return
 	 */
-	public FilteredList<EntClazz> getItemsCheckedByBoSecim() {
+	public FilteredList<EntClazz> getItemsCheckedByBoSelect() {
 
 		FilteredList<EntClazz> itemsCurrentFi = getItemsCurrentFi(ent -> {
 			try {
-				return FiBoolean.convertBooleanElseFalse(PropertyUtils.getNestedProperty(ent, getFieldNameDefaultForSelection()));
+				return FiBoolean.convertBooleanElseFalse(PropertyUtils.getNestedProperty(ent, getFiColSelection().getFieldName()));
 			} catch (Exception e) {
 				e.printStackTrace();
 				return false;
@@ -268,13 +268,9 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 		return itemsCurrentFi;
 	}
 
-	private String getFieldNameDefaultForSelection() {
-		return "boSecim";
-	}
+	public List<EntClazz> getItemsCheckedByBoSelectAsListInCurrentElements() {
 
-	public List<EntClazz> getItemsCheckedByBoSecimAsListInCurrentElements() {
-
-		String fieldForSelection = "boSecim";
+		String fieldForSelection = getFiColSelection().getFieldName();
 
 		FilteredList<EntClazz> itemsCurrentFi = getItemsCurrentFi(ent -> {
 			try {
@@ -290,9 +286,9 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 		return listSelected;
 	}
 
-	public List<EntClazz> getItemsCheckedByBoSecimAsListInAllElements() {
+	public List<EntClazz> getItemsCheckedByBoSelectAsListInAllElements() {
 
-		String fieldForSelection = "boSecim";
+		String fieldForSelection = getFiColSelection().getFieldName();
 
 		FilteredList<EntClazz> itemsCurrentFi = getItemsAllFi(ent -> {
 			try {
@@ -379,6 +375,24 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 		return this;
 	}
 
+	public FxTableView2 addFiColSelection() {
+		FiCol fiTableCol = getFiColSelection();
+		addFiTableColAuto(fiTableCol);
+		return this;
+	}
+
+	private FiCol getFiColSelection() {
+		FiCol fiTableCol = new FiCol("boSecim", "Seç");
+		fiTableCol.setPrefSize(40d);
+		fiTableCol.buildColType(OzColType.Boolean).buildFiEditable(true).buildSumType(OzColSummaryType.CheckBox);
+		return fiTableCol;
+	}
+
+	public FxTableView2 addFiColsAuto(FiCol fiCol) {
+		addFiTableColAuto(fiCol);
+		return this;
+	}
+
 	public void addFiTableColAuto(FiCol fiTableCol) {
 		FxTableCol2 fxTableCol = new FxTableCol2(fiTableCol);
 		addFxTableColAuto(fxTableCol);
@@ -395,6 +409,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 	public void addFxTableColAuto(FxTableCol2 fxTableCol) {
 
 		//fxTableCol.setAutoColumnDefault();
+		// Cell Value Factory and Editor Factory leri ayarlanır
 		setupCellValueAndEditorFactory(fxTableCol);
 
 		//Loghelperr.getInstance(getClass()).debug(" Fx TableView col id:"+fxTableCol.getId());
@@ -999,8 +1014,6 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
 		if (dataList == null) dataList = new ArrayList();
 
-		//System.out.println("Filter List Active");
-
 		FilteredList filteredList = new FilteredList(FXCollections.observableArrayList(dataList), getFilterPredicatesAll());
 		setFilteredListFi(filteredList);
 
@@ -1224,7 +1237,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
 						if (txFilterValue.matches("^[><][1-9]?[0-9]*")) {
 							//Loghelper.get(getClass()).debug("! filter ına girdi");
-							if (txFilterValue.substring(0, 1).equals(">")) {
+							if (txFilterValue.charAt(0) == '>') {
 								if (valueCol >= (Double) objFilterValue) {
 									//return filterCheckResult;
 									continue;
@@ -1236,7 +1249,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 								}
 							}
 
-							if (txFilterValue.substring(0, 1).equals("<")) {
+							if (txFilterValue.charAt(0) == '<') {
 								if (valueCol <= (Double) objFilterValue) {
 									//return filterCheckResult;
 									continue;
@@ -1307,7 +1320,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
 						if (txFilterValue.matches("^[><][1-9]?[0-9]*")) {
 							//Loghelper.get(getClass()).debug("! filter ına girdi");
-							if (txFilterValue.substring(0, 1).equals(">")) {
+							if (txFilterValue.charAt(0) == '>') {
 								if (valueCol >= (Integer) objFilterValue) {
 									//return filterCheckResult;
 									continue;
@@ -1319,7 +1332,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 								}
 							}
 
-							if (txFilterValue.substring(0, 1).equals("<")) {
+							if (txFilterValue.charAt(0) == '<') {
 								if (valueCol <= (Integer) objFilterValue) {
 									//return filterCheckResult;
 									continue;
@@ -1375,11 +1388,8 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 							predAllCols = predAllCols.and(entTmp -> false);
 							break;
 						}
-
 						continue;
-
 					}
-
 
 					// son kontrol
 					if (objFilterValue != null && objCellValue == null) {
@@ -1389,20 +1399,15 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 						//continue;
 						break;
 					}
-
 				}
 
 			} // end of For
 
 			//Loghelperr.getInstance(getClass()).debug("-----------");
-
 			return predAllCols.test(ent); //filterCheckResult;
 		};
-
 		setPredFilterLocalThenUpdate(predFilterLocal);
-
 		//eventsAfterTableViewDataChange();
-
 	}
 
 
@@ -1490,35 +1495,25 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 	}
 
 	public void updateSummary() {
-
 		if (getFilteredList() == null || getFilteredList().size() == 0) {
-
 			if (getEnableSummaryHeader()) {
-
 				getFxTableColList().forEach(fxTableCol -> {
-
 					if (fxTableCol.getFiCol().getSummaryLabelNode() != null && fxTableCol.getFiCol().getSummaryType() != null) {
 						Platform.runLater(() -> {
 							fxTableCol.getFiCol().getSummaryLabelNode().setText("");
 							new FxTableModal().styleSummaryLabel(fxTableCol.getFiCol().getSummaryLabelNode(), fxTableCol);
 						});
 					}
-
 				});
-
 			}
-
 			return;
 		}
 
 		//Loghelperr.debugLog(getClass(), "update summary");
 
 		if (getEnableSummaryHeader()) {
-
 			FiTableContext fiTableContext = new FiTableContext();
-
 			getFxTableColList().forEach(fxTableCol -> {
-
 				if (fxTableCol.getFiCol().getSummaryLabelNode() != null && fxTableCol.getFiCol().getSummaryType() != null) {
 					Platform.runLater(() -> {
 						String sumValue = FiNumber.formatNumber(FxTableModal.calcSummaryValue(getFilteredList(), fxTableCol.getFiCol(), fiTableContext));
@@ -1527,12 +1522,8 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 					});
 				}
 			});
-
 		}
-
-
-	}
-
+	} // end of updateSummary
 
 	public FxTableCol2 getColumnByID(String colID) {
 
@@ -1666,8 +1657,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 	}
 
 	/**
-	 * fnFindEqualItemFromList ilk argünman keye karşılık gelen kısmi tablo datası, ikincisi obje yani entity yeni gelen entitydir
-	 * , bu kısmi tablo datasının içersinden eşit bulunup , işlem yapılır ve bulunmuşsa true, bulunmamışsa false gönderilir.
+	 * fnFindEqualItemFromList ilk argünman keye karşılık gelen kısmi tablo datası, ikincisi obje yani entity yeni gelen entitydir, bu kısmi tablo datasının içersinden eşit bulunup , işlem yapılır ve bulunmuşsa true, bulunmamışsa false gönderilir.
 	 *
 	 * @param listData
 	 * @param fnKeySelection
@@ -1729,34 +1719,33 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
 	}
 
-	// keye göre tek eleman düşüyorsa
-
 	/**
+	 * appendTableDataForKeyToSingle Entity
+	 * <p>
+	 * keye göre tek eleman düşüyorsa
+	 *
 	 * @param listData
-	 * @param fnKeySelection
-	 * @param fnWorksForEqualObject      prm1.EntClazz Tablodaki kayıt , prm2 EntClazz tablodaki kayıt ile birleştirilecek yeni kayıt , yeni kayıda göre alanlar güncellenir
-	 * @param fnUpdateCalculationColumns Birleştirme işlemi bittikten sonra yapılacak işlemler
-	 * @param <KeyClazz>                 Tekil alanın türü - birleştirme yapılırken kontrol edilecek alan
+	 * @param fnKeySelection                    Neye göre arama yapıp eşit objeyi bulacak (tablodaki primary key gibi)
+	 * @param fnWorksForAppendingOfEqualObjects prm1.EntClazz Tablodaki kayıt , prm2 EntClazz tablodaki kayıt ile birleştirilecek yeni kayıt , yeni kayıda göre alanlar güncellenir
+	 * @param fnWorksAfterAllAppending          Birleştirme işlemi bittikten sonra yapılacak işlemler
+	 * @param <KeyClazz>                        Tekil alanın türü - birleştirme yapılırken kontrol edilecek alan
 	 */
 	public <KeyClazz> void appendTableDataForKeyToSingle(Collection<EntClazz> listData
 			, Function<EntClazz, KeyClazz> fnKeySelection
-			, BiConsumer<EntClazz, EntClazz> fnWorksForEqualObject
-			, Consumer<Collection<EntClazz>> fnUpdateCalculationColumns) {
+			, BiConsumer<EntClazz, EntClazz> fnWorksForAppendingOfEqualObjects
+			, Consumer<Collection<EntClazz>> fnWorksAfterAllAppending) {
 
 		ObservableList<EntClazz> tableData = getItemsAllFi();
 		List<EntClazz> listEklenecek = new ArrayList<>();
-
 		if (tableData.size() > 0) {
-
-			Map<KeyClazz, EntClazz> mapEvrakSiraToListChh = FiCollection.listToMapSingle(tableData, fnKeySelection);
+			Map<KeyClazz, EntClazz> mapKeyToEntity = FiCollection.listToMapSingle(tableData, fnKeySelection);
 
 			for (EntClazz newItem : listData) {
-
-				EntClazz entityFromTable = mapEvrakSiraToListChh.getOrDefault(fnKeySelection.apply(newItem), null);
+				EntClazz entityFromTable = mapKeyToEntity.getOrDefault(fnKeySelection.apply(newItem), null);
 				Boolean found = false;
 
 				if (entityFromTable != null) {
-					fnWorksForEqualObject.accept(entityFromTable, newItem);
+					fnWorksForAppendingOfEqualObjects.accept(entityFromTable, newItem);
 					found = true;
 				}
 
@@ -1764,33 +1753,28 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 					listEklenecek.add(newItem);
 				}
 			}
-
 			if (listEklenecek.size() > 0) {
 				Platform.runLater(() -> {
 					//Loghelper.debug(getClass(), "Yeni Itemlar Veriler Ekleniyor");
 					addAllItemsFi(listEklenecek);
 					refreshTableFiAsyn();
 				});
-
 			}
 
 			Platform.runLater(() -> {
-				if (fnUpdateCalculationColumns != null) {
-					fnUpdateCalculationColumns.accept(getItemsAllFi());
+				if (fnWorksAfterAllAppending != null) {
+					fnWorksAfterAllAppending.accept(getItemsAllFi());
 					refreshTableFiAsyn();
 				}
 			});
 
-
 		} else { // tabloda data yok, yeni ekleniyor
 			Platform.runLater(() -> {
-				fnUpdateCalculationColumns.accept(listData);
+				fnWorksAfterAllAppending.accept(listData);
 				setItemsAsFilteredCollection(listData);
 			});
 		}
-
 		eventsAfterTableViewDataChange();
-
 	}
 
 	private void setFilteredListFi(FilteredList<EntClazz> filteredList) {
@@ -1803,26 +1787,22 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 	}
 
 	public FxTextField getEditorCompFxTexfield(String fieldName) {
-
 		FxTableCol2 ozTableCol = getColumnByFieldName(fieldName);
 
 		if (ozTableCol.getFiCol().getFilterNodeClass().equals(FxTextField.class.getName())) {
 			FxTextField comp = (FxTextField) ozTableCol.getFiCol().getColFilterNode();
 			return comp;
 		}
-
 		return null;
 	}
 
 	public FxTextFieldBtn getEditorCompFxTexfieldWithButt(String fieldName) {
+		FxTableCol2 fxCol = getColumnByFieldName(fieldName);
 
-		FxTableCol2 ozTableCol = getColumnByFieldName(fieldName);
-
-		if (ozTableCol.getFiCol().getFilterNodeClass().equals(FxTextFieldBtn.class.getName())) {
-			FxTextFieldBtn comp = (FxTextFieldBtn) ozTableCol.getFiCol().getColFilterNode();
+		if (fxCol.getFiCol().getFilterNodeClass().equals(FxTextFieldBtn.class.getName())) {
+			FxTextFieldBtn comp = (FxTextFieldBtn) fxCol.getFiCol().getColFilterNode();
 			return comp;
 		}
-
 		return null;
 	}
 
@@ -1845,13 +1825,10 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 	}
 
 	public static void autoFilterEventToAllCol(List<? extends IFiCol> listCol, EventHandler<KeyEvent> eventFilter) {
-
 		for (int i = 0; i < listCol.size(); i++) {
 			IFiCol tableCol = listCol.get(i);
 			tableCol.setColFilterKeyEvent(eventFilter);
 		}
-
-
 	}
 
 	public FnResult excelOpen(String appDir, String fileName) {
@@ -1859,11 +1836,8 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 	}
 
 	public FnResult excelOpen(String appDir, String fileName, Boolean performanceEnabled) {
-
 		String fullPath = appDir + "\\" + fileName;
-
 		FnResult result = FnResult.genInstance();
-
 		Path pathEntegre = Paths.get(appDir);
 
 		if (!Files.exists(pathEntegre)) {
@@ -1886,17 +1860,13 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
 	@FiDraft
 	public MigPane pagingPane() {
-
 		MigPane migPane = new MigPane();
 		return null;
-
 	}
 
 	public void scrollToLastForFilteredList() {
-
 		final int size = getFilteredList().getSource().size();
 		scrollTo(size - 1);
-
 //		getFilteredList().getSource().addListener((ListChangeListener<S>) (c -> {
 //			c.next();
 //			final int size = getFilteredList().getSource().size();
@@ -1904,24 +1874,20 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 //				scrollTo(size - 1);
 //			}
 //		}));
-
 	}
 
-
-	public void initFilteredListIfNotNullFi() {
+	public void initFilteredListIfNullFi() {
 		if (getFilteredList() == null) {
 			setItemsAsFilteredList(new ArrayList());
 		}
 	}
 
 	public void setPredFilterExtra(Predicate predFilterExtra) {
-
 		if (predFilterExtra == null) {
 			setPredFilterExtraList(null);
 		} else {
 			setPredFilterExtraList(Arrays.asList(predFilterExtra));
 		}
-
 	}
 
 	private void setPredFilterExtraList(List<Predicate> predFilterExtraList) {
@@ -1949,21 +1915,15 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 	}
 
 	private Predicate getFilterPredicatesAll() {
-
 		Predicate predAll = ent -> true;
-
+		// lokal filtrelemeler, filtre editorune giriş yapılan verilerle yapılan
 		if (getPredFilterLocal() != null) predAll = predAll.and(getPredFilterLocal());
-
-		// bu out olmalı
+		// harici modülden,dışarıdan eklenen filtreler
 		if (getPredFilterRemote() != null) predAll = predAll.and(getPredFilterRemote());
-
-		//if (FiCollection.isNotEmpty(getPredFilterExtraList())) {
 		//Loghelperr.getInstance(getClass()).debug("Size Filter Out : "+ getListPredFilterExtra().size());
 		for (Predicate predItem : getPredFilterExtraList()) {
 			predAll = predAll.and(predItem);
 		}
-		//}
-
 		return predAll;
 	}
 
@@ -2564,22 +2524,22 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 //		});
 
 		fiTableCol.setFnColCellManualChanged(ent -> {
-			for (Consumer<FiCol> consumer : getListenerBoSecim()) {
+			for (Consumer<FiCol> consumer : getListenerBoSelection()) {
 				consumer.accept(fiTableCol); //getItemsFiCheckedByBoolFieldAsList(fiTableCol.getFieldName()
 			}
 		});
 
 	}
 
-	public List<Consumer<FiCol>> getListenerBoSecim() {
-		if (listenerBoSecim == null) {
-			listenerBoSecim = new ArrayList<>();
+	public List<Consumer<FiCol>> getListenerBoSelection() {
+		if (listenerBoSelection == null) {
+			listenerBoSelection = new ArrayList<>();
 		}
-		return listenerBoSecim;
+		return listenerBoSelection;
 	}
 
-	public void setListenerBoSecim(List<Consumer<FiCol>> listenerBoSecim) {
-		this.listenerBoSecim = listenerBoSecim;
+	public void setListenerBoSelection(List<Consumer<FiCol>> listenerBoSelection) {
+		this.listenerBoSelection = listenerBoSelection;
 	}
 
 	//	private void setColFilterNodeEnterEventWrapper(EventHandler<KeyEvent> colFilterNodeEnterEventWrapper) {

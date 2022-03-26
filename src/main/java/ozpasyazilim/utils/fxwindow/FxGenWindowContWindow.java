@@ -8,7 +8,7 @@ import ozpasyazilim.utils.mvc.*;
 
 import java.util.List;
 
-public abstract class FxGenWindowContWindow<FormClazz,EntClazz> extends AbsFxSimpleCont implements IFxSimpleCont, IFxSimpleEntityModule<EntClazz> {
+public abstract class FxGenWindowContWindow<FormClazz, EntClazz> extends AbsFxSimpleCont implements IFxSimpleCont, IFxSimpleEntityModule<EntClazz> {
 
 	FxGenWindowView modView;
 	FormClazz formEntity;
@@ -21,10 +21,8 @@ public abstract class FxGenWindowContWindow<FormClazz,EntClazz> extends AbsFxSim
 
 	@Override
 	public void initCont() {
-		//Loghelper.getInstance(getClass()).debug("MosGenTableForm1 Cont Init");
 		modView = new FxGenWindowView();
 		modView.initGui();
-		//setIFxModViewPres(modView);
 		//afterInit();
 	}
 
@@ -84,14 +82,8 @@ public abstract class FxGenWindowContWindow<FormClazz,EntClazz> extends AbsFxSim
 		return getModView().getFxFormMig().getListFormElements();
 	}
 
-//	public void setListFormElementsWoutFormEntity(List<IFiTableCol> listFormElements) {
-//		getModView().getFxFormMig().setupFormElements(listFormElements, FxFormMig.FormType.PlainFormV2,null,null);
-//	}
-
-
 	public FxTableView2 getFxTableView() {
 		return getModView().getFxTableMig().getFxTableView();
 	}
-
 
 }

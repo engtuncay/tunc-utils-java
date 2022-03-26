@@ -290,7 +290,6 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 	}
 
 	public Boolean isClosedWithOk() {
-
 		if (getCloseReason().equals("done")) {
 			return true;
 		}

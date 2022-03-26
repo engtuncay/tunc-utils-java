@@ -1106,16 +1106,13 @@ public class FxEditorFactory {
 
 
 	public static String getValueOfFilterNodeAsString(IFiCol IFiTableCol) {
-
 		String cellvalue = null;
-		Boolean binded = false;
-
+//	Boolean binded = false;
 		String editorClass = IFiTableCol.getFilterNodeClass();
 
 		if (editorClass == null) editorClass = "";
 
 		if (editorClass.equals(FxTextField.class.getName()) || editorClass.equals(FxTextFieldBtn.class.getName())) {
-
 			String textValue = null;
 
 			if (editorClass.equals(FxTextField.class.getName())) {
@@ -1127,29 +1124,19 @@ public class FxEditorFactory {
 				FxTextFieldBtn comp = (FxTextFieldBtn) IFiTableCol.getColFilterNode();
 				textValue = comp.getFxTextField().getText();
 			}
-
 			cellvalue = textValue;
-
 			if (cellvalue.equals("")) return null;
-
 			return cellvalue;
-
 		}
 
 		if (editorClass.equals(FxLabel.class.getName())) {
-
 			if (IFiTableCol.getColFilterNode() != null) {
 				FxLabel comp = (FxLabel) IFiTableCol.getColFilterNode();
 				cellvalue = comp.getText();
-
 				if (cellvalue.equals("")) return null;
-
 				return cellvalue;
-
 			}
-
 		}
-
 
 		if (editorClass.equals(DatePicker.class.getName())) {
 

@@ -2,6 +2,14 @@ package ozpasyazilim.utils.fidborm;
 
 import org.jdbi.v3.core.Jdbi;
 
+/**
+ * Repolarda genel olması istenen alanlar ve metodlar
+ *
+ * Kullanan Sınıflar
+ *
+ * AbsRepoJdbiPure,
+ *
+ */
 public class RepoGeneralJdbi {
 
 	protected String connProfile;

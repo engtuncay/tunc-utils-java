@@ -1,9 +1,6 @@
 package ozpasyazilim.utils.core;
 
 import javafx.application.Platform;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Labeled;
 import javafx.scene.paint.Color;
 import ozpasyazilim.utils.gui.fxcomponents.FxButton;
 import ozpasyazilim.utils.gui.fxcomponents.FxLabel;
@@ -59,6 +56,8 @@ public class FiThread {
 		return thread;
 
 	}
+
+
 
 	public static Thread startThread(Runnable runnable, FxButton btnListe,Runnable runnableEnd) {
 
@@ -179,21 +178,14 @@ public class FiThread {
 		Platform.runLater(runnable);
 	}
 
-	public static Thread startThreadForFilter(Runnable runnable, FxTableView2 fxTableView2) {
-
-		//FxToastPopup2 fxToastPopup2 = new FxToastPopup2();
-		//		if(message==null) message = "";
-		//		String finalMessage = message;
+	public static Thread startThreadTable(Runnable runnable, FxTableView2 fxTableView2) {
 
 		FxLabel lblNodes = fxTableView2.getFiLblFooterMessage();
-
 		final String textOld = lblNodes.getText();
 
 		Platform.runLater(() -> {
-			//fxToastPopup2.show(finalMessage+ " Hazırlanıyor...",atomicReference.get());
 			lblNodes.setText("Filtre Çalışıyor...");
 			lblNodes.setFxTextColor(Color.RED);
-
 			//lblNodes.setFxStyleColor
 			//lblNodes.setDisable(true);
 		});

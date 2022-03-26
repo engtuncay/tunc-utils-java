@@ -2,7 +2,9 @@ package ozpasyazilim.utils.core;
 
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
+import ozpasyazilim.utils.datatypes.FiListMapStr;
 import ozpasyazilim.utils.datatypes.FiMapParams;
+import ozpasyazilim.utils.datatypes.FiMapString;
 import ozpasyazilim.utils.log.Loghelper;
 
 import java.lang.reflect.Field;
@@ -94,6 +96,22 @@ public class FiConsole {
 
 	public static void debugMapNotNull(Map map, Class clazz) {
 		Loghelper.debugLog(clazz, String.format("Map Detail (Not Null)\n\n%s", textMapNotNull(map)));
+	}
+
+	public static void debugListMap(FiListMapStr listMap, Class clazz,Boolean boShowNulls) {
+		if(listMap==null){
+			Loghelper.debugLog(clazz, String.format("Map Null"));
+			return;
+		}
+		for (FiMapString fiMapString : listMap) {
+			if(FiBoolean.isTrue(boShowNulls)){
+				Loghelper.debugLog(clazz, String.format("Map Detail (Not Null)\n\n%s", textMap(fiMapString)));
+			}else{
+				Loghelper.debugLog(clazz, String.format("Map Detail (Not Null)\n\n%s", textMapNotNull(fiMapString)));
+			}
+
+		}
+
 	}
 
 	public static <E> void debugStringArray(String[] arrString, Class clazz) {
@@ -290,7 +308,11 @@ public class FiConsole {
 	}
 
 	public static void printObjectFieldsNotNull(Object obj) {
-		System.out.println(textObjectFieldsPlain(obj, null));
+		System.out.println(textObjectFieldsPlain(obj, false));
+	}
+
+	public static void printObjectFields(Object obj) {
+		System.out.println(textObjectFieldsPlain(obj, true));
 	}
 
 	public static void debug(Object obj, Class clazz) {
@@ -301,6 +323,10 @@ public class FiConsole {
 		}
 
 		Loghelper.debugLog(clazz, textObjectFieldsPlain(obj, null));
+	}
+
+	public static void debugObjectNotNull(Object obj, Class clazz) {
+		Loghelper.debugLog(clazz, textObjectFieldsPlain(obj, false));
 	}
 
 	public static void debug(Object obj, Class clazz, Class clazzObj) {

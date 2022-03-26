@@ -148,7 +148,7 @@ public class FiEntity {
 	}
 
 	public static List<FiField> getListFieldsCandId(Class clazz) {
-		List<FiField> listFiFieldsSummary = getListFieldsWoutStaticMain(clazz, false,null);
+		List<FiField> listFiFieldsSummary = getListFieldsWoutStaticMain(clazz, false, null);
 
 		List<FiField> fiFieldList = new ArrayList<>();
 
@@ -161,8 +161,21 @@ public class FiEntity {
 		return fiFieldList;
 	}
 
+	public static List<FiField> getListFieldsDateSeperatorField(Class clazz) {
+		List<FiField> listFiFieldsSummary = getListFieldsWoutStaticMain(clazz, false, null);
+
+		List<FiField> fiFieldList = new ArrayList<>();
+
+		for (FiField fiField : listFiFieldsSummary) {
+			if (FiBoolean.isTrue(fiField.getBoDateSeperatorField())) {
+				fiFieldList.add(fiField);
+			}
+		}
+
+		return fiFieldList;
+	}
+
 	/**
-	 *
 	 * @param clazz
 	 * @param boIncTransient boIncludeTransient Fields
 	 * @return
@@ -184,7 +197,6 @@ public class FiEntity {
 
 		return fiFieldList;
 	}
-
 
 
 	/**
@@ -272,6 +284,19 @@ public class FiEntity {
 		fiField.setName(field.getName());
 		if (fiField.getDbFieldName() == null) fiField.setDbFieldName(field.getName());
 		fiField.setClassNameSimple(field.getType().getSimpleName());
+
+		if (field.isAnnotationPresent(FiColumn.class)) {
+			FiColumn anno = field.getAnnotation(FiColumn.class);
+			if (!FiString.isEmptyTrim(anno.name())) {
+				fiField.setDbFieldName(anno.name());
+			}
+
+			if (FiBoolean.isTrue(anno.boFilterLike())) {
+				fiField.setBoFilterLike(true);
+			}
+		}
+
+
 	}
 
 	public static void assignFiFieldExtraRelatedDb(Field field, FiField fiField) {
@@ -281,6 +306,8 @@ public class FiEntity {
 				fiField.setTxComment(column.txComment());
 			}
 		}
+
+
 	}
 
 	public static void assignFiFieldDatabase(Field field, FiField fiField) {
@@ -443,11 +470,16 @@ public class FiEntity {
 			fiField.setBoGuidField(true);
 		}
 
+		if (field.isAnnotationPresent(FiDateSeperator.class)) {
+			fiField.setBoDateSeperatorField(true);
+		}
+
 
 	}
 
 	/**
 	 * Field ile ilgili tüm alanlar (extra hariç) doldurulur.
+	 *
 	 * @param field
 	 * @param fiField
 	 * @return
@@ -456,6 +488,12 @@ public class FiEntity {
 		if (fiField == null) fiField = new FiField();
 		assignFiFieldBasic(field, fiField);
 		assignFiFieldDatabase(field, fiField);
+		return fiField;
+	}
+
+	public static FiField setupFiFieldBasic(Field field, FiField fiField) {
+		if (fiField == null) fiField = new FiField();
+		assignFiFieldBasic(field, fiField);
 		return fiField;
 	}
 

@@ -115,6 +115,10 @@ public class FxMigPane<EntClazz> extends MigPane {
 		add(node, "grow,push,span " + FiString.orEmpty(extra));
 	}
 
+	public void addSpan(Node node) {
+		add(node, "span");
+	}
+
 	public void addGrowXPushXSpan(Node node) {
 		addGrowXPushXSpan(node, null);
 	}

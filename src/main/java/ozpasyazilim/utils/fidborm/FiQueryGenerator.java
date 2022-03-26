@@ -4,11 +4,14 @@ import org.jdbi.v3.core.Jdbi;
 import ozpasyazilim.utils.annotations.FiDraft;
 import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.datatypes.FiMapParams;
+import ozpasyazilim.utils.entitysql.SqlColumn;
+import ozpasyazilim.utils.entitysql.SqlTable;
 import ozpasyazilim.utils.gui.fxcomponents.FxEditorFactory;
 import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.fidbanno.*;
 import ozpasyazilim.utils.db.TableScheme;
 import ozpasyazilim.utils.log.Loghelper;
+import ozpasyazilim.utils.repoSql.RepoSqlColumn;
 import ozpasyazilim.utils.returntypes.Fdr;
 
 import javax.persistence.*;
@@ -250,7 +253,7 @@ public class FiQueryGenerator {
 			if (FiBoolean.isTrue(fiField.getBoCandidateId2())) fieldsWhere.add(fiField);
 		}
 
-		fiQuery.setTxQuery(genSelectQuery(selectFieldList, fieldsWhere,clazz));
+		fiQuery.setTxQuery(genSelectQuery(selectFieldList, fieldsWhere, clazz));
 
 		return fiQuery;
 
@@ -288,7 +291,7 @@ public class FiQueryGenerator {
 	}
 
 
-	private static String genSelectQuery(List<FiField> selectFieldList, List<FiField> fieldsWhere,Class clazz) {
+	private static String genSelectQuery(List<FiField> selectFieldList, List<FiField> fieldsWhere, Class clazz) {
 
 		String tableName = getTableName(clazz);
 
@@ -305,7 +308,7 @@ public class FiQueryGenerator {
 		}
 
 		Integer indexWhere = 0;
-		for(FiField fiField : fieldsWhere){
+		for (FiField fiField : fieldsWhere) {
 			indexWhere++;
 			if (indexWhere != 1) queryWhere.append(" AND ");
 			queryWhere.append(fiField.getName() + " = @" + fiField.getName());
@@ -1598,6 +1601,13 @@ public class FiQueryGenerator {
 
 	}
 
+	public static Boolean checkAnnoClassOfInsertSelect(Class clazz) {
+		if (clazz.isAnnotationPresent(FiInsertSelect.class)) {
+			return true;
+		}
+		return false;
+	}
+
 	public static String getTableNameFi(Class reflectClass) {
 
 		if (reflectClass.isAnnotationPresent(FiTable.class)) {
@@ -2852,6 +2862,91 @@ public class FiQueryGenerator {
 
 		return fieldList;
 	}
+
+	/**
+	 * Db1 den Db2 ye kopyalanacak
+	 *
+	 * @param selectedTable
+	 * @param serverDb1
+	 * @param serverDb2
+	 * @return
+	 */
+	public static String insertSelectQuery(String selectedTable, String serverDb1, String serverDb2) {
+
+		// INSERT INTO table2
+		// SELECT * FROM table1
+		// WHERE condition;
+
+		String sql = String.format("INSERT INTO %s.dbo.%s\n" +
+				"SELECT * FROM %s.dbo.%s\n", serverDb2, selectedTable, serverDb1, selectedTable);
+		return sql;
+	}
+
+	public static String insertSelectQueryWithDate(String selectedTable, String serverDb1, String serverDb2, String txDateFieldName, String txDateFieldValue) {
+
+		String sql = String.format("INSERT INTO %s.dbo.%s\n" +
+				"SELECT * FROM %s.dbo.%s\n" +
+				"WHERE %s >= '%s'", serverDb2, selectedTable, serverDb1, selectedTable, txDateFieldName, txDateFieldValue);
+		return sql;
+	}
+
+	public static String insertSelectQueryWithColsAndDate(String selectedTable, String serverDb1, String serverDb2, String txDateFieldName, String txDateFieldValue, Jdbi jdbi) {
+		//String txFieldsCommaSeperated = getFieldsCommaSeperated(clazz);
+		String txFieldsCommaSeperated = getFieldsCommaSeperatedFromDb(selectedTable, jdbi);
+		if(txDateFieldValue==null) txDateFieldValue = "";
+		if (!txDateFieldValue.contains("@")) {
+			txDateFieldValue = "'" + txDateFieldValue + "'";
+		}
+
+		String sql = String.format("SET IDENTITY_INSERT %s.dbo.%s ON\n\n" +
+				"INSERT INTO %s.dbo.%s (%s)\n" +
+				"SELECT %s FROM %s.dbo.%s\n" +
+				"WHERE %s >= %s\n\n" +
+				"SET IDENTITY_INSERT %s.dbo.%s OFF\n",serverDb2,selectedTable, serverDb2, selectedTable, txFieldsCommaSeperated, txFieldsCommaSeperated, serverDb1, selectedTable, txDateFieldName, txDateFieldValue,serverDb2,selectedTable);
+		return sql;
+	}
+
+	public static String insertSelectQueryWithCols(String selectedTable, String serverDb1, String serverDb2, Jdbi jdbi) {
+		//String txFieldsCommaSeperated = getFieldsCommaSeperated(clazz);
+		String txFieldsCommaSeperated = getFieldsCommaSeperatedFromDb(selectedTable,jdbi);
+		String sql = String.format("SET IDENTITY_INSERT %s.dbo.%s ON\n\n" +
+				"INSERT INTO %s.dbo.%s (%s)\n" +
+				"SELECT %s FROM %s.dbo.%s\n\n" +
+				"SET IDENTITY_INSERT %s.dbo.%s OFF\n",serverDb2,selectedTable, serverDb2, selectedTable, txFieldsCommaSeperated, txFieldsCommaSeperated, serverDb1, selectedTable,serverDb2,selectedTable);
+		return sql;
+	}
+
+	private static String getFieldsCommaSeperated(Class clazz) {
+		List<FiField> fieldListFilterAnno = FiEntity.getListFieldsShortWithId(clazz);
+		StringBuilder query = new StringBuilder();
+
+		Integer index = 0;
+		for (FiField fiField : fieldListFilterAnno) {
+			index++;
+			if (index != 1) query.append(", ");
+			query.append(fiField.getName());
+		}
+		return query.toString();
+	}
+
+	private static String getFieldsCommaSeperatedFromDb(String txTableName,Jdbi jdbi) {
+		Fdr<List<SqlColumn>> fieldListFilterAnno = new RepoSqlColumn(jdbi).selectColumnsAll(txTableName);
+		StringBuilder query = new StringBuilder();
+
+		if(fieldListFilterAnno.isTrueBoResult()){
+			Integer index = 0;
+			for (SqlColumn sqlColumn : fieldListFilterAnno.getValue()) {
+				index++;
+				if (index != 1) query.append(", ");
+				query.append(sqlColumn.getCOLUMN_NAME());
+			}
+			return query.toString();
+		}else{
+			return "";
+		}
+
+	}
+
 }
 
 /*

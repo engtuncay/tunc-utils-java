@@ -375,14 +375,17 @@ public class FiNumber {
 	 * @return
 	 */
 	public static Double truncateByHalfUp(Double dblNumber, Integer scale) {
-
-		//Double toBeTruncated = new Double("3.5789055");
 		Double truncatedDouble = BigDecimal.valueOf(dblNumber)
 				.setScale(scale, RoundingMode.HALF_UP)
 				.doubleValue();
-
 		return truncatedDouble;
+	}
 
+	public static Double truncateByHalfDown(Double dblNumber, Integer scale) {
+		Double truncatedDouble = BigDecimal.valueOf(dblNumber)
+				.setScale(scale, RoundingMode.HALF_DOWN)
+				.doubleValue();
+		return truncatedDouble;
 	}
 
 	/**
@@ -393,9 +396,7 @@ public class FiNumber {
 	 * @return
 	 */
 	public static Double truncateByHalfUp(Double dblNumber) {
-
 		return truncateByHalfUp(dblNumber, 2);
-
 	}
 
 	public static String formatNumber(Number number) {
