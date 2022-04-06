@@ -1378,8 +1378,8 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		return jdUpdateBindObjectMain(updateQuery, bindEntity);
 	}
 
-	public Fdr jdUpdateBindMapThenEntityMain(String updateQuery, EntClazz bindEntity, FiMapParams fiMapParams) {
-		return jdUpdateBindMapThenObjectMapMain(updateQuery, bindEntity, fiMapParams);
+	public Fdr jdUpdateBindMapAndEntity(String updateQuery, EntClazz bindEntity, FiMapParams fiMapParams) {
+		return jdUpdateBindMapAndObjectMain(updateQuery, bindEntity, fiMapParams);
 	}
 
 	/**
@@ -1424,7 +1424,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 	 * @param bindEntity
 	 * @return
 	 */
-	public Fdr jdUpdateBindMapThenObjectMapMain(String updateQuery, Object bindEntity, FiMapParams fiMapParams) {
+	public Fdr jdUpdateBindMapAndObjectMain(String updateQuery, Object bindEntity, FiMapParams fiMapParams) {
 
 		Jdbi jdbi = getJdbi();
 
