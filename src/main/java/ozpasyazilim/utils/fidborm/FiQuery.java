@@ -469,7 +469,16 @@ public class FiQuery {
 							setTxQuery(newQuery);
 							deActivatedParamList.add(key);
 						}
-					} else { // string tipinden dışında olanlar
+					} else if (value instanceof Collection) {
+						if (!FiCollection.isEmpty((Collection) value)) {
+							String newQuery = fsmActivatedOptParamV1Main(getTxQuery(), key);
+							setTxQuery(newQuery);
+						}else{
+							String newQuery = deActivateOptParamMain(getTxQuery(), key);
+							setTxQuery(newQuery);
+							deActivatedParamList.add(key);
+						}
+					} else { // string ve collection tipinden dışında olanlar
 						if (value != null) {
 							String newQuery = fsmActivatedOptParamV1Main(getTxQuery(), key);
 							setTxQuery(newQuery);
