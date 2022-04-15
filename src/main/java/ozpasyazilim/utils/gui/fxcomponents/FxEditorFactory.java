@@ -687,31 +687,31 @@ public class FxEditorFactory {
 
 		for (int i = 0; i < listColumns.size(); i++) {
 
-			IFiCol fiTableCol = listColumns.get(i);
+			IFiCol fiCol = listColumns.get(i);
 
-			if (fiTableCol.getFieldName() == null) continue;
+			if (fiCol.getFieldName() == null) continue;
 
-			Object cellvalue = FiReflection.getProperty(entity, fiTableCol.getFieldName());
+			Object cellvalue = FiReflection.getProperty(entity, fiCol.getFieldName());
 
-			//Loghelperr.getInstance(getClass()).debug("Entity to Editor: Col:"+ fiTableCol.getFieldName());
+			//Loghelperr.getInstance(getClass()).debug("Entity to Editor: Col:"+ fiCol.getFieldName());
 
 			if (cellvalue == null) continue;
 
 			// Bütün alanlar için de atanabilir , eski değer tutulmuş olur.
-			fiTableCol.setColEditorValue(cellvalue);
+			fiCol.setColEditorValue(cellvalue);
 
-			// Hidden ise component e değer ataması yapılmaz, Hiddenlar için node üretilmez ve değer ataması yapılmaz.
-			if (FiBoolean.isTrue(fiTableCol.getBoHidden())) {
+			// Hidden ise, node comp üretilmediği için değer ataması yapılmaz.
+			if (FiBoolean.isTrue(fiCol.getBoHidden())) {
 				continue;
 			}
 
-			//FiConsole.printFieldsNotNull(fiTableCol);
-			setNodeValueForCompsMain(fiTableCol, cellvalue, fiTableCol.getColEditorClass(), fiTableCol.getColEditorNode(), entity);
+			//FiConsole.printFieldsNotNull(fiCol);
+			setNodeValueForCompsMain(fiCol, cellvalue, fiCol.getColEditorClass(), fiCol.getColEditorNode(), entity);
 
 			// Form Node özellikleri buradan atanır
-			if (fiTableCol.getColEditorNode() != null) {
-				if (FiBoolean.isTrue(fiTableCol.getBoNonEditableForForm())) {
-					fiTableCol.getColEditorNode().setDisable(true);
+			if (fiCol.getColEditorNode() != null) {
+				if (FiBoolean.isTrue(fiCol.getBoNonEditableForForm())) {
+					fiCol.getColEditorNode().setDisable(true);
 				}
 			}
 
@@ -764,7 +764,7 @@ public class FxEditorFactory {
 
 	/**
 	 *
-	 * Component değer ataması yapar, örneğin textfield ise textfield.setText değerine atama yaparak içeriğini ayarlar.
+	 * Component değer ataması yapar, örneğin textfield ise textfield.setText değerine atama yaparak içeriğini ayarlar. Datepicker ise tarih değerini atar.
 	 *
 	 * @param iFiCol ilgili field/column tanımı
 	 * @param cellvalue component verilecek değer
