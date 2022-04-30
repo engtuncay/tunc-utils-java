@@ -16,4 +16,7 @@ public class FxDatePicker extends FxDatePickerCore {
 		setPrefWidth(90d);
 	}
 
+	public void setPrefWidthNormal() {
+		setPrefWidth(120d);
+	}
 }
