@@ -79,5 +79,6 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-core:5.0.14.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-jcl:5.0.14.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: com.github.javadev:underscore:1.69" level="project" />
+    <orderEntry type="library" name="Maven: joda-time:joda-time:2.9.9" level="project" />
   </component>
 </module>

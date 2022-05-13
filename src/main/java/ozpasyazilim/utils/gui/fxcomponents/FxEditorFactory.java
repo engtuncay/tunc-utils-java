@@ -473,9 +473,6 @@ public class FxEditorFactory {
 				|| compClassName.equals(FxDatePicker.class.getName())) {
 			FxDatePicker comp = new FxDatePicker();
 			//if (iFiCol.getColFilterKeyEvent() != null) comp.setOnKeyReleased(iFiCol.getColFilterKeyEvent());
-//			if (compValue != null && compValue instanceof Date) {
-//				comp.setValue(FiDate.convertLocalDate((Date) compValue));
-//			}
 			return comp;
 		}
 
@@ -512,11 +509,7 @@ public class FxEditorFactory {
 
 		if (compClassName.equals(FxChoiceBoxSimple.class.getName())) {
 			FxChoiceBoxSimple comp = new FxChoiceBoxSimple();
-			comp.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
-				if (event.getCode() == KeyCode.BACK_SPACE) {
-					comp.clearSelectionFi();
-				}
-			});
+			comp.activateBackSpaceClearSelection();
 			return comp;
 		}
 

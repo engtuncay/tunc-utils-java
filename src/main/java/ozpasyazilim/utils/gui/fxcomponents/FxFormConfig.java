@@ -16,13 +16,17 @@ public class FxFormConfig<EntClazz> {
 	//	private EntClazz formInitEntityInsert;
 
 	private EntClazz formEntity; // 21-10-30 eklendi
+
+	// Form güncellemek amacıyla mı açıldı
 	private Boolean boUpdateForm; // 21-10-30 eklendi
+
+	private Boolean boReadOnlyForm;
 
 	public List<FiCol> getListFormElements() {
 		return listFormElements;
 	}
 
-	public List<FiCol> getListFormElementsNtn() {
+	public List<FiCol> getListFormElementsInit() {
 		if (listFormElements == null) {
 			listFormElements = new ArrayList<>();
 		}
@@ -64,4 +68,16 @@ public class FxFormConfig<EntClazz> {
 		this.formEntity = formEntity;
 	}
 
+	public Boolean getBoUpdateFormInit() {
+		if (boUpdateForm == null) return false;
+		return boUpdateForm;
+	}
+
+	public Boolean getBoReadOnlyForm() {
+		return boReadOnlyForm;
+	}
+
+	public void setBoReadOnlyForm(Boolean boReadOnlyForm) {
+		this.boReadOnlyForm = boReadOnlyForm;
+	}
 }

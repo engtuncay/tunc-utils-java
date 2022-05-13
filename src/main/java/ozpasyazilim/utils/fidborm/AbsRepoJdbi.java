@@ -1592,9 +1592,12 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 	/**
 	 * FiTableCol a göre update sorgusu
-	 * Id field ı update sorgusu içine yazmaz, where içine yazar (anno dan kontrol eder)
+	 * <p>
+	 * Id field ı update sorgusu içine yazmaz, where içine yazar (annotation'dan kontrol eder)
+	 * <p>
 	 * Non updatable alanlar dahil edilmez ( FiTableCol da belirtilen )
-	 * DEfault update alanlarını sorgu içerisine ekler
+	 * <p>
+	 * Default update alanlarını sorgu içerisine ekler (dtCreate,dtLastUp gibi)
 	 *
 	 * @param listFields
 	 * @param entity

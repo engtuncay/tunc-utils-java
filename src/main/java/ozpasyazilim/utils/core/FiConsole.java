@@ -713,7 +713,7 @@ public class FiConsole {
 	}
 
 	public static void printMapFi(FiMapParams mapData) {
-		System.out.println(textMapFi(mapData));
+		System.out.println(textFiMapParams(mapData));
 	}
 
 	public static String textMap(Map<String, String> appMap) {
@@ -727,7 +727,7 @@ public class FiConsole {
 	}
 
 
-	public static String textMapFi(FiMapParams appMap) {
+	public static String textFiMapParams(FiMapParams appMap) {
 		StringBuilder log = new StringBuilder("");
 		log.append("\n");
 		for (Map.Entry<String, Object> entry : appMap.entrySet()) {

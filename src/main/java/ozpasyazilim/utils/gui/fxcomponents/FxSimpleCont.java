@@ -8,6 +8,7 @@ import ozpasyazilim.utils.mvc.IFxSimpleWitEntCont;
 public class FxSimpleCont<E> extends AbsFxSimpleCont implements IFxSimpleWitEntCont<E> {
 
 	FxMigPaneView modView;
+	// Entity neden gerek duyuldu ???
 	E entityDefault;
 
 	public FxSimpleCont() {

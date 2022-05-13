@@ -7,6 +7,7 @@ import ozpasyazilim.utils.log.Loghelper;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
@@ -387,12 +388,27 @@ public class FiDate {
 
 	}
 
+	// FiReflection.setter da kullanılıyor , objeye çevrilirken
 	public static Date strToDateGeneric2(String strDate) {
 
 		Date cellvalue = null;
 
-		// FIXME 2018 yerin 18 kabul eder mi :
+		if(FiString.isEmptyTrim(strDate)) return null;
 
+		if(strDate.contains("T")){
+//			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+//			try {
+//				cellvalue = sdf.parse(strDate);
+//			} catch (ParseException e) {
+//				Loghelper.get(FiDate.class).debug(FiException.exceptiontostring(e));
+//			}
+//			return cellvalue;
+			LocalDateTime dateTime = LocalDateTime.parse(strDate);
+		  cellvalue = convertLocalDateTimeToSimpleDate(dateTime);
+			return cellvalue;
+		}
+
+		// FIXME 2018 yerin 18 kabul eder mi :
 		if (strDate.matches("[0-9]{1,2}[\\/\\.][0-9]{1,2}[\\/\\.][0-9]{2,4}")) {
 
 			if (strDate.matches(".*\\..*")) {
@@ -463,10 +479,9 @@ public class FiDate {
 		}
 
 		//cellvalue = null;
-		Loghelper.get(FiDate.class).debug(" date cell value (unsupported format):" + strDate);
+		Loghelper.get(FiDate.class).debug("date cell value (unsupported format):" + strDate);
 
 		return null;
-
 	}
 
 	public static String clearFirstZero(String strValue) {
@@ -638,6 +653,11 @@ public class FiDate {
 
 		//Date date = cal.getTime();
 
+		return date;
+	}
+
+	public static Date convertLocalDateTimeToSimpleDate(LocalDateTime localDate) {
+		Date date = Date.from(localDate.atZone(ZoneId.systemDefault()).toInstant());
 		return date;
 	}
 

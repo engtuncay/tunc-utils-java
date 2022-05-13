@@ -438,9 +438,9 @@ public class FiEntity {
 
 			FiDefaultUpdate anno = field.getAnnotation(FiDefaultUpdate.class);
 
-			if (!FiString.isEmpty(anno.typeName())) {
-				fiField.setTypeName(anno.typeName());
-			}
+//			if (!FiString.isEmpty(anno.typeName())) {
+//				fiField.setTypeName(anno.typeName());
+//			}
 		}
 
 		if (field.isAnnotationPresent(FiCusFieldUserId.class)) {
@@ -574,6 +574,12 @@ public class FiEntity {
 	}
 
 	/**
+	 * Id alanlarının herhangi biri null olup olmadığını kontrol eder.
+	 * <p>
+	 * True ise id alanlarında herhangi biri null
+	 * <p>
+	 * False tüm id alanları null degil
+	 *
 	 * @param entity
 	 * @param entityClass
 	 * @param <T>
@@ -599,7 +605,6 @@ public class FiEntity {
 		}
 
 		return isNull;
-
 	}
 
 	public static <T> Boolean assignIdFields(T fromEntity, T toEntity, Class<T> entityClass) {

@@ -16,15 +16,23 @@ import com.github.underscore.lodash.U;
 import ozpasyazilim.utils.datatypes.FiMapString;
 
 public class FiXml {
-
 	private FiDoc fiDoc;
 	private String txXmlRaw;
 	private String txXmlTemplate;
 	private FiMapString mapParams;
 
+	public FiXml() {
+	}
+
+	public FiXml(String txXmlTemplate) {
+		this.txXmlTemplate = txXmlTemplate;
+	}
+
 	public static FiXml bui() {
 		return new FiXml();
 	}
+
+
 
 	public static void main(String[] args) {
 
@@ -174,7 +182,7 @@ public class FiXml {
 		this.txXmlTemplate = txXmlTemplate;
 	}
 
-	public FiMapString getMapParams() {
+	public FiMapString getMapParamsInit() {
 		if (mapParams == null) {
 			mapParams = new FiMapString();
 		}
@@ -223,11 +231,11 @@ public class FiXml {
 		return prop;
 	}
 
-	public String getXmlSub() {
-		if(getMapParams().isEmpty()) {
+	public String getXmlConverted() {
+		if(getMapParamsInit().isEmpty()) {
 			setTxXmlRaw(getTxXmlRaw());
 		}else{
-			StrSubstitutor sub = new StrSubstitutor(getMapParams(), "{{", "}}");
+			StrSubstitutor sub = new StrSubstitutor(getMapParamsInit(), "{{", "}}");
 			setTxXmlRaw(sub.replace(getTxXmlTemplate()));
 		}
 		return getTxXmlRaw();

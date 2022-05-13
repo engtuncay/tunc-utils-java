@@ -13,6 +13,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 public @interface FiDefaultUpdate {
 
-	String typeName() default "";
+//	String typeName() default "";
 
 }

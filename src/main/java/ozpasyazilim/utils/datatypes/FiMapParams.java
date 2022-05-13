@@ -282,4 +282,13 @@ public class FiMapParams extends FiMapStrob {
 
 		return fiMapParams;
 	}
+
+	public Integer getFullParamCount() {
+		Collection<Object> values = this.values();
+		Integer lnCount=0;
+		for (Object value : values) {
+			if(value!=null)lnCount++;
+		}
+		return lnCount;
+	}
 }

@@ -7,7 +7,9 @@ import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * LnUserId alanını ifade eder
+ * LnUserId alanını olduğunu ifade eder
+ *
+ * Kullanım Yerleri : ?
  */
 @Target({FIELD})
 @Retention(RUNTIME)

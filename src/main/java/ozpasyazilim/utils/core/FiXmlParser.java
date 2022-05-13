@@ -2,8 +2,10 @@ package ozpasyazilim.utils.core;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import org.apache.commons.io.IOUtils;
 import org.joox.JOOX;
 import org.joox.Match;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 import ozpasyazilim.utils.mvc.IFiCol;
@@ -13,10 +15,12 @@ import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.OzColType;
 
 import java.io.*;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.joox.JOOX.$;
+
 
 public class FiXmlParser {
 
@@ -123,7 +127,7 @@ public class FiXmlParser {
 
 			if ($(xmlParentElement).find(txKeyElementName).text().trim().equals(txKeyElementValue.trim())) {
 
-				EntPrmClazz entPrmClazz = parseMatchToEntityWithChild($(xmlParentElement), listEntCols, clazz);
+				EntPrmClazz entPrmClazz = parseMatchToEntityWithOneChild($(xmlParentElement), listEntCols, clazz);
 				return entPrmClazz;
 //				boFound.setValue(true);
 //				break;
@@ -150,18 +154,17 @@ public class FiXmlParser {
 	}
 
 	public static Match openXml(String txXml) {
-
-//		Match $xmldom = null;
-//
-//		try {
-//			$xmldom = JOOX.builder().parse(sr); // $(file); // $xmldom match objesi
-//		} catch (SAXException e) {
-//			Loghelper.get(FiXmlParser.class).error("Hata :" + FiException.exceptiontostring(e));
-//		} catch (IOException e) {
-//			Loghelper.get(FiXmlParser.class).error("Hata :" + FiException.exceptiontostring(e));
-//		}
-//
-//		return $xmldom;
+		Match $matchDoc = null;
+		try {
+			InputStream targetStream = IOUtils.toInputStream(txXml, Charset.forName("UTF-8"));
+			Document document = JOOX.builder().parse(targetStream); // $matchDoc match objesi
+			$matchDoc = $(document); //.find("root");
+			return $matchDoc;
+		} catch (SAXException e) {
+			Loghelper.get(FiXmlParser.class).error("Hata :" + FiException.exceptiontostring(e));
+		} catch (IOException e) {
+			Loghelper.get(FiXmlParser.class).error("Hata :" + FiException.exceptiontostring(e));
+		}
 
 		return null;
 	}
@@ -195,7 +198,7 @@ public class FiXmlParser {
 		return objectt;
 	}
 
-	public static <EntClazz> EntClazz parseMatchToEntityWithChild(Match xmlMatch, List<FiCol> listColumn, Class<EntClazz> clazz) {
+	public static <EntClazz> EntClazz parseMatchToEntityWithOneChild(Match xmlMatch, List<FiCol> listColumn, Class<EntClazz> clazz) {
 
 		EntClazz entity = FiReflection.generateObject(clazz);
 
@@ -213,7 +216,7 @@ public class FiXmlParser {
 
 				Match elementChild = xmlMatch.find(fiTableColParent.getHeaderName());
 
-				Object listChildren = parseMatchToEntityWithChild(elementChild, fiTableColParent.getListChildCol(), fiTableColParent.getChildClazz());
+				Object listChildren = parseMatchToEntityWithOneChild(elementChild, fiTableColParent.getListChildCol(), fiTableColParent.getChildClazz());
 				FiReflection.setProperty(entity, fiTableColParent.getFieldName(), listChildren);
 
 			}else{
@@ -245,13 +248,19 @@ public class FiXmlParser {
 		return fdrResult;
 
 	}
+	public static <EntClazz> List<EntClazz> parseMatchElementToList(String txXml, String txSelectorTag, List<FiCol> fiColList, Class<EntClazz> clazz) {
+		return parseMatchElementToList(openXml(txXml), txSelectorTag, fiColList, clazz);
+
+	}
 
 	public static <EntClazz> List<EntClazz> parseMatchElementToList(Match xmlMatch, String txSelectorTag, List<FiCol> fiColList, Class<EntClazz> clazz) {
+
+		if(xmlMatch==null) return new ArrayList<>();
 
 		List<EntClazz> dataList = new ArrayList<>();
 
 		for (Element xmlElement : xmlMatch.find(txSelectorTag)) {
-			EntClazz entity = FiXmlParser.parseMatchToEntityWithChild($(xmlElement), fiColList, clazz);
+			EntClazz entity = FiXmlParser.parseMatchToEntityWithOneChild($(xmlElement), fiColList, clazz);
 			dataList.add(entity);
 		}
 
@@ -259,112 +268,3 @@ public class FiXmlParser {
 	}
 
 }
-
-//String dbop = $(xmlElement).attr("DBOP");
-//String faturatip = $(xmlElement).find("TYPE").text();
-
-// Pano versiyonuna göre okunması gerekir
-// chh.setMetaMikroEvrak(getMapPano6BytTurMap().get(chh.getTyPanoBytTur()));
-
-//sorumluluk kodu eklendi
-// uuid eklenecek
-
-// Diger method tanımlandığından burada commente alındı
-// chh.setCha_evrakno_seri(tblAktarimFirma.getTxEvrakSeri());
-// chh.setCha_srmrkkodu(tblAktarimFirma.getTxSormerKod());
-
-//			if (tblAktarimFirma.getAfrTxTxSablonKod().equals(new MetaAktarimSablon().Panoroma6)) {
-//				chh.setMetaMikroEvrak(getMapPano6BytTurMap().get(chh.getTyPanoBytTur()));
-//			}
-//			if (tblAktarimFirma.getTxSablonKod().equals(new MetaAktarimSablon().Panoroma7)) {
-//				chh.setMetaMikroEvrak(getMapPano6BytTurMap().get(chh.getTyPanoBytTur()));
-//			}
-
-// yoruman alındı 9/11
-//			new ModMikroAktarimEntityBinder().bindToChhForStokFatForPano(chh,chh.getMetaMikroEvrak(),chh.getCha_belge_no(),chh.getCha_evrakno_sira(),chh.getCha_satici_kodu()
-//					,chh.getCha_kod(),chh.getCha_tarihi(),chh.getCha_aratoplam(),chh.getCha_ft_iskonto1(),chh.getDmVergiTutar(),chh.getCha_meblag()
-//					,chh.getCha_aciklama(),tblAktarimFirma,chh.getCha_vade(),null);
-
-//			if (chh.getMetaMikroEvrak() == MetaMikroEvrakEm.SF1_SATISFAT) {
-//
-//				$(xmlElement).find("DETAY").forEach(element -> {
-//
-//					List<IFiTableCol> listColStok = getFaturaDetayColumns();
-//
-//					MkSTOK_HAREKETLERI sth = xmlParser.parseXmlElementToEntity(element, listColStok, MkSTOK_HAREKETLERI.class);
-//
-//					List<Double> listIsk = new ArrayList<>();
-//					listIsk.add(sth.getSth_iskonto1());
-//					listIsk.add(sth.getSth_iskonto2());
-//					listIsk.add(sth.getSth_iskonto3());
-//					listIsk.add(sth.getSth_iskonto4());
-//					listIsk.add(sth.getSth_iskonto5());
-//					listIsk.add(sth.getSth_iskonto6());
-//
-//					//Double[] objects = listIsk.toArray(new Double[listIsk.size()]);
-//
-////					new ModMikroAktarimEntityBinder().bindStokHareketForCariHar(chh,sth,tblAktarimFirma, sth.getSth_stok_kod(),sth.getBirimAdiXml(),sth.getDmKdvOran()
-////							,sth.getSth_miktar(),null,listIsk
-////							,sth.getSth_vergi(),sth.getSth_tutar(),sth.getSth_satirno(),null,null);
-//
-//
-//					Double miktar = sth.getSth_miktar() * sth.getDmCarpan();
-//					sth.setSth_miktar(miktar);
-//					sth.setSth_miktar2(miktar);
-//
-//					chh.getListStokHareketler().add(sth);
-//
-//				});
-//
-//
-//			}
-//
-//			// KDVYE göre chavergi1,2,3 gelecek
-//			//list.add(OzTableCol.build("DBLKDVTUTARI", Mkfields.cha_vergi1.toString(), OzColType.Double));
-//
-//			//reftarihi 00 tanımlamış
-//			//miktar alanı hizmetse alınır yoksa 0 yazılır
-//// kdv oranına göre vergi mikro alanı kayıt edilecek
-//
-//			//list.add(OzTableCol.build("TXTMUSTERIKOD", Mkfields.cha_ciro_cari_kodu.toString(), OzColType.Integer));
-//
-//			//list.add(OzTableCol.build("TRHVADETARIHI", Mkfields.cha_tarihi.toString(), OzColType.Date));
-//
-//
-//			listData.add(chh);
-//
-//		});
-
-//		EntClazz objectt = FiReflection.generateObject(clazz);
-//
-//		for (int colidx = 0; colidx < listColumn.size(); colidx++) {
-//
-//			FiTableCol fiTableColParent = listColumn.get(colidx);
-//
-//			if(fiTableColParent.getColType()!=null && fiTableColParent.getColType()== OzColType.XmlChild){
-//
-//				Match childDetay = $(xmlElement).find(fiTableColParent.getFiHeader());
-//
-//				List<FiTableCol> listChild = fiTableColParent.getListChildCol();
-//
-//				Object objectDetay = FiReflection.generateObject(fiTableColParent.getChildClazz());
-//
-//				for (FiTableCol fiTableCol : listChild) {
-//					String textDetay = $(childDetay).find(fiTableCol.getFiHeader()).text();
-//					FiReflection.setter(fiTableCol, objectDetay, textDetay);
-//				}
-//
-//				FiReflection.setProperty(objectt,fiTableColParent.getFieldName(),objectDetay);
-//
-//			}else{
-//				String text = $(xmlElement).find(fiTableColParent.getFiHeader()).text();
-//				//println(" CellValue:"+text);
-//				FiReflection.setter(fiTableColParent, objectt, text);
-//			}
-//
-//
-//		}
-
-//		return objectt;
-
-//		}

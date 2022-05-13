@@ -78,7 +78,7 @@ public class FiField {
 	// true olur FiMapParam a alan eklenirken % işareti ekler
 	Boolean boFilterLike;
 
-	// Inser Select sorguların where alanında kullanıcak alan (tarih genelde)
+	// Insert Select sorguların where alanında kullanıcak alan (tarih genelde)
 	Boolean boDateSeperatorField;
 
 	public FiField() {

@@ -3,6 +3,7 @@ package ozpasyazilim.utils.core;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.util.ReflectionUtils;
 import ozpasyazilim.utils.fidborm.FiEntity;
+import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.table.OzColType;
@@ -141,40 +142,17 @@ public class FiReflection {
 
 			PropertyUtils.setProperty(objectt, fiTableCol.getFieldName(), cellvalue == null ? strCellvalue : cellvalue);
 			return true;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			Loghelper.get(FiReflection.class).debug(FiException.exceptiontostring(e));
 		}
-
+//		} catch (IllegalAccessException e) {
+//			Loghelper.get(FiReflection.class).debug(FiException.exceptiontostring(e));
+//		} catch (InvocationTargetException e) {
+//			Loghelper.get(FiReflection.class).debug(FiException.exceptiontostring(e));
+//		} catch (NoSuchMethodException e) {
+//			Loghelper.get(FiReflection.class).debug(FiException.exceptiontostring(e));
+//		}
 		return false;
-
-// Exceldeki dönüşüm
-//		Object cellvalue = map.get(fiTableCol.getHeader());
-//
-//		if (cellvalue != null && ((String) cellvalue).isEmpty()) cellvalue = null;
-//
-//		if (cellvalue != null && fiTableCol.getColType() == OzColType.Date) {
-//
-//			String strDate = cellvalue.toString();
-//			//Loghelper.getInstance(getClass()).debug(" tarih:" + cellvalue.toString());
-//			cellvalue = FiDate.strToDateGeneric2(strDate);
-//
-//		}
-//
-//		if (cellvalue != null && fiTableCol.getColType() == OzColType.Integer) {
-//			cellvalue = Integer.parseInt(cellvalue.toString());
-//		}
-//
-//		if (cellvalue != null && fiTableCol.getColType() == OzColType.Double) {
-//			cellvalue = OzNumber.convertNumberStrtoDouble(cellvalue.toString());
-//		}
-//
-//		PropertyUtils.setProperty(entity, fiTableCol.getFieldName().trim(), cellvalue);
-
-
 	}
 
 

@@ -35,6 +35,7 @@ import java.util.function.Predicate;
  *
  * @param <EntClazz>
  */
+
 public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 
 	//String id;

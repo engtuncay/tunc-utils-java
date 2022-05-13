@@ -319,4 +319,12 @@ public class FxChoiceBox<T> extends ChoiceBox<T> {
 	public void setPredicateFilterAutoComplete(Predicate<T> predicateFilterAutoComplete) {
 		this.predicateFilterAutoComplete = predicateFilterAutoComplete;
 	}
+
+	public void activateBackSpaceClearSelection() {
+		this.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
+			if (event.getCode() == KeyCode.BACK_SPACE) {
+				this.clearSelectionFi();
+			}
+		});
+	}
 }
