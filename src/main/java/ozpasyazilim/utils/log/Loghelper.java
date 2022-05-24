@@ -12,9 +12,8 @@ import java.util.Set;
 import static org.apache.log4j.Logger.getLogger;
 
 public class Loghelper {
-
 	private static final Logger logGlobal = Logger.getLogger("GLOBAL");
-//	private static boolean DEBUG_MODE = false;
+
 	private static Set<String> setSingle;
 	private Class clazz;
 

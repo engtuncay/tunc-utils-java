@@ -5,7 +5,6 @@ import ozpasyazilim.utils.annotations.FiDraft;
 import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.datatypes.FiMapParams;
 import ozpasyazilim.utils.entitysql.SqlColumn;
-import ozpasyazilim.utils.entitysql.SqlTable;
 import ozpasyazilim.utils.gui.fxcomponents.FxEditorFactory;
 import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.fidbanno.*;
@@ -13,6 +12,7 @@ import ozpasyazilim.utils.db.TableScheme;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.repoSql.RepoSqlColumn;
 import ozpasyazilim.utils.returntypes.Fdr;
+import ozpasyazilim.utils.table.FiCol;
 
 import javax.persistence.*;
 import java.lang.annotation.Annotation;
@@ -1491,6 +1491,45 @@ public class FiQueryGenerator {
 
 		return query.toString();
 
+	}
+
+	/**
+	 *
+	 * FiCol Listesi Update Field ve Key Field ile update sorgusu kurar
+	 *
+	 * @param clazz
+	 * @param fiCols
+	 * @return
+	 */
+	public static String updateQueryWithFiColsByUpdateAndKeyField(Class clazz, List<FiCol> fiCols) {
+
+		StringBuilder query = new StringBuilder();
+		StringBuilder queryWhere = new StringBuilder();
+
+		query.append("UPDATE " + getTableName(clazz) + " SET ");
+
+		Integer index = 0;
+		Integer indexWhere = 0;
+		for (FiCol fiCol : fiCols) {
+			if(FiBoolean.isTrue(fiCol.getBoUpdateField())){
+				index++;
+				if (index != 1) query.append(", ");
+				query.append(fiCol.getFieldName() + " = @" + fiCol.getFieldName());
+			}
+
+			if (FiBoolean.isTrue(fiCol.getBoKeyField())) {
+				indexWhere++;
+				if (indexWhere != 1) queryWhere.append(" AND ");
+				queryWhere.append(fiCol.getFieldName() + " = @" + fiCol.getFieldName()); // dbFieldName kullanımı ile geliştirilebilir
+				continue;
+			}
+		}
+		query.append(" WHERE " + queryWhere);
+
+		if (queryWhere.length() < 1) {
+			query = new StringBuilder();
+		}
+		return query.toString();
 	}
 
 	/**

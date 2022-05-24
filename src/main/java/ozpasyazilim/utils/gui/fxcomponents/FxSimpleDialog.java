@@ -11,6 +11,7 @@ import ozpasyazilim.utils.core.FxPredicateString;
 import ozpasyazilim.utils.fidborm.FiEntity;
 import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.mvc.AbsFxSimpleCont;
+import ozpasyazilim.utils.returntypes.Fdr;
 import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.OzColType;
 
@@ -20,7 +21,6 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
-
 	FxMigPaneView modView;
 	FxSimpleDialogType fxSimpleDialogType;
 	private FxButton btnOk;
@@ -34,8 +34,8 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 	Boolean boInitExecuted;
 	private FxLabel lblHeader;
 	private Class entityClass;
-	private FxFormMig fxFormMig;
-	private List<FiCol> fiTableColList;
+	private FxFormMig2 fxFormMig;
+	private List<FiCol> fiColList;
 	private Predicate<String> predValidateString;
 	private String validateErrorMessage;
 	private String txInitialValue;
@@ -48,17 +48,17 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 
 	public static void creInfoDialog(String message) {
-		FxSimpleDialog modDialogCont = FxSimpleDialog.build(FxSimpleDialogType.InfoLabelDialog).buildMessageContent(message);
+		FxSimpleDialog modDialogCont = FxSimpleDialog.build(FxSimpleDialogType.InfoLabelDialog).buiMessageContent(message);
 		modDialogCont.openAsDialogSync();
 	}
 
-	public static FxSimpleDialog buildTextFieldDialog(String message) {
-		FxSimpleDialog modDialogCont = FxSimpleDialog.build(FxSimpleDialogType.TextField).buildMessageContent(message);
+	public static FxSimpleDialog buiTextFieldDialog(String message) {
+		FxSimpleDialog modDialogCont = FxSimpleDialog.build(FxSimpleDialogType.TextField).buiMessageContent(message);
 		modDialogCont.openAsDialogSync();
 		return modDialogCont;
 	}
 
-	public FxSimpleDialog buildMessageContent(String text) {
+	public FxSimpleDialog buiMessageContent(String text) {
 		setMessageContent(text);
 		return this;
 	}
@@ -69,13 +69,8 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 	public static FxSimpleDialog build(FxSimpleDialogType fxSimpleDialogType) {
 		FxSimpleDialog fxSimpleDialog = new FxSimpleDialog();
-		fxSimpleDialog.setSimpleDialogType(fxSimpleDialogType);
+		fxSimpleDialog.setFxSimpleDialogType(fxSimpleDialogType);
 		return fxSimpleDialog;
-	}
-
-	public FxSimpleDialog buildAddAllText(List<Text> listText) {
-		setListText(listText);
-		return this;
 	}
 
 	public FxSimpleDialog buildAddAllText(Text... arrText) {
@@ -90,14 +85,14 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 	 * @param messageContent
 	 */
 	public FxSimpleDialog(FxSimpleDialogType fxSimpleDialogType, String messageContent) {
-		setSimpleDialogType(fxSimpleDialogType);
+		setFxSimpleDialogType(fxSimpleDialogType);
 		setMessageContent(messageContent);
 		//setiFxModCont(this);
 		initCont();
 	}
 
 	public FxSimpleDialog(FxSimpleDialogType fxSimpleDialogType) {
-		setSimpleDialogType(fxSimpleDialogType);
+		setFxSimpleDialogType(fxSimpleDialogType);
 	}
 
 	public void openAsDialogSync() {
@@ -116,10 +111,10 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 	@Override
 	public void initCont() {
-
 		setBoInitExecuted(true);
 		modView = new FxMigPaneView(FxMigHelper.bui().lcStInset3().lcNoGrid().genLc());
 
+		// default Simple Dialog Type
 		if (fxSimpleDialogType == null) {
 			setupTextHeaderLabel();
 			setupTextFieldDoubleDialog();
@@ -167,7 +162,14 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 			return;
 		}
 
-		if (fxSimpleDialogType == FxSimpleDialogType.FormByCandId) {
+		if (fxSimpleDialogType == FxSimpleDialogType.FormAutoByCandIdFields) {
+			setupTextHeaderLabel();
+			setupFormByCandID();
+			setupFooterOkCancel();
+			return;
+		}
+
+		if (fxSimpleDialogType == FxSimpleDialogType.FormAutoByCandIdFields) {
 			setupTextHeaderLabel();
 			setupFormByCandID();
 			setupFooterOkCancel();
@@ -193,7 +195,14 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 			return;
 		}
 
+		if (fxSimpleDialogType == FxSimpleDialogType.FormDialog) {
+			setupFormDialog();
+			setupFooterOkCancel();
+			return;
+		}
+
 	}
+
 
 	public void setupFooterOkCancel() {
 
@@ -236,7 +245,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 		lblHeader.setWrapText(true);
 
 		if (getMessageContent() != null) {
-			lblHeader.setText(messageContent);
+			lblHeader.setText(getMessageContent());
 		} else {
 			lblHeader.setText("Lütfen Gerekli Alanları Doldurunuz.");
 		}
@@ -248,16 +257,26 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 		FxMigPane fxContent = new FxMigPane(FxMigHelper.bui().lcStInset0Gap55().genLc());
 
-		fxFormMig = new FxFormMig();
+		fxFormMig = new FxFormMig2();
 
 		List<FiField> listFiFieldsCandId = FiEntity.getListFieldsCandId(getEntityClass());
 
 		List<FiCol> fiTableColList = FiCol.convertListFiField(listFiFieldsCandId);
-		setFiTableColList(fiTableColList);
+		setFiColList(fiTableColList);
 
 		fxFormMig.setupForm(fiTableColList, FormType.PlainFormV1);
 
 		fxContent.add(fxFormMig, "wrap");
+		getModView().add(fxContent, "wrap");
+
+	}
+
+	private void setupFormDialog() {
+
+//		getModView().add(lblHeader, "growx,pushx,wrap");
+
+		FxMigPane fxContent = new FxMigPane(FxMigHelper.bui().lcStInset0Gap55().genLc());
+		fxContent.add(getFxFormMig(), "wrap");
 		getModView().add(fxContent, "wrap");
 
 	}
@@ -274,14 +293,45 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 //				return;
 //			}
 //		}
+
+		// Form Alanlarına validasyon eklenmişse onlar kontrol edilir.
+		if (getFxSimpleDialogType() == FxSimpleDialogType.FormDialog) {
+
+			// Obje ile validasyon yapmak istersek
+//			if (getFxFormMig().getFxFormConfigInit().getFnValidateForm() != null) {
+//
+//				if (getEntityClass() != null) {
+//					Fdr fdr = (Fdr) getFxFormMig().getFxFormConfig().getFnValidateForm().apply(getFxFormMig().getFormAsObject(getEntityClass()));
+//
+//					if (!fdr.isTrueBoResult()) {
+//						FxDialogShow.showDbResult(fdr);
+//						return;
+//					}
+//				}
+//
+//			}
+
+			if (getFxFormMig().getFxFormConfigInit().getFnValidateForm() != null) {
+
+				Fdr fdr = (Fdr) getFxFormMig().getFxFormConfig().getFnValidateForm().apply(getFxFormMig());
+
+				if (!fdr.isTrueBoResult()) {
+					FxDialogShow.showPopWarn("Hata \n"+fdr.getMessage());
+					return;
+				}
+
+			}
+
+		}
+
 		super.closeStageWithDoneReason();
 	}
 
 	private void actBtnOKWithValidate() {
-		if(getPredValidateString()!=null){
-			if(!getPredValidateString().test(getTxValue())){
+		if (getPredValidateString() != null) {
+			if (!getPredValidateString().test(getTxValue())) {
 				String message = getValidateErrorMessage();
-				if(message==null) message = "Lütfen Geçerli bir değer giriniz.";
+				if (message == null) message = "Lütfen Geçerli bir değer giriniz.";
 				FxDialogShow.showPopWarn(message);
 				return;
 			}
@@ -303,7 +353,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 	}
 
 	public Object getFormValue() {
-		return FxEditorFactory.bindFormToEntityByEditorNode(getFiTableColList(), getEntityClass());
+		return FxEditorFactory.bindFormToEntityByEditorNode(getFiColList(), getEntityClass());
 	}
 
 	// ******** Setup Methods
@@ -362,7 +412,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 		setOzColType(OzColType.String);
 		txValueProperty().bindBidirectional(fxTextFieldGeneral.textProperty());
 
-		if(!FiString.isEmpty(getTxInitialValue())){
+		if (!FiString.isEmpty(getTxInitialValue())) {
 			fxTextFieldGeneral.setText(getTxInitialValue());
 		}
 
@@ -425,11 +475,11 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 		FxButton fxButton = new FxButton();
 
-		if (getSimpleDialogType() == FxSimpleDialogType.DialogInfo) {
+		if (getFxSimpleDialogType() == FxSimpleDialogType.DialogInfo) {
 			fxButton.setFxIcon(Icons525.INFO);
 		}
 
-		if (getSimpleDialogType() == FxSimpleDialogType.DialogError) {
+		if (getFxSimpleDialogType() == FxSimpleDialogType.DialogError) {
 			fxButton.setFxIcon(Icons525.WARNING_SIGN);
 		}
 
@@ -459,11 +509,11 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 	// Getter and Setter
 
-	public FxSimpleDialogType getSimpleDialogType() {
+	public FxSimpleDialogType getFxSimpleDialogType() {
 		return fxSimpleDialogType;
 	}
 
-	public void setSimpleDialogType(FxSimpleDialogType fxSimpleDialogType) {
+	public void setFxSimpleDialogType(FxSimpleDialogType fxSimpleDialogType) {
 		this.fxSimpleDialogType = fxSimpleDialogType;
 	}
 
@@ -533,20 +583,20 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 		this.entityClass = entityClass;
 	}
 
-	public FxFormMig getFxFormMig() {
+	public FxFormMig2 getFxFormMig() {
 		return fxFormMig;
 	}
 
-	public void setFxFormMig(FxFormMig fxFormMig) {
+	public void setFxFormMig(FxFormMig2 fxFormMig) {
 		this.fxFormMig = fxFormMig;
 	}
 
-	public List<FiCol> getFiTableColList() {
-		return fiTableColList;
+	public List<FiCol> getFiColList() {
+		return fiColList;
 	}
 
-	public void setFiTableColList(List<FiCol> fiTableColList) {
-		this.fiTableColList = fiTableColList;
+	public void setFiColList(List<FiCol> fiColList) {
+		this.fiColList = fiColList;
 	}
 
 	public String getMessageHeader() {

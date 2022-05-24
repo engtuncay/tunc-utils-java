@@ -18,7 +18,6 @@ import org.tbee.javafx.scene.layout.MigPane;
 import ozpasyazilim.utils.annotations.FiDraft;
 import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.datatypes.FiMapParams;
-import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.gui.fxTableViewExtra.NestedPropertyValueFactory;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.mvc.IFiCol;
@@ -36,10 +35,7 @@ import java.lang.reflect.ParameterizedType;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.function.*;
 import java.util.stream.Collectors;
@@ -369,15 +365,15 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
 	public FxTableView2 addAllFiTableColsAuto(List<FiCol> listFiCol) {
 
-		for (FiCol fiTableCol : listFiCol) {
-			addFiTableColAuto(fiTableCol);
+		for (FiCol fiCol : listFiCol) {
+			addFiColAuto(fiCol);
 		}
 		return this;
 	}
 
 	public FxTableView2 addFiColSelection() {
 		FiCol fiTableCol = getFiColSelection();
-		addFiTableColAuto(fiTableCol);
+		addFiColAuto(fiTableCol);
 		return this;
 	}
 
@@ -389,11 +385,11 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 	}
 
 	public FxTableView2 addFiColsAuto(FiCol fiCol) {
-		addFiTableColAuto(fiCol);
+		addFiColAuto(fiCol);
 		return this;
 	}
 
-	public void addFiTableColAuto(FiCol fiTableCol) {
+	public void addFiColAuto(FiCol fiTableCol) {
 		FxTableCol2 fxTableCol = new FxTableCol2(fiTableCol);
 		addFxTableColAuto(fxTableCol);
 	}
@@ -407,11 +403,8 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 	}
 
 	public void addFxTableColAuto(FxTableCol2 fxTableCol) {
-
-		//fxTableCol.setAutoColumnDefault();
 		// Cell Value Factory and Editor Factory leri ayarlanır
 		setupCellValueAndEditorFactory(fxTableCol);
-
 		//Loghelperr.getInstance(getClass()).debug(" Fx TableView col id:"+fxTableCol.getId());
 		addFxTableColFi(fxTableCol);
 	}
@@ -449,7 +442,8 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 			fxTableCol.setCellValueFactory(new PropertyValueFactory<>(fxTableCol.getFiCol().getFieldName()));
 		}
 
-		FxTableViewCellFactoryConfig.setupCellFactoryByDefault(fxTableCol);
+		//bydefault idi
+		FxTableViewCellFactoryModal.setupCellFactoryGeneral(fxTableCol,getEntityClass());
 		fxTableCol.setId(fxTableCol.getFiCol().getFieldName());
 		//fxTableCol.setAutoFormatter(fxTableCol.getFiTableCol().getColType());
 		setAutoFormatter(fxTableCol);
@@ -457,52 +451,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 	}
 
 	public void setAutoFormatter(FxTableCol2 fxTableCol) {
-
-		OzColType dataType = fxTableCol.getFiCol().getColType();
-
-		Map<String, FiField> fieldsAsMap = FiReflection.getFieldsAsMap(getEntityClass());
-
-		String classNameSimple = fieldsAsMap.getOrDefault(fxTableCol.getFiCol().getFieldName(), new FiField()).getClassNameSimple();
-		if (classNameSimple == null) classNameSimple = "";
-
-		//Loghelper.getInstance(getClass()).debug("Class Name Simple:"+classNameSimple + " Field:"+fxTableCol.getFiTableCol().getFieldName());
-
-		if (dataType == OzColType.Double || (dataType == null && classNameSimple.equals("Double"))) {
-			//Loghelper.getInstance(getClass()).debug("Type Double Ayarlandı:"+fxTableCol.getId());
-			Locale locale = new Locale("tr", "TR");
-			DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(locale);
-			otherSymbols.setDecimalSeparator('.');
-			otherSymbols.setGroupingSeparator(',');
-			DecimalFormat decimalFormatter = new DecimalFormat("###,###,###,##0.00", otherSymbols);
-			//String strnumber = decimalFormatter.format(number);
-
-			fxTableCol.setCellFactory(new CellFactoryFormatter<EntClazz, Double>(decimalFormatter));
-			fxTableCol.setStyle("-fx-alignment: CENTER-RIGHT;");
-
-		}
-
-		if (dataType == OzColType.Integer || (dataType == null && classNameSimple.equals("Integer"))) {
-
-			/*
-			DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(locale);
-			otherSymbols.setDecimalSeparator('.');
-			otherSymbols.setGroupingSeparator(',');
-			DecimalFormat decimalpattern = new DecimalFormat("###,###,###,##0.00", otherSymbols);
-			//String strnumber = decimalpattern.format(number);
-
-			// CellFactory : hücre üretim fabrikası TableColumn input alır, output olarak TableCell verir. (Callback fonksiyonunu icra eder) Callback<TableColumn<S, T>, TableCell<S, T>>
-			setCellFactory(new CellFactoryColFormatter<S, Double>(decimalpattern));
-			*/
-			fxTableCol.setStyle("-fx-alignment: CENTER-RIGHT;");
-
-		}
-
-		if (dataType == OzColType.Date || (dataType == null && classNameSimple.equals("Date"))) {
-			SimpleDateFormat f = new SimpleDateFormat("dd.MM.yy");
-			fxTableCol.setCellFactory(new CellFactoryFormatter<EntClazz, Date>(f));
-		}
-
-
+		// FxTableViewCellFactoryConfig e taşındı.
 	}
 
 	public void addFxTableColFi(FxTableCol2 fxTableCol) {
@@ -513,7 +462,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 		// if (getEnabledSummaryRowHeader() == true) setupHeaderSummaryNode(fxTableCol);
 		// activateFilter(fxTableCol);  // setupHeaderFilter içinde konuldu
 		// Editor Class belirtilmişse , Editor Factory si oluşturulur
-		FxTableViewCellFactoryConfig.setupCellFactoryByEditorClass(this, fxTableCol);
+		// FxTableViewCellFactoryModal.setupCellFactoryByEditorClass(this, fxTableCol);
 
 	}
 

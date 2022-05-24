@@ -7,6 +7,7 @@ import javafx.scene.layout.Pane;
 import ozpasyazilim.utils.core.FiBoolean;
 import ozpasyazilim.utils.core.FiCollection;
 import ozpasyazilim.utils.core.FiString;
+import ozpasyazilim.utils.datatypes.FiKeyBean;
 import ozpasyazilim.utils.datatypes.FiMapParams;
 import ozpasyazilim.utils.gui.fxTableViewExtra.EnumColNodeType;
 import ozpasyazilim.utils.log.Loghelper;
@@ -21,7 +22,6 @@ import java.util.List;
 import java.util.Map;
 public class FxFormMig2<EntClazz> extends FxMigPane<EntClazz> implements IFxModView {
 	private Class<EntClazz> entityClazz;
-
 	private Map<String, FiCol> formElementsMap;
 	private String guid;
 	private FxFormConfig<EntClazz> fxFormConfig; // added 27-01-21
@@ -40,12 +40,19 @@ public class FxFormMig2<EntClazz> extends FxMigPane<EntClazz> implements IFxModV
 		super("insets 0");
 		setupListFormElementsDefault(listFormElements);
 	}
-
 	public FxFormMig2(List<FiCol> listFormElements, Boolean boInit) {
 		super("insets 0");
 		if (FiBoolean.isTrue(boInit)) {
 			setupListFormElementsDefault(listFormElements);
 		}
+	}
+	public FxFormMig2(FxFormConfig<EntClazz> fxFormConfig) {
+		setupForm(fxFormConfig);
+	}
+
+	public void setupForm(FxFormConfig<EntClazz> fxFormConfig) {
+		setFxFormSetup(fxFormConfig);
+		initFormElementsMain();
 	}
 
 	@Override
@@ -95,11 +102,15 @@ public class FxFormMig2<EntClazz> extends FxMigPane<EntClazz> implements IFxModV
 	}
 
 	public FiMapParams getFormAsFiMapParams() {
-		return FxEditorFactory.bindFormEditorToMapByEditorNode(getListFormElements());
+		return FxEditorFactory.bindFormToKeyBeanByEditorNode(getListFormElements());
+	}
+
+	public FiKeyBean getFormAsKeyBean() {
+		return FxEditorFactory.bindFormToKeyBeanByEditorNode(getListFormElements());
 	}
 
 	public List<FiCol> getListFiTableColWithFormValue() {
-		FxEditorFactory.bindFormValueToFiTableListByEditor(getListFormElements());
+		FxEditorFactory.bindFormValueToFiColListByEditor(getListFormElements());
 		return getListFormElements();
 	}
 
@@ -410,6 +421,14 @@ public class FxFormMig2<EntClazz> extends FxMigPane<EntClazz> implements IFxModV
 
 	public void showAsDialog() {
 		FxSimpleDialog fxSimpleDialog = new FxSimpleDialog();
+	}
+
+	public void setupForm(List<FiCol> listFormElements, FormType formType) {
+		FxFormConfig fxFormConfig = new FxFormConfig();
+		fxFormConfig.setListFormElements(listFormElements);
+		fxFormConfig.setFormType(formType);
+		setFxFormSetup(fxFormConfig);
+		initFormElementsMain();
 	}
 }
 

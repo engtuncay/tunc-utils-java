@@ -15,6 +15,7 @@ import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.gui.fxcomponents.*;
 import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.core.FiString;
+import ozpasyazilim.utils.returntypes.Fdr;
 
 import java.text.Format;
 import java.util.ArrayList;
@@ -101,7 +102,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 	// --Table Editor ile İgli Alanlar
 	private String colEditorClass;
 	private Node colEditorNode;
-	private Object colEditorValue;
+	private Object colValue;
 	// Editörde kullanılacak component kullanılack yazı , örneğin button ise üzerine yazılacak text
 	private String colEditorNodeText;
 	EventHandler<KeyEvent> colEditorKeyEvent; // editorde enter basılınca action tanımı
@@ -153,8 +154,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 
 	// --Form ile İlgili Alanlar
 
-	// Formlarda update yapılmayacak alanı gösterir
-	private Boolean boNonEditableForForm;
+
 
 	// -- FxTableView için alanlar
 
@@ -168,10 +168,24 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 	// Alanlarda update query oluşturulurken dahil edilmeyecek alanlar
 	private Boolean boNonUpdatable;
 
-	// Sorgular için, alanın primary key alanı olduğunu belirtir
+	// Formlarda update yapılmayacak alanı gösterir
+	private Boolean boNonEditableForForm;
+
+	// ****** SORGULAR İÇİN OLUŞTURULAN ALANLAR *******
+
+	/**
+	 * Sorgular için, alanın primary key alanı olduğunu belirtir
+	 */
 	private Boolean boKeyField;
 
-	// FxTable ve FxTreeTable ile İlişkilendirmeleri
+	/**
+	 * Sorgu hazırlanırken update olacak alan olduğunu gösterir
+ 	 */
+	private Boolean boUpdateField;
+
+	// ------ End - Sorgular için --------------
+
+	// ***** FxTable ve FxTreeTable ile İlişkilendirmeleri *****
 	private ObjectProperty<TableColumn> tableColumnFx = new SimpleObjectProperty<>();
 	private ObjectProperty<TreeTableColumn> fxTreeTableCol = new SimpleObjectProperty<>();
 	// Exprerimental - çıkartılabilir
@@ -201,6 +215,12 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 
 	// formlarda compenete focus olunca trigger eder
 	private Consumer<Node> fnNodeFocusTrigger;
+
+	// Sütun veya Alan için Sayısal karşılık saklamak için, canceled için 1 gibi
+	private Integer lnCode;
+
+	// sütun veya form alanı için validate fonksiyonu, object olarak form alanının değeri gönderilir (draft)
+	private Function<Object,Fdr> fnValidate;
 
 	public FiCol() {
 		// Table Column için yapılacak atamalar
@@ -316,7 +336,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 	 * @param isHidden
 	 * @return
 	 */
-	public FiCol buildBoHiddenCol(boolean isHidden) {
+	public FiCol buiBoHidden(boolean isHidden) {
 		this.setBoHidden(isHidden);
 		return this;
 	}
@@ -468,6 +488,11 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 	 */
 	public FiCol buildBoIsRequired(Boolean boIsRequired) {
 		setBoRequired(boIsRequired);
+		return this;
+	}
+
+	public FiCol buiBoKeyField(Boolean boKeyField) {
+		setBoKeyField(boKeyField);
 		return this;
 	}
 
@@ -863,8 +888,13 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 		this.boNonUpdatable = boNonUpdatable;
 	}
 
-	public FiCol buiBoNonUpdatable(Boolean boNonUpdatable) {
+	public FiCol<EntClazz> buiBoNonUpdatable(Boolean boNonUpdatable) {
 		this.boNonUpdatable = boNonUpdatable;
+		return this;
+	}
+
+	public FiCol<EntClazz> buiBoUpdateField(Boolean boUpdateField) {
+		this.boUpdateField = boUpdateField;
 		return this;
 	}
 
@@ -904,12 +934,12 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 
 	@Override
 	public Object getColEditorValue() {
-		return colEditorValue;
+		return colValue;
 	}
 
 	@Override
 	public void setColEditorValue(Object colEditorValue) {
-		this.colEditorValue = colEditorValue;
+		this.colValue = colEditorValue;
 	}
 
 	@Override
@@ -1195,6 +1225,38 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 
 	public void setFnNodeFocusTrigger(Consumer<Node> fnNodeFocusTrigger) {
 		this.fnNodeFocusTrigger = fnNodeFocusTrigger;
+	}
+
+	public Integer getLnCode() {
+		return lnCode;
+	}
+
+	public void setLnCode(Integer lnCode) {
+		this.lnCode = lnCode;
+	}
+
+	public Function<Object, Fdr> getFnValidate() {
+		return fnValidate;
+	}
+
+	public void setFnValidate(Function<Object, Fdr> fnValidate) {
+		this.fnValidate = fnValidate;
+	}
+
+	public Object getColValue() {
+		return colValue;
+	}
+
+	public void setColValue(Object colValue) {
+		this.colValue = colValue;
+	}
+
+	public Boolean getBoUpdateField() {
+		return boUpdateField;
+	}
+
+	public void setBoUpdateField(Boolean boUpdateField) {
+		this.boUpdateField = boUpdateField;
 	}
 }
 

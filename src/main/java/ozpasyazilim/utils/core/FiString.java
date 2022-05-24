@@ -722,6 +722,12 @@ public class FiString {
 		}
 	}
 
+	public static Boolean isEqualWithTrim(String txData1, String txData2) {
+		if(txData1!=null) txData1 = txData1.trim();
+		if(txData2!=null) txData2 = txData2.trim();
+		return FiString.orEmpty(txData1).equals(FiString.orEmpty(txData2));
+	}
+
 	/**
 	 * İçerikleri dolu bir şekilde eşit ise
 	 *

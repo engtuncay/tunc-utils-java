@@ -2,6 +2,7 @@ package ozpasyazilim.utils.core;
 
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
+import ozpasyazilim.utils.datatypes.FiKeyBean;
 import ozpasyazilim.utils.datatypes.FiListMapStr;
 import ozpasyazilim.utils.datatypes.FiMapParams;
 import ozpasyazilim.utils.datatypes.FiMapString;
@@ -727,10 +728,10 @@ public class FiConsole {
 	}
 
 
-	public static String textFiMapParams(FiMapParams appMap) {
+	public static String textFiMapParams(FiKeyBean fiKeyBean) {
 		StringBuilder log = new StringBuilder("");
 		log.append("\n");
-		for (Map.Entry<String, Object> entry : appMap.entrySet()) {
+		for (Map.Entry<String, Object> entry : fiKeyBean.entrySet()) {
 			log.append(entry.getKey() + " : " + FiString.ToStrOrEmpty(entry.getValue()) + "\n");
 		}
 		return log.toString();

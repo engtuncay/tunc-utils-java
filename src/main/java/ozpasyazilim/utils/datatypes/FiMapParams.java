@@ -17,23 +17,20 @@ import static ozpasyazilim.utils.fidborm.FiQuery.fhrConvertSqlForMultiParamByTem
 /**
  * Sql Sorgularında named parametrelere bind etmek için kullanılır.
  */
-public class FiMapParams extends FiMapStrob {
-
+public class FiMapParams extends FiKeyBean {
 	Set<String> activateParamSet;
 	Set<String> deActivateParamSet;
-
 	public FiMapParams() {
 	}
-
 	public FiMapParams(Map<? extends String, ?> m) {
 		super(m);
 	}
-
 
 	public static FiMapParams build() {
 		return new FiMapParams();
 	}
 
+	// üst sınıftan alamaz, üst sınıf FiKeyBean dönüyor
 	public FiMapParams buildPut(Object fieldName, Object value) {
 		if (fieldName == null) return this;
 
@@ -49,6 +46,12 @@ public class FiMapParams extends FiMapStrob {
 		return this;
 	}
 
+	public FiMapParams bind(Object key, Object value) {
+		if (key == null) return this;
+		put(key.toString(), value);
+		return this;
+	}
+
 //	public FiMapParams buildPutIfNotEmpty(Object fieldName, Object value) {
 //		putIfNotEmpty(fieldName,value,false);
 //		return this;
@@ -59,9 +62,6 @@ public class FiMapParams extends FiMapStrob {
 //		return this;
 //	}
 
-	public FiMapParams putIfNotEmpty(Object fieldName, Object value) {
-		return putIfNotEmpty(fieldName, value, null);
-	}
 
 	public FiMapParams putIfNotEmpty(Object fieldName, Object value, Boolean addPercentage) {
 		if (fieldName == null) return this;
@@ -79,29 +79,19 @@ public class FiMapParams extends FiMapStrob {
 		return this;
 	}
 
-	public void puto(Object field, Object value) {
-		this.put(field.toString(), value);
-	}
+//	public void puto(Object field, Object value) {
+//		this.put(field.toString(), value);
+//	}
+//
+//	public void add(Object field, Object value) {
+//		this.put(field.toString(), value);
+//	}
 
-	public void add(Object field, Object value) {
-		this.put(field.toString(), value);
-	}
-
-	public FiMapParams buildMultiParam(Object fieldName, List<Integer> listData) {
-
-		Integer index = -1;
-		for (Integer listDatum : listData) {
-			index++;
-			put(fieldName.toString() + index.toString(), listData.get(index));
-		}
-		return this;
-	}
-
-	public void putIfNotNull(Object objKey, Object value) {
-		if (value != null) {
-			this.put(objKey.toString(), value);
-		}
-	}
+//	public void putIfNotNull(Object objKey, Object value) {
+//		if (value != null) {
+//			this.put(objKey.toString(), value);
+//		}
+//	}
 
 
 	/**
@@ -171,16 +161,16 @@ public class FiMapParams extends FiMapStrob {
 		return this;
 	}
 
-	public FiMapParams bindAndActivateListParamIfNotEmpty(Object objKey, List value, StringProperty spSql) {
-
-		if (FiCollection.isNotEmpty(value)) {
-			String param = objKey.toString();
-			addMultiParams(spSql, param, (List) value, this);
-			FiQuery.fsmActivateOptParamForProp(spSql, param);
-		}
-
-		return this;
-	}
+//	public FiMapParams bindAndActivateListParamIfNotEmpty(Object objKey, List value, StringProperty spSql) {
+//
+//		if (FiCollection.isNotEmpty(value)) {
+//			String param = objKey.toString();
+//			addMultiParams(spSql, param, (List) value, this);
+//			FiQuery.fsmActivateOptParamForProp(spSql, param);
+//		}
+//
+//		return this;
+//	}
 
 	private void addMultiParams(StringProperty sqlQuery, String param, List listData, FiMapParams mapBind) {
 
@@ -203,21 +193,17 @@ public class FiMapParams extends FiMapStrob {
 
 	}
 
-	public FiMapParams bind(Object key, Object value) {
-		if (key == null) return this;
-		put(key.toString(), value);
-		return this;
-	}
 
-	public void deActivateParam(Object sqlParam, StringProperty spSql) {
-		if (sqlParam == null) return;
-		FiQuery.fhrDeActivateOptParam(spSql, sqlParam.toString());
-	}
 
-	public void activateParam(Object sqlParam, StringProperty spSql) {
-		if (sqlParam == null) return;
-		FiQuery.fsmActivateOptParamForProp(spSql, sqlParam.toString());
-	}
+//	public void deActivateParam(Object sqlParam, StringProperty spSql) {
+//		if (sqlParam == null) return;
+//		FiQuery.fhrDeActivateOptParam(spSql, sqlParam.toString());
+//	}
+
+//	public void activateParam(Object sqlParam, StringProperty spSql) {
+//		if (sqlParam == null) return;
+//		FiQuery.fsmActivateOptParamForProp(spSql, sqlParam.toString());
+//	}
 
 	public Set<String> getActivateParamSet() {
 		if (activateParamSet == null) {
@@ -226,9 +212,9 @@ public class FiMapParams extends FiMapStrob {
 		return activateParamSet;
 	}
 
-	public void setActivateParamSet(Set<String> activateParamSet) {
-		this.activateParamSet = activateParamSet;
-	}
+//	public void setActivateParamSet(Set<String> activateParamSet) {
+//		this.activateParamSet = activateParamSet;
+//	}
 
 	public Set<String> getDeActivateParamSet() {
 		if (deActivateParamSet == null) {
@@ -237,9 +223,9 @@ public class FiMapParams extends FiMapStrob {
 		return deActivateParamSet;
 	}
 
-	public void setDeActivateParamSet(Set<String> deActivateParamSet) {
-		this.deActivateParamSet = deActivateParamSet;
-	}
+//	public void setDeActivateParamSet(Set<String> deActivateParamSet) {
+//		this.deActivateParamSet = deActivateParamSet;
+//	}
 
 	/**
 	 * Included Not Null Fields

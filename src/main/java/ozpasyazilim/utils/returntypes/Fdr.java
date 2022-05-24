@@ -26,7 +26,6 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 	// False ise sorguda hata olup,exception olmuştur
 	// Null ise işlem yapılmadığını ifade eder  (last update:29-12-2019)
 	private Boolean boResult;
-
 	private EntClazz value;
 	private String message;
 	private Integer rowsAffected;
@@ -47,7 +46,6 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 	// Op : Operation
 	private Integer lnSuccessOpCount;
 	private Integer lnFailureOpCount;
-
 	private Integer lnErrorCode;
 
 	// ???
@@ -385,7 +383,6 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 
 		// Tüm işlemlerde mesaj birleştirilir.
 		appendMessageLn(fdr.getMessage());
-
 	}
 
 	public void appendMessageLn(String message) {
@@ -480,7 +477,7 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 		return false;
 	}
 
-	public void setBoResultAndMessage(Boolean boResult, String message) {
+	public void setBoResult2(Boolean boResult, String message) {
 		setBoResult(boResult);
 		setMessage(message);
 	}

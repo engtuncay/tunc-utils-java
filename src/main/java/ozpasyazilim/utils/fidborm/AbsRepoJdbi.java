@@ -4,6 +4,7 @@ import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 import org.reactfx.util.TriConsumer;
 import ozpasyazilim.utils.core.FiString;
+import ozpasyazilim.utils.datatypes.FiKeyBean;
 import ozpasyazilim.utils.datatypes.FiMapParams;
 import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.annotations.FiDraft;
@@ -1112,7 +1113,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 
 	public Fdr<Optional<Integer>> jdSelectSingleOptIntegerValBindBean(String sqlQuery, EntClazz entClazz) {
-		return jdSelectSingleBindEntity(sqlQuery, entClazz, Integer.class);
+		return jdSelectSingleOptBindEntityMain(sqlQuery, entClazz, Integer.class);
 	}
 
 	public Integer jdRunBatchUpdateQuery(String... queryArr) {
@@ -1735,6 +1736,25 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 	}
 
 	/**
+	 * Entity'nin herhangi bir id alanının null olup olmamadığına göre insert veya update işlemi yapar.
+	 *
+	 * @param entity
+	 * @param fiTableColList
+	 * @return
+	 */
+	public Fdr jdInsertEntityOrUpdateFiTableColsBindEntityByDtCreated(EntClazz entity, List<FiCol> fiTableColList) {
+
+		Boolean boIdNull = FiEntity.checkDtCreatedFieldsNull(entity, getEntityClass());
+
+		if (FiBoolean.isTrue(boIdNull)) { // insert
+			return jdInsertEntityMain(entity);
+		} else { // update
+			return jdUpdateFiColsBindEntityByIdFieldInFiCols(fiTableColList, entity);
+		}
+
+	}
+
+	/**
 	 * Consumer yerine , Function kullanılacak ve fidbresult dönmeli <br>
 	 * entity lerin id field null degilse update query çalıştırır, yoksa otomatik insert sorgusu çalışır
 	 *
@@ -2161,13 +2181,11 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 	 */
 	public <PrmEnt> Fdr<PrmEnt> jdSelectSingleCustomEntityBindMap(String sql, Map<String, Object> mapParam, Class<PrmEnt> resultClazz) {
 
-		Jdbi jdbi = getJdbi();
-
 		Fdr<PrmEnt> fdr = new Fdr<>();
 		fdr.setValue(null);
 
 		try {
-			Optional<PrmEnt> result = jdbi.withHandle(handle -> {
+			Optional<PrmEnt> result = getJdbi().withHandle(handle -> {
 				return handle.select(FiQuery.stoj(sql))
 						.bindMap(mapParam)
 						.mapTo(resultClazz)
@@ -2219,7 +2237,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 	 * @param fiMapParams
 	 * @return
 	 */
-	public Fdr<Integer> jdSelectSingleIntOrM1(String sql, FiMapParams fiMapParams) {
+	public Fdr<Integer> jdSelectSingleIntOrMinus1(String sql, FiKeyBean fiMapParams) {
 		Fdr<Integer> fdrSql = jdSelectSingleCustomEntityBindMap(sql, fiMapParams, Integer.class);
 		if (fdrSql.getValue() == null) {
 			fdrSql.setValue(-1);
@@ -2240,7 +2258,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 	 * @param fiMapParams
 	 * @return
 	 */
-	public Fdr<List<String>> jdSelectSingleStringThenSplitCsv(String sql, FiMapParams fiMapParams) {
+	public Fdr<List<String>> jdSelectSingleCsvString(String sql, FiMapParams fiMapParams) {
 
 		Fdr<String> stringFdr = jdSelectSingleCustomEntityBindMap(sql, fiMapParams, String.class);
 
@@ -2259,10 +2277,14 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 	}
 
 	public Fdr<Optional<Integer>> jdSelectSingleIntBindEntity(String sql, EntClazz entClazz) {
-		return jdSelectSingleBindEntity(sql, entClazz, Integer.class);
+		return jdSelectSingleOptBindEntityMain(sql, entClazz, Integer.class);
 	}
 
-	public <PrmEnt> Fdr<Optional<PrmEnt>> jdSelectSingleBindEntity(String sql, EntClazz entClazz, Class<PrmEnt> resultClazz) {
+	public Fdr<Integer> jdSelectSingleInt2BindEntity(String sql, EntClazz entClazz) {
+		return jdSelectSingleBindEntityMain(sql, entClazz, Integer.class);
+	}
+
+	public <PrmEnt> Fdr<Optional<PrmEnt>> jdSelectSingleOptBindEntityMain(String sql, EntClazz entClazz, Class<PrmEnt> resultClazz) {
 
 		Jdbi jdbi = getJdbi();
 
@@ -2289,6 +2311,29 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 	}
 
 
+	public <PrmEnt> Fdr<PrmEnt> jdSelectSingleBindEntityMain(String sql, EntClazz entClazz, Class<PrmEnt> resultClazz) {
+
+		Fdr<PrmEnt> fdr = new Fdr<>();
+//		fdr.setValue(0);
+
+		try {
+			Optional<PrmEnt> result = getJdbi().withHandle(handle -> {
+				return handle.select(FiQuery.stoj(sql))
+						.bindBean(entClazz)
+						.mapTo(resultClazz)
+						.findFirst();
+			});
+
+			result.ifPresent(fdr::setValue);
+			fdr.setBoResult(true);
+		} catch (Exception ex) {
+			Loghelper.errorLog(getClass(), "Query Problem");
+			Loghelper.errorException(getClass(), ex);
+			fdr.setBoResult(false, ex);
+		}
+
+		return fdr;
+	}
 	/**
 	 * Not null return , null yerine Optional.Empty döner
 	 *

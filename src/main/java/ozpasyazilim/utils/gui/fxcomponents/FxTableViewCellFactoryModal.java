@@ -8,43 +8,149 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.util.Callback;
 import ozpasyazilim.utils.core.FiBoolean;
 import ozpasyazilim.utils.core.FiString;
+import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.gui.fxTableViewExtra.EnumColNodeType;
 import ozpasyazilim.utils.core.FiReflection;
+import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.table.OzColType;
+
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Cell Factory, TableView hücrelerinin içerisine yerleşecek componentlerin ayarlanmasını sağlar
- *
  */
-public class FxTableViewCellFactoryConfig {
+public class FxTableViewCellFactoryModal {
 
 	/**
-	 * Eğer cell editor class tanımlanmamışsa, default cell factory ayarları buradan yapılır.
+	 * Genel cellFactory 17-05-22 (iki metod birleştirildi) setupCellFactoryByDefault ve setupCellFactoryByEditorClass
+	 * <p>
 	 *
 	 * @param fxTableCol
 	 */
-	public static void setupCellFactoryByDefault(FxTableCol2 fxTableCol) {
+	public static <EntClazz> void setupCellFactoryGeneral(FxTableCol2 fxTableCol, Class<EntClazz> entitClazz) {
+		// ek argüman
+		//,FxTableView2<EntClazz> fxTableView2
 
-// Loghelper.get(FxTableViewCellEditorFactoryConfig.class).debug("Cell Editor Setup Col Name:" + fxTableCol.getFiCol().getFieldName());
+		/**
+		 * Editor Class belirtilmişse , Cell Factory'si editorClass a göre oluşturulur.
+		 *
+		 *
+		 */
+		if (!FiString.isEmpty(fxTableCol.getFiCol().getColEditorClass())) {
 
-		// Editor Class belirlenmişse , auto Editor Tanımlanmaz
-		if (!FiString.isEmpty(fxTableCol.getFiCol().getColEditorClass())) return; // if içinde başında ! vardı
+			if (fxTableCol.getFiCol().getColEditorClass().equals(CheckBox.class.getSimpleName())) {
 
-		if (fxTableCol.getFiCol().getColType() == OzColType.Boolean) {
+				//			fxTableCol.setCellFactory(new Callback<TableColumn<S, Boolean>, TableCell<S, Boolean>>() {
+				//
+				//				@Override
+				//				public TableCell<S, Boolean> call(
+				//						TableColumn<S, Boolean> param) {
+				//					//return new CheckBoxCell(selectedItems);
+				//					CheckBoxTableCell<S, Boolean> cell = new CheckBoxTableCell<S, Boolean>();
+				//					cell.setAlignment(Pos.CENTER);
+				//					return cell;
+				//				}
+				//			});
+				fxTableCol.setCellFactory(getCellFactoryForCheckBoxSimple());
+				return;
+			}
 
-			fxTableCol.styleAlignCenterFi();
+			if (fxTableCol.getFiCol().getColEditorClass().equals(Button.class.getSimpleName())
+					|| fxTableCol.getFiCol().getColEditorClass().equals(Button.class.getName())) {
+				Callback<TableColumn<EntClazz, String>, TableCell<EntClazz, String>> cellFactory = getCellFactoryForButtonSimple(fxTableCol);
+				fxTableCol.setCellFactory(cellFactory);
+				return;
+			}
 
-//			fxTableCol.setCellValueFactory(param -> {
-//				TableColumn.CellDataFeatures paramm = (TableColumn.CellDataFeatures) param;
-//				paramm.
-//			} );
+			// 26-09-2019 Genel İşlevli Factory Class, istenilen comp üretilip ona göre render edilir
+			if (fxTableCol.getFiCol().getColEditorClass().equals(Node.class.getName())) {
+				Callback<TableColumn<EntClazz, Object>, TableCell<EntClazz, Object>> cellFactory = getCellFactoryForNodeGeneral(fxTableCol);
+				fxTableCol.setCellFactory(cellFactory);
+				return;
+			}
 
-			// callback <P,R> parameter(argumant) type and return type
-			Callback<TableColumn, TableCell> cellFactoryCheckBox = getCellFactoryForCheckBox(fxTableCol);
+			// 26-09-2019 FxButtonV2
+			if (fxTableCol.getFiCol().getColEditorClass().equals(EnumColNodeType.FxButtonV2.toString())) {
+				Callback<TableColumn<EntClazz, Object>, TableCell<EntClazz, Object>> cellFactory = getCellFactoryForFxButtonV2(fxTableCol);
+				fxTableCol.setCellFactory(cellFactory);
+				return;
+			}
 
-			fxTableCol.setCellFactory(cellFactoryCheckBox);
+			if (fxTableCol.getFiCol().getColEditorClass().equals(FxButton.class.getName())
+					|| fxTableCol.getFiCol().getColEditorClass().equals(FxButton.class.getSimpleName())) {
+				Callback<TableColumn<EntClazz, String>, TableCell<EntClazz, String>> cellFactory = getCellFactoryForFxButton(fxTableCol);
+				fxTableCol.setCellFactory(cellFactory);
+				return;
+			}
 
-		}
+			if (fxTableCol.getFiCol().getColEditorClass().equals(ToggleButton.class.getSimpleName())) {
+				Callback<TableColumn<EntClazz, Boolean>, TableCell<EntClazz, Boolean>> cellFactory = getCellFactoryForToggleButton(fxTableCol);
+				fxTableCol.setCellFactory(cellFactory);
+				return;
+			}
+
+			if (fxTableCol.getFiCol().getColEditorClass().equals(FxStateButton.class.getSimpleName())) {
+				Callback<TableColumn<EntClazz, Integer>, TableCell<EntClazz, Integer>> cellFactory = getCellFactoryForFxStateButton(fxTableCol);
+				fxTableCol.setCellFactory(cellFactory);
+				return;
+			}
+
+			if (fxTableCol.getFiCol().getColEditorClass().equals(FxStateButtonThree.class.getSimpleName())) {
+				Callback<TableColumn<EntClazz, Integer>, TableCell<EntClazz, Integer>> cellFactory = getCellFactoryForFxStateButtonThree(fxTableCol);
+				fxTableCol.setCellFactory(cellFactory);
+				return;
+			}
+
+			if (fxTableCol.getFiCol().getColEditorClass().equals(EnumColNodeType.FxButtonCustom.toString())) {
+				fxTableCol.styleAlignCenterFi();
+				Callback<TableColumn<EntClazz, Object>, TableCell<EntClazz, Object>> cellFactory = getCellFactoryForFxButtonCustom(fxTableCol);
+				fxTableCol.setCellFactory(cellFactory);
+				return;
+			}
+
+			if (fxTableCol.getFiCol().getColEditorClass().equals(EnumColNodeType.FxLabelStatus.toString())) {
+				fxTableCol.styleAlignCenterFi();
+				Callback<TableColumn<EntClazz, Object>, TableCell<EntClazz, Object>> cellFactory = getCellFactoryForFxLabelStatus(fxTableCol);
+				fxTableCol.setCellFactory(cellFactory);
+				return;
+			}
+
+		} // end - editorClass a göre cellFactoy Tanımlama
+
+
+		//Loghelper.get(FxTableViewCellEditorFactoryConfig.class).debug("Cell Editor Setup Col Name:" + fxTableCol.getFiCol().getFieldName());
+
+		/**
+		 * OzColType göre Cell Factory Oluşturma
+		 */
+		OzColType ozColType = fxTableCol.getFiCol().getColType();
+
+		if (ozColType != null) {
+
+			if (ozColType == OzColType.Double) {
+				assignCellFactoryDoubleType(fxTableCol);
+				return;
+			}
+
+			if (ozColType == OzColType.Integer) {
+				assignCellFactoryIntegerType(fxTableCol);
+				return;
+			}
+
+			if (ozColType == OzColType.Date) {
+				assignCellFactoryDateType(fxTableCol);
+				return;
+			}
+
+			if (ozColType == OzColType.Boolean) {
+				assignCellFactoryBooleanType(fxTableCol);
+				return;
+			}
 
 //		if (fxTableCol.getFiCol().getColEditorClassInit().equals(EnumColNodeType.FxLabelCell.toString())) {
 //
@@ -56,7 +162,84 @@ public class FxTableViewCellFactoryConfig {
 //
 //		}
 
+		} // end - ozColType göre cellFactory
+
+		/**
+		 * Reflection a göre cellFactory Tanımlama
+		 */
+		if (entitClazz != null) {
+
+			Map<String, FiField> fieldsAsMap = FiReflection.getFieldsAsMap(entitClazz);
+			String classNameSimple = fieldsAsMap.getOrDefault(fxTableCol.getFiCol().getFieldName(), new FiField()).getClassNameSimple();
+			//Loghelper.getInstance(getClass()).debug("Class Name Simple:"+classNameSimple + " Field:"+fxTableCol.getFiTableCol().getFieldName());
+			if (classNameSimple == null) return;
+
+			if (classNameSimple.equals("Double")) {
+				assignCellFactoryDoubleType(fxTableCol);
+				return;
+			}
+
+			if (classNameSimple.equals("Integer")) {
+				assignCellFactoryIntegerType(fxTableCol);
+			}
+
+			if (classNameSimple.equals("Date")) {
+				assignCellFactoryDateType(fxTableCol);
+			}
+
+		} // end - entityClazz a göre cell factory oluşturma
+
+		Loghelper.get(FxTableViewCellFactoryModal.class).debug("özel cell factory oluşturulmadı");
+
 	}
+
+	private static void assignCellFactoryBooleanType(FxTableCol2 fxTableCol) {
+		fxTableCol.styleAlignCenterFi();
+
+//			fxTableCol.setCellValueFactory(param -> {
+//				TableColumn.CellDataFeatures paramm = (TableColumn.CellDataFeatures) param;
+//				paramm.
+//			} );
+
+		// callback <P,R> parameter(argumant) type and return type
+		Callback<TableColumn, TableCell> cellFactoryCheckBox = getCellFactoryForCheckBox(fxTableCol);
+
+		fxTableCol.setCellFactory(cellFactoryCheckBox);
+	}
+
+	private static void assignCellFactoryIntegerType(FxTableCol2 fxTableCol) {
+    /*
+    DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(locale);
+    otherSymbols.setDecimalSeparator('.');
+    otherSymbols.setGroupingSeparator(',');
+    DecimalFormat decimalpattern = new DecimalFormat("###,###,###,##0.00", otherSymbols);
+    //String strnumber = decimalpattern.format(number);
+
+    // CellFactory : hücre üretim fabrikası TableColumn input alır, output olarak TableCell verir. (Callback fonksiyonunu icra eder) Callback<TableColumn<S, T>, TableCell<S, T>>
+    setCellFactory(new CellFactoryColFormatter<S, Double>(decimalpattern));
+    */
+		fxTableCol.setStyle("-fx-alignment: CENTER-RIGHT;");
+	}
+
+	private static <EntClazz> void assignCellFactoryDateType(FxTableCol2 fxTableCol) {
+		SimpleDateFormat f = new SimpleDateFormat("dd.MM.yy");
+		fxTableCol.setCellFactory(new CellFactoryFormatter<EntClazz, Date>(f));
+	}
+
+	private static <EntClazz> void assignCellFactoryDoubleType(FxTableCol2 fxTableCol) {
+		//Loghelper.getInstance(getClass()).debug("Type Double Ayarlandı:"+fxTableCol.getId());
+		Locale locale = new Locale("tr", "TR");
+		DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(locale);
+		otherSymbols.setDecimalSeparator('.');
+		otherSymbols.setGroupingSeparator(',');
+		DecimalFormat decimalFormatter = new DecimalFormat("###,###,###,##0.00", otherSymbols);
+		//String strnumber = decimalFormatter.format(number);
+
+		fxTableCol.setCellFactory(new CellFactoryFormatter<EntClazz, Double>(decimalFormatter));
+		assignCellFactoryIntegerType(fxTableCol);
+	}
+
+	// end -genel cell factory
 
 	private static Callback<TableColumn, TableCell> getCellFactoryForCheckBox(FxTableCol2 fxTableCol) {
 
@@ -130,91 +313,6 @@ public class FxTableViewCellFactoryConfig {
 		};
 	}
 
-	/**
-	 * Editor Class belirtilmişse , Cell Factory'si oluşturulur
-	 *
-	 * @param fxTableCol
-	 */
-	public static <EntClazz> void setupCellFactoryByEditorClass(FxTableView2<EntClazz> fxTableView2, FxTableCol2 fxTableCol) {
-
-		if (fxTableCol.getFiCol().getColEditorClass() == null) return;
-
-		if (fxTableCol.getFiCol().getColEditorClass().equals(CheckBox.class.getSimpleName())) {
-
-//			fxTableCol.setCellFactory(new Callback<TableColumn<S, Boolean>, TableCell<S, Boolean>>() {
-//
-//				@Override
-//				public TableCell<S, Boolean> call(
-//						TableColumn<S, Boolean> param) {
-//					//return new CheckBoxCell(selectedItems);
-//					CheckBoxTableCell<S, Boolean> cell = new CheckBoxTableCell<S, Boolean>();
-//					cell.setAlignment(Pos.CENTER);
-//					return cell;
-//				}
-//			});
-
-			fxTableCol.setCellFactory(getCellFactoryForCheckBoxSimple());
-			return;
-		}
-
-
-		if (fxTableCol.getFiCol().getColEditorClass().equals(Button.class.getSimpleName())
-				|| fxTableCol.getFiCol().getColEditorClass().equals(Button.class.getName())) {
-			Callback<TableColumn<EntClazz, String>, TableCell<EntClazz, String>> cellFactory = getCellFactoryForButtonSimple(fxTableCol);
-			fxTableCol.setCellFactory(cellFactory);
-			return;
-		}
-
-		// 26-09-2019 Genel İşlevli Factory Class , istenilen comp üretilip ona göre render edilir
-		if (fxTableCol.getFiCol().getColEditorClass().equals(Node.class.getName())) {
-			Callback<TableColumn<EntClazz, Object>, TableCell<EntClazz, Object>> cellFactory = getCellFactoryForNodeGeneral(fxTableCol);
-			fxTableCol.setCellFactory(cellFactory);
-			return;
-		}
-
-		// 26-09-2019 FxButtonV2
-		if (fxTableCol.getFiCol().getColEditorClass().equals(EnumColNodeType.FxButtonV2.toString())) {
-			Callback<TableColumn<EntClazz, Object>, TableCell<EntClazz, Object>> cellFactory = getCellFactoryForFxButtonV2(fxTableCol);
-			fxTableCol.setCellFactory(cellFactory);
-		}
-
-		if (fxTableCol.getFiCol().getColEditorClass().equals(FxButton.class.getName())
-				|| fxTableCol.getFiCol().getColEditorClass().equals(FxButton.class.getSimpleName())) {
-			Callback<TableColumn<EntClazz, String>, TableCell<EntClazz, String>> cellFactory = getCellFactoryForFxButton(fxTableCol);
-			fxTableCol.setCellFactory(cellFactory);
-		}
-
-		if (fxTableCol.getFiCol().getColEditorClass().equals(ToggleButton.class.getSimpleName())) {
-			Callback<TableColumn<EntClazz, Boolean>, TableCell<EntClazz, Boolean>> cellFactory = getCellFactoryForToggleButton(fxTableCol);
-			fxTableCol.setCellFactory(cellFactory);
-		}
-
-		if (fxTableCol.getFiCol().getColEditorClass().equals(FxStateButton.class.getSimpleName())) {
-			Callback<TableColumn<EntClazz, Integer>, TableCell<EntClazz, Integer>> cellFactory = getCellFactoryForFxStateButton(fxTableCol);
-			fxTableCol.setCellFactory(cellFactory);
-		}
-
-		if (fxTableCol.getFiCol().getColEditorClass().equals(FxStateButtonThree.class.getSimpleName())) {
-			Callback<TableColumn<EntClazz, Integer>, TableCell<EntClazz, Integer>> cellFactory = getCellFactoryForFxStateButtonThree(fxTableCol);
-			fxTableCol.setCellFactory(cellFactory);
-			return;
-		}
-
-		if (fxTableCol.getFiCol().getColEditorClass().equals(EnumColNodeType.FxButtonCustom.toString())) {
-			fxTableCol.styleAlignCenterFi();
-			Callback<TableColumn<EntClazz, Object>, TableCell<EntClazz, Object>> cellFactory = getCellFactoryForFxButtonCustom(fxTableCol);
-			fxTableCol.setCellFactory(cellFactory);
-			return;
-		}
-
-		if (fxTableCol.getFiCol().getColEditorClass().equals(EnumColNodeType.FxLabelStatus.toString())) {
-			fxTableCol.styleAlignCenterFi();
-			Callback<TableColumn<EntClazz, Object>, TableCell<EntClazz, Object>> cellFactory = getCellFactoryForFxLabelStatus(fxTableCol);
-			fxTableCol.setCellFactory(cellFactory);
-			return;
-		}
-
-	}
 
 	private static <EntClazz> Callback<TableColumn<EntClazz, Object>, TableCell<EntClazz, Object>> getCellFactoryForFxButtonCustom(FxTableCol2 fxTableCol) {
 		// callback S : entity , Field Tür : Object : Herhangi bir tipde hücre alanı olabilir
@@ -734,6 +832,145 @@ public class FxTableViewCellFactoryConfig {
 					}
 				};
 		return cellFactory;
+	}
+
+	/**
+	 * Eğer cell editor class tanımlanmamışsa, default cell factory ayarları buradan yapılır.
+	 *
+	 * @param fxTableCol
+	 */
+	public static <EntityClass> void setupCellFactoryByDefault(FxTableCol2 fxTableCol, Class<EntityClass> entitClazz) {
+
+// Loghelper.get(FxTableViewCellEditorFactoryConfig.class).debug("Cell Editor Setup Col Name:" + fxTableCol.getFiCol().getFieldName());
+		OzColType dataType = fxTableCol.getFiCol().getColType();
+
+		Map<String, FiField> fieldsAsMap = FiReflection.getFieldsAsMap(entitClazz);
+
+		String classNameSimple = fieldsAsMap.getOrDefault(fxTableCol.getFiCol().getFieldName(), new FiField()).getClassNameSimple();
+
+		if (classNameSimple == null) classNameSimple = "";
+
+		//Loghelper.getInstance(getClass()).debug("Class Name Simple:"+classNameSimple + " Field:"+fxTableCol.getFiTableCol().getFieldName());
+
+		if (dataType == OzColType.Double || (dataType == null && classNameSimple.equals("Double"))) {
+			//Loghelper.getInstance(getClass()).debug("Type Double Ayarlandı:"+fxTableCol.getId());
+			assignCellFactoryDoubleType(fxTableCol);
+		}
+
+		if (dataType == OzColType.Integer || (dataType == null && classNameSimple.equals("Integer"))) {
+			assignCellFactoryIntegerType(fxTableCol);
+		}
+
+		if (dataType == OzColType.Date || (dataType == null && classNameSimple.equals("Date"))) {
+			SimpleDateFormat f = new SimpleDateFormat("dd.MM.yy");
+			fxTableCol.setCellFactory(new CellFactoryFormatter<EntityClass, Date>(f));
+		}
+
+
+		// Editor Class belirlenmişse , auto Editor Tanımlanmaz
+		if (!FiString.isEmpty(fxTableCol.getFiCol().getColEditorClass())) return; // if içinde başında ! vardı
+
+		if (fxTableCol.getFiCol().getColType() == OzColType.Boolean) {
+
+			assignCellFactoryBooleanType(fxTableCol);
+
+		}
+
+//		if (fxTableCol.getFiCol().getColEditorClassInit().equals(EnumColNodeType.FxLabelCell.toString())) {
+//
+//			// fxTableCol.styleAlignCenterFi();
+//
+//			// callback <P,R> parameter(argumant) type and return type
+//			Callback<TableColumn, TableCell> cellFactoryCheckBox = getCellFactoryFxLabelCell(fxTableCol);
+//			fxTableCol.setCellFactory(cellFactoryCheckBox);
+//
+//		}
+
+	}
+
+	/**
+	 * Editor Class belirtilmişse , Cell Factory'si oluşturulur
+	 *
+	 * @param fxTableCol
+	 */
+	public static <EntClazz> void setupCellFactoryByEditorClass(FxTableView2<EntClazz> fxTableView2, FxTableCol2 fxTableCol) {
+
+		if (fxTableCol.getFiCol().getColEditorClass() == null) return;
+
+		if (fxTableCol.getFiCol().getColEditorClass().equals(CheckBox.class.getSimpleName())) {
+
+//			fxTableCol.setCellFactory(new Callback<TableColumn<S, Boolean>, TableCell<S, Boolean>>() {
+//
+//				@Override
+//				public TableCell<S, Boolean> call(
+//						TableColumn<S, Boolean> param) {
+//					//return new CheckBoxCell(selectedItems);
+//					CheckBoxTableCell<S, Boolean> cell = new CheckBoxTableCell<S, Boolean>();
+//					cell.setAlignment(Pos.CENTER);
+//					return cell;
+//				}
+//			});
+
+			fxTableCol.setCellFactory(getCellFactoryForCheckBoxSimple());
+			return;
+		}
+
+		if (fxTableCol.getFiCol().getColEditorClass().equals(Button.class.getSimpleName())
+				|| fxTableCol.getFiCol().getColEditorClass().equals(Button.class.getName())) {
+			Callback<TableColumn<EntClazz, String>, TableCell<EntClazz, String>> cellFactory = getCellFactoryForButtonSimple(fxTableCol);
+			fxTableCol.setCellFactory(cellFactory);
+			return;
+		}
+
+		// 26-09-2019 Genel İşlevli Factory Class , istenilen comp üretilip ona göre render edilir
+		if (fxTableCol.getFiCol().getColEditorClass().equals(Node.class.getName())) {
+			Callback<TableColumn<EntClazz, Object>, TableCell<EntClazz, Object>> cellFactory = getCellFactoryForNodeGeneral(fxTableCol);
+			fxTableCol.setCellFactory(cellFactory);
+			return;
+		}
+
+		// 26-09-2019 FxButtonV2
+		if (fxTableCol.getFiCol().getColEditorClass().equals(EnumColNodeType.FxButtonV2.toString())) {
+			Callback<TableColumn<EntClazz, Object>, TableCell<EntClazz, Object>> cellFactory = getCellFactoryForFxButtonV2(fxTableCol);
+			fxTableCol.setCellFactory(cellFactory);
+		}
+
+		if (fxTableCol.getFiCol().getColEditorClass().equals(FxButton.class.getName())
+				|| fxTableCol.getFiCol().getColEditorClass().equals(FxButton.class.getSimpleName())) {
+			Callback<TableColumn<EntClazz, String>, TableCell<EntClazz, String>> cellFactory = getCellFactoryForFxButton(fxTableCol);
+			fxTableCol.setCellFactory(cellFactory);
+		}
+
+		if (fxTableCol.getFiCol().getColEditorClass().equals(ToggleButton.class.getSimpleName())) {
+			Callback<TableColumn<EntClazz, Boolean>, TableCell<EntClazz, Boolean>> cellFactory = getCellFactoryForToggleButton(fxTableCol);
+			fxTableCol.setCellFactory(cellFactory);
+		}
+
+		if (fxTableCol.getFiCol().getColEditorClass().equals(FxStateButton.class.getSimpleName())) {
+			Callback<TableColumn<EntClazz, Integer>, TableCell<EntClazz, Integer>> cellFactory = getCellFactoryForFxStateButton(fxTableCol);
+			fxTableCol.setCellFactory(cellFactory);
+		}
+
+		if (fxTableCol.getFiCol().getColEditorClass().equals(FxStateButtonThree.class.getSimpleName())) {
+			Callback<TableColumn<EntClazz, Integer>, TableCell<EntClazz, Integer>> cellFactory = getCellFactoryForFxStateButtonThree(fxTableCol);
+			fxTableCol.setCellFactory(cellFactory);
+			return;
+		}
+
+		if (fxTableCol.getFiCol().getColEditorClass().equals(EnumColNodeType.FxButtonCustom.toString())) {
+			fxTableCol.styleAlignCenterFi();
+			Callback<TableColumn<EntClazz, Object>, TableCell<EntClazz, Object>> cellFactory = getCellFactoryForFxButtonCustom(fxTableCol);
+			fxTableCol.setCellFactory(cellFactory);
+			return;
+		}
+
+		if (fxTableCol.getFiCol().getColEditorClass().equals(EnumColNodeType.FxLabelStatus.toString())) {
+			fxTableCol.styleAlignCenterFi();
+			Callback<TableColumn<EntClazz, Object>, TableCell<EntClazz, Object>> cellFactory = getCellFactoryForFxLabelStatus(fxTableCol);
+			fxTableCol.setCellFactory(cellFactory);
+			return;
+		}
+
 	}
 
 }

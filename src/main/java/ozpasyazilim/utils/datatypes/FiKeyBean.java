@@ -6,29 +6,24 @@ import java.util.Map;
 /**
  * Custom Data Type
  * <p>
- * Map<String,Object> DataTYpe
+ * Map<String,Object> türünde bir obje ve özel metodları olan
  */
-public class FiMapStrob extends HashMap<String, Object> {
+public class FiKeyBean extends HashMap<String, Object> {
 
-	public FiMapStrob() {
+	public FiKeyBean() {
 	}
-
-	public FiMapStrob(Map<? extends String, ?> m) {
+	public FiKeyBean(Map<? extends String, ?> m) {
 		super(m);
 	}
-
-	public static FiMapStrob build() {
-		return new FiMapStrob();
+	public static FiKeyBean build() {
+		return new FiKeyBean();
 	}
-
-	public FiMapStrob buildPut(Object fieldName, Object value) {
+	public FiKeyBean buildPut(Object fieldName, Object value) {
 		if (fieldName == null) return this;
-
 		this.put(fieldName.toString(), value);
 		return this;
 	}
-
-	public FiMapStrob buildPutIfNotNull(Object fieldName, Object value) {
+	public FiKeyBean buildPutIfNotNull(Object fieldName, Object value) {
 		if (fieldName == null) return this;
 		if (value == null) return this;
 
@@ -49,8 +44,7 @@ public class FiMapStrob extends HashMap<String, Object> {
 			this.put(objKey.toString(), value);
 		}
 	}
-
-	public FiMapStrob bind(Object key, Object value) {
+	public FiKeyBean bind(Object key, Object value) {
 		if (key == null) return this;
 		put(key.toString(), value);
 		return this;

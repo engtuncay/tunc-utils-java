@@ -1,26 +1,33 @@
 package ozpasyazilim.utils.gui.fxcomponents;
 
+import ozpasyazilim.utils.returntypes.Fdr;
 import ozpasyazilim.utils.table.FiCol;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 public class FxFormConfig<EntClazz> {
 
 	private List<FiCol> listFormElements;
 	private FormType formType;
-	// form yüklenecek formEntity - yerine FormEntity kullanılacak
-	//	@Deprecated
-	//	private EntClazz formInitEntityEdit;
-	//	@Deprecated
-	//	private EntClazz formInitEntityInsert;
-
 	private EntClazz formEntity; // 21-10-30 eklendi
 
-	// Form güncellemek amacıyla mı açıldı
+	/**
+	 * Form güncellemek amacıyla açıldığını belirtir
+ 	 */
 	private Boolean boUpdateForm; // 21-10-30 eklendi
 
 	private Boolean boReadOnlyForm;
+
+	private Function<FxFormMig2, Fdr> fnValidateForm;
+
+	public FxFormConfig() {
+	}
+
+	public FxFormConfig(List<FiCol> fiCols) {
+		this.listFormElements = fiCols;
+	}
 
 	public List<FiCol> getListFormElements() {
 		return listFormElements;
@@ -79,5 +86,13 @@ public class FxFormConfig<EntClazz> {
 
 	public void setBoReadOnlyForm(Boolean boReadOnlyForm) {
 		this.boReadOnlyForm = boReadOnlyForm;
+	}
+
+	public Function<FxFormMig2, Fdr> getFnValidateForm() {
+		return fnValidateForm;
+	}
+
+	public void setFnValidateForm(Function<FxFormMig2, Fdr> fnValidateForm) {
+		this.fnValidateForm = fnValidateForm;
 	}
 }

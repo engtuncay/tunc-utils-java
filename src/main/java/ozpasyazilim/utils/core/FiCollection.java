@@ -144,9 +144,7 @@ public class FiCollection {
 		}
 
 		return mapList;
-
 	}
-
 
 	public static <KeyVal, T> Map<KeyVal, T> listToMapSingleIgnoreNullKey(List<T> listData, Function<T, KeyVal> fnKeyGetter) {
 

@@ -607,6 +607,28 @@ public class FiEntity {
 		return isNull;
 	}
 
+	public static <T> Boolean checkDtCreatedFieldsNull(T entity, Class<T> entityClass) {
+
+		List<FiField> listFiFieldsShort = getListFieldsShortWithId(entityClass);
+
+		Boolean isNull = null;
+
+		//listIdFields.forEach(fiField -> {
+		for (FiField field : listFiFieldsShort) {
+
+			if (FiBoolean.isTrue(field.getBoCusFieldDtCreate())) {
+				//Loghelperr.staticLogDebug("Id Fiedl"+field.getName());
+				Object idValue = FiReflection.getPropertyNested(entity, field.getName());
+
+				if (isNull == null && idValue != null) isNull = false;
+				if (idValue == null) isNull = true;
+
+			}
+		}
+
+		return isNull;
+	}
+
 	public static <T> Boolean assignIdFields(T fromEntity, T toEntity, Class<T> entityClass) {
 
 		List<FiField> listFiFieldsShort = getListFieldsShortWithId(entityClass);

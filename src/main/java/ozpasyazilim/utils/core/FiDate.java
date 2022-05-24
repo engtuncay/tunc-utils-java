@@ -1,6 +1,7 @@
 package ozpasyazilim.utils.core;
 
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
+import org.joda.time.DateTime;
 import ozpasyazilim.utils.annotations.FiDraft;
 import ozpasyazilim.utils.log.Loghelper;
 
@@ -22,26 +23,13 @@ import java.util.regex.Pattern;
 // import ozpasyazilim.mikro.models.UtilModel;
 
 public class FiDate {
-
-	public static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-	public static SimpleDateFormat sdfDateAndTimeFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
-	public static SimpleDateFormat sdfDateAndTimeShortFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm");
-
-	public static SimpleDateFormat sdfOnlyTimeFormat = new SimpleDateFormat("HH:mm:ss");
-	public static SimpleDateFormat sdDateAndDayFormat = new SimpleDateFormat("dd.MM.yyyy EEEEE");
-	public static SimpleDateFormat sdfOnlyHourFormat = new SimpleDateFormat("HH:mm");
-
-	public static SimpleDateFormat sdfYil = new SimpleDateFormat("yyyy");
-	public static SimpleDateFormat sdfAy = new SimpleDateFormat("MM");
-	public static SimpleDateFormat sdfGun = new SimpleDateFormat("dd");
-
-	static Locale locale = new Locale("tr", "TR");
+	static Locale localeTr = new Locale("tr", "TR");
 
 	public FiDate() {
 	}
 
 	public static boolean isValidDate(String inDate) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MMMM.yyyy", locale);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MMMM.yyyy", localeTr);
 		dateFormat.setLenient(false);
 		try {
 			dateFormat.parse(inDate.trim());
@@ -72,11 +60,13 @@ public class FiDate {
 	}
 
 	public static String getDateAsString(Date date) {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 		if (date == null) return null;
 		return sdf.format(date);
 	}
 
 	public static Date getStringAsDate(String stDate) throws Exception {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 		return sdf.parse(stDate);
 	}
 
@@ -92,14 +82,17 @@ public class FiDate {
 	}
 
 	public static String getDay(Date date) {
+		SimpleDateFormat sdfGun = new SimpleDateFormat("dd");
 		return sdfGun.format(date);
 	}
 
 	public static String getMonth(Date date) {
+		SimpleDateFormat sdfAy = new SimpleDateFormat("MM");
 		return sdfAy.format(date);
 	}
 
 	public static String getYear(Date date) {
+		SimpleDateFormat sdfYil = new SimpleDateFormat("yyyy");
 		return sdfYil.format(date);
 	}
 
@@ -129,6 +122,11 @@ public class FiDate {
 	}
 
 	public static void setTimeZone(TimeZone tz) {
+		SimpleDateFormat sdfOnlyHourFormat = new SimpleDateFormat("HH:mm");
+		SimpleDateFormat sdDateAndDayFormat = new SimpleDateFormat("dd.MM.yyyy EEEEE");
+		SimpleDateFormat sdfOnlyTimeFormat = new SimpleDateFormat("HH:mm:ss");
+		SimpleDateFormat sdfDateAndTimeFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 		sdf.setTimeZone(tz);
 		sdfDateAndTimeFormat.setTimeZone(tz);
 		sdfOnlyTimeFormat.setTimeZone(tz);
@@ -212,6 +210,7 @@ public class FiDate {
 	}
 
 	public static String datetoString_timestamptShort(Date date) {
+		SimpleDateFormat sdfDateAndTimeShortFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm");
 		return sdfDateAndTimeShortFormat.format(date);
 	}
 
@@ -712,5 +711,11 @@ public class FiDate {
 			return true;
 		}
 		return false;
+	}
+
+	public static String getNowStringAsIso8601Date(){
+		DateTime dt = new DateTime();
+		return dt.toString();
+		//System.out.println("Local Time (ISO8601): "+ dt.toString());
 	}
 }

@@ -7,6 +7,7 @@ import javafx.scene.layout.Pane;
 import ozpasyazilim.utils.core.FiBoolean;
 import ozpasyazilim.utils.core.FiCollection;
 import ozpasyazilim.utils.core.FiString;
+import ozpasyazilim.utils.datatypes.FiKeyBean;
 import ozpasyazilim.utils.datatypes.FiMapParams;
 import ozpasyazilim.utils.gui.fxTableViewExtra.EnumColNodeType;
 import ozpasyazilim.utils.log.Loghelper;
@@ -57,6 +58,10 @@ public class FxFormMig<EntClazz> extends FxMigPane<EntClazz> implements IFxModVi
 		if (FiBoolean.isTrue(boInit)) {
 			setupListFormElementsDefault(listFormElements);
 		}
+	}
+
+	public FxFormMig(FxFormConfig fxFormConfig) {
+		setupForm(fxFormConfig);
 	}
 
 	@Override
@@ -131,13 +136,19 @@ public class FxFormMig<EntClazz> extends FxMigPane<EntClazz> implements IFxModVi
 	}
 
 	public FiMapParams getFormAsFiMapParams() {
-		return FxEditorFactory.bindFormEditorToMapByEditorNode(getListFormElements());
+		return FxEditorFactory.bindFormToKeyBeanByEditorNode(getListFormElements());
 	}
 
-	public List<FiCol> getListFiTableColWithFormValue() {
-		FxEditorFactory.bindFormValueToFiTableListByEditor(getListFormElements());
+	public FiKeyBean getFormAsKeyBean() {
+		return FxEditorFactory.bindFormToKeyBeanByEditorNode(getListFormElements());
+	}
+
+	public List<FiCol> getListFiColWithFormValue() {
+		FxEditorFactory.bindFormValueToFiColListByEditor(getListFormElements());
 		return getListFormElements();
 	}
+
+
 
 	public EntClazz bindFormToEntity() {
 		if (getEntityClazz() == null) setAutoClass();
