@@ -1,6 +1,6 @@
 package ozpasyazilim.utils.core;
 
-import ozpasyazilim.utils.datatypes.FiMapString;
+import ozpasyazilim.utils.datatypes.FiKeyString;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.returntypes.Fdr;
 
@@ -13,10 +13,10 @@ import java.net.URLConnection;
 
 public class FiSoap {
 
-	FiMapString mapHeaders;
+	FiKeyString mapHeaders;
 
 	//String soapAction, String rootTagName
-	public static Fdr<String> requestRaw(String endPoint, String soapRequest, FiMapString mapHeaders) throws MalformedURLException, IOException {
+	public static Fdr<String> requestRaw(String endPoint, String soapRequest, FiKeyString mapHeaders) throws MalformedURLException, IOException {
 
 		Fdr<String> fdr = new Fdr<>();
 
@@ -102,7 +102,7 @@ public class FiSoap {
 		return fdr;
 	}
 
-	public static Fdr<String> requestRawHttps(String endPoint, String soapRequest, FiMapString mapHeaders) throws MalformedURLException, IOException {
+	public static Fdr<String> requestRawHttps(String endPoint, String soapRequest, FiKeyString mapHeaders) throws MalformedURLException, IOException {
 
 		Fdr<String> fdr = new Fdr<>();
 
@@ -190,7 +190,7 @@ public class FiSoap {
 		return fdr;
 	}
 
-	public static Fdr<FiXml> requestFiXml(String endPoint, String soapRequestXml, FiMapString mapHeaders, Boolean boHttps) {
+	public static Fdr<FiXml> requestFiXml(String endPoint, String soapRequestXml, FiKeyString mapHeaders, Boolean boHttps) {
 
 		Fdr<FiXml> fdrXmlDoc = new Fdr<>();
 
@@ -222,11 +222,11 @@ public class FiSoap {
 		return fdrXmlDoc;
 	}
 
-	public FiMapString getMapHeaders() {
+	public FiKeyString getMapHeaders() {
 		return mapHeaders;
 	}
 
-	public void setMapHeaders(FiMapString mapHeaders) {
+	public void setMapHeaders(FiKeyString mapHeaders) {
 		this.mapHeaders = mapHeaders;
 	}
 }

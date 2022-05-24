@@ -1,7 +1,6 @@
 package ozpasyazilim.utils.datatypes;
 
 import ozpasyazilim.utils.core.FiString;
-import ozpasyazilim.utils.table.FiCol;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,13 +11,13 @@ import java.util.List;
  * <p>
  * Map<String,String> DataTYpe
  */
-public class FiMapString extends HashMap<String, String> {
+public class FiKeyString extends HashMap<String, String> {
 
-	public FiMapString() {
+	public FiKeyString() {
 	}
 
-	public static FiMapString build() {
-		return new FiMapString();
+	public static FiKeyString build() {
+		return new FiKeyString();
 	}
 
 	public void clearEmptyKeys() {

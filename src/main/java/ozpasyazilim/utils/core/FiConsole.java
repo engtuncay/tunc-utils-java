@@ -5,7 +5,7 @@ import javafx.geometry.Point2D;
 import ozpasyazilim.utils.datatypes.FiKeyBean;
 import ozpasyazilim.utils.datatypes.FiListMapStr;
 import ozpasyazilim.utils.datatypes.FiMapParams;
-import ozpasyazilim.utils.datatypes.FiMapString;
+import ozpasyazilim.utils.datatypes.FiKeyString;
 import ozpasyazilim.utils.log.Loghelper;
 
 import java.lang.reflect.Field;
@@ -104,11 +104,11 @@ public class FiConsole {
 			Loghelper.debugLog(clazz, String.format("Map Null"));
 			return;
 		}
-		for (FiMapString fiMapString : listMap) {
+		for (FiKeyString fiKeyString : listMap) {
 			if(FiBoolean.isTrue(boShowNulls)){
-				Loghelper.debugLog(clazz, String.format("Map Detail (Not Null)\n\n%s", textMap(fiMapString)));
+				Loghelper.debugLog(clazz, String.format("Map Detail (Not Null)\n\n%s", textMap(fiKeyString)));
 			}else{
-				Loghelper.debugLog(clazz, String.format("Map Detail (Not Null)\n\n%s", textMapNotNull(fiMapString)));
+				Loghelper.debugLog(clazz, String.format("Map Detail (Not Null)\n\n%s", textMapNotNull(fiKeyString)));
 			}
 
 		}

@@ -8,39 +8,39 @@ import java.util.Collection;
 import java.util.List;
 
 
-public class FiListMapStr extends ArrayList<FiMapString> {
+public class FiListMapStr extends ArrayList<FiKeyString> {
 
 	public FiListMapStr() {
 		super();
 	}
 
-	public FiListMapStr(Collection<? extends FiMapString> c) {
+	public FiListMapStr(Collection<? extends FiKeyString> c) {
 		super(c);
 	}
 
 	public void clearEmptyKeys() {
-		for (FiMapString fiMapString : this) {
-			fiMapString.clearEmptyKeys();
+		for (FiKeyString fiKeyString : this) {
+			fiKeyString.clearEmptyKeys();
 		}
 	}
 
 	public void clearRowsKeyIfEmpty(String txDateField) {
-		List<FiMapString> listToDelete = new ArrayList<>();
-		for (FiMapString fiMapString : this) {
-			if (fiMapString.isEmptyKey(txDateField)) {
-				listToDelete.add(fiMapString);
+		List<FiKeyString> listToDelete = new ArrayList<>();
+		for (FiKeyString fiKeyString : this) {
+			if (fiKeyString.isEmptyKey(txDateField)) {
+				listToDelete.add(fiKeyString);
 			}
 		}
-		for (FiMapString fiMapString : listToDelete) {
-			this.remove(fiMapString);
+		for (FiKeyString fiKeyString : listToDelete) {
+			this.remove(fiKeyString);
 		}
 	}
 
-	public Optional<FiMapString> getRow(String txKey, String txValue) {
+	public Optional<FiKeyString> getRow(String txKey, String txValue) {
 		if(FiString.isEmpty(txKey)) return Optional.of(null);
-		for (FiMapString fiMapString : this) {
-			if (fiMapString.getOrDefault(txKey,"-1").equals(txValue)) {
-				Optional<FiMapString> optResult = Optional.of(fiMapString);
+		for (FiKeyString fiKeyString : this) {
+			if (fiKeyString.getOrDefault(txKey,"-1").equals(txValue)) {
+				Optional<FiKeyString> optResult = Optional.of(fiKeyString);
 				return optResult;
 			}
 		}

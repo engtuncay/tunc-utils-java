@@ -4,7 +4,6 @@ package ozpasyazilim.utils.datatypes;
 // Main Group includes 5 types
 // Others are details
 public enum EmDataType {
-
 	MSTRING,
 	MNUMBER,
 	MBINARY,

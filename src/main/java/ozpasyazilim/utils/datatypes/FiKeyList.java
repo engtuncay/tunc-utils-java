@@ -5,21 +5,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FiMapMulti<K, V> extends HashMap<K, List<V>> {
+public class FiKeyList<K, V> extends HashMap<K, List<V>> {
 
-	public FiMapMulti(int initialCapacity, float loadFactor) {
+	public FiKeyList(int initialCapacity, float loadFactor) {
 		super(initialCapacity, loadFactor);
 	}
 
-	public FiMapMulti(int initialCapacity) {
+	public FiKeyList(int initialCapacity) {
 		super(initialCapacity);
 	}
 
-	public FiMapMulti() {
+	public FiKeyList() {
 		super();
 	}
 
-	public FiMapMulti(Map<? extends K, ? extends List<V>> m) {
+	public FiKeyList(Map<? extends K, ? extends List<V>> m) {
 		super(m);
 	}
 
