@@ -19,4 +19,7 @@ public class FiKeyCol extends HashMap<String, FiCol> {
 	}
 
 
+	public void putWithHeaderName(FiCol fiCol) {
+		put(fiCol.getHeaderName(), fiCol);
+	}
 }

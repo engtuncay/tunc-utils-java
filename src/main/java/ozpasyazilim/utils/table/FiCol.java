@@ -47,6 +47,8 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 	// Alanın başlık açıklaması ( tablo için sütün başlığı , form için label alanı değeri / excelde başlık )
 	private String headerName;
 
+	private String txLabel;
+
 	private ObjectProperty<Double> prefSize;
 
 	private Integer printSize;
@@ -1257,6 +1259,14 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 
 	public void setBoUpdateField(Boolean boUpdateField) {
 		this.boUpdateField = boUpdateField;
+	}
+
+	public String getTxLabel() {
+		return txLabel;
+	}
+
+	public void setTxLabel(String txLabel) {
+		this.txLabel = txLabel;
 	}
 }
 
