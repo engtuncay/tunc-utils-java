@@ -3,7 +3,7 @@ package ozpasyazilim.utils.core;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import ozpasyazilim.utils.datatypes.FiKeyBean;
-import ozpasyazilim.utils.datatypes.FiListMapStr;
+import ozpasyazilim.utils.datatypes.FiListKeyString;
 import ozpasyazilim.utils.datatypes.FiMapParams;
 import ozpasyazilim.utils.datatypes.FiKeyString;
 import ozpasyazilim.utils.log.Loghelper;
@@ -99,7 +99,7 @@ public class FiConsole {
 		Loghelper.debugLog(clazz, String.format("Map Detail (Not Null)\n\n%s", textMapNotNull(map)));
 	}
 
-	public static void debugListMap(FiListMapStr listMap, Class clazz,Boolean boShowNulls) {
+	public static void debugListMap(FiListKeyString listMap, Class clazz, Boolean boShowNulls) {
 		if(listMap==null){
 			Loghelper.debugLog(clazz, String.format("Map Null"));
 			return;

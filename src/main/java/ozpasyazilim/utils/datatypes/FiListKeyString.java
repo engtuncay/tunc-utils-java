@@ -8,13 +8,13 @@ import java.util.Collection;
 import java.util.List;
 
 
-public class FiListMapStr extends ArrayList<FiKeyString> {
+public class FiListKeyString extends ArrayList<FiKeyString> {
 
-	public FiListMapStr() {
+	public FiListKeyString() {
 		super();
 	}
 
-	public FiListMapStr(Collection<? extends FiKeyString> c) {
+	public FiListKeyString(Collection<? extends FiKeyString> c) {
 		super(c);
 	}
 
