@@ -1461,11 +1461,11 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 		//Loghelperr.debugLog(getClass(), "update summary");
 
 		if (getEnableSummaryHeader()) {
-			FiTableContext fiTableContext = new FiTableContext();
+			FiHtmlReportConfig fiHtmlReportConfig = new FiHtmlReportConfig();
 			getFxTableColList().forEach(fxTableCol -> {
 				if (fxTableCol.getFiCol().getSummaryLabelNode() != null && fxTableCol.getFiCol().getSummaryType() != null) {
 					Platform.runLater(() -> {
-						String sumValue = FiNumber.formatNumber(FxTableModal.calcSummaryValue(getFilteredList(), fxTableCol.getFiCol(), fiTableContext));
+						String sumValue = FiNumber.formatNumber(FxTableModal.calcSummaryValue(getFilteredList(), fxTableCol.getFiCol(), fiHtmlReportConfig));
 						fxTableCol.getFiCol().getSummaryLabelNode().setText(sumValue);
 						new FxTableModal().styleSummaryLabel(fxTableCol.getFiCol().getSummaryLabelNode(), fxTableCol);
 					});

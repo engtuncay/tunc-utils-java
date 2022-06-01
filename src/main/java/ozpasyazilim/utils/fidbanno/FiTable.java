@@ -14,8 +14,6 @@ public @interface FiTable {
 
 	String prefix() default "";
 
-	String dbName() default "";
-
 	boolean boActive() default true;
 
 }

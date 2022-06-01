@@ -1,4 +1,4 @@
-package ozpasyazilim.utils.fidborm;
+package ozpasyazilim.utils.ficodegen;
 
 import org.jdbi.v3.core.Jdbi;
 import ozpasyazilim.utils.core.FiException;
@@ -6,6 +6,9 @@ import ozpasyazilim.utils.core.FiNumber;
 import ozpasyazilim.utils.core.FiString;
 import ozpasyazilim.utils.core.OzFormatter;
 import ozpasyazilim.utils.fidbanno.FiTable;
+import ozpasyazilim.utils.fidborm.FiEntity;
+import ozpasyazilim.utils.fidborm.FiField;
+import ozpasyazilim.utils.fidborm.FiQueryGenerator;
 
 import javax.persistence.Table;
 import java.util.List;

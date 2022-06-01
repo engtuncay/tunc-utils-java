@@ -3,6 +3,7 @@ package ozpasyazilim.utils.fidborm;
 import org.jdbi.v3.core.Jdbi;
 import ozpasyazilim.utils.annotations.FiDraft;
 import ozpasyazilim.utils.core.*;
+import ozpasyazilim.utils.datatypes.FiListString;
 import ozpasyazilim.utils.datatypes.FiMapParams;
 import ozpasyazilim.utils.entitysql.SqlColumn;
 import ozpasyazilim.utils.gui.fxcomponents.FxEditorFactory;
@@ -1532,6 +1533,52 @@ public class FiQueryGenerator {
 		return query.toString();
 	}
 
+	public static FiListString updateQueryWithFiColsMultiByFiColEntClass(List<FiCol> fiCols) {
+
+		Map<Class, List<FiCol>> classListMap = FiCollection.listToMapMulti(fiCols, fiCol -> fiCol.getEntClass());
+
+		FiListString fiListString = new FiListString();
+
+		classListMap.forEach((clazz, fiCols1) -> {
+
+			StringBuilder query = new StringBuilder();
+			StringBuilder queryWhere = new StringBuilder();
+
+			query.append("UPDATE " + getTableName(clazz) + " SET ");
+
+			Integer index = 0;
+			Integer indexWhere = 0;
+			for (FiCol fiCol : fiCols1) {
+
+				String fieldName = FiString.getIfNotEmptytOr(fiCol.getTxDbFieldName(),fiCol.getFieldName());
+				String paramName = FiString.getIfNotEmptytOr(fiCol.getTxParamName(),fiCol.getFieldName());
+
+				if(!FiBoolean.isTrue(fiCol.getBoKeyField()) && !FiBoolean.isTrue(fiCol.getBoNonUpdatable()) ){
+					index++;
+					if (index != 1) query.append(", ");
+					query.append(fieldName + " = @" + paramName);
+				}
+
+				if (FiBoolean.isTrue(fiCol.getBoKeyField())) {
+					indexWhere++;
+					if (indexWhere != 1) queryWhere.append(" AND ");
+					queryWhere.append(fieldName + " = @" + paramName); // dbFieldName kullanımı ile geliştirilebilir
+					continue;
+				}
+			}
+			query.append(" WHERE " + queryWhere);
+
+			if (queryWhere.length() < 1) {
+				query = new StringBuilder();
+			}
+
+			if(!FiString.isEmptyTrim(query.toString())) fiListString.add(query.toString());
+
+		});
+
+
+		return fiListString;
+	}
 	/**
 	 * Key alanlarını class alanlarındaki Id annotasyonuna göre alır
 	 *

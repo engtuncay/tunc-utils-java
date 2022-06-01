@@ -4,11 +4,10 @@ import org.jdbi.v3.core.Jdbi;
 
 /**
  * Repolarda genel olması istenen alanlar ve metodlar
- *
+ * <p>
  * Kullanan Sınıflar
- *
+ * <p>
  * AbsRepoJdbiPure,
- *
  */
 public class RepoGeneralJdbi {
 
@@ -26,13 +25,17 @@ public class RepoGeneralJdbi {
 		this.databaseName = databaseName;
 	}
 
-	public Jdbi getJdbi() {return jdbi;}
+	public Jdbi getJdbi() {
+		return jdbi;
+	}
 
 	public void setJdbi(Jdbi jdbi) {
 		this.jdbi = jdbi;
 	}
 
-	public String getConnProfile() {return connProfile;}
+	public String getConnProfile() {
+		return connProfile;
+	}
 
 	public void setConnProfile(String connProfile) {
 		this.connProfile = connProfile;

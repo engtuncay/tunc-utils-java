@@ -1130,7 +1130,11 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		return jdRunBatchUpdateQueryFi(queryList);
 	}
 
-	public Fdr jdInsertEntityMain(EntClazz entity) {
+	public Fdr jdInsertEntity(EntClazz entity) {
+		return jdInsertEntityMain(entity, false);
+	}
+
+	public Fdr jdInsertEntityMain(EntClazz entity,Boolean boIncludeIdFields) {
 
 		Jdbi jdbi = getJdbi();
 
@@ -1140,7 +1144,14 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		try {
 			rowCountUpdate = jdbi.withHandle(handle -> {
-				String sql = FiQuery.stoj(FiQueryGenerator.insertQueryWoutId(getEntityClass()));
+
+				String sql = null;
+				if (FiBoolean.isTrue(boIncludeIdFields)) {
+					sql = FiQuery.stoj(FiQueryGenerator.insertQueryWithId(getEntityClass()));
+				}else{
+					sql = FiQuery.stoj(FiQueryGenerator.insertQueryWoutId(getEntityClass()));
+				}
+
 				return handle.createUpdate(sql)
 						.bindBean(entity)
 						.execute(); // returns row count updated
@@ -1728,7 +1739,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		Boolean boIdNull = FiEntity.checkIdFieldsAnyNull(entity, getEntityClass());
 
 		if (FiBoolean.isTrue(boIdNull)) { // insert
-			return jdInsertEntityMain(entity);
+			return jdInsertEntity(entity);
 		} else { // update
 			return jdUpdateFiColsBindEntityByIdFieldInFiCols(fiTableColList, entity);
 		}
@@ -1747,7 +1758,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		Boolean boIdNull = FiEntity.checkDtCreatedFieldsNull(entity, getEntityClass());
 
 		if (FiBoolean.isTrue(boIdNull)) { // insert
-			return jdInsertEntityMain(entity);
+			return jdInsertEntity(entity);
 		} else { // update
 			return jdUpdateFiColsBindEntityByIdFieldInFiCols(fiTableColList, entity);
 		}
@@ -2334,6 +2345,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		return fdr;
 	}
+
 	/**
 	 * Not null return , null yerine Optional.Empty döner
 	 *
@@ -3037,6 +3049,12 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 				if (fdr.getException() != null) {
 					throw fdr.getException();
 				}
+
+				if (fdr.getListExceptionNotNull().size() > 0) {
+					List<Exception> listException = fdr.getListException();
+					throw listException.get(0);
+				}
+
 				handle.commit();
 
 //				} catch (Exception ex) {

@@ -65,6 +65,8 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 	// Combined Operasyon ise alt sonuçlar burada saklanabilir
 	List<Fdr> fdrList;
 
+	List<Exception> listException;
+
 	public Fdr() {
 	}
 
@@ -362,8 +364,8 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 		if (FiBoolean.isFalse(fdr.getBoResult())) {
 			setBoResult(false);
 			setLnFailureOpCount(getLnFailureOpCount() + 1);
-			setException(fdr.getException());
-			// exception listesine eklenebilir - birden fazla olma ihtimali var.
+			setException(fdr.getException()); // exception listesine eklenebilir - birden fazla olma ihtimali var.
+			getListExceptionInit().add(fdr.getException());
 		}
 
 		if (FiBoolean.isTrue(fdr.getBoResult())) {
@@ -375,6 +377,9 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 		if (fdr.getBoResult() == null) {
 
 		}
+
+		// Tümü için yapılacaklar
+
 
 		appendRowsAffected(fdr.getRowsAffectedOrEmpty());
 		appendLnUpdated(fdr.getLnUpdatedRows());
@@ -708,5 +713,27 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 	public Fdr<EntClazz> appendMessageToUp(String s) {
 		setMessage(s+"\n"+getMessage());
 		return this;
+	}
+
+	public List<Exception> getListException() {
+		return listException;
+	}
+
+	public List<Exception> getListExceptionInit() {
+		if (listException == null) {
+			listException = new ArrayList<>();
+		}
+		return listException;
+	}
+
+	public List<Exception> getListExceptionNotNull() {
+		if (listException == null) {
+			return new ArrayList<>();
+		}
+		return listException;
+	}
+
+	public void setListException(List<Exception> listException) {
+		this.listException = listException;
 	}
 }

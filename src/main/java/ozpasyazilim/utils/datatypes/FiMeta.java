@@ -1,6 +1,6 @@
 package ozpasyazilim.utils.datatypes;
 
-import ozpasyazilim.utils.mvcanno.FiExpiremental;
+import ozpasyazilim.utils.annotations.FiExpiremental;
 
 // Genel Bilgi Saklamak Amacıyla kullanılabilir mi ???
 @FiExpiremental

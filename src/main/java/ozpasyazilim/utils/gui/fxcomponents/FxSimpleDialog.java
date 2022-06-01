@@ -315,6 +315,11 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 				Fdr fdr = (Fdr) getFxFormMig().getFxFormConfig().getFnValidateForm().apply(getFxFormMig());
 
+				if(fdr==null){
+					FxDialogShow.showPopWarn("İşlem yapılamadı. Sistem Yöneticinize Başvurun. Hata Tanımı:Fdr-Null");
+					return;
+				}
+
 				if (!fdr.isTrueBoResult()) {
 					FxDialogShow.showPopWarn("Hata \n"+fdr.getMessage());
 					return;

@@ -1,4 +1,4 @@
-package ozpasyazilim.utils.mvcanno;
+package ozpasyazilim.utils.annotations;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;

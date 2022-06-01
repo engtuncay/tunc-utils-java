@@ -3,7 +3,7 @@ package ozpasyazilim.utils.gui.fxcomponents;
 import javafx.geometry.Pos;
 import ozpasyazilim.utils.core.FiNumber;
 import ozpasyazilim.utils.core.FiNumberToText;
-import ozpasyazilim.utils.core.FiTableContext;
+import ozpasyazilim.utils.core.FiHtmlReportConfig;
 import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.core.FiReflection;
 import ozpasyazilim.utils.table.FiCol;
@@ -97,7 +97,7 @@ public class FxTableModal {
 		return summaryEntity;
 	}
 
-	public static <T> Object calcSummaryValue(List<T> listdata, IFiCol fiTableCol, FiTableContext fiTableContext) {
+	public static <T> Object calcSummaryValue(List<T> listdata, IFiCol fiTableCol, FiHtmlReportConfig fiHtmlReportConfig) {
 
 		if (listdata == null || listdata.size() == 0) {
 
@@ -137,7 +137,7 @@ public class FxTableModal {
 					return (Double) objectByField;
 				});
 
-				sumDouble = new FiNumber().truncateByHalfUp(sumDouble, fiTableContext.getLnDecimalScale());
+				sumDouble = new FiNumber().truncateByHalfUp(sumDouble, fiHtmlReportConfig.getLnDecimalScale());
 
 				//Loghelperr.getInstance(getClass()).debug(" Toplam:"+ sumDouble.toString());
 				//new FiProperty().setter(exampleEntity, fiTableCol, sumDouble);
@@ -154,7 +154,7 @@ public class FxTableModal {
 					return (BigDecimal) objectByField;
 				});
 
-				sumDouble = sumDouble.setScale(fiTableContext.getLnDecimalScale(), RoundingMode.HALF_UP);  //new FiNumber().truncateByHalfUp(sumDouble,getDecimalScale());
+				sumDouble = sumDouble.setScale(fiHtmlReportConfig.getLnDecimalScale(), RoundingMode.HALF_UP);  //new FiNumber().truncateByHalfUp(sumDouble,getDecimalScale());
 
 				//Loghelperr.getInstance(getClass()).debug(" Toplam:"+ sumDouble.toString());
 				//new FiProperty().setter(exampleEntity, fiTableCol, sumDouble);
@@ -177,7 +177,7 @@ public class FxTableModal {
 					return (Double) objectByField;
 				});
 
-				sumDouble = new FiNumber().truncateByHalfUp(sumDouble, fiTableContext.getLnDecimalScale());
+				sumDouble = new FiNumber().truncateByHalfUp(sumDouble, fiHtmlReportConfig.getLnDecimalScale());
 
 				//Loghelperr.getInstance(getClass()).debug(" Toplam:"+ sumDouble.toString());
 
@@ -209,7 +209,7 @@ public class FxTableModal {
 		return null;
 	}
 
-	public static <T> Object calcSummaryValueFi(List<T> listdata, FiCol fiTableCol, FiTableContext fiTableContext) {
+	public static <T> Object calcSummaryValueFi(List<T> listdata, FiCol fiTableCol, FiHtmlReportConfig fiHtmlReportConfig) {
 
 		if (listdata == null || listdata.size() == 0) {
 
@@ -251,7 +251,7 @@ public class FxTableModal {
 					return (Double) objectByField;
 				});
 
-				sumDouble = new FiNumber().truncateByHalfUp(sumDouble, fiTableContext.getLnDecimalScale());
+				sumDouble = new FiNumber().truncateByHalfUp(sumDouble, fiHtmlReportConfig.getLnDecimalScale());
 
 				//Loghelperr.getInstance(getClass()).debug(" Toplam:"+ sumDouble.toString());
 				//new FiProperty().setter(exampleEntity, fiTableCol, sumDouble);
@@ -269,7 +269,7 @@ public class FxTableModal {
 					return (Double) objectByField;
 				});
 
-				sumDouble = new FiNumber().truncateByHalfUp(sumDouble, fiTableContext.getLnDecimalScale());
+				sumDouble = new FiNumber().truncateByHalfUp(sumDouble, fiHtmlReportConfig.getLnDecimalScale());
 
 				//Loghelperr.getInstance(getClass()).debug(" Toplam:"+ sumDouble.toString());
 				//new FiProperty().setter(exampleEntity, fiTableCol, sumDouble);
@@ -286,7 +286,7 @@ public class FxTableModal {
 					return (BigDecimal) objectByField;
 				});
 
-				sumDouble = sumDouble.setScale(fiTableContext.getLnDecimalScale(), RoundingMode.HALF_UP);
+				sumDouble = sumDouble.setScale(fiHtmlReportConfig.getLnDecimalScale(), RoundingMode.HALF_UP);
 				//new FiNumber().truncateByHalfUp(sumDouble,getDecimalScale());
 
 				//Loghelperr.getInstance(getClass()).debug(" Toplam:"+ sumDouble.toString());
@@ -306,7 +306,7 @@ public class FxTableModal {
 					return (Double) objectByField;
 				});
 
-				sumDouble = new FiNumber().truncateByHalfUp(sumDouble, fiTableContext.getLnDecimalScale());
+				sumDouble = new FiNumber().truncateByHalfUp(sumDouble, fiHtmlReportConfig.getLnDecimalScale());
 
 				//Loghelperr.getInstance(getClass()).debug(" Toplam:"+ sumDouble.toString());
 

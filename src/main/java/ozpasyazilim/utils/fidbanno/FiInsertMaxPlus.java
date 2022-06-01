@@ -1,6 +1,6 @@
 package ozpasyazilim.utils.fidbanno;
 
-import ozpasyazilim.utils.mvcanno.FiExpiremental;
+import ozpasyazilim.utils.annotations.FiExpiremental;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;

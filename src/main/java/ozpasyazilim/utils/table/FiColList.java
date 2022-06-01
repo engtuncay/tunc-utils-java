@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FiColList extends ArrayList<FiCol>{
-
 	Map<String, FiCol> mapCols;
 
 	public static FiColList build() {

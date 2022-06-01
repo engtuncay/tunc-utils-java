@@ -1,6 +1,6 @@
 package ozpasyazilim.utils.core;
 
-public class FiTableContext {
+public class FiHtmlReportConfig {
 
 	Boolean boSummaryEnabled;
 	Integer lnDecimalScale;

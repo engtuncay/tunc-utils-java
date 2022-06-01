@@ -49,6 +49,8 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 
 	private String txLabel;
 
+	private String txDbFieldName;
+
 	private ObjectProperty<Double> prefSize;
 
 	private Integer printSize;
@@ -148,6 +150,9 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 	List<FiCol> listChildCol;
 	Class childClazz;
 
+	// Hangi Tablonun veya Sınıfın Alanı olduğunu belirtir
+	Class<EntClazz> entClass;
+
 	// Excelde, sütunun yorum balonunda gösterilecek açıklamayı belirtir
 	private String colComment;
 
@@ -162,7 +167,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 
 	private BiConsumer<EntClazz, Button> fnColButton;
 
-	// --Sql Sorgular ile ilgili alanlar
+	// ****** Sql Sorgular ile ilgili alanlar
 
 	// Fi Editor Value nullable izin veriyor mu?
 	private Boolean boNullable;
@@ -170,10 +175,13 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 	// Alanlarda update query oluşturulurken dahil edilmeyecek alanlar
 	private Boolean boNonUpdatable;
 
-	// Formlarda update yapılmayacak alanı gösterir
+	// Formlarda edit yapılmayacak alanı gösterir
 	private Boolean boNonEditableForForm;
 
 	// ****** SORGULAR İÇİN OLUŞTURULAN ALANLAR *******
+
+	// Genel olarak parametre ismi fieldName seçilir , farklı seçilecekse bu alandaki değer kullanılır.
+	private String txParamName;
 
 	/**
 	 * Sorgular için, alanın primary key alanı olduğunu belirtir
@@ -221,7 +229,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 	// Sütun veya Alan için Sayısal karşılık saklamak için, canceled için 1 gibi
 	private Integer lnCode;
 
-	// sütun veya form alanı için validate fonksiyonu, object olarak form alanının değeri gönderilir (draft)
+	// sütun veya form alanı için validate fonksiyonu, object olarak form alanınına değeri gönderilir (draft)
 	private Function<Object,Fdr> fnValidate;
 
 	public FiCol() {
@@ -553,6 +561,11 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 
 	public FiCol buildBoFilterLike(Boolean boFilterLike) {
 		setBoFilterLike(boFilterLike);
+		return this;
+	}
+
+	public FiCol buiTxParamName(String txParamName) {
+		setTxParamName(txParamName);
 		return this;
 	}
 
@@ -1267,6 +1280,30 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 
 	public void setTxLabel(String txLabel) {
 		this.txLabel = txLabel;
+	}
+
+	public Class<EntClazz> getEntClass() {
+		return entClass;
+	}
+
+	public void setEntClass(Class<EntClazz> entClass) {
+		this.entClass = entClass;
+	}
+
+	public String getTxParamName() {
+		return txParamName;
+	}
+
+	public void setTxParamName(String txParamName) {
+		this.txParamName = txParamName;
+	}
+
+	public String getTxDbFieldName() {
+		return txDbFieldName;
+	}
+
+	public void setTxDbFieldName(String txDbFieldName) {
+		this.txDbFieldName = txDbFieldName;
 	}
 }
 

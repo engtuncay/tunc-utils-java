@@ -86,7 +86,7 @@ public class FiThread {
 		return thread;
 	}
 
-	public static void startPlatformThread(Runnable runnable, FxButton btnListe) {
+	public static void startGuiThread(Runnable runnable, FxButton btnListe) {
 
 		final String textOld = btnListe.getText();
 

@@ -2,6 +2,7 @@ package ozpasyazilim.utils.core;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.util.ReflectionUtils;
+import ozpasyazilim.utils.datatypes.FiKeyBean;
 import ozpasyazilim.utils.fidborm.FiEntity;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.mvc.IFiCol;
@@ -319,13 +320,55 @@ public class FiReflection {
 		return list;
 	}
 
+	public static <E> E bindKeyBeanEntity(FiKeyBean keyBean, Class<E> entityclass) {
+		return bindKeyBeanToEntityMain(keyBean, entityclass, false);
+	}
+
+	public static <E> E bindKeyBeanToEntityMain(FiKeyBean keyBean, Class<E> entityclass, Boolean boDoNotShowNotMethod) {
+
+		E entity = createObject(entityclass);
+
+		E finalEntity = entity;
+		keyBean.forEach((key, value) -> {
+
+			try {
+				Object cellvalue = value;
+				PropertyUtils.setProperty(finalEntity, key, cellvalue);
+
+			} catch (IllegalAccessException e) {
+				Loghelper.get(FiReflection.class).debug(FiException.exceptionIfToStr(e));
+			} catch (InvocationTargetException e) {
+				Loghelper.get(FiReflection.class).debug(FiException.exceptionIfToStr(e));
+			} catch (NoSuchMethodException e) {
+				if(!FiBoolean.isTrue(boDoNotShowNotMethod)){
+					Loghelper.get(FiReflection.class).debug("Objenin Metodu Yok:"+key);
+				}
+			}
+
+		});
+
+		return entity;
+	}
+
+	public static <E> E createObject(Class<E> entityclass) {
+		E entity = null;
+		try {
+			entity = entityclass.newInstance();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
+		return entity;
+	}
+
 	/**
 	 * @param clazz
 	 * @return
 	 */
 	public static Map<String, FiField> getFieldsAsMap(Class clazz) {
 
-		if(clazz==null) return new HashMap<>();
+		if (clazz == null) return new HashMap<>();
 
 		Field[] fields = clazz.getDeclaredFields();
 		Map<String, FiField> mapFields = new HashMap<>();
@@ -388,7 +431,7 @@ public class FiReflection {
 				final Class<?>[] clazzField = {null};
 				ReflectionUtils.doWithFields(clazz, field1 -> {
 //					Loghelper.get(FiReflection.class).debug("Field:"+field1.getName());
-					if(field1.getName().equals(fieldName)){
+					if (field1.getName().equals(fieldName)) {
 						clazzField[0] = field1.getType();
 					}
 				});
@@ -484,7 +527,7 @@ public class FiReflection {
 
 	}
 
-	public static <T> T cloneObjectByClass(Object t,Class<T> clazz) {
+	public static <T> T cloneObjectByClass(Object t, Class<T> clazz) {
 		//throws InstantiationException, IllegalAccessException, NoSuchFieldException
 
 		Class clazzRoot = clazz;
@@ -542,8 +585,6 @@ public class FiReflection {
 
 		return objValue;
 	}
-
-
 
 
 	// FIXME field ile control edilebilir - optionala çevrilebilr
@@ -604,11 +645,11 @@ public class FiReflection {
 		return listClone;
 	}
 
-	public static <EntClazz> Object getCandId(EntClazz next,Class<EntClazz> clazz) {
+	public static <EntClazz> Object getCandId(EntClazz next, Class<EntClazz> clazz) {
 
 		List<FiField> listFiFieldsCandId = FiEntity.getListFieldsCandId(clazz);
 
-		if(listFiFieldsCandId.size()==1){
+		if (listFiFieldsCandId.size() == 1) {
 			Object property = getProperty(next, listFiFieldsCandId.get(0).getName());
 			return property;
 		}
@@ -618,7 +659,7 @@ public class FiReflection {
 	public static Boolean setProperty(Object objEntity, String fieldName, Object objValue) {
 
 		try {
-			PropertyUtils.setProperty(objEntity,fieldName,objValue);
+			PropertyUtils.setProperty(objEntity, fieldName, objValue);
 			return true;
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();

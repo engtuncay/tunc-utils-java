@@ -1,6 +1,5 @@
 package ozpasyazilim.utils.core;
 
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.*;
@@ -9,7 +8,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import ozpasyazilim.utils.annotations.FiDraft;
-import ozpasyazilim.utils.gui.components.ComboItem;
 import ozpasyazilim.utils.log.Loghelper;
 
 public class FiString {
@@ -760,5 +758,20 @@ public class FiString {
 		}
 
 		return txValue1.trim().equals(txValue2.trim());
+	}
+
+	/**
+	 *
+	 * Eğer boş degilse (trimli) txValue 1 dön, yoksa txValue2 dön
+	 *
+	 * Emptyt means : Empty With Trim
+	 *
+	 * @param txValue1
+	 * @param txValue2
+	 * @return
+	 */
+	public static String getIfNotEmptytOr(String txValue1, String txValue2) {
+		if(FiString.isEmptyTrim(txValue1)) return txValue2;
+		return txValue1;
 	}
 }

@@ -1,5 +1,7 @@
 package ozpasyazilim.utils.datatypes;
 
+import ozpasyazilim.utils.core.FiString;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,6 +50,22 @@ public class FiKeyBean extends HashMap<String, Object> {
 		if (key == null) return this;
 		put(key.toString(), value);
 		return this;
+	}
+
+	public Object getAfterCheck(Object txKey) {
+		if(FiString.isEmptyToString(txKey)) return null;
+
+		if (this.containsKey(txKey.toString())) {
+			return get(txKey.toString());
+		}else{
+			return null;
+		}
+
+	}
+
+	public Object geto(Object txKey) {
+		if (txKey == null) return null;
+		return get(txKey.toString());
 	}
 
 }

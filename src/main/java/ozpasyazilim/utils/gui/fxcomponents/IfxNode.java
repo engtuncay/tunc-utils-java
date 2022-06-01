@@ -1,6 +1,6 @@
 package ozpasyazilim.utils.gui.fxcomponents;
 
-import ozpasyazilim.utils.mvcanno.FiExpiremental;
+import ozpasyazilim.utils.annotations.FiExpiremental;
 import ozpasyazilim.utils.table.OzColType;
 
 /**
