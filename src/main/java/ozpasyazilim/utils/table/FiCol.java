@@ -49,7 +49,15 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 
 	private String txLabel;
 
+	/**
+	 * Objedeki alan adı (fieldName) ile db deki alan adı aynı degilse kullanılır.
+	 */
 	private String txDbFieldName;
+
+	/**
+	 * Col Id olması için konuldu - tekil kodu
+	 */
+	private String txGuid;
 
 	private ObjectProperty<Double> prefSize;
 
@@ -162,7 +170,6 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 	// --Form ile İlgili Alanlar
 
 
-
 	// -- FxTableView için alanlar
 
 	private BiConsumer<EntClazz, Button> fnColButton;
@@ -190,10 +197,18 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 
 	/**
 	 * Sorgu hazırlanırken update olacak alan olduğunu gösterir
- 	 */
+	 */
 	private Boolean boUpdateField;
 
+	/**
+	 * True olur Sorguda Aktif Edilmesini
+	 * <p>
+	 * False olursa Pasif Edilmesini gösterir
+	 */
+	private Boolean boParamStatus;
+
 	// ------ End - Sorgular için --------------
+
 
 	// ***** FxTable ve FxTreeTable ile İlişkilendirmeleri *****
 	private ObjectProperty<TableColumn> tableColumnFx = new SimpleObjectProperty<>();
@@ -203,7 +218,9 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 
 	// yeni 02-10-19
 
-	// Editörte bir değişim olursa çağrılır (tablonun hücresi değişiklik olursa bildirilir) (property de çevrilebilir ) , inf ye eklenmedi.
+	/**
+	 * Editörte bir değişim olursa çağrılır (tablonun hücresi değişiklik olursa bildirilir) (property de çevrilebilir ) , inf ye eklenmedi.
+	 */
 	private Consumer<EntClazz> fnColCellManualChanged;
 
 	// -- header summary node ile ilgili alanlar
@@ -230,7 +247,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 	private Integer lnCode;
 
 	// sütun veya form alanı için validate fonksiyonu, object olarak form alanınına değeri gönderilir (draft)
-	private Function<Object,Fdr> fnValidate;
+	private Function<Object, Fdr> fnValidate;
 
 	public FiCol() {
 		// Table Column için yapılacak atamalar
@@ -1304,6 +1321,22 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 
 	public void setTxDbFieldName(String txDbFieldName) {
 		this.txDbFieldName = txDbFieldName;
+	}
+
+	public String getTxGuid() {
+		return txGuid;
+	}
+
+	public void setTxGuid(String txGuid) {
+		this.txGuid = txGuid;
+	}
+
+	public Boolean getBoParamStatus() {
+		return boParamStatus;
+	}
+
+	public void setBoParamStatus(Boolean boParamStatus) {
+		this.boParamStatus = boParamStatus;
 	}
 }
 

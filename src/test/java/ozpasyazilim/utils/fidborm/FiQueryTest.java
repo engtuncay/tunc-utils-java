@@ -2,12 +2,10 @@ package ozpasyazilim.utils.fidborm;
 
 import org.junit.jupiter.api.Test;
 import ozpasyazilim.utils.core.FiConsole;
-import ozpasyazilim.utils.datatypes.FiMapParams;
+import ozpasyazilim.utils.datatypes.FiKeyBean;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class FiQueryTest {
 
@@ -35,16 +33,16 @@ class FiQueryTest {
 				"--AND chh.cha_evrak_tip IN(@cha_evrak_tip)\n" +
 				"ORDER BY chh.cha_RECno DESC\n";
 //
-		FiMapParams fiMapParams = new FiMapParams();
+		FiKeyBean fiKeyBean = new FiKeyBean();
 
 		List<Integer> listEvraklar = new ArrayList<>();
 		listEvraklar.add(30);
 		listEvraklar.add(31);
 //		listEvraklar.add(MetaMikroEvrakTip.CekGirisBordrosu.getCha_evrak_tip());
-		fiMapParams.buildPut("cha_evrak_tip", listEvraklar);
-		fiMapParams.buildPut("eceTxFirmaKod", "ozpas");
+		fiKeyBean.buildPut("cha_evrak_tip", listEvraklar);
+		fiKeyBean.buildPut("eceTxFirmaKod", "ozpas");
 
-		FiQuery fiQuery = new FiQuery(sql,fiMapParams);
+		FiQuery fiQuery = new FiQuery(sql, fiKeyBean);
 		fiQuery.activateParamsByFiMap();
 		fiQuery.convertListParamToMultiParams();
 

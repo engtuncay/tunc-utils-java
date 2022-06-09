@@ -12,7 +12,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.reactfx.EventStreams;
 import ozpasyazilim.utils.core.*;
 
-import ozpasyazilim.utils.datatypes.FiMapParams;
+import ozpasyazilim.utils.datatypes.FiKeyBean;
 import ozpasyazilim.utils.fidborm.FiEntity;
 import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.gui.components.ComboItem;
@@ -168,9 +168,9 @@ public class FxEditorFactory {
 
 	}
 
-	public static FiMapParams bindFiColToMapByFilterNode(List<FiCol> fiColList) {
+	public static FiKeyBean bindFiColToMapByFilterNode(List<FiCol> fiColList) {
 
-		FiMapParams fiMapParams = new FiMapParams();
+		FiKeyBean fiKeyBean = new FiKeyBean();
 
 		for (FiCol fiCol : fiColList) {
 
@@ -178,13 +178,13 @@ public class FxEditorFactory {
 
 			//FIXME buraya alan string kontrolü eklenmeli
 			if (FiBoolean.isTrue(fiCol.getBoFilterLike()) && nodeObjValue != null && nodeObjValue instanceof String) {
-				fiMapParams.add(fiCol.getFieldName(), "%" + nodeObjValue + "%");
+				fiKeyBean.add(fiCol.getFieldName(), "%" + nodeObjValue + "%");
 				continue;
 			}
-			fiMapParams.add(fiCol.getFieldName(), nodeObjValue);
+			fiKeyBean.add(fiCol.getFieldName(), nodeObjValue);
 		}
 
-		return fiMapParams;
+		return fiKeyBean;
 	}
 
 	public String convertSimpleTypeToCompClass(String typeSimpleName) {
@@ -712,31 +712,31 @@ public class FxEditorFactory {
 
 	}
 
-	public FiMapParams bindFormEditorToMapByFilterNode(List<? extends IFiCol> listColumns) {
+	public FiKeyBean bindFormEditorToMapByFilterNode(List<? extends IFiCol> listColumns) {
 
-		FiMapParams fiMapParams = new FiMapParams();
+		FiKeyBean fiKeyBean = new FiKeyBean();
 
 		for (int i = 0; i < listColumns.size(); i++) {
 
 			IFiCol ozTableCol = listColumns.get(i);
 			Object cellvalue = getNodeObjValueByFilterNode(ozTableCol);    // map.get(ozTableCol.getHeader());
 			//Loghelperr.getInstance(getClass()).debug(" map param cell value :" + cellvalue.toString() + " class:" + cellvalue.getClass().getSimpleName());
-			fiMapParams.put(ozTableCol.getFieldName().trim(), cellvalue);
+			fiKeyBean.put(ozTableCol.getFieldName().trim(), cellvalue);
 		}
 
-		return fiMapParams;
+		return fiKeyBean;
 
 	}
 
-	public static FiMapParams bindFormToKeyBeanByEditorNode(List<? extends IFiCol> listColumns) {
-		FiMapParams fiMapParams = new FiMapParams();
+	public static FiKeyBean bindFormToKeyBeanByEditorNode(List<? extends IFiCol> listColumns) {
+		FiKeyBean fiKeyBean = new FiKeyBean();
 		for (int i = 0; i < listColumns.size(); i++) {
 			IFiCol iFiCol = listColumns.get(i);
 			Object cellvalue = getNodeObjValueByEditorNode(iFiCol, iFiCol.getColEditorClass());    // map.get(iFiCol.getHeader());
 			//Loghelperr.getInstance(getClass()).debug(" map param cell value :" + cellvalue.toString() + " class:" + cellvalue.getClass().getSimpleName());
-			fiMapParams.put(iFiCol.getFieldName().trim(), cellvalue);
+			fiKeyBean.put(iFiCol.getFieldName().trim(), cellvalue);
 		}
-		return fiMapParams;
+		return fiKeyBean;
 	}
 
 	public static void bindFormValueToFiColListByEditor(List<FiCol> listColumns) {
@@ -1281,12 +1281,12 @@ public class FxEditorFactory {
 	 *
 	 * @param <T>
 	 * @param ozTableCol
-	 * @param consumerStrProp
+	 * @param fncStrProp
 	 * @param durationMilis
 	 */
-	public static <T> void registerTextPropertyWithDurationForFilterNode(IFiCol ozTableCol, Consumer<String> consumerStrProp, long durationMilis) {
+	public static <T> void registerTextPropertyWithDurationForFilterNode(IFiCol ozTableCol, Consumer<String> fncStrProp, long durationMilis) {
 
-		registerTextPropertyWithDurationForNode(consumerStrProp, durationMilis, ozTableCol.getFilterNodeClass(), ozTableCol.getColFilterNode());
+		registerTextPropertyWithDurationForNode(fncStrProp, durationMilis, ozTableCol.getFilterNodeClass(), ozTableCol.getColFilterNode());
 
 	}
 

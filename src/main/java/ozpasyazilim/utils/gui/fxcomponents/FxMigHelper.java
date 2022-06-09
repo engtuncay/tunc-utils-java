@@ -15,12 +15,13 @@ public class FxMigHelper {
 
 	// gap x y : x yatatya boşluk : y dikeyde boşluk
 	public static String lcStandard1InsetZeroGap50 = "insets 0,gap 5 0";
-	public static String lcStandard1InsetZeroGap55 = "insets 0,gap 5 5";
+	// Statik degil get ile yapalım.
+//	public static String lcStandard1InsetZeroGap55 = "insets 0,gap 5 5";
 	public static String lcStandard1InsetZeroGap00 = "insets 0,gap 0 0";
-	public static String lcStandard2WithInset3 = "insets 3,gap 3 3";
-	public static String lcStandard2WithInset5Gap55 = "insets 5,gap 5 5";
-	public static String lcStandard2WithInset5Gap00 = "insets 5,gap 0 0";
-	public static String lcStandard1InsetZeroGap5555 = "insets 0,gap 5 5 5 5";
+//	public static String lcStandard2WithInset3 = "insets 3,gap 3 3";
+//	public static String lcStandard2WithInset5Gap55 = "insets 5,gap 5 5";
+//	public static String lcStandard2WithInset5Gap00 = "insets 5,gap 0 0";
+//	public static String lcStandard1InsetZeroGap5555 = "insets 0,gap 5 5 5 5";
 
 	public static FxMigHelper bui() {
 		return new FxMigHelper();

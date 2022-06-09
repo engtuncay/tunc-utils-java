@@ -1,44 +1,46 @@
 package ozpasyazilim.utils.datatypes;
 
+import ozpasyazilim.utils.core.FiCollection;
+import ozpasyazilim.utils.core.FiString;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class FiKeyList<K, V> extends HashMap<K, List<V>> {
-
-	public FiKeyList(int initialCapacity, float loadFactor) {
-		super(initialCapacity, loadFactor);
-	}
-
-	public FiKeyList(int initialCapacity) {
-		super(initialCapacity);
-	}
+/**
+ * Custom Data Type
+ * <p>
+ * Map<String,List<Ent>> DataTYpe
+ */
+public class FiKeyList<Ent> extends HashMap<String, List<Ent>> {
 
 	public FiKeyList() {
 		super();
 	}
 
-	public FiKeyList(Map<? extends K, ? extends List<V>> m) {
-		super(m);
+	public static FiKeyList build() {
+		return new FiKeyList();
 	}
 
-	/**
-	 * key map de varsa mevcut listeye ekler
-	 * <p>
-	 * key map de yoksa yeni liste oluşturup , map e ekler.
-	 *
-	 * @param key
-	 * @param value
-	 */
-	public void add(K key, V value) {
-		if (this.containsKey(key)) {
-			List<V> vs = this.get(key);
-			vs.add(value);
-		} else { // map'e önceden eklenmemiş
-			List<V> list = new ArrayList<>();
-			list.add(value);
-			put(key, list);
+	public void clearEmptyKeys() {
+		List<String> listToDelete = new ArrayList<>();
+		this.forEach((key,value) -> {
+			if(FiCollection.isEmpty(value)){
+				listToDelete.add(key);
+			}
+		});
+		for (String key : listToDelete) {
+			this.remove(key);
 		}
 	}
+
+	public Boolean isEmptyKey(String txKey) {
+		if(this.containsKey(txKey)){
+			if (FiCollection.isEmpty(this.get(txKey))) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 }

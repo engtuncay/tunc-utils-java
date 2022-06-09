@@ -8,7 +8,7 @@ import net.miginfocom.layout.LC;
 import org.tbee.javafx.scene.layout.MigPane;
 import ozpasyazilim.utils.core.FiString;
 
-public class FxMigPane<EntClazz> extends MigPane {
+public class FxMigPane extends MigPane {
 
 	// inset 0
 	public static String lcStandardInset0Gap50 = "insets 0,gap 5 0"; // gap x y : x yatatya boşluk : y dikeyde boşluk
@@ -133,4 +133,5 @@ public class FxMigPane<EntClazz> extends MigPane {
 		add(node);
 		return this;
 	}
+
 }

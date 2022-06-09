@@ -8,7 +8,6 @@ import ozpasyazilim.utils.core.FiBoolean;
 import ozpasyazilim.utils.core.FiCollection;
 import ozpasyazilim.utils.core.FiString;
 import ozpasyazilim.utils.datatypes.FiKeyBean;
-import ozpasyazilim.utils.datatypes.FiMapParams;
 import ozpasyazilim.utils.gui.fxTableViewExtra.EnumColNodeType;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.mvc.IFiCol;
@@ -20,7 +19,7 @@ import ozpasyazilim.utils.table.FiColList;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.Map;
-public class FxFormMig2<EntClazz> extends FxMigPane<EntClazz> implements IFxModView {
+public class FxFormMig2<EntClazz> extends FxMigPaneEnt<EntClazz> implements IFxModView {
 	private Class<EntClazz> entityClazz;
 	private Map<String, FiCol> formElementsMap;
 	private String guid;
@@ -101,7 +100,7 @@ public class FxFormMig2<EntClazz> extends FxMigPane<EntClazz> implements IFxModV
 		FxEditorFactory.bindEntityToFormByEditorValue(getListFormElements(), formMikroKodDegistir);
 	}
 
-	public FiMapParams getFormAsFiMapParams() {
+	public FiKeyBean getFormAsFiMapParams() {
 		return FxEditorFactory.bindFormToKeyBeanByEditorNode(getListFormElements());
 	}
 

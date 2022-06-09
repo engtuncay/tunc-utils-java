@@ -4,7 +4,7 @@ import org.jdbi.v3.core.Jdbi;
 import ozpasyazilim.utils.annotations.FiDraft;
 import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.datatypes.FiListString;
-import ozpasyazilim.utils.datatypes.FiMapParams;
+import ozpasyazilim.utils.datatypes.FiKeyBean;
 import ozpasyazilim.utils.entitysql.SqlColumn;
 import ozpasyazilim.utils.gui.fxcomponents.FxEditorFactory;
 import ozpasyazilim.utils.mvc.IFiCol;
@@ -1583,10 +1583,10 @@ public class FiQueryGenerator {
 	 * Key alanlarını class alanlarındaki Id annotasyonuna göre alır
 	 *
 	 * @param clazz
-	 * @param fiMapParams
+	 * @param fiKeyBean
 	 * @return
 	 */
-	public static String updateQueryWithFiMapParamByCandId(Class clazz, FiMapParams fiMapParams) {
+	public static String updateQueryWithFiMapParamByCandId(Class clazz, FiKeyBean fiKeyBean) {
 
 		List<FiField> listClassFields = FiEntity.getListFieldsShortWithId(clazz);
 
@@ -1598,7 +1598,7 @@ public class FiQueryGenerator {
 		Integer index = 0;
 		Integer indexWhere = 0;
 
-		for (String key : fiMapParams.keySet()) {
+		for (String key : fiKeyBean.keySet()) {
 			index++;
 			if (index != 1) query.append(", ");
 			query.append(key + " = @" + key);

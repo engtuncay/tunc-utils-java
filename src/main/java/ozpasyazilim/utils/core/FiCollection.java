@@ -3,7 +3,6 @@ package ozpasyazilim.utils.core;
 import javafx.util.Pair;
 
 import org.apache.commons.beanutils.PropertyUtils;
-import ozpasyazilim.utils.datatypes.FiMapParams;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.datatypes.PersonEntityTest;

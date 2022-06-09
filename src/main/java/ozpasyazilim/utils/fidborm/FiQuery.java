@@ -4,7 +4,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.StringProperty;
 import ozpasyazilim.utils.core.*;
-import ozpasyazilim.utils.datatypes.FiMapParams;
+import ozpasyazilim.utils.datatypes.FiKeyBean;
 import ozpasyazilim.utils.log.Loghelper;
 
 import java.util.*;
@@ -23,7 +23,7 @@ public class FiQuery {
 	String txQuery;
 	String txCandIdFieldName;
 	String txPrimaryKeyFieldName;
-	FiMapParams mapParams; // Map<String,Object>
+	FiKeyBean mapParams; // Map<String,Object>
 	List<FiField> queryFieldList;
 	List<FiField> queryWhereList;
 
@@ -31,9 +31,14 @@ public class FiQuery {
 		this.txQuery = sql;
 	}
 
-	public FiQuery(String sql, FiMapParams fiMapParams) {
+//	public FiQuery(String sql, FiMapParams fiMapParams) {
+//		this.txQuery = sql;
+//		this.mapParams = fiMapParams;
+//	}
+
+	public FiQuery(String sql, FiKeyBean fiKeyBean) {
 		this.txQuery = sql;
-		this.mapParams = fiMapParams;
+		this.mapParams = fiKeyBean;
 	}
 
 	public FiQuery() {
@@ -288,9 +293,9 @@ public class FiQuery {
 
 		FiQueryConf finalFiQueryConf = fiQueryConf;
 
-		FiMapParams fiMapParams = new FiMapParams(getMapParams());
+		FiKeyBean fiKeyBean = new FiKeyBean(getMapParams());
 
-		fiMapParams.forEach((param, value) -> {
+		fiKeyBean.forEach((param, value) -> {
 			if (value instanceof List) {
 
 				if (FiBoolean.isTrue(finalFiQueryConf.getBoActivateOnlyFullParams())) {
@@ -329,7 +334,7 @@ public class FiQuery {
 
 	}
 
-	public void convertListParamToMultiParams(FiMapParams mapBind) {
+	public void convertListParamToMultiParams(FiKeyBean mapBind) {
 		setMapParams(mapBind);
 		convertListParamToMultiParams();
 	}
@@ -387,18 +392,18 @@ public class FiQuery {
 		setTxQuery(sqlNew);
 	}
 
-	public FiMapParams getMapParams() {
+	public FiKeyBean getMapParams() {
 		return mapParams;
 	}
 
-	public FiMapParams getMapParamsInit() {
+	public FiKeyBean getMapParamsInit() {
 		if (mapParams == null) {
-			mapParams = new FiMapParams();
+			mapParams = new FiKeyBean();
 		}
 		return mapParams;
 	}
 
-	public FiQuery setMapParams(FiMapParams mapParams) {
+	public FiQuery setMapParams(FiKeyBean mapParams) {
 		this.mapParams = mapParams;
 		return this;
 	}
@@ -452,11 +457,12 @@ public class FiQuery {
 	/**
 	 * FiMapParam'da olan parametreleri aktive eder.
 	 * <p>
-	 * boActivateOnlyFullParams true olursa dolu olan parametreleri aktif eder
+	 * boActivateOnlyFullParams true olursa sadece dolu olan parametreleri aktif eder
 	 */
 	public void activateParamsMain(Boolean boActivateOnlyFullParams) {
 		if (getMapParams() != null) {
 			List<String> deActivatedParamList = new ArrayList<>();
+
 			getMapParams().forEach((key, value) -> {
 				if (FiBoolean.isTrue(boActivateOnlyFullParams)) {
 					// Dolu olanları aktif edecek, boş olanları deaktif edecek
@@ -538,72 +544,72 @@ public class FiQuery {
 	 * <p>
 	 * 3. List tipinde parametre varsa, çoklu parametreye (convertMultiToSingle) çevirir
 	 */
-	public void prepSqlOptParamsByFiMap(FiQueryConf fiQueryConf) {
+//	public void prepSqlOptParamsByFiMap(FiQueryConf fiQueryConf) {
+//
+//		getMapParamsInit();
+//
+//		if (fiQueryConf == null) {
+//			fiQueryConf = new FiQueryConf();
+//		}
+//
+//		// list değer varsa işlem sonunda list paramları single paramlara çevrilecek
+//		BooleanProperty boListDegerVarMi = new SimpleBooleanProperty(false);
+//
+//		FiQueryConf finalFiQueryConf = fiQueryConf;
+//
+//		getMapParams().forEach((key, value) -> {
+//			//Optional Param'ın olup olmadığı kontroline gerek yok.
+//
+//			if (FiBoolean.isTrue(finalFiQueryConf.getBoActivateOnlyFullParams())) {
+//				if (!checkParamValueEmpty(value)) {
+//					activateOptParam(key);
+//				} else {
+//					deActivateOptParam(key);
+//				}
+//			} else {
+//				activateOptParam(key);
+//			}
+//
+//			if (value instanceof Collection) {
+//				boListDegerVarMi.setValue(true);
+//			}
+//
+//		});
+//
+//		for (String activateParam : getMapParams().getActivateParamSet()) {
+//			activateOptParam(activateParam);
+//		}
+//
+//		for (String deActivateParam : getMapParams().getDeActivateParamSet()) {
+//			deActivateOptParam(deActivateParam);
+//		}
+//
+//		// FiMapParam'da olmayan parametreleri pasif eder
+//		Set<String> setParams = getParamOptionals();
+//		for (String setParam : setParams) {
+//			if (!getMapParams().containsKey(setParam)) {
+////				fhrDeActivateOptParam(txQuery, setParam);
+//				deActivateOptParam(setParam);
+//			}
+//		}
+//
+//		if (boListDegerVarMi.getValue()) {
+//			convertListParamToMultiParams();
+//		}
+//
+//
+//	}
 
-		getMapParamsInit();
+//	public void prepSqlAtParamsFullByFiMap() {
+//		prepSqlAtParamsByFiMapMain(FiQueryConf.bui().setBoActivateOnlyFullParams(true));
+//	}
 
-		if (fiQueryConf == null) {
-			fiQueryConf = new FiQueryConf();
-		}
-
-		// list değer varsa işlem sonunda list paramları single paramlara çevrilecek
-		BooleanProperty boListDegerVarMi = new SimpleBooleanProperty(false);
-
-		FiQueryConf finalFiQueryConf = fiQueryConf;
-
-		getMapParams().forEach((key, value) -> {
-			//Optional Param'ın olup olmadığı kontroline gerek yok.
-
-			if (FiBoolean.isTrue(finalFiQueryConf.getBoActivateOnlyFullParams())) {
-				if (!checkParamValueEmpty(value)) {
-					activateOptParam(key);
-				} else {
-					deActivateOptParam(key);
-				}
-			} else {
-				activateOptParam(key);
-			}
-
-			if (value instanceof Collection) {
-				boListDegerVarMi.setValue(true);
-			}
-
-		});
-
-		for (String activateParam : getMapParams().getActivateParamSet()) {
-			activateOptParam(activateParam);
-		}
-
-		for (String deActivateParam : getMapParams().getDeActivateParamSet()) {
-			deActivateOptParam(deActivateParam);
-		}
-
-		// FiMapParam'da olmayan parametreleri pasif eder
-		Set<String> setParams = getParamOptionals();
-		for (String setParam : setParams) {
-			if (!getMapParams().containsKey(setParam)) {
-//				fhrDeActivateOptParam(txQuery, setParam);
-				deActivateOptParam(setParam);
-			}
-		}
-
-		if (boListDegerVarMi.getValue()) {
-			convertListParamToMultiParams();
-		}
-
-
-	}
-
-	public void prepSqlAtParamsFullByFiMap() {
-		prepSqlAtParamsByFiMapMain(FiQueryConf.bui().setBoActivateOnlyFullParams(true));
-	}
-
-	/**
-	 * without configuration
-	 */
-	public void prepSqlAtParamsWoutConfByFiMap() {
-		prepSqlAtParamsByFiMapMain(null);
-	}
+//	/**
+//	 * without configuration
+//	 */
+//	public void prepSqlAtParamsWoutConfByFiMap() {
+//		prepSqlAtParamsByFiMapMain(null);
+//	}
 
 	/**
 	 * Sql At Parametreleri ile çalışır (!!! Optional ile degil)
@@ -614,60 +620,60 @@ public class FiQuery {
 	 * <p>
 	 * 3. List tipinde parametre varsa, çoklu parametreye (convertMultiToSingle) çevirir
 	 */
-	public void prepSqlAtParamsByFiMapMain(FiQueryConf fiQueryConf) {
-
-		getMapParamsInit();
-
-		if (fiQueryConf == null) {
-			fiQueryConf = new FiQueryConf();
-		}
-
-		// list değer varsa işlem sonunda list paramları single paramlara çevrilecek
-		BooleanProperty boListDegerVarMi = new SimpleBooleanProperty(false);
-
-		FiQueryConf finalFiQueryConf = fiQueryConf;
-
-		getMapParams().forEach((key, value) -> {
-			//Optional Param'ın olup olmadığı kontroline gerek yok.
-
-			if (FiBoolean.isTrue(finalFiQueryConf.getBoActivateOnlyFullParams())) {
-				if (!checkParamValueEmpty(value)) {
-					activateSqlAtParam(key);
-				} else {
-					deActivateSqlAtParam(key);
-				}
-			} else {
-				activateSqlAtParam(key);
-			}
-
-			if (value instanceof Collection) {
-				boListDegerVarMi.setValue(true);
-			}
-
-		});
-
-		for (String activateParam : getMapParams().getActivateParamSet()) {
-			activateSqlAtParam(activateParam);
-		}
-
-		for (String deActivateParam : getMapParams().getDeActivateParamSet()) {
-			deActivateSqlAtParam(deActivateParam);
-		}
-
-		// FiMapParam'da olmayan parametreleri pasif eder
-		Set<String> setParams = getParamsSqlAt();
-		for (String setParam : setParams) {
-			if (!getMapParams().containsKey(setParam)) {
-				deActivateSqlAtParam(setParam);
-			}
-		}
-
-		if (boListDegerVarMi.getValue()) {
-			convertListParamToMultiParams(fiQueryConf);
-		}
-
-
-	}
+//	public void prepSqlAtParamsByFiMapMain(FiQueryConf fiQueryConf) {
+//
+//		getMapParamsInit();
+//
+//		if (fiQueryConf == null) {
+//			fiQueryConf = new FiQueryConf();
+//		}
+//
+//		// list değer varsa işlem sonunda list paramları single paramlara çevrilecek
+//		BooleanProperty boListDegerVarMi = new SimpleBooleanProperty(false);
+//
+//		FiQueryConf finalFiQueryConf = fiQueryConf;
+//
+//		getMapParams().forEach((key, value) -> {
+//			//Optional Param'ın olup olmadığı kontroline gerek yok.
+//
+//			if (FiBoolean.isTrue(finalFiQueryConf.getBoActivateOnlyFullParams())) {
+//				if (!checkParamValueEmpty(value)) {
+//					activateSqlAtParam(key);
+//				} else {
+//					deActivateSqlAtParam(key);
+//				}
+//			} else {
+//				activateSqlAtParam(key);
+//			}
+//
+//			if (value instanceof Collection) {
+//				boListDegerVarMi.setValue(true);
+//			}
+//
+//		});
+//
+//		for (String activateParam : getMapParams().getActivateParamSet()) {
+//			activateSqlAtParam(activateParam);
+//		}
+//
+//		for (String deActivateParam : getMapParams().getDeActivateParamSet()) {
+//			deActivateSqlAtParam(deActivateParam);
+//		}
+//
+//		// FiMapParam'da olmayan parametreleri pasif eder
+//		Set<String> setParams = getParamsSqlAt();
+//		for (String setParam : setParams) {
+//			if (!getMapParams().containsKey(setParam)) {
+//				deActivateSqlAtParam(setParam);
+//			}
+//		}
+//
+//		if (boListDegerVarMi.getValue()) {
+//			convertListParamToMultiParams(fiQueryConf);
+//		}
+//
+//
+//	}
 
 	/**
 	 * String (trimli) içi boş ise true olur
@@ -729,13 +735,14 @@ public class FiQuery {
 
 			});
 
-			for (String activateParam : getMapParams().getActivateParamSet()) {
-				activateOptParam(activateParam);
-			}
-
-			for (String deActivateParam : getMapParams().getDeActivateParamSet()) {
-				deActivateOptParam(deActivateParam);
-			}
+			// fimap parama eklenerek aktif edildi.
+//			for (String activateParam : getMapParams().getActivateParamSet()) {
+//				activateOptParam(activateParam);
+//			}
+//
+//			for (String deActivateParam : getMapParams().getDeActivateParamSet()) {
+//				deActivateOptParam(deActivateParam);
+//			}
 
 			// FiMapParam'da olmayan parametreleri pasif eder
 			Set<String> setParams = getParamOptionals();
@@ -951,8 +958,8 @@ public class FiQuery {
 				"GROUP BY cha_evrak_tip,cha_cinsi,cha_tip,cha_normal_Iade,met.metLnKod) tblDevir\n" +
 				"ORDER BY metBoPanoTip DESC,metTxEvrakAdi ";
 //
-		FiMapParams fiMapParams = new FiMapParams();
-		fiMapParams.add("top", 10);
+		FiKeyBean fiKeyBean = new FiKeyBean();
+		fiKeyBean.add("top", 10);
 
 //
 //		List<String> listEvrak = new ArrayList<>();
@@ -962,7 +969,7 @@ public class FiQuery {
 //		fiMapParams.puto("listEvrak",listEvrak);
 //
 		FiQuery fiQuery = new FiQuery(sql);
-		fiQuery.setMapParams(fiMapParams);
+		fiQuery.setMapParams(fiKeyBean);
 //
 //		FiQueryConf fiQueryConf = new FiQueryConf();
 //		fiQueryConf.setBoActivateOnlyFullParams(true);

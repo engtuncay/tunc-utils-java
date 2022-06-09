@@ -5,7 +5,6 @@ import org.jdbi.v3.core.Jdbi;
 import org.reactfx.util.TriConsumer;
 import ozpasyazilim.utils.core.FiString;
 import ozpasyazilim.utils.datatypes.FiKeyBean;
-import ozpasyazilim.utils.datatypes.FiMapParams;
 import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.annotations.FiDraft;
 import ozpasyazilim.utils.core.FiBoolean;
@@ -138,7 +137,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 	}
 
-	public Fdr<List<EntClazz>> jdSelectListBindObjectMain(String sqlQuery, Object entClazz, FiMapParams mapParams) {
+	public Fdr<List<EntClazz>> jdSelectListBindObjectMain(String sqlQuery, Object entClazz, FiKeyBean mapParams) {
 
 		if (entityClass == null) setAutoClass();
 
@@ -558,7 +557,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		return fdr;
 	}
 
-	public Fdr<List<EntClazz>> jdSelectAllDtoByFirmFieldBindMap(FiMapParams fiMapParams) {
+	public Fdr<List<EntClazz>> jdSelectAllDtoByFirmFieldBindMap(FiKeyBean fiKeyBean) {
 
 		Fdr<List<EntClazz>> fdr = new Fdr<>();
 		List<EntClazz> result = new ArrayList<>();
@@ -567,7 +566,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		try {
 			result = getJdbi().withHandle(handle -> {
 				return handle.select(FiQuery.stoj(FiQueryGenerator.selectDtoFieldsByTxFirmCode(getEntityClass())))
-						.bindMap(fiMapParams)
+						.bindMap(fiKeyBean)
 						.mapToBean(getEntityClass())
 						.list();
 			});
@@ -635,7 +634,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		String candId1First = FiQueryGenerator.getCandId1FirstField(getEntityClass());
 		String sqlQuery = FiQueryGenerator.selectQueryCountByCandIdFirst(getEntityClass());
-		FiMapParams map = FiMapParams.build().buildPut(candId1First, candId1Value);
+		FiKeyBean map = FiKeyBean.build().buildPut(candId1First, candId1Value);
 
 		return jdSelectSingleOpCustomEntityBindMap(sqlQuery, map, Integer.class);
 	}
@@ -665,7 +664,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		return fdr;
 	}
 
-	public Fdr<Optional<Integer>> jdSelectSingleIntOptBindMap(String sqlQuery, FiMapParams map) {
+	public Fdr<Optional<Integer>> jdSelectSingleIntOptBindMap(String sqlQuery, FiKeyBean map) {
 
 		Fdr<Optional<Integer>> fdr = new Fdr<>();
 
@@ -711,7 +710,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 	}
 
-	public Fdr<Optional<Integer>> jdhSelectSingleIntOptBindMap(Handle handle, String sqlQuery, FiMapParams map) {
+	public Fdr<Optional<Integer>> jdhSelectSingleIntOptBindMap(Handle handle, String sqlQuery, FiKeyBean map) {
 
 		Fdr<Optional<Integer>> fdr = new Fdr<>();
 
@@ -787,12 +786,12 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		String dbFieldName = FiEntity.getListFieldsCandId2(getEntityClass()).get(0).getDbFieldName();
 
-		FiMapParams fiMapParams = FiMapParams.build().buildPut(dbFieldName, listData);
+		FiKeyBean fiKeyBean = FiKeyBean.build().buildPut(dbFieldName, listData);
 
 		FiQuery fiQuery = new FiQuery(sql);
-		fiQuery.convertListParamToMultiParams(fiMapParams);
+		fiQuery.convertListParamToMultiParams(fiKeyBean);
 
-		return jdUpdateBindMapMain(fiQuery.getTxQuery(), fiMapParams);
+		return jdUpdateBindMapMain(fiQuery.getTxQuery(), fiKeyBean);
 	}
 
 	public Fdr jdhDeleteByCandId2IntList(List<Integer> listData, Handle handle) {
@@ -803,15 +802,15 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		String dbFieldName = FiEntity.getListFieldsCandId2(getEntityClass()).get(0).getDbFieldName();
 
-		FiMapParams fiMapParams = FiMapParams.build().buildPut(dbFieldName, listData);
+		FiKeyBean fiKeyBean = FiKeyBean.build().buildPut(dbFieldName, listData);
 
 		FiQuery fiQuery = new FiQuery(sql);
-		fiQuery.convertListParamToMultiParams(fiMapParams);
+		fiQuery.convertListParamToMultiParams(fiKeyBean);
 
 //		Loghelper.get(getClass()).debug("Delete query(multi):" + fiQuery.getTxQuery());
 //		Loghelper.get(getClass()).debug(FiConsole.logMain(fiMapParams));
 
-		return jdhUpdateBindMap(fiQuery.getTxQuery(), fiMapParams, handle);
+		return jdhUpdateBindMap(fiQuery.getTxQuery(), fiKeyBean, handle);
 	}
 
 	public Fdr jdDeleteByCandId2MapStringList(List<String> listData) {
@@ -820,12 +819,12 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		String dbFieldName = FiEntity.getListFieldsCandId2(getEntityClass()).get(0).getDbFieldName();
 
-		FiMapParams fiMapParams = FiMapParams.build().buildPut(dbFieldName, listData);
+		FiKeyBean fiKeyBean = FiKeyBean.build().buildPut(dbFieldName, listData);
 
 		FiQuery fiQuery = new FiQuery(sql);
-		fiQuery.convertListParamToMultiParams(fiMapParams);
+		fiQuery.convertListParamToMultiParams(fiKeyBean);
 
-		return jdUpdateBindMapMain(fiQuery.getTxQuery(), fiMapParams);
+		return jdUpdateBindMapMain(fiQuery.getTxQuery(), fiKeyBean);
 	}
 
 	public Fdr jdDeleteListByCandId(List<EntClazz> entityList) {
@@ -892,7 +891,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 	}
 
 	// XNOTE transaction için güzel bir örnek - jdbi
-	public Fdr jdUpdateBatchWitTrans(List<String> queryList, FiMapParams mapParams) {
+	public Fdr jdUpdateBatchWitTrans(List<String> queryList, FiKeyBean mapParams) {
 
 		if (queryList == null || queryList.size() == 0) {
 			return new Fdr(false, "Boş sorgu");
@@ -949,7 +948,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 	@Deprecated
 	@FiDraft
-	public Fdr jdUpdateBatchAsScriptWitTrans(String query, FiMapParams fiMapParams) {
+	public Fdr jdUpdateBatchAsScriptWitTrans(String query, FiKeyBean fiKeyBean) {
 
 		if (FiString.isEmpty(query)) {
 			return new Fdr(false, "Boş sorgu");
@@ -961,7 +960,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		try {
 			getJdbi().useTransaction(handle -> {
-				int[] rowAffected = handle.createScript(FiQuery.stoj(query)).bindMap(fiMapParams).execute();
+				int[] rowAffected = handle.createScript(FiQuery.stoj(query)).bindMap(fiKeyBean).execute();
 				fdr.appendRowsAffected(rowAffected);
 				//Loghelperr.getInstance(getClass()).debug("Affected:"+ rowAffectedLast);
 			});
@@ -979,22 +978,22 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 	public Fdr<Optional<EntClazz>> jdSelectEntityById(Integer id) {
 		String sql = FiQueryGenerator.selectQuery20ById(getEntityClass());
 		String idField = FiQueryGenerator.getIdField(getEntityClass());
-		FiMapParams fiMapParams = FiMapParams.build().buildPut(idField, id);
-		return jdSelectEntityOptBindMap(sql, fiMapParams);
+		FiKeyBean fiKeyBean = FiKeyBean.build().buildPut(idField, id);
+		return jdSelectEntityOptBindMap(sql, fiKeyBean);
 	}
 
 	public Fdr<List<Map<String, Object>>> jdSelectListMapById(Integer id) {
 		String sql = FiQueryGenerator.selectQuery20ById(getEntityClass());
 		String idField = FiQueryGenerator.getIdField(getEntityClass());
-		FiMapParams fiMapParams = FiMapParams.build().buildPut(idField, id);
-		return jdSelectListMapBindMap(sql, fiMapParams);
+		FiKeyBean fiKeyBean = FiKeyBean.build().buildPut(idField, id);
+		return jdSelectListMapBindMap(sql, fiKeyBean);
 	}
 
 	public Fdr<List<EntClazz>> jdSelectListById(Integer id) {
 		String sql = FiQueryGenerator.selectQuery20ById(getEntityClass());
 		String idField = FiQueryGenerator.getIdField(getEntityClass());
-		FiMapParams fiMapParams = FiMapParams.build().buildPut(idField, id);
-		return jdSelectListBindMapMain(sql, fiMapParams);
+		FiKeyBean fiKeyBean = FiKeyBean.build().buildPut(idField, id);
+		return jdSelectListBindMapMain(sql, fiKeyBean);
 	}
 
 	public Fdr<List<EntClazz>> jdSelectListByCandIds(EntClazz entClazz) {
@@ -1023,15 +1022,15 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 	public Fdr<Optional<EntClazz>> jdSelectEntityOptByStringCandId1(String txKod) {
 		String sql = FiQueryGenerator.selectQueryByCandIds(getEntityClass());
 		String txFieldName = FiQueryGenerator.getCandIdFieldFirst(getEntityClass());
-		FiMapParams fiMapParams = FiMapParams.build().buildPut(txFieldName, txKod);
-		return jdSelectEntityOptBindMap(sql, fiMapParams);
+		FiKeyBean fiKeyBean = FiKeyBean.build().buildPut(txFieldName, txKod);
+		return jdSelectEntityOptBindMap(sql, fiKeyBean);
 	}
 
 	public Fdr<EntClazz> jdSelectEntityByStringCandId1(String txKod) {
 		String sql = FiQueryGenerator.selectQueryByCandIds(getEntityClass());
 		String txFieldName = FiQueryGenerator.getCandIdFieldFirst(getEntityClass());
-		FiMapParams fiMapParams = FiMapParams.build().buildPut(txFieldName, txKod);
-		Fdr<Optional<EntClazz>> optionalFdr = jdSelectEntityOptBindMap(sql, fiMapParams);
+		FiKeyBean fiKeyBean = FiKeyBean.build().buildPut(txFieldName, txKod);
+		Fdr<Optional<EntClazz>> optionalFdr = jdSelectEntityOptBindMap(sql, fiKeyBean);
 		Fdr<EntClazz> fdr = new Fdr<>();
 		fdr.combineAnd(optionalFdr);
 		fdr.setValue(optionalFdr.getValue().get());
@@ -1045,8 +1044,8 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 	public Fdr<Optional<EntClazz>> jdSelectDtoEntityByStrCandId1(String txValue) {
 		FiQuery fiQuery = FiQueryGenerator.selectDtoEntityByCandId1Fi(getEntityClass());
-		FiMapParams fiMapParams = FiMapParams.build().buildPut(fiQuery.getTxCandIdFieldName(), txValue);
-		return jdSelectEntityOptBindMap(fiQuery.getTxQuery(), fiMapParams);
+		FiKeyBean fiKeyBean = FiKeyBean.build().buildPut(fiQuery.getTxCandIdFieldName(), txValue);
+		return jdSelectEntityOptBindMap(fiQuery.getTxQuery(), fiKeyBean);
 	}
 
 	public Fdr<Optional<EntClazz>> jdSelectDtoEntityByCandId1(EntClazz entity) {
@@ -1086,9 +1085,9 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		return jdSelectListBindMapMain(query, null);
 	}
 
-	public List<EntClazz> jdSelectListDtoFieldsBySeperatedFieldRaw(FiMapParams fiMapParams) {
+	public List<EntClazz> jdSelectListDtoFieldsBySeperatedFieldRaw(FiKeyBean fiKeyBean) {
 		String sql = FiQueryGenerator.selectDtoFieldsBySeperatedField(getEntityClass());
-		return jdSelectListBindMapRaw(sql, fiMapParams);
+		return jdSelectListBindMapRaw(sql, fiKeyBean);
 	}
 
 	public Fdr<List<EntClazz>> jdSelectListComboFieldsBySeperatedFields(EntClazz entClazz) {
@@ -1106,9 +1105,9 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		return jdSelectListBindEntity(sql, entity);
 	}
 
-	public Fdr<List<EntClazz>> jdSelect1ListByCandId(FiMapParams fiMapParams) {
+	public Fdr<List<EntClazz>> jdSelect1ListByCandId(FiKeyBean fiKeyBean) {
 		String query = FiQueryGenerator.select1FieldsByCandId(getEntityClass());
-		return jdSelectListBindMapMain(query, fiMapParams);
+		return jdSelectListBindMapMain(query, fiKeyBean);
 	}
 
 
@@ -1390,8 +1389,8 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		return jdUpdateBindObjectMain(updateQuery, bindEntity);
 	}
 
-	public Fdr jdUpdateBindMapAndEntity(String updateQuery, EntClazz bindEntity, FiMapParams fiMapParams) {
-		return jdUpdateBindMapAndObjectMain(updateQuery, bindEntity, fiMapParams);
+	public Fdr jdUpdateBindMapAndEntity(String updateQuery, EntClazz bindEntity, FiKeyBean fiKeyBean) {
+		return jdUpdateBindMapAndObjectMain(updateQuery, bindEntity, fiKeyBean);
 	}
 
 	/**
@@ -1436,7 +1435,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 	 * @param bindEntity
 	 * @return
 	 */
-	public Fdr jdUpdateBindMapAndObjectMain(String updateQuery, Object bindEntity, FiMapParams fiMapParams) {
+	public Fdr jdUpdateBindMapAndObjectMain(String updateQuery, Object bindEntity, FiKeyBean fiKeyBean) {
 
 		Jdbi jdbi = getJdbi();
 
@@ -1445,7 +1444,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		try {
 			Integer rowCountUpdate = jdbi.withHandle(handle -> {
 				return handle.createUpdate(FiQuery.stoj(updateQuery))
-						.bindMap(fiMapParams)
+						.bindMap(fiKeyBean)
 						.bindBean(bindEntity)
 						.execute(); // returns row count updated
 			});
@@ -2221,11 +2220,11 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 	 * Not Null Return
 	 *
 	 * @param sql
-	 * @param fiMapParams
+	 * @param fiKeyBean
 	 * @return
 	 */
-	public Fdr<Optional<Integer>> jdSelectSingleOpInt(String sql, FiMapParams fiMapParams) {
-		return jdSelectSingleOpCustomEntityBindMap(sql, fiMapParams, Integer.class);
+	public Fdr<Optional<Integer>> jdSelectSingleOpInt(String sql, FiKeyBean fiKeyBean) {
+		return jdSelectSingleOpCustomEntityBindMap(sql, fiKeyBean, Integer.class);
 	}
 
 	/**
@@ -2234,11 +2233,11 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 	 * Sorguda hata olursa result false olur, deger yine null olur
 	 *
 	 * @param sql
-	 * @param fiMapParams
+	 * @param fiKeyBean
 	 * @return
 	 */
-	public Fdr<Integer> jdSelectSingleInt(String sql, FiMapParams fiMapParams) {
-		return jdSelectSingleCustomEntityBindMap(sql, fiMapParams, Integer.class);
+	public Fdr<Integer> jdSelectSingleInt(String sql, FiKeyBean fiKeyBean) {
+		return jdSelectSingleCustomEntityBindMap(sql, fiKeyBean, Integer.class);
 	}
 
 	/**
@@ -2256,8 +2255,8 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		return fdrSql;
 	}
 
-	public Fdr<String> jdSelectSingleString(String sql, FiMapParams fiMapParams) {
-		return jdSelectSingleCustomEntityBindMap(sql, fiMapParams, String.class);
+	public Fdr<String> jdSelectSingleString(String sql, FiKeyBean fiKeyBean) {
+		return jdSelectSingleCustomEntityBindMap(sql, fiKeyBean, String.class);
 	}
 
 	/**
@@ -2269,7 +2268,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 	 * @param fiMapParams
 	 * @return
 	 */
-	public Fdr<List<String>> jdSelectSingleCsvString(String sql, FiMapParams fiMapParams) {
+	public Fdr<List<String>> jdSelectSingleCsvString(String sql, FiKeyBean fiMapParams) {
 
 		Fdr<String> stringFdr = jdSelectSingleCustomEntityBindMap(sql, fiMapParams, String.class);
 

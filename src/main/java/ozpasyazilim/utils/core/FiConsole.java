@@ -4,7 +4,6 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import ozpasyazilim.utils.datatypes.FiKeyBean;
 import ozpasyazilim.utils.datatypes.FiListKeyString;
-import ozpasyazilim.utils.datatypes.FiMapParams;
 import ozpasyazilim.utils.datatypes.FiKeyString;
 import ozpasyazilim.utils.log.Loghelper;
 
@@ -713,8 +712,8 @@ public class FiConsole {
 		System.out.println(textMap(mapData));
 	}
 
-	public static void printMapFi(FiMapParams mapData) {
-		System.out.println(textFiMapParams(mapData));
+	public static void printMapFi(FiKeyBean mapData) {
+		System.out.println(textFiKeyBean(mapData));
 	}
 
 	public static String textMap(Map<String, String> appMap) {
@@ -728,7 +727,7 @@ public class FiConsole {
 	}
 
 
-	public static String textFiMapParams(FiKeyBean fiKeyBean) {
+	public static String textFiKeyBean(FiKeyBean fiKeyBean) {
 		StringBuilder log = new StringBuilder("");
 		log.append("\n");
 		for (Map.Entry<String, Object> entry : fiKeyBean.entrySet()) {

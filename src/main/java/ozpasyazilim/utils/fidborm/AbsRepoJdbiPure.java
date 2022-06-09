@@ -3,7 +3,7 @@ package ozpasyazilim.utils.fidborm;
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 import ozpasyazilim.utils.core.FiString;
-import ozpasyazilim.utils.datatypes.FiMapParams;
+import ozpasyazilim.utils.datatypes.FiKeyBean;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.returntypes.Fdr;
 
@@ -86,7 +86,7 @@ public abstract class AbsRepoJdbiPure extends RepoGeneralJdbi implements IRepoJd
 		return sqlQuery;
 	}
 
-	public Fdr<Optional<Integer>> jdSelectSingleOptIntegerByMap(String sqlQuery, FiMapParams map) {
+	public Fdr<Optional<Integer>> jdSelectSingleOptIntegerByMap(String sqlQuery, FiKeyBean map) {
 
 		Jdbi jdbi = getJdbi();
 		Fdr<Optional<Integer>> fdr = new Fdr<>();
@@ -161,7 +161,7 @@ public abstract class AbsRepoJdbiPure extends RepoGeneralJdbi implements IRepoJd
 	}
 
 	// XNOTE transaction için güzel bir örnek - jdbi
-	public Fdr jdUpdateBatchWitTrans(List<String> queryList, FiMapParams mapParams) {
+	public Fdr jdUpdateBatchWitTrans(List<String> queryList, FiKeyBean mapParams) {
 
 		if (queryList == null || queryList.size() == 0) {
 			return new Fdr(false, "Boş sorgu");
@@ -273,8 +273,8 @@ public abstract class AbsRepoJdbiPure extends RepoGeneralJdbi implements IRepoJd
 		return fdr;
 	}
 
-	public Fdr<Integer> jdSelectSingleInt(String sql, FiMapParams fiMapParams) {
-		return jdSelectSingleIntBindMapOrMinus1(sql, fiMapParams);
+	public Fdr<Integer> jdSelectSingleInt(String sql, FiKeyBean fiKeyBean) {
+		return jdSelectSingleIntBindMapOrMinus1(sql, fiKeyBean);
 	}
 
 	/**

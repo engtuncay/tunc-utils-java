@@ -137,9 +137,7 @@ public class FiRegExp {
 		String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(eMail);
-
 		return matcher.matches();
-
 	}
 
 	public static Boolean checkTel(String cepTel) {
