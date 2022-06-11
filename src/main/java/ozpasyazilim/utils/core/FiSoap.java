@@ -16,7 +16,8 @@ public class FiSoap {
 	FiKeyString mapHeaders;
 
 	//String soapAction, String rootTagName
-	public static Fdr<String> requestRaw(String endPoint, String soapRequest, FiKeyString mapHeaders) throws MalformedURLException, IOException {
+	public static Fdr<String> requestRaw(String endPoint, String soapRequest, FiKeyString mapHeaders) throws IOException {
+//MalformedURLException, IOException daha geniş olduğu için çıkarıldı
 
 		Fdr<String> fdr = new Fdr<>();
 
