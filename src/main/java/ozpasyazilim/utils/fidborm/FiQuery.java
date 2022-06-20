@@ -27,26 +27,23 @@ public class FiQuery {
 	List<FiField> queryFieldList;
 	List<FiField> queryWhereList;
 
+	public FiQuery() {
+	}
+
 	public FiQuery(String sql) {
 		this.txQuery = sql;
 	}
-
-//	public FiQuery(String sql, FiMapParams fiMapParams) {
-//		this.txQuery = sql;
-//		this.mapParams = fiMapParams;
-//	}
 
 	public FiQuery(String sql, FiKeyBean fiKeyBean) {
 		this.txQuery = sql;
 		this.mapParams = fiKeyBean;
 	}
 
-	public FiQuery() {
-	}
-
 	public static FiQuery bui() {
 		return new FiQuery();
 	}
+
+	// ******** Statik Metodlar ******* //
 
 	/**
 	 * tüm optional parametreleri ( --!optParam ) deaktif eder.
@@ -229,30 +226,9 @@ public class FiQuery {
 		return sqlQuery;
 	}
 
-	public String getTxQuery() {
-		return txQuery;
-	}
+	// end of Statik Metodlar
 
-	public FiQuery setTxQuery(String txQueryPrm) {
-		this.txQuery = txQueryPrm;
-		return this;
-	}
-
-	public String getTxCandIdFieldName() {
-		return txCandIdFieldName;
-	}
-
-	public void setTxCandIdFieldName(String txCandIdFieldName) {
-		this.txCandIdFieldName = txCandIdFieldName;
-	}
-
-	public String getTxPrimaryKeyFieldName() {
-		return txPrimaryKeyFieldName;
-	}
-
-	public void setTxPrimaryKeyFieldName(String txPrimaryKeyFieldName) {
-		this.txPrimaryKeyFieldName = txPrimaryKeyFieldName;
-	}
+	// Obje Metodları
 
 	public void activateOptParam(String txOptParamName) {
 		setTxQuery(activateOptParamMain(getTxQuery(), txOptParamName));
@@ -267,71 +243,61 @@ public class FiQuery {
 	}
 
 	public void convertListParamToMultiParams() {
+		convertListParamToMultiParams(true);
+	}
+
+	/**
+	 * List Türündeki parametreleri multi param (abc_1,abc_2... gibi) çevirir
+	 */
+	public void convertListParamToMultiParams(Boolean boRemoveOldMultiParam) {
 
 		if (getMapParams() == null) return;
 
+		// (1) List türündeki parametreler bulunur.
 		List<String> listParamToConvertMulti = new ArrayList<>();
-
 		getMapParams().forEach((param, value) -> {
 			if (value instanceof List) {
 				// concurrent modification olmaması amacıyla convert işlemi ayrı yapılacak (aşağıda)
 				listParamToConvertMulti.add(param);
 			}
 		});
+		// --end-1
 
+		// List türünde olan parametreleri , multi tekli parametrelere çevirir. (abc_1,abc_2 gibi)
 		for (String param : listParamToConvertMulti) {
 			List value = (List) getMapParams().get(param);
-			convertSqlAsListParamToMultiParam(param, value);
+			convertSqlAsListParamToMultiParam(param, value,boRemoveOldMultiParam);
 		}
-
-	}
-
-	public void convertListParamToMultiParams(FiQueryConf fiQueryConf) {
-
-		if (getMapParams() == null) return;
-		if (fiQueryConf == null) fiQueryConf = new FiQueryConf();
-
-		FiQueryConf finalFiQueryConf = fiQueryConf;
-
-		FiKeyBean fiKeyBean = new FiKeyBean(getMapParams());
-
-		fiKeyBean.forEach((param, value) -> {
-			if (value instanceof List) {
-
-				if (FiBoolean.isTrue(finalFiQueryConf.getBoActivateOnlyFullParams())) {
-					if (!checkParamValueEmpty(value)) {
-						convertSqlAsListParamToMultiParam(param, (List) value);
-					}
-				} else {
-					convertSqlAsListParamToMultiParam(param, (List) value);
-				}
-			}
-		});
 
 	}
 
 	/**
 	 * List değerindeki parametreyi abc_1,abc_2 gibi multi parametreye çevirir
+	 * <p>
+	 * Not: eski parametre çıkarılmış kaladabilirdi
 	 *
 	 * @param param
 	 * @param listData
+	 * @param boRemoveOldMultiParam
 	 */
-	private void convertSqlAsListParamToMultiParam(String param, List listData) {
+	private void convertSqlAsListParamToMultiParam(String param, List listData, Boolean boRemoveOldMultiParam) {
 
-		// şablona göre yeni parametre listesi ve değeri map koleksiyonuna atılır
-		Map<String, Object> mapParamNew = new HashMap<>();
+		// (1) şablona göre yeni eklenecek parametre listesi
+		Map<String, Object> mapParamsNew = new HashMap<>();
 
 		for (int index = 0; index < listData.size(); index++) {
 			String sablonParam = FiQuery.genTemplateMultiParam(param, index);
-			mapParamNew.put(sablonParam, listData.get(index));
+			mapParamsNew.put(sablonParam, listData.get(index));
 		}
+		// end-1
 
-		// Sorgu cümlesi güncellenir (eski parametre , yeni parametre ile değiştirilir.)
+		// Sorgu cümlesi güncellenir (eski parametre çıkarılır , yeni parametreler eklenir.)
 		setTxQuery(fhrConvertSqlForMultiParamByTemplate(getTxQuery(), param, listData.size()));
 		// map paramden eski parametre çıkarılıp, yenileri eklenir
-		getMapParams().remove(param);
-		getMapParams().putAll(mapParamNew);
-
+		if(FiBoolean.isTrue(boRemoveOldMultiParam)){
+			getMapParams().remove(param);
+		}
+		getMapParams().putAll(mapParamsNew);
 	}
 
 	public void convertListParamToMultiParams(FiKeyBean mapBind) {
@@ -479,7 +445,7 @@ public class FiQuery {
 						if (!FiCollection.isEmpty((Collection) value)) {
 							String newQuery = fsmActivatedOptParamV1Main(getTxQuery(), key);
 							setTxQuery(newQuery);
-						}else{
+						} else {
 							String newQuery = deActivateOptParamMain(getTxQuery(), key);
 							setTxQuery(newQuery);
 							deActivatedParamList.add(key);
@@ -536,144 +502,6 @@ public class FiQuery {
 			}
 		}
 	}
-
-	/**
-	 * 1. FiMapParam'da olan parametreleri confige göre aktif eder.Config dolu olup olmadığı kontrol edilme şartı eklenebilir. Dolu degilse pasif eder.
-	 * <p>
-	 * 2. FiMapParam'da olmayan parametreleri pasif eder
-	 * <p>
-	 * 3. List tipinde parametre varsa, çoklu parametreye (convertMultiToSingle) çevirir
-	 */
-//	public void prepSqlOptParamsByFiMap(FiQueryConf fiQueryConf) {
-//
-//		getMapParamsInit();
-//
-//		if (fiQueryConf == null) {
-//			fiQueryConf = new FiQueryConf();
-//		}
-//
-//		// list değer varsa işlem sonunda list paramları single paramlara çevrilecek
-//		BooleanProperty boListDegerVarMi = new SimpleBooleanProperty(false);
-//
-//		FiQueryConf finalFiQueryConf = fiQueryConf;
-//
-//		getMapParams().forEach((key, value) -> {
-//			//Optional Param'ın olup olmadığı kontroline gerek yok.
-//
-//			if (FiBoolean.isTrue(finalFiQueryConf.getBoActivateOnlyFullParams())) {
-//				if (!checkParamValueEmpty(value)) {
-//					activateOptParam(key);
-//				} else {
-//					deActivateOptParam(key);
-//				}
-//			} else {
-//				activateOptParam(key);
-//			}
-//
-//			if (value instanceof Collection) {
-//				boListDegerVarMi.setValue(true);
-//			}
-//
-//		});
-//
-//		for (String activateParam : getMapParams().getActivateParamSet()) {
-//			activateOptParam(activateParam);
-//		}
-//
-//		for (String deActivateParam : getMapParams().getDeActivateParamSet()) {
-//			deActivateOptParam(deActivateParam);
-//		}
-//
-//		// FiMapParam'da olmayan parametreleri pasif eder
-//		Set<String> setParams = getParamOptionals();
-//		for (String setParam : setParams) {
-//			if (!getMapParams().containsKey(setParam)) {
-////				fhrDeActivateOptParam(txQuery, setParam);
-//				deActivateOptParam(setParam);
-//			}
-//		}
-//
-//		if (boListDegerVarMi.getValue()) {
-//			convertListParamToMultiParams();
-//		}
-//
-//
-//	}
-
-//	public void prepSqlAtParamsFullByFiMap() {
-//		prepSqlAtParamsByFiMapMain(FiQueryConf.bui().setBoActivateOnlyFullParams(true));
-//	}
-
-//	/**
-//	 * without configuration
-//	 */
-//	public void prepSqlAtParamsWoutConfByFiMap() {
-//		prepSqlAtParamsByFiMapMain(null);
-//	}
-
-	/**
-	 * Sql At Parametreleri ile çalışır (!!! Optional ile degil)
-	 * <p>
-	 * 1. FiMapParam'da olan parametreleri confige göre aktif eder.Config dolu olup olmadığı kontrol edilme şartı eklenebilir. Dolu degilse pasif eder.
-	 * <p>
-	 * 2. FiMapParam'da olmayan parametreleri pasif eder
-	 * <p>
-	 * 3. List tipinde parametre varsa, çoklu parametreye (convertMultiToSingle) çevirir
-	 */
-//	public void prepSqlAtParamsByFiMapMain(FiQueryConf fiQueryConf) {
-//
-//		getMapParamsInit();
-//
-//		if (fiQueryConf == null) {
-//			fiQueryConf = new FiQueryConf();
-//		}
-//
-//		// list değer varsa işlem sonunda list paramları single paramlara çevrilecek
-//		BooleanProperty boListDegerVarMi = new SimpleBooleanProperty(false);
-//
-//		FiQueryConf finalFiQueryConf = fiQueryConf;
-//
-//		getMapParams().forEach((key, value) -> {
-//			//Optional Param'ın olup olmadığı kontroline gerek yok.
-//
-//			if (FiBoolean.isTrue(finalFiQueryConf.getBoActivateOnlyFullParams())) {
-//				if (!checkParamValueEmpty(value)) {
-//					activateSqlAtParam(key);
-//				} else {
-//					deActivateSqlAtParam(key);
-//				}
-//			} else {
-//				activateSqlAtParam(key);
-//			}
-//
-//			if (value instanceof Collection) {
-//				boListDegerVarMi.setValue(true);
-//			}
-//
-//		});
-//
-//		for (String activateParam : getMapParams().getActivateParamSet()) {
-//			activateSqlAtParam(activateParam);
-//		}
-//
-//		for (String deActivateParam : getMapParams().getDeActivateParamSet()) {
-//			deActivateSqlAtParam(deActivateParam);
-//		}
-//
-//		// FiMapParam'da olmayan parametreleri pasif eder
-//		Set<String> setParams = getParamsSqlAt();
-//		for (String setParam : setParams) {
-//			if (!getMapParams().containsKey(setParam)) {
-//				deActivateSqlAtParam(setParam);
-//			}
-//		}
-//
-//		if (boListDegerVarMi.getValue()) {
-//			convertListParamToMultiParams(fiQueryConf);
-//		}
-//
-//
-//	}
 
 	/**
 	 * String (trimli) içi boş ise true olur
@@ -940,79 +768,31 @@ public class FiQuery {
 		Loghelper.get(getClass()).debug(getTxQuery());
 	}
 
-	public static void main(String[] args) {
+	// Getter and Setter
 
-		String sql = "--sq202109290930\n" +
-				"select met2.metLnKod,met2.metTxEvrakAdi,tblDevir.cha_meblag,met2.metBoPanoTip\n" +
-				"FROM\n" +
-				"(select chh.cha_evrak_tip , chh.cha_cinsi , chh.cha_tip , chh.cha_normal_Iade,met.metLnKod\n" +
-				"FROM CARI_HESAP_HAREKETLERI chh \n" +
-				"LEFT JOIN CARI_HESAPLAR ch ON chh.cha_kod = ch.cari_kod \n" +
-				"WHERE chh.cha_iptal=0\n" +
-				"and chh.cha_srmrkkodu = @cha_srmrkkodu \n" +
-				"--!cha_tarihi1\n" +
-				"--and cha_tarihi >= @cha_tarihi1\n" +
-				"--TOP {{top}}\n" +
-				"and cha_tarihi <= @cha_tarihi2\n" +
-				"and evraklar IN (@listEvrak)\n" +
-				"GROUP BY cha_evrak_tip,cha_cinsi,cha_tip,cha_normal_Iade,met.metLnKod) tblDevir\n" +
-				"ORDER BY metBoPanoTip DESC,metTxEvrakAdi ";
-//
-		FiKeyBean fiKeyBean = new FiKeyBean();
-		fiKeyBean.add("top", 10);
+	public String getTxQuery() {
+		return txQuery;
+	}
 
-//
-//		List<String> listEvrak = new ArrayList<>();
-//		listEvrak.add("fatura");
-//		listEvrak.add("stok");
-//
-//		fiMapParams.puto("listEvrak",listEvrak);
-//
-		FiQuery fiQuery = new FiQuery(sql);
-		fiQuery.setMapParams(fiKeyBean);
-//
-//		FiQueryConf fiQueryConf = new FiQueryConf();
-//		fiQueryConf.setBoActivateOnlyFullParams(true);
-//
-//		fiQuery.prepSqlAtParamsFullByFiMap();
-//
-////		System.out.println(FiQuery.activateSqlAtParamMain(sql, "cha_tarihi2"));
-//
+	public FiQuery setTxQuery(String txQueryPrm) {
+		this.txQuery = txQueryPrm;
+		return this;
+	}
 
-		fiQuery.setTxQuery(FiQuery.activateNamedParamMain(fiQuery.getTxQuery(), "top", "1000"));
-		System.out.println(fiQuery.getTxQuery());
-		FiConsole.printMapFi(fiQuery.getMapParams());
+	public String getTxCandIdFieldName() {
+		return txCandIdFieldName;
+	}
 
-//		final String regex = " *(--)*(.*)(\\{\\{%s\\}\\})(.*)\\n{0,1}";
-//		final String string = "--activate named param v211002_12082\n"
-//				+ "--orijinal sql parametreleri aktif eder\n"
-//				+ "--TOP {{%s}}\n"
-//				+ "WHERE 1=1\n"
-//				+ "AND chh.cha_tarihi < @cha_tarihi1\n"
-//				+ "     --!ps 1 \n"
-//				+ "     --AND ch.cari_sektor_kodu IN (@cari_sektor_kodu)\n"
-//				+ "GROUP BY ch.cari_vdaire_no \n"
-//				+ "AND chh.cha_tarihi >= @cha_tarihi1 AND chh.cha_tarihi <= @cha_tarihi2\n"
-//				+ "--!ps 2 dsssds\n"
-//				+ "--AND ch.cari_sektor_kodu IN (@cari_sektor_kodu)\n"
-//				+ "--!ps 3\n"
-//				+ "AND ch.cari_sektor_kodu = @cari_sektor_kodu\n"
-//				+ "--!ps_abc\n"
-//				+ "AND ch.ps IN (@ps)\n\n";
-//		final String subst = "$2%s$4 --%s activated\\n";
-//
-//		final Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE);
-//		final Matcher matcher = pattern.matcher(string);
-//
-//		// The substituted value will be contained in the result variable
-//		final String result = matcher.replaceAll(subst);
-//
-//
-//		System.out.println("Substitution result: " + result);
-//
-//		String string2 = string.replaceAll(regex, subst);
-//
-//		System.out.println("Substitution result 2: " + string2);
+	public void setTxCandIdFieldName(String txCandIdFieldName) {
+		this.txCandIdFieldName = txCandIdFieldName;
+	}
+
+	public String getTxPrimaryKeyFieldName() {
+		return txPrimaryKeyFieldName;
+	}
+
+	public void setTxPrimaryKeyFieldName(String txPrimaryKeyFieldName) {
+		this.txPrimaryKeyFieldName = txPrimaryKeyFieldName;
 	}
 
 }

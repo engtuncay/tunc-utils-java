@@ -76,7 +76,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 	// Lokal içeriden yapılan filtrelemedir(ör.tablonun filter editorden gelen)
 	private Predicate predFilterLocal;
 	// Remote ise belli server üzerinde kayıt çekilirken yapılır.
-	private Predicate predFilterRemote;
+	private Predicate predFilterRemoteDb;
 
 	private BooleanProperty propHeaderChange = new SimpleBooleanProperty(false);
 
@@ -102,7 +102,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 	private Integer lnTotalSize;
 	private FxLabel lblPageNoIndex;
 
-	public void clearItemsAllFi() {
+	public void removeItemsAllFi() {
 		setItemsAsFilteredList(new ArrayList());
 	}
 
@@ -160,7 +160,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 		getSelectionModel().select(index);
 	}
 
-	public void clearAllColsFi() {
+	public void removeColsAllFi() {
 		setFxTableColList(null);
 		getColumns().clear();
 	}
@@ -364,7 +364,6 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 	}
 
 	public FxTableView2 addAllFiTableColsAuto(List<FiCol> listFiCol) {
-
 		for (FiCol fiCol : listFiCol) {
 			addFiColAuto(fiCol);
 		}
@@ -1751,7 +1750,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 		// lokal filtrelemeler, filtre editorune giriş yapılan verilerle yapılan
 		if (getPredFilterLocal() != null) predAll = predAll.and(getPredFilterLocal());
 		// harici modülden,dışarıdan eklenen filtreler
-		if (getPredFilterRemote() != null) predAll = predAll.and(getPredFilterRemote());
+		if (getPredFilterRemoteDb() != null) predAll = predAll.and(getPredFilterRemoteDb());
 		//Loghelperr.getInstance(getClass()).debug("Size Filter Out : "+ getListPredFilterExtra().size());
 		for (Predicate predItem : getPredFilterExtraList()) {
 			predAll = predAll.and(predItem);
@@ -2088,12 +2087,12 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 		return predFilterLocal;
 	}
 
-	public Predicate getPredFilterRemote() {
-		return predFilterRemote;
+	public Predicate getPredFilterRemoteDb() {
+		return predFilterRemoteDb;
 	}
 
-	public void setPredFilterRemote(Predicate predFilterRemote) {
-		this.predFilterRemote = predFilterRemote;
+	public void setPredFilterRemoteDb(Predicate predFilterRemoteDb) {
+		this.predFilterRemoteDb = predFilterRemoteDb;
 		activateFilters();
 	}
 

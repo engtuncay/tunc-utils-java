@@ -2346,6 +2346,36 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 	}
 
 	/**
+	 * Hata Olursa -1 döner
+	 *
+	 * @param sql
+	 * @param entClazz
+	 * @return
+	 */
+	public Fdr<Integer> jdSelectIntBindEntityMain(String sql, EntClazz entClazz) {
+
+		Fdr<Integer> fdr = new Fdr<>();
+
+		try {
+			Optional<Integer> result = getJdbi().withHandle(handle -> {
+				return handle.select(FiQuery.stoj(sql))
+						.bindBean(entClazz)
+						.mapTo(Integer.class)
+						.findFirst();
+			});
+
+			result.ifPresent(fdr::setValue);
+			fdr.setBoResult(true);
+		} catch (Exception ex) {
+			Loghelper.errorLog(getClass(), "Query Problem");
+			Loghelper.errorException(getClass(), ex);
+			fdr.setValue(-1);
+			fdr.setBoResult(false, ex);
+		}
+
+		return fdr;
+	}
+	/**
 	 * Not null return , null yerine Optional.Empty döner
 	 *
 	 * @param sql

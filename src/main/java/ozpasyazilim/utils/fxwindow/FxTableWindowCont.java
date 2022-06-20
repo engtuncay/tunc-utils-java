@@ -324,7 +324,7 @@ public class FxTableWindowCont<EntClazz> extends AbsFxSimpleCont implements IFxS
 	}
 
 	public void setTableContent(List<EntClazz> sqlTableList) {
-		getFxTableView().clearItemsAllFi();
+		getFxTableView().removeItemsAllFi();
 		getFxTableView().addAllItemsFi(sqlTableList);
 	}
 

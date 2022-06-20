@@ -18,6 +18,10 @@ public class FiMeta {
 
 	}
 
+	public FiMeta(Integer lnValue) {
+		this.lnValue = lnValue;
+	}
+
 	// Getter and Setter
 
 	public String getTxValue() {
