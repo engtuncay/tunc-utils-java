@@ -44,9 +44,7 @@ import java.util.stream.Collectors;
 // CellFactory : hücre üretim fabrikası TableColumn input alır, output olarak TableCell verir.
 // (Callback lambda bir fonksiyondur.) Callback<TableColumn<S, T>, TableCell<S, T>>
 public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxComp {
-
 	private Class<EntClazz> entityClass;
-
 	private String fxId;
 	private Map<String, Object> styleMap;
 	private List<FxTableCol2> fxTableColList;
@@ -2382,9 +2380,12 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 	public Runnable getFnSummaryChanged() {
 		return fnSummaryChanged;
 	}
-
 	public void setFnSummaryChanged(Runnable fnSummaryChanged) {
 		this.fnSummaryChanged = fnSummaryChanged;
 	}
-}
 
+	public String getIdNtn(){
+		return FiString.orEmpty(getId());
+	}
+
+}

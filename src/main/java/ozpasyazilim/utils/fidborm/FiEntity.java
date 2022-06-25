@@ -706,11 +706,11 @@ public class FiEntity {
 
 	}
 
-	public static List<FiCol> getListFiTableCol(Class entityClass) {
+	public static List<FiCol> getListFiCol(Class entityClass) {
 		return FiCol.convertListFiField(getListFieldsWoutStatic(entityClass));
 	}
 
-	public static List<FiCol> getListFiTableColWithTransient(Class entityClass) {
+	public static List<FiCol> getListFiColWithTransient(Class entityClass) {
 		return FiCol.convertListFiField(getListFieldsWoutStatic(entityClass, true));
 	}
 }

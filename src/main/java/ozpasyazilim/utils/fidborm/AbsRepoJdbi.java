@@ -3136,6 +3136,40 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		return fdrMain;
 	}
 
+	public Fdr jdExecuteTrans3(BiFunction<AbsRepoJdbi<EntClazz>, Handle, Fdr> fnTransactions) {
+
+		// try {
+
+		Fdr fdrJdbi = getJdbi().inTransaction(handle -> {
+
+			try {
+				handle.begin();
+				Fdr fdrTrans = fnTransactions.apply(this, handle);
+				// fdrMain.combineAnd(fdrTrans);
+
+				if (fdrTrans.getException() != null) {
+					throw fdrTrans.getException();
+				}
+				handle.commit();
+				return fdrTrans;
+			} catch (Exception ex) {
+				Fdr fdrMain = new Fdr();
+				Loghelper.debugException(getClass(), ex);
+				handle.rollback();
+				fdrMain.setBoResult(false, ex);
+				return fdrMain;
+			}
+		});
+
+//		} catch (Exception ex) {
+//			Loghelper.debugException(getClass(), ex);
+//			Loghelper.get(getClass()).debug("Genel Catch de Yakalandı");
+//			fdrMain.setBoResult(false, ex);
+//		}
+
+		return fdrJdbi;
+	}
+
 	public Fdr jdDeleteBindEntityMain(String sql, EntClazz entClazz) {
 		return jdDeleteBindObjectMain(sql, entClazz);
 	}
