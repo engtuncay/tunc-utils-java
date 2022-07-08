@@ -317,7 +317,7 @@ public class FxFormMig<EntClazz> extends FxMigPaneEnt<EntClazz> implements IFxMo
 
 		for (FiCol fiCol : listFormElements) {
 
-			Loghelper.get(getClass()).debug("FiCol in Form" + fiCol.getFieldName());
+//			Loghelper.get(getClass()).debug("FiCol in Form" + fiCol.getFieldName());
 
 			if (FiBoolean.isTrue(fiCol.getBoHidden())) {
 				continue;

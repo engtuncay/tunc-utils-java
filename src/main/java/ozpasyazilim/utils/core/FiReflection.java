@@ -129,19 +129,19 @@ public class FiReflection {
 
 			String strCellvalue = value;  //fiTableCol.getHeader();
 
-			if (fiTableCol.getColType() == OzColType.Double) {
+			if (fiTableCol.getColType() == OzColType.String) {
+				cellvalue = strCellvalue;
+			} else if (fiTableCol.getColType() == OzColType.Double) {
 				cellvalue = FiNumber.strToDouble(strCellvalue);
-			}
-
-			if (fiTableCol.getColType() == OzColType.Date) {
+			} else if (fiTableCol.getColType() == OzColType.Date) {
 				cellvalue = FiDate.strToDateGeneric2(strCellvalue);
-			}
-
-			if (fiTableCol.getColType() == OzColType.Integer) {
+			} else if (fiTableCol.getColType() == OzColType.Integer) {
 				cellvalue = Integer.parseInt(strCellvalue);
+			} else { // eğer tip belirtilmemişse String olarak varsayılır
+				cellvalue = strCellvalue;
 			}
 
-			PropertyUtils.setProperty(objectt, fiTableCol.getFieldName(), cellvalue == null ? strCellvalue : cellvalue);
+			PropertyUtils.setProperty(objectt, fiTableCol.getFieldName(),cellvalue ); //cellvalue == null ? strCellvalue : cellvalue
 			return true;
 		} catch (Exception e) {
 			Loghelper.get(FiReflection.class).debug(FiException.exceptiontostring(e));
@@ -340,8 +340,8 @@ public class FiReflection {
 			} catch (InvocationTargetException e) {
 				Loghelper.get(FiReflection.class).debug(FiException.exceptionIfToStr(e));
 			} catch (NoSuchMethodException e) {
-				if(!FiBoolean.isTrue(boDoNotShowNotMethod)){
-					Loghelper.get(FiReflection.class).debug("Objenin Metodu Yok:"+key);
+				if (!FiBoolean.isTrue(boDoNotShowNotMethod)) {
+					Loghelper.get(FiReflection.class).debug("Objenin Metodu Yok:" + key);
 				}
 			}
 

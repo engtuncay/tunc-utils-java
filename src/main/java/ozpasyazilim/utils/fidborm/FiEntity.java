@@ -244,6 +244,35 @@ public class FiEntity {
 		return listFields;
 	}
 
+	public static List<FiField> getListFieldsWithFiColManualWoutStaticMain(Class clazz, Boolean includeTransient, Boolean includeExtra) {
+
+		Field[] fields = clazz.getDeclaredFields();
+		List<FiField> listFields = new ArrayList<>();
+
+		for (Field field : fields) {
+
+			// transient dahil edilmemişse atlasın
+			if (!field.isAnnotationPresent(FiColManual.class) && !FiBoolean.isTrue(includeTransient)) {
+				if (field.isAnnotationPresent(Transient.class)) continue;
+				if (field.isAnnotationPresent(FiTransient.class)) continue;
+			}
+
+			// Static alanlar alınmaz
+			if (Modifier.isStatic(field.getModifiers())) continue;
+
+			FiField fiField = new FiField();
+			setupFiFieldAll(field, fiField);
+
+			if (FiBoolean.isTrue(includeExtra)) {
+				assignFiFieldExtraRelatedDb(field, fiField);
+			}
+
+			listFields.add(fiField);
+		}
+
+		return listFields;
+	}
+
 
 	public static List<FiField> getListFieldsNotNullable(Class clazz, Boolean includeTransient) {
 
@@ -708,6 +737,10 @@ public class FiEntity {
 
 	public static List<FiCol> getListFiCol(Class entityClass) {
 		return FiCol.convertListFiField(getListFieldsWoutStatic(entityClass));
+	}
+
+	public static List<FiCol> getListFiColWithFiColManual(Class entityClass) {
+		return FiCol.convertListFiField(getListFieldsWithFiColManualWoutStaticMain(entityClass,false,null));
 	}
 
 	public static List<FiCol> getListFiColWithTransient(Class entityClass) {

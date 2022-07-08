@@ -7,10 +7,9 @@ import ozpasyazilim.utils.gui.components.ComboItemGen;
 
 import java.util.List;
 
-public class FxComboBoxSimpleGen<EntClazz> extends FxComboBox<ComboItemGen<EntClazz>> {
+public class FxComboBoxEntity<EntClazz> extends FxComboBox<ComboItemGen<EntClazz>> {
 
-
-	public FxComboBoxSimpleGen() {
+	public FxComboBoxEntity() {
 		super();
 	}
 

@@ -58,16 +58,30 @@ public class FiNumber {
 
 		if (sNumberold == null) return null;
 
-		String sNumbernew = FiNumberToText.convertNumberFormatToDotSeperator(sNumberold.toString());
+		if(sNumberold instanceof Double) return (Double) sNumberold;
 
-		try {
-			Double numbernew = Double.parseDouble(sNumbernew);
-			return numbernew;
-		} catch (Exception e) {
-			Loghelper.get().debug("String sayı double'a çevrilemedi." + sNumberold.toString());
-			return null;
+		if(sNumberold instanceof Integer){
+			Integer ntValue = (Integer) sNumberold;
+			return ntValue.doubleValue();
 		}
 
+		if(sNumberold instanceof String){
+
+			String txValue = (String) sNumberold;
+
+			if(FiString.isEmptyTrim(txValue)) return null;
+
+			String sNumbernew = FiNumberToText.convertNumberFormatToDotSeperator(txValue); // sNumberold.toString()
+
+			try {
+				return Double.parseDouble(sNumbernew);
+			} catch (Exception e) {
+				Loghelper.get().debug("String sayı double'a çevrilemedi." + sNumberold.toString());
+				return null;
+			}
+		}
+
+		return null;
 	}
 
 	public static Double convertNumberStrtoDoubleWth(String sNumberold) throws Exception {

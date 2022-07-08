@@ -52,6 +52,7 @@ public class FxComboBox<T> extends ComboBox<T> {
 		valueProperty().addListener(listener);
 	}
 
+
 	public enum ComboAfterSelectType {
 		ZeroIndex,Null,DoNothing
 	}

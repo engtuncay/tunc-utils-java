@@ -633,6 +633,11 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 		return FiBoolean.isTrue(getBoResult());
 	}
 
+	public boolean isTrueResultAndValueNtn() {
+		if(FiBoolean.isTrue(getBoResult()) && getValue()!=null) return true;
+		return false;
+	}
+
 	public boolean isTrueBoResultAndValueExists() {
 		return FiBoolean.isTrue(getBoResult()) && getValue() != null;
 	}

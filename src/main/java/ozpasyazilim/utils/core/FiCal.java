@@ -16,7 +16,7 @@ public class FiCal {
 	public static void main(String[] args) {
 		//System.out.println(new FiCal().getDateGecenAySonu().toString());
 //		System.out.println(getDateDiffFromToday(-1));
-		System.out.println("Gün Farkı"+ FiCal.dateDiffByDay2(new Date(),FiDate.strToDateYmd("20200906")));
+		System.out.println("Gün Farkı"+ FiCal.dateDiffByDay2(FiDate.strToDateYmd("20200906"), new Date()));
 
 		Date date = FiDate.strToDateYmd("20210815");
 
@@ -191,15 +191,17 @@ public class FiCal {
 	//	DateTime dtPlusOne = dtOrg.plusDays(1);
 	//	LocalDateTime.from(dt.toInstant()).plusDays(1);
 
-	public static Integer dateDiffDay(Date date1, Date date2) {
-		Integer l = Math.toIntExact(dateDiffByDay(FiCal.convertToCal(date1), FiCal.convertToCal(date2)) / 100 / 60 / 60 / 24);
-		return l;
-	}
-
-	public static Long dateDiffByDay2(Date date1, Date date2) {
-		LocalDate lcDate1 = FiCal.convertLocalDate(date1);
-		LocalDate lcDate2 = FiCal.convertLocalDate(date2);
-		long daysBetween = ChronoUnit.DAYS.between(lcDate2, lcDate1);
+	/**
+	 * startDate - EndDate
+	 *
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
+	public static Long dateDiffByDay2(Date startDate, Date endDate) {
+		LocalDate lcEnd = FiCal.convertLocalDate(endDate);
+		LocalDate lcStart = FiCal.convertLocalDate(startDate);
+		long daysBetween = ChronoUnit.DAYS.between(lcStart, lcEnd);
 		return daysBetween;
 	}
 

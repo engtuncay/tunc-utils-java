@@ -15,6 +15,7 @@ import org.controlsfx.control.Notifications;
 import org.tbee.javafx.scene.layout.MigPane;
 import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.fidborm.QueryType;
+import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.mvc.*;
 import ozpasyazilim.utils.returntypes.Fdr;
 import ozpasyazilim.utils.returntypes.FnResult;
@@ -622,6 +623,7 @@ public class FxDialogShow {
 		Stage stage = fxModCont.getFxStage();
 
 		if (stage == null) {
+			Loghelper.get(getClass()).debug("Modal Penceresi için Yeni Stage");
 			stage = new FxStage();
 			fxModCont.setFxStage(stage);
 		}

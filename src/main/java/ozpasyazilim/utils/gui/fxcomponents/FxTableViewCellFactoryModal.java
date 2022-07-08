@@ -189,7 +189,7 @@ public class FxTableViewCellFactoryModal {
 
 		} // end - entityClazz a göre cell factory oluşturma
 
-		Loghelper.get(FxTableViewCellFactoryModal.class).debug("özel cell factory oluşturulmadı");
+//		Loghelper.get(FxTableViewCellFactoryModal.class).debug("özel cell factory oluşturulmadı");
 
 	}
 
