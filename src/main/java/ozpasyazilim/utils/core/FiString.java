@@ -733,7 +733,7 @@ public class FiString {
 	 * @param txData2
 	 * @return
 	 */
-	public static Boolean isEqualFull(String txData1, String txData2) {
+	public static Boolean isEqualAndFull(String txData1, String txData2) {
 
 		if (FiString.isEmptyOneOfThemWithTrim(txData1, txData2)) {
 			return false;
@@ -773,5 +773,10 @@ public class FiString {
 	public static String getIfNotEmptytOr(String txValue1, String txValue2) {
 		if(FiString.isEmptyTrim(txValue1)) return txValue2;
 		return txValue1;
+	}
+
+	public static int getSize(String cari_vergiKimlikNo) {
+		if(cari_vergiKimlikNo ==null) return 0;
+		return cari_vergiKimlikNo.length();
 	}
 }

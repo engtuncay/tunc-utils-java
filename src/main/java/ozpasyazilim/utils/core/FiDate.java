@@ -332,7 +332,6 @@ public class FiDate {
 
 		if (matcher.find()) {
 
-
 			Calendar cal = Calendar.getInstance();
 
 			String day = matcher.group(1);

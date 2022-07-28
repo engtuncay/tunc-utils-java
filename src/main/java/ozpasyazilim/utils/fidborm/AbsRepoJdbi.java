@@ -1133,7 +1133,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		return jdInsertEntityMain(entity, false);
 	}
 
-	public Fdr jdInsertEntityMain(EntClazz entity,Boolean boIncludeIdFields) {
+	public Fdr jdInsertEntityMain(EntClazz entity, Boolean boIncludeIdFields) {
 
 		Jdbi jdbi = getJdbi();
 
@@ -1147,7 +1147,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 				String sql = null;
 				if (FiBoolean.isTrue(boIncludeIdFields)) {
 					sql = FiQuery.stoj(FiQueryGenerator.insertQueryWithId(getEntityClass()));
-				}else{
+				} else {
 					sql = FiQuery.stoj(FiQueryGenerator.insertQueryWoutId(getEntityClass()));
 				}
 
@@ -1183,9 +1183,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 			Loghelper.debugException(getClass(), ex);
 			fdr.setBoResult(false, ex);
 		}
-
 		return fdr;
-
 	}
 
 	public Fdr jdInsertQueryBindEntityMain(String sqlInsert, EntClazz entity) {
@@ -2375,6 +2373,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		return fdr;
 	}
+
 	/**
 	 * Not null return , null yerine Optional.Empty döner
 	 *
@@ -3043,6 +3042,45 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 	}
 
+	public Fdr jdhInsertEntityAlt1(EntClazz ent, Boolean boBindGeneratedKey, Handle handle) {
+
+		Fdr fdrMain = new Fdr();
+
+		String sql1 = FiQueryGenerator.insertQueryWoutId(getEntityClass());
+
+		try {
+			if (FiBoolean.isTrue(boBindGeneratedKey)) {
+
+				String idField = FiEntity.getListIdFields(getEntityClass()).get(0);
+				Class idClazz = FiReflection.getFieldClassType(getEntityClass(), idField);
+
+				Optional opId = handle.createUpdate(FiQuery.stoj(sql1))
+						.bindBean(ent)
+						.executeAndReturnGeneratedKeys(idField)
+						.mapTo(idClazz)
+						.findFirst(); // returns generated keys
+
+				opId.ifPresent(insertedId -> {
+					FiReflection.setterNested(ent, idField, insertedId);
+				});
+				fdrMain.appendRowsAffected(1);
+
+			} else { // generated keyler alınmasına gerek yoksa
+				int execute = handle.createUpdate(FiQuery.stoj(sql1 ))
+						.bindBean(ent)
+						.execute();// returns row count updated
+				fdrMain.appendRowsAffected(execute);
+			}
+			//Loghelperr.getInstance(getClass()).debug("Rows Affected: " + execute);
+			fdrMain.setBoResult(true);
+			return fdrMain;
+		} catch (Exception exception) {
+			Loghelper.debugException(getClass(), exception);
+			fdrMain.setBoResult(false, exception);
+			return fdrMain;
+		}
+
+	}
 	@Deprecated
 	@FiDraft
 	public Fdr jdInsertEntityWithMaxFields(EntClazz entity) {
@@ -3100,29 +3138,32 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		return fdrMain;
 	}
 
-	public Fdr jdExecuteTrans2(BiFunction<AbsRepoJdbi<EntClazz>, Handle, Fdr> fnTransactions) {
+	/**
+	 * Transactionlar AbsRepoJdbi ve Handle ile yönetilir.
+	 * <p>
+	 * Transaction Catch'i dışarıda yakalanıyor.
+	 *
+	 * @param fnTransactions
+	 * @return
+	 */
+	public Fdr jdExecuteTransByUse(BiFunction<AbsRepoJdbi<EntClazz>, Handle, Fdr> fnTransactions) {
 
 		Fdr fdrMain = new Fdr();
 
 		try {
 
+			// Use Transaction kullanılıyor ****
 			getJdbi().useTransaction(handle -> {
-
-//				try {
 				handle.begin();
+
 				Fdr fdr = fnTransactions.apply(this, handle);
 				fdrMain.combineAnd(fdr);
 
 				if (fdr.getException() != null) {
 					throw fdr.getException();
 				}
-				handle.commit();
 
-//				} catch (Exception ex) {
-//					Loghelper.debugException(getClass(), ex);
-//					handle.rollback();
-//					fdrMain.setBoResult(false, ex);
-//				}
+				handle.commit();
 			});
 
 		} catch (Exception ex) {
@@ -3134,10 +3175,17 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		return fdrMain;
 	}
 
-	public Fdr jdExecuteTrans3(BiFunction<AbsRepoJdbi<EntClazz>, Handle, Fdr> fnTransactions) {
+	/**
+	 * inTransaction ile kullanımı
+	 *
+	 * Using start 13-07-22
+	 *
+	 * @param fnTransactions
+	 * @return
+	 */
+	public Fdr jdExecuteTransByIn(BiFunction<AbsRepoJdbi<EntClazz>, Handle, Fdr> fnTransactions) {
 
-		// try {
-
+		// InTransaction Kulanılıyor ****
 		Fdr fdrJdbi = getJdbi().inTransaction(handle -> {
 
 			try {
@@ -3158,13 +3206,6 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 				return fdrMain;
 			}
 		});
-
-//		} catch (Exception ex) {
-//			Loghelper.debugException(getClass(), ex);
-//			Loghelper.get(getClass()).debug("Genel Catch de Yakalandı");
-//			fdrMain.setBoResult(false, ex);
-//		}
-
 		return fdrJdbi;
 	}
 

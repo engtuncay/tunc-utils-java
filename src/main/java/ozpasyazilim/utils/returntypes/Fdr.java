@@ -8,29 +8,32 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-// 22-02-2019 TO
-
 /**
  * Sorgu çalıştırılmışsa başarılı bir şekilde boResult True olur
  * <p>
  * Hata alırsa da false olur
  * <p>
  * İşlem yapılmamışsa null olur !!!
+ * <p>
+ * Cre : 22-02-2019 TO
  *
  * @param <EntClazz>> value property nin tipi
  */
 public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 
-	// boQueryExecuted alternatif adı
-	// True ise sorgu başarıyla çalıştırıldığı ifade eder (sorgu çalışsada,sorgu sebebi ile farklı nedenlerle başarısız olma ihtimalleri de var)
-	// False ise sorguda hata olup,exception olmuştur
-	// Null ise işlem yapılmadığını ifade eder  (last update:29-12-2019)
+	/**
+	 * True ise sorgu başarıyla çalıştırıldığını ifade eder (exception'a düşmemiş)
+	 * <p>
+	 * False ise sorguda hata olup,exception olmuştur
+	 * <p>
+	 * Null ise işlem yapılmadığını ifade eder  (last update:29-12-2019)
+	 * <p>
+	 * boQueryExecuted alternatif adı
+	 */
 	private Boolean boResult;
 	private EntClazz value;
 	private String message;
 	private Integer rowsAffected;
-
-
 	private Integer lnTotalCount;
 
 	// Advanced Configuration
@@ -41,7 +44,6 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 
 	// fdr id
 	private String txId;
-
 	private Exception exception;
 	// Op : Operation
 	private Integer lnSuccessOpCount;
@@ -52,12 +54,17 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 	Integer rowsAffectedExtraWorks;
 	Integer rowsAffectedExtraByEntity;
 
-	// Operasyon sonucu nedir , true işlem sonucu pozitif, false işlem sonucu negatif olur. ??boResult farkı nedir
-	// örneğin checkExist yapılıyorsa varsa kayıt true, yoksa false olur.
+	/**
+	 * Operasyon sonucu nedir , true işlem sonucu pozitif, false işlem sonucu negatif olur.
+	 * <p>
+	 * boResult farkı : boResult , sorgunun başarılı çalıştırıldığını gösterir
+	 * <p>
+	 * örneğin checkExist yapılıyorsa varsa kayıt true, yoksa false olur.
+	 */
 	Boolean boOprResult;
 
 	// Sorgu,işlem çalıştırılmadıysa false yapılır
-	Boolean boExecuted;
+	Boolean boQueryExecuted;
 
 	// dbResult birleştirilmiş operasyon mu
 	Boolean boCombinedOperation;
@@ -211,7 +218,7 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 		// rows affected 0 dan büyük olmalı true olması için
 		if (FiBoolean.isTrue(boResult) && getRowsAffectedNotNull() < 1) {
 			this.boResult = false;
-			this.boExecuted = true;
+			this.boQueryExecuted = true;
 		}
 
 		if (FiBoolean.isFalse(boResult)) {
@@ -547,28 +554,28 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 	}
 
 	public Fdr buildOperated(Boolean boExecuted) {
-		setBoExecuted(boExecuted);
+		setBoQueryExecuted(boExecuted);
 		return this;
 	}
 
 	public Boolean getBoNotExecutedNotNull() {
 		// executed null ise, çalıştırılmadığına ifade eder
-		if (boExecuted == null) return true;
-		return !boExecuted;
+		if (boQueryExecuted == null) return true;
+		return !boQueryExecuted;
 	}
 
 	public Boolean getBoExecutedNotNull() {
 		// executed null ise çalıştırılmadığına ifade eder
-		if (boExecuted == null) return false;
-		return boExecuted;
+		if (boQueryExecuted == null) return false;
+		return boQueryExecuted;
 	}
 
-	public Boolean getBoExecuted() {
-		return boExecuted;
+	public Boolean getBoQueryExecuted() {
+		return boQueryExecuted;
 	}
 
-	public void setBoExecuted(Boolean boExecuted) {
-		this.boExecuted = boExecuted;
+	public void setBoQueryExecuted(Boolean boQueryExecuted) {
+		this.boQueryExecuted = boQueryExecuted;
 	}
 
 	public void appendRowsAffected(int[] arrQueryResult) {
@@ -634,7 +641,7 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 	}
 
 	public boolean isTrueResultAndValueNtn() {
-		if(FiBoolean.isTrue(getBoResult()) && getValue()!=null) return true;
+		if (FiBoolean.isTrue(getBoResult()) && getValue() != null) return true;
 		return false;
 	}
 
@@ -711,12 +718,12 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 	}
 
 	public void setBoResultByNull(Object entiy) {
-		if(entiy==null) setBoResult(false);
+		if (entiy == null) setBoResult(false);
 		setBoResult(true);
 	}
 
 	public Fdr<EntClazz> appendMessageToUp(String s) {
-		setMessage(s+"\n"+getMessage());
+		setMessage(s + "\n" + getMessage());
 		return this;
 	}
 

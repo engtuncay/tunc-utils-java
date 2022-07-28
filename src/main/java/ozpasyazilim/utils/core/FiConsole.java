@@ -105,7 +105,7 @@ public class FiConsole {
 		}
 		for (FiKeyString fiKeyString : listMap) {
 			if(FiBoolean.isTrue(boShowNulls)){
-				Loghelper.debugLog(clazz, String.format("Map Detail (Not Null)\n\n%s", textMap(fiKeyString)));
+				Loghelper.debugLog(clazz, String.format("Map Detail (Not Null)\n\n%s", textFiKeyString(fiKeyString)));
 			}else{
 				Loghelper.debugLog(clazz, String.format("Map Detail (Not Null)\n\n%s", textMapNotNull(fiKeyString)));
 			}
@@ -709,14 +709,18 @@ public class FiConsole {
 	}
 
 	public static void printMap(Map<String, String> mapData) {
-		System.out.println(textMap(mapData));
+		System.out.println(textFiKeyString(mapData));
 	}
 
 	public static void printMapFi(FiKeyBean mapData) {
 		System.out.println(textFiKeyBean(mapData));
 	}
 
-	public static String textMap(Map<String, String> appMap) {
+	public static String textFiMapString(Map<String, String> appMap) {
+		return textFiKeyString(appMap);
+	}
+
+	public static String textFiKeyString(Map<String, String> appMap) {
 
 		StringBuilder log = new StringBuilder("");
 		for (Map.Entry<String, String> entry : appMap.entrySet()) {

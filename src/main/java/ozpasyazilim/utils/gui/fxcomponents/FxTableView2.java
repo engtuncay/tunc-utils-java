@@ -1798,6 +1798,13 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 		return fxId;
 	}
 
+	public String getFxIdNtn() {
+		if (fxId == null) {
+			return "";
+		}
+		return fxId;
+	}
+
 	@Override
 	public void setFxId(String fxId) {
 		this.fxId = fxId;

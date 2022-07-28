@@ -6,11 +6,19 @@ import ozpasyazilim.utils.annotations.FiExpiremental;
 @FiExpiremental
 public class FiMeta {
 
+	/**
+	 * TxCode (TxKodu)
+	 */
 	private String txKey;
 
 	private String txValue;
-	// Key Meta Karşılık Gelen Integer Kod varsa
-	private Integer lnValue;
+
+	/**
+	 * LnCode (LnKodu)
+	 * <p>
+	 * Key Meta Karşılık Gelen Integer Kod varsa
+	 */
+	private Integer lnKey;
 
 	private String txLabel;
 
@@ -18,8 +26,17 @@ public class FiMeta {
 
 	}
 
-	public FiMeta(Integer lnValue) {
-		this.lnValue = lnValue;
+	public FiMeta(Integer lnKey) {
+		this.lnKey = lnKey;
+	}
+
+	public FiMeta(String txKey) {
+		this.txKey = txKey;
+	}
+
+	public FiMeta(int lnKey, String txLabel) {
+		this.lnKey = lnKey;
+		this.txLabel = txLabel;
 	}
 
 	// Getter and Setter
@@ -32,12 +49,12 @@ public class FiMeta {
 		this.txValue = txValue;
 	}
 
-	public Integer getLnValue() {
-		return lnValue;
+	public Integer getLnKey() {
+		return lnKey;
 	}
 
-	public void setLnValue(Integer lnValue) {
-		this.lnValue = lnValue;
+	public void setLnKey(Integer lnKey) {
+		this.lnKey = lnKey;
 	}
 
 	public String getTxLabel() {
