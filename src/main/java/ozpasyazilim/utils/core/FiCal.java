@@ -54,6 +54,14 @@ public class FiCal {
 		return ((FiCal.getMonthBegin0(dtNow)-1)%12)+1; // 0-1=-1%12=11 + 1 = 12
 	}
 
+	public static Date setDayofDate(Date dtSon, int dayNo) {
+		Calendar calendar = convertToCal(dtSon);
+		clearTime(calendar);
+		// set Date to 1, so first date of previous month
+		calendar.set(Calendar.DATE, dayNo);
+		return calendar.getTime();
+	}
+
 	public FiCal buildDateDiffNow(int dayDifference) {
 		Calendar cal = Calendar.getInstance();
 		clearTime(cal);
