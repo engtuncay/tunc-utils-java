@@ -24,9 +24,9 @@ public class FiMapList<K, V> extends HashMap<K, List<V>> {
 	}
 
 	/**
-	 * key map de varsa mevcut listeye ekler
+	 * key map de varsa objeyi mevcut listeye ekler
 	 * <p>
-	 * key map de yoksa yeni liste oluşturup , map e ekler.
+	 * key map de yoksa yeni liste oluşturur, objeyi ekler ve listeyi de map e ekler.
 	 *
 	 * @param key
 	 * @param value

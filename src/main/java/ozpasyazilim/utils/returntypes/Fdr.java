@@ -50,6 +50,8 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 	private Integer lnFailureOpCount;
 	private Integer lnErrorCode;
 
+	private Integer lnResponseCode;
+
 	// ???
 	Integer rowsAffectedExtraWorks;
 	Integer rowsAffectedExtraByEntity;
@@ -489,7 +491,7 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 		return false;
 	}
 
-	public void setBoResult2(Boolean boResult, String message) {
+	public void setBoResultAndMess(Boolean boResult, String message) {
 		setBoResult(boResult);
 		setMessage(message);
 	}
@@ -747,5 +749,13 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 
 	public void setListException(List<Exception> listException) {
 		this.listException = listException;
+	}
+
+	public Integer getLnResponseCode() {
+		return lnResponseCode;
+	}
+
+	public void setLnResponseCode(Integer lnResponseCode) {
+		this.lnResponseCode = lnResponseCode;
 	}
 }

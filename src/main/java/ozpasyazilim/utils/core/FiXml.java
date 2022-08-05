@@ -19,7 +19,7 @@ public class FiXml {
 	private FiDoc fiDoc;
 	private String txXmlRaw;
 	private String txXmlTemplate;
-	private FiKeyString mapParams;
+	private FiKeyString fksParams;
 
 	public FiXml() {
 	}
@@ -31,8 +31,6 @@ public class FiXml {
 	public static FiXml bui() {
 		return new FiXml();
 	}
-
-
 
 	public static void main(String[] args) {
 
@@ -130,7 +128,7 @@ public class FiXml {
 		System.out.println(doc.getFirstChild().getNodeName());
 	}
 
-	private static Document convertStringToXMLDocument(String xmlString) {
+	public static Document convertStringToXMLDocument(String xmlString) {
 		//Parser that produces DOM object trees from XML content
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
@@ -183,14 +181,14 @@ public class FiXml {
 	}
 
 	public FiKeyString getMapParamsInit() {
-		if (mapParams == null) {
-			mapParams = new FiKeyString();
+		if (fksParams == null) {
+			fksParams = new FiKeyString();
 		}
-		return mapParams;
+		return fksParams;
 	}
 
-	public void setMapParams(FiKeyString mapParams) {
-		this.mapParams = mapParams;
+	public void setFksParams(FiKeyString fksParams) {
+		this.fksParams = fksParams;
 	}
 
 	public Properties readXmlAsProp(String xmlFilename, Class clazz) {
@@ -261,4 +259,14 @@ public class FiXml {
 }
 
 
-//
+// Soap İsteğinin Sonuna yazılmıştı
+//Parse the String output to a org.w3c.dom.Document and be able to reach every node with the org.w3c.dom API.
+// Document document = parseXmlFile(outputString); // Write a separate method to parse the xml input.
+// NodeList nodeLst = document.getElementsByTagName(rootTagName); //"<TagName of the element to be retrieved>"
+// String elementValue = nodeLst.item(0).getTextContent();
+// System.out.println(elementValue);
+
+// Write the SOAP message formatted to the console.
+// String formattedSOAPResponse = formatXML(outputString); // Write a separate method to format the XML input.
+// System.out.println(formattedSOAPResponse);
+// return elementValue;

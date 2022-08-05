@@ -19,11 +19,13 @@ public class FiDoc {
 	}
 
 	public String getElementValueByTagName(String tagName) {
-		return doc.getElementsByTagName(tagName).item(0).getTextContent();
+		if(doc.getElementsByTagName(tagName).getLength()>0){
+			return doc.getElementsByTagName(tagName).item(0).getTextContent();
+		}else{
+			return null;
+		}
 	}
-
 }
-
 
 // Xmldeki belli bir alanı okumak için
 
