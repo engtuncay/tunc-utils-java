@@ -755,6 +755,13 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 		return lnResponseCode;
 	}
 
+	public Integer getLnResponseCodeNtn() {
+		if (lnResponseCode == null) {
+			return -1;
+		}
+		return lnResponseCode;
+	}
+
 	public void setLnResponseCode(Integer lnResponseCode) {
 		this.lnResponseCode = lnResponseCode;
 	}
