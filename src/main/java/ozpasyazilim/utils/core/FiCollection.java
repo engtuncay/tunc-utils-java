@@ -12,6 +12,7 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.function.*;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class FiCollection {
 
@@ -125,10 +126,10 @@ public class FiCollection {
 	 * <p>
 	 * Bir değere karşılık, sadece bir entity bağlanır.
 	 *
-	 * @param listData Data Listesi
-	 * @param fnKeyGetter    Key değerini döndüren fonksiyon
-	 * @param <KeyVal> Key value
-	 * @param <T>      Entity object
+	 * @param listData    Data Listesi
+	 * @param fnKeyGetter Key değerini döndüren fonksiyon
+	 * @param <KeyVal>    Key value
+	 * @param <T>         Entity object
 	 * @return
 	 */
 	public static <KeyVal, T> Map<KeyVal, T> listToMapSingle(List<T> listData, Function<T, KeyVal> fnKeyGetter) {
@@ -138,7 +139,7 @@ public class FiCollection {
 		for (Iterator iterator = listData.iterator(); iterator.hasNext(); ) {
 			T t = (T) iterator.next();
 			KeyVal keyVal = fnKeyGetter.apply(t);
-			if (keyVal == null)return null;
+			if (keyVal == null) return null;
 			mapList.put(keyVal, t);
 		}
 
@@ -152,7 +153,7 @@ public class FiCollection {
 		for (Iterator iterator = listData.iterator(); iterator.hasNext(); ) {
 			T t = (T) iterator.next();
 			KeyVal keyVal = fnKeyGetter.apply(t);
-			if (keyVal == null)continue;
+			if (keyVal == null) continue;
 			mapList.put(keyVal, t);
 		}
 		return mapList;
@@ -194,7 +195,6 @@ public class FiCollection {
 	}
 
 	/**
-	 *
 	 * Key null olursa dahil etmez
 	 *
 	 * @param listData
@@ -1092,7 +1092,6 @@ public class FiCollection {
 	}
 
 	/**
-	 *
 	 * Null değerler eklenmez
 	 *
 	 * @param listSelected
@@ -1121,7 +1120,6 @@ public class FiCollection {
 	}
 
 	/**
-	 *
 	 * Null Değerler eklenmez
 	 *
 	 * @param listSelected
@@ -1210,8 +1208,8 @@ public class FiCollection {
 		StringBuilder joinString = new StringBuilder("");
 		int i = 1;
 		for (Object listDatum : listData) {
-			if(listDatum==null)continue;
-			if(i!=1) joinString.append(txJoin);
+			if (listDatum == null) continue;
+			if (i != 1) joinString.append(txJoin);
 			joinString.append(listDatum.toString());
 			i++;
 		}
@@ -1219,34 +1217,34 @@ public class FiCollection {
 		return joinString.toString();
 	}
 
-	public static <PrmEnt> Double sumDouble(Collection<PrmEnt> itemsCheckedByBoSecimAsList,Function<PrmEnt,Double> fnValue) {
+	public static <PrmEnt> Double sumDouble(Collection<PrmEnt> itemsCheckedByBoSecimAsList, Function<PrmEnt, Double> fnValue) {
 
-		Double dbSum= 0d;
+		Double dbSum = 0d;
 
 		for (PrmEnt prmEnt : itemsCheckedByBoSecimAsList) {
 			Double value = fnValue.apply(prmEnt);
-			if(value==null) value=0d;
-			dbSum+= value;
+			if (value == null) value = 0d;
+			dbSum += value;
 		}
 
 		return dbSum;
 	}
 
-	public static <PrmEnt> Integer findMinInt(Collection<PrmEnt> hizmetHareketList, Function<PrmEnt,Integer> fnGetInteger) {
+	public static <PrmEnt> Integer findMinInt(Collection<PrmEnt> hizmetHareketList, Function<PrmEnt, Integer> fnGetInteger) {
 
-		Integer min=null;
+		Integer min = null;
 
 		for (PrmEnt prmEnt : hizmetHareketList) {
 
 			Integer tempValue = fnGetInteger.apply(prmEnt);
-			if(tempValue==null) continue;
+			if (tempValue == null) continue;
 
-			if(min==null){
+			if (min == null) {
 				min = tempValue;
 				continue;
 			}
 
-			if(tempValue<min){
+			if (tempValue < min) {
 				min = tempValue;
 			}
 
@@ -1255,20 +1253,20 @@ public class FiCollection {
 		return min;
 	}
 
-	public static <PrmEnt> Date findMinDate(Collection<PrmEnt> hizmetHareketList, Function<PrmEnt,Date> fnGetInteger) {
+	public static <PrmEnt> Date findMinDate(Collection<PrmEnt> hizmetHareketList, Function<PrmEnt, Date> fnGetInteger) {
 
-		Date min=null;
+		Date min = null;
 		for (PrmEnt prmEnt : hizmetHareketList) {
 
 			Date tempValue = fnGetInteger.apply(prmEnt);
-			if(tempValue==null) continue;
+			if (tempValue == null) continue;
 
-			if(min==null){
+			if (min == null) {
 				min = tempValue;
 				continue;
 			}
 
-			if(tempValue.compareTo(min)<0){
+			if (tempValue.compareTo(min) < 0) {
 				min = tempValue;
 			}
 		}
@@ -1276,21 +1274,21 @@ public class FiCollection {
 		return min;
 	}
 
-	public static <PrmEnt> Date findMaxDate(Collection<PrmEnt> hizmetHareketList, Function<PrmEnt,Date> fnGetInteger) {
+	public static <PrmEnt> Date findMaxDate(Collection<PrmEnt> hizmetHareketList, Function<PrmEnt, Date> fnGetInteger) {
 
-		Date max=null;
+		Date max = null;
 
 		for (PrmEnt prmEnt : hizmetHareketList) {
 
 			Date tempValue = fnGetInteger.apply(prmEnt);
-			if(tempValue==null) continue;
+			if (tempValue == null) continue;
 
-			if(max==null){
+			if (max == null) {
 				max = tempValue;
 				continue;
 			}
 
-			if(tempValue.compareTo(max)>0){
+			if (tempValue.compareTo(max) > 0) {
 				max = tempValue;
 			}
 		}
@@ -1298,24 +1296,24 @@ public class FiCollection {
 		return max;
 	}
 
-	public static <PrmEnt> PrmEnt findMinDateEntity(Collection<PrmEnt> hizmetHareketList, Function<PrmEnt,Date> fnGetInteger) {
+	public static <PrmEnt> PrmEnt findMinDateEntity(Collection<PrmEnt> hizmetHareketList, Function<PrmEnt, Date> fnGetInteger) {
 
-		Date min=null;
-		PrmEnt minPrmEnt=null;
+		Date min = null;
+		PrmEnt minPrmEnt = null;
 		for (PrmEnt prmEnt : hizmetHareketList) {
 
 			Date tempValue = fnGetInteger.apply(prmEnt);
-			if(tempValue==null) continue;
+			if (tempValue == null) continue;
 
-			if(min==null){
+			if (min == null) {
 				min = tempValue;
 				minPrmEnt = prmEnt;
 				continue;
 			}
 
-			if(tempValue.compareTo(min)<0){
+			if (tempValue.compareTo(min) < 0) {
 				min = tempValue;
-				minPrmEnt=prmEnt;
+				minPrmEnt = prmEnt;
 			}
 		}
 
@@ -1326,5 +1324,18 @@ public class FiCollection {
 		if (mapData == null) return true;
 		if (mapData.size() == 0) return true;
 		return false;
+	}
+
+	/**
+	 *
+	 * Sıralanmış yeni bir liste döndürü, orijinal list'de değişiklik yapmaz.
+	 *
+	 * @param listData
+	 * @param comparator varsayılan olarak küçükten büyüğe sıralar. Örneğin -1,0,1 gibi..., tam tersine çevirmek için -1 ile çarpılır.
+	 * @param <E>
+	 * @return
+	 */
+	public static <E> List<E> sort(List<E> listData, Comparator<E> comparator) {
+		return listData.stream().sorted(comparator).collect(Collectors.toList());
 	}
 }
