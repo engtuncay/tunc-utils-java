@@ -265,9 +265,9 @@ public class FiField {
 
 	public void setFiCollation(FiCollation fiCollation) {this.fiCollation = fiCollation;}
 
-	public Boolean getBoSeperatedField() {return boSeperatedField;}
+//	public Boolean getBoSeperatedField() {return boSeperatedField;}
 
-	public void setBoSeperatedField(Boolean boSeperatedField) {this.boSeperatedField = boSeperatedField;}
+//	public void setBoSeperatedField(Boolean boSeperatedField) {this.boSeperatedField = boSeperatedField;}
 
 	public Boolean getBoDtoField() {return boDtoField;}
 

@@ -454,9 +454,9 @@ public class FiEntity {
 			fiField.setBoDtoField(true);
 		}
 
-		if (field.isAnnotationPresent(FiSeperatedField.class)) {
-			fiField.setBoSeperatedField(true);
-		}
+//		if (field.isAnnotationPresent(FiSeperatedField.class)) {
+//			fiField.setBoSeperatedField(true);
+//		}
 
 		if (field.isAnnotationPresent(FiFirmField.class)) {
 			fiField.setBoFirmField(true);

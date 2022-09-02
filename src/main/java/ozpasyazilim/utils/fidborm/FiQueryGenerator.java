@@ -794,7 +794,7 @@ public class FiQueryGenerator {
 		Integer indexWhere = 0;
 		for (FiField fiField : fieldList) {
 
-			if (FiBoolean.isTrue(fiField.getBoSeperatedField())) {
+			if (FiBoolean.isTrue(fiField.getBoFirmField())) {
 				indexWhere++;
 				if (indexWhere != 1) queryWhere.append(" and ");
 				queryWhere.append(String.format("%s = @%s", fiField.getName(), fiField.getName()));
@@ -933,7 +933,7 @@ public class FiQueryGenerator {
 		Integer indexWhere = 0;
 		for (FiField fiField : fieldList) {
 
-			if (FiBoolean.isTrue(fiField.getBoSeperatedField())) {
+			if (FiBoolean.isTrue(fiField.getBoFirmField())) {
 				indexWhere++;
 				if (indexWhere != 1) queryWhere.append(" and ");
 				queryWhere.append(String.format("%s = @%s", fiField.getName(), fiField.getName()));

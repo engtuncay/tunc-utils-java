@@ -473,5 +473,34 @@ public class FiCal {
 		return result;
 	}
 
+	public static int getNowHour(){
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(new Date());
+		int hours = calendar.get(Calendar.HOUR_OF_DAY);
+		return hours;
+	}
+
+	public static int getNowMinute(){
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(new Date());
+		int minutes = calendar.get(Calendar.MINUTE);
+		return minutes;
+	}
+
+	public static int getNowSecond(){
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(new Date());
+		int seconds = calendar.get(Calendar.SECOND);
+		return seconds;
+	}
+
+	public static Boolean isDaySunday(){
+		Calendar cal = Calendar.getInstance();
+		if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+			return true;
+		}
+		return false;
+	}
+
 
 }
