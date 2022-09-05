@@ -324,7 +324,7 @@ public class FiReflection {
 		return bindKeyBeanToEntityMain(keyBean, entityclass, false);
 	}
 
-	public static <E> E bindKeyBeanToEntityMain(FiKeyBean keyBean, Class<E> entityclass, Boolean boDoNotShowNotMethod) {
+	public static <E> E bindKeyBeanToEntityMain(FiKeyBean keyBean, Class<E> entityclass, Boolean boDoNotShowNotSuchMethodException) {
 
 		E entity = createObject(entityclass);
 
@@ -340,7 +340,7 @@ public class FiReflection {
 			} catch (InvocationTargetException e) {
 				Loghelper.get(FiReflection.class).debug(FiException.exceptionIfToStr(e));
 			} catch (NoSuchMethodException e) {
-				if (!FiBoolean.isTrue(boDoNotShowNotMethod)) {
+				if (!FiBoolean.isTrue(boDoNotShowNotSuchMethodException)) {
 					Loghelper.get(FiReflection.class).debug("Objenin Metodu Yok:" + key);
 				}
 			}

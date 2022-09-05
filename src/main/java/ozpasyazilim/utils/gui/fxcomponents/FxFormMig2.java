@@ -163,7 +163,7 @@ public class FxFormMig2<EntClazz> extends FxMigPaneEnt<EntClazz> implements IFxM
 			if (getFxFormConfig().getFormEntity() != null) setFormEntity(getFxFormConfig().getFormEntity());
 			if (getFxFormConfig().getBoUpdateForm() != null) setBoUpdateForm(getFxFormConfig().getBoUpdateForm());
 			if (getFxFormConfig().getFormType() != null) setFormTypeSelected(getFxFormConfig().getFormType());
-		} else { // null sa initiliaze edilir
+		} else { // null'sa initiliaze edilir
 			getFxFormConfigInit();
 		}
 

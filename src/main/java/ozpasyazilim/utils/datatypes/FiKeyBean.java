@@ -70,7 +70,7 @@ public class FiKeyBean extends HashMap<String, Object> {
 		return this;
 	}
 
-	public void puto(Object field, Object value) {
+	public void putByObj(Object field, Object value) {
 		this.put(field.toString(), value);
 	}
 
@@ -203,7 +203,7 @@ public class FiKeyBean extends HashMap<String, Object> {
 		this.put(field.toString(), value);
 	}
 
-	public Object geto(Object txKey) {
+	public Object getByObj(Object txKey) {
 		if (txKey == null) return null;
 		return get(txKey.toString());
 	}
