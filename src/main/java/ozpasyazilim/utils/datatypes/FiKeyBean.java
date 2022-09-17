@@ -13,11 +13,13 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * String,Object türünde HashMap Objesidir
+ * String,Object türünde HashMap'dir.
  * <p>
  * Kullanımları
  * <p>
  * Sql Sorgularında named parametrelere bind etmek için kullanılır.
+ * <p>
+ * Bir nevi key-object tipinde array dir.
  */
 public class FiKeyBean extends HashMap<String, Object> {
 
@@ -81,7 +83,7 @@ public class FiKeyBean extends HashMap<String, Object> {
 	 * Collection size 0 olmamalı
 	 * <p>
 	 * Diger objeler null olmamalı
-	 *
+	 * <p>
 	 * FiQuery kullan
 	 *
 	 * @param objKey

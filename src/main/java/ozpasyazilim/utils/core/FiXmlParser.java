@@ -204,27 +204,28 @@ public class FiXmlParser {
 
 		for (int colidx = 0; colidx < listColumn.size(); colidx++) {
 
-			FiCol fiTableColParent = listColumn.get(colidx);
+			// L1 means Layer1 or Parent
+			FiCol fiColParent = listColumn.get(colidx);
 
-			if (fiTableColParent.getColTypeNotNull() == OzColType.XmlChildList) {
+			if (fiColParent.getColTypeNotNull() == OzColType.XmlChildList) {
 
-				List listChildren = parseMatchElementToList(xmlMatch, fiTableColParent.getHeaderName(), fiTableColParent.getListChildCol(), fiTableColParent.getChildClazz());
+				List listChildren = parseMatchElementToList(xmlMatch, fiColParent.getHeaderName(), fiColParent.getListChildCol(), fiColParent.getChildClazz());
 
-				FiReflection.setProperty(entity, fiTableColParent.getFieldName(), listChildren);
+				FiReflection.setProperty(entity, fiColParent.getFieldName(), listChildren);
 
-			} else if(fiTableColParent.getColTypeNotNull() == OzColType.XmlChild) {
+			} else if(fiColParent.getColTypeNotNull() == OzColType.XmlChild) {
 
-				Match elementChild = xmlMatch.find(fiTableColParent.getHeaderName());
+				Match elementChild = xmlMatch.find(fiColParent.getHeaderName());
 
-				Object listChildren = parseMatchToEntityWithOneChild(elementChild, fiTableColParent.getListChildCol(), fiTableColParent.getChildClazz());
-				FiReflection.setProperty(entity, fiTableColParent.getFieldName(), listChildren);
+				Object listChildren = parseMatchToEntityWithOneChild(elementChild, fiColParent.getListChildCol(), fiColParent.getChildClazz());
+				FiReflection.setProperty(entity, fiColParent.getFieldName(), listChildren);
 
 			}else{
 
-				Match elementChild = xmlMatch.find(fiTableColParent.getHeaderName());
+				Match elementChild = xmlMatch.find(fiColParent.getHeaderName());
 				String text = elementChild.text();
 				//println("CellValue:"+text);
-				FiReflection.setter(fiTableColParent, entity, text);
+				FiReflection.setter(fiColParent, entity, text);
 			}
 
 

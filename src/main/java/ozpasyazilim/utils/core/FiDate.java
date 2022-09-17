@@ -164,7 +164,8 @@ public class FiDate {
 		return FiNumber.strToInt(formatter.format(date));
 	}
 
-	public static String toString_globalFormat(Date date) {
+
+	public static String toString_globalFormatWoTime(Date date) {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		return formatter.format(date);
 	}

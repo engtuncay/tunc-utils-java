@@ -1142,7 +1142,7 @@ public class FxEditorFactory {
 
 			DatePicker comp = (DatePicker) IFiTableCol.getColFilterNode();
 			if (comp.getValue() != null) {
-				cellvalue = FiDate.toString_globalFormat(FiDate.convertLocalDateToSimpleDate(comp.getValue()));
+				cellvalue = FiDate.toString_globalFormatWoTime(FiDate.convertLocalDateToSimpleDate(comp.getValue()));
 				return cellvalue;
 			} else {
 				String txValueEditor = comp.getEditor().getText();
@@ -1159,7 +1159,7 @@ public class FxEditorFactory {
 			FxDatePicker comp = (FxDatePicker) IFiTableCol.getColFilterNode();
 			if (comp.getValue() != null) {
 				//Loghelperr.getInstance(getClass()).debug("comp getvalue"+ comp.getValue());
-				cellvalue = FiDate.toString_globalFormat(FiDate.convertLocalDateToSimpleDate(comp.getValue()));
+				cellvalue = FiDate.toString_globalFormatWoTime(FiDate.convertLocalDateToSimpleDate(comp.getValue()));
 				return cellvalue;
 			} else {
 				String txValueEditor = comp.getEditor().getText();
