@@ -60,13 +60,11 @@ public class AutoCompletion extends PlainDocument {
 			public void propertyChange(PropertyChangeEvent e) {
 				if (e.getPropertyName().equals("editor")) {
 					configureEditor((ComboBoxEditor) e.getNewValue());
-					// TODO: remove
 					// Loghelper.getInstance(this.getClass()).info("editor config ");
 				}
 				if (e.getPropertyName().equals("model")) {
 					model = (ComboBoxModel) e.getNewValue();
 
-					// TODO: remove
 					// Loghelper.getInstance(this.getClass()).info("model property");
 
 				}
@@ -121,7 +119,6 @@ public class AutoCompletion extends PlainDocument {
 
 	void configureEditor(ComboBoxEditor newEditor) {
 		if (editor != null) {
-			// TODO: remove
 			// Loghelper.getInstance(this.getClass()).info("editor null degil");
 
 			editor.removeKeyListener(editorKeyListener);
@@ -129,7 +126,6 @@ public class AutoCompletion extends PlainDocument {
 		}
 
 		if (newEditor != null) {
-			// TODO: remove
 			// Loghelper.getInstance(this.getClass()).info("neweditor null degil");
 
 			editor = (JTextComponent) newEditor.getEditorComponent();

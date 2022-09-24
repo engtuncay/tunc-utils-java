@@ -33,7 +33,6 @@ public class CustomButtonEditor extends DefaultCellEditor {
 		button.setOpaque(true);
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO: remove
 				// Loghelper.getInstance(this.getClass()).info("entered");
 
 				fireEditingStopped();

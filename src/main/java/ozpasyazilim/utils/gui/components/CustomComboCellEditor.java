@@ -11,7 +11,7 @@ public class CustomComboCellEditor extends AbstractCellEditor implements TableCe
 	JComboBox<ComboItem> combobox; // = new JTextField();
 
 	public CustomComboCellEditor(JComboBox comboBox) {
-		// TODO Auto-generated constructor stub
+
 		combobox = comboBox;
 		// editorComponent = comboBox;
 		// comboBox.putClientProperty("JComboBox.isTableCellEditor", Boolean.TRUE);

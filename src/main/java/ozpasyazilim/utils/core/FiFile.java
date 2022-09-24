@@ -425,7 +425,6 @@ public class FiFile {
 //						musterirut.setAciklama(columns[3]);
 //					listRutcsv.add(musterirut);
 //				} catch (IndexOutOfBoundsException e) {
-//					// TODO: ctrl-view mesaj gönder
 //					Platform.runLater(() -> {
 //						FxDialogShow.showModalError("dosyada hata var \n" + e.toString());
 //					});

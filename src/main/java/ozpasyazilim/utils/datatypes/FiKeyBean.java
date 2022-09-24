@@ -6,6 +6,7 @@ import ozpasyazilim.utils.fidborm.FiEntity;
 import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.fidborm.FiQuery;
 import ozpasyazilim.utils.log.Loghelper;
+import ozpasyazilim.utils.table.FiCol;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -208,6 +209,16 @@ public class FiKeyBean extends HashMap<String, Object> {
 	public Object getByObj(Object txKey) {
 		if (txKey == null) return null;
 		return get(txKey.toString());
+	}
+
+	public String  getAsString(FiCol fiCol) {
+		if (fiCol == null || FiString.isEmpty(fiCol.getFieldName())) return null;
+
+		if (containsKey(fiCol.getFieldName())) {
+			return (String) get(fiCol.getFieldName());
+		}
+
+		return null;
 	}
 
 

@@ -66,6 +66,13 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 	// Alanın türünü belirtir (double,string,date vs )
 	private OzColType colType;
 
+	/**
+	 * Column Generic Type. Sütun nasıl bir tipte olduğunu gösterir. (Data Tipi degil)
+	 * <p>
+	 * Örneğin , Xml parse edilirken, alanın xmlAttribute türünde olduğunu gösterir.
+	 */
+	private OzColType colGenType;
+
 	// Formlarda default true olarak çalışır, false olursa düzenleme izni vermez
 	private Boolean boEditable;
 
@@ -433,6 +440,11 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 		return this;
 	}
 
+	public FiCol buildColGenType(OzColType colType) {
+		setColGenType(colType);
+		return this;
+	}
+
 	public FiCol buildPrefSize(Double prefSize) {
 		setPrefSize(prefSize);
 		return this;
@@ -698,7 +710,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 		return colType;
 	}
 
-	public OzColType getColTypeNotNull() {
+	public OzColType getColTypeNtn() {
 		if (colType == null) {
 			return OzColType.Undefined;
 		}
@@ -1337,6 +1349,21 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 
 	public void setBoParamStatus(Boolean boParamStatus) {
 		this.boParamStatus = boParamStatus;
+	}
+
+	public OzColType getColGenType() {
+		return colGenType;
+	}
+
+	public OzColType getColGenTypeNtn() {
+		if (colGenType == null) {
+			return OzColType.Undefined;
+		}
+		return colGenType;
+	}
+
+	public void setColGenType(OzColType colGenType) {
+		this.colGenType = colGenType;
 	}
 }
 

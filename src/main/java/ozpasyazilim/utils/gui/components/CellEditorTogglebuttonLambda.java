@@ -110,37 +110,37 @@ public class CellEditorTogglebuttonLambda extends AbstractCellEditor implements 
 
 	// @Override
 	// public void addCellEditorListener(CellEditorListener l) {
-	// // TODO Auto-generated method stub
+	// 
 	// super.addCellEditorListener(l);
 	// }
 	//
 	// @Override
 	// public void cancelCellEditing() {
-	// // TODO Auto-generated method stub
+	// 
 	// super.cancelCellEditing();
 	// }
 	//
 	// @Override
 	// public boolean isCellEditable(EventObject anEvent) {
-	// // TODO Auto-generated method stub
+	// 
 	// return true;
 	// }
 	//
 	// @Override
 	// public void removeCellEditorListener(CellEditorListener l) {
-	// // TODO Auto-generated method stub
+	// 
 	// super.removeCellEditorListener(l);
 	// }
 	//
 	// @Override
 	// public boolean shouldSelectCell(EventObject anEvent) {
-	// // TODO Auto-generated method stub
+	// 
 	// return true;
 	// }
 	//
 	// @Override
 	// public boolean stopCellEditing() {
-	// // TODO Auto-generated method stub
+	// 
 	// return true;
 	// }
 

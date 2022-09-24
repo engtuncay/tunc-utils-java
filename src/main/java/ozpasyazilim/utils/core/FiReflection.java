@@ -118,7 +118,7 @@ public class FiReflection {
 		return clazz;
 	}
 
-	public static <T> Boolean setter(IFiCol fiTableCol, T objectt, String value) {
+	public static <T> Boolean setter(IFiCol fiCol, T objectt, String value) {
 
 		if (objectt == null) return false;
 		if (value == null) return false;
@@ -127,21 +127,21 @@ public class FiReflection {
 
 			Object cellvalue = null;
 
-			String strCellvalue = value;  //fiTableCol.getHeader();
+			String strCellvalue = value;  //fiCol.getHeader();
 
-			if (fiTableCol.getColType() == OzColType.String) {
+			if (fiCol.getColType() == OzColType.String) {
 				cellvalue = strCellvalue;
-			} else if (fiTableCol.getColType() == OzColType.Double) {
+			} else if (fiCol.getColType() == OzColType.Double) {
 				cellvalue = FiNumber.strToDouble(strCellvalue);
-			} else if (fiTableCol.getColType() == OzColType.Date) {
+			} else if (fiCol.getColType() == OzColType.Date) {
 				cellvalue = FiDate.strToDateGeneric2(strCellvalue);
-			} else if (fiTableCol.getColType() == OzColType.Integer) {
+			} else if (fiCol.getColType() == OzColType.Integer) {
 				cellvalue = Integer.parseInt(strCellvalue);
 			} else { // eğer tip belirtilmemişse String olarak varsayılır
 				cellvalue = strCellvalue;
 			}
 
-			PropertyUtils.setProperty(objectt, fiTableCol.getFieldName(),cellvalue ); //cellvalue == null ? strCellvalue : cellvalue
+			PropertyUtils.setProperty(objectt, fiCol.getFieldName(),cellvalue ); //cellvalue == null ? strCellvalue : cellvalue
 			return true;
 		} catch (Exception e) {
 			Loghelper.get(FiReflection.class).debug(FiException.exceptiontostring(e));

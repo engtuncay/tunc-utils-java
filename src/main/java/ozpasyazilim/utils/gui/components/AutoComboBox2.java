@@ -24,10 +24,10 @@ public class AutoComboBox2 extends JComboBox<Object> {
 		framedemo.setLayout(new FlowLayout());
 
 		AutoComboBox2 ac = new AutoComboBox2();
-		String[] itemArray = { "Malith", "John", "Jack" };
+		String[] itemArray = {"Malith", "John", "Jack"};
 		ac.setKeyWord(itemArray);
 
-		JComboBox comboBox = new JComboBox(new Object[] { "Ester", "Jordi", "Jordina", "Jorge", "Sergi" });
+		JComboBox comboBox = new JComboBox(new Object[]{"Ester", "Jordi", "Jordina", "Jorge", "Sergi"});
 		// swingx component
 		AutoCompleteDecorator.decorate(comboBox);
 
@@ -40,7 +40,7 @@ public class AutoComboBox2 extends JComboBox<Object> {
 
 	}
 
-	String keyWord[] = { "itema1", "itema2", "itemb3" };
+	String keyWord[] = {"itema1", "itema2", "itemb3"};
 	Vector myVector = new Vector();
 
 	public AutoComboBox2() {
@@ -59,29 +59,26 @@ public class AutoComboBox2 extends JComboBox<Object> {
 
 			@Override
 			public void removeUpdate(DocumentEvent e) {
-                try {
-                    String aa = e.getDocument().getText(0, e.getLength());
-                    out.println("aar:" + aa);
-                } catch (BadLocationException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
-
-
-            }
+				try {
+					String aa = e.getDocument().getText(0, e.getLength());
+					out.println("aar:" + aa);
+				} catch (BadLocationException e1) {
+					e1.printStackTrace();
+				}
+			}
 
 			@Override
 			public void insertUpdate(DocumentEvent e) {
-                try {
-                    String aa = e.getDocument().getText(1, e.getLength());
-                    out.println("aai:" + aa);
-                } catch (BadLocationException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
+				try {
+					String aa = e.getDocument().getText(1, e.getLength());
+					out.println("aai:" + aa);
+				} catch (BadLocationException e1) {
+
+					e1.printStackTrace();
+				}
 
 
-            }
+			}
 
 			@Override
 			public void changedUpdate(DocumentEvent e) {
@@ -90,7 +87,7 @@ public class AutoComboBox2 extends JComboBox<Object> {
 					String aa = e.getDocument().getText(0, e.getLength());
 					System.out.println("aac:" + aa);
 				} catch (BadLocationException e1) {
-					// TODO Auto-generated catch block
+
 					e1.printStackTrace();
 				}
 
@@ -102,9 +99,8 @@ public class AutoComboBox2 extends JComboBox<Object> {
 
 	/**
 	 * set the item list of the AutoComboBox
-	 * 
-	 * @param keyWord
-	 *            an String array
+	 *
+	 * @param keyWord an String array
 	 */
 	public void setKeyWord(String[] keyWord) {
 		this.keyWord = keyWord;

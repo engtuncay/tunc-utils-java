@@ -67,7 +67,6 @@ public class CustomComboboxmodel<E> extends DefaultComboBoxModel<E> {
 		if (getSize() > 0) {
 			selectedObject = getElementAt(0);
 		}
-		// TODO: remove
 		// Loghelper.getInstance(this.getClass()).info("entered setdata");
 
 		fireContentsChanged(this, 0, objects.size() - 1);

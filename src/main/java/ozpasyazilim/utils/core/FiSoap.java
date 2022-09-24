@@ -1,5 +1,6 @@
 package ozpasyazilim.utils.core;
 
+import com.google.common.base.Charsets;
 import ozpasyazilim.utils.datatypes.FiKeyString;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.returntypes.Fdr;
@@ -10,16 +11,25 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 
 public class FiSoap {
 
 	FiKeyString mapHeaders;
 
 	//String soapAction, String rootTagName
+
+	/**
+	 *
+	 *
+	 * @param endPoint
+	 * @param soapRequest entire SOAP Request
+	 * @param mapHeaders
+	 * @return
+	 */
 	public static Fdr<String> requestRaw(String endPoint, String soapRequest, FiKeyString mapHeaders) {
 		//MalformedURLException, IOException daha geniş olduğu için çıkarıldı
 		//throws IOException
-
 		Fdr<String> fdr = new Fdr<>();
 
 		try {
@@ -32,23 +42,24 @@ public class FiSoap {
 			URL url = new URL(wsURL);
 			URLConnection connection = url.openConnection();
 			HttpURLConnection httpConn = (HttpURLConnection) connection;
-			ByteArrayOutputStream bout = new ByteArrayOutputStream();
-			String xmlInput = soapRequest; //"entire SOAP Request";
 
-			byte[] buffer; //new byte[xmlInput.length()];
-			buffer = xmlInput.getBytes();
-			bout.write(buffer);
-			byte[] boutAsArr = bout.toByteArray();
+			//soapRequest.getBytes();
+			byte[] buffer = soapRequest.getBytes(StandardCharsets.UTF_8);//new byte[soapRequest.length()];
+
+			// ByteArrayOutputStream baouts = new ByteArrayOutputStream();
+			// baouts.write(buffer);
+			// byte[] boutAsArr = baouts.toByteArray();
+			byte[] boutAsArr = buffer;
 
 			//String SOAPAction = soapAction; //"<SOAP action of the webservice to be consumed>";
 
 			//Set the appropriate HTTP parameters. (default parameters)
+			httpConn.setRequestProperty("Content-Type", "text/xml;charset=utf-8;"); //
 			httpConn.setRequestProperty("Content-Length", String.valueOf(boutAsArr.length));
-			httpConn.setRequestProperty("Content-Type", "text/xml; charset=utf-8"); //
-//		httpConn.setRequestProperty("Postman-Token","8052f355-19cf-492b-8608-9f796aaeb59b");
-//		httpConn.setRequestProperty("User-Agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36"); 		//PostmanRuntime/7.28.4
-//		httpConn.setRequestProperty("Accept-Encoding","gzip, deflate, br");
-//		httpConn.setRequestProperty("Accept","*/*");
+			//httpConn.setRequestProperty("Postman-Token","8052f355-19cf-492b-8608-9f796aaeb59b");
+			//httpConn.setRequestProperty("User-Agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36"); 		//PostmanRuntime/7.28.4
+			//httpConn.setRequestProperty("Accept-Encoding","gzip, deflate, br");
+			//httpConn.setRequestProperty("Accept","*/*");
 			// httpConn.setRequestProperty("SOAPAction", FiString.orEmpty(soapAction));
 
 			// custom user headers
@@ -73,11 +84,10 @@ public class FiSoap {
 			fdr.setLnResponseCode(httpConn.getResponseCode());
 
 			if (httpConn.getResponseCode() == 200) {
-				isr = new InputStreamReader(httpConn.getInputStream());
+				isr = new InputStreamReader(httpConn.getInputStream(),StandardCharsets.UTF_8);
 				fdr.setBoResult(true);
 			} else {
-				if (httpConn.getErrorStream() != null) isr = new InputStreamReader(httpConn.getErrorStream());
-				//fdr.setBoResult(false);
+				if (httpConn.getErrorStream() != null) isr = new InputStreamReader(httpConn.getErrorStream(),StandardCharsets.UTF_8);
 			}
 
 			if (isr != null) {
@@ -114,24 +124,24 @@ public class FiSoap {
 			//URLConnection connection = url.openConnection();
 			HttpsURLConnection httpConn = (HttpsURLConnection) url.openConnection();
 
-
 			String xmlInput = soapRequest; //"entire SOAP Request";
-			byte[] bytRequestBuffer = xmlInput.getBytes(); //new byte[xmlInput.length()];
+			byte[] bytRequestBuffer = xmlInput.getBytes(StandardCharsets.UTF_8); //new byte[xmlInput.length()];
 
 			ByteArrayOutputStream bytOutStream = new ByteArrayOutputStream();
 			bytOutStream.write(bytRequestBuffer);
 			byte[] bytOutHttpParams = bytOutStream.toByteArray();
+			//post.getBytes(Charsets.UTF_8);
 
 			//String SOAPAction = soapAction; //"<SOAP action of the webservice to be consumed>";
 
 			//Set the appropriate HTTP parameters. (default parameters)
+			httpConn.setRequestProperty("Content-Type", "text/xml;charset=utf-8");
 			httpConn.setRequestProperty("Content-Length", String.valueOf(bytOutHttpParams.length));
-			httpConn.setRequestProperty("Content-Type", "text/xml; charset=utf-8"); //
 //		httpConn.setRequestProperty("Postman-Token","8052f355-19cf-492b-8608-9f796aaeb59b");
 //		httpConn.setRequestProperty("User-Agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36"); 		//PostmanRuntime/7.28.4
 //		httpConn.setRequestProperty("Accept-Encoding","gzip, deflate, br");
 //		httpConn.setRequestProperty("Accept","*/*");
-			// httpConn.setRequestProperty("SOAPAction", FiString.orEmpty(soapAction));
+//    httpConn.setRequestProperty("SOAPAction", FiString.orEmpty(soapAction));
 
 			// custom user headers
 			if (!FiCollection.isEmptyMap(fksHeaders)) {

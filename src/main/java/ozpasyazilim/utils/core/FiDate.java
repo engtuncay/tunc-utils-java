@@ -407,6 +407,7 @@ public class FiDate {
 			return cellvalue;
 		}
 
+		// dd/MM/YY[YY] dd.MM.YY[YY]
 		// FIXME 2018 yerin 18 kabul eder mi :
 		if (strDate.matches("[0-9]{1,2}[\\/\\.][0-9]{1,2}[\\/\\.][0-9]{2,4}")) {
 
@@ -429,7 +430,6 @@ public class FiDate {
 
 			return cellvalue;
 		}
-
 
 		if (strDate.matches("[0-9]+[\\,\\.]*[0-9]*")) {
 			Date date = HSSFDateUtil.getJavaDate(Double.parseDouble(strDate));
@@ -475,6 +475,24 @@ public class FiDate {
 			if (matcher.groupCount() != 7)
 				Loghelper.get(FiDate.class).error("Tarih parça group sayısı hatası");
 
+		}
+
+		// YYYY-MM-DD
+		if (strDate.matches("[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}")) {
+
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+			try {
+				Date date = formatter.parse(strDate);
+				//System.out.println(date);
+				//System.out.println(formatter.format(date));
+				cellvalue = date;
+
+			} catch (ParseException e) {
+				Loghelper.get(FiDate.class).debug(FiException.exceptiontostring(e));
+			}
+
+			return cellvalue;
 		}
 
 		//cellvalue = null;

@@ -30,28 +30,6 @@ public class FiXmlParser {
 
 	public static void main(String[] args) {
 
-		String path = "Y:\\TEST\\KENT\\FATURA_20181102_170740.XML";
-
-		File file = new File("Y:\\TEST\\KENT\\FATURA_20181102_170740.XML");
-
-		Match xmlRoot = openXmlFile(file);
-
-		xmlRoot.find("BASLIK").forEach(elementBaslik -> {
-			System.out.println($(elementBaslik).find("LNGBELGEKOD").text());
-
-			System.out.println("Sayı Detay" + $(elementBaslik).find("DETAY").size());
-
-//			$(elementBaslik).find("DETAY").forEach(elementDetay -> {
-//				System.out.println("  "+$(elementDetay).find("LNGBELGEDETAYKOD").text());
-//			});
-
-			for (Element detay : $(elementBaslik).find("DETAY")) {
-				System.out.println("  " + $(detay).find("LNGBELGEDETAYKOD").text());
-			}
-
-			System.out.println("");
-
-		});
 
 	}
 
@@ -113,7 +91,7 @@ public class FiXmlParser {
 		return boFound.getValue();
 	}
 
-	public static <EntPrmClazz> EntPrmClazz findEntity(File file, String txElementName, String txKeyElementName, String txKeyElementValue,Class<EntPrmClazz> clazz,List<FiCol> listEntCols) {
+	public static <EntPrmClazz> EntPrmClazz findEntity(File file, String txElementName, String txKeyElementName, String txKeyElementValue, Class<EntPrmClazz> clazz, List<FiCol> listEntCols) {
 
 		//Loghelper.get(getClass()).debug("Element Name:"+elementName);
 		//Loghelper.get(getClass()).debug("File Name:"+file.getName());
@@ -127,7 +105,7 @@ public class FiXmlParser {
 
 			if ($(xmlParentElement).find(txKeyElementName).text().trim().equals(txKeyElementValue.trim())) {
 
-				EntPrmClazz entPrmClazz = parseMatchToEntityWithOneChild($(xmlParentElement), listEntCols, clazz);
+				EntPrmClazz entPrmClazz = parseMatchToEntityWithOneChild($(xmlParentElement), listEntCols, clazz, false, null);
 				return entPrmClazz;
 //				boFound.setValue(true);
 //				break;
@@ -170,7 +148,6 @@ public class FiXmlParser {
 	}
 
 
-
 	public <T> void parseXmlElementToList(Match xmldom, List<IFiCol> listColumn, List<T> listData, String elementName, Class<T> clazz) {
 
 		xmldom.find(elementName).forEach(
@@ -198,39 +175,60 @@ public class FiXmlParser {
 		return objectt;
 	}
 
-	public static <EntClazz> EntClazz parseMatchToEntityWithOneChild(Match xmlMatch, List<FiCol> listColumn, Class<EntClazz> clazz) {
+	/**
+	 * @param xmlMatch
+	 * @param listColumn
+	 * @param clazz
+	 * @param boChildSameClassCheck Çocuk elementi aynı sınıfa sahipse,aynı entity üzerine yazmaya devam eder.
+	 * @param entity
+	 * @param <EntClazz>
+	 * @return
+	 */
+	public static <EntClazz> EntClazz parseMatchToEntityWithOneChild(Match xmlMatch, List<FiCol> listColumn, Class<EntClazz> clazz, Boolean boChildSameClassCheck, EntClazz entity) {
 
-		EntClazz entity = FiReflection.generateObject(clazz);
+		if (entity == null) entity = FiReflection.generateObject(clazz);
 
 		for (int colidx = 0; colidx < listColumn.size(); colidx++) {
 
 			// L1 means Layer1 or Parent
 			FiCol fiColParent = listColumn.get(colidx);
 
-			if (fiColParent.getColTypeNotNull() == OzColType.XmlChildList) {
+			if (fiColParent.getColTypeNtn() == OzColType.XmlChildList) {
 
-				List listChildren = parseMatchElementToList(xmlMatch, fiColParent.getHeaderName(), fiColParent.getListChildCol(), fiColParent.getChildClazz());
-
+				List listChildren = parseMatchElementToList(xmlMatch, fiColParent.getHeaderName(), fiColParent.getListChildCol(), fiColParent.getChildClazz(), false);
 				FiReflection.setProperty(entity, fiColParent.getFieldName(), listChildren);
-
-			} else if(fiColParent.getColTypeNotNull() == OzColType.XmlChild) {
-
-				Match elementChild = xmlMatch.find(fiColParent.getHeaderName());
-
-				Object listChildren = parseMatchToEntityWithOneChild(elementChild, fiColParent.getListChildCol(), fiColParent.getChildClazz());
-				FiReflection.setProperty(entity, fiColParent.getFieldName(), listChildren);
-
-			}else{
-
-				Match elementChild = xmlMatch.find(fiColParent.getHeaderName());
-				String text = elementChild.text();
-				//println("CellValue:"+text);
-				FiReflection.setter(fiColParent, entity, text);
+				continue;
 			}
 
+			if (fiColParent.getColTypeNtn() == OzColType.XmlChild) {
 
+				Match elementChild = xmlMatch.find(fiColParent.getHeaderName());
+
+				if (FiBoolean.isTrue(boChildSameClassCheck) && fiColParent.getChildClazz().equals(clazz)) {
+					parseMatchToEntityWithOneChild(elementChild, fiColParent.getListChildCol(), fiColParent.getChildClazz(), boChildSameClassCheck, entity);
+
+				} else {
+					Object objChild = parseMatchToEntityWithOneChild(elementChild, fiColParent.getListChildCol(), fiColParent.getChildClazz(), boChildSameClassCheck, null);
+					FiReflection.setProperty(entity, fiColParent.getFieldName(), objChild);
+				}
+
+				continue;
+			}
+
+			if (fiColParent.getColGenTypeNtn().equals(OzColType.XmlAttribute)) {
+				String text = xmlMatch.attr(fiColParent.getHeaderName());
+				FiReflection.setter(fiColParent, entity, text);
+//			Loghelper.get(FiXmlParser.class).debug("Attr HeaderName:"+ fiColParent.getHeaderName());
+//			Loghelper.get(FiXmlParser.class).debug("Attr Value:" + text);
+				continue;
+			}
+
+			//Loghelper.get(FiXmlParser.class).debug("HeaderName:"+ fiColParent.getHeaderName());
+
+			Match elementChild = xmlMatch.find(fiColParent.getHeaderName());
+			String text = elementChild.text();
+			FiReflection.setter(fiColParent, entity, text);
 		}
-
 		return entity;
 	}
 
@@ -242,26 +240,30 @@ public class FiXmlParser {
 		Fdr<List<EntClazz>> fdrResult = new Fdr<>();
 		Match xmlRoot = FiXmlParser.openXmlFile(fileXml);
 
-		List<EntClazz> entClazzes = parseMatchElementToList(xmlRoot, txSelectorTag, listColumn, clazz);
+		List<EntClazz> entClazzes = parseMatchElementToList(xmlRoot, txSelectorTag, listColumn, clazz, false);
 		fdrResult.setValue(entClazzes);
 
 		fdrResult.setBoResult(true);
 		return fdrResult;
 
 	}
-	public static <EntClazz> List<EntClazz> parseMatchElementToList(String txXml, String txSelectorTag, List<FiCol> fiColList, Class<EntClazz> clazz) {
-		return parseMatchElementToList(openXml(txXml), txSelectorTag, fiColList, clazz);
 
+	public static <EntClazz> List<EntClazz> parseMatchElementToList(String txXml, String txSelectorTag, List<FiCol> fiColList, Class<EntClazz> clazz) {
+		return parseMatchElementToList(openXml(txXml), txSelectorTag, fiColList, clazz, false);
 	}
 
-	public static <EntClazz> List<EntClazz> parseMatchElementToList(Match xmlMatch, String txSelectorTag, List<FiCol> fiColList, Class<EntClazz> clazz) {
+	public static <EntClazz> List<EntClazz> parseMatchElementToList(String txXml, String txSelectorTag, List<FiCol> fiColList, Class<EntClazz> clazz, Boolean boChildSameClassCheck) {
+		return parseMatchElementToList(openXml(txXml), txSelectorTag, fiColList, clazz, boChildSameClassCheck);
+	}
 
-		if(xmlMatch==null) return new ArrayList<>();
+	public static <EntClazz> List<EntClazz> parseMatchElementToList(Match xmlMatch, String txSelectorTag, List<FiCol> fiColList, Class<EntClazz> clazz, Boolean boChildSameClassCheck) {
+
+		if (xmlMatch == null) return new ArrayList<>();
 
 		List<EntClazz> dataList = new ArrayList<>();
 
 		for (Element xmlElement : xmlMatch.find(txSelectorTag)) {
-			EntClazz entity = FiXmlParser.parseMatchToEntityWithOneChild($(xmlElement), fiColList, clazz);
+			EntClazz entity = FiXmlParser.parseMatchToEntityWithOneChild($(xmlElement), fiColList, clazz, boChildSameClassCheck, null);
 			dataList.add(entity);
 		}
 
