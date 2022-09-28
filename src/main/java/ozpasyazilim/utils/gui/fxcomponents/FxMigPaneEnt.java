@@ -3,6 +3,11 @@ package ozpasyazilim.utils.gui.fxcomponents;
 import net.miginfocom.layout.AC;
 import net.miginfocom.layout.LC;
 
+/**
+ * Bir alt sınıfta auto class kullanabilmek için EntClazz eklendi
+ *
+ * @param <EntClazz>
+ */
 public class FxMigPaneEnt<EntClazz> extends FxMigPane {
 
 	public FxMigPaneEnt() {

@@ -503,6 +503,16 @@ public class FiEntity {
 			fiField.setBoDateSeperatorField(true);
 		}
 
+		if (field.isAnnotationPresent(FiUniqGroup1.class)) {
+			fiField.setBoUnique1(true);
+
+			FiUniqGroup1 anno = field.getAnnotation(FiUniqGroup1.class);
+
+			if (!FiString.isEmpty(anno.name())) {
+				fiField.setTxUnique1Name(anno.name());
+			}
+
+		}
 
 	}
 

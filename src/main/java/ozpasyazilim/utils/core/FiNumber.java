@@ -357,6 +357,21 @@ public class FiNumber {
 		return lnInsertedRows;
 	}
 
+	/**
+	 * null değerlerde false döner
+	 *
+	 * @param value1
+	 * @param values
+	 * @return
+	 */
+	public static Boolean equalsSome(Integer value1,Integer... values) {
+		if(value1==null) return false;
+		for (Integer value : values) {
+			if(value==null) continue;
+			if(value1==value) return true;
+		}
+		return false;
+	}
 
 
 	public FiNumber buildNullCheckOrZero(Double dmValue) {

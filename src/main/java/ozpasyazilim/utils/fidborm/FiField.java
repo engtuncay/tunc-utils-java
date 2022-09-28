@@ -81,6 +81,10 @@ public class FiField {
 	// Insert Select sorguların where alanında kullanıcak alan (tarih genelde)
 	Boolean boDateSeperatorField;
 
+	Boolean boUnique1;
+
+	String txUnique1Name;
+
 	public FiField() {
 	}
 
@@ -369,5 +373,29 @@ public class FiField {
 	public Boolean getBoDateSeperatorField() {return boDateSeperatorField;}
 
 	public void setBoDateSeperatorField(Boolean boDateSeperatorField) {this.boDateSeperatorField = boDateSeperatorField;
+	}
+
+	public Boolean getBoUnique1() {
+		return boUnique1;
+	}
+
+	public void setBoUnique1(Boolean boUnique1) {
+		this.boUnique1 = boUnique1;
+	}
+
+	public Boolean getBoSeperatedField() {
+		return boSeperatedField;
+	}
+
+	public void setBoSeperatedField(Boolean boSeperatedField) {
+		this.boSeperatedField = boSeperatedField;
+	}
+
+	public String getTxUnique1Name() {
+		return txUnique1Name;
+	}
+
+	public void setTxUnique1Name(String txUnique1Name) {
+		this.txUnique1Name = txUnique1Name;
 	}
 }

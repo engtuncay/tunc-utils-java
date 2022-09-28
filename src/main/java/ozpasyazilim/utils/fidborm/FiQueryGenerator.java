@@ -1495,7 +1495,6 @@ public class FiQueryGenerator {
 	}
 
 	/**
-	 *
 	 * FiCol Listesi Update Field ve Key Field ile update sorgusu kurar
 	 *
 	 * @param clazz
@@ -1512,7 +1511,7 @@ public class FiQueryGenerator {
 		Integer index = 0;
 		Integer indexWhere = 0;
 		for (FiCol fiCol : fiCols) {
-			if(FiBoolean.isTrue(fiCol.getBoUpdateField())){
+			if (FiBoolean.isTrue(fiCol.getBoUpdateField())) {
 				index++;
 				if (index != 1) query.append(", ");
 				query.append(fiCol.getFieldName() + " = @" + fiCol.getFieldName());
@@ -1550,10 +1549,10 @@ public class FiQueryGenerator {
 			Integer indexWhere = 0;
 			for (FiCol fiCol : fiCols1) {
 
-				String fieldName = FiString.getIfNotEmptytOr(fiCol.getTxDbFieldName(),fiCol.getFieldName());
-				String paramName = FiString.getIfNotEmptytOr(fiCol.getTxParamName(),fiCol.getFieldName());
+				String fieldName = FiString.getIfNotEmptytOr(fiCol.getTxDbFieldName(), fiCol.getFieldName());
+				String paramName = FiString.getIfNotEmptytOr(fiCol.getTxParamName(), fiCol.getFieldName());
 
-				if(!FiBoolean.isTrue(fiCol.getBoKeyField()) && !FiBoolean.isTrue(fiCol.getBoNonUpdatable()) ){
+				if (!FiBoolean.isTrue(fiCol.getBoKeyField()) && !FiBoolean.isTrue(fiCol.getBoNonUpdatable())) {
 					index++;
 					if (index != 1) query.append(", ");
 					query.append(fieldName + " = @" + paramName);
@@ -1572,13 +1571,14 @@ public class FiQueryGenerator {
 				query = new StringBuilder();
 			}
 
-			if(!FiString.isEmptyTrim(query.toString())) fiListString.add(query.toString());
+			if (!FiString.isEmptyTrim(query.toString())) fiListString.add(query.toString());
 
 		});
 
 
 		return fiListString;
 	}
+
 	/**
 	 * Key alanlarını class alanlarındaki Id annotasyonuna göre alır
 	 *
@@ -2428,6 +2428,55 @@ public class FiQueryGenerator {
 
 	}
 
+	public static String uniqueQuery(Class clazz) {
+
+		List<FiField> listFields = FiEntity.getListFieldsAll(clazz);
+
+		StringBuilder sbFields = new StringBuilder();
+		StringBuilder sbFieldsForName = new StringBuilder();
+		String name = "";
+
+		int index = 0;
+		for (FiField field : listFields) {
+
+			if (FiBoolean.isTrue(field.getBoUnique1())) {
+				if (index != 0) sbFields.append("\n,");
+				if (index != 0) sbFieldsForName.append("_");
+
+				sbFields.append(field.getDbFieldName() + " ASC");
+				sbFieldsForName.append(field.getDbFieldName());
+				index++;
+
+				if (!FiString.isEmpty(field.getTxUnique1Name())) {
+					name = field.getTxUnique1Name();
+				}
+
+			}
+
+		}
+
+		if (FiString.isEmpty(name) ) {
+				name = "ent_unique_"+ sbFieldsForName;
+//			}else{
+//				name = "ent-unique-" + FiDate.toStringTimestamptPlain(new Date());
+//			}
+		}
+
+
+		String sablon = "CREATE \n" +
+				"UNIQUE NONCLUSTERED INDEX {{name}} ON [dbo].{{tableName}}\n" +
+				"(\n" +
+				"{{fields}}\n" +
+				")";
+
+		FiKeyBean fiKeyBean = new FiKeyBean();
+		fiKeyBean.put("name", name);
+		fiKeyBean.put("tableName", getTableName(clazz));
+		fiKeyBean.put("fields", sbFields.toString());
+
+		return FiString.substitutor(sablon, fiKeyBean);
+	}
+
 	public static List<FiField> getFieldsWithDbDefinitionFromCode(Class clazz) {
 
 		List<FiField> listFields = FiEntity.getListFieldsAll(clazz);
@@ -2979,7 +3028,7 @@ public class FiQueryGenerator {
 	public static String insertSelectQueryWithColsAndDate(String selectedTable, String serverDb1, String serverDb2, String txDateFieldName, String txDateFieldValue, Jdbi jdbi) {
 		//String txFieldsCommaSeperated = getFieldsCommaSeperated(clazz);
 		String txFieldsCommaSeperated = getFieldsCommaSeperatedFromDb(selectedTable, jdbi);
-		if(txDateFieldValue==null) txDateFieldValue = "";
+		if (txDateFieldValue == null) txDateFieldValue = "";
 		if (!txDateFieldValue.contains("@")) {
 			txDateFieldValue = "'" + txDateFieldValue + "'";
 		}
@@ -2988,17 +3037,17 @@ public class FiQueryGenerator {
 				"INSERT INTO %s.dbo.%s (%s)\n" +
 				"SELECT %s FROM %s.dbo.%s\n" +
 				"WHERE %s >= %s\n\n" +
-				"SET IDENTITY_INSERT %s.dbo.%s OFF\n",serverDb2,selectedTable, serverDb2, selectedTable, txFieldsCommaSeperated, txFieldsCommaSeperated, serverDb1, selectedTable, txDateFieldName, txDateFieldValue,serverDb2,selectedTable);
+				"SET IDENTITY_INSERT %s.dbo.%s OFF\n", serverDb2, selectedTable, serverDb2, selectedTable, txFieldsCommaSeperated, txFieldsCommaSeperated, serverDb1, selectedTable, txDateFieldName, txDateFieldValue, serverDb2, selectedTable);
 		return sql;
 	}
 
 	public static String insertSelectQueryWithCols(String selectedTable, String serverDb1, String serverDb2, Jdbi jdbi) {
 		//String txFieldsCommaSeperated = getFieldsCommaSeperated(clazz);
-		String txFieldsCommaSeperated = getFieldsCommaSeperatedFromDb(selectedTable,jdbi);
+		String txFieldsCommaSeperated = getFieldsCommaSeperatedFromDb(selectedTable, jdbi);
 		String sql = String.format("SET IDENTITY_INSERT %s.dbo.%s ON\n\n" +
 				"INSERT INTO %s.dbo.%s (%s)\n" +
 				"SELECT %s FROM %s.dbo.%s\n\n" +
-				"SET IDENTITY_INSERT %s.dbo.%s OFF\n",serverDb2,selectedTable, serverDb2, selectedTable, txFieldsCommaSeperated, txFieldsCommaSeperated, serverDb1, selectedTable,serverDb2,selectedTable);
+				"SET IDENTITY_INSERT %s.dbo.%s OFF\n", serverDb2, selectedTable, serverDb2, selectedTable, txFieldsCommaSeperated, txFieldsCommaSeperated, serverDb1, selectedTable, serverDb2, selectedTable);
 		return sql;
 	}
 
@@ -3015,11 +3064,11 @@ public class FiQueryGenerator {
 		return query.toString();
 	}
 
-	private static String getFieldsCommaSeperatedFromDb(String txTableName,Jdbi jdbi) {
+	private static String getFieldsCommaSeperatedFromDb(String txTableName, Jdbi jdbi) {
 		Fdr<List<SqlColumn>> fieldListFilterAnno = new RepoSqlColumn(jdbi).selectColumnsAll(txTableName);
 		StringBuilder query = new StringBuilder();
 
-		if(fieldListFilterAnno.isTrueBoResult()){
+		if (fieldListFilterAnno.isTrueBoResult()) {
 			Integer index = 0;
 			for (SqlColumn sqlColumn : fieldListFilterAnno.getValue()) {
 				index++;
@@ -3027,7 +3076,7 @@ public class FiQueryGenerator {
 				query.append(sqlColumn.getCOLUMN_NAME());
 			}
 			return query.toString();
-		}else{
+		} else {
 			return "";
 		}
 

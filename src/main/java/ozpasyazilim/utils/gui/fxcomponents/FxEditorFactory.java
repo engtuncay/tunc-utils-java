@@ -290,11 +290,11 @@ public class FxEditorFactory {
 	 * @param entity
 	 * @return
 	 */
-	public static Node  generateEditorNodeFullLifeCycle(FiCol fiCol, Object entity) {
+	public static Node generateEditorNodeFullLifeCycle(FiCol fiCol, Object entity) {
 
 		Node comp = generateNodeByClassNameMain(fiCol.getColType(), fiCol.getColEditorClass(), fiCol);
 
-		if (fiCol.getFnNodeFocusTrigger()!=null) {
+		if (fiCol.getFnNodeFocusTrigger() != null) {
 			comp.focusedProperty().addListener((observable, oldValue, newValue) -> fiCol.getFnNodeFocusTrigger().accept(comp));
 		}
 
@@ -750,14 +750,13 @@ public class FxEditorFactory {
 	}
 
 	/**
-	 *
 	 * Component değer ataması yapar, örneğin textfield ise textfield.setText değerine atama yaparak içeriğini ayarlar. Datepicker ise tarih değerini atar.
 	 *
-	 * @param iFiCol ilgili field/column tanımı
-	 * @param cellvalue component verilecek değer
+	 * @param iFiCol       ilgili field/column tanımı
+	 * @param cellvalue    component verilecek değer
 	 * @param colNodeClass node sınıf ismi Örnegin FxTextField gibi
-	 * @param colNode component'in Node objesi
-	 * @param entity değerin alındığı Entity. İşlevi ???
+	 * @param colNode      component'in Node objesi
+	 * @param entity       değerin alındığı Entity. İşlevi ???
 	 */
 	private static void setNodeValueForCompsMain(IFiCol iFiCol, Object cellvalue, String colNodeClass, Node colNode, Object entity) {
 
@@ -1079,18 +1078,23 @@ public class FxEditorFactory {
 			return cellvalue;
 		}
 
+//		if (ozColType == OzColType.DateTimeIso) {
+//			Object cellvalue = FiDate.strToDateGeneric2()togetNowStringAsIso8601Date(textValue);
+//			return cellvalue;
+//		}
+
 		if (ozColType == OzColType.CommaSeperatedStr) {
 			List<String> listData = FiCollection.commaSeperatedParseToStrList(textValue);
 			return listData;
 		}
 
 		if (ozColType == OzColType.BoolEvetHayir) {
-			if(FiString.isEmpty(textValue)) return null;
+			if (FiString.isEmpty(textValue)) return null;
 
-			if(textValue.equalsIgnoreCase("E") || textValue.equalsIgnoreCase("EVET")) {
+			if (textValue.equalsIgnoreCase("E") || textValue.equalsIgnoreCase("EVET")) {
 				return true;
 			}
-			if(textValue.equalsIgnoreCase("H") || textValue.equalsIgnoreCase("HAYIR")) {
+			if (textValue.equalsIgnoreCase("H") || textValue.equalsIgnoreCase("HAYIR")) {
 				return false;
 			}
 			return null;
@@ -1406,7 +1410,13 @@ public class FxEditorFactory {
 		return true;
 	}
 
-	public static Fdr checkColumnsForNullAndOtherErrorsByEditorValue(List<FiCol> colsForm) {
+	/**
+	 * Null , Required Checks
+	 *
+	 * @param colsForm
+	 * @return
+	 */
+	public static Fdr validateCols(List<FiCol> colsForm) {
 
 		for (FiCol fiTableCol : colsForm) {
 

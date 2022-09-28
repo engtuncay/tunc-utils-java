@@ -10,4 +10,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 public @interface FiUniqGroup1 {
 
+	String name() default "";
+
 }

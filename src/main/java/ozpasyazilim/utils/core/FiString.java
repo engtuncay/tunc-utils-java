@@ -7,7 +7,9 @@ import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.text.StrSubstitutor;
 import ozpasyazilim.utils.annotations.FiDraft;
+import ozpasyazilim.utils.datatypes.FiKeyBean;
 import ozpasyazilim.utils.log.Loghelper;
 
 public class FiString {
@@ -721,8 +723,8 @@ public class FiString {
 	}
 
 	public static Boolean isEqualWithTrim(String txData1, String txData2) {
-		if(txData1!=null) txData1 = txData1.trim();
-		if(txData2!=null) txData2 = txData2.trim();
+		if (txData1 != null) txData1 = txData1.trim();
+		if (txData2 != null) txData2 = txData2.trim();
 		return FiString.orEmpty(txData1).equals(FiString.orEmpty(txData2));
 	}
 
@@ -746,14 +748,14 @@ public class FiString {
 		}
 	}
 
-	public static <PrmEnt1> String itemOrEmpty(PrmEnt1 itemGun, Function<PrmEnt1,String> fnValue) {
-		if(itemGun==null) return "";
+	public static <PrmEnt1> String itemOrEmpty(PrmEnt1 itemGun, Function<PrmEnt1, String> fnValue) {
+		if (itemGun == null) return "";
 		return fnValue.apply(itemGun);
 	}
 
 	public static boolean equalsWithTrim(String txValue1, String txValue2) {
 
-		if(txValue1==null || txValue2 ==null){
+		if (txValue1 == null || txValue2 == null) {
 			return false;
 		}
 
@@ -761,9 +763,8 @@ public class FiString {
 	}
 
 	/**
-	 *
 	 * Eğer boş degilse (trimli) txValue 1 dön, yoksa txValue2 dön
-	 *
+	 * <p>
 	 * Emptyt means : Empty With Trim
 	 *
 	 * @param txValue1
@@ -771,12 +772,24 @@ public class FiString {
 	 * @return
 	 */
 	public static String getIfNotEmptytOr(String txValue1, String txValue2) {
-		if(FiString.isEmptyTrim(txValue1)) return txValue2;
+		if (FiString.isEmptyTrim(txValue1)) return txValue2;
 		return txValue1;
 	}
 
 	public static int getSize(String cari_vergiKimlikNo) {
-		if(cari_vergiKimlikNo ==null) return 0;
+		if (cari_vergiKimlikNo == null) return 0;
 		return cari_vergiKimlikNo.length();
+	}
+
+	/**
+	 * {{namedParameter}} ile değerlerini yer değişitirir
+	 *
+	 * @param txTemplate
+	 * @param fiKeyBean
+	 * @return
+	 */
+	public static String substitutor(String txTemplate, FiKeyBean fiKeyBean) {
+		StrSubstitutor sub = new StrSubstitutor(fiKeyBean, "{{", "}}");
+		return sub.replace(txTemplate);
 	}
 }

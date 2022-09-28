@@ -243,30 +243,36 @@ public class FiQuery {
 	}
 
 	public void convertListParamToMultiParams() {
-		convertListParamToMultiParams(true);
+		convertListParamToMultiParams(false);
 	}
 
 	/**
 	 * List Türündeki parametreleri multi param (abc_1,abc_2... gibi) çevirir
 	 */
-	public void convertListParamToMultiParams(Boolean boRemoveOldMultiParam) {
+	public void convertListParamToMultiParams(Boolean boDontRemoveOldMultiParam) {
 
 		if (getMapParams() == null) return;
 
 		// (1) List türündeki parametreler bulunur.
-		List<String> listParamToConvertMulti = new ArrayList<>();
+		List<String> listMultiParamsName = new ArrayList<>();
 		getMapParams().forEach((param, value) -> {
+
+			// concurrent modification olmaması amacıyla convert işlemi ayrı yapılacak (aşağıda)
 			if (value instanceof List) {
-				// concurrent modification olmaması amacıyla convert işlemi ayrı yapılacak (aşağıda)
-				listParamToConvertMulti.add(param);
+				listMultiParamsName.add(param);
 			}
+
+			if (value instanceof Set) {
+				listMultiParamsName.add(param);
+			}
+
 		});
 		// --end-1
 
-		// List türünde olan parametreleri , multi tekli parametrelere çevirir. (abc_1,abc_2 gibi)
-		for (String param : listParamToConvertMulti) {
-			List value = (List) getMapParams().get(param);
-			convertSqlAsListParamToMultiParam(param, value,boRemoveOldMultiParam);
+		// List-Set türünde olan parametreleri , multi tekli parametrelere çevirir. (abc_1,abc_2 gibi)
+		for (String param : listMultiParamsName) {
+			Collection paramCollection = (Collection) getMapParams().get(param);
+			convertSqlAsSingleParamToMultiParam(param, paramCollection, boDontRemoveOldMultiParam);
 		}
 
 	}
@@ -278,26 +284,34 @@ public class FiQuery {
 	 *
 	 * @param param
 	 * @param listData
-	 * @param boRemoveOldMultiParam
+	 * @param boDontRemoveOldMultiParam
 	 */
-	private void convertSqlAsListParamToMultiParam(String param, List listData, Boolean boRemoveOldMultiParam) {
+	private void convertSqlAsSingleParamToMultiParam(String param, Collection listData, Boolean boDontRemoveOldMultiParam) {
 
 		// (1) şablona göre yeni eklenecek parametre listesi
-		Map<String, Object> mapParamsNew = new HashMap<>();
+		FiKeyBean paramsNew = new FiKeyBean();
+		StringBuilder sbNewParamsForQuery = new StringBuilder("");
 
-		for (int index = 0; index < listData.size(); index++) {
+		int index = 0;
+		for (Object listDatum : listData) {
 			String sablonParam = FiQuery.genTemplateMultiParam(param, index);
-			mapParamsNew.put(sablonParam, listData.get(index));
+			if(index!=0) sbNewParamsForQuery.append(",");
+			sbNewParamsForQuery.append("@"+sablonParam);
+			paramsNew.put(sablonParam, listDatum);
+			index++;
 		}
 		// end-1
 
-		// Sorgu cümlesi güncellenir (eski parametre çıkarılır , yeni parametreler eklenir.)
-		setTxQuery(fhrConvertSqlForMultiParamByTemplate(getTxQuery(), param, listData.size()));
+		// Sorgu cümlesi güncellenir (eski parametre çıkarılır , yeni multi parametreler eklenir.)
+		// setTxQuery(fhrConvertSqlForMultiParamByTemplate(getTxQuery(), param, listData.size()));
+		String sqlNew = getTxQuery().replaceAll("@"+param, sbNewParamsForQuery.toString()); //(%s)
+		setTxQuery(sqlNew);
+
 		// map paramden eski parametre çıkarılıp, yenileri eklenir
-		if(FiBoolean.isTrue(boRemoveOldMultiParam)){
+		if (!FiBoolean.isTrue(boDontRemoveOldMultiParam)) {
 			getMapParams().remove(param);
 		}
-		getMapParams().putAll(mapParamsNew);
+		getMapParams().putAll(paramsNew);
 	}
 
 	public void convertListParamToMultiParams(FiKeyBean mapBind) {
@@ -306,9 +320,9 @@ public class FiQuery {
 	}
 
 	/**
-	 * sql sorgu içindeki parametreyi, parametre_index (genTem şeklinde multi parametreye çevirir.
+	 * sql sorgu içindeki parametreyi (@paramName), parametre_indexNo şeklinde multi parametreye çevirir. (@paramName_1,@paramName_2,...)
 	 * <p>
-	 * param_1 param_2 gibi
+	 * Örnek @paramName -> @paramName_1 , @paramName_2 , ...
 	 */
 	public static String fhrConvertSqlForMultiParamByTemplate(String sql, String param, Integer count) {
 

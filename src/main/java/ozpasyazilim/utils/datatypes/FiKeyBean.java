@@ -73,7 +73,7 @@ public class FiKeyBean extends HashMap<String, Object> {
 		return this;
 	}
 
-	public void putByObj(Object field, Object value) {
+	public void putObj(Object field, Object value) {
 		this.put(field.toString(), value);
 	}
 

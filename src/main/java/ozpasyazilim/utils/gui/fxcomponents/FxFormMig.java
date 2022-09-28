@@ -134,7 +134,7 @@ public class FxFormMig<EntClazz> extends FxMigPaneEnt<EntClazz> implements IFxMo
 		FxEditorFactory.bindEntityToFormByEditorValue(getListFormElements(), formMikroKodDegistir);
 	}
 
-	public FiKeyBean getFormAsFiMapParams() {
+	public FiKeyBean getFormAsFiKeyBean() {
 		return FxEditorFactory.bindFormToKeyBeanByEditorNode(getListFormElements());
 	}
 
