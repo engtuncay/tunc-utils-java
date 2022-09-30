@@ -295,8 +295,8 @@ public class FiQuery {
 		int index = 0;
 		for (Object listDatum : listData) {
 			String sablonParam = FiQuery.genTemplateMultiParam(param, index);
-			if(index!=0) sbNewParamsForQuery.append(",");
-			sbNewParamsForQuery.append("@"+sablonParam);
+			if (index != 0) sbNewParamsForQuery.append(",");
+			sbNewParamsForQuery.append("@" + sablonParam);
 			paramsNew.put(sablonParam, listDatum);
 			index++;
 		}
@@ -304,7 +304,7 @@ public class FiQuery {
 
 		// Sorgu cümlesi güncellenir (eski parametre çıkarılır , yeni multi parametreler eklenir.)
 		// setTxQuery(fhrConvertSqlForMultiParamByTemplate(getTxQuery(), param, listData.size()));
-		String sqlNew = getTxQuery().replaceAll("@"+param, sbNewParamsForQuery.toString()); //(%s)
+		String sqlNew = getTxQuery().replaceAll("@" + param, sbNewParamsForQuery.toString()); //(%s)
 		setTxQuery(sqlNew);
 
 		// map paramden eski parametre çıkarılıp, yenileri eklenir
@@ -559,12 +559,13 @@ public class FiQuery {
 	 * <p>
 	 * 3. List tipinde parametre varsa, çoklu parametreye (convertMultiToSingle) çevirir
 	 */
-	public void prepSqlOptParamsByFiMap() {
+	public void prepSqlParamsFull() {
 		if (getMapParams() != null) {
 
 			// list değer varsa işlem sonunda list paramları single paramlara çevrilecek
 			BooleanProperty boListDegerVarMi = new SimpleBooleanProperty(false);
 
+			// MapParams olan parametreler aktif edilir ve collection olan parametre olup olmadığı kontrol edilir
 			getMapParams().forEach((key, value) -> {
 				//Optional Param'ın olup olmadığı kontroline gerek yok.
 				//String newQuery = activateOptParamV1Main(getTxQuery(), key);
@@ -577,20 +578,10 @@ public class FiQuery {
 
 			});
 
-			// fimap parama eklenerek aktif edildi.
-//			for (String activateParam : getMapParams().getActivateParamSet()) {
-//				activateOptParam(activateParam);
-//			}
-//
-//			for (String deActivateParam : getMapParams().getDeActivateParamSet()) {
-//				deActivateOptParam(deActivateParam);
-//			}
-
-			// FiMapParam'da olmayan parametreleri pasif eder
-			Set<String> setParams = getParamOptionals();
+			// MapParam'da olmayan parametreler pasif edilir
+			Set<String> setParams = getParamOptionalsFromQuery();
 			for (String setParam : setParams) {
 				if (!getMapParams().containsKey(setParam)) {
-//					fhrDeActivateOptParam(txQuery, setParam);
 					deActivateOptParam(setParam);
 				}
 			}
@@ -603,7 +594,7 @@ public class FiQuery {
 	}
 
 
-	private Set<String> getParamOptionals() {
+	private Set<String> getParamOptionalsFromQuery() {
 		return findParamOptionals(getTxQuery());
 	}
 

@@ -1203,7 +1203,7 @@ public class FxDialogShow {
 			String messageDetail = dbResult.getMessageNotNull();
 
 			if (dbResult.getRowsAffectedNotNull() > 0) {
-				String messageHeader = FiString.addNewLineToEndIfNotEmpty(title) + "İşlem Başarı ile Gerçekleşti\n";
+				String messageHeader = FiString.addNewLineToEndIfNotEmpty(title) + "İşlem Başarı ile Gerçekleşti :::\n";
 
 				if (FiNumber.orZero(dbResult.getLnInsertedRows()) > 0 || dbResult.getTxQueryType().equalsIgnoreCase(QueryType.bui().insert)) {
 					messageHeader += String.format("\nEklenen Yeni Kayıt Sayısı:%s", FiNumber.orZero(dbResult.getLnInsertedRows()));

@@ -12,6 +12,12 @@ public class FiErp {
 		System.out.println(efaturaRemoveZeros(efat));
 	}
 
+	/**
+	 * DML20190000000002039 efatura nosunu DML-2019-2039 a çevirir.
+	 *
+	 * @param text
+	 * @return
+	 */
 	public static String efaturaRemoveZeros(String text) {
 
 		if(FiString.isEmptyTrim(text)) return text;

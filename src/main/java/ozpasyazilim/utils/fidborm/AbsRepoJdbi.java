@@ -3216,4 +3216,27 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 	public Fdr<List<EntClazz>> jdSelectListBindMap(FiQuery fiQuery) {
 		return jdSelectListBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
 	}
+
+	public Fdr<List<EntClazz>> jdSelectList(FiQuery fiQuery) {
+		return jdSelectListBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
+	}
+
+	/**
+	 * FiQuery oluşturarak prepSqlParamFull metodunu çalıştırır.
+	 *
+	 * @param sql
+	 * @param fiKeyBean
+	 * @return
+	 */
+	public Fdr<List<EntClazz>> jdSelectListWitPrep(String sql, FiKeyBean fiKeyBean) {
+		FiQuery fiQuery = new FiQuery(sql, fiKeyBean);
+		fiQuery.prepSqlParamsFull();
+		return jdSelectListBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
+	}
+
+	public Fdr<List<EntClazz>> jdSelectListWitMulti(String sql, FiKeyBean fiKeyBean) {
+		FiQuery fiQuery = new FiQuery(sql, fiKeyBean);
+		fiQuery.convertListParamToMultiParams();
+		return jdSelectListBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
+	}
 }

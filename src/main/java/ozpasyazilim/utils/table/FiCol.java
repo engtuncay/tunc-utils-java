@@ -513,7 +513,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 		return this;
 	}
 
-	public FiCol buildColEditorValue(Object colFilterValue) {
+	public FiCol buiColEditorValue(Object colFilterValue) {
 		setColEditorValue(colFilterValue);
 		return this;
 	}
@@ -525,7 +525,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 	 * @param boIsRequired
 	 * @return
 	 */
-	public FiCol buildBoIsRequired(Boolean boIsRequired) {
+	public FiCol buiBoIsRequired(Boolean boIsRequired) {
 		setBoRequired(boIsRequired);
 		return this;
 	}

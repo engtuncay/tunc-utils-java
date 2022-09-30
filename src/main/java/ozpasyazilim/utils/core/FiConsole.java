@@ -732,7 +732,7 @@ public class FiConsole {
 
 
 	public static String textFiKeyBean(FiKeyBean fiKeyBean) {
-		StringBuilder log = new StringBuilder("");
+		StringBuilder log = new StringBuilder("FiKeyBean İçeriği:");
 		log.append("\n");
 		for (Map.Entry<String, Object> entry : fiKeyBean.entrySet()) {
 			log.append(entry.getKey() + " : " + FiString.ToStrOrEmpty(entry.getValue()) + "\n");
