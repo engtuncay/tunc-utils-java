@@ -3237,6 +3237,9 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 	public Fdr<List<EntClazz>> jdSelectListWitMulti(String sql, FiKeyBean fiKeyBean) {
 		FiQuery fiQuery = new FiQuery(sql, fiKeyBean);
 		fiQuery.convertListParamToMultiParams();
+
+		//Loghelper.get(getClass()).debug("sql:" + fiQuery.getTxQuery());
+
 		return jdSelectListBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
 	}
 }
