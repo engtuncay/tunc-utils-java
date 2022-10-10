@@ -9,27 +9,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Get MonthStart , YearStart, DateDiff gibi metodlar
+ */
 public class FiCal {
 
 	private Date dateBuffer;
-
-	public static void main(String[] args) {
-		//System.out.println(new FiCal().getDateGecenAySonu().toString());
-//		System.out.println(getDateDiffFromToday(-1));
-		System.out.println("Gün Farkı"+ FiCal.dateDiffByDay2(FiDate.strToDateYmd("20200906"), new Date()));
-
-		Date date = FiDate.strToDateYmd("20210815");
-
-		System.out.println("Ayın Günü:"+ FiCal.getDayNumber());
-
-		if (FiCal.getMonth(date) < FiCal.getMonth()) {
-			System.out.println("ay önceki");
-		}else{
-			System.out.println("ay sonraki");
-		}
-
-
-	}
 
 	public FiCal() {
 	}
@@ -150,9 +135,9 @@ public class FiCal {
 		//final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");
 		//LocalDate.parse(txFirstInput, formatter);
 
-		final LocalDate firstDate = FiDate.convertLocalDate(selectedDate);
-		final LocalDate secondDate = FiDate.convertLocalDate(selectedDate1);
-		final LocalDate thirdate = FiDate.convertLocalDate(selectedDate2);
+		final LocalDate firstDate = FiDate.dateToLocalDate(selectedDate);
+		final LocalDate secondDate = FiDate.dateToLocalDate(selectedDate1);
+		final LocalDate thirdate = FiDate.dateToLocalDate(selectedDate2);
 		final long daydiff1 = ChronoUnit.DAYS.between(firstDate, secondDate);
 		final long daydiff2 = ChronoUnit.DAYS.between(firstDate, thirdate);
 
@@ -163,8 +148,8 @@ public class FiCal {
 
 	public static Integer compareDate(Date selectedDate1, Date selectedDate2) {
 
-		final LocalDate firstDate = FiDate.convertLocalDate(selectedDate1);
-		final LocalDate secondDate = FiDate.convertLocalDate(selectedDate2);
+		final LocalDate firstDate = FiDate.dateToLocalDate(selectedDate1);
+		final LocalDate secondDate = FiDate.dateToLocalDate(selectedDate2);
 		final long daydiff1 = ChronoUnit.DAYS.between(firstDate, secondDate);
 
 		if (daydiff1 > 0) {

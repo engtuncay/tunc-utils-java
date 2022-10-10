@@ -13,12 +13,6 @@ public class FxComboBoxEntity<EntClazz> extends FxComboBox<ComboItemGen<EntClazz
 		super();
 	}
 
-//	public void addFiItems(List<String> list) {
-//		for (String s : list) {
-//			getItems().add(new ComboItem(s, s));
-//		}
-//	}
-
 	public void activateSelectedItem() {
 
 		if (FiString.isEmpty(getTxValue())) {

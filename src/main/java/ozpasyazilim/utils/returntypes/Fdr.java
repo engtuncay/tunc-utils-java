@@ -1,8 +1,12 @@
 package ozpasyazilim.utils.returntypes;
 
+import javafx.util.Pair;
 import ozpasyazilim.utils.core.FiBoolean;
+import ozpasyazilim.utils.core.FiCollection;
 import ozpasyazilim.utils.core.FiNumber;
 import ozpasyazilim.utils.core.FiString;
+import ozpasyazilim.utils.log.EntLog;
+import ozpasyazilim.utils.log.MetaLogType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,6 +79,12 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 	List<Fdr> fdrList;
 
 	List<Exception> listException;
+
+	List<String> messageList;
+
+	List<EntLog> logList;
+
+	Boolean boMultiFdr;
 
 	public Fdr() {
 	}
@@ -397,6 +407,8 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 
 		// Tüm işlemlerde mesaj birleştirilir.
 		appendMessageLn(fdr.getMessage());
+
+		if(!FiCollection.isEmpty(fdr.getLogList())) getLogListInit().addAll(fdr.getLogList());
 	}
 
 	public void appendMessageLn(String message) {
@@ -429,7 +441,7 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 		appendRowsAffected(fdr.getRowsAffectedOrEmpty());
 		// Tüm işlemlerde mesaj birleştirilir.
 		appendMessageLn(fdr.getMessage());
-
+		if(!FiCollection.isEmpty(fdr.getLogList())) getLogListInit().addAll(fdr.getLogList());
 	}
 
 	public Integer getLnSuccessOpCount() {
@@ -764,5 +776,110 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 
 	public void setLnResponseCode(Integer lnResponseCode) {
 		this.lnResponseCode = lnResponseCode;
+	}
+
+	public List<Fdr> getFdrList() {
+		return fdrList;
+	}
+
+	public List<Fdr> getFdrListInit() {
+		if (fdrList == null) {
+			fdrList = new ArrayList<>();
+		}
+		return fdrList;
+	}
+
+	public void setFdrList(List<Fdr> fdrList) {
+		this.fdrList = fdrList;
+	}
+
+	public List<String> getMessageList() {
+		return messageList;
+	}
+
+	public List<String> getMessageListInit() {
+		if (messageList == null) {
+			messageList = new ArrayList<>();
+		}
+		return messageList;
+	}
+
+	public void setMessageList(List<String> messageList) {
+		this.messageList = messageList;
+	}
+
+	public String getMessageListCombined() {
+		StringBuilder sb = new StringBuilder();
+
+		int index = 0;
+		for (String s : getMessageListInit()) {
+			if (index > 0) sb.append("\n");
+			sb.append(s);
+			index++;
+		}
+
+		return sb.toString();
+	}
+
+	public List<EntLog> getLogList() {
+		return logList;
+	}
+
+	public List<EntLog> getLogListInit() {
+		if (logList == null) {
+			logList = new ArrayList<>();
+		}
+		return logList;
+	}
+
+	public void setLogList(List<EntLog> logList) {
+		this.logList = logList;
+	}
+
+	public Boolean getBoMultiFdr() {
+		return boMultiFdr;
+	}
+
+	public void setBoMultiFdr(Boolean boMultiFdr) {
+		this.boMultiFdr = boMultiFdr;
+	}
+
+	public void addLog(EntLog log) {
+		getLogListInit().add(log);
+	}
+
+	public void addLog(String txMessage, MetaLogType metaLogType) {
+		getLogListInit().add(new EntLog(txMessage,metaLogType));
+	}
+
+	public String getLogAsString() {
+		StringBuilder sb = new StringBuilder("");
+		int index=0;
+		for (EntLog entLog : getLogListInit()) {
+			if(index>0) sb.append("\n");
+			if(entLog.getTxMessage().equals(MetaLogType.ERROR.toString())){
+				sb.append("HATA !!! : ");
+			}
+			sb.append(entLog.getTxMessage());
+			index++;
+		}
+		return sb.toString();
+	}
+
+	public Pair<String,Boolean> getLogAsStringAndErrorExist() {
+		StringBuilder sb = new StringBuilder("");
+		int index=0;
+		boolean boErrorExist = false;
+		for (EntLog entLog : getLogListInit()) {
+			if(index>0) sb.append("\n");
+			if(entLog.getTxMessage().equals(MetaLogType.ERROR.toString())){
+				boErrorExist = true;
+				sb.append("HATA !!! : ");
+			}
+			sb.append(entLog.getTxMessage());
+			index++;
+		}
+		Pair<String, Boolean> pair = new Pair<>(sb.toString(),boErrorExist);
+		return pair;
 	}
 }

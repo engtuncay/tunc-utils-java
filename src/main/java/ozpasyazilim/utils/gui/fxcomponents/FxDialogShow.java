@@ -11,6 +11,7 @@ import javafx.scene.control.TextArea;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import javafx.util.Pair;
 import org.controlsfx.control.Notifications;
 import org.tbee.javafx.scene.layout.MigPane;
 import ozpasyazilim.utils.core.*;
@@ -1124,6 +1125,29 @@ public class FxDialogShow {
 			showPopInfo(message);
 		} else {
 			showModalInfo2("", message);
+		}
+	}
+
+	public static void showPopOrModalLog(Fdr fdr, Boolean boPopInfo) {
+		if(fdr.isTrueBoResult()){
+
+			Pair<String,Boolean> logAsStringAndErrorExist = fdr.getLogAsStringAndErrorExist();
+			if(FiBoolean.isTrue(boPopInfo)){
+				if(logAsStringAndErrorExist.getValue()){
+					showPopInfo("İşlem Başarılı, fakat bazı yerlerde hata oluştu.\n"+ fdr.getLogAsString());
+				}else{
+					showPopInfo("İşlem Başarılı\n"+ fdr.getLogAsString());
+				}
+
+			}else {
+				if(logAsStringAndErrorExist.getValue()){
+					showModalInfo2("İşlem Başarılı, fakat bazı yerlerde hata oluştu. Detayı inceleyiniz. !!\n",fdr.getLogAsString());
+				}else{
+					showModalInfo2("İşlem Başarılı\n",fdr.getLogAsString());
+				}
+			}
+		}else{
+			showModalError(fdr.getLogAsString(),"Hata Oluştu.");
 		}
 	}
 

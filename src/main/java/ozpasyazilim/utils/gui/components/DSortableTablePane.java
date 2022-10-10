@@ -824,8 +824,8 @@ public class DSortableTablePane extends JScrollPane {
 		    if (anotherObject == null || ((String) anotherObject).trim().equals(""))
 			return -1;
 		    try {
-			date1 = FiDate.getStringAsDate((String) mainObject);
-			date2 = FiDate.getStringAsDate((String) anotherObject);
+			date1 = FiDate.strToDateAsddmmyyyyByDotWitExc((String) mainObject);
+			date2 = FiDate.strToDateAsddmmyyyyByDotWitExc((String) anotherObject);
 		    } catch (Exception ex) {
 			ex.printStackTrace();
 		    }

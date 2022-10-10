@@ -23,13 +23,12 @@ import java.util.regex.Pattern;
 // import ozpasyazilim.mikro.models.UtilModel;
 
 public class FiDate {
-	static Locale localeTr = new Locale("tr", "TR");
 
 	public FiDate() {
 	}
 
 	public static boolean isValidDate(String inDate) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MMMM.yyyy", localeTr);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MMMM.yyyy", getLocaleTr());
 		dateFormat.setLenient(false);
 		try {
 			dateFormat.parse(inDate.trim());
@@ -39,14 +38,18 @@ public class FiDate {
 		return true;
 	}
 
-	public static LocalDate convertLocalDate(Date date) {
+	private static Locale getLocaleTr() {
+		return new Locale("tr", "TR");
+	}
+
+	public static LocalDate dateToLocalDate(Date date) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		LocalDate localDate = cal.getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		return localDate;
 	}
 
-	public static LocalDate convertLocalDate(String strDateyyyymmdd) {
+	public static LocalDate dateToLocalDate(String strDateyyyymmdd) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
 		LocalDate localDate = LocalDate.parse(strDateyyyymmdd, formatter);
 		return localDate;
@@ -59,15 +62,32 @@ public class FiDate {
 		return cal.getTime();
 	}
 
-	public static String getDateAsString(Date date) {
+	public static String dateToStrAsddDmmDyyyy(Date date) {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 		if (date == null) return null;
 		return sdf.format(date);
 	}
 
-	public static Date getStringAsDate(String stDate) throws Exception {
+	/**
+	 * dd.MM.yyyy Formatı
+	 *
+	 * @param stDate
+	 * @return
+	 * @throws Exception
+	 */
+	public static Date strToDateAsddmmyyyyByDotWitExc(String stDate) throws Exception {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 		return sdf.parse(stDate);
+	}
+
+	public static Date strToDateAsddmmyyyyWitDot(String stDate) {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+		try {
+			return sdf.parse(stDate);
+		} catch (ParseException e) {
+			Loghelper.get(FiDate.class).debug(FiException.exceptiontostring(e));
+			return null;
+		}
 	}
 
 	public static int getYear() throws Exception {
@@ -97,7 +117,6 @@ public class FiDate {
 	}
 
 	public static Date getDatewithTimeZero() {
-
 		Calendar now = Calendar.getInstance();
 		now.set(Calendar.HOUR, 0);
 		now.set(Calendar.MINUTE, 0);
@@ -105,10 +124,16 @@ public class FiDate {
 		now.set(Calendar.MILLISECOND, 0);
 		now.set(Calendar.HOUR_OF_DAY, 0);
 		return now.getTime();
-
 	}
 
-	public static Date clearTimeSetZeroFromDate(Date mydate) {
+	/**
+	 *
+	 * set Time to 0
+	 *
+	 * @param mydate
+	 * @return
+	 */
+	public static Date clearTimeFromDate(Date mydate) {
 
 		Calendar mycal = Calendar.getInstance();
 		mycal.setTime(mydate);
@@ -134,53 +159,41 @@ public class FiDate {
 		sdfOnlyHourFormat.setTimeZone(tz);
 	}
 
-	public static void main(String[] args) {
-
-		/*Date date = new Date();
-		System.out.println("year:" + UtilozDate.getYear(date));
-		System.out.println("month:" + UtilozDate.getMonth(date));
-		System.out.println("day:" + UtilozDate.getDay(date));
-		System.out.println("yil:" + (UtilozDate.getYearAsInt(date) - 1));*/
-
-		//System.out.println( String.format("Tarih : %s", FiDate.datetoString_dd_mm_yyyy_Slash(FiDate.strToDateGeneric("01.06.2018"))));
-
-		//FiDate.strToDateGeneric2("30.11.2017 00:00:00");
-
-		String str5AyOnce = FiDate.toStringYmd(FiCal.getDateDiffFromToday(0, -5));
-
-//		System.out.println(str5AyOnce);
-
-	}
 
 	public static String toStringYmd(Date date) {
-		if(date==null) return "";
+		if (date == null) return "";
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
 		return formatter.format(date);
 	}
 
 	public static Integer toIntegerYmd(Date date) {
-		if(date==null) return null;
+		if (date == null) return null;
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
 		return FiNumber.strToInt(formatter.format(date));
 	}
 
-
-	public static String toString_globalFormatWoTime(Date date) {
+	/**
+	 * yyyyHmmHdd -> yyyy-MM-dd  ( H means hyphen )
+	 *
+	 * @param date
+	 * @return
+	 */
+	public static String dateToStrGlobalFormatAsyyyyHmmHdd(Date date) {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		return formatter.format(date);
 	}
 
-	public static String datetoString_dd_mm_yyyy_Slash(Date date) {
+	public static String dateToStrAsddmmyyyyWitSlash(Date date) {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		return formatter.format(date);
 	}
 
-	public static String toStringDdmmyyWitDot(Date date) {
+	public static String dateToStrAsddmmyyyyWitDot(Date date) {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
 		return formatter.format(date);
 	}
 
-	public static String datetoString_yyyymmddtimeformat(Date date) {
+	public static String dateToStrAsddmmyyyyTime(Date date) {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy kk:mm:ss EEE");
 		return formatter.format(date);
 	}
@@ -274,7 +287,7 @@ public class FiDate {
 
 	public static String convertDateSeparator(String value, String seperator) {
 
-		if(seperator==null) seperator = ".";
+		if (seperator == null) seperator = ".";
 
 		// eklenen ayraçlar . / - ,
 		Pattern pattern = Pattern.compile("([0-9]{1,2})[\\.\\-,/]([0-9]{1,2})[\\.\\-,/]([0-9]{2,4})");
@@ -286,8 +299,8 @@ public class FiDate {
 			String month = matcher.group(2);
 			String year = matcher.group(3);
 
-			if(day.equals("0")) return null;
-			if(month.equals("0")) return null;
+			if (day.equals("0")) return null;
+			if (month.equals("0")) return null;
 
 			return day + seperator + month + seperator + year;
 		}
@@ -297,9 +310,9 @@ public class FiDate {
 
 	public static String generateDatePattern(String value, String seperator) {
 
-		if(seperator==null) seperator = ".";
+		if (seperator == null) seperator = ".";
 
-		if(value==null) return null;
+		if (value == null) return null;
 
 		// eklenen ayraçlar . / - ,
 		Pattern pattern = Pattern.compile("([0-9]{1,2})[\\.\\-,/]([0-9]{1,2})[\\.\\-,/]([0-9]{2,4})");
@@ -312,9 +325,9 @@ public class FiDate {
 			String month = matcher.group(2);
 			String year = matcher.group(3);
 
-			day = day.replaceAll(".","d");
-			month = month.replaceAll(".","M");
-			year = year.replaceAll(".","y");
+			day = day.replaceAll(".", "d");
+			month = month.replaceAll(".", "M");
+			year = year.replaceAll(".", "y");
 
 			return day + seperator + month + seperator + year;
 		}
@@ -392,9 +405,9 @@ public class FiDate {
 
 		Date cellvalue = null;
 
-		if(FiString.isEmptyTrim(strDate)) return null;
+		if (FiString.isEmptyTrim(strDate)) return null;
 
-		if(strDate.contains("T")){
+		if (strDate.contains("T")) {
 //			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 //			try {
 //				cellvalue = sdf.parse(strDate);
@@ -403,7 +416,7 @@ public class FiDate {
 //			}
 //			return cellvalue;
 			LocalDateTime dateTime = LocalDateTime.parse(strDate);
-		  cellvalue = convertLocalDateTimeToSimpleDate(dateTime);
+			cellvalue = convertLocalDateTimeToSimpleDate(dateTime);
 			return cellvalue;
 		}
 
@@ -525,7 +538,7 @@ public class FiDate {
 	 * @return
 	 */
 	public static Date stringToDateByDot(String date) {
-		if(FiString.isEmpty(date)) return null;
+		if (FiString.isEmpty(date)) return null;
 		SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
 		try {
 			Date dtValue = formatter.parse(date);
@@ -723,7 +736,7 @@ public class FiDate {
 
 
 	public static Boolean isEqualAsYmd(Date dt1, Date dt2) {
-		if(dt1 ==null || dt2==null) return false;
+		if (dt1 == null || dt2 == null) return false;
 
 		if (FiDate.toStringYmd(dt1).equals(FiDate.toStringYmd(dt2))) {
 			return true;
@@ -731,9 +744,64 @@ public class FiDate {
 		return false;
 	}
 
-	public static String getNowStringAsIso8601Date(){
+	public static String getNowStringAsIso8601Date() {
 		DateTime dt = new DateTime();
 		return dt.toString();
 		//System.out.println("Local Time (ISO8601): "+ dt.toString());
+	}
+
+	/**
+	 * Ör String Iso Date 2022-05-12T10:03:33.935 , Date çevirir
+	 *
+	 * @param txIsoDateTime
+	 */
+	public static Date strToIsoDate(String txIsoDateTime) {
+		//String txIsoDateTime = "2022-05-12T10:03:33.935";
+		try {
+			DateTime customDateTimeFromString = new DateTime(txIsoDateTime);
+			Date date = customDateTimeFromString.toDate();
+			//System.out.println("String To Date: "+ FiDate.datetoString_timestampt2(date));
+			return date;
+		} catch (Exception ex) {
+			Loghelper.get(FiDate.class).debug(FiException.exceptiontostring(ex));
+			return null;
+		}
+	}
+
+	/**
+	 * Date değişkenini 2022-05-12T10:03:33.935 şeklinde IsoDateTime'a çevirir
+	 *
+	 * @param dtToConvert
+	 * @return
+	 */
+	public static String  dateToStrIsoDate(Date dtToConvert) {
+		org.joda.time.LocalDateTime currentDateAndTime = org.joda.time.LocalDateTime.fromDateFields(dtToConvert);
+		return currentDateAndTime.toString();
+	}
+
+	public static Date atEndOfDay(Date date) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.set(Calendar.HOUR_OF_DAY, 23);
+		calendar.set(Calendar.MINUTE, 59);
+		calendar.set(Calendar.SECOND, 59);
+		calendar.set(Calendar.MILLISECOND, 999);
+		return calendar.getTime();
+	}
+
+	public static Date atStartOfDay(Date date) {
+		if(date==null) return null;
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		return calendar.getTime();
+	}
+
+
+	public static String dateToStrEndOfDayAsIsoDateTime(Date dtToConvert) {
+		return FiDate.dateToStrIsoDate(FiDate.atEndOfDay(dtToConvert));
 	}
 }

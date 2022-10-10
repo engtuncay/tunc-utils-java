@@ -24,15 +24,15 @@ public class FxDatePickerCore extends DatePicker {
 	public FxDatePickerCore(Date dtValue) {
 		super();
 		setDefaultConverter();
-		setValue(FiDate.convertLocalDate(dtValue));
+		setValue(FiDate.dateToLocalDate(dtValue));
 	}
 
 	public void setTodayDate() {
-		this.setValue(FiDate.convertLocalDate(FiDate.getDatewithTimeZero()));
+		this.setValue(FiDate.dateToLocalDate(FiDate.getDatewithTimeZero()));
 	}
 
 	public void setDate(Date date) {
-		this.setValue(FiDate.convertLocalDate(date));
+		this.setValue(FiDate.dateToLocalDate(date));
 	}
 
 	public void setDefaultConverter() {

@@ -1,10 +1,13 @@
 package ozpasyazilim.utils.gui.fxcomponents;
 
+import ozpasyazilim.utils.table.OzColType;
+
 public class FxTextFieldBtnLabel2<EntClazz> extends FxTextFieldBtn<EntClazz> implements IfxNode {
 
 //	FxLabel lblAciklama;
 //	Consumer<String> fnLblDataChange;
 //	Long lnDurationChange;
+	OzColType compValueType;
 
 	public FxTextFieldBtnLabel2() {
 		setup(null);
@@ -26,6 +29,16 @@ public class FxTextFieldBtnLabel2<EntClazz> extends FxTextFieldBtn<EntClazz> imp
 //				getFnLblDataChange().accept(s);
 //			}
 //		},getLnDurationChange(),getFxTextField());
+	}
+
+	@Override
+	public void setCompValueType(OzColType compValueType) {
+		this.compValueType = compValueType;
+	}
+
+	@Override
+	public Object getCompValueByColType() {
+		return null;
 	}
 
 //	public FxLabel getLblAciklama() {return lblAciklama;}

@@ -3234,12 +3234,10 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		return jdSelectListBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
 	}
 
-	public Fdr<List<EntClazz>> jdSelectListWitMulti(String sql, FiKeyBean fiKeyBean) {
+	public Fdr<List<EntClazz>> jdSelectListWitMultiOnly(String sql, FiKeyBean fiKeyBean) {
 		FiQuery fiQuery = new FiQuery(sql, fiKeyBean);
 		fiQuery.convertListParamToMultiParams();
-
 		//Loghelper.get(getClass()).debug("sql:" + fiQuery.getTxQuery());
-
 		return jdSelectListBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
 	}
 }

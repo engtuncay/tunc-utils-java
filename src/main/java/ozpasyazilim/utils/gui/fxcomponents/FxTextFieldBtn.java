@@ -162,8 +162,18 @@ public class FxTextFieldBtn<EntClazz> extends FxMigPane implements IfxNode {
 	}
 
 	@Override
+	public Object getCompValueByColType() {
+		return null;
+	}
+
+	@Override
 	public OzColType getCompValueType() {
 		return null;
+	}
+
+	@Override
+	public void setCompValueType(OzColType ozColType) {
+
 	}
 
 	@Override

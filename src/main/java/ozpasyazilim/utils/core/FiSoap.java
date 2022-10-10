@@ -213,7 +213,7 @@ public class FiSoap {
 			fdrRequest = requestRaw(endPoint, soapRequestXml, mapHeaders);
 		}
 
-		Loghelper.get(FiSoap.class).debug("Response:" + fdrRequest.getValue());
+		//Loghelper.get(FiSoap.class).debug("Response:" + fdrRequest.getValue());
 
 		if (fdrRequest.isTrueBoResult()) {
 

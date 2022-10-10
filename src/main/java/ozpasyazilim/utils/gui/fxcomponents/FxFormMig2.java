@@ -170,7 +170,7 @@ public class FxFormMig2<EntClazz> extends FxMigPaneEnt<EntClazz> implements IFxM
 		if(getFxFormConfig()==null) {
 			Loghelper.get(getClass()).debug("Form Config Tanımlanmamış");
 			return;
-		}else if( FiCollection.isEmpty(getFxFormConfig().getListFormElements())){
+		}else if(FiCollection.isEmpty(getFxFormConfig().getListFormElements())){
 			Loghelper.get(getClass()).debug("Form Alanları Tanımlanmamış.");
 			return;
 		}

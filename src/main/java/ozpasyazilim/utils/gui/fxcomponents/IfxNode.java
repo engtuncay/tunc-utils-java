@@ -14,8 +14,13 @@ public interface IfxNode {
 
 	OzColType getCompValueType();
 
+	void setCompValueType(OzColType ozColType);
+
 	Boolean getBoInvalidData();
 
+	Object getCompValueByColType();
+
+	@Deprecated
 	@FiExpiremental // sonradan kaldırılacak , coltype getCompValueType dan alıacak
 	Object getCompValueByColType(OzColType ozColType);
 
