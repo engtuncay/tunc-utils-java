@@ -22,6 +22,8 @@ public class FiMeta {
 
 	private String txLabel;
 
+	private String txType;
+
 	public FiMeta() {
 
 	}
@@ -71,5 +73,13 @@ public class FiMeta {
 
 	public void setTxKey(String txKey) {
 		this.txKey = txKey;
+	}
+
+	public String getTxType() {
+		return txType;
+	}
+
+	public void setTxType(String txType) {
+		this.txType = txType;
 	}
 }

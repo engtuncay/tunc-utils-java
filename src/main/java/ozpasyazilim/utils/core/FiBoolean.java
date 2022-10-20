@@ -10,8 +10,6 @@ public class FiBoolean {
 	public static boolean isFalse(Boolean boolVar) {
 		if (boolVar == null) return false;
 		return !boolVar;
-//		if (boolVar != null && boolVar == false) return true;
-//		return false;
 	}
 
 	public static Boolean convertBoolean(String txValue) {
@@ -98,18 +96,18 @@ public class FiBoolean {
 	}
 
 	public static boolean isNotTrue(Boolean value) {
-		if(value==null) return true;
+		if (value == null) return true;
 		return !value;
 
 	}
 
 	public static Boolean toggle(Boolean item) {
-		if(item==null) return true;
+		if (item == null) return true;
 		return !item;
 	}
 
 	public static Boolean toggleObj(Object item) {
-		if(item==null) return true;
+		if (item == null) return true;
 		Boolean itemm = (Boolean) item;
 		return !itemm;
 	}
@@ -119,20 +117,20 @@ public class FiBoolean {
 	}
 
 	public static boolean getBooleanIfNullFalse(Object item) {
-		if(item==null) return false;
+		if (item == null) return false;
 		return (boolean) item;
 	}
 
 	public static Boolean or(Boolean boValue, Boolean orValue) {
-		if(boValue==null) return orValue;
+		if (boValue == null) return orValue;
 		return boValue;
 	}
 
 	public static String convertBooleanToStr(Boolean boKilitli) {
-		if(boKilitli==null) return "NULL";
-		if(boKilitli){
+		if (boKilitli == null) return "NULL";
+		if (boKilitli) {
 			return "1";
-		}else{
+		} else {
 			return "0";
 		}
 	}

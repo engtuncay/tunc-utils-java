@@ -15,6 +15,7 @@ import java.nio.charset.StandardCharsets;
 
 public class FiSoap {
 
+
 	FiKeyString mapHeaders;
 
 	//String soapAction, String rootTagName
@@ -33,7 +34,6 @@ public class FiSoap {
 		Fdr<String> fdr = new Fdr<>();
 
 		try {
-
 			//Code to make a webservice HTTP request
 			String responseString = "";
 			String outputString = "";
@@ -185,10 +185,12 @@ public class FiSoap {
 			// Exception fırlatmadığı için boResult True verildi.
 			fdr.setBoResult(true);
 
-		} catch (IOException exception) { //	//throws MalformedURLException, IOException
+		} catch (Exception exception) { //	//throws MalformedURLException, IOException
 			Loghelper.get(FiSoap.class).debug(FiException.exceptionIfToStr(exception));
+			Loghelper.get(FiSoap.class).debug(FiException.exceptiontostring1(exception));
 			fdr.setBoResult(false);
 			fdr.setMessage("Soap isteği gerçekleşirken hata oluştu. Detay için Exception inceleyiniz.");
+			fdr.setException(exception);
 		}
 
 		return fdr;
@@ -202,12 +204,12 @@ public class FiSoap {
 		return requestFiXml(endPoint, soapRequestXml, mapHeaders, false);
 	}
 
-	public static Fdr<FiXml> requestFiXml(String endPoint, String soapRequestXml, FiKeyString mapHeaders, Boolean boHttps) {
+	public static Fdr<FiXml> requestFiXml(String endPoint, String soapRequestXml, FiKeyString mapHeaders, Boolean boUseHttps) {
 
 		Fdr<FiXml> fdrXmlDoc = new Fdr<>();
 
 		Fdr<String> fdrRequest = null;
-		if (FiBoolean.isTrue(boHttps)) {
+		if (FiBoolean.isTrue(boUseHttps)) {
 			fdrRequest = requestRawHttps(endPoint, soapRequestXml, mapHeaders);
 		} else {
 			fdrRequest = requestRaw(endPoint, soapRequestXml, mapHeaders);
@@ -230,6 +232,7 @@ public class FiSoap {
 		} else {
 			fdrXmlDoc.setBoResult(false);
 			fdrXmlDoc.setMessage("Soap isteği gerçekleşirken hata oluştu. Detay için Exception inceleyiniz.");
+			fdrXmlDoc.setException(fdrRequest.getException());
 		}
 		return fdrXmlDoc;
 	}

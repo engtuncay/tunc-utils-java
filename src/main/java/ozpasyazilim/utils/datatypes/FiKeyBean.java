@@ -221,6 +221,15 @@ public class FiKeyBean extends HashMap<String, Object> {
 		return null;
 	}
 
+	public Date getAsDate(FiCol fiCol) {
+		if (fiCol == null || FiString.isEmpty(fiCol.getFieldName())) return null;
+
+		if (containsKey(fiCol.getFieldName())) {
+			return (Date) get(fiCol.getFieldName());
+		}
+		return null;
+	}
+
 	public Boolean  getAsBoolean(FiCol fiCol) {
 		if (fiCol == null || FiString.isEmpty(fiCol.getFieldName())) return null;
 

@@ -141,7 +141,7 @@ public class FiReflection {
 				cellvalue = strCellvalue;
 			}
 
-			PropertyUtils.setProperty(objectt, fiCol.getFieldName(),cellvalue ); //cellvalue == null ? strCellvalue : cellvalue
+			PropertyUtils.setProperty(objectt, fiCol.getFieldName(), cellvalue); //cellvalue == null ? strCellvalue : cellvalue
 			return true;
 		} catch (Exception e) {
 			Loghelper.get(FiReflection.class).debug(FiException.exceptiontostring(e));
@@ -320,7 +320,7 @@ public class FiReflection {
 		return list;
 	}
 
-	public static <E> E bindKeyBeanEntity(FiKeyBean keyBean, Class<E> entityclass) {
+	public static <E> E bindKeyBeanToEntity(FiKeyBean keyBean, Class<E> entityclass) {
 		return bindKeyBeanToEntityMain(keyBean, entityclass, false);
 	}
 
@@ -385,6 +385,28 @@ public class FiReflection {
 
 		return mapFields;
 
+	}
+
+	public static Map<String, FiField> getFieldsNtnAsMap(Class clazz, Object entity) {
+
+		if (clazz == null) return new HashMap<>();
+
+		Field[] fields = clazz.getDeclaredFields();
+		Map<String, FiField> mapFields = new HashMap<>();
+
+		for (Field field : fields) {
+			FiField fiField = new FiField();
+
+			Object property = FiReflection.getProperty(entity, field.getName());
+			if(property!=null) {
+				fiField.setName(field.getName());
+				fiField.setClassNameSimple(field.getType().getSimpleName());
+
+				mapFields.put(field.getName(), fiField);
+			}
+		}
+
+		return mapFields;
 	}
 
 	public static <T extends Object> String getSimpleClassName(T object) {
@@ -673,4 +695,23 @@ public class FiReflection {
 		}
 
 	}
+
+	public static <E> void bindKeyBeanToEntity(FiKeyBean keyBean, E entity, Class<E> clazz, Boolean boAddOnlyNtnFields) {
+
+		Field[] fields = clazz.getDeclaredFields();
+
+		for (Field field : fields) {
+			Object property = FiReflection.getProperty(entity, field.getName());
+
+			if(FiBoolean.isTrue(boAddOnlyNtnFields)){
+				if(property!=null) {
+					keyBean.put(field.getName(), property);
+				}
+			}else{
+				keyBean.put(field.getName(), property);
+			}
+		}
+
+	} // end-bindKeyBeanToEntity
+
 }

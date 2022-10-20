@@ -916,6 +916,24 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
 	}
 
+	public void setItemsAsFilteredListAsync2(List listTable) {
+
+		if (listTable == null) {
+			listTable = new ArrayList();
+		}
+
+		if (listTable.size()==0) {
+			FxDialogShow.showPopInfo("Tabloya Eklenecek Veri Yok.");
+		}
+
+		List finalListTable = listTable;
+		Platform.runLater(() -> {
+			setItemsAsFilteredList(finalListTable);
+		});
+
+	}
+
+
 	/**
 	 * Tablonun içinde bulunan satırları filtreler
 	 *

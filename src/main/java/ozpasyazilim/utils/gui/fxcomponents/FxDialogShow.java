@@ -263,6 +263,16 @@ public class FxDialogShow {
 		return true;
 	}
 
+	public static void showModalForLog(Fdr fdr) {
+
+		if(fdr.isTrueBoResult()){
+		  FxDialogShow.showModalInfo(fdr.getTxFdrName(),fdr.getLogAsString());
+		}else{
+			FxDialogShow.showModalError2(fdr.getTxFdrName(), fdr.getLogAsString());
+		}
+
+	}
+
 	/**
 	 * ShowandWait method ile gösterilebilir
 	 *
@@ -910,10 +920,10 @@ public class FxDialogShow {
 	}
 
 	public static void showModalError(String message) {
-		showModalError(message, null);
+		showModalError(null, message);
 	}
 
-	public static void showModalError(String message, String title) {
+	public static void showModalError(String title, String message) {
 		Platform.runLater(() -> {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 
@@ -939,7 +949,7 @@ public class FxDialogShow {
 		});
 	}
 
-	public static void showModalInfo2(String messageHeader, String message) {
+	public static void showModalInfo(String messageHeader, String message) {
 		Platform.runLater(() -> {
 			FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogType.DialogInfo, message);
 			fxSimpleDialog.setMessageHeader(messageHeader);
@@ -1124,30 +1134,34 @@ public class FxDialogShow {
 		if (message.length() < 301) {
 			showPopInfo(message);
 		} else {
-			showModalInfo2("", message);
+			showModalInfo("", message);
 		}
 	}
 
 	public static void showPopOrModalLog(Fdr fdr, Boolean boPopInfo) {
+
+		String grup = !FiString.isEmpty(fdr.getTxFdrName()) ? fdr.getTxFdrName() + "\n": "";
+
 		if(fdr.isTrueBoResult()){
 
 			Pair<String,Boolean> logAsStringAndErrorExist = fdr.getLogAsStringAndErrorExist();
+
 			if(FiBoolean.isTrue(boPopInfo)){
 				if(logAsStringAndErrorExist.getValue()){
-					showPopInfo("İşlem Başarılı, fakat bazı yerlerde hata oluştu.\n"+ fdr.getLogAsString());
+					showPopInfo(grup + "İşlem Başarılı, fakat bazı yerlerde hata oluştu.\n"+ fdr.getLogAsString());
 				}else{
-					showPopInfo("İşlem Başarılı\n"+ fdr.getLogAsString());
+					showPopInfo(grup + "İşlem Başarılı\n"+ fdr.getLogAsString());
 				}
 
 			}else {
 				if(logAsStringAndErrorExist.getValue()){
-					showModalInfo2("İşlem Başarılı, fakat bazı yerlerde hata oluştu. Detayı inceleyiniz. !!\n",fdr.getLogAsString());
+					showModalInfo(grup + "İşlem Başarılı, fakat bazı yerlerde hata oluştu. Detayı inceleyiniz. !!\n",fdr.getLogAsString());
 				}else{
-					showModalInfo2("İşlem Başarılı\n",fdr.getLogAsString());
+					showModalInfo(grup + "İşlem Başarılı\n",fdr.getLogAsString());
 				}
 			}
 		}else{
-			showModalError(fdr.getLogAsString(),"Hata Oluştu.");
+			showModalError(grup + "Hata Oluştu.", fdr.getLogAsString());
 		}
 	}
 
@@ -1158,7 +1172,7 @@ public class FxDialogShow {
 		if (messageDetail.length() < 301) {
 			showPopInfo(messageHeader + messageDetail);
 		} else {
-			showModalInfo2(messageHeader, messageDetail);
+			showModalInfo(messageHeader, messageDetail);
 		}
 	}
 
@@ -1259,7 +1273,7 @@ public class FxDialogShow {
 
 			if (dbResult.isNullBoResult()) {
 				String messageDetail = dbResult.getMessage();
-				FxDialogShow.showModalInfo2(FiString.addNewLineToEndIfNotEmpty(title) + "İşlem yapılacak kayıt bulunamadı.", messageDetail); //uygun kayıt bulunamadı.
+				FxDialogShow.showModalInfo(FiString.addNewLineToEndIfNotEmpty(title) + "İşlem yapılacak kayıt bulunamadı.", messageDetail); //uygun kayıt bulunamadı.
 			}
 
 
@@ -1318,7 +1332,7 @@ public class FxDialogShow {
 
 			if (fdr.isNullBoResult()) {
 				String messageDetail = fdr.getMessage();
-				FxDialogShow.showModalInfo2(FiString.addNewLineToEndIfNotEmpty(title) + "İşlem yapılamadı.", messageDetail); //uygun kayıt bulunamadı.
+				FxDialogShow.showModalInfo(FiString.addNewLineToEndIfNotEmpty(title) + "İşlem yapılamadı.", messageDetail); //uygun kayıt bulunamadı.
 			}
 
 

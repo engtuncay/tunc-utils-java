@@ -1058,7 +1058,6 @@ public class FxEditorFactory {
 			textValue = textValue.replaceAll("(<|>|!)", "");
 		}
 
-
 		if (ozColType == OzColType.String) {
 			return textValue;
 		}

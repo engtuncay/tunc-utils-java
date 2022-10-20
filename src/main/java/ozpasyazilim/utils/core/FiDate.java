@@ -1,10 +1,14 @@
 package ozpasyazilim.utils.core;
 
+import javafx.scene.control.TextField;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.joda.time.DateTime;
 import ozpasyazilim.utils.annotations.FiDraft;
+import ozpasyazilim.utils.gui.fxcomponents.FxTextField;
 import ozpasyazilim.utils.log.Loghelper;
+import ozpasyazilim.utils.returntypes.FdrLog;
 
+import java.awt.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;

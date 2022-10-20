@@ -31,7 +31,7 @@ public class FiCollection {
 	}
 
 	/**
-	 * predicareFunc fonksiyonuna göre filtrelenmiş yeni bir list döndürür
+	 * predicareFunc fonksiyonuna göre filtrelenmiş yeni bir list döndürür. True ise ekler, false ise eklemez.
 	 *
 	 * @param listtum
 	 * @param predicateFunc
@@ -1337,5 +1337,10 @@ public class FiCollection {
 	 */
 	public static <E> List<E> sort(List<E> listData, Comparator<E> comparator) {
 		return listData.stream().sorted(comparator).collect(Collectors.toList());
+	}
+
+	public static List orValue(List value,List orValue) {
+		if(value==null)return orValue;
+		return value;
 	}
 }

@@ -1,7 +1,6 @@
 package ozpasyazilim.utils.core;
 
 public class FiObject {
-
     public static String nullcheckstring(Object object) {
     
         if (object == null) {
@@ -95,5 +94,9 @@ public class FiObject {
     	return false;
     }
 
+    public static <E> E orValue(E object,E orValue) {
+        if (object == null) return orValue;
+        return object;
+    }
 
 }
