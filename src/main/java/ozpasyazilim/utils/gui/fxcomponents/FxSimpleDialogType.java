@@ -11,5 +11,7 @@ public enum FxSimpleDialogType {
 	 * FxForm üzerinden dialog oluşturur
 	 */
 	FormDialog,
-	TextAreaString
+	TextAreaString,
+
+	LogTable
 }

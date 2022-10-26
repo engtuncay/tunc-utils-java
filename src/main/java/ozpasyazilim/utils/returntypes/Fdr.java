@@ -456,13 +456,13 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 
 	public void combineListData(Fdr fdr2) {
 
-		if (fdr2.getValue()!=null && getValue() instanceof List && fdr2.getValue() instanceof List) {
+		if (fdr2.getValue() != null && getValue() instanceof List && fdr2.getValue() instanceof List) {
 
 			List listData = (List) fdr2.getValue();
 
-			if (getValue()==null) {
+			if (getValue() == null) {
 				setValue((EntClazz) listData);
-			}else{
+			} else {
 				List list = (List) getValue();
 				list.addAll((Collection) fdr2.getValue());
 			}
@@ -878,28 +878,28 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 	}
 
 	public void addLog(EntLog log) {
-		if(getBoLockAddLogNtn()) Loghelper.get(getClass()).debug("Error: Added Log to Blocked Fdr !!!!!!!!");
+		if (getBoLockAddLogNtn()) Loghelper.get(getClass()).debug("Error: Added Log to Blocked Fdr !!!!!!!!");
 		getLogListInit().add(log);
 	}
 
 	public void addLog(String txMessage, MetaLogType metaLogType) {
-		if(getBoLockAddLogNtn()) Loghelper.get(getClass()).debug("Error: Added Log to Blocked Fdr !!!!!!!!");
+		if (getBoLockAddLogNtn()) Loghelper.get(getClass()).debug("Error: Added Log to Blocked Fdr !!!!!!!!");
 		getLogListInit().add(new EntLog(txMessage, metaLogType));
 	}
 
 	public void addLogInfo(String txMessage) {
-		if(getBoLockAddLogNtn()) Loghelper.get(getClass()).debug("Error: Added Log to Blocked Fdr !!!!!!!!");
+		if (getBoLockAddLogNtn()) Loghelper.get(getClass()).debug("Error: Added Log to Blocked Fdr !!!!!!!!");
 		//if(getBoLockAddLogNtn()) throw new RuntimeException("Error: Added Log to Blocked Fdr !!!!!!!!");
 		getLogListInit().add(new EntLog(txMessage, MetaLogType.INFO));
 	}
 
 	public void addLogError(String txMessage) {
-		if(getBoLockAddLogNtn()) Loghelper.get(getClass()).debug("Error: Added Log to Blocked Fdr !!!!!!!!");
+		if (getBoLockAddLogNtn()) Loghelper.get(getClass()).debug("Error: Added Log to Blocked Fdr !!!!!!!!");
 		getLogListInit().add(new EntLog(txMessage, MetaLogType.ERROR));
 	}
 
 	public void addLogWarn(String txMessage) {
-		if(getBoLockAddLogNtn()) Loghelper.get(getClass()).debug("Error: Added Log to Blocked Fdr !!!!!!!!");
+		if (getBoLockAddLogNtn()) Loghelper.get(getClass()).debug("Error: Added Log to Blocked Fdr !!!!!!!!");
 		getLogListInit().add(new EntLog(txMessage, MetaLogType.WARN));
 	}
 
@@ -959,5 +959,12 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 
 	public void setBoLockAddLog(Boolean boLockAddLog) {
 		this.boLockAddLog = boLockAddLog;
+	}
+
+	public void combineAllLog() {
+		for (Fdr fdr : getFdrListInit()) {
+			addLogInfo(String.format("--- %s ---", fdr.getTxFdrName()));
+			getLogListInit().addAll(fdr.getLogListInit());
+		}
 	}
 }

@@ -47,7 +47,7 @@ public class FxSimpleCont<E> extends AbsFxSimpleCont implements IFxSimpleWitEntC
 		}
 
 		getModView().getRootPane().getStylesheets().add("app.css");
-		fxDialogShow.nodeModalByIFxMod(nodeRelative, this, width, height, boNonModal);
+		fxDialogShow.nodeModalByIFxSimpleCont(nodeRelative, this, width, height, boNonModal);
 	}
 
 	@Override

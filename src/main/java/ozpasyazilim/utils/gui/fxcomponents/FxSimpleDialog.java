@@ -25,13 +25,13 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 	FxSimpleDialogType fxSimpleDialogType;
 	private FxButton btnOk;
 	private FxButton btnCancel;
-	String messageContent;
-	String messageHeader;
+	private String messageContent;
+	private String messageHeader;
 	// Dialog gelen veriyi tutmak için (component text proplarını bind ederiz)
-	StringProperty txValue = new SimpleStringProperty();
-	OzColType ozColType;
-	List<Text> listText;
-	Boolean boInitExecuted;
+	private StringProperty txValue = new SimpleStringProperty();
+	private OzColType ozColType;
+	private List<Text> listText;
+	private Boolean boInitExecuted;
 	private FxLabel lblHeader;
 	private Class entityClass;
 	private FxFormMig2 fxFormMig;
@@ -101,7 +101,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 		}
 		FxDialogShow fxDialogShow = new FxDialogShow();
 		//getiFxModCont().getModView().getRootPane().getStylesheets().add("main.css");
-		fxDialogShow.nodeModalByIFxMod(null, this);
+		fxDialogShow.nodeModalByIFxSimpleCont(null, this);
 	}
 
 	public static FxSimpleDialog build(FxSimpleDialogType fxSimpleDialogType, String message) {
@@ -113,7 +113,11 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 	public void initCont() {
 		setBoInitExecuted(true);
 		modView = new FxMigPaneView(FxMigHelper.bui().lcStInset3().lcNoGrid().genLc());
+		dialogInitByType();
 
+	}
+
+	private void dialogInitByType() {
 		// default Simple Dialog Type
 		if (fxSimpleDialogType == null) {
 			setupTextHeaderLabel();
@@ -201,6 +205,12 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 			return;
 		}
 
+		if (fxSimpleDialogType == FxSimpleDialogType.LogTable) {
+			setupTextHeaderLabel();
+			setupFormDialog();
+			setupFooterOkCancel();
+			return;
+		}
 	}
 
 

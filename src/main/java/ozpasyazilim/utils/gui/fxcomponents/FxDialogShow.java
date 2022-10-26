@@ -600,15 +600,11 @@ public class FxDialogShow {
 
 	}
 
-	public void nodeModalByIFxMod(Node nodeRelative, IFxSimpleCont ifxSimpleCont) {
-		nodeModalByIFxMod(nodeRelative, ifxSimpleCont, null, null, null);
+	public void nodeModalByIFxSimpleCont(Node nodeRelative, IFxSimpleCont ifxSimpleCont) {
+		nodeModalByIFxSimpleCont(nodeRelative, ifxSimpleCont, null, null, null);
 	}
 
-	public void nodeModalByIFxMod(Node nodeRelative, IFxModCont fxModCont, Integer width, Integer height, Boolean boNonModal) {
-		nodeModalByIFxMod(nodeRelative, fxModCont, width, height, boNonModal, new DialogConfig());
-	}
-
-	public void nodeModalByIFxMod(Node nodeRelative, IFxModCont fxModCont, Integer width, Integer height, Boolean boNonModal, DialogConfig dialogConfig) {
+	public void nodeModalByIFxModCont(Node nodeRelative, IFxModCont fxModCont, Integer width, Integer height, Boolean boNonModal, DialogConfig dialogConfig) {
 
 		if (dialogConfig == null) {
 			dialogConfig = new DialogConfig();
@@ -734,7 +730,7 @@ public class FxDialogShow {
 
 	}
 
-	public void nodeModalByIFxMod(Node nodeRelative, IFxSimpleCont fxSimpleCont, Integer width, Integer height, Boolean isNonModal) {
+	public void nodeModalByIFxSimpleCont(Node nodeRelative, IFxSimpleCont fxSimpleCont, Integer width, Integer height, Boolean isNonModal) {
 
 		Stage stage = fxSimpleCont.getFxStage();
 

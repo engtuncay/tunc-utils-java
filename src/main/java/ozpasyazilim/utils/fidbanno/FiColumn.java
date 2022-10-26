@@ -9,6 +9,9 @@ import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
+/**
+ * For Integer types , precision = 1 -> tinyint type
+ */
 @Target({METHOD, FIELD})
 @Retention(RUNTIME)
 public @interface FiColumn {

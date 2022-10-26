@@ -6,7 +6,6 @@ import ozpasyazilim.utils.gui.fxcomponents.FxDialogShow;
 import ozpasyazilim.utils.gui.fxcomponents.FxStage;
 
 public abstract class AbsFxSimpleCont implements IFxSimpleCont {
-
 	Stage fxStage;
 	String moduleCode;
 	String moduleLabel;
