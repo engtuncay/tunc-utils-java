@@ -13,5 +13,7 @@ public enum FxSimpleDialogType {
 	FormDialog,
 	TextAreaString,
 
-	LogTable
+	LogTable,
+
+	Undefined
 }

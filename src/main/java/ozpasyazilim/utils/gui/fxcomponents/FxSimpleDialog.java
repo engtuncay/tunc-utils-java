@@ -35,6 +35,8 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 	private FxLabel lblHeader;
 	private Class entityClass;
 	private FxFormMig2 fxFormMig;
+
+	private FxFormMig3 fxForm;
 	private List<FiCol> fiColList;
 	private Predicate<String> predValidateString;
 	private String validateErrorMessage;
@@ -114,31 +116,31 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 		setBoInitExecuted(true);
 		modView = new FxMigPaneView(FxMigHelper.bui().lcStInset3().lcNoGrid().genLc());
 		dialogInitByType();
-
 	}
 
 	private void dialogInitByType() {
 		// default Simple Dialog Type
-		if (fxSimpleDialogType == null) {
-			setupTextHeaderLabel();
-			setupTextFieldDoubleDialog();
-			setupFooterOkCancel();
-		}
-
-		if (fxSimpleDialogType == FxSimpleDialogType.TextFieldDouble) {
+		if (getFxSimpleDialogType() == null) {
 			setupTextHeaderLabel();
 			setupTextFieldDoubleDialog();
 			setupFooterOkCancel();
 			return;
 		}
 
-		if (fxSimpleDialogType == FxSimpleDialogType.TextFieldWithValidation) {
+		if (getFxSimpleDialogType() == FxSimpleDialogType.TextFieldDouble) {
+			setupTextHeaderLabel();
+			setupTextFieldDoubleDialog();
+			setupFooterOkCancel();
+			return;
+		}
+
+		if (getFxSimpleDialogType() == FxSimpleDialogType.TextFieldWithValidation) {
 			setupTextFieldWithValidation();
 			setupFooterWithValidateString();
 			return;
 		}
 
-		if (fxSimpleDialogType == FxSimpleDialogType.TextField) {
+		if (getFxSimpleDialogType() == FxSimpleDialogType.TextField) {
 			setupTextHeaderLabel();
 			setupTextFieldString();
 			setupFooterOkCancel();
@@ -222,11 +224,12 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 		btnCancel = new FxButton("İptal", Icons525.CANCEL);
 
 		btnOk.setOnAction(event -> actBtnOK());
+		btnCancel.setOnAction(event -> actBtnCancel());
 
 		migFooter.add(btnCancel);
 		migFooter.add(btnOk);
 
-		modView.add(migFooter, "span,alignx right");
+		getModView().add(migFooter, "span,alignx right");
 	}
 
 	public void setupFooterWithValidateString() {
@@ -259,6 +262,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 		} else {
 			lblHeader.setText("Lütfen Gerekli Alanları Doldurunuz.");
 		}
+
 	}
 
 	private void setupFormByCandID() {
@@ -282,13 +286,18 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 	}
 
 	private void setupFormDialog() {
-
-//		getModView().add(lblHeader, "growx,pushx,wrap");
-
 		FxMigPane fxContent = new FxMigPane(FxMigHelper.bui().lcStInset0Gap55().genLc());
 		fxContent.add(getFxFormMig(), "wrap");
 		getModView().add(fxContent, "wrap");
+	}
 
+	private void setupFormDialog2() {
+		setFxSimpleDialogType(FxSimpleDialogType.Undefined);
+		initCont();
+		FxMigPane fxContent = new FxMigPane(FxMigHelper.bui().lcStInset0Gap55().genLc());
+		fxContent.addGrowPushSpan(getFxForm(), null);
+		getModView().add(fxContent, "wrap");
+		setupFooterOkCancel();
 	}
 
 
@@ -401,7 +410,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 	private void setupTextFieldString() {
 
-		modView.add(lblHeader, "growx,pushx,wrap");
+		getModView().add(lblHeader, "growx,pushx,wrap");
 
 		FxMigPane fxContent = new FxMigPane(FxMigHelper.bui().lcStInset0Gap55().genLc());
 		FxTextField fxTextField = new FxTextField();
@@ -687,5 +696,16 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 	public void setTxInitialValue(String txInitialValue) {
 		this.txInitialValue = txInitialValue;
+	}
+
+	public FxFormMig3 getFxForm() {
+		return fxForm;
+	}
+
+	public FxFormMig3 getFxFormInit() {
+		if (fxForm == null) {
+			fxForm = new FxFormMig3<>();
+		}
+		return fxForm;
 	}
 }
