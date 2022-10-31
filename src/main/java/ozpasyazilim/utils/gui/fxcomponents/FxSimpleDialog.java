@@ -13,6 +13,7 @@ import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.mvc.AbsFxSimpleCont;
 import ozpasyazilim.utils.returntypes.Fdr;
 import ozpasyazilim.utils.table.FiCol;
+import ozpasyazilim.utils.table.FiColList;
 import ozpasyazilim.utils.table.OzColType;
 
 import java.util.ArrayList;
@@ -44,6 +45,8 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 	// Experimental
 	private Predicate<EntClazz> predValidate;
+
+	private Predicate<FxFormMig3> predValidateForm;
 	private EntClazz value;
 	private FxMigPane fxMigToolbar;
 	private FxTextField fxTextFieldGeneral;
@@ -248,6 +251,22 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 		modView.add(migFooter, "span,alignx right");
 	}
 
+	public void setupFooterWithValidateForm() {
+
+		FxMigPane migFooter = new FxMigPane(FxMigHelper.bui().lcNoGrid().lcStInset0Gap55().genLc());
+
+		btnOk = new FxButton("Ok", Icons525.OK);
+		btnCancel = new FxButton("İptal", Icons525.CANCEL);
+
+		btnOk.setOnAction(event -> actBtnOKWithValidateForm());
+		btnCancel.setOnAction(event -> actBtnCancel());
+
+		migFooter.add(btnCancel);
+		migFooter.add(btnOk);
+
+		modView.add(migFooter, "span,alignx right");
+	}
+
 	private void actBtnCancel() {
 		closeStageWithCancelReason();
 	}
@@ -291,13 +310,14 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 		getModView().add(fxContent, "wrap");
 	}
 
-	private void setupFormDialog2() {
+	public void initFormDialog(FiColList fiCols, FormType formType) {
+		getFxFormInit().setup1(fiCols,FormType.PlainFormV1);
 		setFxSimpleDialogType(FxSimpleDialogType.Undefined);
 		initCont();
 		FxMigPane fxContent = new FxMigPane(FxMigHelper.bui().lcStInset0Gap55().genLc());
-		fxContent.addGrowPushSpan(getFxForm(), null);
+		fxContent.addGrowPushSpan(getFxFormInit(), null);
 		getModView().add(fxContent, "wrap");
-		setupFooterOkCancel();
+		setupFooterWithValidateForm();
 	}
 
 
@@ -334,13 +354,13 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 				Fdr fdr = (Fdr) getFxFormMig().getFxFormConfig().getFnValidateForm().apply(getFxFormMig());
 
-				if(fdr==null){
+				if (fdr == null) {
 					FxDialogShow.showPopWarn("İşlem yapılamadı. Sistem Yöneticinize Başvurun. Hata Tanımı:Fdr-Null");
 					return;
 				}
 
 				if (!fdr.isTrueBoResult()) {
-					FxDialogShow.showPopWarn("Hata \n"+fdr.getMessage());
+					FxDialogShow.showPopWarn("Hata \n" + fdr.getMessage());
 					return;
 				}
 
@@ -355,13 +375,26 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 		if (getPredValidateString() != null) {
 			if (!getPredValidateString().test(getTxValue())) {
 				String message = getValidateErrorMessage();
-				if (message == null) message = "Lütfen Geçerli bir değer giriniz.";
+				if (message == null) message = "Lütfen Geçerli Değerler giriniz.";
 				FxDialogShow.showPopWarn(message);
 				return;
 			}
 		}
 		super.closeStageWithDoneReason();
 	}
+
+	private void actBtnOKWithValidateForm() {
+		if (getPredValidateForm() != null) {
+			if (!getPredValidateForm().test(getFxFormInit())) {
+//				String message = getValidateErrorMessage();
+//				if (message == null) message = "ForLütfen Geçerli bir değer giriniz.";
+//				FxDialogShow.showPopWarn(message);
+				return;
+			}
+		}
+		super.closeStageWithDoneReason();
+	}
+
 
 	public Boolean isClosedWithOk() {
 		if (getCloseReason().equals("done")) {
@@ -707,5 +740,13 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 			fxForm = new FxFormMig3<>();
 		}
 		return fxForm;
+	}
+
+	public Predicate<FxFormMig3> getPredValidateForm() {
+		return predValidateForm;
+	}
+
+	public void setPredValidateForm(Predicate<FxFormMig3> predValidateForm) {
+		this.predValidateForm = predValidateForm;
 	}
 }

@@ -6,7 +6,6 @@ package ozpasyazilim.utils.returntypes;
  *
  */
 public class FtBool {
-
 	Boolean value;
 	Boolean boDefault;
 	Integer lnCount;

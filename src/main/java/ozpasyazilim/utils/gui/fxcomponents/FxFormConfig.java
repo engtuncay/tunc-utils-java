@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.function.Function;
 
 public class FxFormConfig<EntClazz> {
-
 	private List<FiCol> listFormElements;
 	private FormType formType;
 	private EntClazz formEntity; // 21-10-30 eklendi

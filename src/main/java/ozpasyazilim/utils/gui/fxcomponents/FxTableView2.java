@@ -282,13 +282,11 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
 	public List<EntClazz> getItemsCheckedByBoSelectAsListInAllElements() {
 
-		String fieldForSelection = getFiColSelection().getFieldName();
-
 		FilteredList<EntClazz> itemsCurrentFi = getItemsAllFi(ent -> {
 			try {
-				return FiBoolean.convertBooleanElseFalse(PropertyUtils.getNestedProperty(ent, fieldForSelection));
+				return FiBoolean.convertBooleanElseFalse(PropertyUtils.getNestedProperty(ent, getFiColSelection().getFieldName()));
 			} catch (Exception e) {
-				e.printStackTrace();
+				Loghelper.get(getClass()).debug(FiException.exceptiontostring1(e));
 				return false;
 			}
 		});

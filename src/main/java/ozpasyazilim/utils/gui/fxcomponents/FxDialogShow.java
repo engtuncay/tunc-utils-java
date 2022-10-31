@@ -265,13 +265,29 @@ public class FxDialogShow {
 
 	public static void showModalForLog(Fdr fdr) {
 
-		if(fdr.isTrueBoResult()){
-		  FxDialogShow.showModalInfo(fdr.getTxFdrName(),fdr.getLogAsString());
-		}else{
+		if (fdr.isTrueBoResult()) {
+			FxDialogShow.showModalInfo(fdr.getTxFdrName(), fdr.getLogAsString());
+		} else {
 			FxDialogShow.showModalError2(fdr.getTxFdrName(), fdr.getLogAsString());
 		}
 
 	}
+
+	public static void showFdr1PopOrFailModal(Fdr fdr) {
+
+		if (fdr.getBoResult() == null) {
+			FxDialogShow.showPopInfo("İşlem sonucu alınamadı."+ "\n" + FiString.orEmpty(fdr.getMessage()));
+			return;
+		}
+
+		if (fdr.isTrueBoResult()) {
+			FxDialogShow.showPopInfo("İşlem Başarı ile Gerçekleşti"+ "\n" + FiString.orEmpty(fdr.getMessage()));
+			return;
+		}
+
+		FxDialogShow.showModalError(fdr.getMessage());
+	}
+
 
 	/**
 	 * ShowandWait method ile gösterilebilir
@@ -1136,27 +1152,27 @@ public class FxDialogShow {
 
 	public static void showPopOrModalLog(Fdr fdr, Boolean boPopInfo) {
 
-		String grup = !FiString.isEmpty(fdr.getTxFdrName()) ? fdr.getTxFdrName() + "\n": "";
+		String grup = !FiString.isEmpty(fdr.getTxFdrName()) ? fdr.getTxFdrName() + "\n" : "";
 
-		if(fdr.isTrueBoResult()){
+		if (fdr.isTrueBoResult()) {
 
-			Pair<String,Boolean> logAsStringAndErrorExist = fdr.getLogAsStringAndErrorExist();
+			Pair<String, Boolean> logAsStringAndErrorExist = fdr.getLogAsStringAndErrorExist();
 
-			if(FiBoolean.isTrue(boPopInfo)){
-				if(logAsStringAndErrorExist.getValue()){
-					showPopInfo(grup + "İşlem Başarılı, fakat bazı yerlerde hata oluştu.\n"+ fdr.getLogAsString());
-				}else{
-					showPopInfo(grup + "İşlem Başarılı\n"+ fdr.getLogAsString());
+			if (FiBoolean.isTrue(boPopInfo)) {
+				if (logAsStringAndErrorExist.getValue()) {
+					showPopInfo(grup + "İşlem Başarılı, fakat bazı yerlerde hata oluştu.\n" + fdr.getLogAsString());
+				} else {
+					showPopInfo(grup + "İşlem Başarılı\n" + fdr.getLogAsString());
 				}
 
-			}else {
-				if(logAsStringAndErrorExist.getValue()){
-					showModalInfo(grup + "İşlem Başarılı, fakat bazı yerlerde hata oluştu. Detayı inceleyiniz. !!\n",fdr.getLogAsString());
-				}else{
-					showModalInfo(grup + "İşlem Başarılı\n",fdr.getLogAsString());
+			} else {
+				if (logAsStringAndErrorExist.getValue()) {
+					showModalInfo(grup + "İşlem Başarılı, fakat bazı yerlerde hata oluştu. Detayı inceleyiniz. !!\n", fdr.getLogAsString());
+				} else {
+					showModalInfo(grup + "İşlem Başarılı\n", fdr.getLogAsString());
 				}
 			}
-		}else{
+		} else {
 			showModalError(grup + "Hata Oluştu.", fdr.getLogAsString());
 		}
 	}
@@ -1220,9 +1236,9 @@ public class FxDialogShow {
 		showDbResult(dbResult, null);
 	}
 
-	public static void showDbResult2(Fdr dbResult,Runnable runIfTrue) {
+	public static void showDbResult2(Fdr dbResult, Runnable runIfTrue) {
 		showDbResult(dbResult, null);
-		if(dbResult.isTrueBoResult())runIfTrue.run();
+		if (dbResult.isTrueBoResult()) runIfTrue.run();
 	}
 
 	public static void showDbResult(Fdr dbResult, String title) {
