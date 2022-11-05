@@ -16,6 +16,7 @@ import ozpasyazilim.utils.datatypes.FiKeyBean;
 import ozpasyazilim.utils.fidborm.FiEntity;
 import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.gui.components.ComboItem;
+import ozpasyazilim.utils.gui.components.ComboItemObj;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.core.FiReflection;
@@ -501,6 +502,11 @@ public class FxEditorFactory {
 			return comp;
 		}
 
+		if (compClassName.equals(FxComboBoxObj.class.getName())) {
+			FxComboBoxObj comp = new FxComboBoxObj();
+			return comp;
+		}
+
 		if (compClassName.equals(FxCheckBox.class.getName())) {
 			FxCheckBox comp = new FxCheckBox();
 			return comp;
@@ -673,6 +679,16 @@ public class FxEditorFactory {
 
 	}
 
+	/**
+	 *
+	 * Kullanım Alanları
+	 *
+	 * Entitydeki alanların değerini FiCol Editor Componetlere verir. Örnergin FxForm'da
+	 *
+	 * @param listColumns
+	 * @param entity
+	 * @param <E>
+	 */
 	public static <E> void bindEntityToFormByEditorValue(List<? extends IFiCol> listColumns, E entity) {
 
 		if (entity == null) return;
@@ -684,7 +700,6 @@ public class FxEditorFactory {
 			if (fiCol.getFieldName() == null) continue;
 
 			Object cellvalue = FiReflection.getProperty(entity, fiCol.getFieldName());
-
 			//Loghelperr.getInstance(getClass()).debug("Entity to Editor: Col:"+ fiCol.getFieldName());
 
 			if (cellvalue == null) continue;
@@ -762,7 +777,9 @@ public class FxEditorFactory {
 
 		//String colNodeClass = iFiCol.getColFilterNodeClass();
 
+		// IfxNode türünde ise CompValue metoduyla kendisine değer atamasını kendisi yapar
 		if (colNode instanceof IfxNode) {
+			Loghelper.get(FxEditorFactory.class).debug("IfxNode Set CompValue :"+ iFiCol.getHeaderName());
 			IfxNode ifxNode = (IfxNode) colNode;
 			ifxNode.setCompValue(cellvalue);
 			return;
@@ -806,17 +823,13 @@ public class FxEditorFactory {
 		}
 
 		if (colNodeClass.equals(FxDatePicker.class.getName())) {
-
 			FxDatePicker comp = (FxDatePicker) colNode;
 			comp.setValue(FiDate.dateToLocalDate((Date) cellvalue));
-
 		}
 
 		if (colNodeClass.equals(DatePicker.class.getName())) {
-
 			DatePicker comp = (DatePicker) colNode;
 			comp.setValue(FiDate.dateToLocalDate((Date) cellvalue));
-
 		}
 
 		if (colNodeClass.equals(FxLabel.class.getName())) {
@@ -836,6 +849,14 @@ public class FxEditorFactory {
 			FxComboBoxSimple comp = (FxComboBoxSimple) colNode;
 			comp.setTxValue(cellvalue.toString());
 			comp.setSelectedItemByTxValueFi(); // 5-11-21 eklendi
+		}
+
+		// 04-11-22 added.
+		if (colNodeClass.equals(FxComboBoxObj.class.getName())) {
+			Loghelper.get(FxEditorFactory.class).debug("FxComboBoxObj Set Value :"+iFiCol.getHeaderName());
+			FxComboBoxObj comp = (FxComboBoxObj) colNode;
+			comp.setObjValue(cellvalue);
+			comp.setSelectedItemByObjValueFi();
 		}
 
 		if (colNodeClass.equals(FxChoiceBox.class.getName())) {
@@ -1014,8 +1035,18 @@ public class FxEditorFactory {
 
 		if (txNodeClass.equals(FxComboBoxSimple.class.getName())) {
 			FxComboBoxSimple comp = (FxComboBoxSimple) nodeComp;
-			String textValue = comp.getSelectedItemFi().getValue();
+			ComboItem selectedItemFi = comp.getSelectedItemFi();
+			String textValue = null;
+			if(selectedItemFi!=null) textValue = selectedItemFi.getValue();
 			return convertStringValueToObjectByOzColType(ozColType, textValue);
+		}
+
+		if (txNodeClass.equals(FxComboBoxObj.class.getName())) {
+			FxComboBoxObj comp = (FxComboBoxObj) nodeComp;
+			ComboItemObj selectedItemFi = comp.getSelectedItemFi();
+			//String textValue = null;
+			//if(selectedItemFi!=null) textValue = selectedItemFi.getValue();
+			return selectedItemFi.getValue(); //convertStringValueToObjectByOzColType(ozColType, textValue);
 		}
 
 		if (txNodeClass.equals(FxChoiceBoxSimple.class.getName())) {
@@ -1055,7 +1086,7 @@ public class FxEditorFactory {
 
 		// gelen veride özel işaretler temizlenir
 		if (ozColType == OzColType.Double || ozColType == OzColType.Integer) {
-			textValue = textValue.replaceAll("(<|>|!)", "");
+			if(textValue!=null) textValue = textValue.replaceAll("(<|>|!)", "");
 		}
 
 		if (ozColType == OzColType.String) {

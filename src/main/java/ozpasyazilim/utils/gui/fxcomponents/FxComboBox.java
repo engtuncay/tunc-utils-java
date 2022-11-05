@@ -2,6 +2,8 @@ package ozpasyazilim.utils.gui.fxcomponents;
 
 import com.google.common.base.Function;
 import javafx.application.Platform;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
@@ -27,6 +29,7 @@ public class FxComboBox<T> extends ComboBox<T> {
 
 	// Componentin Ekrandan görünen değerden(txLabel) farklı olarak arka planda tutulan değeri
 	private StringProperty txValue = new SimpleStringProperty();
+	private ObjectProperty objValue;
 	private FilteredList<T> filteredList;
 	private StringProperty txFilter;
 	private Tooltip filterTooltip;
@@ -375,12 +378,20 @@ public class FxComboBox<T> extends ComboBox<T> {
 
 	public void addSelectedItemListenerFi(ChangeListener<? super T> listener){
 		getSelectionModel().selectedItemProperty().addListener(listener);
-	};
+	}
 
+	public Object getObjValue() {
+		return objValueProperty().get();
+	}
 
+	public ObjectProperty objValueProperty() {
+		if (objValue == null) {
+			objValue = new SimpleObjectProperty();
+		}
+		return objValue;
+	}
 
-	//public OzColType getComboBoxValueType() {return comboBoxValueType;}
-
-	//public void setComboBoxValueType(OzColType comboBoxValueType) {	this.comboBoxValueType = comboBoxValueType;}
-
+	public void setObjValue(Object objValue) {
+		this.objValueProperty().set(objValue);
+	}
 }

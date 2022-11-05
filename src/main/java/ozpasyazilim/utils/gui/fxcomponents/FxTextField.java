@@ -17,21 +17,31 @@ import java.util.function.UnaryOperator;
 
 public class FxTextField<EntClazz> extends TextField {
 
-	// Görünen Text değeri ile birlikte arka planda farklı bir değer tutmak için
+	/**
+	 * Görünen Text değeri ile birlikte arka planda farklı bir değer tutmak için
+	 */
 	private StringProperty txValue;  //= new SimpleStringProperty();
-	// Belli obje değeri tutmak için
+
+	/**
+	 * Belli obje değeri tutmak için
+	 */
 	private ObjectProperty<EntClazz> objValue;  //= new SimpleObjectProperty<>();
-	// Text veya value değerinin geçersiz olduğunu göstermek için kullanılır
+
+	/**
+	 * Text veya value değerinin geçersiz olduğunu göstermek için kullanılır
+	 */
 	private Boolean boInvalidData;
-	// Value dışında alternatif bir değer de tutmak için kullanılır.
+
+	/**
+	 * Value dışında alternatif bir değer de tutmak için kullanılır.
+	 */
 	private StringProperty txAltValue;
 
+	public FxTextField() {
+	}
 
 	public FxTextField(String text) {
 		super(text);
-	}
-
-	public FxTextField() {
 	}
 
 	public FxTextField format1() {
@@ -144,7 +154,7 @@ public class FxTextField<EntClazz> extends TextField {
 		return txValue;
 	}
 
-	public void setTxValue(String txValue)  {
+	public void setTxValue(String txValue) {
 		txValueProperty().set(txValue);
 	}
 

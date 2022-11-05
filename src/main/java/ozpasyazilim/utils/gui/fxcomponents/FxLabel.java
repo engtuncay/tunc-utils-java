@@ -14,26 +14,30 @@ import java.io.File;
 public class FxLabel extends Label implements IFxComp {
 
 	String fxId;
-	StringProperty txValue = new SimpleStringProperty("");
+
+	/**
+	 * Görünen değerden arka planda farklı bir değer tutmak için
+	 */
+	StringProperty txValue;
 	Boolean boInvalidData;
 
 	public FxLabel(String text) {
 		super(text);
 	}
 
-	public static FxLabel buildLabel(String message){
+	public static FxLabel buildLabel(String message) {
 		return new FxLabel(message);
 	}
 
-	public FxLabel buildsetAlignment(Pos value){
+	public FxLabel buildsetAlignment(Pos value) {
 		this.setAlignment(value);
 		return this;
 	}
 
-	public void fiSetImage(File file,Double height){
+	public void fiSetImage(File file, Double height) {
 
-		if(file.exists()){
-			Image image = new Image(file.toURI().toString(),0,height,true,true) ;
+		if (file.exists()) {
+			Image image = new Image(file.toURI().toString(), 0, height, true, true);
 			ImageView imageView = new ImageView(image);
 			//imageView.setPreserveRatio(true);
 			//imageView.setFitHeight(50);
@@ -69,15 +73,33 @@ public class FxLabel extends Label implements IFxComp {
 		setTextFill(color);
 	}
 
-	public String getTxValue() {return txValue.get();}
+	public String getTxValue() {
+		return txValueProperty().get();
+	}
 
-	public StringProperty txValueProperty() {return txValue;}
+	public StringProperty txValueProperty() {
+		if (txValue == null) {
+			txValue = new SimpleStringProperty();
+		}
+		return txValue;
+	}
 
-	public void setTxValue(String txValue) {this.txValue.set(txValue);}
+	public void setTxValue(String txValue) {
+		this.txValueProperty().set(txValue);
+	}
 
-	public Boolean getBoInvalidData() {return boInvalidData;}
+	public Boolean getBoInvalidData() {
+		return boInvalidData;
+	}
 
-	public void setBoInvalidData(Boolean boInvalidData) {this.boInvalidData = boInvalidData;}
+	public void setBoInvalidData(Boolean boInvalidData) {
+		this.boInvalidData = boInvalidData;
+	}
+
+	public void setTextAndValue(String txValue) {
+		setText(txValue);
+		setTxValue(txValue);
+	}
 
 }
 

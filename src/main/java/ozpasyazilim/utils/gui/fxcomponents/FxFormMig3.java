@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 /**
- * FxFormMig3 de FormConfig çıkarıldı. Direk buraya eklendi alanlar.
+ * FxFormMig3 de FormConfig çıkarıldı. Ana Alanlar direk fxformmig içerisinde
  *
  * @param <EntClazz>
  */
@@ -100,7 +100,7 @@ public class FxFormMig3<EntClazz> extends FxMigPaneEnt<EntClazz> implements IFxM
 		return listFormElements;
 	}
 
-	public FxDatePicker getEditorCompFxDatePicker(String fieldName) {
+	public FxDatePicker getEditorCompAsFxDatePicker(String fieldName) {
 
 		IFiCol ozTableCol = FiColInfHelper.build(getListFormElements()).getFiTableColByID(fieldName);
 
@@ -198,8 +198,9 @@ public class FxFormMig3<EntClazz> extends FxMigPaneEnt<EntClazz> implements IFxM
 		// Form Tiplerine Göre Form Oluşturma metodlarına Yönlendirme
 		if (getFormTypeSelected() == FormType.PlainFormV1) {
 			initPlainFormV1();
-			if (getFormEntity() != null)
+			if (getFormEntity() != null){
 				FxEditorFactory.bindEntityToFormByEditorValue(getListFormElements(), getFormEntity());
+			}
 			trigEventAfterLoadFormValue();
 			return;
 		}
