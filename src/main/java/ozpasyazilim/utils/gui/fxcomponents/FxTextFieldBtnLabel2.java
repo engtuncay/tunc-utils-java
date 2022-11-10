@@ -4,9 +4,6 @@ import ozpasyazilim.utils.table.OzColType;
 
 public class FxTextFieldBtnLabel2<EntClazz> extends FxTextFieldBtn<EntClazz> implements IfxNode {
 
-//	FxLabel lblAciklama;
-//	Consumer<String> fnLblDataChange;
-//	Long lnDurationChange;
 	OzColType compValueType;
 
 	public FxTextFieldBtnLabel2() {
@@ -20,15 +17,6 @@ public class FxTextFieldBtnLabel2<EntClazz> extends FxTextFieldBtn<EntClazz> imp
 	public void setup(Long lnDurationChange) {
 		addLabelBelowRow();
 		activateChangeEvent(lnDurationChange);
-//		setLnDurationChange(lnDurationChange);
-//		lblAciklama = new FxLabel("");
-//		fiWrap();
-//		add(lblAciklama, "growx,pushx");
-//		FiNodeFx.registerTextPropertyWithDurationForFxTextfield((s) -> {
-//			if (getFnLblDataChange()!=null) {
-//				getFnLblDataChange().accept(s);
-//			}
-//		},getLnDurationChange(),getFxTextField());
 	}
 
 	@Override

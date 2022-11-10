@@ -92,7 +92,7 @@ public class FxMigHelper {
 	}
 
 	private void addSeperatorCc() {
-		if (FiString.isEmpty(getCellConst())) return;
+		if (FiString.isEmpty(getCellConstNtn())) return;
 		this.cellConst += ",";
 	}
 
@@ -167,7 +167,11 @@ public class FxMigHelper {
 		return cellConst;
 	}
 
-	public String getCellConst() {
+	public String getCcNtn() {
+		return getCellConstNtn();
+	}
+
+	public String getCellConstNtn() {
 		if (cellConst == null) {
 			cellConst = "";
 		}

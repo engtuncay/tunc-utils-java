@@ -22,9 +22,9 @@ import java.util.Map;
 import java.util.function.Function;
 
 /**
- * FxFormMig3 de FormConfig çıkarıldı. Ana Alanlar direk fxformmig içerisinde
+ * FxFormMig3 de FormConfig çıkarıldı. Ana Alanlar direk FxFormMig3 sınıfına eklendi.
  *
- * @param <EntClazz>
+ * @param <EntClazz> Form alanın değerlerinin aktarılacağı veya alınacağı sınıf
  */
 public class FxFormMig3<EntClazz> extends FxMigPaneEnt<EntClazz> implements IFxModView {
 	private Class<EntClazz> entityClazz;
@@ -33,7 +33,7 @@ public class FxFormMig3<EntClazz> extends FxMigPaneEnt<EntClazz> implements IFxM
 	private ChangeListener<Boolean> fnFocusedChangeListener;
 	private List<FiCol> listFormElements;
 	private FormType formType;
-	private EntClazz formEntity; // 21-10-30 eklendi
+	private EntClazz formEntity; // 30-10-21 eklendi
 
 	/**
 	 * Form güncellemek amacıyla açıldığını belirtir
@@ -54,8 +54,6 @@ public class FxFormMig3<EntClazz> extends FxMigPaneEnt<EntClazz> implements IFxM
 	}
 
 	/**
-	 * FormConfig oluşturularak listFormElements kaydedilir.
-	 *
 	 * @param listFormElements
 	 */
 	public FxFormMig3(List<FiCol> listFormElements) {
@@ -69,15 +67,6 @@ public class FxFormMig3<EntClazz> extends FxMigPaneEnt<EntClazz> implements IFxM
 			setupWitDefaultFormType(listFormElements);
 		}
 	}
-
-//	public FxFormMig3(FxFormConfig<EntClazz> fxFormConfig) {
-//		setupForm(fxFormConfig);
-//	}
-
-//	public void setupForm(FxFormConfig<EntClazz> fxFormConfig) {
-//		setFxFormSetup(fxFormConfig);
-//		initFormElementsMain();
-//	}
 
 	@Override
 	public Pane getRootPane() {
@@ -186,21 +175,23 @@ public class FxFormMig3<EntClazz> extends FxMigPaneEnt<EntClazz> implements IFxM
 		// default form type specified
 		if (getFormTypeSelected() == null) setFormTypeSelected(FormType.PlainFormV1);
 
-		// ?????
-//		if (getListFormElements() instanceof FiColList) {
-////			FiColList fiTableCols = (FiColList) getListFormElements();
-////			setFormElementsMap(fiTableCols.getMapCols());
-//		} else {
-//			Map<String, FiCol> formMap = getFormMap();
-////			setFormElementsMap(formMap);
-//		}
+		// FiColList map halinde tutmak için
+		// if (getListFormElements() instanceof FiColList) {
+		// FiColList fiTableCols = (FiColList) getListFormElements();
+		// setFormElementsMap(fiTableCols.getMapCols());
+		// } else {
+		// Map<String, FiCol> formMap = getFormMap();
+		// setFormElementsMap(formMap);
+		// }
 
 		// Form Tiplerine Göre Form Oluşturma metodlarına Yönlendirme
 		if (getFormTypeSelected() == FormType.PlainFormV1) {
 			initPlainFormV1();
-			if (getFormEntity() != null){
+			// formEntity varsa, alanlara değerler set edilir
+			if (getFormEntity() != null) {
 				FxEditorFactory.bindEntityToFormByEditorValue(getListFormElements(), getFormEntity());
 			}
+			// Form değerleri eklendikten sonra trigger edilecek metodlar
 			trigEventAfterLoadFormValue();
 			return;
 		}
@@ -293,7 +284,7 @@ public class FxFormMig3<EntClazz> extends FxMigPaneEnt<EntClazz> implements IFxM
 			if (fiCol.getPrefSize() != null) {
 				add(node, String.format("width %s,wrap", fiCol.getPrefSize().toString()));
 			} else {
-				add(node, FxMigHelper.bcc("growx,pushx,wrap").addCcCompMaxWidthSizeByColType(fiCol).genCc());
+				add(node, FxMigHelper.bcc("growx,pushx,wrap").addCcCompMaxWidthSizeByColType(fiCol).getCcNtn());
 			}
 
 		} // tblCol for döngüsü sonu

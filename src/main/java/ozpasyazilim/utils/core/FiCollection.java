@@ -1327,7 +1327,6 @@ public class FiCollection {
 	}
 
 	/**
-	 *
 	 * Sıralanmış yeni bir liste döndürü, orijinal list'de değişiklik yapmaz.
 	 *
 	 * @param listData
@@ -1339,8 +1338,16 @@ public class FiCollection {
 		return listData.stream().sorted(comparator).collect(Collectors.toList());
 	}
 
-	public static List orValue(List value,List orValue) {
-		if(value==null)return orValue;
+	public static List orValue(List value, List orValue) {
+		if (value == null) return orValue;
 		return value;
+	}
+
+	public static <E> List<E> toList(E... entObject) {
+		List<E> list = new ArrayList<>();
+		for (E tempObj : entObject) {
+			list.add(tempObj);
+		}
+		return list;
 	}
 }

@@ -394,25 +394,24 @@ public class FxEditorFactory {
 	// Component Node oluşturmak için
 	public static Node generateNodeByClassNameMain(OzColType ozColType, String txClassName, IFiCol iFiCol) { //, Object compValue
 
-		String compClassName = txClassName; //iFiCol.getColFxNodeClass();
 		//Loghelper.getInstance(FxEditorFactory.class).debug(" Ozcoltype:"+ozColType.toString());
 		//Loghelper.getInstance(FxEditorFactory.class).debug(" Prm Comp Class:"+txClassName);
 
-		if (compClassName == null) {
+		if (txClassName == null) {
 			//iFiCol.setColFxNodeClass(FxTextField.class.getName());
-			compClassName = FxTextField.class.getName();
+			txClassName = FxTextField.class.getName();
 
 			// 14-12 eklendi
 			if (ozColType == OzColType.Boolean) {
-				compClassName = FxCheckBox.class.getName();
+				txClassName = FxCheckBox.class.getName();
 			}
 
 		}
 
-		//Loghelper.getInstance(FxEditorFactory.class).debug(" Comp Class:"+compClassName.toString());
+		//Loghelper.getInstance(FxEditorFactory.class).debug(" Comp Class:"+txClassName.toString());
 
-		if (compClassName.equals(FxTextField.class.getName())
-				|| compClassName.equals(FxTextField.class.getSimpleName())) {
+		if (txClassName.equals(FxTextField.class.getName())
+				|| txClassName.equals(FxTextField.class.getSimpleName())) {
 
 			FxTextField comp = new FxTextField();
 
@@ -433,7 +432,7 @@ public class FxEditorFactory {
 			return comp;
 		}
 
-		if (compClassName.equals(FxTextFieldBtn.class.getName())) {
+		if (txClassName.equals(FxTextFieldBtn.class.getName())) {
 
 			FxTextFieldBtn comp = new FxTextFieldBtn();
 
@@ -445,7 +444,7 @@ public class FxEditorFactory {
 			return comp;
 		}
 
-		if (compClassName.equals(FxTextFieldWitBtnLbl3.class.getName())) {
+		if (txClassName.equals(FxTextFieldWitBtnLbl3.class.getName())) {
 
 			FxTextFieldWitBtnLbl3 comp = new FxTextFieldWitBtnLbl3();
 
@@ -457,7 +456,7 @@ public class FxEditorFactory {
 			return comp;
 		}
 
-		if (compClassName.equals(FxTextFieldBtnLabel2.class.getName())) {
+		if (txClassName.equals(FxTextFieldBtnLabel2.class.getName())) {
 
 			FxTextFieldBtnLabel2 comp = new FxTextFieldBtnLabel2();
 
@@ -469,50 +468,50 @@ public class FxEditorFactory {
 			return comp;
 		}
 
-		if (compClassName.equals(DatePicker.class.getName())
-				|| compClassName.equals(FxDatePicker.class.getName())) {
+		if (txClassName.equals(DatePicker.class.getName())
+				|| txClassName.equals(FxDatePicker.class.getName())) {
 			FxDatePicker comp = new FxDatePicker();
 			//if (iFiCol.getColFilterKeyEvent() != null) comp.setOnKeyReleased(iFiCol.getColFilterKeyEvent());
 			return comp;
 		}
 
-		if (compClassName.equals(FxLabel.class.getName())) {
+		if (txClassName.equals(FxLabel.class.getName())) {
 			FxLabel comp = new FxLabel("");
 			return comp;
 		}
 
-		if (compClassName.equals(FxLabelData.class.getName())) {
+		if (txClassName.equals(FxLabelData.class.getName())) {
 			FxLabelData comp = new FxLabelData("");
 			return comp;
 		}
 
-		if (compClassName.equals(TextField.class.getName())) {
+		if (txClassName.equals(TextField.class.getName())) {
 			FxTextField comp = new FxTextField();
 			//if (iFiCol.getColFilterKeyEvent() != null) comp.setOnKeyReleased(iFiCol.getColFilterKeyEvent());
 			return comp;
 		}
 
-		if (compClassName.equals(FxComboBox.class.getName())) {
+		if (txClassName.equals(FxComboBox.class.getName())) {
 			FxComboBox<ComboItem> comp = new FxComboBox<>();
 			return comp;
 		}
 
-		if (compClassName.equals(FxComboBoxSimple.class.getName())) {
+		if (txClassName.equals(FxComboBoxSimple.class.getName())) {
 			FxComboBoxSimple comp = new FxComboBoxSimple();
 			return comp;
 		}
 
-		if (compClassName.equals(FxComboBoxObj.class.getName())) {
+		if (txClassName.equals(FxComboBoxObj.class.getName())) {
 			FxComboBoxObj comp = new FxComboBoxObj();
 			return comp;
 		}
 
-		if (compClassName.equals(FxCheckBox.class.getName())) {
+		if (txClassName.equals(FxCheckBox.class.getName())) {
 			FxCheckBox comp = new FxCheckBox();
 			return comp;
 		}
 
-		if (compClassName.equals(FxChoiceBoxSimple.class.getName())) {
+		if (txClassName.equals(FxChoiceBoxSimple.class.getName())) {
 			FxChoiceBoxSimple comp = new FxChoiceBoxSimple();
 			comp.activateBackSpaceClearSelection();
 			return comp;
@@ -680,9 +679,8 @@ public class FxEditorFactory {
 	}
 
 	/**
-	 *
 	 * Kullanım Alanları
-	 *
+	 * <p>
 	 * Entitydeki alanların değerini FiCol Editor Componetlere verir. Örnergin FxForm'da
 	 *
 	 * @param listColumns
@@ -779,7 +777,7 @@ public class FxEditorFactory {
 
 		// IfxNode türünde ise CompValue metoduyla kendisine değer atamasını kendisi yapar
 		if (colNode instanceof IfxNode) {
-			Loghelper.get(FxEditorFactory.class).debug("IfxNode Set CompValue :"+ iFiCol.getHeaderName());
+			Loghelper.get(FxEditorFactory.class).debug("IfxNode Set CompValue :" + iFiCol.getHeaderName());
 			IfxNode ifxNode = (IfxNode) colNode;
 			ifxNode.setCompValue(cellvalue);
 			return;
@@ -853,7 +851,7 @@ public class FxEditorFactory {
 
 		// 04-11-22 added.
 		if (colNodeClass.equals(FxComboBoxObj.class.getName())) {
-			Loghelper.get(FxEditorFactory.class).debug("FxComboBoxObj Set Value :"+iFiCol.getHeaderName());
+			Loghelper.get(FxEditorFactory.class).debug("FxComboBoxObj Set Value :" + iFiCol.getHeaderName());
 			FxComboBoxObj comp = (FxComboBoxObj) colNode;
 			comp.setObjValue(cellvalue);
 			comp.setSelectedItemByObjValueFi();
@@ -909,17 +907,15 @@ public class FxEditorFactory {
 		// Loghelper.getInstance(FxEditorFactory.class).debug("Col Node Class:"+ txNodeClass);
 		// Loghelper.getInstance(FxEditorFactory.class).debug("Col Node Component Id:"+ FiType.orEmpty(nodeComp));
 
-		Object cellvalue = null;    // map.get(infTableCol.getHeader());
+		Object cellvalue = null;
 
 		// String txNodeClass = txNodeClass; //infTableCol.getColFxNodeClass();
 
 		if (txNodeClass == null) txNodeClass = "";
 
-		// Node nodeComp = nodeComp; //infTableCol.getColFxNode();
-
-		// editor tanımlanmamış ise nodeValue parametresi döndürülür
+		// editor tanımlanmamışsa nodeValue parametresi döndürülür
 		if (nodeComp == null || txNodeClass.equals("")) {
-			return nodeValue; //getColFilterValueByColType(iFiTableCol);
+			return nodeValue;
 		}
 
 		// IFxNode interface kullanan bir component ise degeri kendi metodundan alınır.
@@ -1037,16 +1033,15 @@ public class FxEditorFactory {
 			FxComboBoxSimple comp = (FxComboBoxSimple) nodeComp;
 			ComboItem selectedItemFi = comp.getSelectedItemFi();
 			String textValue = null;
-			if(selectedItemFi!=null) textValue = selectedItemFi.getValue();
+			if (selectedItemFi != null) textValue = selectedItemFi.getValue();
 			return convertStringValueToObjectByOzColType(ozColType, textValue);
 		}
 
 		if (txNodeClass.equals(FxComboBoxObj.class.getName())) {
 			FxComboBoxObj comp = (FxComboBoxObj) nodeComp;
 			ComboItemObj selectedItemFi = comp.getSelectedItemFi();
-			//String textValue = null;
-			//if(selectedItemFi!=null) textValue = selectedItemFi.getValue();
-			return selectedItemFi.getValue(); //convertStringValueToObjectByOzColType(ozColType, textValue);
+			// selectedItem yoksa null döner
+			return (selectedItemFi != null ? selectedItemFi.getValue() : null);
 		}
 
 		if (txNodeClass.equals(FxChoiceBoxSimple.class.getName())) {
@@ -1086,7 +1081,7 @@ public class FxEditorFactory {
 
 		// gelen veride özel işaretler temizlenir
 		if (ozColType == OzColType.Double || ozColType == OzColType.Integer) {
-			if(textValue!=null) textValue = textValue.replaceAll("(<|>|!)", "");
+			if (textValue != null) textValue = textValue.replaceAll("(<|>|!)", "");
 		}
 
 		if (ozColType == OzColType.String) {

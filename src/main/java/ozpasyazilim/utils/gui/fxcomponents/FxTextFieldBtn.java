@@ -113,7 +113,6 @@ public class FxTextFieldBtn<EntClazz> extends FxMigPane implements IfxNode {
 	public void addLabelBelowRow() {
 		if (getLblAciklama() == null) {
 			setLblAciklama(new FxLabel(""));
-			//fxLabel = new FxLabel("");
 			wrapFi();
 			add(getLblAciklama(), "growx,pushx");
 		}

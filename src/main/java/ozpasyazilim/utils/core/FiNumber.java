@@ -373,6 +373,18 @@ public class FiNumber {
 		return false;
 	}
 
+	public static Boolean checkDbNegativeSome(Double ...objValues) {
+		for (Double objValue : objValues) {
+			if(FiNumber.orZero(objValue)<0) return true;
+		}
+		return false;
+	}
+
+	public static String orEmpty(Integer lnValue) {
+		if(lnValue==null) return "";
+		return lnValue.toString();
+	}
+
 
 	public FiNumber buildNullCheckOrZero(Double dmValue) {
 		if (dmValue == null) {

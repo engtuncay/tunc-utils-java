@@ -479,7 +479,6 @@ public class FiConsole {
 		fiConsoleConfig.setBoEqualSignHide(true);
 		fiConsoleConfig.setBoTypeHide(true);
 
-
 		return textObjectFieldsMain(obj, fiConsoleConfig);
 	}
 

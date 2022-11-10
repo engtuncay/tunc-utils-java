@@ -186,7 +186,9 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 	// Fi Editor Value nullable izin veriyor mu?
 	private Boolean boNullable;
 
-	// Alanlarda update query oluşturulurken dahil edilmeyecek alanlar
+	/**
+	 * Alanlarda update query oluşturulurken dahil edilmeyecek alanlar
+	 */
 	private Boolean boNonUpdatable;
 
 	// Formlarda edit yapılmayacak alanı gösterir
