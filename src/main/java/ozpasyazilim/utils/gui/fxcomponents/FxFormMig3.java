@@ -192,7 +192,7 @@ public class FxFormMig3<EntClazz> extends FxMigPaneEnt<EntClazz> implements IFxM
 				FxEditorFactory.bindEntityToFormByEditorValue(getListFormElements(), getFormEntity());
 			}
 			// Form değerleri eklendikten sonra trigger edilecek metodlar
-			trigEventAfterLoadFormValue();
+			trigEventsAfterFormLoaded();
 			return;
 		}
 
@@ -203,7 +203,7 @@ public class FxFormMig3<EntClazz> extends FxMigPaneEnt<EntClazz> implements IFxM
 		return FiCollection.listToMapSingle(getListFormElements(), FiCol::getFieldName);
 	}
 
-	private void trigEventAfterLoadFormValue() {
+	private void trigEventsAfterFormLoaded() {
 
 		getListFormElements().forEach(fiTableCol -> {
 			if (fiTableCol.getFnEditorNodeRendererAfterFormLoad() != null) {
@@ -245,7 +245,7 @@ public class FxFormMig3<EntClazz> extends FxMigPaneEnt<EntClazz> implements IFxM
 
 		for (FiCol fiCol : listFormElements) {
 
-//			Loghelper.get(getClass()).debug("FiCol in Form" + fiCol.getFieldName());
+			//Loghelper.get(getClass()).debug("FiCol in Form" + fiCol.getFieldName());
 
 			if (FiBoolean.isTrue(fiCol.getBoHidden())) {
 				continue;
@@ -272,12 +272,17 @@ public class FxFormMig3<EntClazz> extends FxMigPaneEnt<EntClazz> implements IFxM
 			// Editor comp (node) oluşturulur
 			Node node = FxEditorFactory.generateEditorNodeFullLifeCycle(fiCol, entityForNode);
 
-			if (FiBoolean.isTrue(getBoReadOnlyFormNtn()) || FiBoolean.isFalse(fiCol.getBoEditable())) {
+			if (FiBoolean.isTrue(getBoReadOnlyFormNtn()) || FiBoolean.isFalse(fiCol.getBoEditable())
+			|| FiBoolean.isTrue(fiCol.getBoNonEditableForForm())) {
 				node.setDisable(true);
 			}
 
-			// getFormEntityForEdit() yerin getFormEntity getirildi 213010
+			// formEntity yüklenirse eğer (update formu ise) nonupdatable alanlar disable yapılır
 			if (getFormEntity() != null && FiBoolean.isTrue(fiCol.getBoNonUpdatable())) {
+				node.setDisable(true);
+			}
+
+			if (getBoUpdateFormNtn() && FiBoolean.isTrue(fiCol.getBoNonUpdatable())) {
 				node.setDisable(true);
 			}
 
@@ -345,7 +350,7 @@ public class FxFormMig3<EntClazz> extends FxMigPaneEnt<EntClazz> implements IFxM
 		return boUpdateForm;
 	}
 
-	public Boolean getBoUpdateFormInit() {
+	public Boolean getBoUpdateFormNtn() {
 		if (boUpdateForm == null) return false;
 		return boUpdateForm;
 	}
@@ -365,7 +370,7 @@ public class FxFormMig3<EntClazz> extends FxMigPaneEnt<EntClazz> implements IFxM
 	public void bindEntityToForm(EntClazz formEntity) {
 		setFormEntity(formEntity);
 		FxEditorFactory.bindEntityToFormByEditorValue(getListFormElements(), getFormEntity());
-		trigEventAfterLoadFormValue();
+		trigEventsAfterFormLoaded();
 	}
 
 	public EntClazz getFormEntity() {

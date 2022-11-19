@@ -214,7 +214,7 @@ public class FxEditorFactory {
 	 */
 	public static Node generateAndSetFilterNode(IFiCol ozTableCol) {
 
-		Node comp = generateNodeByClassNameMain(ozTableCol.getColType(), ozTableCol.getFilterNodeClass(), ozTableCol);
+		Node comp = generateNodeByClassNameMain(ozTableCol.getColType(), ozTableCol.getFilterNodeClass(),null);
 
 		// generator içinden çıkarılıp buraya eklendi, esas amaç anlaşılmadı
 		setNodeValueByCompClass(comp, ozTableCol.getFilterNodeClass(), ozTableCol.getFilterValue());
@@ -262,7 +262,7 @@ public class FxEditorFactory {
 	 */
 	public static Node generateAndRenderNodeBeforeLoadByEditorClassEntry(IFiCol fiTableCol, Object entity) {
 
-		Node comp = generateNodeByClassNameMain(fiTableCol.getColType(), fiTableCol.getColEditorClass(), fiTableCol);
+		Node comp = generateNodeByClassNameMain(fiTableCol.getColType(), fiTableCol.getColEditorClass(),null);
 
 		if (fiTableCol.getFnEditorNodeRendererBeforeSettingValue() != null) {
 			fiTableCol.getFnEditorNodeRendererBeforeSettingValue().accept(entity, comp);
@@ -283,9 +283,13 @@ public class FxEditorFactory {
 	}
 
 	/**
-	 * Kullanan Comp lar
+	 * Kullanan Component'ler
 	 * <p>
 	 * FxFormMig
+	 * <p>
+	 * Lifecycle Methods
+	 * <p>
+	 * getFnEditorNodeRendererBeforeSettingValue , getFnEditorNodeRendererAfterInitialValue1 , getFnEditorNodeRendererAfterInitialValue1 çalıştırır.
 	 *
 	 * @param fiCol
 	 * @param entity
@@ -293,27 +297,29 @@ public class FxEditorFactory {
 	 */
 	public static Node generateEditorNodeFullLifeCycle(FiCol fiCol, Object entity) {
 
-		Node comp = generateNodeByClassNameMain(fiCol.getColType(), fiCol.getColEditorClass(), fiCol);
+		Node comp = generateNodeByClassNameMain(fiCol.getColType(), fiCol.getColEditorClass(),fiCol);
 
-		if (fiCol.getFnNodeFocusTrigger() != null) {
+		if (fiCol.getFnNodeFocusTrigger() != null && comp != null) {
 			comp.focusedProperty().addListener((observable, oldValue, newValue) -> fiCol.getFnNodeFocusTrigger().accept(comp));
 		}
 
-		if (fiCol.getColEditorClass() == null) fiCol.setColEditorClass(comp.getClass().getName());
-		if (comp != null) fiCol.setColEditorNode(comp);
+		if (comp != null) {
+			if (fiCol.getColEditorClass() == null) fiCol.setColEditorClass(comp.getClass().getName());
+			fiCol.setColEditorNode(comp);
+		}
 
 		if (comp instanceof IfxNode) {
 			fiCol.setIfxNodeEditor((IfxNode) comp);
 			//logger.getLogger().debug("ifxnode ayarlandı");
 		}
 
+		// getFnEditorNodeRendererBeforeSettingValue çalıştırır
 		fiCol.doNodeOperationsBeforeSettingValue(entity, comp);
 
 		// comp'a değer atanır
 		setNodeValueByCompClass(fiCol.getColEditorNode(), fiCol.getColEditorClass(), fiCol.getColEditorValue());
 
-		fiCol.doNodeOperationsAfterInitialValue1(entity, comp);
-		fiCol.doNodeOperationsAfterInitialValue2(entity, comp);
+		fiCol.doNodeOperationsAfterInitialValue(entity, comp);
 
 		return comp;
 	}
@@ -392,10 +398,13 @@ public class FxEditorFactory {
 	}
 
 	// Component Node oluşturmak için
-	public static Node generateNodeByClassNameMain(OzColType ozColType, String txClassName, IFiCol iFiCol) { //, Object compValue
+	public static Node generateNodeByClassNameMain(OzColType ozColType, String txClassName, FiCol fiCol) { //, Object compValue
 
 		//Loghelper.getInstance(FxEditorFactory.class).debug(" Ozcoltype:"+ozColType.toString());
 		//Loghelper.getInstance(FxEditorFactory.class).debug(" Prm Comp Class:"+txClassName);
+		if(fiCol==null) {
+			fiCol = new FiCol();
+		}
 
 		if (txClassName == null) {
 			//iFiCol.setColFxNodeClass(FxTextField.class.getName());
@@ -425,6 +434,10 @@ public class FxEditorFactory {
 			if (ozColType == OzColType.Integer) {
 				comp.convertNumberDoubleTextField1();
 				//comp.setAlignment(Pos.BASELINE_RIGHT);
+			}
+
+			if(FiBoolean.isTrue(fiCol.getBoEditorOnlyNumber())){
+				comp.convertNumberDoubleTextField1();
 			}
 
 			//if (iFiCol.getColFilterKeyEvent() != null) comp.setOnKeyReleased(iFiCol.getColFilterKeyEvent());

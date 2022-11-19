@@ -1328,6 +1328,10 @@ public class FiCollection {
 
 	/**
 	 * Sıralanmış yeni bir liste döndürü, orijinal list'de değişiklik yapmaz.
+	 * <p>
+	 * Örnek 1 (Comparator ile örnek)
+	 * <p>
+	 * List sortedListCariHar  = FiCollection.sort(cariEvrak.getListCariHareketInit(), Comparator.comparing(cariHar -> FiNumber.orZero(cariHar.getCha_satir_no())));
 	 *
 	 * @param listData
 	 * @param comparator varsayılan olarak küçükten büyüğe sıralar. Örneğin -1,0,1 gibi..., tam tersine çevirmek için -1 ile çarpılır.
@@ -1336,6 +1340,7 @@ public class FiCollection {
 	 */
 	public static <E> List<E> sort(List<E> listData, Comparator<E> comparator) {
 		return listData.stream().sorted(comparator).collect(Collectors.toList());
+
 	}
 
 	public static List orValue(List value, List orValue) {

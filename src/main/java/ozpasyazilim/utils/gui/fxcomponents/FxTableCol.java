@@ -29,9 +29,9 @@ import java.util.function.Predicate;
 /**
  * N nedir ?
  *
- * @param <N>
+ * @param <Clazz>
  */
-public class FxTableCol<N> extends TableColumn implements IFiCol<N> {
+public class FxTableCol<Clazz> extends TableColumn implements IFiCol<Clazz> {
 
 	// FxTable Col a Özel Alanlar
 
@@ -60,7 +60,6 @@ public class FxTableCol<N> extends TableColumn implements IFiCol<N> {
 
 	private Boolean boIsRequired;
 
-
 	// excekde sütunun bulunduğunu gösterir
 	private Boolean boIsExist;
 
@@ -68,7 +67,7 @@ public class FxTableCol<N> extends TableColumn implements IFiCol<N> {
 	private Boolean boIsNotExportedExcel;
 
 	// For Forms, entity is edit value for the field
-	private N entity;
+	private Clazz entity;
 
 
 	// *** Filter Editor Alanları
@@ -98,9 +97,9 @@ public class FxTableCol<N> extends TableColumn implements IFiCol<N> {
 	//private TriFunction<Object, Node,Object,Object> fnEditorSetOnActionWithCellValue; // Entity,Node Comp,Cell Value
 
 	@Deprecated // bi veya tri consumer olanlar kullanılacak
-	private Consumer<N> fnEditorSetOnActionWithEntity; // cellfactoryaction idi
+	private Consumer<Clazz> fnEditorSetOnActionWithEntity; // cellfactoryaction idi
 	@Deprecated //yukarıdakiler kullanılacak
-	private BiConsumer<N, Button> fnColButton;
+	private BiConsumer<Clazz, Button> fnColButton;
 
 
 	// ---- end editor fields
@@ -149,10 +148,10 @@ public class FxTableCol<N> extends TableColumn implements IFiCol<N> {
 
 
 	// Editörlerde , mesela tabloda bu pred e göre disable olmasını engeller veya açar   ( inf ye eklenmedi)
-	private Predicate<N> predFiEditorDisable;
+	private Predicate<Clazz> predFiEditorDisable;
 
 	// Editörte bir değişim olursa çağrılır (tablonun hücresi değişiklik olursa bildirilir) (property de çevrilebilir ) , inf ye eklenmedi.
-	private Consumer<N> fnColCellChanged;
+	private Consumer<Clazz> fnColCellChanged;
 
 	private Locale locale = new Locale("tr", "TR");
 
@@ -221,39 +220,39 @@ public class FxTableCol<N> extends TableColumn implements IFiCol<N> {
 		return this;
 	}
 
-	private void setValuesFromInfTableCol(IFiCol ozTableCol) {
+	private void setValuesFromInfTableCol(IFiCol iFiCol) {
 
-		setId(ozTableCol.getFieldName());
-		setFieldName(ozTableCol.getFieldName());
-		setHeaderName(ozTableCol.getHeaderName());
-		if (ozTableCol.getPrefSize() != null) setPrefSize(ozTableCol.getPrefSize());
-		setPrintSize(ozTableCol.getPrintSize());
-		setColType(ozTableCol.getColType());
-		if (ozTableCol.getColType() == null) ozTableCol.setColType(OzColType.String);
-		setColComment(ozTableCol.getColComment());
-		setMapStyle(ozTableCol.getMapStyle());
-		setSummaryType(ozTableCol.getSummaryType());
-		setBoEditable(ozTableCol.getBoEditable());
-		setSummaryCalculateFn(ozTableCol.getSummaryCalculateFn());
-		setBoHidden(ozTableCol.getBoHidden());
-		setColEditorClass(ozTableCol.getColEditorClass());
-		setBoOptional(ozTableCol.getBoOptional());
-		setBoExist(ozTableCol.getBoExist());
-		setBoFilterable(ozTableCol.getBoFilterable());
-		setColEditorNodeText(ozTableCol.getColEditorNodeText());
-		setFilterNodeClass(ozTableCol.getFilterNodeClass());
-		setColFilterNode(ozTableCol.getColFilterNode());
-		setColFilterKeyEvent(ozTableCol.getColFilterKeyEvent());
-		setColIndex(ozTableCol.getColIndex());
-		setEntity((N) ozTableCol.getEntity());
-		setFilterValue(ozTableCol.getFilterValue());
-		setFuncFormatter(ozTableCol.getFuncFormatter());
-		setFormatter(ozTableCol.getFormatter());
-		setBoEnabled(ozTableCol.getBoEnabled());
-		setFnEditorSetOnActionWithEntity(ozTableCol.getFnEditorSetOnActionWithEntity());
-		setPaneHeader(ozTableCol.getPaneHeader());
+		setId(iFiCol.getFieldName());
+		setFieldName(iFiCol.getFieldName());
+		setHeaderName(iFiCol.getHeaderName());
+		if (iFiCol.getPrefSize() != null) setPrefSize(iFiCol.getPrefSize());
+		setPrintSize(iFiCol.getPrintSize());
+		setColType(iFiCol.getColType());
+		if (iFiCol.getColType() == null) iFiCol.setColType(OzColType.String);
+		setColComment(iFiCol.getColComment());
+		setMapStyle(iFiCol.getMapStyle());
+		setSummaryType(iFiCol.getSummaryType());
+		setBoEditable(iFiCol.getBoEditable());
+		setSummaryCalculateFn(iFiCol.getSummaryCalculateFn());
+		setBoHidden(iFiCol.getBoHidden());
+		setColEditorClass(iFiCol.getColEditorClass());
+		setBoOptional(iFiCol.getBoOptional());
+		setBoExist(iFiCol.getBoExist());
+		setBoFilterable(iFiCol.getBoFilterable());
+		setColEditorNodeText(iFiCol.getColEditorNodeText());
+		setFilterNodeClass(iFiCol.getFilterNodeClass());
+		setColFilterNode(iFiCol.getColFilterNode());
+		setColFilterKeyEvent(iFiCol.getColFilterKeyEvent());
+		setColIndex(iFiCol.getColIndex());
+		setEntity((Clazz) iFiCol.getEntity());
+		setFilterValue(iFiCol.getFilterValue());
+		setFuncFormatter(iFiCol.getFuncFormatter());
+		setFormatter(iFiCol.getFormatter());
+		setBoEnabled(iFiCol.getBoEnabled());
+		setFnEditorSetOnActionWithEntity(iFiCol.getFnEditorSetOnActionWithEntity());
+		setPaneHeader(iFiCol.getPaneHeader());
 		//
-		setFnColButton(ozTableCol.getFnColButton());
+		setFnColButton(iFiCol.getFnColButton());
 
 	}
 
@@ -478,12 +477,12 @@ public class FxTableCol<N> extends TableColumn implements IFiCol<N> {
 	// ************************** Getter and Setter
 
 	@Override
-	public BiConsumer<N, Button> getFnColButton() {
+	public BiConsumer<Clazz, Button> getFnColButton() {
 		return fnColButton;
 	}
 
 	@Override
-	public void setFnColButton(BiConsumer<N, Button> fnColButton) {
+	public void setFnColButton(BiConsumer<Clazz, Button> fnColButton) {
 		this.fnColButton = fnColButton;
 	}
 
@@ -712,12 +711,12 @@ public class FxTableCol<N> extends TableColumn implements IFiCol<N> {
 	}
 
 	@Override
-	public N getEntity() {
+	public Clazz getEntity() {
 		return entity;
 	}
 
 	@Override
-	public void setEntity(N entity) {
+	public void setEntity(Clazz entity) {
 		this.entity = entity;
 	}
 
@@ -763,12 +762,12 @@ public class FxTableCol<N> extends TableColumn implements IFiCol<N> {
 
 	@Deprecated
 	@Override
-	public Consumer<N> getFnEditorSetOnActionWithEntity() {
+	public Consumer<Clazz> getFnEditorSetOnActionWithEntity() {
 		return fnEditorSetOnActionWithEntity;
 	}
 
 	@Override
-	public void setFnEditorSetOnActionWithEntity(Consumer<N> fnEditorSetOnActionWithEntity) {
+	public void setFnEditorSetOnActionWithEntity(Consumer<Clazz> fnEditorSetOnActionWithEntity) {
 		this.fnEditorSetOnActionWithEntity = fnEditorSetOnActionWithEntity;
 	}
 
@@ -873,7 +872,7 @@ public class FxTableCol<N> extends TableColumn implements IFiCol<N> {
 	}
 
 
-	public Predicate<N> getPredFiEditorDisable() {
+	public Predicate<Clazz> getPredFiEditorDisable() {
 		return predFiEditorDisable;
 	}
 
@@ -883,15 +882,15 @@ public class FxTableCol<N> extends TableColumn implements IFiCol<N> {
 	 *
 	 * @param predFiEditorDisable
 	 */
-	public void setPredFiEditorDisable(Predicate<N> predFiEditorDisable) {
+	public void setPredFiEditorDisable(Predicate<Clazz> predFiEditorDisable) {
 		this.predFiEditorDisable = predFiEditorDisable;
 	}
 
-	public Consumer<N> getFnColCellChanged() {
+	public Consumer<Clazz> getFnColCellChanged() {
 		return fnColCellChanged;
 	}
 
-	public void setFnColCellChanged(Consumer<N> fnColCellChanged) {
+	public void setFnColCellChanged(Consumer<Clazz> fnColCellChanged) {
 		this.fnColCellChanged = fnColCellChanged;
 	}
 

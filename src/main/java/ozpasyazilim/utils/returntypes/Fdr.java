@@ -348,6 +348,13 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 		return exception;
 	}
 
+	public Exception getExceptionNtn() {
+		if (exception == null) {
+			return new Exception("exception boş,atanmamış.(ntn)");
+		}
+		return exception;
+	}
+
 	public Boolean hasException() {
 		return getException() != null;
 	}
@@ -508,7 +515,7 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 		return false;
 	}
 
-	public Boolean getBoOperaResultNotNull() {
+	public Boolean getBoResultNtn() {
 		if (getBoResult() == null) return false;
 		return getBoResult();
 	}

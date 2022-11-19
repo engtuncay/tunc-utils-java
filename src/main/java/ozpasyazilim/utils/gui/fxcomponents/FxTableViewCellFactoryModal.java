@@ -11,7 +11,6 @@ import ozpasyazilim.utils.core.FiString;
 import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.gui.fxTableViewExtra.EnumColNodeType;
 import ozpasyazilim.utils.core.FiReflection;
-import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.table.OzColType;
 
 import java.text.DecimalFormat;
@@ -275,8 +274,8 @@ public class FxTableViewCellFactoryModal {
 
 								Object entity = getTableView().getItems().get(getIndex());
 
-								if (fxTableCol.getFiCol().getPredFiEditorDisable() != null) {
-									node.setDisable(fxTableCol.getFiCol().getPredFiEditorDisable().test(entity));
+								if (fxTableCol.getFiCol().getPredEditorDisable() != null) {
+									node.setDisable(fxTableCol.getFiCol().getPredEditorDisable().test(entity));
 								} else {
 									node.setDisable(false);
 								}

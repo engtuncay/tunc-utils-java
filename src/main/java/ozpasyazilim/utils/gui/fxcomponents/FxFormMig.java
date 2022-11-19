@@ -28,7 +28,9 @@ public class FxFormMig<EntClazz> extends FxMigPaneEnt<EntClazz> implements IFxMo
 	private Map<String, FiCol> formElementsMap;
 	private EntClazz formEntity; // added 21-10-30
 
-	// Form güncellemek amacıyla mı açıldı
+	/**
+	 * Form güncellemek amacıyla mı açıldı
+	 */
 	private Boolean boUpdateForm; // added 21-10-06
 
 	private FormType formTypeSelected;
@@ -216,7 +218,7 @@ public class FxFormMig<EntClazz> extends FxMigPaneEnt<EntClazz> implements IFxMo
 
 		// Form Oluşturma metodları
 		if (getFormTypeSelected() == FormType.PlainFormV1) {
-			setupPlainFormV1(getListFormElements());  //,formEntityForEdit,formEntityInsert
+			initPlainFormV1(getListFormElements());  //,formEntityForEdit,formEntityInsert
 			FxEditorFactory.bindEntityToFormByEditorValue(getListFormElements(), getFormEntity());
 			afterLoadFormValue();
 			return;
@@ -305,7 +307,7 @@ public class FxFormMig<EntClazz> extends FxMigPaneEnt<EntClazz> implements IFxMo
 		});
 	}
 
-	private void setupPlainFormV1(List<FiCol> listFormElements) {
+	private void initPlainFormV1(List<FiCol> listFormElements) {
 
 		//Loghelperr.debug(getClass(), "Plain Form By Editor");
 
@@ -343,12 +345,17 @@ public class FxFormMig<EntClazz> extends FxMigPaneEnt<EntClazz> implements IFxMo
 			// Editor comp (node) oluşturulur
 			Node node = FxEditorFactory.generateEditorNodeFullLifeCycle(fiCol, entityForNode);
 
-			if (FiBoolean.isFalse(getBoEditableForm()) || FiBoolean.isFalse(fiCol.getBoEditable())) {
+			if (FiBoolean.isFalse(getBoEditableForm())) {
+				node.setDisable(true);
+			}
+
+			if (FiBoolean.isTrue(fiCol.getBoNonEditableForForm()) || FiBoolean.isFalse(fiCol.getBoEditable())) {
 				node.setDisable(true);
 			}
 
 			// getFormEntityForEdit() yerin getFormEntity getirildi 213010
-			if (getFormEntity() != null && FiBoolean.isTrue(fiCol.getBoNonUpdatable())) {
+			// 19-11-22 'de getFormEntity , getBoUpdateFormInit() değiştirildi (form update olduğunu anlamak için)
+			if (getBoUpdateFormInit() && FiBoolean.isTrue(fiCol.getBoNonUpdatable())) {
 				node.setDisable(true);
 			}
 

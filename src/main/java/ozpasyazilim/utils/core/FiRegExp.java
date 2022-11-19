@@ -145,9 +145,21 @@ public class FiRegExp {
 		if (cepTel == null) cepTel = "";
 
 		cepTel = cepTel.trim();
-		String regex = "^0\\d{10}$";
+		String regex = "\\d{10,11}$";
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(cepTel);
+
+		return matcher.matches();
+	}
+
+	public static Boolean checkVergiNo(String txVergiNo) {
+
+		if (txVergiNo == null) txVergiNo = "";
+
+		txVergiNo = txVergiNo.trim();
+		String regex = "\\d{10,11}$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(txVergiNo);
 
 		return matcher.matches();
 	}

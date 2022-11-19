@@ -430,6 +430,12 @@ public class FiString {
 		return value;
 	}
 
+	public static String orEmpty(Object value) {
+		if (value == null) return "";
+
+		return value.toString();
+	}
+
 	/**
 	 * null ise elseValue değerini dönderir <br>
 	 * null degilse kendi değerini döner

@@ -29,22 +29,22 @@ import java.util.function.Predicate;
 
 /**
  * EntClazz Entity
- * <br>
- * Not: daha sonra <N,T> formuna dönüştürülebilir.N Entity Türünü, T alanın tipini gösterir.
- * <br>
- * (field type of column. for ex. string , bool , date ...)
+ * <p>
+ * (field type of column and field for ex. string , bool , date ...)
  *
  * @param <EntClazz>
  */
 
 public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 
-	//String id;
-
-	// Alanın ismini (veritabanındaki veya objedeki refere ettiği alan ismi )
+	/**
+	 * Alanın ismini (veritabanındaki veya objedeki refere ettiği alan ismi )
+	 */
 	private String fieldName;
 
-	// Alanın başlık açıklaması ( tablo için sütün başlığı , form için label alanı değeri / excelde başlık )
+	/**
+	 * Alanın başlık açıklaması ( tablo için sütün başlığı , form için label alanı değeri / excelde başlık )
+	 */
 	private String headerName;
 
 	private String txLabel;
@@ -107,10 +107,14 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 	// ---- Filter Node ile ilgili Alanlar
 	private Object filterValue;
 
-	// Tablo başlıklarındaki filtre için ve formlar daki comp.ler için
+	/**
+	 * Tablo başlıklarındaki filtre için ve formlar daki comp.ler için
+	 */
 	private Boolean boFilterable;
 
-	// Alan için hangi tür filter node kullanılacaksa sınıfın ismi tutulur
+	/**
+	 * Alan için hangi tür filter node kullanılacaksa sınıfın ismi tutulur
+	 */
 	String filterNodeClass;
 
 	// experimental
@@ -122,9 +126,16 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 	private String colEditorClass;
 	private Node colEditorNode;
 	private Object colValue;
-	// Editörde kullanılacak component kullanılack yazı , örneğin button ise üzerine yazılacak text
+
+	/**
+	 * Editörde kullanılacak component kullanılack yazı , örneğin button ise üzerine yazılacak text
+	 */
 	private String colEditorNodeText;
-	EventHandler<KeyEvent> colEditorKeyEvent; // editorde enter basılınca action tanımı
+
+	/**
+	 * editorde enter basılınca action tanımı
+	 */
+	EventHandler<KeyEvent> colEditorKeyEvent; //
 
 	// ---- Editor Action
 	private Consumer<EntClazz> fnEditorSetOnActionWithEntity;
@@ -132,47 +143,81 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 	private TriConsumer<Object, Node, FxTableCol> fnEditorSetOnActionWitCol;
 	private TriConsumer<Object, Node, Object> fnEditorSetOnActionWitValue;
 
-	// entity giren, value çıkan -- comp üzerinde yazan (text) değeri formatlamak için , (arka plan değeri değiştirmez (txValue su varsa eğer)
+	/**
+	 * entity giren, value çıkan -- comp üzerinde yazan (text) değeri formatlamak için , (arka plan değeri değiştirmez (txValue su varsa eğer)
+	 */
 	private Function<Object, Object> fnEditorNodeValueFormmatter;
 
 	// ---- Editor Renderer
 
-	// Node comp için özel renderer yapacaksak bu fonksiyonu kulanırız. (formlarda alanlar için, tabloda editor için)
+	/**
+	 * Değer ataması öncesinde Node comp'ine özel renderer yapacaksak bu fonksiyonu kulanırız. (formlarda alanlar için, tabloda editor için)
+	 */
 	private BiConsumer<Object, Node> fnEditorNodeRendererBeforeSettingValue;
+
+	/**
+	 * Değer ataması sonrasında bileşene(comp) yapılacak işlemler. Genellikle Object olarak entity gönderilir.
+	 */
 	private BiConsumer<Object, Node> fnEditorNodeRendererAfterInitialValue1;
 	private BiConsumer<Object, Node> fnEditorNodeRendererAfterInitialValue2;
 
-	// Form yüklendikten (After Setup) sonra çalıştırılacak
-	// Editorler için , after form load, it executes
-	// Object olarak form için kullanılacak entity gönderilir
-	// Node : component için kullanılır (FxTextField,FxCombobox gibi)
+	/**
+	 * Form yüklendikten (After Setup) sonra çalıştırılacak
+	 * <p>
+	 * Editorler için , after form load, it executes
+	 * <p>
+	 * Object olarak form için kullanılacak entity gönderilir
+	 * <p>
+	 * Node : component için kullanılır (FxTextField,FxCombobox gibi)
+	 */
 	private BiConsumer<Object, Node> fnEditorNodeRendererAfterFormLoad;
 
 	private BiConsumer<Object, Node> fnEditorNodeAfterChangeForForm;
 
-	private TriConsumer<Object, Node, FxTableCol2> fnEditorNodeRendererWithCol; // celfactoryedinoderenderer
-	private TriConsumer<Object, Node, Object> fnEditorNodeRendererWitValue; // celfactoryedinoderenderer
+	private TriConsumer<Object, Node, FxTableCol2> fnEditorNodeRendererWithCol;
+	private TriConsumer<Object, Node, Object> fnEditorNodeRendererWitValue;
 
-	// Editörlerde , mesela tabloda bu pred e göre disable olmasını sağlar ( ifc ye eklenmedi)
-	private Predicate<EntClazz> predFiEditorDisable;
+
+	/**
+	 * Editör comp, mesela tabloda bu pred e göre disable olmasını sağlar ( ifc ye eklenmedi)
+	 */
+	private Predicate<EntClazz> predEditorDisable;
 
 	// --Excel İle İlgili Alanlar
 
-	// excel için kaçıncı sütunda olduğunu gösterir
+	/**
+	 * excel için kaçıncı sütunda olduğunu gösterir
+	 */
 	Integer colIndex;
 
 	// Xml okumalar için
+
+	/**
+	 * Elemente ait, alt çocuk elementleri
+	 */
 	List<FiCol> listChildCol;
+
+	/**
+	 *
+	 */
 	Class childClazz;
 
-	// Hangi Tablonun veya Sınıfın Alanı olduğunu belirtir
+	/**
+	 * Hangi Tablonun veya Sınıfın Alanı olduğunu belirtir
+	 */
 	Class<EntClazz> entClass;
 
-	// Excelde, sütunun yorum balonunda gösterilecek açıklamayı belirtir
+
+	/**
+	 * Excelde, sütunun yorum balonunda gösterilecek açıklamayı belirtir
+	 */
 	private String colComment;
 
-	// ColStyle,String şeklindeydi
+	/**
+	 *
+	 */
 	private Map<String, String> mapStyle;
+
 
 	// --Form ile İlgili Alanlar
 
@@ -183,20 +228,29 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 
 	// ****** Sql Sorgular ile ilgili alanlar
 
-	// Fi Editor Value nullable izin veriyor mu?
+
+	/**
+	 * Bu alanın null değer alıp alamayacağını gösterir.
+	 */
 	private Boolean boNullable;
 
 	/**
 	 * Alanlarda update query oluşturulurken dahil edilmeyecek alanlar
+	 * <p>
+	 * Formlarda ilgili alanın update edilmeyeceğini gösterir
 	 */
 	private Boolean boNonUpdatable;
 
-	// Formlarda edit yapılmayacak alanı gösterir
+	/**
+	 * Formlarda edit yapılmayacak alanı gösterir
+	 */
 	private Boolean boNonEditableForForm;
 
 	// ****** SORGULAR İÇİN OLUŞTURULAN ALANLAR *******
 
-	// Genel olarak parametre ismi fieldName seçilir , farklı seçilecekse bu alandaki değer kullanılır.
+	/**
+	 * Genel olarak parametre ismi fieldName seçilir , farklı seçilecekse bu alandaki değer kullanılır.
+	 */
 	private String txParamName;
 
 	/**
@@ -218,52 +272,103 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 
 	// ------ End - Sorgular için --------------
 
-
 	// ***** FxTable ve FxTreeTable ile İlişkilendirmeleri *****
 	private ObjectProperty<TableColumn> tableColumnFx = new SimpleObjectProperty<>();
 	private ObjectProperty<TreeTableColumn> fxTreeTableCol = new SimpleObjectProperty<>();
+
 	// Exprerimental - çıkartılabilir
 	private FxTableCol2<EntClazz> fxTableCol2;
 
 	// yeni 02-10-19
 
 	/**
-	 * Editörte bir değişim olursa çağrılır (tablonun hücresi değişiklik olursa bildirilir) (property de çevrilebilir ) , inf ye eklenmedi.
+	 * Editörte bir değişim olursa çağrılır (tablonun hücresi değişiklik olursa bildirilir) (property de çevrilebilir) (Inf'ye eklenmedi.)
 	 */
 	private Consumer<EntClazz> fnColCellManualChanged;
 
-	// -- header summary node ile ilgili alanlar
-	private FxLabel summaryLabelNode; // summary Label  // inftable cola eklenmedi
+	// Header summary node ile ilgili alanlar
+
+	/**
+	 * Header Summary Label (inftable cola eklenmedi)
+	 */
+	private FxLabel summaryLabelNode; //
+
+	/**
+	 *
+	 */
 	private FxCheckBox summaryCheckBox;
+	/**
+	 * Tabloda Özetleme Alanına Yerleştirilecek Bileşen (node)
+	 */
 	private Node summaryNode;
-	// Tablolarda özet alanının türünü belirtir (toplam,ortalama vs. gibi )
+
+	/**
+	 * Tablolarda özet alanının türünü belirtir (toplam,ortalama vs. gibi )
+	 */
 	private OzColSummaryType summaryType;
+
+	/**
+	 *
+	 */
 	private Function summaryCalculateFn;
 
+	/**
+	 * Sütunun excel dosyasına aktarılmayacağını gösterir
+	 */
 	private Boolean boDontExportExcel;
+
+	/**
+	 * Sütunun excel şablon dosyasına aktarılmayacağını gösterir
+	 */
 	private Boolean boDontExportExcelTemplate;
 
+	/**
+	 *
+	 */
 	private IfxNode ifxNodeEditor;
 
-	// filter node like araması yapılacak mı
+	/**
+	 * Filter node like araması yapılacak mı
+	 */
 	private Boolean boFilterLike;
+
+	/**
+	 *
+	 */
 	private TriConsumer<Object, Node, List<FiCol>> fnEditorNodeRendererAfterFormLoad2;
 
-	// formlarda compenete focus olunca trigger eder
+
+	/**
+	 * formlarda comp.'a focus olunca trigger edilecek fonksiyon
+	 */
 	private Consumer<Node> fnNodeFocusTrigger;
 
-	// Sütun veya Alan için Sayısal karşılık saklamak için, canceled için 1 gibi
+	/**
+	 * Sütun veya Alan için Sayısal karşılık saklamak için, canceled için 1 gibi
+	 */
 	private Integer lnCode;
 
-	// sütun veya form alanı için validate fonksiyonu, object olarak form alanınına değeri gönderilir (draft)
+
+	/**
+	 * sütun veya form alanı için validate fonksiyonu, object olarak form alanınına değeri gönderilir (draft)
+	 */
 	private Function<Object, Fdr> fnValidate;
 
-	public FiCol() {
-		// Table Column için yapılacak atamalar
-		setupFiCol();
-	}
+	/**
+	 * Editor Component içerisine sadece sayısal veri girilecek (String olan VergiNo alanına sadece sayısal alan girilir)
+	 */
+	private Boolean boEditorOnlyNumber;
+
+	/**
+	 * Tanımlanmamış FiCol olduğunu , obje olarak null pointer almaması için oluşturulduğunu gösterir
+	 */
+	// private Boolean boUndefinedCol;
 
 	// ***** Constructors
+	public FiCol() {
+		// FiCol için standard ön ayarlar
+		setupFiCol();
+	}
 
 	public FiCol(String fieldName, String headerName) {
 		this.headerName = headerName;
@@ -480,7 +585,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 		return this;
 	}
 
-	public FiCol buildNonEditable(boolean boNonEditable) {
+	public FiCol buiNonEditable(boolean boNonEditable) {
 		setBoNonEditableForForm(boNonEditable);
 		return this;
 	}
@@ -568,23 +673,27 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 	}
 
 	public FiCol buildFiEditorDisabled(Predicate<EntClazz> predFiEditorDisable) {
-		setPredFiEditorDisable(predFiEditorDisable);
+		setPredEditorDisable(predFiEditorDisable);
 		return this;
 	}
 
+	/**
+	 * getFnEditorNodeRendererBeforeSettingValue çalıştırır
+	 *
+	 * @param entity
+	 * @param comp
+	 */
 	public void doNodeOperationsBeforeSettingValue(Object entity, Node comp) {
 		if (getFnEditorNodeRendererBeforeSettingValue() != null) {
 			getFnEditorNodeRendererBeforeSettingValue().accept(entity, comp);
 		}
 	}
 
-	public void doNodeOperationsAfterInitialValue1(Object entity, Node comp) {
+	public void doNodeOperationsAfterInitialValue(Object entity, Node comp) {
 		if (getFnEditorNodeRendererAfterInitialValue1() != null) {
 			getFnEditorNodeRendererAfterInitialValue1().accept(entity, comp);
 		}
-	}
 
-	public void doNodeOperationsAfterInitialValue2(Object entity, Node comp) {
 		if (getFnEditorNodeRendererAfterInitialValue2() != null) {
 			getFnEditorNodeRendererAfterInitialValue2().accept(entity, comp);
 		}
@@ -998,12 +1107,12 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 		this.boRequired = boRequired;
 	}
 
-	public Predicate<EntClazz> getPredFiEditorDisable() {
-		return predFiEditorDisable;
+	public Predicate<EntClazz> getPredEditorDisable() {
+		return predEditorDisable;
 	}
 
-	public void setPredFiEditorDisable(Predicate<EntClazz> predFiEditorDisable) {
-		this.predFiEditorDisable = predFiEditorDisable;
+	public void setPredEditorDisable(Predicate<EntClazz> predEditorDisable) {
+		this.predEditorDisable = predEditorDisable;
 	}
 
 	/**
@@ -1367,5 +1476,14 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 	public void setColGenType(OzColType colGenType) {
 		this.colGenType = colGenType;
 	}
+
+	public Boolean getBoEditorOnlyNumber() {
+		return boEditorOnlyNumber;
+	}
+
+	public void setBoEditorOnlyNumber(Boolean boEditorOnlyNumber) {
+		this.boEditorOnlyNumber = boEditorOnlyNumber;
+	}
+
 }
 

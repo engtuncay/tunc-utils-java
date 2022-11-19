@@ -47,7 +47,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 	private Class<EntClazz> entityClass;
 	private String fxId;
 	private Map<String, Object> styleMap;
-	private List<FxTableCol2> fxTableColList;
+	private List<FxTableCol2> listFxTableCol;
 	private FilteredList<EntClazz> filteredList;
 
 	// gereksiz çıkartılabilir
@@ -85,7 +85,6 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
 	// filter node da aşağı tuşuna basınca elemanlar gider
 	private EventHandler<KeyEvent> colFilterNodeKeyDownEvent;
-
 
 	private String headerSummaryClass = "tblHeaderSummary";
 
@@ -159,7 +158,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 	}
 
 	public void removeColsAllFi() {
-		setFxTableColList(null);
+		setListFxTableCol(null);
 		getColumns().clear();
 	}
 
@@ -309,7 +308,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 	}
 
 	public List<FiCol> getFiTableColList() {
-		return getFxTableColList().stream().map(FxTableCol2::getFiCol).collect(Collectors.toList());
+		return getListFxTableCol().stream().map(FxTableCol2::getFiCol).collect(Collectors.toList());
 	}
 
 
@@ -451,14 +450,8 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
 	public void addFxTableColFi(FxTableCol2 fxTableCol) {
 		getColumns().add(fxTableCol);
-		getFxTableColList().add(fxTableCol);
-		setupHeader1ForHeaderAndFilterNode(fxTableCol);
-		// if (getEnabledLocalFilterEditor() || getEnabledRemoteFilterEditor()) setupHeaderFilterNode(fxTableCol);
-		// if (getEnabledSummaryRowHeader() == true) setupHeaderSummaryNode(fxTableCol);
-		// activateFilter(fxTableCol);  // setupHeaderFilter içinde konuldu
-		// Editor Class belirtilmişse , Editor Factory si oluşturulur
-		// FxTableViewCellFactoryModal.setupCellFactoryByEditorClass(this, fxTableCol);
-
+		getListFxTableCol().add(fxTableCol);
+		setupHeader1ForTableCol(fxTableCol);
 	}
 
 	public Object getSelectedItemFi() {
@@ -470,7 +463,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 	}
 
 	public FxTableView2 setActivateFxColsFilterableNullToTrue() {
-		getFxTableColList().forEach(fxTableCol -> {
+		getListFxTableCol().forEach(fxTableCol -> {
 			if (fxTableCol.getFiCol().getBoFilterable() == null)
 				fxTableCol.getFiCol().setBoFilterable(true);
 		});
@@ -481,7 +474,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
 
 	public void setFxColsFilterable(Boolean boFilterable) {
-		getFxTableColList().forEach(fxTableCol -> {
+		getListFxTableCol().forEach(fxTableCol -> {
 			fxTableCol.getFiCol().setBoFilterable(boFilterable);
 		});
 	}
@@ -618,7 +611,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 	}
 
 	private void activateFilters() {
-		getFxTableColList().forEach(fxTableCol -> {
+		getListFxTableCol().forEach(fxTableCol -> {
 			activateFilterSearch(fxTableCol);
 		});
 	}
@@ -646,7 +639,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 				|| FiType.isTrue(fxTableCol.getFiCol().getBoFilterable())) {
 			// filter Node eklenmemişse Header Setup edilir.
 			if (fxTableCol.getFiCol().getColFilterNode() == null) {
-				setupHeader1ForHeaderAndFilterNode(fxTableCol);
+				setupHeader1ForTableCol(fxTableCol);
 			}
 
 		}
@@ -675,7 +668,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 	 *
 	 * @param fxcol
 	 */
-	private void setupHeader1ForHeaderAndFilterNode(FxTableCol2 fxcol) {
+	private void setupHeader1ForTableCol(FxTableCol2 fxcol) {
 
 		//if (fxcol.getOzTableCol().getFiPaneHeader() != null) return;
 		FxLabel label = new FxLabel(fxcol.getFiCol().getHeaderName());
@@ -704,7 +697,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 		}
 
 		Boolean isExistSummaryNode = false;
-		for (FxTableCol2 fxTableCol2 : getFxTableColList()) {
+		for (FxTableCol2 fxTableCol2 : getListFxTableCol()) {
 			if (fxTableCol2.getFiCol().getSummaryType() != null) {
 				isExistSummaryNode = true;
 			}
@@ -792,8 +785,8 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
 					Boolean disabledSelection = false;
 
-					if (fxcol.getFiCol().getPredFiEditorDisable() != null
-							&& fxcol.getFiCol().getPredFiEditorDisable().test(ent)) {
+					if (fxcol.getFiCol().getPredEditorDisable() != null
+							&& fxcol.getFiCol().getPredEditorDisable().test(ent)) {
 						disabledSelection = true;
 					}
 
@@ -816,7 +809,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
 					Boolean disabledSelection = false;
 
-					if (fxcol.getFiCol().getPredFiEditorDisable() != null && fxcol.getFiCol().getPredFiEditorDisable().test(ent)) {
+					if (fxcol.getFiCol().getPredEditorDisable() != null && fxcol.getFiCol().getPredEditorDisable().test(ent)) {
 						disabledSelection = true;
 					}
 
@@ -949,7 +942,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 			Predicate predAllCols = ent2 -> true;
 
 			//FiBool logSingleShow = new FiBool(false);
-			for (FxTableCol2 fxTableColumn : getFxTableColList()) {
+			for (FxTableCol2 fxTableColumn : getListFxTableCol()) {
 
 				// sütun filtrelenebilir olması gerekir
 				if (checkColFilterableLocal(fxTableColumn)) {
@@ -1285,19 +1278,23 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
 	private boolean checkColFilterableLocal(FxTableCol2 fxTableColumn) {
 
-		// fiCol.colFilterable true ise ve enableLocalFilterEditor false edilmişse
+		if (FiBoolean.isFalse(fxTableColumn.getFiCol().getBoFilterable())) {
+			return false;
+		}
+
+		// fiCol.colFilterable true ise ve enableLocalFilterEditor false edilmemişse
 		if (FiBoolean.isTrue(fxTableColumn.getFiCol().getBoFilterable())
 				&& !FiBoolean.isFalse(getEnableLocalFilterEditorNtn())) {
 			//Loghelperr.getInstance(getClass()).debug("FiTableCol ColFilterable is True");
 			return true;
 		}
 
-		// enableLocalFilterEditor true edilmiş ve ficol.colFilterable false edilmişse
-		if (getEnableLocalFilterEditorNtn() &&
-				!FiBoolean.isFalse(fxTableColumn.getFiCol().getBoFilterable())) {
+		// enableLocalFilterEditor true edilmiş  ( ficol.colFilterable false edilmemişse yukarıda şart saglanmış zaten)
+		if (getEnableLocalFilterEditorNtn()) {
 			//Loghelperr.getInstance(getClass()).debug("Enable Local Filter True");
 			return true;
 		}
+
 		return false;
 	}
 
@@ -1367,7 +1364,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 	public void updateSummary() {
 		if (getFilteredList() == null || getFilteredList().size() == 0) {
 			if (getEnableSummaryHeader()) {
-				getFxTableColList().forEach(fxTableCol -> {
+				getListFxTableCol().forEach(fxTableCol -> {
 					if (fxTableCol.getFiCol().getSummaryLabelNode() != null && fxTableCol.getFiCol().getSummaryType() != null) {
 						Platform.runLater(() -> {
 							fxTableCol.getFiCol().getSummaryLabelNode().setText("");
@@ -1383,7 +1380,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
 		if (getEnableSummaryHeader()) {
 			FiHtmlReportConfig fiHtmlReportConfig = new FiHtmlReportConfig();
-			getFxTableColList().forEach(fxTableCol -> {
+			getListFxTableCol().forEach(fxTableCol -> {
 				if (fxTableCol.getFiCol().getSummaryLabelNode() != null && fxTableCol.getFiCol().getSummaryType() != null) {
 					Platform.runLater(() -> {
 						String sumValue = FiNumber.formatNumber(FxTableModal.calcSummaryValue(getFilteredList(), fxTableCol.getFiCol(), fiHtmlReportConfig));
@@ -1399,7 +1396,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
 		//ObservableList<TableColumn<S, ?>> columns = getColumns();
 
-		for (FxTableCol2 fxTableCol : getFxTableColList()) {
+		for (FxTableCol2 fxTableCol : getListFxTableCol()) {
 			if (fxTableCol.getId().equals(colID)) {
 				return fxTableCol;
 			}
@@ -1410,7 +1407,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
 	public FxTableCol2 getColumnByFieldName(String fieldName) {
 
-		for (FxTableCol2 fxTableCol : getFxTableColList()) {
+		for (FxTableCol2 fxTableCol : getListFxTableCol()) {
 			if (fxTableCol.getFiCol().getFieldName().equals(fieldName)) {
 				return fxTableCol;
 			}
@@ -1419,15 +1416,15 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 		return null;
 	}
 
-	public List<FxTableCol2> getFxTableColList() {
-		if (fxTableColList == null) {
-			fxTableColList = new ArrayList<>();
+	public List<FxTableCol2> getListFxTableCol() {
+		if (listFxTableCol == null) {
+			listFxTableCol = new ArrayList<>();
 		}
-		return fxTableColList;
+		return listFxTableCol;
 	}
 
-	private void setFxTableColList(List<FxTableCol2> fxTableColList) {
-		this.fxTableColList = fxTableColList;
+	private void setListFxTableCol(List<FxTableCol2> listFxTableCol) {
+		this.listFxTableCol = listFxTableCol;
 	}
 
 	public Map<String, Object> getStyleMap() {
@@ -1777,7 +1774,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 		updateStatusBar();
 		if (getBtnPagePrev() != null) updatePageToolbar();
 
-		for (FxTableCol2 fxTableCol2 : getFxTableColList()) {
+		for (FxTableCol2 fxTableCol2 : getListFxTableCol()) {
 			if (fxTableCol2.getFiCol() != null && fxTableCol2.getFiCol().getFnColCellManualChanged() != null) {
 				fxTableCol2.getFiCol().getFnColCellManualChanged().accept(null);
 			}
@@ -1794,19 +1791,19 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
 	public void removeFxTableCol(FxTableCol fxTableCol) {
 		getColumns().remove(fxTableCol);
-		getFxTableColList().remove(fxTableCol);
+		getListFxTableCol().remove(fxTableCol);
 	}
 
 	public void removeFiTableCol(FiCol fxTableCol) {
 		if (fxTableCol.getFxTableCol2() != null) {
 			getColumns().remove(fxTableCol.getFxTableCol2());
-			getFxTableColList().remove(fxTableCol.getFxTableCol2());
+			getListFxTableCol().remove(fxTableCol.getFxTableCol2());
 		}
 	}
 
 	public void removeFxTableCol(FxTableCol2 fxTableCol) {
 		getColumns().remove(fxTableCol);
-		getFxTableColList().remove(fxTableCol);
+		getListFxTableCol().remove(fxTableCol);
 	}
 
 	@Override
@@ -1845,7 +1842,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 	}
 
 	private void activateHeaderSummary() {
-		getFxTableColList().forEach(fxTableCol -> {
+		getListFxTableCol().forEach(fxTableCol -> {
 			if (getEnableSummaryHeader()) setupHeaderSummaryNode(fxTableCol);
 		});
 	}

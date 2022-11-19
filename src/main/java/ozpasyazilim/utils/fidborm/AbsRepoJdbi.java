@@ -2791,6 +2791,47 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 	}
 
+	public Fdr jdhInsertWithScopeId(EntClazz ent, Boolean boBindGeneratedKey, String sql1, String sql2, Handle handle) {
+
+		Fdr fdrMain = new Fdr();
+
+		if (FiBoolean.isTrue(boBindGeneratedKey)) { // generated key'de alınacak
+
+			String idField = FiEntity.getListIdFields(getEntityClass()).get(0);
+			Class idClazz = FiReflection.getFieldClassType(getEntityClass(), idField);
+
+			try {
+				Optional opId = handle.createUpdate(FiQuery.stoj(sql1 + ";SET NOCOUNT ON;" + sql2))
+						.bindBean(ent)
+						.executeAndReturnGeneratedKeys(idField)
+						.mapTo(idClazz)
+						.findFirst(); // returns row count updated
+
+				opId.ifPresent(insertedId -> {
+					FiReflection.setterNested(ent, idField, insertedId);
+				});
+				fdrMain.appendRowsAffected(1);
+				fdrMain.setBoResult(true);
+			} catch (Exception ex) {
+				fdrMain.setBoResult(false);
+				fdrMain.setException(ex);
+			}
+			return fdrMain;
+		} else { // generated keyler alınmasına gerek yoksa
+			try {
+				int execute = handle.createUpdate(FiQuery.stoj(sql1 + "; " + sql2))
+						.bindBean(ent)
+						.execute();// returns row count updated
+				fdrMain.appendRowsAffected(execute);
+				fdrMain.setBoResult(true);
+			} catch (Exception ex) {
+				fdrMain.setBoResult(false);
+				fdrMain.setException(ex);
+			}
+			return fdrMain;
+		}
+
+	}
 
 	public Fdr jdInsertEntityWithScopeId(EntClazz ent) {
 		return jdInsertEntityTransactionsWithScopeIdMain(ent, null, null, null);
@@ -3066,7 +3107,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 				fdrMain.appendRowsAffected(1);
 
 			} else { // generated keyler alınmasına gerek yoksa
-				int execute = handle.createUpdate(FiQuery.stoj(sql1 ))
+				int execute = handle.createUpdate(FiQuery.stoj(sql1))
 						.bindBean(ent)
 						.execute();// returns row count updated
 				fdrMain.appendRowsAffected(execute);
@@ -3081,6 +3122,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		}
 
 	}
+
 	@Deprecated
 	@FiDraft
 	public Fdr jdInsertEntityWithMaxFields(EntClazz entity) {
@@ -3177,7 +3219,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 	/**
 	 * inTransaction ile kullanımı
-	 *
+	 * <p>
 	 * Using start 13-07-22
 	 *
 	 * @param fnTransactions

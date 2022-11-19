@@ -320,6 +320,10 @@ public class FiNumber {
 		return "";
 	}
 
+	public static String formatlaParaBy2Decimal(Double dblnumber) {
+		return formatlaPara(dblnumber, 2);
+	}
+
 	public static String formatlaPara(Double dblnumber, Integer nOndalikKisim) {
 
 		if (dblnumber == null) {
