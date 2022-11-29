@@ -267,6 +267,7 @@ public class ReportHtml2 {
 		String htmlreport = "";
 
 		Object cellvalue = null;
+
 		try {
 			cellvalue = PropertyUtils.getProperty(rowdata, listColumns.get(colindex).getFieldName());
 		} catch (IllegalAccessException e) {
@@ -278,7 +279,6 @@ public class ReportHtml2 {
 		}
 
 		OzColType colType = listColumns.get(colindex).getColType();
-
 
 		if (cellvalue == null) return htmlreport = tag_td_string + "" + tag_td_end;
 
@@ -301,8 +301,8 @@ public class ReportHtml2 {
 			Map<String,String> mapStyle = listColumns.get(colindex).getMapStyle();
 			String alignment = mapStyle.get(key);
 
-			if (alignment.toUpperCase().equals("LEFT")) htmlreport = tag_td_string + cellvalue.toString() + tag_td_end;
-			if (alignment.toUpperCase().equals("RIGHT")) htmlreport = tag_td_num + cellvalue.toString() + tag_td_end;
+			if (alignment.equalsIgnoreCase("LEFT")) htmlreport = tag_td_string + cellvalue.toString() + tag_td_end;
+			if (alignment.equalsIgnoreCase("RIGHT")) htmlreport = tag_td_num + cellvalue.toString() + tag_td_end;
 
 		}
 

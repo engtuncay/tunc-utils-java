@@ -250,7 +250,9 @@ public class FxDialogShow {
 	public static void showDbResultAsErrorIfFail(Fdr fdr) {
 
 		if (!fdr.isTrueBoResult()) {
-			FxDialogShow.showModalError2("Hata oluştu", fdr.getMessage());
+			if(fdr.isFalseBoResult()) FxDialogShow.showModalError2("Hata oluştu", fdr.getMessage());
+
+			if(fdr.getBoResult()==null) FxDialogShow.showModalError2("İşlem sonucu alınamadı.", fdr.getMessage());
 		}
 
 	}

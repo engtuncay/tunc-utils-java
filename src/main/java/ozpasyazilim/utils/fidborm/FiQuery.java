@@ -130,7 +130,7 @@ public class FiQuery {
 	}
 
 	/**
-	 * Comment içerisinde değişkenler varsa iptal eder.
+	 * Comment içerisinde değişkenler varsa iptal eder.# işareti ile gösterir.
 	 * <br>
 	 *
 	 * @param sql

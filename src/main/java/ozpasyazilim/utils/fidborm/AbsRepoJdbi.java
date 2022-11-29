@@ -3,6 +3,7 @@ package ozpasyazilim.utils.fidborm;
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 import org.reactfx.util.TriConsumer;
+import ozpasyazilim.utils.core.FiException;
 import ozpasyazilim.utils.core.FiString;
 import ozpasyazilim.utils.datatypes.FiKeyBean;
 import ozpasyazilim.utils.mvc.IFiCol;
@@ -233,8 +234,8 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 			});
 			fdr.setBoResultAndValue(true, result, 1);
 		} catch (Exception ex) {
-			Loghelper.errorLog(getClass(), "Query Problem");
-			Loghelper.errorException(getClass(), ex);
+			Loghelper.get(getClass()).error("Query Problem");
+			Loghelper.get(getClass()).error("Hata (Exception):\n" + FiException.exceptiontostring(ex));
 			fdr.setBoResult(false, ex);
 		}
 
@@ -3273,6 +3274,9 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 	public Fdr<List<EntClazz>> jdSelectListWitPrep(String sql, FiKeyBean fiKeyBean) {
 		FiQuery fiQuery = new FiQuery(sql, fiKeyBean);
 		fiQuery.prepSqlParamsFull();
+
+//		Loghelper.get(getClass()).debug("Sql:" + fiQuery.getTxQuery());
+
 		return jdSelectListBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
 	}
 

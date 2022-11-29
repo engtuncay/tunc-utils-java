@@ -9,9 +9,9 @@ public class FiJdbiFactory {
 
 	public static Jdbi createJdbi(String server, String dbName, String user, String pass) {
 
-		if (!DbConfig.checkDriverClassJdbcMicrosoft()) return null;
+		if (!DbConfig.checkDriverClassJtdsSqlServerDriver()) return null;
 
-		String url = DbConfig.getUrlJdbcSqlServer(server, dbName);
+		String url = DbConfig.getUrlJtdsSqlServer(server, dbName);
 
 		Jdbi jdbi = Jdbi.create(url, user, pass);
 		jdbi.installPlugin(new SqlObjectPlugin());

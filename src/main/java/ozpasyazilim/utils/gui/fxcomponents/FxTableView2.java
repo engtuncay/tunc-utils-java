@@ -18,6 +18,7 @@ import org.tbee.javafx.scene.layout.MigPane;
 import ozpasyazilim.utils.annotations.FiDraft;
 import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.datatypes.FiKeyBean;
+import ozpasyazilim.utils.gui.components.TableValueFactoryForFiKeyBean;
 import ozpasyazilim.utils.gui.fxTableViewExtra.NestedPropertyValueFactory;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.mvc.IFiCol;
@@ -365,6 +366,13 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 		return this;
 	}
 
+	public FxTableView2 addAllFiTableColsAutoForFiKeyBean(List<FiCol> listFiCol) {
+		for (FiCol fiCol : listFiCol) {
+			addFiColAutoAsFiKeyBean(fiCol);
+		}
+		return this;
+	}
+
 	public FxTableView2 addFiColSelection() {
 		FiCol fiTableCol = getFiColSelection();
 		addFiColAuto(fiTableCol);
@@ -388,6 +396,11 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 		addFxTableColAuto(fxTableCol);
 	}
 
+	public void addFiColAutoAsFiKeyBean(FiCol fiTableCol) {
+		FxTableCol2 fxTableCol = new FxTableCol2(fiTableCol);
+		addFxTableColAutoAsFiKeyBean(fxTableCol);
+	}
+
 	public FxTableView2 addAllFxTableCols2Auto(List<FxTableCol2> fxTableColList) {
 		for (int i = 0; i < fxTableColList.size(); i++) {
 			FxTableCol2 fxTableCol = fxTableColList.get(i);
@@ -399,6 +412,13 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 	public void addFxTableColAuto(FxTableCol2 fxTableCol) {
 		// Cell Value Factory and Editor Factory leri ayarlanır
 		setupCellValueAndEditorFactory(fxTableCol);
+		//Loghelperr.getInstance(getClass()).debug(" Fx TableView col id:"+fxTableCol.getId());
+		addFxTableColFi(fxTableCol);
+	}
+
+	public void addFxTableColAutoAsFiKeyBean(FxTableCol2 fxTableCol) {
+		// Cell Value Factory and Editor Factory leri ayarlanır
+		setupCellValueAndEditorFactoryAsFiKeyBean(fxTableCol);
 		//Loghelperr.getInstance(getClass()).debug(" Fx TableView col id:"+fxTableCol.getId());
 		addFxTableColFi(fxTableCol);
 	}
@@ -439,16 +459,22 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 		//bydefault idi
 		FxTableViewCellFactoryModal.setupCellFactoryGeneral(fxTableCol, getEntityClass());
 		fxTableCol.setId(fxTableCol.getFiCol().getFieldName());
+
+	}
+
+	private void setupCellValueAndEditorFactoryAsFiKeyBean(FxTableCol2 fxTableCol) {
+		//Loghelperr.getInstance(getClass()).debug("added "+ fxTableCol.getFieldName());
+		fxTableCol.setText(fxTableCol.getFiCol().getHeaderName());
+
+		fxTableCol.setCellValueFactory(new TableValueFactoryForFiKeyBean<>(fxTableCol.getFiCol().getFieldName()));
+
+		//bydefault idi
+		FxTableViewCellFactoryModal.setupCellFactoryGeneral(fxTableCol, getEntityClass());
+		fxTableCol.setId(fxTableCol.getFiCol().getFieldName());
 		//fxTableCol.setAutoFormatter(fxTableCol.getFiTableCol().getColType());
-		setAutoFormatter(fxTableCol);
-
 	}
 
-	public void setAutoFormatter(FxTableCol2 fxTableCol) {
-		// FxTableViewCellFactoryConfig e taşındı.
-	}
-
-	public void addFxTableColFi(FxTableCol2 fxTableCol) {
+		public void addFxTableColFi(FxTableCol2 fxTableCol) {
 		getColumns().add(fxTableCol);
 		getListFxTableCol().add(fxTableCol);
 		setupHeader1ForTableCol(fxTableCol);

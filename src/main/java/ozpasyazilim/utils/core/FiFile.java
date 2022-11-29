@@ -214,7 +214,7 @@ public class FiFile {
 
 	public static void saveHtmlContent_to_File(String content) {
 
-		String timestamp = FiDate.datetoString_timestamptText(new Date());
+		String timestamp = FiDate.datetoString_timestampt3(new Date());
 
 		// File file = new File("y:\\ornekhtml-" + timestamp + ".html");
 
