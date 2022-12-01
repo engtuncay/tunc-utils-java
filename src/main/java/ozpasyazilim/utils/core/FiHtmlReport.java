@@ -123,7 +123,7 @@ public class FiHtmlReport {
 
 	}
 
-	public static <T> String reportBasicHtmlByFiTableCol(List<T> listData, List<FiCol> colList, FiHtmlReportConfig fiHtmlReportConfig) {
+	public static <T> String reportBasicHtmlByFiTableCol(List<T> listData, List<FiCol> colList, FiReportConfig fiReportConfig) {
 
 		//Integer numberofcol = colList.size();
 		//Loghelper.get(FiHtmlReport.class).info("col size:" + numberofcol);
@@ -211,13 +211,13 @@ public class FiHtmlReport {
 
 
 		// toplam satırı var mı ?
-		if (FiBoolean.isTrue(fiHtmlReportConfig.getBoSummaryEnabled())) {
+		if (FiBoolean.isTrue(fiReportConfig.getBoSummaryEnabled())) {
 
 			htmlContent += "<tr>\r\n";
 			for (FiCol fiTableCol : colList) {
 
 				if (fiTableCol.getSummaryType() != null) {
-					String sumValue = FiNumber.formatNumber(FxTableModal.calcSummaryValueFi(listData, fiTableCol, fiHtmlReportConfig));
+					String sumValue = FiNumber.formatNumber(FxTableModal.calcSummaryValueFi(listData, fiTableCol, fiReportConfig));
 					htmlContent += tagTdNumSum + sumValue + tagTdEnd;
 				} else {
 					htmlContent += tagTdStringSum + "" + tagTdEnd;

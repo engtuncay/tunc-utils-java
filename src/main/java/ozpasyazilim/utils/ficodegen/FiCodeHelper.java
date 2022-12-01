@@ -378,7 +378,7 @@ public class FiCodeHelper {
 				//return true;
 
 			} catch (Exception e) {
-				System.out.println("Hata Oluştu" + FiException.exceptiontostring(e));
+				System.out.println("Hata Oluştu" + FiException.exceptionToStrMain(e));
 				handle.rollback();
 				//return false;
 			}

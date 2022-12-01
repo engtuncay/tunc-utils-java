@@ -24,7 +24,7 @@ public class NestedPropertyValueFactory implements Callback<TableColumn.CellData
 			objValue = PropertyUtils.getNestedProperty(value, property);
 		} catch (Exception e) {
 			//logger.error("Error in StringCellValueFactory", e);
-			Loghelper.get(getClass()).error(FiException.exceptiontostring(e));
+			Loghelper.get(getClass()).error(FiException.exceptionToStrMain(e));
 		}
 
 		return new SimpleObjectProperty<>(objValue);

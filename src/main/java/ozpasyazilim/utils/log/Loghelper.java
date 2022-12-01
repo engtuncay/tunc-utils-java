@@ -96,16 +96,16 @@ public class Loghelper {
 	}
 
 	public static void debugException(Class logClass, Exception e) {
-		Loghelper.get(logClass).debug("Hata (Exception): " + FiException.exceptiontostring(e));
+		Loghelper.get(logClass).debug("Hata (Exception): " + FiException.exceptionToStrMain(e));
 	}
 
 	public static void errorException(Class logClass, Exception e) {
-		Loghelper.get(logClass).error("Hata (Exception): " + FiException.exceptiontostring(e));
+		Loghelper.get(logClass).error("Hata (Exception): " + FiException.exceptionToStrMain(e));
 	}
 
 	public static void errorException(Class logClass, Exception e, String message) {
 		Loghelper.get(logClass).error(message);
-		Loghelper.get(logClass).error("Hata (Exception): " + FiException.exceptiontostring(e));
+		Loghelper.get(logClass).error("Hata (Exception): " + FiException.exceptionToStrMain(e));
 	}
 
 	public static void debugLogSta(Class logClass, String message) {
@@ -145,7 +145,7 @@ public class Loghelper {
 	}
 
 	public static void debugStatic(String message, Exception ex) {
-		logGlobal.debug("Statik Log: Hata: " + message + "\n\n" + FiException.exceptiontostring(ex));
+		logGlobal.debug("Statik Log: Hata: " + message + "\n\n" + FiException.exceptionToStrMain(ex));
 	}
 
 	// ??????

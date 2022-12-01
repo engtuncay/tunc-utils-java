@@ -1,6 +1,5 @@
 package ozpasyazilim.utils.core;
 
-import com.google.common.base.Charsets;
 import ozpasyazilim.utils.datatypes.FiKeyString;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.returntypes.Fdr;
@@ -8,7 +7,6 @@ import ozpasyazilim.utils.returntypes.Fdr;
 import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
@@ -102,7 +100,7 @@ public class FiSoap {
 			}
 			//Loghelper.debugLog(FiSoap.class, "Soap Response:"+outputString);
 		} catch (IOException exception) {
-			Loghelper.get(FiSoap.class).debug(FiException.exceptionIfToStr(exception));
+			Loghelper.get(FiSoap.class).debug(FiException.exceptionIfToString(exception));
 			fdr.setBoResult(false);
 			fdr.setException(exception);
 			fdr.setMessage("Soap isteği gerçekleşirken hata oluştu. Detay için Exception inceleyiniz.");
@@ -186,7 +184,7 @@ public class FiSoap {
 			fdr.setBoResult(true);
 
 		} catch (Exception exception) { //	//throws MalformedURLException, IOException
-			Loghelper.get(FiSoap.class).debug(FiException.exceptionIfToStr(exception));
+			Loghelper.get(FiSoap.class).debug(FiException.exceptionIfToString(exception));
 			Loghelper.get(FiSoap.class).debug(FiException.exceptiontostring1(exception));
 			fdr.setBoResult(false);
 			fdr.setMessage("Soap isteği gerçekleşirken hata oluştu. Detay için Exception inceleyiniz.");

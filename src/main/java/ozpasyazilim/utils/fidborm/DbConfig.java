@@ -13,7 +13,7 @@ public class DbConfig {
 		try {
 			Class.forName(DRIVER_CLASS);
 		} catch (ClassNotFoundException e) {
-			Loghelper.get(DbConfig.class).info("Hata :" + FiException.exceptiontostring(e));
+			Loghelper.get(DbConfig.class).info("Hata :" + FiException.exceptionToStrMain(e));
 			System.out.println("ERROR: Sürücü Yüklenemedi");
 			return false;
 		}
@@ -29,7 +29,7 @@ public class DbConfig {
 		try {
 			Class.forName(DRIVER_CLASS);
 		} catch (ClassNotFoundException e) {
-			Loghelper.get(DbConfig.class).error("Hata :" + FiException.exceptiontostring(e));
+			Loghelper.get(DbConfig.class).error("Hata :" + FiException.exceptionToStrMain(e));
 			System.out.println("ERROR: Sürücü Yüklenemedi");
 			return false;
 		}

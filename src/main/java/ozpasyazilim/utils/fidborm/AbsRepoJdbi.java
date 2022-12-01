@@ -6,6 +6,7 @@ import org.reactfx.util.TriConsumer;
 import ozpasyazilim.utils.core.FiException;
 import ozpasyazilim.utils.core.FiString;
 import ozpasyazilim.utils.datatypes.FiKeyBean;
+import ozpasyazilim.utils.jdbi.FiKeyBeanMapper;
 import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.annotations.FiDraft;
 import ozpasyazilim.utils.core.FiBoolean;
@@ -235,7 +236,30 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 			fdr.setBoResultAndValue(true, result, 1);
 		} catch (Exception ex) {
 			Loghelper.get(getClass()).error("Query Problem");
-			Loghelper.get(getClass()).error("Hata (Exception):\n" + FiException.exceptiontostring(ex));
+			Loghelper.get(getClass()).error("Hata (Exception):\n" + FiException.exceptionToStrMain(ex));
+			fdr.setBoResult(false, ex);
+		}
+
+		return fdr;
+	}
+
+	public Fdr<List<FiKeyBean>> jdSelectFkbListBindMapMain(String sqlQuery, Map<String, Object> mapBind) {
+
+		Fdr<List<FiKeyBean>> fdr = new Fdr<>();
+		fdr.setValue(new ArrayList<>());
+
+		try {
+			List<FiKeyBean> result = getJdbi().withHandle(handle -> {
+				return handle.createQuery(FiQuery.stoj(sqlQuery))
+						.bindMap(mapBind)
+						.map(new FiKeyBeanMapper())
+						.list();
+			});
+			fdr.setBoResultAndValue(true, result, 1);
+
+		} catch (Exception ex) {
+			Loghelper.get(getClass()).error("Query Problem");
+			Loghelper.get(getClass()).error("Hata (Exception):\n" + FiException.exceptionToStrMain(ex));
 			fdr.setBoResult(false, ex);
 		}
 
@@ -3149,32 +3173,24 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 			getJdbi().useTransaction(handle -> {
 
-//				try {
 				handle.begin();
 				Fdr fdr = fnTransactions.apply(handle);
 				fdrMain.combineAnd(fdr);
-
-				if (fdr.getException() != null) {
-					throw fdr.getException();
-				}
 
 				if (fdr.getListExceptionNotNull().size() > 0) {
 					List<Exception> listException = fdr.getListException();
 					throw listException.get(0);
 				}
 
-				handle.commit();
+				if (fdr.getException() != null) {
+					throw fdr.getException();
+				}
 
-//				} catch (Exception ex) {
-//					Loghelper.debugException(getClass(), ex);
-//					handle.rollback();
-//					fdrMain.setBoResult(false, ex);
-//				}
+				handle.commit();
 			});
 
 		} catch (Exception ex) {
-			Loghelper.debugException(getClass(), ex);
-			//Loghelper.get(getClass()).debug("Genel Catch de Yakalandı");
+			Loghelper.get(getClass()).error(FiException.exceptionToStrMain(ex));
 			fdrMain.setBoResult(false, ex);
 		}
 

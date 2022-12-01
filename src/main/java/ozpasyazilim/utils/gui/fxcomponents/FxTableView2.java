@@ -62,13 +62,17 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
 	private List<Consumer<FiCol>> listenerBoSelection;
 
-	// Sayfalama için yapıldı.
+	// @ Sayfalama için yapıldı.
+
+	// Sayfadaki Kayıt Sayısı
 	private Integer pageViewRowCount;
+	// Toplam Kayıt Sayısı
 	private Integer pageTotalRowCount;
 	private BiConsumer<Integer, Integer> fnPageAction;
 
-	private Runnable fnSummaryChanged;
+	// @ end - Sayfalama
 
+	private Runnable fnSummaryChanged;
 
 	// Özel Filtreler buraya eklenir
 	private List<Predicate> predFilterExtraList;
@@ -359,14 +363,14 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
 	}
 
-	public FxTableView2 addAllFiTableColsAuto(List<FiCol> listFiCol) {
+	public FxTableView2 addAllFiColsAuto(List<FiCol> listFiCol) {
 		for (FiCol fiCol : listFiCol) {
 			addFiColAuto(fiCol);
 		}
 		return this;
 	}
 
-	public FxTableView2 addAllFiTableColsAutoForFiKeyBean(List<FiCol> listFiCol) {
+	public FxTableView2 addAllFiColsAutoForFiKeyBean(List<FiCol> listFiCol) {
 		for (FiCol fiCol : listFiCol) {
 			addFiColAutoAsFiKeyBean(fiCol);
 		}
@@ -380,10 +384,18 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 	}
 
 	private FiCol getFiColSelection() {
-		FiCol fiTableCol = new FiCol("boSecim", "Seç");
+		FiCol fiTableCol = new FiCol(getSelectionColName(), getSelectionHeaderName());
 		fiTableCol.setPrefSize(40d);
 		fiTableCol.buildColType(OzColType.Boolean).buildFiEditable(true).buildSumType(OzColSummaryType.CheckBox);
 		return fiTableCol;
+	}
+
+	private String getSelectionHeaderName() {
+		return "Seç";
+	}
+
+	private String getSelectionColName() {
+		return "boSecim";
 	}
 
 	public FxTableView2 addFiColsAuto(FiCol fiCol) {
@@ -474,7 +486,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 		//fxTableCol.setAutoFormatter(fxTableCol.getFiTableCol().getColType());
 	}
 
-		public void addFxTableColFi(FxTableCol2 fxTableCol) {
+	public void addFxTableColFi(FxTableCol2 fxTableCol) {
 		getColumns().add(fxTableCol);
 		getListFxTableCol().add(fxTableCol);
 		setupHeader1ForTableCol(fxTableCol);
@@ -729,7 +741,8 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 			}
 		}
 
-		if (getEnableSummaryHeader() == true) { //&& fxcol.getFiTableCol().getSummaryType()!=null
+		if (getEnableSummaryHeaderNtn()) { //&& fxcol.getFiTableCol().getSummaryType()!=null
+			//Loghelper.get(getClass()).debug("Summary Node eklenecek FiColFieldName:"+fxcol.getFiCol().getHeaderName());
 			setupHeaderSummaryNode(fxcol);
 		}
 
@@ -773,6 +786,8 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 	private void setupHeaderSummaryNode(FxTableCol2 fxcol) {
 
 		if (fxcol.getFiCol().getSummaryType() == null) {
+
+			Loghelper.get(getClass()).debug("Summary Node belirlenmemiş.Genel Boş Label Eklenir." + fxcol.getFiCol().getFieldName());
 
 			FxLabel lblSummary = new FxLabel("");
 
@@ -827,8 +842,6 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 							e.printStackTrace();
 						}
 					}
-
-
 				});
 
 				getItemsCurrentFi().forEach(ent -> {
@@ -855,8 +868,6 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 				});
 
 				refreshTableFiAsyn();
-
-
 			});
 
 			fxCheckBox.setAlignment(Pos.CENTER);
@@ -868,6 +879,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 		}
 
 		FxLabel lblSummary = new FxLabel("");
+		Loghelper.get(getClass()).debug("Summary Node Alanı açılacak.:" + fxcol.getFiCol().getFieldName());
 
 		//lblSummary.setStyle("-fx-padding: 1px;");
 		lblSummary.getStyleClass().add(headerSummaryClass);
@@ -901,7 +913,6 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 		if (getBoConfigAutoScrollToLast()) scrollToLastForFilteredList();
 
 		eventsAfterTableViewDataChange();
-
 	}
 
 	public void setItemsAsFilteredListGen(List<EntClazz> listTable) {
@@ -939,7 +950,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 			listTable = new ArrayList();
 		}
 
-		if (listTable.size()==0) {
+		if (listTable.size() == 0) {
 			FxDialogShow.showPopInfo("Tabloya Eklenecek Veri Yok.");
 		}
 
@@ -1388,8 +1399,10 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 	}
 
 	public void updateSummary() {
+
+		// Tabloda veri yoksa toplam hesaplanmaz
 		if (getFilteredList() == null || getFilteredList().size() == 0) {
-			if (getEnableSummaryHeader()) {
+			if (getEnableSummaryHeaderNtn()) {
 				getListFxTableCol().forEach(fxTableCol -> {
 					if (fxTableCol.getFiCol().getSummaryLabelNode() != null && fxTableCol.getFiCol().getSummaryType() != null) {
 						Platform.runLater(() -> {
@@ -1404,18 +1417,21 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
 		//Loghelperr.debugLog(getClass(), "update summary");
 
-		if (getEnableSummaryHeader()) {
-			FiHtmlReportConfig fiHtmlReportConfig = new FiHtmlReportConfig();
-			getListFxTableCol().forEach(fxTableCol -> {
+		if (getEnableSummaryHeaderNtn()) {
+			Loghelper.get(getClass()).debug("Tablonun Sütunlar için özet Fonksiyonu çalışacak");
+
+			FiReportConfig fiReportConfig = new FiReportConfig();
+			for (FxTableCol2 fxTableCol : getListFxTableCol()) {
 				if (fxTableCol.getFiCol().getSummaryLabelNode() != null && fxTableCol.getFiCol().getSummaryType() != null) {
 					Platform.runLater(() -> {
-						String sumValue = FiNumber.formatNumber(FxTableModal.calcSummaryValue(getFilteredList(), fxTableCol.getFiCol(), fiHtmlReportConfig));
+						String sumValue = FiNumber.formatNumber(FxTableModal.calcSummaryValue(getFilteredList(), fxTableCol.getFiCol(), fiReportConfig));
 						fxTableCol.getFiCol().getSummaryLabelNode().setText(sumValue);
 						new FxTableModal().styleSummaryLabel(fxTableCol.getFiCol().getSummaryLabelNode(), fxTableCol);
 					});
 				}
-			});
+			}
 		}
+
 	} // end of updateSummary
 
 	public FxTableCol2 getColumnByID(String colID) {
@@ -1487,14 +1503,17 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
 	public void addAllItemsFi(Collection<? extends EntClazz> c) {
 		getFiSourceList().addAll(c);
+		eventsAfterTableViewDataChange();
 	}
 
 	public void addAllItemsFi(EntClazz... c) {
 		getFiSourceList().addAll(c);
+		eventsAfterTableViewDataChange();
 	}
 
 	public void addAllItemsFi(int index, EntClazz c) {
 		getFiSourceList().addAll(index, c);
+		eventsAfterTableViewDataChange();
 	}
 
 	public void addItemFi(EntClazz c) {
@@ -1504,19 +1523,23 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
 	public void addItemFi(int index, EntClazz c) {
 		getFiSourceList().add(index, c);
+		eventsAfterTableViewDataChange();
 	}
 
 	public void removeItemFi(int index) {
 		getFiSourceList().remove(index);
+		eventsAfterTableViewDataChange();
 	}
 
 	public void removeItemFi(int from, int to) {
 		getFiSourceList().remove(from, to);
+		eventsAfterTableViewDataChange();
 	}
 
 	public void removeItemFi(EntClazz entity) {
 		getFiSourceList().remove(entity);
-		updateSummary();
+		eventsAfterTableViewDataChange();
+		//updateSummary(); 1-12-22 commented
 		//getItems().remove(entity); // filterd listelerde olmuyor, unsupported action hatası veriyor
 	}
 
@@ -1534,6 +1557,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
 			if (candId.equals(candId2)) {
 				iterator.remove();
+				eventsAfterTableViewDataChange();
 				return true;
 			}
 
@@ -1543,10 +1567,12 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
 	public void removeAllItemsFi(Collection<?> c) {
 		getFiSourceList().removeAll(c);
+		eventsAfterTableViewDataChange();
 	}
 
 	public void removeAllItemsFi(EntClazz... c) {
 		getFiSourceList().removeAll(c);
+		eventsAfterTableViewDataChange();
 	}
 
 	/**
@@ -1609,7 +1635,6 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 		}
 
 		eventsAfterTableViewDataChange();
-
 	}
 
 	/**
@@ -1857,8 +1882,12 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 		this.colRemoteFilterEnterEvent = colRemoteFilterEnterEvent;
 	}
 
-	public Boolean getEnableSummaryHeader() {
+	public Boolean getEnableSummaryHeaderNtn() {
 		if (enableSummaryHeader == null) return false;
+		return enableSummaryHeader;
+	}
+
+	public Boolean getEnableSummaryHeader() {
 		return enableSummaryHeader;
 	}
 
@@ -1869,7 +1898,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
 	private void activateHeaderSummary() {
 		getListFxTableCol().forEach(fxTableCol -> {
-			if (getEnableSummaryHeader()) setupHeaderSummaryNode(fxTableCol);
+			if (getEnableSummaryHeaderNtn()) setupHeaderSummaryNode(fxTableCol);
 		});
 	}
 
@@ -2385,23 +2414,23 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 		return lblPageNoIndex;
 	}
 
-	public void configColSelection(FiCol fiTableCol) {
+	public void configColSelection(FiCol fiCol) {
 
-//		fiTableCol.buildFnEditorRenderer((o, node) -> {
+//		fiCol.buildFnEditorRenderer((o, node) -> {
 //
 //			FxCheckBox node1 = (FxCheckBox) node;
 //			//Loghelper.get(getClass()).debug("Renderer işledi");
 //
 //			node1.selectedProperty().addListener((observable, oldValue, newValue) -> {
 //				for (Consumer<List<EntClazz>> consumer : getListenerBoSecim()) {
-//					consumer.accept(getItemsFiCheckedByBoolFieldAsList(fiTableCol.getFieldName()));
+//					consumer.accept(getItemsFiCheckedByBoolFieldAsList(fiCol.getFieldName()));
 //				}
 //			});
 //		});
 
-		fiTableCol.setFnColCellManualChanged(ent -> {
+		fiCol.setFnColCellManualChanged(ent -> {
 			for (Consumer<FiCol> consumer : getListenerBoSelection()) {
-				consumer.accept(fiTableCol); //getItemsFiCheckedByBoolFieldAsList(fiTableCol.getFieldName()
+				consumer.accept(fiCol); //getItemsFiCheckedByBoolFieldAsList(fiCol.getFieldName()
 			}
 		});
 
@@ -2426,11 +2455,12 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 	public Runnable getFnSummaryChanged() {
 		return fnSummaryChanged;
 	}
+
 	public void setFnSummaryChanged(Runnable fnSummaryChanged) {
 		this.fnSummaryChanged = fnSummaryChanged;
 	}
 
-	public String getIdNtn(){
+	public String getIdNtn() {
 		return FiString.orEmpty(getId());
 	}
 

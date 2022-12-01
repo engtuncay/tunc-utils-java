@@ -1,14 +1,10 @@
 package ozpasyazilim.utils.core;
 
-import javafx.scene.control.TextField;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.joda.time.DateTime;
 import ozpasyazilim.utils.annotations.FiDraft;
-import ozpasyazilim.utils.gui.fxcomponents.FxTextField;
 import ozpasyazilim.utils.log.Loghelper;
-import ozpasyazilim.utils.returntypes.FdrLog;
 
-import java.awt.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -89,7 +85,7 @@ public class FiDate {
 		try {
 			return sdf.parse(stDate);
 		} catch (ParseException e) {
-			Loghelper.get(FiDate.class).debug(FiException.exceptiontostring(e));
+			Loghelper.get(FiDate.class).debug(FiException.exceptionToStrMain(e));
 			return null;
 		}
 	}
@@ -131,7 +127,6 @@ public class FiDate {
 	}
 
 	/**
-	 *
 	 * set Time to 0
 	 *
 	 * @param mydate
@@ -382,7 +377,7 @@ public class FiDate {
 
 	}
 
-	public static Date stringToDate_ddmmyyyyslashformat(String date) {
+	public static Date stringToDate_ddmmyyyyWithSlash(String date) {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			return formatter.parse(date);
@@ -393,7 +388,7 @@ public class FiDate {
 
 	}
 
-	public static Date stringToDate_ddmmyyyycommaformat(String date) {
+	public static Date stringToDate_ddmmyyyyWithComma(String date) {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd,MM,yyyy");
 		try {
 			return formatter.parse(date);
@@ -442,7 +437,7 @@ public class FiDate {
 				cellvalue = date;
 
 			} catch (ParseException e) {
-				Loghelper.get(FiDate.class).debug(FiException.exceptiontostring(e));
+				Loghelper.get(FiDate.class).debug(FiException.exceptionToStrMain(e));
 			}
 
 			return cellvalue;
@@ -506,7 +501,7 @@ public class FiDate {
 				cellvalue = date;
 
 			} catch (ParseException e) {
-				Loghelper.get(FiDate.class).debug(FiException.exceptiontostring(e));
+				Loghelper.get(FiDate.class).debug(FiException.exceptionToStrMain(e));
 			}
 
 			return cellvalue;
@@ -700,7 +695,7 @@ public class FiDate {
 		try {
 			return formatter.parse(date);
 		} catch (ParseException e) {
-			Loghelper.get(FiDate.class).info("Error :" + FiException.exceptiontostring(e));
+			Loghelper.get(FiDate.class).info("Error :" + FiException.exceptionToStrMain(e));
 			return null;
 		}
 
@@ -772,7 +767,7 @@ public class FiDate {
 			//System.out.println("String To Date: "+ FiDate.datetoString_timestampt2(date));
 			return date;
 		} catch (Exception ex) {
-			Loghelper.get(FiDate.class).debug(FiException.exceptiontostring(ex));
+			Loghelper.get(FiDate.class).debug(FiException.exceptionToStrMain(ex));
 			return null;
 		}
 	}
@@ -783,7 +778,7 @@ public class FiDate {
 	 * @param dtToConvert
 	 * @return
 	 */
-	public static String  dateToStrIsoDate(Date dtToConvert) {
+	public static String dateToStrIsoDate(Date dtToConvert) {
 		org.joda.time.LocalDateTime currentDateAndTime = org.joda.time.LocalDateTime.fromDateFields(dtToConvert);
 		return currentDateAndTime.toString();
 	}
@@ -799,7 +794,7 @@ public class FiDate {
 	}
 
 	public static Date atStartOfDay(Date date) {
-		if(date==null) return null;
+		if (date == null) return null;
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -812,5 +807,11 @@ public class FiDate {
 
 	public static String dateToStrEndOfDayAsIsoDateTime(Date dtToConvert) {
 		return FiDate.dateToStrIsoDate(FiDate.atEndOfDay(dtToConvert));
+	}
+
+	public static Calendar dateToCalender(Date date) {
+		Calendar tCalendar = Calendar.getInstance();
+		tCalendar.setTime(date);
+		return tCalendar;
 	}
 }

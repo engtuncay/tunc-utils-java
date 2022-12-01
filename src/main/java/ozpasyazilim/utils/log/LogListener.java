@@ -30,7 +30,7 @@ public class LogListener {
 	}
 
 	public static void setLogMessageAndDetail(String logMessage, Exception exception) {
-		setLogDetailMessage(FiException.exceptiontostring(exception));
+		setLogDetailMessage(FiException.exceptionToStrMain(exception));
 		LogListener.logMessage.set(logMessage);
 
 	}

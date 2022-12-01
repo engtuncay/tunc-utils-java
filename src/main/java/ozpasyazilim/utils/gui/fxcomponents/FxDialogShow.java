@@ -116,6 +116,58 @@ public class FxDialogShow {
 		return fdr;
 	}
 
+	public static Fdr showPromptDialogYesNoFdrNonModal(String message, String title) {
+
+		FxMigPane migPane = new FxMigPane();
+		migPane.add(new Label(message), "span");
+
+		MigPane migFooter = new MigPane();
+
+		FxButton btnYes = new FxButton("Evet");
+		FxButton btnNo = new FxButton("Hayır");
+		FxButton btnCancel = new FxButton("İptal");
+
+		migFooter.add(btnYes, "gapafter 10");
+		migFooter.add(btnNo, "gapafter 10");
+		migFooter.add(btnCancel, "gapafter 10");
+
+		migPane.add(migFooter, "span");
+
+		FxStage stage = new FxStage();
+		FxScene scene = new FxScene(migPane);
+
+		if (title == null && titleGeneral != null) stage.setTitle(titleGeneral);
+		if (title != null) stage.setTitle(title);
+
+		Fdr fdr = new Fdr();
+
+		btnYes.setOnAction(event -> {
+			fdr.setBoResult(true);
+			stage.close();
+		});
+
+		btnNo.setOnAction(event -> {
+			fdr.setBoResult(false);
+			stage.close();
+		});
+
+		btnCancel.setOnAction(event -> {
+			fdr.setBoResult(null);
+			stage.close();
+		});
+
+//			if(parentNode!=null){
+//				Bounds bounds = parentNode.localToScreen(parentNode.getBoundsInLocal());
+//				stage.setX(bounds.getMaxX());
+//				stage.setY(bounds.getMinY());
+//			}
+
+		stage.initModality(Modality.NONE);
+		stage.setScene(scene);
+		stage.sizeToScene();
+		stage.showAndWait();
+		return fdr;
+	}
 	// 09-08-2019
 	public static FnResult showPromptDialogYesNo(String message, String title) {
 
@@ -287,7 +339,22 @@ public class FxDialogShow {
 			return;
 		}
 
-		FxDialogShow.showModalError(fdr.getMessage());
+		FxDialogShow.showModalError2("",fdr.getMessage());
+	}
+
+	public static void showFdr1PopOrFailModal2(Fdr fdr) {
+
+		if (fdr.getBoResult() == null) {
+			FxDialogShow.showPopInfo("İşlem sonucu alınamadı."+ "\n" + FiString.orEmpty(fdr.getMessage()));
+			return;
+		}
+
+		if (fdr.isTrueBoResult()) {
+			FxDialogShow.showPopInfo("İşlem Başarı ile Gerçekleşti"+ "\n" + FiString.orEmpty(fdr.getMessage()));
+			return;
+		}
+
+		FxDialogShow.showModalError2("",fdr);
 	}
 
 
@@ -979,6 +1046,20 @@ public class FxDialogShow {
 		});
 	}
 
+	public static void showModalError2(String messageHeader, Fdr fdr) {
+		Platform.runLater(() -> {
+			String message = fdr.getMessage();
+
+			if(fdr.getException()!=null){
+				message += "\n Exception Tanımı \n\n" + FiException.exceptionIfToString(fdr.getException());
+			}
+
+			FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogType.DialogError, message);
+			fxSimpleDialog.setMessageHeader(messageHeader);
+			fxSimpleDialog.openAsDialogSync();
+		});
+	}
+
 	public void alertFnResult(FnResult fnResult) {
 
 		if (FiBoolean.isTrue(fnResult.getBoResult())) {
@@ -1281,7 +1362,7 @@ public class FxDialogShow {
 
 			if (dbResult.isFalseBoResult()) {
 				String messageHeader = FiString.addNewLineToEndIfNotEmpty(title) + "Hata Oluştu !!!\n";
-				String messageDetail = FiString.addNewLineToEndIfNotEmpty(dbResult.getMessage()) + "\n Exception:\n" + FiException.exceptionIfToStr(dbResult.getException());
+				String messageDetail = FiString.addNewLineToEndIfNotEmpty(dbResult.getMessage()) + "\n Exception:\n" + FiException.exceptionIfToString(dbResult.getException());
 				FxDialogShow.showModalError2(messageHeader, messageDetail);
 			}
 
@@ -1340,7 +1421,7 @@ public class FxDialogShow {
 
 			if (fdr.isFalseBoResult()) {
 				String messageHeader = FiString.addNewLineToEndIfNotEmpty(title) + "Hata Oluştu !!!\n";
-				String messageDetail = FiString.addNewLineToEndIfNotEmpty(fdr.getMessage()) + "\n Exception:\n" + FiException.exceptionIfToStr(fdr.getException());
+				String messageDetail = FiString.addNewLineToEndIfNotEmpty(fdr.getMessage()) + "\n Exception:\n" + FiException.exceptionIfToString(fdr.getException());
 				FxDialogShow.showModalError2(messageHeader, messageDetail);
 			}
 
@@ -1374,7 +1455,7 @@ public class FxDialogShow {
 		} else {
 
 			if (dbResult.isEmptyMessage()) {
-				dbResult.setMessage("Hata Oluştu !!! : " + FiException.exceptionIfToStr(dbResult.getException()));
+				dbResult.setMessage("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getException()));
 			}
 
 			showModalWarning(dbResult.getMessage());
@@ -1398,7 +1479,7 @@ public class FxDialogShow {
 		} else {
 
 			if (dbResult.isEmptyMessage()) {
-				dbResult.setMessage("Hata Oluştu !!! : " + FiException.exceptionIfToStr(dbResult.getException()));
+				dbResult.setMessage("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getException()));
 			}
 
 			showModalWarning(dbResult.getMessage());
@@ -1422,7 +1503,7 @@ public class FxDialogShow {
 
 			if (dbResult.isFalseBoResult()) {
 				if (dbResult.getMessage() == null) {
-					dbResult.setMessage("Hata Oluştu !!! : " + FiException.exceptionIfToStr(dbResult.getException()));
+					dbResult.setMessage("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getException()));
 				}
 			}
 
@@ -1451,7 +1532,7 @@ public class FxDialogShow {
 		} else {
 
 			if (dbResult.getMessage() == null) {
-				dbResult.setMessage("Hata Oluştu !!! : " + FiException.exceptionIfToStr(dbResult.getException()));
+				dbResult.setMessage("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getException()));
 			}
 
 			showModalWarning(dbResult.getMessage());
@@ -1480,7 +1561,7 @@ public class FxDialogShow {
 		} else {
 
 			if (dbResult.getMessage() == null) {
-				dbResult.setMessage("Hata Oluştu !!! : " + FiException.exceptionIfToStr(dbResult.getException()));
+				dbResult.setMessage("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getException()));
 			}
 
 			showModalWarning(dbResult.getMessage());

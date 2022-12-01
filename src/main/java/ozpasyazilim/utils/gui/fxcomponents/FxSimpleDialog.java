@@ -527,6 +527,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 		FxMigPane fxHeader = new FxMigPane(FxMigHelper.bui().lcStInset0Gap55().genLc());
 		FxMigPane fxContent = new FxMigPane(FxMigHelper.bui().lcStInset0Gap55().genLc());
+		getModView().prefHeight(150d);
 
 		this.lblHeader = new FxLabel(getMessageHeader());
 
@@ -548,8 +549,8 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 		if (!FiString.isEmptyTrim(getMessageContent())) {
 			FxTextArea fxTextArea = new FxTextArea();
 			fxTextArea.setText(messageContent);
-			fxTextArea.setPrefHeight(100);
-			fxTextArea.setPrefWidth(300);
+			//fxTextArea.setMaxHeight(300);
+			//fxTextArea.setMaxWidth(300);
 			fxTextArea.setEditable(false);
 
 			ScrollPane scrollPane = new ScrollPane();

@@ -145,7 +145,7 @@ public class FiExcel {
 			sheet = workbook.getSheetAt(0);
 
 		} catch (Exception e) {
-			Loghelper.get(this.getClass()).error("Hata :" + FiException.exceptiontostring(e));
+			Loghelper.get(this.getClass()).error("Hata :" + FiException.exceptionToStrMain(e));
 			return null;
 		}
 
@@ -1150,14 +1150,14 @@ public class FiExcel {
 						obj = PropertyUtils.getProperty(rowent, fieldname);
 					} catch (IllegalAccessException e) {
 						//e.printStackTrace();
-						FiException.exceptiontostring(e);
+						FiException.exceptionToStrMain(e);
 					} catch (InvocationTargetException e) {
 						//e.printStackTrace();
-						FiException.exceptiontostring(e);
+						FiException.exceptionToStrMain(e);
 					} catch (NoSuchMethodException e) {
 						//e.printStackTrace();
 						Loghelper.get(FiExcel2.class).debug(" Metod Bulunamdı:" + fieldname);
-						FiException.exceptiontostring(e);
+						FiException.exceptionToStrMain(e);
 					}
 
 				}
@@ -1655,7 +1655,7 @@ public class FiExcel {
 			sheet = workbook.getSheetAt(0);
 
 		} catch (Exception e) {
-			Loghelper.get(this.getClass()).error("Hata :" + FiException.exceptiontostring(e));
+			Loghelper.get(this.getClass()).error("Hata :" + FiException.exceptionToStrMain(e));
 			return null;
 		}
 

@@ -5,9 +5,7 @@ import org.jdbi.v3.core.Jdbi;
 /**
  * Repolarda genel olması istenen alanlar ve metodlar
  * <p>
- * Kullanan Sınıflar
- * <p>
- * AbsRepoJdbiPure,
+ * Kullanan Sınıflar : AbsRepoJdbi,AbsRepoJdbiPure,AbsFkbRepoJdbi
  */
 public class RepoGeneralJdbi {
 

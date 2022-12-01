@@ -22,13 +22,25 @@ import java.util.concurrent.atomic.AtomicReference;
  * <p>
  * Bir nevi key-object tipinde array dir.
  */
-public class FiKeyBean extends HashMap<String, Object> {
+public class FiKeyBean extends LinkedHashMap<String, Object> {
 
 	public FiKeyBean() {
 	}
 
 	public FiKeyBean(Map<? extends String, ?> m) {
 		super(m);
+	}
+
+	public FiKeyBean(int initialCapacity, float loadFactor) {
+		super(initialCapacity, loadFactor);
+	}
+
+	public FiKeyBean(int initialCapacity) {
+		super(initialCapacity);
+	}
+
+	public FiKeyBean(int initialCapacity, float loadFactor, boolean accessOrder) {
+		super(initialCapacity, loadFactor, accessOrder);
 	}
 
 	public static FiKeyBean build() {

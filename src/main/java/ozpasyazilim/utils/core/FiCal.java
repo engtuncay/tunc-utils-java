@@ -87,7 +87,7 @@ public class FiCal {
 		return convertToCal(dateGiven).get(Calendar.YEAR);
 	}
 
-	public static Integer getMonth() {
+	public static Integer getMonthNumber() {
 		return Calendar.getInstance().get(Calendar.MONTH)+1;
 	}
 
@@ -105,7 +105,7 @@ public class FiCal {
 		return calendar.get(Calendar.MONTH);
 	}
 
-	public static Integer getMonth(Date dateGiven) {
+	public static Integer getMonthNumber(Date dateGiven) {
 		return convertToCal(dateGiven).get(Calendar.MONTH)+1;
 	}
 
@@ -260,14 +260,14 @@ public class FiCal {
 		return TimeUnit.MILLISECONDS.toDays(Math.abs(end.getTimeInMillis() - start.getTimeInMillis()));
 	}
 
-	public static Date getYearBeginning() {
+	public static Date getDateYearBegin() {
 		Calendar cal = getCalendarWoutTime(); // new GregorianCalendar();
 		cal.set(Calendar.DAY_OF_YEAR, 1);
 		clearTime(cal);
 		return cal.getTime();
 	}
 
-	public static Date getYearPrevBeginning() {
+	public static Date getDatePrevYearBegin() {
 		Calendar cal = getCalendarWoutTime(); // new GregorianCalendar();
 		cal.add(Calendar.YEAR, -1);
 		cal.set(Calendar.DAY_OF_YEAR, 1);
@@ -446,6 +446,14 @@ public class FiCal {
 		aCalendar.add(Calendar.DATE, dayDifference);
 		Date result = aCalendar.getTime();
 		return result;
+	}
+
+	public static Date getDateDiffFromDate(Date date, int dayDifference) {
+		Calendar aCalendar = FiDate.dateToCalender(date);
+		clearTime(aCalendar);
+		// Calendar.Date günü belirtiyor
+		aCalendar.add(Calendar.DATE, dayDifference);
+		return aCalendar.getTime();
 	}
 
 	public static Date getDateDiffFromToday(int lndayDifference, int lnMonthDiff) {

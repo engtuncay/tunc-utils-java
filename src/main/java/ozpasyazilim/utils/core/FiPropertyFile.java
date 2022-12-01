@@ -73,7 +73,7 @@ public class FiPropertyFile {
 		try {
 			propFileContentStream = Files.lines(Paths.get(fileName), StandardCharsets.UTF_8);
 		} catch (IOException exception) {
-			Loghelper.get(FiPropertyFile.class).error("Hata :" + FiException.exceptiontostring(exception));
+			Loghelper.get(FiPropertyFile.class).error("Hata :" + FiException.exceptionToStrMain(exception));
 		}
 
 		List<String> listContent = propFileContentStream.collect(Collectors.toList());

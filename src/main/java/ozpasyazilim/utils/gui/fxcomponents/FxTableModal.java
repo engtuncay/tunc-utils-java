@@ -3,7 +3,7 @@ package ozpasyazilim.utils.gui.fxcomponents;
 import javafx.geometry.Pos;
 import ozpasyazilim.utils.core.FiNumber;
 import ozpasyazilim.utils.core.FiNumberToText;
-import ozpasyazilim.utils.core.FiHtmlReportConfig;
+import ozpasyazilim.utils.core.FiReportConfig;
 import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.core.FiReflection;
 import ozpasyazilim.utils.table.FiCol;
@@ -97,16 +97,13 @@ public class FxTableModal {
 		return summaryEntity;
 	}
 
-	public static <T> Object calcSummaryValue(List<T> listdata, IFiCol fiTableCol, FiHtmlReportConfig fiHtmlReportConfig) {
+	public static <T> Object calcSummaryValue(List<T> listdata, IFiCol fiTableCol, FiReportConfig fiReportConfig) {
 
 		if (listdata == null || listdata.size() == 0) {
-
 			if (fiTableCol != null && fiTableCol.getColType() == OzColType.Double) {
-
 				if (fiTableCol.getSummaryType() == OzColSummaryType.SUM) {
 					return "0.00";
 				}
-
 			}
 			return "";
 		}
@@ -129,7 +126,7 @@ public class FxTableModal {
 
 //			Loghelperr.getInstance(getClass()).debug(String.format("Col Summary For: %s -- Sum Type %s -- Class Type %s ", fiTableCol.getFiHeader(),fiTableCol.getSummaryType(),clazzType.getSimpleName()));
 
-			if (fiTableCol.getSummaryType() == OzColSummaryType.SUM && clazzType!=null && clazzType.equals(Double.class)) { //.equals(Double.class
+			if (fiTableCol.getSummaryType() == OzColSummaryType.SUM && clazzType!=null && clazzType.equals(Double.class)) {
 
 				Double sumDouble = FiNumberToText.sumValuesDouble(listdata, ent -> {
 					Object objectByField = new FiReflection().getPropertyNested(ent, fiTableCol.getFieldName());
@@ -137,7 +134,7 @@ public class FxTableModal {
 					return (Double) objectByField;
 				});
 
-				sumDouble = new FiNumber().truncateByHalfUp(sumDouble, fiHtmlReportConfig.getLnDecimalScale());
+				sumDouble = new FiNumber().truncateByHalfUp(sumDouble, fiReportConfig.getLnDecimalScale());
 
 				//Loghelperr.getInstance(getClass()).debug(" Toplam:"+ sumDouble.toString());
 				//new FiProperty().setter(exampleEntity, fiTableCol, sumDouble);
@@ -154,7 +151,7 @@ public class FxTableModal {
 					return (BigDecimal) objectByField;
 				});
 
-				sumDouble = sumDouble.setScale(fiHtmlReportConfig.getLnDecimalScale(), RoundingMode.HALF_UP);  //new FiNumber().truncateByHalfUp(sumDouble,getDecimalScale());
+				sumDouble = sumDouble.setScale(fiReportConfig.getLnDecimalScale(), RoundingMode.HALF_UP);  //new FiNumber().truncateByHalfUp(sumDouble,getDecimalScale());
 
 				//Loghelperr.getInstance(getClass()).debug(" Toplam:"+ sumDouble.toString());
 				//new FiProperty().setter(exampleEntity, fiTableCol, sumDouble);
@@ -177,7 +174,7 @@ public class FxTableModal {
 					return (Double) objectByField;
 				});
 
-				sumDouble = new FiNumber().truncateByHalfUp(sumDouble, fiHtmlReportConfig.getLnDecimalScale());
+				sumDouble = new FiNumber().truncateByHalfUp(sumDouble, fiReportConfig.getLnDecimalScale());
 
 				//Loghelperr.getInstance(getClass()).debug(" Toplam:"+ sumDouble.toString());
 
@@ -209,7 +206,7 @@ public class FxTableModal {
 		return null;
 	}
 
-	public static <T> Object calcSummaryValueFi(List<T> listdata, FiCol fiTableCol, FiHtmlReportConfig fiHtmlReportConfig) {
+	public static <T> Object calcSummaryValueFi(List<T> listdata, FiCol fiTableCol, FiReportConfig fiReportConfig) {
 
 		if (listdata == null || listdata.size() == 0) {
 
@@ -251,7 +248,7 @@ public class FxTableModal {
 					return (Double) objectByField;
 				});
 
-				sumDouble = new FiNumber().truncateByHalfUp(sumDouble, fiHtmlReportConfig.getLnDecimalScale());
+				sumDouble = new FiNumber().truncateByHalfUp(sumDouble, fiReportConfig.getLnDecimalScale());
 
 				//Loghelperr.getInstance(getClass()).debug(" Toplam:"+ sumDouble.toString());
 				//new FiProperty().setter(exampleEntity, fiTableCol, sumDouble);
@@ -269,7 +266,7 @@ public class FxTableModal {
 					return (Double) objectByField;
 				});
 
-				sumDouble = new FiNumber().truncateByHalfUp(sumDouble, fiHtmlReportConfig.getLnDecimalScale());
+				sumDouble = new FiNumber().truncateByHalfUp(sumDouble, fiReportConfig.getLnDecimalScale());
 
 				//Loghelperr.getInstance(getClass()).debug(" Toplam:"+ sumDouble.toString());
 				//new FiProperty().setter(exampleEntity, fiTableCol, sumDouble);
@@ -286,7 +283,7 @@ public class FxTableModal {
 					return (BigDecimal) objectByField;
 				});
 
-				sumDouble = sumDouble.setScale(fiHtmlReportConfig.getLnDecimalScale(), RoundingMode.HALF_UP);
+				sumDouble = sumDouble.setScale(fiReportConfig.getLnDecimalScale(), RoundingMode.HALF_UP);
 				//new FiNumber().truncateByHalfUp(sumDouble,getDecimalScale());
 
 				//Loghelperr.getInstance(getClass()).debug(" Toplam:"+ sumDouble.toString());
@@ -306,7 +303,7 @@ public class FxTableModal {
 					return (Double) objectByField;
 				});
 
-				sumDouble = new FiNumber().truncateByHalfUp(sumDouble, fiHtmlReportConfig.getLnDecimalScale());
+				sumDouble = new FiNumber().truncateByHalfUp(sumDouble, fiReportConfig.getLnDecimalScale());
 
 				//Loghelperr.getInstance(getClass()).debug(" Toplam:"+ sumDouble.toString());
 

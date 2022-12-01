@@ -26,16 +26,4 @@ public class FiJdbiFactory {
 		return jdbi;
 	}
 
-//	public Jdbi createJdbi(String dbName) {
-//
-//		if (new DbConfig().checkDriverClassJdbcMicrosoft()) return null;
-//
-//		String url = new DbConfig().getUrlJdbcSqlServer(server, dbName);
-//
-//		Jdbi jdbi = Jdbi.create(url, user, pass);
-//		jdbi.installPlugin(new SqlObjectPlugin());
-//
-//		return jdbi;
-//	}
-
 }

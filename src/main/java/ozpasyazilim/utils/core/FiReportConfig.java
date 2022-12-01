@@ -1,7 +1,6 @@
 package ozpasyazilim.utils.core;
 
-public class FiHtmlReportConfig {
-
+public class FiReportConfig {
 	Boolean boSummaryEnabled;
 	Integer lnDecimalScale;
 
@@ -21,4 +20,5 @@ public class FiHtmlReportConfig {
 	public void setLnDecimalScale(Integer lnDecimalScale) {
 		this.lnDecimalScale = lnDecimalScale;
 	}
+
 }

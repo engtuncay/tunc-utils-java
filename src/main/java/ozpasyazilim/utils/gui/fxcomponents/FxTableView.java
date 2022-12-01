@@ -1674,7 +1674,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 				if (fxTableCol.getSummaryLabelNode() != null && fxTableCol.getSummaryType() != null) {
 					Platform.runLater(() -> {
-						String sumValue = new FiNumber().formatNumber(new FxTableModal().calcSummaryValue(getFilteredList(), fxTableCol,new FiHtmlReportConfig()));
+						String sumValue = new FiNumber().formatNumber(new FxTableModal().calcSummaryValue(getFilteredList(), fxTableCol,new FiReportConfig()));
 						fxTableCol.getSummaryLabelNode().setText(sumValue);
 						new FxTableModal().styleSummaryLabel(fxTableCol.getSummaryLabelNode(), fxTableCol);
 					});
