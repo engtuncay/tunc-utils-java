@@ -22,10 +22,10 @@ public class Loghelper {
 		return LogManager.getLogger(clazz);
 	}
 
-	public static void installLogger(Boolean debugmode) {
-		System.out.println("Logger Util yüklenecek. Logger.installLogger()");
+	public static void installLogger(Boolean boDebugModeEnabled) {
+		System.out.println("Logger Util yüklenecek. Logger.installLogger() (Logger v1)");
 
-		if (FiBoolean.isTrue(debugmode)) { // || Loghelper.DEBUG_MODE
+		if (FiBoolean.isTrue(boDebugModeEnabled)) { // || Loghelper.DEBUG_MODE
 			PropertyConfigurator.configure("log4jd.properties");
 			//System.out.println("Logger installing...(debug mode) (Log4jd)");
 			Loghelper.get(Loghelper.class).info("Log4jd (Debug) Mode");

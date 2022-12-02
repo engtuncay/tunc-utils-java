@@ -3173,6 +3173,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 			getJdbi().useTransaction(handle -> {
 
+				handle.getConnection().setAutoCommit(false);
 				handle.begin();
 				Fdr fdr = fnTransactions.apply(handle);
 				fdrMain.combineAnd(fdr);
@@ -3187,6 +3188,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 				}
 
 				handle.commit();
+				handle.close();
 			});
 
 		} catch (Exception ex) {

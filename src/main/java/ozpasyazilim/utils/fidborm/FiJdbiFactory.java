@@ -9,17 +9,21 @@ public class FiJdbiFactory {
 
 	public static Jdbi createJdbi(String server, String dbName, String user, String pass) {
 
-		if (!DbConfig.checkDriverClassJtdsSqlServerDriver()) return null;
+		if (!DbConfig.checkDriverClassMicrosoftJdbc()) {
+			String message = String.format("Sql Sürücü Kütüphanesi bulunamadı.");
+			Loghelper.get(FiJdbiFactory.class).error(message);
+			return null;
+		}
 
-		String url = DbConfig.getUrlJtdsSqlServer(server, dbName);
+		String url = DbConfig.getUrlMicrosoftJdbcSqlServer(server, dbName);
 
 		Jdbi jdbi = Jdbi.create(url, user, pass);
 		jdbi.installPlugin(new SqlObjectPlugin());
 		jdbi.getConfig(SqlStatements.class).setUnusedBindingAllowed(true);
 
-		if(jdbi==null){
-			String uyari= "Server:" + (server==null?"":server) + " Db: "+ (dbName==null?"":dbName) + " için bağlantı bilgilerinde hata var.";
-			Loghelper.get(FiJdbiFactory.class).debug(uyari);
+		if (jdbi == null) {
+			String uyari = String.format("Server: %s Db: %s için bağlantı bilgilerinde hata var.", (server == null ? "" : server), (dbName == null ? "" : dbName));
+			Loghelper.get(FiJdbiFactory.class).error(uyari);
 			//System.out.println(uyari);
 		}
 
