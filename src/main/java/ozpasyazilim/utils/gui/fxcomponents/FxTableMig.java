@@ -15,7 +15,7 @@ public class FxTableMig<S> extends MigPane {
 
 	public FxTableMig() {
 		//super("insets 0,fill", "0[grow]", "0[grow]4[]");
-		super(new FxMigHelper().lcStInset3().genLc());
+		super(new FxMigHp().lgcStInset3().genLayConst());
 		fxTableView = new FxTableView<>();
 		//fxTableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 		initComp(fxTableView);
@@ -23,7 +23,7 @@ public class FxTableMig<S> extends MigPane {
 
 	public void initComp(FxTableView<S> fxTableView) {
 		fxTableView.setFxTableMig(this);
-		paneFooter = new FxMigPane(new FxMigHelper().lcStInset0Gap55().genLc());
+		paneFooter = new FxMigPane(new FxMigHp().lgcStInset0Gap55().genLayConst());
 		lblFooter = new FxLabel("");
 
 		btnExcel = new FxButton(Icons525.EXCEL,"Excel");

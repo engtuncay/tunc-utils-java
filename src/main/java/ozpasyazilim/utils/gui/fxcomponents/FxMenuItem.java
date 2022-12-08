@@ -1,9 +1,8 @@
 package ozpasyazilim.utils.gui.fxcomponents;
 
-import javafx.beans.property.ObjectProperty;
 import javafx.scene.Node;
 import javafx.scene.control.MenuItem;
-import ozpasyazilim.utils.security.SecurityRight;
+import ozpasyazilim.utils.core.FiThread;
 
 public class FxMenuItem extends MenuItem implements IFxSecureNode {
 
@@ -33,5 +32,9 @@ public class FxMenuItem extends MenuItem implements IFxSecureNode {
 
 	public void setModuleCode(String moduleCode) {
 		this.moduleCode = moduleCode;
+	}
+
+	public void setOnActionWithThread(Runnable runnable, FxMenuButton mbEslesme) {
+		setOnAction(event -> FiThread.startThreadMb(runnable, mbEslesme,null));
 	}
 }

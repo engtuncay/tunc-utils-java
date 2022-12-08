@@ -23,7 +23,7 @@ public class FxSimpleCont<E> extends AbsFxSimpleCont implements IFxSimpleWitEntC
 
 	@Override
 	public void initCont() {
-		modView = new FxMigPaneView(FxMigHelper.bui().lcStInset3().lcNoGrid().genLc());
+		modView = new FxMigPaneView(FxMigHp.bui().lgcStInset3().lgcNoGrid().genLayConst());
 	}
 
 

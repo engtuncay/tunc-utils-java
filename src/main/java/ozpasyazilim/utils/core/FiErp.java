@@ -22,6 +22,8 @@ public class FiErp {
 
 		if(FiString.isEmptyTrim(text)) return text;
 
+		text = text.replace("-", "");
+
 		if(text.length()>7){
 			String efaturaSeri = text.substring(0,3);
 			String efaturaYil = text.substring(3,7);

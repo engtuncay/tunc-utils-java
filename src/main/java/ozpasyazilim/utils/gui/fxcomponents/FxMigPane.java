@@ -53,8 +53,8 @@ public class FxMigPane extends MigPane {
 		super(layoutConstraints, colConstraints, rowConstraints);
 	}
 
-	public FxMigPane(FxMigHelper fxMigHelper) {
-		super(fxMigHelper.getLayConst(), fxMigHelper.getColConst(), fxMigHelper.getRowConst());
+	public FxMigPane(FxMigHp fxMigHp) {
+		super(fxMigHp.getLayGenConst(), fxMigHp.getLayColConst(), fxMigHp.getLayRowConst());
 	}
 
 	// Constraint Shortcuts
@@ -88,7 +88,7 @@ public class FxMigPane extends MigPane {
 	}
 
 	public static FxMigPane buiStandard() {
-		return new FxMigPane(FxMigHelper.lcStandard1InsetZeroGap00);
+		return new FxMigPane(FxMigHp.lgcStandard1InsetZeroGap00);
 	}
 
 	public void wrapFi() {
@@ -111,8 +111,16 @@ public class FxMigPane extends MigPane {
 		add(node, "growx,pushx,span " + FiString.orEmpty(extra));
 	}
 
+	public void addGrowPushSpan(Node node) {
+		add(node, "grow,push,span");
+	}
+
 	public void addGrowPushSpan(Node node, String extra) {
-		add(node, "grow,push,span " + FiString.orEmpty(extra));
+		add(node, "grow,push,span " + FiString.getCommaIfNotEmpty(extra) + FiString.orEmpty(extra));
+	}
+
+	public void addGrowSpan(Node node, String extra) {
+		add(node, "grow,span " + FiString.getCommaIfNotEmpty(extra) + FiString.orEmpty(extra));
 	}
 
 	public void addSpan(Node node) {

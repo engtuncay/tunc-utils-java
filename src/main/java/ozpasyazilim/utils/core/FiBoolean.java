@@ -7,9 +7,9 @@ public class FiBoolean {
 		return boolVar;
 	}
 
-	public static boolean isFalse(Boolean boolVar) {
-		if (boolVar == null) return false;
-		return !boolVar;
+	public static boolean isFalse(Boolean boValue) {
+		if (boValue == null) return false;
+		return !boValue; // false sa true , true false gönderir
 	}
 
 	public static Boolean convertBoolean(String txValue) {

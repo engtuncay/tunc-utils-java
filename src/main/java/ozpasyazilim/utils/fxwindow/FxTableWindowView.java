@@ -1,8 +1,7 @@
 package ozpasyazilim.utils.fxwindow;
 
 import javafx.scene.layout.Pane;
-import ozpasyazilim.utils.fxwindow.FxTableWindowCont;
-import ozpasyazilim.utils.gui.fxcomponents.FxMigHelper;
+import ozpasyazilim.utils.gui.fxcomponents.FxMigHp;
 import ozpasyazilim.utils.gui.fxcomponents.FxMigPane;
 import ozpasyazilim.utils.gui.fxcomponents.FxTableMig2;
 import ozpasyazilim.utils.gui.fxcomponents.FxTableView2;
@@ -39,8 +38,8 @@ public class FxTableWindowView<EntClazz> implements IFxModView, IFxTempView<FxTa
 
 		// Comp Init
 		fxTableMig = new FxTableMig2<>();
-		fxMigToolbar = new FxMigPane(FxMigHelper.bui().lcStInset3().lcNoGrid().genLc()); // lcStandard2WithInset3
-		fxMigContent = new FxMigPane(FxMigHelper.lcStandard1InsetZeroGap50);
+		fxMigToolbar = new FxMigPane(FxMigHp.bui().lgcStInset3().lgcNoGrid().genLayConst()); // lcStandard2WithInset3
+		fxMigContent = new FxMigPane(FxMigHp.lgcStandard1InsetZeroGap50);
 
 		this.fxMigContent.add(fxTableMig, "span,grow,push");
 

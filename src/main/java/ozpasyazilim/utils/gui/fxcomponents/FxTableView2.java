@@ -1802,6 +1802,11 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 		}
 	}
 
+	public void removeAllFromPredFilterExtraList() {
+		setPredFilterExtra(null);
+		executeFiltersLocalAndExtra();
+	}
+
 	public void executeFiltersLocalAndExtra() {
 		getFilteredList().setPredicate(getFilterPredicatesAll());
 		eventsAfterTableViewDataChange();

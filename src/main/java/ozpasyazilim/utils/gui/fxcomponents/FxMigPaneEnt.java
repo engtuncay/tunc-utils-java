@@ -38,12 +38,12 @@ public class FxMigPaneEnt<EntClazz> extends FxMigPane {
 		super(layoutConstraints, colConstraints, rowConstraints);
 	}
 
-	public FxMigPaneEnt(FxMigHelper fxMigHelper) {
-		super(fxMigHelper.getLayConst(), fxMigHelper.getColConst(), fxMigHelper.getRowConst());
+	public FxMigPaneEnt(FxMigHp fxMigHp) {
+		super(fxMigHp.getLayGenConst(), fxMigHp.getLayColConst(), fxMigHp.getLayRowConst());
 	}
 
 	public static FxMigPaneEnt buiStandard() {
-		return new FxMigPaneEnt(FxMigHelper.lcStandard1InsetZeroGap00);
+		return new FxMigPaneEnt(FxMigHp.lgcStandard1InsetZeroGap00);
 	}
 
 }

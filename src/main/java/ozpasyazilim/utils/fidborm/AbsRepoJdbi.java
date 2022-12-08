@@ -3174,21 +3174,23 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 			getJdbi().useTransaction(handle -> {
 
 				handle.getConnection().setAutoCommit(false);
-				handle.begin();
+				//handle.begin();
 				Fdr fdr = fnTransactions.apply(handle);
 				fdrMain.combineAnd(fdr);
 
 				if (fdr.getListExceptionNotNull().size() > 0) {
 					List<Exception> listException = fdr.getListException();
+					handle.rollback();
 					throw listException.get(0);
 				}
 
 				if (fdr.getException() != null) {
+					handle.rollback();
 					throw fdr.getException();
 				}
 
 				handle.commit();
-				handle.close();
+				//handle.close(); // close edilirse : failed to commit transaction hatası veriyor
 			});
 
 		} catch (Exception ex) {

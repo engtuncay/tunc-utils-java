@@ -21,21 +21,21 @@ public class FxTableMig2<EntClazz> extends MigPane {
 	private FxLabel lblFooterVer;
 
 	public FxTableMig2() {
-		super(FxMigHelper.bui().lcStInset3Gap0().genLc());
+		super(FxMigHp.bui().lgcStInset3Gap0().genLayConst());
 		fxTableView = new FxTableView2<>();
 		//fxTableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 		initComp(fxTableView);
 	}
 
 	public FxTableMig2(FxTableView2 fxTableView) {
-		super(FxMigHelper.bui().lcStInset3Gap0().genLc());
+		super(FxMigHp.bui().lgcStInset3Gap0().genLayConst());
 		setFxTableView(fxTableView);
 		initComp(fxTableView);
 	}
 
 	public void initComp(FxTableView2<EntClazz> fxTableView) {
 		fxTableView.setFxTableMig(this);
-		paneFooter = new FxMigPane(FxMigHelper.bui().lcStInset0Gap55().lcNoGrid().genLc());
+		paneFooter = new FxMigPane(FxMigHp.bui().lgcStInset0Gap55().lgcNoGrid().genLayConst());
 		lblFooterRowCount = new FxLabel("");
 		lblFooterMessage = new FxLabel("");
 		lblFooterMessageSelection = new FxLabel("");
@@ -58,7 +58,7 @@ public class FxTableMig2<EntClazz> extends MigPane {
 		paneFooter.add(lblFooterMessage);
 		paneFooter.add(lblFooterMessageSelection);
 
-		tableHeaderPane = new FxMigPane(FxMigHelper.bui().lcStInset0Gap55().lcNoGrid().genLc());
+		tableHeaderPane = new FxMigPane(FxMigHp.bui().lgcStInset0Gap55().lgcNoGrid().genLayConst());
 
 		this.add(tableHeaderPane, "span");
 		this.add(fxTableView, "span,grow,push");

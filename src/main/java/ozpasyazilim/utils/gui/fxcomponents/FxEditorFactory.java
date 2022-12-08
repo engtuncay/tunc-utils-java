@@ -1451,6 +1451,8 @@ public class FxEditorFactory {
 	/**
 	 * Null , Required Checks
 	 *
+	 * Form verileri kontrol edilirken kullanılıyor
+	 *
 	 * @param colsForm
 	 * @return
 	 */

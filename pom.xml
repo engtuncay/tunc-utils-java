@@ -51,19 +51,19 @@
 
     </build>
 
-    <dependencyManagement>
-        <dependencies>
+<!--    <dependencyManagement>-->
+<!--        <dependencies>-->
 
-            <dependency>
-                <groupId>org.jdbi</groupId>
-                <artifactId>jdbi3-bom</artifactId>
-                <type>pom</type>
-                <version>3.8.1</version>
-                <scope>import</scope>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>org.jdbi</groupId>-->
+<!--                <artifactId>jdbi3-bom</artifactId>-->
+<!--                <type>pom</type>-->
+<!--                <version>3.8.1</version>-->
+<!--                <scope>import</scope>-->
+<!--            </dependency>-->
 
-        </dependencies>
-    </dependencyManagement>
+<!--        </dependencies>-->
+<!--    </dependencyManagement>-->
 
     <repositories>
 

@@ -117,7 +117,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 	@Override
 	public void initCont() {
 		setBoInitExecuted(true);
-		modView = new FxMigPaneView(FxMigHelper.bui().lcStInset3().lcNoGrid().genLc());
+		modView = new FxMigPaneView(FxMigHp.bui().lgcStInset3().lgcNoGrid().genLayConst());
 		dialogInitByType();
 	}
 
@@ -221,7 +221,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 	public void setupFooterOkCancel() {
 
-		FxMigPane migFooter = new FxMigPane(FxMigHelper.bui().lcNoGrid().lcStInset0Gap55().genLc());
+		FxMigPane migFooter = new FxMigPane(FxMigHp.bui().lgcNoGrid().lgcStInset0Gap55().genLayConst());
 
 		btnOk = new FxButton("Ok", Icons525.OK);
 		btnCancel = new FxButton("İptal", Icons525.CANCEL);
@@ -237,7 +237,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 	public void setupFooterWithValidateString() {
 
-		FxMigPane migFooter = new FxMigPane(FxMigHelper.bui().lcNoGrid().lcStInset0Gap55().genLc());
+		FxMigPane migFooter = new FxMigPane(FxMigHp.bui().lgcNoGrid().lgcStInset0Gap55().genLayConst());
 
 		btnOk = new FxButton("Ok", Icons525.OK);
 		btnCancel = new FxButton("İptal", Icons525.CANCEL);
@@ -253,7 +253,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 	public void setupFooterWithValidateForm() {
 
-		FxMigPane migFooter = new FxMigPane(FxMigHelper.bui().lcNoGrid().lcStInset0Gap55().genLc());
+		FxMigPane migFooter = new FxMigPane(FxMigHp.bui().lgcNoGrid().lgcStInset0Gap55().genLayConst());
 
 		btnOk = new FxButton("Ok", Icons525.OK);
 		btnCancel = new FxButton("İptal", Icons525.CANCEL);
@@ -288,7 +288,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 		getModView().add(lblHeader, "growx,pushx,wrap");
 
-		FxMigPane fxContent = new FxMigPane(FxMigHelper.bui().lcStInset0Gap55().genLc());
+		FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lgcStInset0Gap55().genLayConst());
 
 		fxFormMig = new FxFormMig2();
 
@@ -305,7 +305,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 	}
 
 	private void setupFormDialog() {
-		FxMigPane fxContent = new FxMigPane(FxMigHelper.bui().lcStInset0Gap55().genLc());
+		FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lgcStInset0Gap55().genLayConst());
 		fxContent.add(getFxFormMig(), "wrap");
 		getModView().add(fxContent, "wrap");
 	}
@@ -314,8 +314,8 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 		getFxFormInit().setup1(fiCols,FormType.PlainFormV1);
 		setFxSimpleDialogType(FxSimpleDialogType.Undefined);
 		initCont();
-		FxMigPane fxContent = new FxMigPane(FxMigHelper.bui().lcStInset0Gap55().genLc());
-		fxContent.addGrowPushSpan(getFxFormInit(), null);
+		FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lgcStInset0Gap55().genLayConst());
+		fxContent.addGrowPushSpan(getFxFormInit());
 		getModView().add(fxContent, "wrap");
 		setupFooterWithValidateForm();
 	}
@@ -418,7 +418,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 	private void setupTextFieldDoubleDialog() {
 		modView.add(lblHeader, "growx,pushx,wrap");
 
-		FxMigPane fxContent = new FxMigPane(FxMigHelper.bui().lcStInset0Gap55().genLc());
+		FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lgcStInset0Gap55().genLayConst());
 		FxTextField fxTextField = new FxTextField();
 		fxTextField.convertNumberDoubleTextField1();
 		setOzColType(OzColType.Double);
@@ -431,7 +431,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 	private void setupTextFieldIntegerDialog() {
 		modView.add(lblHeader, "growx,pushx,wrap");
-		FxMigPane fxContent = new FxMigPane(FxMigHelper.bui().lcStInset0Gap55().genLc());
+		FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lgcStInset0Gap55().genLayConst());
 		FxTextField fxTextField = new FxTextField();
 		fxTextField.convertNumberTextField2();
 		setOzColType(OzColType.Integer);
@@ -445,7 +445,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 		getModView().add(lblHeader, "growx,pushx,wrap");
 
-		FxMigPane fxContent = new FxMigPane(FxMigHelper.bui().lcStInset0Gap55().genLc());
+		FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lgcStInset0Gap55().genLayConst());
 		FxTextField fxTextField = new FxTextField();
 		//fxTextField.convertNumberDoubleTextField1();
 		setOzColType(OzColType.String);
@@ -462,7 +462,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 		getModView().add(lblHeader2, "growx,pushx,wrap");
 
-		FxMigPane fxContent = new FxMigPane(FxMigHelper.bui().lcStInset0Gap55().genLc());
+		FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lgcStInset0Gap55().genLayConst());
 		fxTextFieldGeneral = new FxTextField();
 
 		//fxTextField.convertNumberDoubleTextField1();
@@ -483,7 +483,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 		modView.add(lblHeader, "growx,pushx,wrap");
 
-		FxMigPane fxContent = new FxMigPane(FxMigHelper.bui().lcStInset0Gap55().genLc());
+		FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lgcStInset0Gap55().genLayConst());
 		FxTextArea fxTextField = new FxTextArea();
 		//fxTextField.convertNumberDoubleTextField1();
 		setOzColType(OzColType.String);
@@ -498,7 +498,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 		if (getListText().size() == 0) {
 			getListText().add(new Text(""));
 		}
-		FxMigPane fxContent = new FxMigPane(FxMigHelper.bui().lcStInset0Gap55().genLc());
+		FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lgcStInset0Gap55().genLayConst());
 		Text[] texts = (Text[]) getListText().toArray();
 		FxTextFlow fxTextFlow = new FxTextFlow(texts);
 		fxContent.add(fxTextFlow, "wrap");
@@ -507,7 +507,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 	private void setupInfoLabelDialog() {
 
-		FxMigPane fxContent = new FxMigPane(FxMigHelper.bui().lcStInset0Gap55().genLc());
+		FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lgcStInset0Gap55().genLayConst());
 
 		ScrollPane scrollPane = new ScrollPane();
 		WebView webView = new WebView();
@@ -525,8 +525,8 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 	private void setupDialogInfoWarnTextArea() {
 
-		FxMigPane fxHeader = new FxMigPane(FxMigHelper.bui().lcStInset0Gap55().genLc());
-		FxMigPane fxContent = new FxMigPane(FxMigHelper.bui().lcStInset0Gap55().genLc());
+		FxMigPane fxHeader = new FxMigPane(FxMigHp.bui().lgcStInset0Gap55().genLayConst());
+		FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lgcStInset0Gap55().genLayConst());
 		getModView().prefHeight(150d);
 
 		this.lblHeader = new FxLabel(getMessageHeader());
@@ -715,7 +715,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 	public FxMigPane getFxMigToolbar() {
 		if (fxMigToolbar == null) {
-			fxMigToolbar = new FxMigPane(FxMigHelper.bui().lcStInset0Gap55().genLc());
+			fxMigToolbar = new FxMigPane(FxMigHp.bui().lgcStInset0Gap55().genLayConst());
 		}
 		return fxMigToolbar;
 	}

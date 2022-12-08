@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.scene.paint.Color;
 import ozpasyazilim.utils.gui.fxcomponents.FxButton;
 import ozpasyazilim.utils.gui.fxcomponents.FxLabel;
+import ozpasyazilim.utils.gui.fxcomponents.FxMenuButton;
 import ozpasyazilim.utils.gui.fxcomponents.FxTableView2;
 import ozpasyazilim.utils.listener.CompoundRunnable;
 
@@ -57,6 +58,41 @@ public class FiThread {
 
 	}
 
+	public static Thread startThreadMb(Runnable runnable, FxMenuButton mbComp,Runnable runnableEnd) {
+
+//		FxMenuButton mbComp = mbComp;
+
+		final String textOld = mbComp.getText();
+
+		Platform.runLater(() -> {
+			mbComp.setText("İşlem Yapılıyor..");
+			mbComp.setDisable(true);
+//			for (FxButton fxButton : mbComp) {
+//				fxButton.setDisable(true);
+//			}
+		});
+
+		Runnable runnable2 = () -> {
+			//fxToastPopup2.end();
+			Platform.runLater(() -> {
+				mbComp.setText(textOld);
+				mbComp.setDisable(false);
+//				for (FxButton fxButton : mbComp) {
+//					fxButton.setDisable(false);
+//				}
+			});
+
+		};
+
+		if(runnableEnd==null) runnableEnd = ()->{};
+
+		CompoundRunnable compoundRunnable = new CompoundRunnable(runnable, runnable2,runnableEnd);
+
+		Thread thread = new Thread(compoundRunnable); // compoundRunnable
+		thread.start();
+		return thread;
+
+	}
 
 
 	public static Thread startThread(Runnable runnable, FxButton btnListe,Runnable runnableEnd) {

@@ -61,12 +61,18 @@ public class FxFormMig3<EntClazz> extends FxMigPaneEnt<EntClazz> implements IFxM
 		this.listFormElements = listFormElements;
 	}
 
-	public FxFormMig3(List<FiCol> listFormElements, Boolean boInit) {
+	public FxFormMig3(List<FiCol> colsForm, FormType formType) {
 		super("insets 0");
-		if (FiBoolean.isTrue(boInit)) {
-			setupWitDefaultFormType(listFormElements);
-		}
+		this.listFormElements = colsForm;
+		this.formType = formType;
 	}
+
+//	public FxFormMig3(List<FiCol> listFormElements, Boolean boInit) {
+//		super("insets 0");
+//		if (FiBoolean.isTrue(boInit)) {
+//			setupWitDefaultFormType(listFormElements);
+//		}
+//	}
 
 	@Override
 	public Pane getRootPane() {
@@ -289,7 +295,7 @@ public class FxFormMig3<EntClazz> extends FxMigPaneEnt<EntClazz> implements IFxM
 			if (fiCol.getPrefSize() != null) {
 				add(node, String.format("width %s,wrap", fiCol.getPrefSize().toString()));
 			} else {
-				add(node, FxMigHelper.bcc("growx,pushx,wrap").addCcCompMaxWidthSizeByColType(fiCol).getCcNtn());
+				add(node, FxMigHp.bcc("growx,pushx,wrap").addCcCompMaxWidthSizeByColType(fiCol).getCcInit());
 			}
 
 		} // tblCol for döngüsü sonu

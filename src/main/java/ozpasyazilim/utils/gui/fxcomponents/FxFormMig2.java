@@ -303,7 +303,7 @@ public class FxFormMig2<EntClazz> extends FxMigPaneEnt<EntClazz> implements IFxM
 			if (fiCol.getPrefSize() != null) {
 				add(node, String.format("width %s,wrap", fiCol.getPrefSize().toString()));
 			} else {
-				add(node, FxMigHelper.bcc("growx,pushx,wrap").addCcCompMaxWidthSizeByColType(fiCol).genCc());
+				add(node, FxMigHp.bcc("growx,pushx,wrap").addCcCompMaxWidthSizeByColType(fiCol).genCc());
 			}
 
 		} // tblCol for döngüsü sonu

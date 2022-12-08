@@ -258,7 +258,7 @@ public class FiCollection {
 	 * @return
 	 */
 
-	public static <T, KeyVal> Map<KeyVal, List<T>> listToMapMulti(List<T> listtum, Function<T, KeyVal> fnGetId) {
+	public static <T, KeyVal> Map<KeyVal, List<T>> listToMapMulti(Collection<T> listtum, Function<T, KeyVal> fnGetId) {
 
 		Map<KeyVal, List<T>> mapList = new HashMap<>();
 
@@ -1192,7 +1192,7 @@ public class FiCollection {
 	}
 
 
-	public static <NewClazz, OldClazz> List<NewClazz> convertEntity(List<OldClazz> listDataOld, Function<OldClazz, NewClazz> convertFunction) {
+	public static <NewClazz, OldClazz> List<NewClazz> convertEntity(Collection<OldClazz> listDataOld, Function<OldClazz, NewClazz> convertFunction) {
 
 		List<NewClazz> listNew = new ArrayList<>();
 

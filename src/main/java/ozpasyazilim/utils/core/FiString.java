@@ -524,13 +524,13 @@ public class FiString {
 		return list;
 	}
 
-	public static String addOneSpaceifNotEmpty(String egk_evracik1) {
+	public static String getOneSpaceifNotEmpty(String egk_evracik1) {
 		if (!FiString.isEmpty(egk_evracik1)) return " ";
 		return "";
 	}
 
-	public static String addSemicolonIfNotEmpty(String value) {
-		if (!FiString.isEmpty(value)) return ",";
+	public static String getCommaIfNotEmpty(String value) {
+		if (!FiString.isEmptyTrim(value)) return ",";
 		return "";
 	}
 
