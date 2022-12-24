@@ -3,7 +3,6 @@ package ozpasyazilim.utils.gui.fxcomponents;
 import javafx.scene.layout.Pane;
 import net.miginfocom.layout.AC;
 import net.miginfocom.layout.LC;
-import ozpasyazilim.utils.mvc.IFxModView;
 import ozpasyazilim.utils.mvc.IFxSimpleView;
 
 /**
@@ -11,33 +10,33 @@ import ozpasyazilim.utils.mvc.IFxSimpleView;
  * <p>
  * IFxSimpleView arayüzü tanımlandı sadece
  */
-public class FxMigPaneView2 extends FxMigPane implements IFxSimpleView {
+public class FxMigPaneViewSimp extends FxMigPane implements IFxSimpleView {
 
-	public FxMigPaneView2() {
+	public FxMigPaneViewSimp() {
 		super();
 	}
 
-	public FxMigPaneView2(LC layoutConstraints) {
+	public FxMigPaneViewSimp(LC layoutConstraints) {
 		super(layoutConstraints);
 	}
 
-	public FxMigPaneView2(LC layoutConstraints, AC colConstraints) {
+	public FxMigPaneViewSimp(LC layoutConstraints, AC colConstraints) {
 		super(layoutConstraints, colConstraints);
 	}
 
-	public FxMigPaneView2(LC layoutConstraints, AC colConstraints, AC rowConstraints) {
+	public FxMigPaneViewSimp(LC layoutConstraints, AC colConstraints, AC rowConstraints) {
 		super(layoutConstraints, colConstraints, rowConstraints);
 	}
 
-	public FxMigPaneView2(String layoutConstraints) {
+	public FxMigPaneViewSimp(String layoutConstraints) {
 		super(layoutConstraints);
 	}
 
-	public FxMigPaneView2(String layoutConstraints, String colConstraints) {
+	public FxMigPaneViewSimp(String layoutConstraints, String colConstraints) {
 		super(layoutConstraints, colConstraints);
 	}
 
-	public FxMigPaneView2(String layoutConstraints, String colConstraints, String rowConstraints) {
+	public FxMigPaneViewSimp(String layoutConstraints, String colConstraints, String rowConstraints) {
 		super(layoutConstraints, colConstraints, rowConstraints);
 	}
 

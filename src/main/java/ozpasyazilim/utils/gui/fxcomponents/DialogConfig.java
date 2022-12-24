@@ -12,6 +12,8 @@ public class DialogConfig {
 	Node nodeRelative;
 	String cssFileName;
 
+	//Double nmPrefWidth;
+
 	public DialogConfig() {
 	}
 
@@ -80,4 +82,6 @@ public class DialogConfig {
 	public void setCssFileName(String cssFileName) {
 		this.cssFileName = cssFileName;
 	}
+
+
 }

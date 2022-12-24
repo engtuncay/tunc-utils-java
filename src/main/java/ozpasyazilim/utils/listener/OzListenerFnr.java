@@ -74,7 +74,7 @@ public class OzListenerFnr {
 			for (Iterator iterator2 = listObservers.iterator(); iterator2.hasNext();) {
 
 				Consumer<FnResultGen> consumer = (Consumer<FnResultGen>) iterator2.next();
-				if (consumer == null) Loghelper.get().info("consumer null");
+				if (consumer == null) Loghelper.get(OzListenerFnr.class).info("consumer null");
 				consumer.accept(new FnResultGen(string));
 			}
 
@@ -100,10 +100,10 @@ public class OzListenerFnr {
 
 			for (Iterator iterator2 = listObservers.iterator(); iterator2.hasNext();) {
 
-				Loghelper.get().info("for döngüsü");
+				Loghelper.get(OzListenerFnr.class).info("for döngüsü");
 
 				Consumer<FnResultGen> consumer = (Consumer<FnResultGen>) iterator2.next();
-				if (consumer == null) Loghelper.get().info("consumer null");
+				if (consumer == null) Loghelper.get(OzListenerFnr.class).info("consumer null");
 				consumer.accept(new FnResultGen(string, type));
 
 

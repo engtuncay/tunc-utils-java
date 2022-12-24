@@ -2114,8 +2114,8 @@ public class FiQueryGenerator {
 				//.collect(Collectors.toList());
 			});
 		} catch (Exception ex) {
-			ex.printStackTrace();
-			Loghelper.debugStatic("", ex);
+			//ex.printStackTrace();
+			Loghelper.get(FiQueryGenerator.class).error(FiException.exToLog(ex));
 		}
 		return result;
 	}

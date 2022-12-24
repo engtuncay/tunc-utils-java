@@ -161,6 +161,20 @@ public class FiEntity {
 		return fiFieldList;
 	}
 
+	public static List<FiField> getListFieldsId(Class clazz) {
+		List<FiField> listFiFieldsSummary = getListFieldsWoutStaticMain(clazz, false, null);
+
+		List<FiField> fiFieldList = new ArrayList<>();
+
+		for (FiField fiField : listFiFieldsSummary) {
+			if (FiBoolean.isTrue(fiField.getBoIdField())) {
+				fiFieldList.add(fiField);
+			}
+		}
+
+		return fiFieldList;
+	}
+
 	public static List<FiField> getListFieldsDateSeperatorField(Class clazz) {
 		List<FiField> listFiFieldsSummary = getListFieldsWoutStaticMain(clazz, false, null);
 
@@ -680,7 +694,7 @@ public class FiEntity {
 		for (FiField field : listFiFieldsShort) {
 
 			if (FiBoolean.isTrue(field.getBoIdField())) {
-				Loghelper.debugStatic("Id Field:" + field.getName());
+				Loghelper.get(FiEntity.class).debug("Id Field:" + field.getName());
 				Object idValue = FiReflection.getPropertyNested(fromEntity, field.getName());
 				boResult = FiReflection.setterNested(toEntity, field.getName(), idValue);
 			}

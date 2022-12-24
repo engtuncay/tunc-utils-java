@@ -3,19 +3,19 @@ package ozpasyazilim.utils.gui.fxcomponents;
 import javafx.scene.Node;
 import ozpasyazilim.utils.core.FiBoolean;
 import ozpasyazilim.utils.mvc.AbsFxSimpleCont;
-import ozpasyazilim.utils.mvc.IFxSimpleWitEntCont;
+import ozpasyazilim.utils.mvc.IFxSimpleGenCont;
 
-public class FxSimpleCont<E> extends AbsFxSimpleCont implements IFxSimpleWitEntCont<E> {
+public class FxSimpleContGen<E> extends AbsFxSimpleCont implements IFxSimpleGenCont<E> {
 
 	FxMigPaneView modView;
 	// Entity neden gerek duyuldu ???
 	E entityDefault;
 
-	public FxSimpleCont() {
+	public FxSimpleContGen() {
 
 	}
 
-	public FxSimpleCont(Boolean withInit) {
+	public FxSimpleContGen(Boolean withInit) {
 		if (FiBoolean.isTrue(withInit)) {
 			initCont();
 		}

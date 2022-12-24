@@ -117,7 +117,7 @@ public abstract class AbsFxSimpleCont implements IFxSimpleCont {
 		}
 
 		dialogConfig.setCssFileName("main.css");
-		fxDialogShow.nodeModalBySimpleCont(this, dialogConfig);
+		fxDialogShow.nodeModalByIFxSimpleCont(this, dialogConfig);
 	}
 
 }

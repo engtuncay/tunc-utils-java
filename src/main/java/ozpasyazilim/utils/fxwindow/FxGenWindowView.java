@@ -2,6 +2,7 @@ package ozpasyazilim.utils.fxwindow;
 
 import javafx.scene.layout.Pane;
 import ozpasyazilim.utils.gui.fxcomponents.FxFormMig;
+import ozpasyazilim.utils.gui.fxcomponents.FxMigHp;
 import ozpasyazilim.utils.gui.fxcomponents.FxMigPane;
 import ozpasyazilim.utils.gui.fxcomponents.FxTableMig2;
 import ozpasyazilim.utils.mvc.IFxSimpleView;
@@ -34,13 +35,13 @@ public class FxGenWindowView implements IFxSimpleView {
 	public void initGui() {
 
 		// root init
-		fxRootMigPane = new FxMigPane(FxMigPane.lcStandardInset3Gap33);
+		fxRootMigPane = new FxMigPane(FxMigHp.bui().lgcStInset3Gap33().getLayConstGen());
 
 		// Container Initial.
 		fxFormMig = new FxFormMig();
-		fxMigToolbar = new FxMigPane(FxMigPane.lcStandardInset3Gap33);
+		fxMigToolbar = new FxMigPane(FxMigHp.bui().lgcStInset3Gap33().getLayConstGen());
 		fxTableMig = new FxTableMig2();
-		fxContent = new FxMigPane(FxMigPane.lcStandardInset0Gap50);
+		fxContent = new FxMigPane(FxMigHp.bui().lgcStInset0Gap50().getLayConstGen());
 
 		// Comp Init
 

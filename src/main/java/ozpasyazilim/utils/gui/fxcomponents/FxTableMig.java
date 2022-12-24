@@ -51,7 +51,7 @@ public class FxTableMig<S> extends MigPane {
 
 	public FxTableMig(FxTableView fxTableView) {
 		//super("insets 0,fill", "0[grow]", "0[grow]4[]");
-		super(FxMigPane.lcStandardInset3Gap33);
+		super(FxMigHp.bui().lgcStInset3Gap33().getLayConstGen());
 		setFxTableView(fxTableView);
 		initComp(fxTableView);
 		//super.getChildren().add(fxTableMig);

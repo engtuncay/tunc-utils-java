@@ -678,6 +678,17 @@ public class FiReflection {
 		return null;
 	}
 
+	public static <EntClazz> Object getIdValue(EntClazz next, Class<EntClazz> clazz) {
+
+		List<FiField> listFieldsId = FiEntity.getListFieldsId(clazz);
+
+		if (listFieldsId.size() == 1) {
+			Object property = getProperty(next, listFieldsId.get(0).getName());
+			return property;
+		}
+		return null;
+	}
+
 	public static Boolean setProperty(Object objEntity, String fieldName, Object objValue) {
 
 		try {

@@ -31,10 +31,10 @@ public class FxTableWindowView<EntClazz> implements IFxModView, IFxTempView<FxTa
 	@Override
 	public void initGui() {
 		// Container Initial.
-		this.fxMigPane = new FxMigPane(FxMigPane.lcStandardInset3Gap33);
+		this.fxMigPane = new FxMigPane(FxMigHp.bui().lgcStInset3Gap33().getLayConstGen());
 //		setRootMigPane(fxMigPane);
 
-		fxMigHeader = new FxMigPane(FxMigPane.lcStandardInset0Gap00);
+		fxMigHeader = new FxMigPane(FxMigHp.bui().lgcStInset0Gap00().getLayConstGen());
 
 		// Comp Init
 		fxTableMig = new FxTableMig2<>();

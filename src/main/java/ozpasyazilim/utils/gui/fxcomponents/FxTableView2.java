@@ -23,7 +23,7 @@ import ozpasyazilim.utils.gui.fxTableViewExtra.NestedPropertyValueFactory;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.mvc.IFxSimpleEntityModule;
-import ozpasyazilim.utils.mvc.IFxSimpleWitEntCont;
+import ozpasyazilim.utils.mvc.IFxSimpleGenCont;
 import ozpasyazilim.utils.core.FiReflection;
 import ozpasyazilim.utils.returntypes.FnResult;
 import ozpasyazilim.utils.table.OzColSummaryType;
@@ -441,7 +441,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 				this.entityClass = (Class<EntClazz>) ((ParameterizedType) this.getClass().getGenericSuperclass())
 						.getActualTypeArguments()[0];
 			} catch (Exception ex) {
-				Loghelper.errorException(getClass(), ex, "Generic Tip Sınıfı Tespit Edilirken Hata Oluştu.");
+				Loghelper.get(FxTableView2.class).error("Generic Tip Sınıfı Tespit Edilirken Hata Oluştu. :" + FiException.exToLog(ex));
 			}
 
 		}
@@ -604,6 +604,11 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 	}
 
 
+	/**
+	 * Event tanımları rowfactory de yapıldı, herhangi aktive etme işlemi gerekmez.
+	 *
+	 * @param doubleClickEvent
+	 */
 	public void onRowDoubleClickEventByEntityFi(Consumer<EntClazz> doubleClickEvent) {
 
 		if (doubleClickEvent == null) return;
@@ -1565,6 +1570,28 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 		return false;
 	}
 
+	public Boolean removeItemFiById(EntClazz entity) {
+
+		for (Iterator<EntClazz> iterator = getFiSourceList().iterator(); iterator.hasNext(); ) {
+			EntClazz next = iterator.next();
+
+			Object candId = FiReflection.getIdValue(next, getEntityClass());
+			Object candId2 = FiReflection.getIdValue(entity, getEntityClass());
+
+			if (candId == null || candId2 == null) {
+				continue;
+			}
+
+			if (candId.equals(candId2)) {
+				iterator.remove();
+				eventsAfterTableViewDataChange();
+				return true;
+			}
+
+		}
+		return false;
+	}
+
 	public void removeAllItemsFi(Collection<?> c) {
 		getFiSourceList().removeAll(c);
 		eventsAfterTableViewDataChange();
@@ -2049,7 +2076,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 	}
 
 
-	public void activateExtensionFxTableSelectAndClose(IFxSimpleWitEntCont iFxSimpleWitEntCont) {
+	public void activateExtensionFxTableSelectAndClose(IFxSimpleGenCont iFxSimpleWitEntCont) {
 
 		setOnKeyReleased(event -> {
 			if (event.getCode() == KeyCode.ENTER) {
@@ -2070,7 +2097,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 		});
 	}
 
-	public void extensionSelectAndClose(IFxSimpleWitEntCont iFxMosCont) {
+	public void extensionSelectAndClose(IFxSimpleGenCont iFxMosCont) {
 		EntClazz selectedItem = getSelectionModel().getSelectedItem();
 		if (selectedItem == null) return;
 
@@ -2469,4 +2496,32 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 		return FiString.orEmpty(getId());
 	}
 
+	/**
+	 * setEnableLocalFilterEditor(true);
+	 * <p>
+	 * setEnableSummaryHeader(true);
+	 * <p>
+	 * addAllFiColsAuto(fiCols);
+	 *
+	 * @param fiCols
+	 */
+	public void standardSetup1(List<FiCol> fiCols) {
+		setEnableLocalFilterEditor(true);
+		setEnableSummaryHeader(true);
+		addAllFiColsAuto(fiCols);
+	}
+
+	public EntClazz getItemsCheckedOneItem() {
+		FilteredList<EntClazz> checkedByBoSelect = getItemsCheckedByBoSelect();
+
+		if(checkedByBoSelect.size()==0){
+			FxDialogShow.showPopWarn("Lütfen tablo bir kayıdı seçiniz.");
+			return null;
+		}else if(checkedByBoSelect.size()>1){
+			FxDialogShow.showPopWarn("Lütfen tablodan sadece bir kayıt seçiniz.");
+			return null;
+		}
+
+		return checkedByBoSelect.get(0);
+	}
 }

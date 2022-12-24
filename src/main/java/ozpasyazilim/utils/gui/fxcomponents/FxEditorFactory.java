@@ -38,7 +38,6 @@ import java.util.function.Function;
 public class FxEditorFactory {
 
 	Map<String, String> mapSimpleClassToEditorClass;
-	private static Loghelper logger = Loghelper.getLogHelper(FxEditorFactory.class);
 
 	public static Boolean setTextValueEditorNodeByString(List<? extends IFiCol> listFormElements, Object fieldName, String value, Object entity) {
 
@@ -214,7 +213,7 @@ public class FxEditorFactory {
 	 */
 	public static Node generateAndSetFilterNode(IFiCol ozTableCol) {
 
-		Node comp = generateNodeByClassNameMain(ozTableCol.getColType(), ozTableCol.getFilterNodeClass(),null);
+		Node comp = generateNodeByClassNameMain(ozTableCol.getColType(), ozTableCol.getFilterNodeClass(), null);
 
 		// generator içinden çıkarılıp buraya eklendi, esas amaç anlaşılmadı
 		setNodeValueByCompClass(comp, ozTableCol.getFilterNodeClass(), ozTableCol.getFilterValue());
@@ -262,7 +261,7 @@ public class FxEditorFactory {
 	 */
 	public static Node generateAndRenderNodeBeforeLoadByEditorClassEntry(IFiCol fiTableCol, Object entity) {
 
-		Node comp = generateNodeByClassNameMain(fiTableCol.getColType(), fiTableCol.getColEditorClass(),null);
+		Node comp = generateNodeByClassNameMain(fiTableCol.getColType(), fiTableCol.getColEditorClass(), null);
 
 		if (fiTableCol.getFnEditorNodeRendererBeforeSettingValue() != null) {
 			fiTableCol.getFnEditorNodeRendererBeforeSettingValue().accept(entity, comp);
@@ -297,7 +296,7 @@ public class FxEditorFactory {
 	 */
 	public static Node generateEditorNodeFullLifeCycle(FiCol fiCol, Object entity) {
 
-		Node comp = generateNodeByClassNameMain(fiCol.getColType(), fiCol.getColEditorClass(),fiCol);
+		Node comp = generateNodeByClassNameMain(fiCol.getColType(), fiCol.getColEditorClass(), fiCol);
 
 		if (fiCol.getFnNodeFocusTrigger() != null && comp != null) {
 			comp.focusedProperty().addListener((observable, oldValue, newValue) -> fiCol.getFnNodeFocusTrigger().accept(comp));
@@ -402,7 +401,7 @@ public class FxEditorFactory {
 
 		//Loghelper.getInstance(FxEditorFactory.class).debug(" Ozcoltype:"+ozColType.toString());
 		//Loghelper.getInstance(FxEditorFactory.class).debug(" Prm Comp Class:"+txClassName);
-		if(fiCol==null) {
+		if (fiCol == null) {
 			fiCol = new FiCol();
 		}
 
@@ -436,7 +435,7 @@ public class FxEditorFactory {
 				//comp.setAlignment(Pos.BASELINE_RIGHT);
 			}
 
-			if(FiBoolean.isTrue(fiCol.getBoEditorOnlyNumber())){
+			if (FiBoolean.isTrue(fiCol.getBoEditorOnlyNumber())) {
 				comp.convertNumberDoubleTextField1();
 			}
 
@@ -769,7 +768,7 @@ public class FxEditorFactory {
 
 		for (int i = 0; i < listColumns.size(); i++) {
 			FiCol fiCol = listColumns.get(i);
-			Object cellvalue = getNodeObjValueByEditorNode(fiCol, fiCol.getColEditorClass());    // map.get(fiCol.getHeader());
+			Object cellvalue = getNodeObjValueByEditorNode(fiCol, fiCol.getColEditorClass());
 			fiCol.setColEditorValue(cellvalue);
 		}
 
@@ -907,9 +906,9 @@ public class FxEditorFactory {
 	}
 
 	/**
-	 * Önemli !!!
+	 * Fx Node Component'inden değeri alır ve ozcoltype'a ilgili türe çevirir.
 	 * <p>
-	 * Editorden gelen boş string ler null olarak yorumlandı.
+	 * Not Önemli !!! : Editorden gelen boş string ler null olarak yorumlandı.
 	 *
 	 * @param
 	 * @return
@@ -1450,7 +1449,7 @@ public class FxEditorFactory {
 
 	/**
 	 * Null , Required Checks
-	 *
+	 * <p>
 	 * Form verileri kontrol edilirken kullanılıyor
 	 *
 	 * @param colsForm
@@ -1478,6 +1477,12 @@ public class FxEditorFactory {
 		return new Fdr(true);
 	}
 
+	/**
+	 * getBoRequired,getBoNullable özellikleri kontrol ediliyor.
+	 *
+	 * @param colsForm
+	 * @return
+	 */
 	public static Fdr checkColErrorsByEditor(List<FiCol> colsForm) {
 
 		for (FiCol fiTableCol : colsForm) {
@@ -1485,7 +1490,7 @@ public class FxEditorFactory {
 			// boRequired True, BoNullable False yapılmışsa boş geçilemez.
 			if (FiBoolean.isTrue(fiTableCol.getBoRequired()) || FiBoolean.isFalse(fiTableCol.getBoNullable())) {
 
-//				Object cellValue = fiTableCol.getColEditorValue();
+				//Object cellValue = fiTableCol.getColEditorValue();
 				Object cellValue = FxEditorFactory.getNodeObjValueByEditorNode(fiTableCol, fiTableCol.getColEditorClass());
 
 				// Null ve Boş Alan Kontrolü

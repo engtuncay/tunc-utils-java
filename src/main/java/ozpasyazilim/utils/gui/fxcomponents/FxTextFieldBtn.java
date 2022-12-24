@@ -19,7 +19,7 @@ public class FxTextFieldBtn<EntClazz> extends FxMigPane implements IfxNode {
 	Boolean boFirstLoaded;
 
 	public FxTextFieldBtn() {
-		super(FxMigPane.lcStandardInset0Gap00);
+		super(FxMigHp.bui().lgcStInset0Gap00().getLayConstGen());
 		btnSearch = new FxButton("*");
 		getFxTextField();
 		btnSearch.setMaxHeight(22d);
@@ -114,7 +114,7 @@ public class FxTextFieldBtn<EntClazz> extends FxMigPane implements IfxNode {
 		if (getLblAciklama() == null) {
 			setLblAciklama(new FxLabel(""));
 			wrapFi();
-			add(getLblAciklama(), "growx,pushx");
+			addGrowXSpan(getLblAciklama());
 		}
 	}
 

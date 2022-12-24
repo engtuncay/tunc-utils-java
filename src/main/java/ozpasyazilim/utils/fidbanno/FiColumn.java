@@ -36,6 +36,10 @@ public @interface FiColumn {
 	 */
 	int length() default 0;
 
+	/**
+	 * Precision 1 : tinyint olduğunu gösterir Integer alanlar için
+	 * @return
+	 */
 	int precision() default 0;
 
 	int scale() default 0;

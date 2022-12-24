@@ -31,12 +31,12 @@ public class FiCal {
 		setDateBuffer(dateBuffer);
 	}
 
-	public static Integer getPrevMonth() {
-		return ((FiCal.getMonthBegin0()-1)%12)+1; // 0-1=-1%12=11 + 1 = 12
+	public static Integer getPrevMonthNumber() {
+		return ((FiCal.getMonthNumberBegin0()-1)%12)+1; // 0-1=-1%12=11 + 1 = 12
 	}
 
-	public static Integer getPrevMonth(Date dtNow) {
-		return ((FiCal.getMonthBegin0(dtNow)-1)%12)+1; // 0-1=-1%12=11 + 1 = 12
+	public static Integer getPrevMonthNumber(Date dtNow) {
+		return ((FiCal.getMonthNumberBegin0(dtNow)-1)%12)+1; // 0-1=-1%12=11 + 1 = 12
 	}
 
 	public static Date setDayofDate(Date dtSon, int dayNo) {
@@ -96,11 +96,18 @@ public class FiCal {
 	 *
 	 * @return
 	 */
-	public static Integer getMonthBegin0() {
+	public static Integer getMonthNumberBegin0() {
 		return Calendar.getInstance().get(Calendar.MONTH);
 	}
 
-	public static Integer getMonthBegin0(Date dtNow) {
+	/**
+	 *
+	 * Ocak Ayı 0 indeksinden başlar
+	 *
+	 * @param dtNow
+	 * @return
+	 */
+	public static Integer getMonthNumberBegin0(Date dtNow) {
 		Calendar calendar = convertToCal(dtNow);
 		return calendar.get(Calendar.MONTH);
 	}

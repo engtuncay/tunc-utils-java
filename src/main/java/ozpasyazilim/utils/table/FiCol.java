@@ -333,7 +333,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 	private Boolean boFilterLike;
 
 	/**
-	 *
+	 * Entity , Node Componet, List-FiCol- degerlerini alan consumer fn
 	 */
 	private TriConsumer<Object, Node, List<FiCol>> fnEditorNodeRendererAfterFormLoad2;
 

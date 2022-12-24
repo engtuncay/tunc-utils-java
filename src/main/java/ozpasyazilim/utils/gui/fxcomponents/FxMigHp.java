@@ -18,7 +18,7 @@ public class FxMigHp {
 	/**
 	 * Layout General Constraits (constructor based)
 	 */
-	private String layGenConst; // lgc
+	private String layConstGen; // lgc
 
 	/**
 	 * Layout Column Constraints (constructor based)
@@ -56,13 +56,13 @@ public class FxMigHp {
 
 	public static FxMigHp blc(String lc) {
 		FxMigHp fxMigHp = new FxMigHp();
-		fxMigHp.setLayGenConst(lc);
+		fxMigHp.setLayConstGen(lc);
 		return fxMigHp;
 	}
 
 	public static FxMigHp blc(String lgc, String rc, String lcc) {
 		FxMigHp fxMigHp = new FxMigHp();
-		fxMigHp.setLayGenConst(lgc);
+		fxMigHp.setLayConstGen(lgc);
 		fxMigHp.setLayRowConst(rc);
 		fxMigHp.setLayColConst(lcc);
 		return fxMigHp;
@@ -76,24 +76,34 @@ public class FxMigHp {
 
 	public FxMigHp lgcInsetAndGap(Integer inset, Integer gapx, Integer gapy) {
 		addCommaLgcPrev();
-		this.layGenConst += String.format("insets %s,gap %s %s", inset, gapx, gapy);
+		this.layConstGen += String.format("insets %s,gap %s %s", inset, gapx, gapy);
 		return this;
 	}
 
 	public FxMigHp lgcNoGrid() {
 		addCommaLgcPrev();
-		this.layGenConst += "nogrid";
+		this.layConstGen += "nogrid";
 		return this;
 	}
 
 	public FxMigHp lgcAlignx(Integer percent) {
 		addCommaLgcPrev();
-		this.layGenConst += "ax " + percent + "%";
+		this.layConstGen += "ax " + percent + "%";
 		return this;
 	}
 
 	public FxMigHp lgcStInset0Gap55() {
 		lgcInsetAndGap(0, 5, 5);
+		return this;
+	}
+
+	public FxMigHp lgcStInset0Gap50() {
+		lgcInsetAndGap(0, 5,0 );
+		return this;
+	}
+
+	public FxMigHp lgcStInset0Gap00() {
+		lgcInsetAndGap(0, 0,0 );
 		return this;
 	}
 
@@ -107,9 +117,14 @@ public class FxMigHp {
 		return this;
 	}
 
+	public FxMigHp lgcStInset3Gap33() {
+		lgcInsetAndGap(3, 3, 3);
+		return this;
+	}
+
 	private void addCommaLgcPrev() {
-		if (FiString.isEmptyTrim(getLayGenConst())) return;
-		this.layGenConst += ",";
+		if (FiString.isEmptyTrim(getLayConstGen())) return;
+		this.layConstGen += ",";
 	}
 
 	private void addCommaToCc() {
@@ -117,11 +132,11 @@ public class FxMigHp {
 		this.cellConst += ",";
 	}
 
-	public String getLayGenConst() {
-		if (layGenConst == null) {
-			layGenConst = "";
+	public String getLayConstGen() {
+		if (layConstGen == null) {
+			layConstGen = "";
 		}
-		return layGenConst;
+		return layConstGen;
 	}
 
 	public String getLayRowConst() {
@@ -147,18 +162,18 @@ public class FxMigHp {
 	 */
 	public String genLayConst() {
 
-		if (layGenConst == null) {
-			layGenConst = "";
+		if (layConstGen == null) {
+			layConstGen = "";
 		}
 
 		if (debugMode) {
-			if (!layGenConst.contains("debug")) {
+			if (!layConstGen.contains("debug")) {
 				addCommaLgcPrev();
-				layGenConst += "debug";
+				layConstGen += "debug";
 			}
 		}
 
-		return layGenConst;
+		return layConstGen;
 	}
 
 	/**
@@ -201,12 +216,12 @@ public class FxMigHp {
 
 	public FxMigHp lgcDebug() {
 		addCommaLgcPrev();
-		this.layGenConst += "debug";
+		this.layConstGen += "debug";
 		return this;
 	}
 
-	public void setLayGenConst(String layGenConst) {
-		this.layGenConst = layGenConst;
+	public void setLayConstGen(String layConstGen) {
+		this.layConstGen = layConstGen;
 	}
 
 	public void setLayRowConst(String layRowConst) {
@@ -245,6 +260,11 @@ public class FxMigHp {
 
 	public FxMigHp ccAlignYTop() {
 		appendCc("aligny top");
+		return this;
+	}
+
+	public FxMigHp lgcStInset5Gap00() {
+		lgcInsetAndGap(5, 0,0 );
 		return this;
 	}
 }

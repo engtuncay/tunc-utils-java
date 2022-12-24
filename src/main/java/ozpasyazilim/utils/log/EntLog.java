@@ -22,11 +22,25 @@ public class EntLog {
 		return txMessage;
 	}
 
+	public String getTxMessageNtn() {
+		if (txMessage == null) {
+			return "";
+		}
+		return txMessage;
+	}
+
 	public void setTxMessage(String txMessage) {
 		this.txMessage = txMessage;
 	}
 
 	public String getTxLogType() {
+		return txLogType;
+	}
+
+	public String getTxLogTypeNtn() {
+		if (txLogType == null) {
+			return "";
+		}
 		return txLogType;
 	}
 

@@ -4,7 +4,7 @@ package ozpasyazilim.utils.mvc;
  * Mos Controller Interface
  *
 */
-public interface IFxMosCont<E> extends IFxSimpleCont, IFxSimpleWitEntCont<E> {
+public interface IFxMosCont<E> extends IFxSimpleCont, IFxSimpleGenCont<E> {
 
 	IFxModView getModView();
 

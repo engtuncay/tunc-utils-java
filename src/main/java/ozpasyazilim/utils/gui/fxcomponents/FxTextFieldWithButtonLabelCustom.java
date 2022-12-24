@@ -12,7 +12,7 @@ public class FxTextFieldWithButtonLabelCustom<EntClazz> extends FxMigPane {
 	private FxButton fxButton;
 
 	public FxTextFieldWithButtonLabelCustom() {
-		super(FxMigPane.lcStandardInset0Gap00);
+		super(FxMigHp.bui().lgcStInset0Gap00().getLayConstGen());
 		fxButton = new FxButton("*");
 		getFxTextField();
 		fxButton.setMaxHeight(22d);

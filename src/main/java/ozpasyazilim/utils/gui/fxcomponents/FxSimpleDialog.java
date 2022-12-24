@@ -13,7 +13,6 @@ import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.mvc.AbsFxSimpleCont;
 import ozpasyazilim.utils.returntypes.Fdr;
 import ozpasyazilim.utils.table.FiCol;
-import ozpasyazilim.utils.table.FiColList;
 import ozpasyazilim.utils.table.OzColType;
 
 import java.util.ArrayList;
@@ -22,6 +21,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
+
 	FxMigPaneView modView;
 	FxSimpleDialogType fxSimpleDialogType;
 	private FxButton btnOk;
@@ -310,7 +310,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 		getModView().add(fxContent, "wrap");
 	}
 
-	public void initFormDialog(FiColList fiCols, FormType formType) {
+	public void initFormDialog(List<FiCol> fiCols, FormType formType) {
 		getFxFormInit().setup1(fiCols,FormType.PlainFormV1);
 		setFxSimpleDialogType(FxSimpleDialogType.Undefined);
 		initCont();
@@ -320,8 +320,13 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 		setupFooterWithValidateForm();
 	}
 
+	public void initFormDialogForUpdate(List<FiCol> fiCols, FormType formType, Object entity) {
+		getFxFormInit().setFormEntity(entity);
+		getFxFormInit().setBoUpdateForm(true);
+		initFormDialog(fiCols,formType);
+	}
 
-	@Override
+		@Override
 	public FxMigPaneView getModView() {
 		return modView;
 	}
@@ -750,4 +755,5 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 	public void setPredValidateForm(Predicate<FxFormMig3> predValidateForm) {
 		this.predValidateForm = predValidateForm;
 	}
+
 }

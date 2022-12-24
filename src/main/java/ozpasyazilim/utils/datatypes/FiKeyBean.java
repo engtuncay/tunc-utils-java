@@ -85,8 +85,9 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
 		return this;
 	}
 
-	public void putObj(Object field, Object value) {
+	public FiKeyBean putObj(Object field, Object value) {
 		this.put(field.toString(), value);
+		return this;
 	}
 
 
@@ -218,12 +219,12 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
 		this.put(field.toString(), value);
 	}
 
-	public Object getByObj(Object txKey) {
+	public Object getAsObj(Object txKey) {
 		if (txKey == null) return null;
 		return get(txKey.toString());
 	}
 
-	public String  getAsString(FiCol fiCol) {
+	public String getAsString(FiCol fiCol) {
 		if (fiCol == null || FiString.isEmpty(fiCol.getFieldName())) return null;
 
 		if (containsKey(fiCol.getFieldName())) {
@@ -242,11 +243,11 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
 		return null;
 	}
 
-	public Boolean  getAsBoolean(FiCol fiCol) {
+	public Boolean getAsBoolean(FiCol fiCol) {
 		if (fiCol == null || FiString.isEmpty(fiCol.getFieldName())) return null;
 
 		if (containsKey(fiCol.getFieldName())) {
-			if(get(fiCol.getFieldName()) instanceof Boolean){
+			if (get(fiCol.getFieldName()) instanceof Boolean) {
 				return (Boolean) get(fiCol.getFieldName());
 			}
 		}
@@ -255,137 +256,8 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
 	}
 
 
+	public void copyParamByFiColOrEmptyStr(FiCol fiColFrom, FiCol fiColTo) {
+		putObj(fiColTo, getOrDefault(fiColFrom.toString(), ""));
+	}
+
 }
-
-//public class FiKeyBean extends HashMap<String, Object> {
-//
-//	public FiKeyBean buildPut(Object fieldName, Object value) {
-//		if (fieldName == null) return this;
-//		this.put(fieldName.toString(), value);
-//		return this;
-//	}
-//	public FiKeyBean buildPutIfNotNull(Object fieldName, Object value) {
-//		if (fieldName == null) return this;
-//		if (value == null) return this;
-//
-//		this.put(fieldName.toString(), value);
-//		return this;
-//	}
-//
-//	public void puto(Object field, Object value) {
-//		this.put(field.toString(), value);
-//	}
-//
-//	public void add(Object field, Object value) {
-//		this.put(field.toString(), value);
-//	}
-//
-//	public void putIfNotNull(Object objKey, Object value) {
-//		if (value != null) {
-//			this.put(objKey.toString(), value);
-//		}
-//	}
-//	public FiKeyBean bind(Object key, Object value) {
-//		if (key == null) return this;
-//		put(key.toString(), value);
-//		return this;
-//	}
-//
-//	public Object getAfterCheck(Object txKey) {
-//		if(FiString.isEmptyToString(txKey)) return null;
-//
-//		if (this.containsKey(txKey.toString())) {
-//			return get(txKey.toString());
-//		}else{
-//			return null;
-//		}
-//
-//	}
-
-//	public FiMapParams buildPutIfNotEmpty(Object fieldName, Object value) {
-//		putIfNotEmpty(fieldName,value,false);
-//		return this;
-//	}
-
-//	public FiMapParams buildPutIfNotEmpty(Object fieldName, Object value, Boolean addPercentage) {
-//		putIfNotEmpty(fieldName, value, addPercentage);
-//		return this;
-//	}
-
-//	Set<String> activateParamSet;
-//	Set<String> deActivateParamSet;
-
-//	public void add(Object field, Object value) {
-//		this.put(field.toString(), value);
-//	}
-
-//	public void putIfNotNull(Object objKey, Object value) {
-//		if (value != null) {
-//			this.put(objKey.toString(), value);
-//		}
-//	}
-
-//	public FiMapParams bindAndActivateListParamIfNotEmpty(Object objKey, List value, StringProperty spSql) {
-//
-//		if (FiCollection.isNotEmpty(value)) {
-//			String param = objKey.toString();
-//			addMultiParams(spSql, param, (List) value, this);
-//			FiQuery.fsmActivateOptParamForProp(spSql, param);
-//		}
-//
-//		return this;
-//	}
-
-//	private void addMultiParams(StringProperty sqlQuery, String param, List listData, FiKeyBean mapBind) {
-//
-//		if (FiCollection.isEmpty(listData)) return;
-//
-//		Map<String, Object> mapParamsNew = new HashMap<>();
-//
-//		Integer index = -1;
-//		for (Object listDatum : listData) {
-//			index++;
-//			String paramNameByTemplate = FiQuery.genTemplateMultiParam(param, index);
-//			Object value = listData.get(index);
-//			mapParamsNew.put(paramNameByTemplate, value);
-//		}
-//
-//		FiQuery.fhrConvertSqlForMultiParamByTemplate2(sqlQuery, param, listData.size());
-//
-//		mapBind.remove(param);
-//		mapBind.putAll(mapParamsNew);
-//
-//	}
-
-
-//	public void deActivateParam(Object sqlParam, StringProperty spSql) {
-//		if (sqlParam == null) return;
-//		FiQuery.fhrDeActivateOptParam(spSql, sqlParam.toString());
-//	}
-
-//	public void activateParam(Object sqlParam, StringProperty spSql) {
-//		if (sqlParam == null) return;
-//		FiQuery.fsmActivateOptParamForProp(spSql, sqlParam.toString());
-//	}
-
-//	public Set<String> getActivateParamSet() {
-//		if (activateParamSet == null) {
-//			activateParamSet = new HashSet<>();
-//		}
-//		return activateParamSet;
-//	}
-
-//	public void setActivateParamSet(Set<String> activateParamSet) {
-//		this.activateParamSet = activateParamSet;
-//	}
-
-//	public Set<String> getDeActivateParamSet() {
-//		if (deActivateParamSet == null) {
-//			deActivateParamSet = new HashSet<>();
-//		}
-//		return deActivateParamSet;
-//	}
-
-//	public void setDeActivateParamSet(Set<String> deActivateParamSet) {
-//		this.deActivateParamSet = deActivateParamSet;
-//	}

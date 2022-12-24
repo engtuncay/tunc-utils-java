@@ -39,7 +39,7 @@ public class FxMigPaneEnt<EntClazz> extends FxMigPane {
 	}
 
 	public FxMigPaneEnt(FxMigHp fxMigHp) {
-		super(fxMigHp.getLayGenConst(), fxMigHp.getLayColConst(), fxMigHp.getLayRowConst());
+		super(fxMigHp.getLayConstGen(), fxMigHp.getLayColConst(), fxMigHp.getLayRowConst());
 	}
 
 	public static FxMigPaneEnt buiStandard() {

@@ -18,6 +18,7 @@ public abstract class AbsFkbRepoJdbi extends RepoGeneralJdbi implements IRepoJdb
 
 	}
 
+
 	public AbsFkbRepoJdbi(String connProfile) {
 		this.connProfile = connProfile;
 	}
@@ -60,5 +61,32 @@ public abstract class AbsFkbRepoJdbi extends RepoGeneralJdbi implements IRepoJdb
 		}
 
 		return fdr;
+	}
+
+	public Fdr jdUpdateBindMapMain(FiQuery fiQuery) {
+		return jdUpdateBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
+	}
+
+	public Fdr jdUpdateBindMapMain(String updateQuery, Map<String, Object> fiMapParams) {
+		Fdr fdrMain = new Fdr();
+		try {
+			Integer rowCountUpdate = getJdbi().withHandle(handle -> {
+				return handle.createUpdate(FiQuery.stoj(updateQuery))
+						.bindMap(fiMapParams)
+						.execute(); // returns row count updated
+			});
+			//Loghelperr.getInstance(getClass()).debug("Row Count Update:"+rowCountUpdate);
+			//fiDbResult.setLnSuccessWithUpBoResult(1, rowCountUpdate);
+			fdrMain.setBoResultAndRowsAff(true, rowCountUpdate);
+		} catch (Exception ex) {
+			fdrMain.setBoResult(false, ex);
+			Loghelper.get(getClass()).debug(FiException.exToLog(ex));
+		}
+		return fdrMain;
+	}
+
+
+	public void setAutoClass() {
+
 	}
 }

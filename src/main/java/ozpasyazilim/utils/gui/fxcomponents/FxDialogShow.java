@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -700,11 +701,11 @@ public class FxDialogShow {
 		dialogConfig.setHeight(height.doubleValue());
 		dialogConfig.setBoNonModal(boNonModal);
 
-		nodeModalByIFxModMain(fxModCont, dialogConfig);
+		nodeModalByIFxModContMain(fxModCont, dialogConfig);
 
 	}
 
-	public void nodeModalByIFxModMain(IFxModCont fxModCont, DialogConfig dialogConfig) {
+	public void nodeModalByIFxModContMain(IFxModCont fxModCont, DialogConfig dialogConfig) {
 
 		if (dialogConfig == null) dialogConfig = new DialogConfig();
 
@@ -760,12 +761,14 @@ public class FxDialogShow {
 
 	}
 
-	public void nodeModalBySimpleCont(IFxSimpleCont fxModCont, DialogConfig dialogConfig) {
+	public void nodeModalByIFxSimpleCont(IFxSimpleCont fxModCont, DialogConfig dialogConfig) {
 
 		if (dialogConfig == null) dialogConfig = new DialogConfig();
 
+		Pane rootPane = fxModCont.getModView().getRootPane();
+
 		if (!FiString.isEmpty(dialogConfig.getCssFileName())) {
-			fxModCont.getModView().getRootPane().getStylesheets().add(dialogConfig.getCssFileName());
+			rootPane.getStylesheets().add(dialogConfig.getCssFileName());
 		}
 
 		Stage stage = fxModCont.getFxStage();
@@ -782,11 +785,10 @@ public class FxDialogShow {
 		FxScene scene = null;
 
 		if (dialogConfig.getWidth() != null && dialogConfig.getHeight() != null) {
-			scene = new FxScene(fxModCont.getModView().getRootPane(), dialogConfig.getWidth(), dialogConfig.getHeight());  //,width,height
+			scene = new FxScene(rootPane, dialogConfig.getWidth(), dialogConfig.getHeight());  //,width,height
 		} else {
-			scene = new FxScene(fxModCont.getModView().getRootPane());  //,width,height
+			scene = new FxScene(rootPane);  //,width,height
 		}
-
 
 		if (dialogConfig.getNodeRelative() != null) {
 			Bounds bounds = dialogConfig.getNodeRelative().localToScreen(dialogConfig.getNodeRelative().getBoundsInLocal());
@@ -799,7 +801,8 @@ public class FxDialogShow {
 
 		if (dialogConfig.getWidth() != null) {
 			//Loghelper.debug(getClass(), "width ayarlanıyor" + dialogContext.getWidth());
-			stage.setWidth(dialogConfig.getWidth());
+			//stage.setWidth(dialogConfig.getWidth());
+			rootPane.setPrefWidth(dialogConfig.getWidth());
 		}
 
 		if (dialogConfig.getWidth() == null && dialogConfig.getHeight() == null) {

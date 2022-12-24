@@ -9,7 +9,7 @@ public class FiBoolean {
 
 	public static boolean isFalse(Boolean boValue) {
 		if (boValue == null) return false;
-		return !boValue; // false sa true , true false gönderir
+		return !boValue; // false ise true , true ise false gönderir
 	}
 
 	public static Boolean convertBoolean(String txValue) {
@@ -70,8 +70,8 @@ public class FiBoolean {
 	}
 
 	public static boolean isNullOrTrue(Boolean boolVar) {
-		if (boolVar == null || boolVar == true) return true;
-		return false;
+		if (boolVar == null) return true;
+		return boolVar;
 	}
 
 	public static Boolean convertDbResultGteZero(Integer result) {

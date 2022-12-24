@@ -76,7 +76,7 @@ public class FiNumber {
 			try {
 				return Double.parseDouble(sNumbernew);
 			} catch (Exception e) {
-				Loghelper.get().debug("String sayı double'a çevrilemedi." + sNumberold.toString());
+				Loghelper.get(FiNumber.class).debug("String sayı double'a çevrilemedi." + sNumberold.toString());
 				return null;
 			}
 		}
@@ -557,7 +557,7 @@ public class FiNumber {
 			Double numbernew = Double.parseDouble(sNumbernew);
 			return numbernew;
 		} catch (Exception e) {
-			Loghelper.get().trace("String sayı double'a çevrilemedi.");
+			Loghelper.get(FiNumber.class).trace("String sayı double'a çevrilemedi.");
 			return null;
 		}
 

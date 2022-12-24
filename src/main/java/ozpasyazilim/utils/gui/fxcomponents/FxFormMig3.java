@@ -42,7 +42,7 @@ public class FxFormMig3<EntClazz> extends FxMigPaneEnt<EntClazz> implements IFxM
 
 	private Boolean boReadOnlyForm;
 
-	private Function<FxFormMig2, Fdr> fnValidateForm;
+	private Function<FxFormMig3, Fdr> fnValidateForm;
 
 	public FxFormMig3() {
 		super("insets 0");
@@ -123,7 +123,7 @@ public class FxFormMig3<EntClazz> extends FxMigPaneEnt<EntClazz> implements IFxM
 		return FxEditorFactory.bindFormToKeyBeanByEditorNode(getListFormElements());
 	}
 
-	public FiKeyBean getFormAsFiKeyBean() {
+	public FiKeyBean getFormAsFkb() {
 		return FxEditorFactory.bindFormToKeyBeanByEditorNode(getListFormElements());
 	}
 
@@ -266,16 +266,17 @@ public class FxFormMig3<EntClazz> extends FxMigPaneEnt<EntClazz> implements IFxM
 			// Tek satır label göstermek için
 			if (fiCol.getColEditorClass().equals(EnumColNodeType.FxLabelRowComment.toString())) {
 				FxLabel fxLabelComment = new FxLabel(fiCol.getHeaderName());
-				add(fxLabelComment, "span,pushx,growx");
+				add(fxLabelComment, "pushx,growx,span");
 				continue;
 			}
 
+			// Label oluşturulur
 			Label lblForm = new Label(fiCol.getHeaderName());
 			add(lblForm, "width 30%,wmax 150,wmin 120");
 
 			Object entityForNode = getFormEntity();
 
-			// Editor comp (node) oluşturulur
+			// Editor comp (node) oluşturulur, lifecycle metodları çalıştırılır
 			Node node = FxEditorFactory.generateEditorNodeFullLifeCycle(fiCol, entityForNode);
 
 			if (FiBoolean.isTrue(getBoReadOnlyFormNtn()) || FiBoolean.isFalse(fiCol.getBoEditable())

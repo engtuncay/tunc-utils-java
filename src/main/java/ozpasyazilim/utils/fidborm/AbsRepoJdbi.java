@@ -20,6 +20,7 @@ import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static ozpasyazilim.utils.core.OzFormatter.*;
 
@@ -266,24 +267,26 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		return fdr;
 	}
 
-	public Fdr<List<EntClazz>> jdSelectListMain(String sqlQuery) {
-		if (entityClass == null) setAutoClass();
-		Fdr<List<EntClazz>> fdr = new Fdr<>();
+	public Fdr<List<String>> jdSelectListStringMain(String sql, FiKeyBean fiKeyBean) {
+		Fdr<List<String>> fdr = new Fdr<>();
 		fdr.setValue(new ArrayList<>());
+
 		try {
-			List<EntClazz> result = getJdbi().withHandle(handle -> {
-				return handle.createQuery(FiQuery.stoj(sqlQuery))
-						.mapToBean(getEntityClass())
-						.list();
+			List<String> result = getJdbi().withHandle(handle -> {
+				return handle.select(FiQuery.stoj(sql))
+						.bindMap(fiKeyBean)
+						.mapTo(String.class)
+						.collect(Collectors.toList());
 			});
-			fdr.setBoResultAndValue(true, result, 1);
+			fdr.setBoResult(true);
+			fdr.setValue(result);
 		} catch (Exception ex) {
-			Loghelper.errorLog(getClass(), "Query Problem");
-			Loghelper.errorException(getClass(), ex);
-			fdr.setBoResult(false, ex);
+			Loghelper.get(getClass()).error(FiException.exToLog(ex));
+			fdr.setBoResult(false);
 		}
 		return fdr;
 	}
+
 
 	/**
 	 * FiDbResult içi default olarak new Arraylist ile doldurulmadığı için kullanan metodlar kontrol edilecek
@@ -858,6 +861,17 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		for (EntClazz entClazz : entityList) {
 			fdr.combineAnd(jdDeleteByCandId1(entClazz));
+		}
+
+		return fdr;
+	}
+
+	public Fdr jdDeleteListById(List<EntClazz> entityList) {
+		// FIXME Tek Transaction çevirmek lazım
+		Fdr fdr = new Fdr();
+
+		for (EntClazz entClazz : entityList) {
+			fdr.combineAnd(jdDeleteById(entClazz));
 		}
 
 		return fdr;
@@ -1645,6 +1659,14 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		return jdUpdateBindEntityMain(sqlQuery, entity);
 	}
 
+	public Fdr jdUpdateFiColsBindMapByIdFieldInFiCols(List<? extends IFiCol> listFields, FiKeyBean fiKeyBean) {
+
+		String sqlQuery = FiQueryGenerator.updateQueryWithFiColListByIdFiCol(getEntityClass(), listFields);
+		//Loghelper.get(getClass()).debug(sqlQuery);
+
+		return jdUpdateBindMapMain(sqlQuery, fiKeyBean);
+	}
+
 	public Fdr jdUpdateFiColsBindEntityByIdFieldInClass(List<? extends IFiCol> listFields, EntClazz entity) {
 
 		String sqlQuery = FiQueryGenerator.updateQueryWithFiColsByIdFieldInClass(getEntityClass(), listFields);
@@ -2375,7 +2397,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 	 * @param entClazz
 	 * @return
 	 */
-	public Fdr<Integer> jdSelectIntBindEntityMain(String sql, EntClazz entClazz) {
+	public Fdr<Integer> jdSelectIntBindEntityMainNtn(String sql, EntClazz entClazz) {
 
 		Fdr<Integer> fdr = new Fdr<>();
 
@@ -2390,8 +2412,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 			result.ifPresent(fdr::setValue);
 			fdr.setBoResult(true);
 		} catch (Exception ex) {
-			Loghelper.errorLog(getClass(), "Query Problem");
-			Loghelper.errorException(getClass(), ex);
+			Loghelper.get(getClass()).debug("Query Problem:" + FiException.exToLog(ex));
 			fdr.setValue(-1);
 			fdr.setBoResult(false, ex);
 		}
@@ -3306,4 +3327,5 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		//Loghelper.get(getClass()).debug("sql:" + fiQuery.getTxQuery());
 		return jdSelectListBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
 	}
+
 }

@@ -18,7 +18,7 @@ public class EncryptedProperties extends Properties {
 	// (byte) 0x33,
 	// (byte) 0x10,
 	// (byte) 0x12, };
-	String password =null;
+	String password = null;
 
 	public EncryptedProperties() throws Exception {
 		// parametre silindi String password
@@ -43,9 +43,10 @@ public class EncryptedProperties extends Properties {
 		try {
 			return decrypt(super.getProperty(key));
 		} catch (Exception e) {
-			Loghelper.logexceptionOnlyMail(FiException.exceptionStackTraceStringFull(e));
-			throw new RuntimeException("Couldn't decrypt property");
+			Loghelper.get(EncryptedProperties.class).error(FiException.exToLog(e));
+			//throw new RuntimeException("Couldn't decrypt property");
 		}
+		return null;
 	}
 
 	@Override
@@ -53,9 +54,11 @@ public class EncryptedProperties extends Properties {
 		try {
 			return super.setProperty(key, encrypt(value));
 		} catch (Exception e) {
-			Loghelper.logexceptionOnlyMail(FiException.exceptionStackTraceStringFull(e));
-			throw new RuntimeException("Couldn't encrypt property");
+			Loghelper.get(EncryptedProperties.class).error(FiException.exToLog(e));
+//			Loghelper.logexceptionOnlyMail(FiException.exceptionStackTraceStringFull(e));
+//			throw new RuntimeException("Couldn't encrypt property");
 		}
+		return null;
 	}
 
 	private synchronized String decrypt(String str) throws Exception {

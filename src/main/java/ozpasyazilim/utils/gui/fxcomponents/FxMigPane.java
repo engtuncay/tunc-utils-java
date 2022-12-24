@@ -10,20 +10,8 @@ import ozpasyazilim.utils.core.FiString;
 
 public class FxMigPane extends MigPane {
 
-	// inset 0
-	public static String lcStandardInset0Gap50 = "insets 0,gap 5 0"; // gap x y : x yatatya boşluk : y dikeyde boşluk
-	public static String lcStandardInset0Gap55 = "insets 0,gap 5 5"; // gap x y : x yatatya boşluk : y dikeyde boşluk
-	public static String lcStandardInset0Gap00 = "insets 0,gap 0 0";
-	public static String lcStandardInset0Gap5555 = "insets 0,gap 5 5 5 5"; // gap x y : x yatatya boşluk : y dikeyde boşluk
-
-	// inset 5
-	public static String lcStandardInset3Gap33 = "insets 3,gap 3 3";
-
-	// inset 5
-	public static String lcStandardInset5Gap55 = "insets 5,gap 5 5";
-	public static String lcStandardInset5Gap00 = "insets 5,gap 0 0";
-
-	public static String lcDebug = ",debug";
+	//public static String lcStandardInset0Gap55 = "insets 0,gap 5 5"; // gap x y : x yatatya boşluk : y dikeyde boşluk
+	//	public static String lcDebug = ",debug";
 
 	public FxMigPane() {
 		super();
@@ -54,7 +42,7 @@ public class FxMigPane extends MigPane {
 	}
 
 	public FxMigPane(FxMigHp fxMigHp) {
-		super(fxMigHp.getLayGenConst(), fxMigHp.getLayColConst(), fxMigHp.getLayRowConst());
+		super(fxMigHp.getLayConstGen(), fxMigHp.getLayColConst(), fxMigHp.getLayRowConst());
 	}
 
 	// Constraint Shortcuts
@@ -80,12 +68,12 @@ public class FxMigPane extends MigPane {
 		return ",w :" + i + ":" + i;
 	}
 
-	public static void addDebugLc() {
-		FxMigPane.lcStandardInset0Gap50 += FxMigPane.lcDebug;
-		FxMigPane.lcStandardInset0Gap5555 += FxMigPane.lcDebug;
-		FxMigPane.lcStandardInset3Gap33 += FxMigPane.lcDebug;
-		FxMigPane.lcStandardInset5Gap55 += FxMigPane.lcDebug;
-	}
+//	public static void addDebugLc() {
+//		FxMigPane.lcStandardInset0Gap50 += FxMigPane.lcDebug;
+//		FxMigPane.lcStandardInset0Gap5555 += FxMigPane.lcDebug;
+//		FxMigPane.lcStandardInset3Gap33 += FxMigPane.lcDebug;
+//		FxMigPane.lcStandardInset5Gap55 += FxMigPane.lcDebug;
+//	}
 
 	public static FxMigPane buiStandard() {
 		return new FxMigPane(FxMigHp.lgcStandard1InsetZeroGap00);
