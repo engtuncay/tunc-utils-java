@@ -123,11 +123,11 @@ public class FiConsole {
 	}
 
 	public static <E> void debugStringList(List<String> listString, Class clazz) {
-		Loghelper.debugLog(clazz, String.format("Array Detail \n\n%s", textStringList(listString)));
+		Loghelper.debugLog(clazz, String.format("Array Detail \n\n%s", textStringCollection(listString)));
 	}
 
-	public static <E> void debugStringList(List<String> listString) {
-		Loghelper.debugLog(FiConsole.class, String.format("Array Detail \n\n%s", textStringList(listString)));
+	public static <E> void debugStringList(Collection<String> stringCollection) {
+		Loghelper.debugLog(FiConsole.class, String.format("Array Detail \n\n%s", textStringCollection(stringCollection)));
 	}
 
 	public static <E> void debugListObjectsToString(List<E> list, Class clazz) {
@@ -219,7 +219,7 @@ public class FiConsole {
 
 	}
 
-	public static String textStringList(List<String> list) {
+	public static String textStringCollection(Collection<String> list) {
 
 		StringBuilder result = new StringBuilder("");
 
@@ -239,7 +239,6 @@ public class FiConsole {
 		}
 
 		return result.toString();
-
 	}
 
 	public static <E> String textListObjectsToString(List<E> list) {
@@ -416,7 +415,7 @@ public class FiConsole {
 			List list = (List) obj;
 
 			if (list.size() > 0 && list.get(0) instanceof String) {
-				return String.format("Array Detail \n\n%s", textStringList((list)));
+				return String.format("Array Detail \n\n%s", textStringCollection((list)));
 			}
 
 			debugListObjectsNotNull(list, FiConsole.class);
@@ -739,4 +738,7 @@ public class FiConsole {
 		return log.toString();
 	}
 
+	public static void printStringCollection(Collection<String> strings) {
+		System.out.println(textStringCollection(strings));
+	}
 }

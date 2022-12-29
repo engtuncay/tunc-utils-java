@@ -84,12 +84,12 @@ public class FiRegExp {
 
 	}
 
-	public static Set<String> matchGroupOneSet(String sRegex, String sText) {
+	public static Set<String> matchGroupOneToSet(String txPattern, String txValue) {
 
 		Set<String> setFirst = new HashSet<>();
 
-		Pattern pattern = Pattern.compile(sRegex);
-		Matcher matcher = pattern.matcher(sText);
+		Pattern pattern = Pattern.compile(txPattern);
+		Matcher matcher = pattern.matcher(txValue);
 
 		while(matcher.find()) {
 			setFirst.add(matcher.group(1));
@@ -102,16 +102,16 @@ public class FiRegExp {
 	 *
 	 * matcher.group(0) sonucunu set halinde verir
 	 *
-	 * @param sRegex
-	 * @param sText
+	 * @param txPattern
+	 * @param txValue
 	 * @return
 	 */
-	public static Set<String> matchGroupZeroSet(String sRegex, String sText) {
+	public static Set<String> matchGroupZeroToSet(String txPattern, String txValue) {
 
 		Set<String> setFirst = new HashSet<>();
 
-		Pattern pattern = Pattern.compile(sRegex);
-		Matcher matcher = pattern.matcher(sText);
+		Pattern pattern = Pattern.compile(txPattern);
+		Matcher matcher = pattern.matcher(txValue);
 
 		while(matcher.find()) {
 			setFirst.add(matcher.group(0));
@@ -119,8 +119,6 @@ public class FiRegExp {
 
 		return setFirst;
 	}
-
-
 
 	public static Matcher match(String sRegex, String sText) {
 		Pattern pattern = Pattern.compile(sRegex);

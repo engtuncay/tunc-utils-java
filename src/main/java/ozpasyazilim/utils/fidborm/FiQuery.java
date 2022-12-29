@@ -606,12 +606,12 @@ public class FiQuery {
 	public static Set<String> findParamOptionals(String sql) {
 		// regexr: Sql Parametre List rg2011201511
 		String regEx = "--!(\\w*).*\\n";
-		return FiRegExp.matchGroupOneSet(regEx, sql);
+		return FiRegExp.matchGroupOneToSet(regEx, sql);
 	}
 
 	public static Set<String> findParams(String sql) {
 		String regEx = "@(\\w*)";
-		return FiRegExp.matchGroupOneSet(regEx, sql);
+		return FiRegExp.matchGroupOneToSet(regEx, sql);
 	}
 
 	/**
@@ -799,6 +799,36 @@ public class FiQuery {
 
 	public void setTxPrimaryKeyFieldName(String txPrimaryKeyFieldName) {
 		this.txPrimaryKeyFieldName = txPrimaryKeyFieldName;
+	}
+
+	public void placeUserParams() {
+
+		if (getMapParamsInit().size() == 0) return;
+
+		String txPattern = "\\b" + getTxUserParamPrefix() + "\\w+\\b";
+		Set<String> setUserParam = FiRegExp.matchGroupZeroToSet(txPattern, getTxQuery());
+
+		if (setUserParam.size() > 0) {
+			for (String txUserParam : setUserParam) {
+				String sqlParam = txUserParam.substring(getTxUserParamPrefix().length(), txUserParam.length());
+				//System.out.println("sqlparam:" + sqlParam);
+				if (getMapParams().containsKey(sqlParam)) {
+					Object paramValue = getMapParams().get(sqlParam);
+					if (paramValue != null) {
+						// URFIX paramvalue sql injection engellebilir
+						String upQuery = getTxQuery().replaceAll(String.format("\\b%s%s\\b", getTxUserParamPrefix(), sqlParam), paramValue.toString());
+						setTxQuery(upQuery);
+					} else {
+						//getTxQuery().replaceAll(String.format("\\b__%s\\b", txUserParam), "NULL");
+					}
+				}
+			}
+		}
+
+	}
+
+	public String getTxUserParamPrefix() {
+		return "__";
 	}
 
 }
