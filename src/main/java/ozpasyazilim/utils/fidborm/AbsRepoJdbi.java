@@ -605,7 +605,6 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 			Loghelper.errorException(getClass(), ex);
 			fdr.setBoResult(false, ex);
 		}
-
 		return fdr;
 	}
 

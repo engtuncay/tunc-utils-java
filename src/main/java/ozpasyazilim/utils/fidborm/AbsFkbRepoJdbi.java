@@ -22,6 +22,10 @@ public abstract class AbsFkbRepoJdbi extends RepoGeneralJdbi implements IRepoJdb
 		this.connProfile = connProfile;
 	}
 
+	public void setAutoClass() {
+
+	}
+
 	public AbsFkbRepoJdbi(Jdbi jdbi) {
 		this.jdbi = jdbi;
 	}
