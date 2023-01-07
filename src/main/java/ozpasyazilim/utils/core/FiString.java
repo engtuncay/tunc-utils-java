@@ -735,6 +735,23 @@ public class FiString {
 	}
 
 	/**
+	 * Nte : Not Empty , iki datadan biri boşsa false döner (boşla boş eşit kabul etmez)
+	 *
+	 * @param txData1
+	 * @param txData2
+	 * @return
+	 */
+	public static Boolean isEqualWithTrimAndNte(String txData1, String txData2) {
+		if (FiString.isEmptyTrim(txData1)) return false;
+		if (FiString.isEmptyTrim(txData2)) return false;
+
+		txData1 = txData1.trim();
+		txData2 = txData2.trim();
+
+		return FiString.orEmpty(txData1).equals(FiString.orEmpty(txData2));
+	}
+
+	/**
 	 * İçerikleri dolu bir şekilde eşit ise
 	 *
 	 * @param txData1
