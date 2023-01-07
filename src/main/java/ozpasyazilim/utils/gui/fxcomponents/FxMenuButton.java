@@ -4,7 +4,9 @@ import javafx.scene.Node;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 
-public class FxMenuButton extends MenuButton {
+public class FxMenuButton extends MenuButton implements IFxSecureNode {
+
+	private String moduleCode;
 
 	public FxMenuButton() {
 		super();
@@ -25,4 +27,18 @@ public class FxMenuButton extends MenuButton {
 	public void addItem(FxMenuItem fxMenuItem) {
 		getItems().add(fxMenuItem);
 	}
+
+	public String getModuleCode() {
+		return moduleCode;
+	}
+
+	public void setModuleCode(String moduleCode) {
+		this.moduleCode = moduleCode;
+	}
+
+	@Override
+	public void setNodeDisabledBySecurity(Boolean isDisabled) {
+		setDisable(isDisabled);
+	}
+
 }

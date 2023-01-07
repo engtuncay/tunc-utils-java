@@ -42,7 +42,7 @@ public class FxMigPane extends MigPane {
 	}
 
 	public FxMigPane(FxMigHp fxMigHp) {
-		super(fxMigHp.getLayConstGen(), fxMigHp.getLayColConst(), fxMigHp.getLayRowConst());
+		super(fxMigHp.getLcgPrep2(), fxMigHp.getLayColConst(), fxMigHp.getLayRowConst());
 	}
 
 	// Constraint Shortcuts

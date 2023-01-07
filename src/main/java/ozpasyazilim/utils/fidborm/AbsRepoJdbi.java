@@ -1171,6 +1171,10 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		return jdInsertEntityMain(entity, false);
 	}
 
+	public Fdr jdInsertEntityWitId(EntClazz entity) {
+		return jdInsertEntityMain(entity, true);
+	}
+
 	public Fdr jdInsertEntityMain(EntClazz entity, Boolean boIncludeIdFields) {
 
 		Jdbi jdbi = getJdbi();
@@ -1537,7 +1541,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		return fdr;
 	}
 
-	public Fdr jdUpdateBindMap(FiQuery fiQuery) {
+	public Fdr jdUpdateBindMapMain(FiQuery fiQuery) {
 		return jdUpdateBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
 	}
 
@@ -1556,9 +1560,11 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 			//Loghelperr.getInstance(getClass()).debug("Row Count Update:"+rowCountUpdate);
 			//fiDbResult.setLnSuccessWithUpBoResult(1, rowCountUpdate);
 			fdr.setBoResultAndRowsAff(true, rowCountUpdate);
+			fdr.setLnResult(1);
 		} catch (Exception ex) {
 			Loghelper.debugException(getClass(), ex);
 			fdr.setBoResult(false, ex);
+			fdr.setLnResult(0);
 		}
 		return fdr;
 	}
@@ -1662,9 +1668,67 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		String sqlQuery = FiQueryGenerator.updateQueryWithFiColListByIdFiCol(getEntityClass(), listFields);
 		//Loghelper.get(getClass()).debug(sqlQuery);
-
 		return jdUpdateBindMapMain(sqlQuery, fiKeyBean);
 	}
+
+	/**
+	 * Id Field in FiColList
+	 * @param fiColList
+	 * @return
+	 */
+	public Fdr jdUpdateFiColsBindColValueByIdField(List<FiCol> fiColList) {
+
+		String sqlQuery = FiQueryGenerator.updateQueryWithFiColListByIdFiCol(getEntityClass(), fiColList);
+
+		FiKeyBean fkbParams = new FiKeyBean();
+		for (IFiCol fiCol : fiColList) {
+			fkbParams.put(fiCol.getFieldName(), fiCol.getColValue());
+		}
+
+		Loghelper.get(getClass()).debug(sqlQuery);
+		return jdUpdateBindMapMain(sqlQuery, fkbParams);
+	}
+
+	public Fdr jdUpdateFiColsBindColValueByIdFieldList(List<FiCol> fiColList) {
+
+		String sqlQuery = FiQueryGenerator.updateQueryWithFiColListByIdList(getEntityClass(), fiColList);
+
+		FiKeyBean fkbParams = new FiKeyBean();
+		for (IFiCol fiCol : fiColList) {
+			fkbParams.put(fiCol.getFieldName(), fiCol.getColValue());
+		}
+
+		FiQuery fiQuery = new FiQuery(sqlQuery, fkbParams);
+		fiQuery.convertListParamToMultiParamsWithKeep();
+
+		Loghelper.get(getClass()).debug(sqlQuery);
+		return jdUpdateBindMapMain(fiQuery);
+	}
+
+	/**
+	 *
+	 * Bind FiColValue
+	 *
+	 * @param fiColList
+	 * @return
+	 */
+	public Fdr<List<EntClazz>> jdSelectCountIdByFiColListWhereIdList(List<FiCol> fiColList) {
+
+		String sqlQuery = FiQueryGenerator.selectQueryCountIdByFiColListWhereIdList(getEntityClass(), fiColList);
+
+		FiKeyBean fkbParams = new FiKeyBean();
+		for (IFiCol fiCol : fiColList) {
+			fkbParams.put(fiCol.getFieldName(), fiCol.getColValue());
+		}
+
+		FiQuery fiQuery = new FiQuery(sqlQuery, fkbParams);
+		fiQuery.convertListParamToMultiParamsWithKeep();
+
+		Loghelper.get(getClass()).debug(sqlQuery);
+		return jdSelectListBindMap(fiQuery);
+	}
+
+
 
 	public Fdr jdUpdateFiColsBindEntityByIdFieldInClass(List<? extends IFiCol> listFields, EntClazz entity) {
 

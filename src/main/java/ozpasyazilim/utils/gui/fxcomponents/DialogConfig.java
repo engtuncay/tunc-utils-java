@@ -38,6 +38,11 @@ public class DialogConfig {
 		return this;
 	}
 
+	public DialogConfig buiContent(String txContent) {
+		setTxContent(txContent);
+		return this;
+	}
+
 	public Double getWidth() {
 		return width;
 	}

@@ -276,7 +276,7 @@ public class FxEditorFactory {
 		}
 
 		// generator içinden çıkarılıp buraya eklendi, esas amaç anlaşılmadı
-		setNodeValueByCompClass(fiTableCol.getColEditorNode(), fiTableCol.getColEditorClass(), fiTableCol.getColEditorValue());
+		setNodeValueByCompClass(fiTableCol.getColEditorNode(), fiTableCol.getColEditorClass(), fiTableCol.getColValue());
 
 		return comp;
 	}
@@ -316,7 +316,7 @@ public class FxEditorFactory {
 		fiCol.doNodeOperationsBeforeSettingValue(entity, comp);
 
 		// comp'a değer atanır
-		setNodeValueByCompClass(fiCol.getColEditorNode(), fiCol.getColEditorClass(), fiCol.getColEditorValue());
+		setNodeValueByCompClass(fiCol.getColEditorNode(), fiCol.getColEditorClass(), fiCol.getColValue());
 
 		fiCol.doNodeOperationsAfterInitialValue(entity, comp);
 

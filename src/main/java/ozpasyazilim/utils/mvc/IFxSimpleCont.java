@@ -3,9 +3,7 @@ package ozpasyazilim.utils.mvc;
 import javafx.stage.Stage;
 
 public interface IFxSimpleCont {
-
 	void initCont();
-
 	IFxSimpleView getModView();
 
 	// Stage tanımı controller üzerinden kullanılacak

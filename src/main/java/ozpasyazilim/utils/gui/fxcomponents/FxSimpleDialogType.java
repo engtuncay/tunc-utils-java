@@ -7,6 +7,7 @@ public enum FxSimpleDialogType {
 	 */
 	FormAutoByCandIdFields,
 	DialogError, DialogInfo, TextFieldWithValidation,
+	ErrorDialogDetailed,
 	/**
 	 * FxForm üzerinden dialog oluşturur
 	 */

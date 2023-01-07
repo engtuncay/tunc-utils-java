@@ -122,19 +122,19 @@ public class FiThread {
 		return thread;
 	}
 
-	public static void startGuiThread(Runnable runnable, FxButton btnListe) {
+	public static void startGuiThread(Runnable runnable, FxButton btnComp) {
 
-		final String textOld = btnListe.getText();
+		final String textOld = btnComp.getText();
 
 		Platform.runLater(() -> {
 			//fxToastPopup2.show(finalMessage+ " Hazırlanıyor...",atomicReference.get());
-			btnListe.setText("İşlem Yapılıyor..");
-			btnListe.setDisable(true);
+			btnComp.setText("İşlem Yapılıyor..");
+			btnComp.setDisable(true);
 		});
 
 		Runnable runnable2 = () -> {
-			btnListe.setText(textOld);
-			btnListe.setDisable(false);
+			btnComp.setText(textOld);
+			btnComp.setDisable(false);
 		};
 
 		CompoundRunnable compoundRunnable = new CompoundRunnable(runnable, runnable2);

@@ -219,7 +219,7 @@ public class FiCodeHelper {
 				fieldName = fieldPrefix + FiString.firstLetterUpperOnly(fieldName);
 			}
 
-			templateDetail.append(String.format("\t\tlistTableCols.add(FiColsMikro.bui().%s().buildHeader(\"%s\"));\n", fieldName, fieldHeader));
+			templateDetail.append(String.format("\t\tlistTableCols.add(FiColsMikro.%s().buildHeader(\"%s\"));\n", fieldName, fieldHeader));
 
 		}
 

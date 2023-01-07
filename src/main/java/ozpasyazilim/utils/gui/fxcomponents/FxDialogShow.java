@@ -340,7 +340,7 @@ public class FxDialogShow {
 			return;
 		}
 
-		FxDialogShow.showModalError2("",fdr.getMessage());
+		FxDialogShow.showModalError2("Hata Oluştu",fdr.getMessage());
 	}
 
 	public static void showFdr1PopOrFailModal2(Fdr fdr) {
@@ -1057,8 +1057,7 @@ public class FxDialogShow {
 				message += "\n Exception Tanımı \n\n" + FiException.exceptionIfToString(fdr.getException());
 			}
 
-			FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogType.DialogError, message);
-			fxSimpleDialog.setMessageHeader(messageHeader);
+			FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogType.DialogError, message,messageHeader);
 			fxSimpleDialog.openAsDialogSync();
 		});
 	}
@@ -1164,20 +1163,20 @@ public class FxDialogShow {
 		if (title == null && titleGeneral != null) stage.setTitle(titleGeneral);
 		if (title != null) stage.setTitle(title);
 
-		Fdr fnResult = new Fdr();
+		Fdr fdrResult = new Fdr();
 
 		btnYes.setOnAction(event -> {
-			fnResult.setBoResult(true);
+			fdrResult.setBoResult(true);
 			stage.close();
 		});
 
 		btnNo.setOnAction(event -> {
-			fnResult.setBoResult(false);
+			fdrResult.setBoResult(false);
 			stage.close();
 		});
 
 		btnCancel.setOnAction(event -> {
-			fnResult.setBoResult(null);
+			fdrResult.setBoResult(null);
 			stage.close();
 		});
 
@@ -1191,7 +1190,7 @@ public class FxDialogShow {
 		stage.setScene(scene);
 		stage.sizeToScene();
 		stage.showAndWait();
-		return fnResult;
+		return fdrResult;
 	}
 
 	public void showPopNotification(String title, String message) {

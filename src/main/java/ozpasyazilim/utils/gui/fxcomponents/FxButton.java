@@ -253,6 +253,10 @@ public class FxButton extends Button implements IFxSecureNode {
 		setOnAction(event -> FiThread.startThread(runnable,this));
 	}
 
+	public void setOnActionWithGuiThread(Runnable runnable) {
+		setOnAction(event -> FiThread.startGuiThread(runnable,this));
+	}
+
 	public String getTxDefaultText() {
 		return txDefaultText;
 	}

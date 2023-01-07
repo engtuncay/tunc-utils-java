@@ -29,7 +29,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 	private String messageContent;
 	private String messageHeader;
 	// Dialog gelen veriyi tutmak için (component text proplarını bind ederiz)
-	private StringProperty txValue = new SimpleStringProperty();
+	private StringProperty txValue;
 	private OzColType ozColType;
 	private List<Text> listText;
 	private Boolean boInitExecuted;
@@ -96,6 +96,13 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 		initCont();
 	}
 
+	public FxSimpleDialog(FxSimpleDialogType fxSimpleDialogType, String messageContent,String messageHeader) {
+		setFxSimpleDialogType(fxSimpleDialogType);
+		setMessageContent(messageContent);
+		setMessageHeader(messageHeader);
+		initCont();
+	}
+
 	public FxSimpleDialog(FxSimpleDialogType fxSimpleDialogType) {
 		setFxSimpleDialogType(fxSimpleDialogType);
 	}
@@ -117,7 +124,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 	@Override
 	public void initCont() {
 		setBoInitExecuted(true);
-		modView = new FxMigPaneView(FxMigHp.bui().lgcStInset3().lgcNoGrid().genLayConst());
+		modView = new FxMigPaneView(FxMigHp.bui().lcgInset3Gap33().lcgNoGrid().getLcgPrep());
 		dialogInitByType();
 	}
 
@@ -193,8 +200,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 		}
 
 		if (fxSimpleDialogType == FxSimpleDialogType.DialogError) {
-			setupDialogInfoWarnTextArea();
-			setupFooterOkCancel();
+			initDialogError();
 			return;
 		}
 
@@ -218,10 +224,15 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 		}
 	}
 
+	private void initDialogError() {
+		setupDialogInfoWarnTextArea();
+		setupFooterOkCancel();
+	}
+
 
 	public void setupFooterOkCancel() {
 
-		FxMigPane migFooter = new FxMigPane(FxMigHp.bui().lgcNoGrid().lgcStInset0Gap55().genLayConst());
+		FxMigPane migFooter = new FxMigPane(FxMigHp.bui().lcgNoGrid().lcgInset0Gap55().getLcgPrep());
 
 		btnOk = new FxButton("Ok", Icons525.OK);
 		btnCancel = new FxButton("İptal", Icons525.CANCEL);
@@ -237,7 +248,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 	public void setupFooterWithValidateString() {
 
-		FxMigPane migFooter = new FxMigPane(FxMigHp.bui().lgcNoGrid().lgcStInset0Gap55().genLayConst());
+		FxMigPane migFooter = new FxMigPane(FxMigHp.bui().lcgNoGrid().lcgInset0Gap55().getLcgPrep());
 
 		btnOk = new FxButton("Ok", Icons525.OK);
 		btnCancel = new FxButton("İptal", Icons525.CANCEL);
@@ -253,7 +264,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 	public void setupFooterWithValidateForm() {
 
-		FxMigPane migFooter = new FxMigPane(FxMigHp.bui().lgcNoGrid().lgcStInset0Gap55().genLayConst());
+		FxMigPane migFooter = new FxMigPane(FxMigHp.bui().lcgNoGrid().lcgInset0Gap55().getLcgPrep());
 
 		btnOk = new FxButton("Ok", Icons525.OK);
 		btnCancel = new FxButton("İptal", Icons525.CANCEL);
@@ -288,7 +299,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 		getModView().add(lblHeader, "growx,pushx,wrap");
 
-		FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lgcStInset0Gap55().genLayConst());
+		FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().getLcgPrep());
 
 		fxFormMig = new FxFormMig2();
 
@@ -305,7 +316,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 	}
 
 	private void setupFormDialog() {
-		FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lgcStInset0Gap55().genLayConst());
+		FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().getLcgPrep());
 		fxContent.add(getFxFormMig(), "wrap");
 		getModView().add(fxContent, "wrap");
 	}
@@ -314,7 +325,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 		getFxFormInit().setup1(fiCols,FormType.PlainFormV1);
 		setFxSimpleDialogType(FxSimpleDialogType.Undefined);
 		initCont();
-		FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lgcStInset0Gap55().genLayConst());
+		FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().getLcgPrep());
 		fxContent.addGrowPushSpan(getFxFormInit());
 		getModView().add(fxContent, "wrap");
 		setupFooterWithValidateForm();
@@ -423,7 +434,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 	private void setupTextFieldDoubleDialog() {
 		modView.add(lblHeader, "growx,pushx,wrap");
 
-		FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lgcStInset0Gap55().genLayConst());
+		FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().getLcgPrep());
 		FxTextField fxTextField = new FxTextField();
 		fxTextField.convertNumberDoubleTextField1();
 		setOzColType(OzColType.Double);
@@ -436,7 +447,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 	private void setupTextFieldIntegerDialog() {
 		modView.add(lblHeader, "growx,pushx,wrap");
-		FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lgcStInset0Gap55().genLayConst());
+		FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().getLcgPrep());
 		FxTextField fxTextField = new FxTextField();
 		fxTextField.convertNumberTextField2();
 		setOzColType(OzColType.Integer);
@@ -450,7 +461,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 		getModView().add(lblHeader, "growx,pushx,wrap");
 
-		FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lgcStInset0Gap55().genLayConst());
+		FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().getLcgPrep());
 		FxTextField fxTextField = new FxTextField();
 		//fxTextField.convertNumberDoubleTextField1();
 		setOzColType(OzColType.String);
@@ -467,7 +478,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 		getModView().add(lblHeader2, "growx,pushx,wrap");
 
-		FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lgcStInset0Gap55().genLayConst());
+		FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().getLcgPrep());
 		fxTextFieldGeneral = new FxTextField();
 
 		//fxTextField.convertNumberDoubleTextField1();
@@ -488,7 +499,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 		modView.add(lblHeader, "growx,pushx,wrap");
 
-		FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lgcStInset0Gap55().genLayConst());
+		FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().getLcgPrep());
 		FxTextArea fxTextField = new FxTextArea();
 		//fxTextField.convertNumberDoubleTextField1();
 		setOzColType(OzColType.String);
@@ -503,7 +514,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 		if (getListText().size() == 0) {
 			getListText().add(new Text(""));
 		}
-		FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lgcStInset0Gap55().genLayConst());
+		FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().getLcgPrep());
 		Text[] texts = (Text[]) getListText().toArray();
 		FxTextFlow fxTextFlow = new FxTextFlow(texts);
 		fxContent.add(fxTextFlow, "wrap");
@@ -512,7 +523,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 	private void setupInfoLabelDialog() {
 
-		FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lgcStInset0Gap55().genLayConst());
+		FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().getLcgPrep());
 
 		ScrollPane scrollPane = new ScrollPane();
 		WebView webView = new WebView();
@@ -530,8 +541,8 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 	private void setupDialogInfoWarnTextArea() {
 
-		FxMigPane fxHeader = new FxMigPane(FxMigHp.bui().lgcStInset0Gap55().genLayConst());
-		FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lgcStInset0Gap55().genLayConst());
+		FxMigPane fxHeader = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().getLcgPrep());
+		FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().getLcgPrep());
 		getModView().prefHeight(150d);
 
 		this.lblHeader = new FxLabel(getMessageHeader());
@@ -597,15 +608,18 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 	}
 
 	public String getTxValue() {
-		return txValue.get();
+		return txValueProperty().get();
 	}
 
 	public StringProperty txValueProperty() {
+		if (txValue == null) {
+			txValue = new SimpleStringProperty();
+		}
 		return txValue;
 	}
 
 	public void setTxValue(String txValue) {
-		this.txValue.set(txValue);
+		txValueProperty().set(txValue);
 	}
 
 	public OzColType getOzColType() {
@@ -720,7 +734,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 	public FxMigPane getFxMigToolbar() {
 		if (fxMigToolbar == null) {
-			fxMigToolbar = new FxMigPane(FxMigHp.bui().lgcStInset0Gap55().genLayConst());
+			fxMigToolbar = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().getLcgPrep());
 		}
 		return fxMigToolbar;
 	}

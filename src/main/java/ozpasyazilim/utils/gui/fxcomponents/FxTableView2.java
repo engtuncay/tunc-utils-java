@@ -157,7 +157,6 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 	// FxTable comp i , fxtable mig içerisinde ise buraya set edilir.
 	private FxTableMig2 fxTableMig;
 
-
 	public void selectItemFi(int index) {
 		getSelectionModel().select(index);
 	}
@@ -266,7 +265,12 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 		return itemsCurrentFi;
 	}
 
-	public List<EntClazz> getItemsCheckedByBoSelectAsListInCurrentElements() {
+	/**
+	 * ItemsChecked By BoSelect (field) As List In Current Elements
+	 *
+	 * @return
+	 */
+	public List<EntClazz> getItemsCheckedInCurrent() {
 
 		String fieldForSelection = getFiColSelection().getFieldName();
 
@@ -2514,10 +2518,10 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 	public EntClazz getItemsCheckedOneItem() {
 		FilteredList<EntClazz> checkedByBoSelect = getItemsCheckedByBoSelect();
 
-		if(checkedByBoSelect.size()==0){
+		if (checkedByBoSelect.size() == 0) {
 			FxDialogShow.showPopWarn("Lütfen tablo bir kayıdı seçiniz.");
 			return null;
-		}else if(checkedByBoSelect.size()>1){
+		} else if (checkedByBoSelect.size() > 1) {
 			FxDialogShow.showPopWarn("Lütfen tablodan sadece bir kayıt seçiniz.");
 			return null;
 		}

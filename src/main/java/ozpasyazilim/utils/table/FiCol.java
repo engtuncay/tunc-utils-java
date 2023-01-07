@@ -620,8 +620,8 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 		return this;
 	}
 
-	public FiCol buiColEditorValue(Object colFilterValue) {
-		setColEditorValue(colFilterValue);
+	public FiCol buiColValue(Object colValue) {
+		setColValue(colValue);
 		return this;
 	}
 

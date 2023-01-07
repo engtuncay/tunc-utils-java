@@ -1452,6 +1452,125 @@ public class FiQueryGenerator {
 	}
 
 	/**
+	 * * FiTableCol a göre update sorgusu
+	 * * Id field ı update sorgusu içine yazmaz, where içine yazar (in operatörü kullanır)
+	 * * DEfault update alanlarını sorgu içerisine ekler
+	 *
+	 * @param clazz
+	 * @param listFields
+	 * @return
+	 */
+	public static String updateQueryWithFiColListByIdList(Class clazz, List<FiCol> listFields) {
+
+		//Map<String, FiField> listClassFields = FiEntity.getMapFieldsShort(clazz);
+
+		StringBuilder query = new StringBuilder();
+		StringBuilder queryWhere = new StringBuilder();
+
+		query.append("UPDATE " + getTableName(clazz) + " SET ");
+
+		Integer index = 0;
+		Integer indexWhere = 0;
+		for (FiCol fiCol : listFields) {
+
+			// id field dahil edilmez
+			if (FiBoolean.isTrue(fiCol.getBoKeyField())) {
+				indexWhere++;
+				if (indexWhere != 1) queryWhere.append(" AND ");
+				queryWhere.append(fiCol.getFieldName() + " IN ( @" + fiCol.getFieldName() + " )");
+				continue;
+			}
+			//if (FiBoolean.isTrue(listClassFields.getOrDefault(fiCol.getFieldName(), new FiField()).getBoIdField())) {
+			//				continue;
+			//			}
+
+			// non updatable alanlar dahil edilmez
+			if (FiBoolean.isTrue(fiCol.getBoNonUpdatable())) {
+				continue;
+			}
+
+			index++;
+			if (index != 1) query.append(", ");
+			query.append(fiCol.getFieldName() + " = @" + fiCol.getFieldName());
+		}
+
+		query.append(" WHERE " + queryWhere);
+
+		// where cümleciği yoksa sorguyu iptal edelim
+		if (queryWhere.length() < 1) {
+			query = new StringBuilder();
+		}
+
+		return query.toString();
+	}
+
+	/**
+	 * Örnek Sorgu çıktısı
+	 * <p>
+	 * SELECT cha_RECno, count( cha_RECno )
+	 * <p>
+	 * FROM EnmCariHareketEk
+	 * <p>
+	 * WHERE cha_RECno IN ( @cha_RECno )
+	 *
+	 * @param clazz
+	 * @param listFields
+	 * @return
+	 */
+	public static String selectQueryCountIdByFiColListWhereIdList(Class clazz, List<FiCol> listFields) {
+
+		Map<String, FiField> listClassFields = FiEntity.getMapFieldsShort(clazz);
+
+		StringBuilder query = new StringBuilder();
+		StringBuilder queryWhere = new StringBuilder();
+		StringBuilder queryGroupBy = new StringBuilder();
+
+		query.append("SELECT ");
+
+		FiCol fiColId = null;
+		Integer index = 0;
+		for (FiCol fiCol : listFields) {
+			index++;
+			if (index != 1) query.append(", ");
+			query.append(fiCol.getFieldName());
+			// idCol kayıt edilir
+			if (FiBoolean.isTrue(fiCol.getBoKeyField())) fiColId = fiCol;
+		}
+
+		if (fiColId != null) {
+			index++;
+			if (index != 1) query.append(", ");
+			query.append(String.format("count( %s ) lnCount", fiColId.getFieldName()));
+			queryGroupBy.append(fiColId.getFieldName());
+		}
+
+		query.append("\nFROM " + getTableName(clazz));
+
+		Integer indexWhere = 0;
+		for (FiCol fiCol : listFields) {
+
+			if (FiBoolean.isTrue(fiCol.getBoKeyField())) {
+				indexWhere++;
+				if (indexWhere != 1) queryWhere.append(" AND ");
+				queryWhere.append(fiCol.getFieldName() + " IN ( @" + fiCol.getFieldName() + " )");
+				continue;
+			}
+		}
+
+		query.append("\nWHERE " + queryWhere);
+		query.append("\nGROUP BY " + queryGroupBy);
+
+
+		// where cümleciği yoksa sorguyu iptal edelim
+		if (queryWhere.length() < 1) {
+			query = new StringBuilder();
+		}
+
+		return query.toString();
+	}
+
+
+	/**
 	 * Key alanlarını class alanlarındaki Id annotasyonuna göre alır
 	 *
 	 * @param clazz
@@ -2455,8 +2574,8 @@ public class FiQueryGenerator {
 
 		}
 
-		if (FiString.isEmpty(name) ) {
-				name = "ent_unique_"+ sbFieldsForName;
+		if (FiString.isEmpty(name)) {
+			name = "ent_unique_" + sbFieldsForName;
 //			}else{
 //				name = "ent-unique-" + FiDate.toStringTimestamptPlain(new Date());
 //			}

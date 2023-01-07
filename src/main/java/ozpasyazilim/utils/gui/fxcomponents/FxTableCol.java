@@ -1023,7 +1023,17 @@ public class FxTableCol<Clazz> extends TableColumn implements IFiCol<Clazz> {
 		return ifxNodeEditor;
 	}
 
+	@Override
+	public Object getColValue() {
+		return colEditorValue;
+	}
+
+	@Override
+	public void setColValue(Object colValue) {
+		this.colEditorValue = colValue;
+	}
 	public void setIfxNodeEditor(IfxNode ifxNodeEditor) {
 		this.ifxNodeEditor = ifxNodeEditor;
 	}
+
 }

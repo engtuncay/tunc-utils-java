@@ -35,13 +35,13 @@ public class FxGenWindowView implements IFxSimpleView {
 	public void initGui() {
 
 		// root init
-		fxRootMigPane = new FxMigPane(FxMigHp.bui().lgcStInset3Gap33().getLayConstGen());
+		fxRootMigPane = new FxMigPane(FxMigHp.bui().lcgInset3Gap33().getLcgPrep2());
 
 		// Container Initial.
 		fxFormMig = new FxFormMig();
-		fxMigToolbar = new FxMigPane(FxMigHp.bui().lgcStInset3Gap33().getLayConstGen());
+		fxMigToolbar = new FxMigPane(FxMigHp.bui().lcgInset3Gap33().getLcgPrep2());
 		fxTableMig = new FxTableMig2();
-		fxContent = new FxMigPane(FxMigHp.bui().lgcStInset0Gap50().getLayConstGen());
+		fxContent = new FxMigPane(FxMigHp.bui().lcgInset0Gap50().getLcgPrep2());
 
 		// Comp Init
 

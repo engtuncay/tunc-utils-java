@@ -224,6 +224,17 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 		this.boResult = boResult;
 	}
 
+	public void setBoResultAndLnResult(Boolean boResult) {
+		this.boResult = boResult;
+		if(boResult!=null){
+			if(boResult){
+				setLnResult(1); // true
+			}else{
+				setLnResult(0); // false
+			}
+		}
+	}
+
 	// Tek tek kullanılmalı
 	@Deprecated
 	public void setBoResultWithCheckUpWithRowsAff(Boolean boResult) {
@@ -399,41 +410,52 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 	 * <p>
 	 * Loglar aktarılır
 	 *
-	 * @param fdr
+	 * @param fdrSub
 	 */
-	public void combineAnd(Fdr fdr) {
+	public void combineAnd(Fdr fdrSub) {
 
-		if (FiBoolean.isFalse(fdr.getBoResult())) {
+		if (FiBoolean.isFalse(fdrSub.getBoResult())) {
 			setBoResult(false);
 			setLnFailureOpCount(getLnFailureOpCount() + 1);
-			setException(fdr.getException()); // exception listesine eklenebilir - birden fazla olma ihtimali var.
-			getListExceptionInit().add(fdr.getException());
+			setException(fdrSub.getException()); // exception listesine eklenebilir - birden fazla olma ihtimali var.
+			getListExceptionInit().add(fdrSub.getException());
+			calcLnResult(0);
+
 		}
 
-		if (FiBoolean.isTrue(fdr.getBoResult())) {
+		if (FiBoolean.isTrue(fdrSub.getBoResult())) {
 			setLnSuccessOpCount(getLnSuccessOpCount() + 1);
 			if (getBoResult() == null) setBoResult(true);
+			calcLnResult(1);
 		}
 
 		// null sonuçlar için combine işlemi
-		if (fdr.getBoResult() == null) {
+		if (fdrSub.getBoResult() == null) {
 
 		}
 
 		// Tümü için yapılacaklar
-		appendRowsAffected(fdr.getRowsAffectedOrEmpty());
-		appendLnUpdated(fdr.getLnUpdatedRows());
-		appendLnInserted(fdr.getLnInsertedRows());
-		appendLnDeleted(fdr.getLnDeletedRows());
+		appendRowsAffected(fdrSub.getRowsAffectedOrEmpty());
+		appendLnUpdated(fdrSub.getLnUpdatedRows());
+		appendLnInserted(fdrSub.getLnInsertedRows());
+		appendLnDeleted(fdrSub.getLnDeletedRows());
 
 		// Tüm işlemlerde mesaj birleştirilir.
-		if (!FiString.isEmptyTrim(fdr.getMessage())) appendMessageLn(fdr.getMessage());
+		if (!FiString.isEmptyTrim(fdrSub.getMessage())) appendMessageLn(fdrSub.getMessage());
 
 		// Loglar birleştirilir.
-		if (!FiCollection.isEmpty(fdr.getLogList())) getLogListInit().addAll(fdr.getLogList());
+		if (!FiCollection.isEmpty(fdrSub.getLogList())) getLogListInit().addAll(fdrSub.getLogList());
 
 		// Birleştirme yapıldığı, log eklenmesi engellenir
-		fdr.setBoLockAddLog(true);
+		fdrSub.setBoLockAddLog(true);
+	}
+
+	private void calcLnResult(int lnResultNew) {
+		if (getLnResult() == null) {
+			setLnResult(lnResultNew);
+		} else if (getLnResult() != lnResultNew) { // Başarısız durumda olan durumu kısmı başarılıya çeker
+			setLnResult(2);
+		} // lnResultNew aynı ise değişiklik yapmaz. Farklı ise partial success yapar
 	}
 
 	public void appendMessageLn(String message) {
@@ -454,11 +476,8 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 			appendLnFailure(1);
 			setException(fdrAlt.getException());
 			if (getBoResult() == null) setBoResult(false);
-			if (getLnResult() == null) {
-				setLnResult(0);
-			} else if (getLnResult() == 1) {
-				setLnResult(2);
-			}
+
+			calcLnResult(0);
 
 			//getResMessage().append(fiDbResult.getResMessage().toString());
 		}
@@ -467,11 +486,7 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 			setBoResult(true);
 			appendLnSuccess(1);
 			// Başarısız durumda olan durumu kısmı başarılıya çeker
-			if (getLnResult() != null && getLnResult() == 0) {
-				setLnResult(2);
-			}else{
-				setLnResult(1);
-			}
+			calcLnResult(1);
 			//getResMessage().append(fiDbResult.getResMessage().toString());
 		}
 
@@ -722,7 +737,7 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 	}
 
 	public boolean isFalseOrNullBoResult() {
-		if(getBoResult()==null)return true;
+		if (getBoResult() == null) return true;
 		return FiBoolean.isFalse(getBoResult());
 	}
 
@@ -1012,7 +1027,7 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 	}
 
 	public Integer getLnResultNtn() {
-		if(getLnResult()==null) return -1;
+		if (getLnResult() == null) return -1;
 		return lnResult;
 	}
 
@@ -1021,12 +1036,12 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 	}
 
 	public boolean isTrueLnResult() {
-		if(getLnResult()==1) return true;
+		if (getLnResult() == 1) return true;
 		return false;
 	}
 
 	public boolean isTrueOrPartialTrueLnResult() {
-		if(getLnResult()==1 || getLnResult() == 2) return true;
+		if (getLnResult() == 1 || getLnResult() == 2) return true;
 		return false;
 	}
 }

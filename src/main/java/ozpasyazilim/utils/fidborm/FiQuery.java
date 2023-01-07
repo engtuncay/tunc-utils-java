@@ -247,6 +247,10 @@ public class FiQuery {
 		convertListParamToMultiParams(false);
 	}
 
+	public void convertListParamToMultiParamsWithKeep() {
+		convertListParamToMultiParams(true);
+	}
+
 	/**
 	 * List Türündeki parametreleri multi param (abc_1,abc_2... gibi) çevirir
 	 */

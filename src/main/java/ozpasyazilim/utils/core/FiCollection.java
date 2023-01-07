@@ -146,6 +146,34 @@ public class FiCollection {
 		return mapList;
 	}
 
+	/**
+	 *
+	 * fnKeyGetter ve fnKeyValueGetter ile map oluşturur.
+	 *
+	 * @param listData
+	 * @param fnKeyGetter
+	 * @param fnKeyValueGetter
+	 * @return
+	 * @param <KeyVal>
+	 * @param <T>
+	 * @param <KeyValue>
+	 */
+	public static <KeyVal, T,KeyValue> Map<KeyVal, KeyValue> listToMapManual(List<T> listData, Function<T, KeyVal> fnKeyGetter, Function<T, KeyValue> fnKeyValueGetter) {
+
+		Map<KeyVal, KeyValue> mapList = new HashMap<>();
+
+		for (Iterator iterator = listData.iterator(); iterator.hasNext(); ) {
+			T t = (T) iterator.next();
+			KeyVal keyVal = fnKeyGetter.apply(t);
+			if (keyVal == null) continue;
+
+			KeyValue keyValue = fnKeyValueGetter.apply(t);
+			mapList.put(keyVal, keyValue);
+		}
+
+		return mapList;
+	}
+
 	public static <KeyVal, T> Map<KeyVal, T> listToMapSingleIgnoreNullKey(List<T> listData, Function<T, KeyVal> fnKeyGetter) {
 
 		Map<KeyVal, T> mapList = new HashMap<>();

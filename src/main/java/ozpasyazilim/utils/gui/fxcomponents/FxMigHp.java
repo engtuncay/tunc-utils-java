@@ -5,13 +5,13 @@ import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.table.OzColType;
 
 /**
- * layConst : new MigPane(String layoutConstraints, String colConstraints, String rowConstraints)
+ * layConst : new MigPane(String layoutConstraintsGeneral, String colConstraints, String rowConstraints)
  * <p>
- * lgc,lcc,lrc parametreleri migPane oluşturulurken constructor'a parametre olarak verilir.
+ * lcg,lcc,lrc parametreleri migPane oluşturulurken constructor'a parametre olarak verilir.
  * <p>
- * cc : cell contraint
+ * cc : cell contraints
  * <p>
- * cc ise migpane addNode metodu ile node eklenirken parametre olarak verilir.
+ * cc ise migpane addNode(String cellConstraints) metodu ile node eklenirken parametre olarak verilir.
  */
 public class FxMigHp {
 
@@ -74,56 +74,82 @@ public class FxMigHp {
 		return this;
 	}
 
-	public FxMigHp lgcInsetAndGap(Integer inset, Integer gapx, Integer gapy) {
-		addCommaLgcPrev();
-		this.layConstGen += String.format("insets %s,gap %s %s", inset, gapx, gapy);
+	public FxMigHp lcgInsetAndGap(Integer inset, Integer gapx, Integer gapy) {
+		appendToLcg(String.format("insets %s,gap %s %s", inset, gapx, gapy));
+		return this;
+	}
+	// panelLayout = new MigLayout("insets 0 0 0 0");
+	// setLayout(new MigLayout("gap rel 0", "grow"));
+	//setBorder(BorderFactory.createTitledBorder("Sterowanie:"));
+
+	/**
+	 *
+	 *
+	 * @return
+	 */
+	public FxMigHp lcgNoGrid() {
+		appendToLcg("nogrid");
 		return this;
 	}
 
-	public FxMigHp lgcNoGrid() {
-		addCommaLgcPrev();
-		this.layConstGen += "nogrid";
+	private void appendToLcg(String append) {
+		addCommaLayConstGenPrev();
+		this.layConstGen += append;
+	}
+
+	public FxMigHp lcgAlignx(Integer percent) {
+		appendToLcg("ax " + percent + "%");
 		return this;
 	}
 
-	public FxMigHp lgcAlignx(Integer percent) {
-		addCommaLgcPrev();
-		this.layConstGen += "ax " + percent + "%";
+	public FxMigHp lcgInset0Gap55() {
+		lcgInsetAndGap(0, 5, 5);
 		return this;
 	}
 
-	public FxMigHp lgcStInset0Gap55() {
-		lgcInsetAndGap(0, 5, 5);
+	public FxMigHp lcgInset0Gap33() {
+		lcgInsetAndGap(0, 3, 3);
 		return this;
 	}
 
-	public FxMigHp lgcStInset0Gap50() {
-		lgcInsetAndGap(0, 5,0 );
+
+	public FxMigHp lcgInset0Gap50() {
+		lcgInsetAndGap(0, 5,0 );
 		return this;
 	}
 
-	public FxMigHp lgcStInset0Gap00() {
-		lgcInsetAndGap(0, 0,0 );
+	public FxMigHp lcgInset0Gap00() {
+		lcgInsetAndGap(0, 0,0 );
 		return this;
 	}
 
-	public FxMigHp lgcStInset3() {
-		lgcInsetAndGap(3, 3, 3);
+	public FxMigHp lcgInset0Gap03() {
+		lcgInsetAndGap(0, 0,3 );
 		return this;
 	}
 
-	public FxMigHp lgcStInset3Gap0() {
-		lgcInsetAndGap(3, 0, 0);
+	public FxMigHp lcgInset0Gap05() {
+		lcgInsetAndGap(0, 0,5 );
 		return this;
 	}
 
-	public FxMigHp lgcStInset3Gap33() {
-		lgcInsetAndGap(3, 3, 3);
+//	public FxMigHp lcgInset0Gap010() {
+//		lcgInsetAndGap(0, 0,10 );
+//		return this;
+//	}
+
+	public FxMigHp lcgInset3Gap00() {
+		lcgInsetAndGap(3, 0, 0);
 		return this;
 	}
 
-	private void addCommaLgcPrev() {
-		if (FiString.isEmptyTrim(getLayConstGen())) return;
+	public FxMigHp lcgInset3Gap33() {
+		lcgInsetAndGap(3, 3, 3);
+		return this;
+	}
+
+	private void addCommaLayConstGenPrev() {
+		if (FiString.isEmptyTrim(getLcgRawInit())) return;
 		this.layConstGen += ",";
 	}
 
@@ -132,7 +158,15 @@ public class FxMigHp {
 		this.cellConst += ",";
 	}
 
-	public String getLayConstGen() {
+	public String getLcgPrep2() {
+//		if (layConstGen == null) {
+//			layConstGen = "";
+//		}
+//		return layConstGen;
+		return getLcgPrep();
+	}
+
+	public String getLcgRawInit() {
 		if (layConstGen == null) {
 			layConstGen = "";
 		}
@@ -160,19 +194,14 @@ public class FxMigHp {
 	 *
 	 * @return
 	 */
-	public String genLayConst() {
-
-		if (layConstGen == null) {
-			layConstGen = "";
-		}
+	public String getLcgPrep() {
+		if (layConstGen == null) layConstGen = "";
 
 		if (debugMode) {
 			if (!layConstGen.contains("debug")) {
-				addCommaLgcPrev();
-				layConstGen += "debug";
+				appendToLcg("debug");
 			}
 		}
-
 		return layConstGen;
 	}
 
@@ -214,9 +243,8 @@ public class FxMigHp {
 		return cellConst;
 	}
 
-	public FxMigHp lgcDebug() {
-		addCommaLgcPrev();
-		this.layConstGen += "debug";
+	public FxMigHp lcgDebug() {
+		appendToLcg("debug");
 		return this;
 	}
 
@@ -264,7 +292,7 @@ public class FxMigHp {
 	}
 
 	public FxMigHp lgcStInset5Gap00() {
-		lgcInsetAndGap(5, 0,0 );
+		lcgInsetAndGap(5, 0,0 );
 		return this;
 	}
 }

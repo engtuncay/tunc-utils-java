@@ -282,17 +282,18 @@ public class FxTreeTableCol<E> extends TreeTableColumn implements IFiCol<E> {
 				return cell;
 
 			}
-
-//		         singleCol.setCellFactory(new Callback<TreeTableColumn<Employee,Boolean>,TreeTableCell<Employee,Boolean>>() {
-//            @Override
-//            public TreeTableCell<Employee,Boolean> call( TreeTableColumn<Employee,Boolean> p ) {
-//                CheckBoxTreeTableCell<Employee,Boolean> cell = new CheckBoxTreeTableCell<Employee,Boolean>();
-//                cell.setAlignment(Pos.CENTER);
-//                return cell;
-//            }
-//        });
-
 		});
+
+//singleCol.setCellFactory(new Callback<TreeTableColumn<Employee,Boolean>,TreeTableCell<Employee,Boolean>>() {
+//@Override
+//public TreeTableCell<Employee,Boolean> call( TreeTableColumn<Employee,Boolean> p ) {
+//CheckBoxTreeTableCell<Employee,Boolean> cell = new CheckBoxTreeTableCell<Employee,Boolean>();
+//cell.setAlignment(Pos.CENTER);
+//return cell;
+//}
+//});
+
+
 	}
 
 	@Override
@@ -624,10 +625,19 @@ public class FxTreeTableCol<E> extends TreeTableColumn implements IFiCol<E> {
 	}
 
 	@Override
+	public Object getColValue() {
+		return getColEditorValue();
+	}
+
+	@Override
+	public void setColValue(Object colValue) {
+		setColEditorValue(colValue);
+	}
+
+	@Override
 	public void setIfxNodeEditor(IfxNode ifxNodeEditor) {
 		getFiTableCol().setIfxNodeEditor(ifxNodeEditor);
 	}
-
 
 
 }

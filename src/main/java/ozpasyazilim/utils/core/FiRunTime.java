@@ -30,12 +30,13 @@ public class FiRunTime {
 	}
 
 	public Long getRunningTimeMiliseconds(){
-
-		if(getStartTime()==null || getEndTime()==null) return 0L;
-
-		//Double dbl= Double.valueOf((getEndTime()-getStartTime())/1000000);
-
+		if(getStartTime()==null || getEndTime()==null) return -1L;
 		return (getEndTime()-getStartTime())/1000000;
+	}
+
+	public Long getDuration(){
+		if(getStartTime()==null || getEndTime()==null) return -1L;
+		return getEndTime()-getStartTime();
 	}
 
 

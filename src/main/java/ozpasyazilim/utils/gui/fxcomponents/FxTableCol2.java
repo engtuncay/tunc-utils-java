@@ -19,7 +19,7 @@ import java.util.Locale;
  */
 public class FxTableCol2<EntClazz> extends TableColumn implements IFxTableCol<EntClazz> {
 
-	ObjectProperty<FiCol<EntClazz>> fiCol = new SimpleObjectProperty<>();
+	private ObjectProperty<FiCol<EntClazz>> fiCol = new SimpleObjectProperty<>();
 
 	public FxTableCol2() {
 		super();
