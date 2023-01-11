@@ -50,7 +50,7 @@ public interface IFiCol<N> {
 
 	IFiCol buildSumType(OzColSummaryType summaryType);
 
-	IFiCol buildHeader(String header);
+	IFiCol buiHeader(String header);
 
 	// --> -----------------
 

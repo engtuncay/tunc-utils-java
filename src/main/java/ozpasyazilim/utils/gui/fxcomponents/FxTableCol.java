@@ -796,7 +796,7 @@ public class FxTableCol<Clazz> extends TableColumn implements IFiCol<Clazz> {
 	}
 
 	@Override
-	public FxTableCol buildHeader(String header) {
+	public FxTableCol buiHeader(String header) {
 		this.fiHeader = header;
 		return this;
 	}

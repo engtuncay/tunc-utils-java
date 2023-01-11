@@ -194,6 +194,8 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 
 	/**
 	 * Elemente ait, alt çocuk elementleri
+	 * <p>
+	 * Form Elemanın içinde bulunan alt propertiler
 	 */
 	List<FiCol> listChildCol;
 
@@ -440,7 +442,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 
 	// build Methods
 
-	public FiCol buildHeader(String header) {
+	public FiCol buiHeader(String header) {
 		this.setHeaderName(header);
 		return this;
 	}
@@ -461,12 +463,12 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 		return this;
 	}
 
-	public FiCol buildEditorNodeClass(String editorClassName) {
+	public FiCol buiEditorNodeClass(String editorClassName) {
 		this.setColEditorClass(editorClassName);
 		return this;
 	}
 
-	public FiCol buildEditorNodeClass(Class editorClass) {
+	public FiCol buiEditorNodeClass(Class editorClass) {
 		this.setColEditorClass(editorClass.getName());
 		return this;
 	}
@@ -595,7 +597,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 		return this;
 	}
 
-	public FiCol buildFiEditable(Boolean boEditable) {
+	public FiCol buiBoEditable(Boolean boEditable) {
 		setBoEditable(boEditable);
 		return this;
 	}

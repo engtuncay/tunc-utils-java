@@ -8,6 +8,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
+import org.kordamp.ikonli.javafx.FontIcon;
 import ozpasyazilim.utils.core.FiThread;
 import ozpasyazilim.utils.security.SecurityRight;
 
@@ -151,7 +152,7 @@ public class FxButton extends Button implements IFxSecureNode {
 	}
 
 	public void setFxIcon(Icons525 icon) {
-		new FxAwesomeIcon().loadIcon525ToFxButton(this, icon, 12, "white", null);
+		new FxAwesomeIcon().loadIcon525ToFxButton(this, icon, 10, "white", null);
 	}
 
 	public String getModuleCode() {
@@ -281,4 +282,8 @@ public class FxButton extends Button implements IFxSecureNode {
 		this.lnIdValue = lnIdValue;
 	}
 
+	public void setIkonliIcon(String txBtnId) {
+		this.setGraphic(new FontIcon());
+		this.setId(txBtnId);
+	}
 }

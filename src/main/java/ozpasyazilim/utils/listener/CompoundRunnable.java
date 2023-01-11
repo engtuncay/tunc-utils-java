@@ -1,29 +1,34 @@
 package ozpasyazilim.utils.listener;
 
-import com.google.common.collect.Lists;
-import java.util.Arrays;
+import java.util.*;
 
-public final class CompoundRunnable implements Runnable
-{
-    private final Iterable<Runnable> runnables;
+public final class CompoundRunnable implements Runnable {
+	private final Set<Runnable> setRunnables = new LinkedHashSet<>();
 
-    public CompoundRunnable(Iterable<Runnable> runnables)
-    {
-        // From Guava. Easy enough to do by hand if necessary
-        this.runnables = Lists.newArrayList(runnables);
-    }
+	public CompoundRunnable() {
+	}
 
-    public CompoundRunnable(Runnable... runnables)
-    {
-        this(Arrays.asList(runnables));
-    }
+	public CompoundRunnable(Iterable<Runnable> runnables) {
+		// From Guava. Easy enough to do by hand if necessary
+		for (Runnable runnable : runnables) {
+			this.setRunnables.add(runnable);
+		}
+		//this.runnables. = Lists.newArrayList(runnables);
 
-    @Override
-    public void run()
-    {
-        for (Runnable runnable : runnables)
-        {
-             runnable.run();
-        }
-    }
+	}
+
+	public CompoundRunnable(Runnable... runnables) {
+		this(Arrays.asList(runnables));
+	}
+
+	@Override
+	public void run() {
+		for (Runnable runnable : setRunnables) {
+			runnable.run();
+		}
+	}
+
+	public void addRunnable(Runnable runnable){
+		this.setRunnables.add(runnable);
+	}
 }

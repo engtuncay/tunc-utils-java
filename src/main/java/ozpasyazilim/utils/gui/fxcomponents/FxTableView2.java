@@ -270,7 +270,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 	 *
 	 * @return
 	 */
-	public List<EntClazz> getItemsCheckedInCurrent() {
+	public List<EntClazz> getItemsCheckedInCurrentAsNewList() {
 
 		String fieldForSelection = getFiColSelection().getFieldName();
 
@@ -286,6 +286,22 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 		List<EntClazz> listSelected = new ArrayList<>(itemsCurrentFi);
 
 		return listSelected;
+	}
+
+	public List<EntClazz> getItemsCheckedInCurrent() {
+
+		String fieldForSelection = getFiColSelection().getFieldName();
+
+		FilteredList<EntClazz> itemsCurrentFi = getItemsCurrentFi(ent -> {
+			try {
+				return FiBoolean.convertBooleanElseFalse(PropertyUtils.getNestedProperty(ent, fieldForSelection));
+			} catch (Exception e) {
+				e.printStackTrace();
+				return false;
+			}
+		});
+
+		return itemsCurrentFi;
 	}
 
 	public List<EntClazz> getItemsCheckedByBoSelectAsListInAllElements() {
@@ -390,7 +406,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 	private FiCol getFiColSelection() {
 		FiCol fiTableCol = new FiCol(getSelectionColName(), getSelectionHeaderName());
 		fiTableCol.setPrefSize(40d);
-		fiTableCol.buildColType(OzColType.Boolean).buildFiEditable(true).buildSumType(OzColSummaryType.CheckBox);
+		fiTableCol.buildColType(OzColType.Boolean).buiBoEditable(true).buildSumType(OzColSummaryType.CheckBox);
 		return fiTableCol;
 	}
 

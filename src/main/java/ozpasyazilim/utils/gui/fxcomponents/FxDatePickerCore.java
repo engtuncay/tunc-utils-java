@@ -51,7 +51,7 @@ public class FxDatePickerCore extends DatePicker {
 		return new StringConverter<LocalDate>() {
 
 			final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yy");
-//			final DateTimeFormatter dateFormatter2 = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+			//final DateTimeFormatter dateFormatter2 = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
 			@Override
 			public String toString(LocalDate date) {

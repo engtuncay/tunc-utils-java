@@ -314,7 +314,7 @@ public class FxTreeTableCol<E> extends TreeTableColumn implements IFiCol<E> {
 	}
 
 	@Override
-	public FxTreeTableCol buildHeader(String header) {
+	public FxTreeTableCol buiHeader(String header) {
 		setHeaderName(header);
 		return this;
 	}
