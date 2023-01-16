@@ -169,6 +169,7 @@ public class FxDialogShow {
 		stage.showAndWait();
 		return fdr;
 	}
+
 	// 09-08-2019
 	public static FnResult showPromptDialogYesNo(String message, String title) {
 
@@ -303,9 +304,9 @@ public class FxDialogShow {
 	public static void showDbResultAsErrorIfFail(Fdr fdr) {
 
 		if (!fdr.isTrueBoResult()) {
-			if(fdr.isFalseBoResult()) FxDialogShow.showModalError2("Hata oluştu", fdr.getMessage());
+			if (fdr.isFalseBoResult()) FxDialogShow.showModalError2("Hata oluştu", fdr.getMessage());
 
-			if(fdr.getBoResult()==null) FxDialogShow.showModalError2("İşlem sonucu alınamadı.", fdr.getMessage());
+			if (fdr.getBoResult() == null) FxDialogShow.showModalError2("İşlem sonucu alınamadı.", fdr.getMessage());
 		}
 
 	}
@@ -331,31 +332,53 @@ public class FxDialogShow {
 	public static void showFdr1PopOrFailModal(Fdr fdr) {
 
 		if (fdr.getBoResult() == null) {
-			FxDialogShow.showPopInfo("İşlem sonucu alınamadı."+ "\n" + FiString.orEmpty(fdr.getMessage()));
+			FxDialogShow.showPopInfo("İşlem sonucu alınamadı." + "\n" + FiString.orEmpty(fdr.getMessage()));
 			return;
 		}
 
 		if (fdr.isTrueBoResult()) {
-			FxDialogShow.showPopInfo("İşlem Başarı ile Gerçekleşti"+ "\n" + FiString.orEmpty(fdr.getMessage()));
+			FxDialogShow.showPopInfo("İşlem Başarı ile Gerçekleşti" + "\n" + FiString.orEmpty(fdr.getMessage()));
 			return;
 		}
 
-		FxDialogShow.showModalError2("Hata Oluştu",fdr.getMessage());
+		FxDialogShow.showModalError2("Hata Oluştu", fdr.getMessage());
 	}
 
 	public static void showFdr1PopOrFailModal2(Fdr fdr) {
 
 		if (fdr.getBoResult() == null) {
-			FxDialogShow.showPopInfo("İşlem sonucu alınamadı."+ "\n" + FiString.orEmpty(fdr.getMessage()));
+			FxDialogShow.showPopInfo("İşlem sonucu alınamadı." + "\n" + FiString.orEmpty(fdr.getMessage()));
 			return;
 		}
 
 		if (fdr.isTrueBoResult()) {
-			FxDialogShow.showPopInfo("İşlem Başarı ile Gerçekleşti"+ "\n" + FiString.orEmpty(fdr.getMessage()));
+			FxDialogShow.showPopInfo("İşlem Başarı ile Gerçekleşti" + "\n" + FiString.orEmpty(fdr.getMessage()));
 			return;
 		}
 
-		FxDialogShow.showModalError2("",fdr);
+		FxDialogShow.showModalError2("", fdr);
+	}
+
+	/**
+	 * TextArea da Log , Mesaj ve Özet Exception bilgilerini verir
+	 *
+	 *
+	 *
+	 * @param fdr
+	 */
+	public static void showFdr1PopOrFailModalWitLogAndMessageAndExc(Fdr fdr) {
+
+		if (fdr.getBoResult() == null) {
+			FxDialogShow.showPopInfo("İşlem sonucu alınamadı." + "\n" + FiString.orEmpty(fdr.getMessage()));
+			return;
+		}
+
+		if (fdr.isTrueBoResult()) {
+			FxDialogShow.showPopInfo("İşlem Başarı ile Gerçekleşti" + "\n" + FiString.orEmpty(fdr.getMessage()));
+			return;
+		}
+
+		FxDialogShow.showModalErrorWitLogAndMessage("", fdr);
 	}
 
 
@@ -1053,11 +1076,32 @@ public class FxDialogShow {
 		Platform.runLater(() -> {
 			String message = fdr.getMessage();
 
-			if(fdr.getException()!=null){
+			if (fdr.getException() != null) {
 				message += "\n Exception Tanımı \n\n" + FiException.exceptionIfToString(fdr.getException());
 			}
 
-			FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogType.DialogError, message,messageHeader);
+			FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogType.DialogError, message, messageHeader);
+			fxSimpleDialog.openAsDialogSync();
+		});
+	}
+
+	public static void showModalErrorWitLogAndMessage(String messageHeader, Fdr fdr) {
+		Platform.runLater(() -> {
+			String message = "";
+
+			String logAsString = fdr.getLogAsString();
+			if(!FiString.isEmptyTrim(logAsString)){
+				message += "\n"+ logAsString;
+			}
+			if(!FiString.isEmptyTrim(fdr.getMessage())){
+				message += "\n" + fdr.getMessage();
+			}
+
+			if (fdr.getException() != null) {
+				message += "\nException Tanımı : " + FiException.exceptionToStrSummary(fdr.getException());
+			}
+
+			FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogType.DialogError, message, messageHeader);
 			fxSimpleDialog.openAsDialogSync();
 		});
 	}

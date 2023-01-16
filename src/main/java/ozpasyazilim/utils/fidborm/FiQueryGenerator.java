@@ -3021,7 +3021,7 @@ public class FiQueryGenerator {
 		Fdr<List<String>> fdrAlter = new Fdr<>();
 
 		if (jdbi == null) {
-			return fdrAlter.buildMessage("Veritabanı bağlantısı ayarlanmamış.");
+			return fdrAlter.buiMessage("Veritabanı bağlantısı ayarlanmamış.");
 		}
 
 		Map<String, FiField> mapDbFields = getMapDbFields(clazz, jdbi);

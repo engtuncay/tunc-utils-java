@@ -398,7 +398,7 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 		return this;
 	}
 
-	public Fdr<EntClazz> buildMessage(String message) {
+	public Fdr<EntClazz> buiMessage(String message) {
 		this.setMessage(message);
 		return this;
 	}

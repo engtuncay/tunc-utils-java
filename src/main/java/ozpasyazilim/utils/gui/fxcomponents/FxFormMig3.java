@@ -138,6 +138,12 @@ public class FxFormMig3<EntClazz> extends FxMigPaneEnt<EntClazz> implements IFxM
 		return formEntity;
 	}
 
+	public <PrmEntClazz> PrmEntClazz bindFormToEntity(Class<PrmEntClazz> entClazz) {
+		if (entClazz == null) return null;
+		PrmEntClazz formEntity = FxEditorFactory.bindFormToEntityByEditorNode(getListFormElements(), entClazz);
+		return formEntity;
+	}
+
 	public void clearFormFields() {
 		FxEditorFactory.clearFormFields(getListFormElements());
 	}

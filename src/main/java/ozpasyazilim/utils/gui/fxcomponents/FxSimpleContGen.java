@@ -23,7 +23,7 @@ public class FxSimpleContGen<E> extends AbsFxSimpleCont implements IFxSimpleGenC
 
 	@Override
 	public void initCont() {
-		modView = new FxMigPaneView(FxMigHp.bui().lcgInset3Gap33().lcgNoGrid().getLcgPrep());
+		modView = new FxMigPaneView(FxMigHp.bui().lcgInset3Gap33().lcgNoGrid().getLcg());
 	}
 
 

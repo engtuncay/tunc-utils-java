@@ -691,7 +691,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		return fdr;
 	}
 
-	public Fdr<Optional<Integer>> jdSelectSingleIntOptBindMap(String sqlQuery, FiKeyBean map) {
+	public Fdr<Optional<Integer>> jdSelectSingleIntOptBindMapWithDeAct(String sqlQuery, FiKeyBean map) {
 
 		Fdr<Optional<Integer>> fdr = new Fdr<>();
 

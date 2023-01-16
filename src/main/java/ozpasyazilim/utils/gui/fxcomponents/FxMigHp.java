@@ -163,7 +163,7 @@ public class FxMigHp {
 //			layConstGen = "";
 //		}
 //		return layConstGen;
-		return getLcgPrep();
+		return getLcg();
 	}
 
 	public String getLcgRawInit() {
@@ -194,7 +194,7 @@ public class FxMigHp {
 	 *
 	 * @return
 	 */
-	public String getLcgPrep() {
+	public String getLcg() {
 		if (layConstGen == null) layConstGen = "";
 
 		if (debugMode) {

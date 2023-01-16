@@ -38,7 +38,7 @@ public class FxTableWindowView<EntClazz> implements IFxModView, IFxTempView<FxTa
 
 		// Comp Init
 		fxTableMig = new FxTableMig2<>();
-		fxMigToolbar = new FxMigPane(FxMigHp.bui().lcgInset3Gap33().lcgNoGrid().getLcgPrep()); // lcStandard2WithInset3
+		fxMigToolbar = new FxMigPane(FxMigHp.bui().lcgInset3Gap33().lcgNoGrid().getLcg()); // lcStandard2WithInset3
 		fxMigContent = new FxMigPane(FxMigHp.lgcStandard1InsetZeroGap50);
 
 		this.fxMigContent.add(fxTableMig, "span,grow,push");

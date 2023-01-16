@@ -8,6 +8,17 @@ import net.miginfocom.layout.LC;
 import org.tbee.javafx.scene.layout.MigPane;
 import ozpasyazilim.utils.core.FiString;
 
+/**
+ * Constraint Shortcuts
+ * <p>
+ * cc component constraint
+ * <p>
+ * lcg layout constraint general
+ * <p>
+ * lrc layout row constraint
+ * <p>
+ * lcc layout col constraint
+ */
 public class FxMigPane extends MigPane {
 
 	//public static String lcStandardInset0Gap55 = "insets 0,gap 5 5"; // gap x y : x yatatya boşluk : y dikeyde boşluk
@@ -45,13 +56,6 @@ public class FxMigPane extends MigPane {
 		super(fxMigHp.getLcgPrep2(), fxMigHp.getLayColConst(), fxMigHp.getLayRowConst());
 	}
 
-	// Constraint Shortcuts
-
-	// cc component constraint
-	// lc layout constraint
-	// rc row constraint
-	// clc col constraint
-
 	public static String ccHeight(int height) {
 		return ",h " + height;
 	}
@@ -67,13 +71,6 @@ public class FxMigPane extends MigPane {
 	public static String ccPrefWidth(int i) {
 		return ",w :" + i + ":" + i;
 	}
-
-//	public static void addDebugLc() {
-//		FxMigPane.lcStandardInset0Gap50 += FxMigPane.lcDebug;
-//		FxMigPane.lcStandardInset0Gap5555 += FxMigPane.lcDebug;
-//		FxMigPane.lcStandardInset3Gap33 += FxMigPane.lcDebug;
-//		FxMigPane.lcStandardInset5Gap55 += FxMigPane.lcDebug;
-//	}
 
 	public static FxMigPane buiStandard() {
 		return new FxMigPane(FxMigHp.lgcStandard1InsetZeroGap00);
@@ -92,11 +89,21 @@ public class FxMigPane extends MigPane {
 	}
 
 	public void addGrowXSpan(Node node, String extra) {
-		add(node, "growx,pushx,span " + FiString.orEmpty(extra));
+		add(node, appendExtra("growx,pushx,span", extra));
 	}
 
 	public void addGrowXPushXSpan(Node node, String extra) {
-		add(node, "growx,pushx,span " + FiString.orEmpty(extra));
+		add(node, appendExtra("growx,pushx,span", extra));
+	}
+
+	private String appendExtra(String constraint, String extra) {
+
+		if (FiString.isEmptyTrim(extra)) {
+			return constraint;
+		}
+		// extra is full
+		String seperator = FiString.getCommaIfNotEmpty(constraint);
+		return FiString.orEmpty(constraint) + seperator + extra;
 	}
 
 	public void addGrowPushSpan(Node node) {
@@ -104,22 +111,31 @@ public class FxMigPane extends MigPane {
 	}
 
 	public void addGrowPushSpan(Node node, String extra) {
-		add(node, "grow,push,span " + FiString.getCommaIfNotEmpty(extra) + FiString.orEmpty(extra));
+		add(node, appendExtra("grow,push,span", extra));
 	}
 
 	public void addGrowSpan(Node node, String extra) {
-		add(node, "grow,span " + FiString.getCommaIfNotEmpty(extra) + FiString.orEmpty(extra));
+		add(node, appendExtra("grow,span", extra));
 	}
 
 	public void addSpan(Node node) {
 		add(node, "span");
 	}
 
+	public void addSpan(Node node,String extra) {
+		add(node, appendExtra("span",extra));
+	}
+
 	public void addGrowXPushXSpan(Node node) {
 		addGrowXPushXSpan(node, null);
 	}
 
-	public Separator addSeparatorHr() {
+	/**
+	 * Yatay çizgi ekler
+	 *
+	 * @return seperator node
+	 */
+	public Separator addSeparatorLineHor() {
 		Separator separator = new Separator(Orientation.HORIZONTAL);
 		addGrowXSpan(separator);
 		return separator;
@@ -130,4 +146,7 @@ public class FxMigPane extends MigPane {
 		return this;
 	}
 
+	public void addAlignxRight(Node node) {
+		add(node, "alignx right,span");
+	}
 }
