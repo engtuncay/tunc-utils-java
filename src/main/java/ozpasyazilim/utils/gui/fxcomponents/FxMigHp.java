@@ -291,8 +291,13 @@ public class FxMigHp {
 		return this;
 	}
 
-	public FxMigHp lgcStInset5Gap00() {
+	public FxMigHp lcgInset5Gap00() {
 		lcgInsetAndGap(5, 0,0 );
+		return this;
+	}
+
+	public FxMigHp lcgInset5Gap05() {
+		lcgInsetAndGap(5, 0,5 );
 		return this;
 	}
 }
