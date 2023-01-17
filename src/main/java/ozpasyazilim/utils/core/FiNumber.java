@@ -364,15 +364,15 @@ public class FiNumber {
 	/**
 	 * null değerlerde false döner
 	 *
-	 * @param value1
-	 * @param values
+	 * @param lnValueMain
+	 * @param valuesToCheck
 	 * @return
 	 */
-	public static Boolean equalsSome(Integer value1,Integer... values) {
-		if(value1==null) return false;
-		for (Integer value : values) {
+	public static Boolean equalsSome(Integer lnValueMain,Integer... valuesToCheck) {
+		if(lnValueMain==null) return false;
+		for (Integer value : valuesToCheck) {
 			if(value==null) continue;
-			if(value1==value) return true;
+			if(lnValueMain.equals(value)) return true;
 		}
 		return false;
 	}

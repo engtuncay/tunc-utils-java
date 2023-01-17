@@ -7,9 +7,8 @@ import ozpasyazilim.utils.gui.fxcomponents.FxTableMig2;
 import ozpasyazilim.utils.gui.fxcomponents.FxTableView2;
 import ozpasyazilim.utils.mvc.IFxModView;
 import ozpasyazilim.utils.mvc.IFxSimpleView;
-import ozpasyazilim.utils.mvc.IFxTempView;
 
-public class FxTableWindowView<EntClazz> implements IFxModView, IFxTempView<FxTableWindowCont>, IFxSimpleView {
+public class FxTableWindowView<EntClazz> implements IFxModView, IFxSimpleView {
 
 	// Containers
 	// rootMigPane super de
