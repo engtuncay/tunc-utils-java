@@ -2,6 +2,12 @@ package ozpasyazilim.utils.mvc;
 
 import javafx.stage.Stage;
 
+/**
+ * use IFxSelection and IFxSimple
+ * 
+ * @param <EntClazz>
+ */
+@Deprecated
 public interface IFxSimpleEntityModule<EntClazz> {
 
 	IFxSimpleView getModView();

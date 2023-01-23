@@ -534,6 +534,11 @@ public class FiString {
 		return "";
 	}
 
+	public static String getDashIfNotEmpty(String value) {
+		if (!FiString.isEmptyTrim(value)) return "-";
+		return "";
+	}
+
 	public static String cevir(String metin) {
 		if (metin == null || metin.isEmpty())
 			return metin;

@@ -134,4 +134,16 @@ public class FiBoolean {
 			return "0";
 		}
 	}
+
+	/**
+	 * Null ise değer , orValue değerini döner
+	 *
+	 * @param boValue
+	 * @param orValue
+	 * @return
+	 */
+	public static Boolean isNullOr(Boolean boValue, boolean orValue) {
+		if(boValue==null)return orValue;
+		return boValue;
+	}
 }

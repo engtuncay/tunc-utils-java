@@ -97,6 +97,8 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 		initCont();
 	}
 
+
+
 	public FxSimpleDialog(FxSimpleDialogType fxSimpleDialogType, String messageContent,String messageHeader) {
 		setFxSimpleDialogType(fxSimpleDialogType);
 		setMessageContent(messageContent);
@@ -152,9 +154,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 		}
 
 		if (getFxSimpleDialogType() == FxSimpleDialogType.TextField) {
-			setupTextHeaderLabel();
-			setupTextFieldString();
-			setupFooterOkCancel(null);
+			initTextField();
 			return;
 		}
 
@@ -180,54 +180,78 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 		}
 
 		if (fxSimpleDialogType == FxSimpleDialogType.FormAutoByCandIdFields) {
-			setupTextHeaderLabel();
-			setupFormByCandID();
-			setupFooterOkCancel(null);
+			initFormAutoByCandIdFields();
 			return;
 		}
 
 		if (fxSimpleDialogType == FxSimpleDialogType.FormAutoByCandIdFields) {
-			setupTextHeaderLabel();
-			setupFormByCandID();
-			setupFooterOkCancel(null);
+			initFormAutoByCandIdFields();
 			return;
 		}
 
 		if (fxSimpleDialogType == FxSimpleDialogType.InfoLabelDialog) {
-			setupTextHeaderLabel();
-			setupInfoLabelDialog();
-			setupFooterOkCancel(null);
+			initInfoLabelDialog();
 			return;
 		}
 
 		if (fxSimpleDialogType == FxSimpleDialogType.DialogError) {
-			setupDialogError();
+			initDialogError();
 			return;
 		}
 
 		if (fxSimpleDialogType == FxSimpleDialogType.DialogInfo) {
-			setupDialogInfoWarnErrorWithTextArea();
-			setupFooterOkCancel(null);
+			initDialogInfo();
 			return;
 		}
 
 		if (fxSimpleDialogType == FxSimpleDialogType.FormDialog) {
-			setupFormDialog();
-			setupFooterOkCancel(null);
+			initFormDialog();
 			return;
 		}
 
 		if (fxSimpleDialogType == FxSimpleDialogType.LogTable) {
-			setupTextHeaderLabel();
-			setupFormDialog();
-			setupFooterOkCancel(null);
+			initLogTable();
 			return;
 		}
 	}
 
-	private void setupDialogError() {
+	public void initTextField() {
+		setupTextHeaderLabel();
+		setupTextFieldString();
+		setupFooterOkCancel(null);
+	}
+
+	public void initFormAutoByCandIdFields() {
+		setupTextHeaderLabel();
+		setupFormByCandID();
+		setupFooterOkCancel(null);
+	}
+
+	public void initLogTable() {
+		setupTextHeaderLabel();
+		initFormDialog();
+	}
+
+	public void initFormDialog() {
+		setupFormDialog();
+		setupFooterOkCancel(null);
+	}
+
+	public void initDialogInfo() {
+		setupDialogInfoWarnErrorWithTextArea();
+		setupFooterOkCancel(null);
+	}
+
+	public void initInfoLabelDialog() {
+		setupTextHeaderLabel();
+		setupInfoLabelDialog();
+		setupFooterOkCancel(null);
+	}
+
+	public FxSimpleDialog<EntClazz> initDialogError() {
 		setupDialogInfoWarnErrorWithTextArea();
 		setupFooterOkCancel(true);
+		return this;
 	}
 
 
@@ -325,7 +349,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 		getModView().add(fxContent, "wrap");
 	}
 
-	public void initFormDialog(List<FiCol> fiCols, FormType formType) {
+	public void setupFormDialog(List<FiCol> fiCols, FormType formType) {
 		getFxFormInit().setup1(fiCols,FormType.PlainFormV1);
 		setFxSimpleDialogType(FxSimpleDialogType.Undefined);
 		initCont();
@@ -338,7 +362,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 	public void initFormDialogForUpdate(List<FiCol> fiCols, FormType formType, Object entity) {
 		getFxFormInit().setFormEntity(entity);
 		getFxFormInit().setBoUpdateForm(true);
-		initFormDialog(fiCols,formType);
+		setupFormDialog(fiCols,formType);
 	}
 
 		@Override

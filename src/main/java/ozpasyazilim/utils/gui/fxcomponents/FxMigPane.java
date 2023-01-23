@@ -110,6 +110,10 @@ public class FxMigPane extends MigPane {
 		add(node, "grow,push,span");
 	}
 
+	public void addWrap(Node node) {
+		add(node, "wrap");
+	}
+
 	public void addGrowPushSpan(Node node, String extra) {
 		add(node, appendExtra("grow,push,span", extra));
 	}
@@ -149,4 +153,6 @@ public class FxMigPane extends MigPane {
 	public void addAlignxRight(Node node) {
 		add(node, "alignx right,span");
 	}
+
+
 }

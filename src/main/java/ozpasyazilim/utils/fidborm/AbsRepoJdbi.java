@@ -2300,7 +2300,6 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 	public <PrmEnt> Fdr<PrmEnt> jdSelectSingleCustomEntityBindMap(String sql, Map<String, Object> mapParam, Class<PrmEnt> resultClazz) {
 
 		Fdr<PrmEnt> fdr = new Fdr<>();
-		fdr.setValue(null);
 
 		try {
 			Optional<PrmEnt> result = getJdbi().withHandle(handle -> {
@@ -2315,8 +2314,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 			}
 			fdr.setBoResult(true);
 		} catch (Exception ex) {
-			Loghelper.errorLog(getClass(), "Query Problem");
-			Loghelper.errorException(getClass(), ex);
+			Loghelper.get(getClass()).debug(FiException.exToLog(ex));
 			fdr.setBoResult(false);
 			fdr.setValue(null);
 		}

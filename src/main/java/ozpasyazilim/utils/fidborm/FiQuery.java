@@ -289,9 +289,9 @@ public class FiQuery {
 	 *
 	 * @param param
 	 * @param collData
-	 * @param boKeepOldMParamInMapParams
+	 * @param boKeepOldParam
 	 */
-	private void convertSqlFromSingleParamToMultiParam(String param, Collection collData, Boolean boKeepOldMParamInMapParams) {
+	private void convertSqlFromSingleParamToMultiParam(String param, Collection collData, Boolean boKeepOldParam) {
 
 		// (1) şablona göre yeni eklenecek parametre listesi
 		FiKeyBean paramsNew = new FiKeyBean();
@@ -313,7 +313,7 @@ public class FiQuery {
 		setTxQuery(sqlNew);
 
 		// map paramden eski parametre çıkarılıp, yenileri eklenir
-		if (!FiBoolean.isTrue(boKeepOldMParamInMapParams)) {
+		if (!FiBoolean.isTrue(boKeepOldParam)) {
 			getMapParams().remove(param);
 		}
 		getMapParams().putAll(paramsNew);
@@ -442,7 +442,13 @@ public class FiQuery {
 	/**
 	 * FiMapParam'da olan parametreleri aktive eder.
 	 * <p>
-	 * boActivateOnlyFullParams true olursa sadece dolu olan parametreleri aktif eder
+	 * boActivateOnlyFullParams true olursa sadece dolu olan parametreleri aktif eder.
+	 * <p>
+	 * String boş string degilse
+	 * <p>
+	 * Collection larda size > 0 olmalı
+	 * <p>
+	 * Diger türler için null olmamalı
 	 */
 	public void activateParamsMain(Boolean boActivateOnlyFullParams) {
 		if (getMapParams() != null) {
@@ -469,7 +475,7 @@ public class FiQuery {
 							setTxQuery(newQuery);
 							deActivatedParamList.add(key);
 						}
-					} else { // string ve collection tipinden dışında olanlar
+					} else { // string ve collection tipinden dışında olanlar, null degilse aktif edilir
 						if (value != null) {
 							String newQuery = fsmActivatedOptParamV1Main(getTxQuery(), key);
 							setTxQuery(newQuery);
@@ -805,7 +811,12 @@ public class FiQuery {
 		this.txPrimaryKeyFieldName = txPrimaryKeyFieldName;
 	}
 
-	public void placeUserParams() {
+	/**
+	 * Sorguda bulunan __userParam şeklindeki user parametrelerini bulur
+	 * <p>
+	 * Bu parametreler eğer mapParams'da var ise, değeri yer değiştirir.
+	 */
+	public void convertUserParamsToValue() {
 
 		if (getMapParamsInit().size() == 0) return;
 

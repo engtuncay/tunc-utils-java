@@ -1,6 +1,6 @@
 package ozpasyazilim.utils.mvc;
 
-public interface IFiCrudMethods {
+public interface IFiCrudActMethods {
 
 	void actBtnAdd();
 

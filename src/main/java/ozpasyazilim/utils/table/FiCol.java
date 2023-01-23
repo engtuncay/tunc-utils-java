@@ -592,7 +592,10 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 		return this;
 	}
 
-	public FiCol buildComment(String txComment) {
+	/**
+	 * Excelde, sütunun yorum balonunda gösterilecek açıklamayı belirtir
+	 */
+	public FiCol buiComment(String txComment) {
 		setColComment(txComment);
 		return this;
 	}

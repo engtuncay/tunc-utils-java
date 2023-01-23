@@ -23,7 +23,7 @@ import java.util.Optional;
  * <p>
  * Cre : 22-02-2019 TO
  *
- * @param <EntClazz>> value property nin tipi
+ * @param <EntClazz>> value property 'sinin tipi
  */
 public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 
@@ -38,10 +38,7 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 	 */
 	private Boolean boResult;
 
-	/**
-	 * 0 Başarısız, 1 Başarılı, 2 Kısmi Başarılı
-	 */
-	private Integer lnResult;
+
 	private EntClazz value;
 	private String message;
 	private Integer rowsAffected;
@@ -67,6 +64,13 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 	Integer rowsAffectedExtraWorks;
 	Integer rowsAffectedExtraByEntity;
 
+	@Deprecated
+	/**
+	 * Kompleksleştirmemek için kaldırıldı (lnSuccessOpCount veya lnFailureOp ile anlaşılabilir kısmi başarılı )
+	 * 0 Başarısız, 1 Başarılı, 2 Kısmi Başarılı
+	 */
+	private Integer lnResult;
+
 	/**
 	 * Operasyon sonucu nedir , true işlem sonucu pozitif, false işlem sonucu negatif olur.
 	 * <p>
@@ -79,11 +83,11 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 	// Sorgu,işlem çalıştırılmadıysa false yapılır
 	Boolean boQueryExecuted;
 
-	// dbResult birleştirilmiş operasyon mu
+	// boResult birleştirilmiş operasyon mu
 	Boolean boCombinedOperation;
 
 	// Combined Operasyon ise alt sonuçlar burada saklanabilir
-	List<Fdr> fdrList;
+	List<Fdr> listFdr;
 
 	List<Exception> listException;
 
@@ -93,7 +97,10 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 
 	Boolean boMultiFdr;
 
-	String txFdrName;
+	/**
+	 * Fdr için verilecek özel bir isim
+	 */
+	String txName;
 
 	/**
 	 * True olunca Log eklemeyi engeller. Birleştirmeden sonra yapılır, tekrar eski Fdr ye log eklenirse , ana Fdr de o loglar görünmez.
@@ -226,10 +233,10 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 
 	public void setBoResultAndLnResult(Boolean boResult) {
 		this.boResult = boResult;
-		if(boResult!=null){
-			if(boResult){
+		if (boResult != null) {
+			if (boResult) {
 				setLnResult(1); // true
-			}else{
+			} else {
 				setLnResult(0); // false
 			}
 		}
@@ -265,6 +272,11 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 
 	public EntClazz getValue() {
 		return value;
+	}
+
+	public String getValueAsString() {
+		if(value==null) return null;
+		return (String) value;
 	}
 
 	public EntClazz getValueOr(EntClazz entClazz) {
@@ -450,6 +462,12 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 		fdrSub.setBoLockAddLog(true);
 	}
 
+	/**
+	 * lnResult iptal edilecek , boResult kullanilacak
+	 *
+	 * @param lnResultNew
+	 */
+	@Deprecated
 	private void calcLnResult(int lnResultNew) {
 		if (getLnResult() == null) {
 			setLnResult(lnResultNew);
@@ -705,14 +723,14 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 	}
 
 	public List<Fdr> getFdrResultList() {
-		if (fdrList == null) {
-			fdrList = new ArrayList<>();
+		if (listFdr == null) {
+			listFdr = new ArrayList<>();
 		}
-		return fdrList;
+		return listFdr;
 	}
 
 	public void setFdrResultList(List<Fdr> fdrList) {
-		this.fdrList = fdrList;
+		this.listFdr = fdrList;
 	}
 
 	public void append(String message) {
@@ -852,19 +870,19 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 		this.lnResponseCode = lnResponseCode;
 	}
 
-	public List<Fdr> getFdrList() {
-		return fdrList;
+	public List<Fdr> getListFdr() {
+		return listFdr;
 	}
 
 	public List<Fdr> getFdrListInit() {
-		if (fdrList == null) {
-			fdrList = new ArrayList<>();
+		if (listFdr == null) {
+			listFdr = new ArrayList<>();
 		}
-		return fdrList;
+		return listFdr;
 	}
 
-	public void setFdrList(List<Fdr> fdrList) {
-		this.fdrList = fdrList;
+	public void setListFdr(List<Fdr> listFdr) {
+		this.listFdr = listFdr;
 	}
 
 	public List<String> getMessageList() {
@@ -957,7 +975,7 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 		getLogListInit().add(new EntLog(txMessage, MetaLogType.LOG));
 	}
 
-	public String getLogAsString() {
+	public String getLogAsStringWitErrorInfo() {
 		StringBuilder sb = new StringBuilder("");
 		int index = 0;
 		for (EntLog entLog : getLogListInit()) {
@@ -965,6 +983,17 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 			if (entLog.getTxLogTypeNtn().equals(MetaLogType.ERROR.toString())) {
 				sb.append("HATA !!! : ");
 			}
+			sb.append(entLog.getTxMessage());
+			index++;
+		}
+		return sb.toString();
+	}
+
+	public String getLogAsString() {
+		StringBuilder sb = new StringBuilder();
+		int index = 0;
+		for (EntLog entLog : getLogListInit()) {
+			if (index > 0) sb.append("\n");
 			sb.append(entLog.getTxMessage());
 			index++;
 		}
@@ -988,12 +1017,12 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 		return pair;
 	}
 
-	public String getTxFdrName() {
-		return txFdrName;
+	public String getTxName() {
+		return txName;
 	}
 
-	public void setTxFdrName(String txFdrName) {
-		this.txFdrName = txFdrName;
+	public void setTxName(String txName) {
+		this.txName = txName;
 	}
 
 	public Boolean getBoLockAddLog() {
@@ -1013,7 +1042,7 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 
 	public void combineAllLog() {
 		for (Fdr fdr : getFdrListInit()) {
-			addLogInfo(String.format("--- %s ---", fdr.getTxFdrName()));
+			addLogInfo(String.format("--- %s ---", fdr.getTxName()));
 			getLogListInit().addAll(fdr.getLogListInit());
 		}
 	}
@@ -1022,15 +1051,18 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 		if (getBoResult() == null) setBoResult(boResult);
 	}
 
+	@Deprecated
 	public Integer getLnResult() {
 		return lnResult;
 	}
 
+	@Deprecated
 	public Integer getLnResultNtn() {
 		if (getLnResult() == null) return -1;
 		return lnResult;
 	}
 
+	@Deprecated
 	public void setLnResult(Integer lnResult) {
 		this.lnResult = lnResult;
 	}

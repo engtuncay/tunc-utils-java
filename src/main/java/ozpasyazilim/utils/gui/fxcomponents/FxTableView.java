@@ -24,9 +24,9 @@ import ozpasyazilim.utils.gui.fxTableViewExtra.NestedPropertyValueFactory;
 import ozpasyazilim.utils.annotations.FiDraft;
 import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.log.Loghelper;
-import ozpasyazilim.utils.mvc.IFxMosCont;
 import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.core.FiReflection;
+import ozpasyazilim.utils.mvc.IFxSimpSelectionCont;
 import ozpasyazilim.utils.returntypes.FnResult;
 import ozpasyazilim.utils.table.OzColSummaryType;
 import ozpasyazilim.utils.table.OzColType;
@@ -2144,12 +2144,12 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 	}
 
 
-	public void activateFxTableSelectAndClose(IFxMosCont iFxMosCont) {
+	public void activateFxTableSelectAndClose(IFxSimpSelectionCont iFxMosCont) {
 
 		setOnKeyReleased(event -> {
 			if (event.getCode() == KeyCode.ENTER) {
 				//getRunnableSelectAndClose().run();
-				iFxMosCont.setEntityDefault(getSelectionModel().getSelectedItem());
+				iFxMosCont.setEntitySelected(getSelectionModel().getSelectedItem());
 				iFxMosCont.setCloseReason("done");
 				iFxMosCont.getFxStage().close();
 			}
@@ -2165,7 +2165,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 		onFiRowDoubleClickEvent(tableRow -> {
 			//getRunnableSelectAndClose().run();
-			iFxMosCont.setEntityDefault(getSelectionModel().getSelectedItem());
+			iFxMosCont.setEntitySelected(getSelectionModel().getSelectedItem());
 			iFxMosCont.setCloseReason("done");
 			iFxMosCont.getFxStage().close();
 		});

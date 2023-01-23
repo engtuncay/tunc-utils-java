@@ -3,13 +3,13 @@ package ozpasyazilim.utils.gui.fxcomponents;
 import javafx.scene.Node;
 import ozpasyazilim.utils.core.FiBoolean;
 import ozpasyazilim.utils.mvc.AbsFxSimpleCont;
-import ozpasyazilim.utils.mvc.IFxSimpleGenCont;
+import ozpasyazilim.utils.mvc.IFxSimpSelectionCont;
 
-public class FxSimpleContGen<E> extends AbsFxSimpleCont implements IFxSimpleGenCont<E> {
+public class FxSimpleContGen<E> extends AbsFxSimpleCont implements IFxSimpSelectionCont<E> {
 
 	FxMigPaneView modView;
 	// Entity neden gerek duyuldu ???
-	E entityDefault;
+	E entitySelected;
 
 	public FxSimpleContGen() {
 
@@ -52,12 +52,12 @@ public class FxSimpleContGen<E> extends AbsFxSimpleCont implements IFxSimpleGenC
 
 	@Override
 	public E getEntitySelected() {
-		return entityDefault;
+		return entitySelected;
 	}
 
 	@Override
-	public void setEntityDefault(E entitySelected) {
-		this.entityDefault = entitySelected;
+	public void setEntitySelected(E entitySelected) {
+		this.entitySelected = entitySelected;
 	}
 
 

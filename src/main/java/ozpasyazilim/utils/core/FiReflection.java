@@ -452,7 +452,7 @@ public class FiReflection {
 
 				final Class<?>[] clazzField = {null};
 				ReflectionUtils.doWithFields(clazz, field1 -> {
-//					Loghelper.get(FiReflection.class).debug("Field:"+field1.getName());
+				//Loghelper.get(FiReflection.class).debug("Field:"+field1.getName());
 					if (field1.getName().equals(fieldName)) {
 						clazzField[0] = field1.getType();
 					}
