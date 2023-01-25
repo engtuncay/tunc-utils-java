@@ -618,7 +618,6 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
 		if (doubleClickEvent == null) return;
 		//getMapTableRowEvents().remove(TableRowActions.DoubleClick);
-
 		getMapTableRowEvents().put(FxTableRowActions.DoubleClick, doubleClickEvent);
 
 	}

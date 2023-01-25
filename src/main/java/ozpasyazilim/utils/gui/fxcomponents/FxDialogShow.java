@@ -781,7 +781,7 @@ public class FxDialogShow {
 		nodeModalByIFxSimpleCont(nodeRelative, ifxSimpleCont, null, null, null);
 	}
 
-	public void nodeModalByIFxModCont(Node nodeRelative, IFxMotCont2 fxModCont, Integer width, Integer height, Boolean boNonModal, DialogConfig dialogConfig) {
+	public void nodeModalByIFxModCont(Node nodeRelative, IFxMotSimpleCont fxModCont, Integer width, Integer height, Boolean boNonModal, DialogConfig dialogConfig) {
 
 		if (dialogConfig == null) {
 			dialogConfig = new DialogConfig();
@@ -796,7 +796,7 @@ public class FxDialogShow {
 
 	}
 
-	public void nodeModalByIFxModContMain(IFxMotCont2 fxModCont, DialogConfig dialogConfig) {
+	public void nodeModalByIFxModContMain(IFxMotSimpleCont fxModCont, DialogConfig dialogConfig) {
 
 		if (dialogConfig == null) dialogConfig = new DialogConfig();
 
