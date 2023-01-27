@@ -8,7 +8,7 @@ import javax.swing.table.TableCellEditor;
 
 public class CustomComboCellEditor extends AbstractCellEditor implements TableCellEditor {
 
-	JComboBox<ComboItem> combobox; // = new JTextField();
+	JComboBox<ComboItemText> combobox; // = new JTextField();
 
 	public CustomComboCellEditor(JComboBox comboBox) {
 
@@ -60,9 +60,9 @@ public class CustomComboCellEditor extends AbstractCellEditor implements TableCe
 
 
 	public void setSelectedValue(JComboBox comboBox, String value) {
-		ComboItem item;
+		ComboItemText item;
 		for (int i = 0; i < comboBox.getItemCount(); i++) {
-			item = (ComboItem) comboBox.getItemAt(i);
+			item = (ComboItemText) comboBox.getItemAt(i);
 
 			if (item.getLabel().equals(value)) {
 				// Loghelper.getInstance(this.getClass()).info("seçildi"+(String)value);

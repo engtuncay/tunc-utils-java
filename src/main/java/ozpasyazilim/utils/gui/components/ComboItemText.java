@@ -5,7 +5,7 @@ package ozpasyazilim.utils.gui.components;
  *
  * @author ttn
  */
-public class ComboItem {
+public class ComboItemText {
 
 	private String label;
 	private String value;
@@ -13,18 +13,18 @@ public class ComboItem {
 	private String txCode;
 	private String txSpec1;
 
-	public ComboItem(String label, String value) {
+	public ComboItemText(String label, String value) {
 		this.label = label;
 		this.value = value;
 	}
 
-	public ComboItem(String label, String value,String txSpec1) {
+	public ComboItemText(String label, String value, String txSpec1) {
 		this.label = label;
 		this.value = value;
 		this.txSpec1 = txSpec1;
 	}
 
-	public ComboItem(String label) {
+	public ComboItemText(String label) {
 		this.label = label;
 		//this.onAction = onAction;
 	}
@@ -37,13 +37,13 @@ public class ComboItem {
 //		this.onAction = onAction;
 //	}
 
-	public static ComboItem build(Object objLabel, Object objValue) {
-		ComboItem comboItem = new ComboItem(objLabel.toString(), objValue.toString());
+	public static ComboItemText build(Object objLabel, Object objValue) {
+		ComboItemText comboItem = new ComboItemText(objLabel.toString(), objValue.toString());
 		return comboItem;
 	}
 
-	public static ComboItem buildWitAction(String label, Runnable onAction) {
-		ComboItem comboItem = new ComboItem(label);
+	public static ComboItemText buildWitAction(String label, Runnable onAction) {
+		ComboItemText comboItem = new ComboItemText(label);
 		comboItem.setOnAction(onAction);
 		return comboItem;
 	}
@@ -68,7 +68,7 @@ public class ComboItem {
 			return false;
 		}
 
-		ComboItem comboItem = (ComboItem) obj;
+		ComboItemText comboItem = (ComboItemText) obj;
 
 		if (comboItem.getValue() == null || getValue() == null) {
 			return false;
@@ -106,7 +106,7 @@ public class ComboItem {
 		this.onAction = onAction;
 	}
 
-	public ComboItem buildOnAction(Runnable onAction) {
+	public ComboItemText buildOnAction(Runnable onAction) {
 		this.onAction = onAction;
 		return this;
 	}
@@ -115,7 +115,7 @@ public class ComboItem {
 		return txCode;
 	}
 
-	public ComboItem setTxCode(String txCode) {
+	public ComboItemText setTxCode(String txCode) {
 		this.txCode = txCode;
 		return this;
 	}

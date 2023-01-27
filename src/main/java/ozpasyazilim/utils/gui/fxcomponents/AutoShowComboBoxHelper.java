@@ -4,16 +4,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.scene.control.ComboBox;
-import javafx.util.Callback;
-import ozpasyazilim.utils.gui.components.ComboItem;
+import ozpasyazilim.utils.gui.components.ComboItemText;
 
 public class AutoShowComboBoxHelper {
 
-    public static void activate(final ComboBox<ComboItem> comboBox) {
+    public static void activate(final ComboBox<ComboItemText> comboBox) {
 
         //, final Callback<String, String> textBuilder
 
-        final ObservableList<ComboItem> items = FXCollections.observableArrayList(comboBox.getItems());
+        final ObservableList<ComboItemText> items = FXCollections.observableArrayList(comboBox.getItems());
 
         comboBox.getEditor().textProperty().addListener((ov, o, n) -> {
             if (n.equals(comboBox.getSelectionModel().getSelectedItem())) {
@@ -21,7 +20,7 @@ public class AutoShowComboBoxHelper {
             }
 
             //comboBox.hide();
-            final FilteredList<ComboItem> filtered = items.filtered(s -> s.toString().toLowerCase().contains(n.toLowerCase()));
+            final FilteredList<ComboItemText> filtered = items.filtered(s -> s.toString().toLowerCase().contains(n.toLowerCase()));
             if (filtered.isEmpty()) {
                 comboBox.getItems().setAll(items);
             } else {

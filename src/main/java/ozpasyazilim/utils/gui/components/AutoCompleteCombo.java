@@ -147,7 +147,7 @@ public class AutoCompleteCombo extends JComboBox {
 
 	}
 
-	public void setText(ComboItem text) {
+	public void setText(ComboItemText text) {
 		if (model.data.contains(text.getLabel())) {
 			setSelectedItem(text);
 		} else {
@@ -208,7 +208,7 @@ public class AutoCompleteCombo extends JComboBox {
 	// clearSelection();
 	// }
 
-	public synchronized void addToTop(ComboItem aString) {
+	public synchronized void addToTop(ComboItemText aString) {
 		model.addToTop(aString);
 	}
 
@@ -227,18 +227,18 @@ public class AutoCompleteCombo extends JComboBox {
 
 		class Data {
 
-			private List<ComboItem> list = new ArrayList<>(limit);
-			private List<ComboItem> lowercase = new ArrayList<>(limit);
-			private List<ComboItem> filtered;
+			private List<ComboItemText> list = new ArrayList<>(limit);
+			private List<ComboItemText> lowercase = new ArrayList<>(limit);
+			private List<ComboItemText> filtered;
 
-			void add(ComboItem s) {
+			void add(ComboItemText s) {
 				list.add(s);
 				s.setLabel(s.getValue().toLowerCase());
 				lowercase.add(s);
 
 			}
 
-			void addToTop(ComboItem s) {
+			void addToTop(ComboItemText s) {
 				list.add(0, s);
 				s.setLabel(s.getValue().toLowerCase());
 				lowercase.add(0, s);
@@ -249,11 +249,11 @@ public class AutoCompleteCombo extends JComboBox {
 				lowercase.remove(index);
 			}
 
-			List<ComboItem> getList() {
+			List<ComboItemText> getList() {
 				return list;
 			}
 
-			List<ComboItem> getFiltered() {
+			List<ComboItemText> getFiltered() {
 				if (filtered == null) filtered = list;
 				return filtered;
 			}
@@ -285,7 +285,7 @@ public class AutoCompleteCombo extends JComboBox {
 			boolean contains(String s) {
 				if (s == null || s.trim().isEmpty()) return true;
 				s = s.toLowerCase();
-				for (ComboItem item : lowercase) {
+				for (ComboItemText item : lowercase) {
 					if (item.equals(s)) {
 						return true;
 					}
@@ -298,9 +298,9 @@ public class AutoCompleteCombo extends JComboBox {
 
 		void readData() {
 
-			ComboItem comboItem1 = new ComboItem("Afghanistan", "Afghanistanvalue");
-			ComboItem comboItem2 = new ComboItem("Afgan", "Afganvalue");
-			ComboItem comboItem3 = new ComboItem("Albania", "AlbeniaValue");
+			ComboItemText comboItem1 = new ComboItemText("Afghanistan", "Afghanistanvalue");
+			ComboItemText comboItem2 = new ComboItemText("Afgan", "Afganvalue");
+			ComboItemText comboItem3 = new ComboItemText("Albania", "AlbeniaValue");
 
 			data.add(comboItem1);
 			data.add(comboItem2);
@@ -313,7 +313,7 @@ public class AutoCompleteCombo extends JComboBox {
 		void writeData() {
 			StringBuilder b = new StringBuilder(limit * 60);
 
-			for (ComboItem url : data.getList()) {
+			for (ComboItemText url : data.getList()) {
 				b.append(delimiter).append(url);
 			}
 			b.delete(0, delimiter.length());
@@ -369,7 +369,7 @@ public class AutoCompleteCombo extends JComboBox {
 			}
 		}
 
-		public void addToTop(ComboItem aString) {
+		public void addToTop(ComboItemText aString) {
 			if (aString == null || data.contains(aString.getLabel())) return;
 			if (data.size() == 0) data.add(aString);
 			else

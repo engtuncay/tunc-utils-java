@@ -15,7 +15,7 @@ import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.datatypes.FiKeyBean;
 import ozpasyazilim.utils.fidborm.FiEntity;
 import ozpasyazilim.utils.fidborm.FiField;
-import ozpasyazilim.utils.gui.components.ComboItem;
+import ozpasyazilim.utils.gui.components.ComboItemText;
 import ozpasyazilim.utils.gui.components.ComboItemObj;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.mvc.IFiCol;
@@ -504,7 +504,7 @@ public class FxEditorFactory {
 		}
 
 		if (txClassName.equals(FxComboBox.class.getName())) {
-			FxComboBox<ComboItem> comp = new FxComboBox<>();
+			FxComboBox<ComboItemText> comp = new FxComboBox<>();
 			return comp;
 		}
 
@@ -1034,7 +1034,7 @@ public class FxEditorFactory {
 				|| txNodeClass.equals(ComboBox.class.getName())) {
 
 			if (txNodeClass.equals(FxComboBox.class.getName())) {
-				FxComboBox<ComboItem> comp = (FxComboBox<ComboItem>) nodeComp;
+				FxComboBox<ComboItemText> comp = (FxComboBox<ComboItemText>) nodeComp;
 				String textValue = comp.getSelectedItemFi().getValue();
 				return convertStringValueToObjectByOzColType(ozColType, textValue);
 			}
@@ -1043,7 +1043,7 @@ public class FxEditorFactory {
 
 		if (txNodeClass.equals(FxComboBoxSimple.class.getName())) {
 			FxComboBoxSimple comp = (FxComboBoxSimple) nodeComp;
-			ComboItem selectedItemFi = comp.getSelectedItemFi();
+			ComboItemText selectedItemFi = comp.getSelectedItemFi();
 			String textValue = null;
 			if (selectedItemFi != null) textValue = selectedItemFi.getValue();
 			return convertStringValueToObjectByOzColType(ozColType, textValue);

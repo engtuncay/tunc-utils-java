@@ -396,7 +396,7 @@ public class OzFormatter {
 	}
 
 	public OzFormatter buildDeActivateOptionalParam(String param) {
-		this.value = FiQuery.deActivateOptParamMain(value, param);
+		this.value = FiQuery.fsmDeActivateOptParamMain(value, param);
 		return this;
 	}
 

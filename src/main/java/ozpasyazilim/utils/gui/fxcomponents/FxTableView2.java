@@ -2095,11 +2095,11 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 	}
 
 
-	public void activateExtensionFxTableSelectAndClose(IFxSimpSelectionCont iFxSimpleWitEntCont) {
+	public void activateExtensionFxTableSelectAndClose(IFxSimpSelectionCont iFxSimpSelectionCont) {
 
 		setOnKeyReleased(event -> {
 			if (event.getCode() == KeyCode.ENTER) {
-				extensionSelectAndClose(iFxSimpleWitEntCont);
+				extensionSelectAndClose(iFxSimpSelectionCont);
 			}
 
 			//default olarak eklendi
@@ -2112,7 +2112,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 		});
 
 		onRowDoubleClickEventFi(tableRow -> {
-			extensionSelectAndClose(iFxSimpleWitEntCont);
+			extensionSelectAndClose(iFxSimpSelectionCont);
 		});
 	}
 

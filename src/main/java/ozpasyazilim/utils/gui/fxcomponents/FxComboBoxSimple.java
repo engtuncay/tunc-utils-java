@@ -8,12 +8,12 @@ import javafx.scene.input.KeyEvent;
 import ozpasyazilim.utils.annotations.FiDraft;
 import ozpasyazilim.utils.core.FiBoolean;
 import ozpasyazilim.utils.core.FiString;
-import ozpasyazilim.utils.gui.components.ComboItem;
+import ozpasyazilim.utils.gui.components.ComboItemText;
 import ozpasyazilim.utils.log.Loghelper;
 
 import java.util.List;
 
-public class FxComboBoxSimple extends FxComboBox<ComboItem> {
+public class FxComboBoxSimple extends FxComboBox<ComboItemText> {
 
 	public FxComboBoxSimple() {
 		super();
@@ -36,13 +36,13 @@ public class FxComboBoxSimple extends FxComboBox<ComboItem> {
 		setPromptText(prompText);
 	}
 
-	public FxComboBoxSimple(ObservableList<ComboItem> items) {
+	public FxComboBoxSimple(ObservableList<ComboItemText> items) {
 		super(items);
 	}
 
 	public void addFiItems(List<String> list) {
 		for (String s : list) {
-			getItems().add(new ComboItem(s, s));
+			getItems().add(new ComboItemText(s, s));
 		}
 	}
 
@@ -60,11 +60,11 @@ public class FxComboBoxSimple extends FxComboBox<ComboItem> {
 
 		if (FiString.isEmpty(getTxValue()) || isEmptyComboBox()) return;
 
-		ObservableList<ComboItem> items = getItems();
+		ObservableList<ComboItemText> items = getItems();
 
 		for (int index = 0; index < items.size(); index++) {
 
-			ComboItem item = items.get(index);
+			ComboItemText item = items.get(index);
 			if (item.getValue() == null) continue;
 
 			if (item.getValue().equals(getTxValue())) {
@@ -74,11 +74,11 @@ public class FxComboBoxSimple extends FxComboBox<ComboItem> {
 		}
 	}
 
-	public void addComboItem(ComboItem comboItem) {
+	public void addComboItem(ComboItemText comboItem) {
 		getItems().add(comboItem);
 	}
 
-	public void addSecureComboItem(ComboItem comboItem, Predicate<String> predSecureCheck) {
+	public void addSecureComboItem(ComboItemText comboItem, Predicate<String> predSecureCheck) {
 		if(predSecureCheck.apply(comboItem.getTxCode())){
 			getItems().add(comboItem);
 		}
@@ -87,17 +87,17 @@ public class FxComboBoxSimple extends FxComboBox<ComboItem> {
 	public <PrmEnt> void addFiList(List<PrmEnt> list, Function<PrmEnt, Object> fnValue, Function<PrmEnt, Object> fnLabel) {
 
 		for (PrmEnt prmEnt : list) {
-			getItems().add(ComboItem.build(fnLabel.apply(prmEnt), fnValue.apply(prmEnt)));
+			getItems().add(ComboItemText.build(fnLabel.apply(prmEnt), fnValue.apply(prmEnt)));
 		}
 
 	}
 
 	public void addFirstItemAsNull() {
-		addComboItem(new ComboItem("Seçiniz", null));
+		addComboItem(new ComboItemText("Seçiniz", null));
 	}
 
 	public void addComboItem(String value, String label) {
-		addComboItem(new ComboItem(label, value));
+		addComboItem(new ComboItemText(label, value));
 	}
 
 	public void addComboItemObjFi(Object value, String label) {
@@ -109,18 +109,18 @@ public class FxComboBoxSimple extends FxComboBox<ComboItem> {
 		// selection alternatif yöntemi bulunamadı
 		setOnKeyPressed(e -> {
 			if (e.getCode() == KeyCode.ENTER) {
-				ComboItem selectedItem = getSelectionModel().getSelectedItem();
+				ComboItemText selectedItem = getSelectionModel().getSelectedItem();
 				Loghelper.get(getClass()).debug("Entered"+selectedItem.getValue());
 			}
 		});
 
 		addEventHandler(KeyEvent.KEY_PRESSED,event -> {
-			ComboItem selectedItem = getSelectionModel().getSelectedItem();
+			ComboItemText selectedItem = getSelectionModel().getSelectedItem();
 			Loghelper.get(getClass()).debug("keypressed"+selectedItem.getValue());
 		});
 
 		setOnMouseEntered(event -> {
-			ComboItem selectedItem = getSelectionModel().getSelectedItem();
+			ComboItemText selectedItem = getSelectionModel().getSelectedItem();
 			Loghelper.get(getClass()).debug("Mouse entered:"+selectedItem.getValue());
 		});
 	}

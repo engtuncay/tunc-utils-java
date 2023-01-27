@@ -2,7 +2,7 @@ package ozpasyazilim.utils.gui.fxcomponents;
 
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Tooltip;
-import ozpasyazilim.utils.gui.components.ComboItem;
+import ozpasyazilim.utils.gui.components.ComboItemText;
 
 import java.util.function.Consumer;
 
@@ -14,9 +14,9 @@ public class FxCheckBox extends CheckBox implements IFxEditorNode {
 
 	private Boolean boOldValue;
 
-	ComboItem comboitem;
+	ComboItemText comboitem;
 
-	public FxCheckBox(ComboItem comboitem) {
+	public FxCheckBox(ComboItemText comboitem) {
 		this.comboitem= comboitem;
 		setText(comboitem.getLabel());
 	}
@@ -38,11 +38,11 @@ public class FxCheckBox extends CheckBox implements IFxEditorNode {
 		setTooltip(new Tooltip(txTooltip));
 	}
 
-	public ComboItem getComboitem() {
+	public ComboItemText getComboitem() {
 		return comboitem;
 	}
 
-	public void setComboitem(ComboItem comboitem) {
+	public void setComboitem(ComboItemText comboitem) {
 		this.comboitem = comboitem;
 		setText(comboitem.getLabel());
 	}

@@ -1,22 +1,19 @@
 package ozpasyazilim.utils.gui.fxcomponents;
 
 import javafx.collections.ObservableList;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import ozpasyazilim.utils.gui.components.ComboItem;
+import ozpasyazilim.utils.gui.components.ComboItemText;
 
-public class FxChoiceBoxSimple extends FxChoiceBox<ComboItem> {
+public class FxChoiceBoxSimple extends FxChoiceBox<ComboItemText> {
 
 	public FxChoiceBoxSimple() {
 	}
 
-	public FxChoiceBoxSimple(ObservableList<ComboItem> items) {
+	public FxChoiceBoxSimple(ObservableList<ComboItemText> items) {
 		super(items);
 	}
 
 
-	public ComboItem getFiSelectedItem() {
+	public ComboItemText getFiSelectedItem() {
 		return selectionModelProperty().get().getSelectedItem();
 	}
 

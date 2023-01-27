@@ -14,7 +14,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Window;
 import ozpasyazilim.utils.core.FiRegExp;
 import ozpasyazilim.utils.core.FiString;
-import ozpasyazilim.utils.gui.components.ComboItem;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -27,7 +27,7 @@ public class AutocompleteJComboBox extends JComboBox {
 
 	static final long serialVersionUID = 4321421L;
 
-	private final Searchable<ComboItem, String> searchable;
+	private final Searchable<ComboItemText, String> searchable;
 
 	/**
 	 *
@@ -36,7 +36,7 @@ public class AutocompleteJComboBox extends JComboBox {
 	 * @param s
 	 */
 
-	public AutocompleteJComboBox(Searchable<ComboItem, String> s) {
+	public AutocompleteJComboBox(Searchable<ComboItemText, String> s) {
 
 		super();
 
@@ -82,7 +82,7 @@ public class AutocompleteJComboBox extends JComboBox {
 						@Override
 						public void run() {
 
-							List<ComboItem> founds = new ArrayList<ComboItem>(searchable.search(tc
+							List<ComboItemText> founds = new ArrayList<ComboItemText>(searchable.search(tc
 									.getText()));
 
 //							Set<ComboItem> foundSet = new HashSet<ComboItem>();
@@ -108,7 +108,7 @@ public class AutocompleteJComboBox extends JComboBox {
 //
 //							}
 
-							for (ComboItem s : founds) {
+							for (ComboItemText s : founds) {
 								addItem(s);
 							}
 

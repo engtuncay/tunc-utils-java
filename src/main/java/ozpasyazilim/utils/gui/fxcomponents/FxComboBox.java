@@ -18,7 +18,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Window;
 import ozpasyazilim.utils.core.FiBoolean;
 import ozpasyazilim.utils.core.FiString;
-import ozpasyazilim.utils.gui.components.ComboItem;
+import ozpasyazilim.utils.gui.components.ComboItemText;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -80,11 +80,11 @@ public class FxComboBox<T> extends ComboBox<T> {
 
 		if (FiString.isEmpty(getTxValue()) || isEmptyComboBox()) return;
 
-		ObservableList<ComboItem> items = (ObservableList<ComboItem>) getItems();
+		ObservableList<ComboItemText> items = (ObservableList<ComboItemText>) getItems();
 
 		for (int index = 0; index < items.size(); index++) {
 
-			ComboItem item = items.get(index);
+			ComboItemText item = items.get(index);
 			if (item.getValue() == null) continue;
 
 			if (item.getValue().equals(getTxValue())) {
@@ -118,15 +118,15 @@ public class FxComboBox<T> extends ComboBox<T> {
 		getItems().add(item);
 	}
 
-	public <PrmEnt> void addFiList(FxComboBox<ComboItem> compCombo, List<PrmEnt> list, Function<PrmEnt, Object> fnValue, Function<PrmEnt, Object> fnLabel) {
+	public <PrmEnt> void addFiList(FxComboBox<ComboItemText> compCombo, List<PrmEnt> list, Function<PrmEnt, Object> fnValue, Function<PrmEnt, Object> fnLabel) {
 
 		for (PrmEnt prmEnt : list) {
-			compCombo.addComboItem(ComboItem.build(fnLabel.apply(prmEnt), fnValue.apply(prmEnt)));
+			compCombo.addComboItem(ComboItemText.build(fnLabel.apply(prmEnt), fnValue.apply(prmEnt)));
 		}
 
 	}
 
-	public void activateSelectedItem(FxComboBox<ComboItem> compCombo) {
+	public void activateSelectedItem(FxComboBox<ComboItemText> compCombo) {
 
 		if (FiString.isEmpty(getTxValue())) {
 			compCombo.getSelectionModel().select(0);
@@ -136,15 +136,15 @@ public class FxComboBox<T> extends ComboBox<T> {
 
 	}
 
-	public void setFiSelectedItemByTxValue(FxComboBox<ComboItem> compCombo) {
+	public void setFiSelectedItemByTxValue(FxComboBox<ComboItemText> compCombo) {
 
 		if (FiString.isEmpty(getTxValue()) || isEmptyComboBox()) return;
 
-		ObservableList<ComboItem> items = compCombo.getItems();
+		ObservableList<ComboItemText> items = compCombo.getItems();
 
 		for (int index = 0; index < items.size(); index++) {
 
-			ComboItem item = items.get(index);
+			ComboItemText item = items.get(index);
 			if (item.getValue() == null) continue;
 
 			if (item.getValue().equals(getTxValue())) {
@@ -168,7 +168,7 @@ public class FxComboBox<T> extends ComboBox<T> {
 
 			if(newValue==null)return;
 
-			ComboItem cbi = (ComboItem) newValue;
+			ComboItemText cbi = (ComboItemText) newValue;
 
 			if (cbi.getOnAction() != null) {
 				cbi.getOnAction().run();

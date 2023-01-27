@@ -1,12 +1,11 @@
 package ozpasyazilim.utils.datatypes;
 
-import ozpasyazilim.utils.gui.components.ComboItem;
+import ozpasyazilim.utils.gui.components.ComboItemText;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
-public class ListCombo extends ArrayList<ComboItem> {
+public class ListCombo extends ArrayList<ComboItemText> {
 
 	public ListCombo(int initialCapacity) {
 		super(initialCapacity);
@@ -15,16 +14,16 @@ public class ListCombo extends ArrayList<ComboItem> {
 	public ListCombo() {
 	}
 
-	public ListCombo(Collection<? extends ComboItem> c) {
+	public ListCombo(Collection<? extends ComboItemText> c) {
 		super(c);
 	}
 
 	public void addItem(Object key, Object value) {
 		if(key==null)return;
 		if(value==null) {
-			add(new ComboItem(key.toString(), null));
+			add(new ComboItemText(key.toString(), null));
 			return;
 		}
-		add(new ComboItem(key.toString(), value.toString()));
+		add(new ComboItemText(key.toString(), value.toString()));
 	}
 }

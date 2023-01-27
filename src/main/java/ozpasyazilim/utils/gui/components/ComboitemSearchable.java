@@ -18,11 +18,11 @@ import java.util.List;
 
  */
 
-public class ComboitemSearchable implements Searchable<ComboItem,String>{
+public class ComboitemSearchable implements Searchable<ComboItemText,String>{
 
 
 
-	private List<ComboItem> terms = new ArrayList<ComboItem>();
+	private List<ComboItemText> terms = new ArrayList<ComboItemText>();
 
 
 
@@ -34,7 +34,7 @@ public class ComboitemSearchable implements Searchable<ComboItem,String>{
 
 	 */
 
-	public ComboitemSearchable(List<ComboItem> terms){
+	public ComboitemSearchable(List<ComboItemText> terms){
 
 		this.terms.addAll(terms);
 
@@ -44,12 +44,12 @@ public class ComboitemSearchable implements Searchable<ComboItem,String>{
 
 	@Override
 
-	public Collection<ComboItem> search(String value) {
+	public Collection<ComboItemText> search(String value) {
 
-		List<ComboItem> founds = new ArrayList<ComboItem>();
+		List<ComboItemText> founds = new ArrayList<ComboItemText>();
 
 
-		for ( ComboItem s : terms ){
+		for ( ComboItemText s : terms ){
 
 			if ( s.getLabel().indexOf(value) == 0 ){
 

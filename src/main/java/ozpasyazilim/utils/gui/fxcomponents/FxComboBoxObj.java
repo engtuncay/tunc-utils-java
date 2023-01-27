@@ -1,7 +1,6 @@
 package ozpasyazilim.utils.gui.fxcomponents;
 
 import javafx.collections.ObservableList;
-import ozpasyazilim.utils.core.FiString;
 import ozpasyazilim.utils.gui.components.ComboItemObj;
 
 public class FxComboBoxObj extends FxComboBox<ComboItemObj> {

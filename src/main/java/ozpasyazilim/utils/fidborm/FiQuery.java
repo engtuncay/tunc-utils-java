@@ -57,14 +57,14 @@ public class FiQuery {
 		return sql.replaceAll(regex, subst);
 	}
 
-	public static String deActivateOptParamMain(String sql, String param) {
+	public static String fsmDeActivateOptParamMain(String sql, String param) {
 		final String regex = String.format("--!(%s).*\\s*.*", param); // 15-10-19
 		final String subst = "--$1 deactivated"; // 15-10-19
 		return sql.replaceAll(regex, subst);
 	}
 
 	public void deActivateOptParam(String txOptParamName) {
-		setTxQuery(deActivateOptParamMain(getTxQuery(), txOptParamName));
+		setTxQuery(fsmDeActivateOptParamMain(getTxQuery(), txOptParamName));
 	}
 
 	public void deActivateSqlAtParam(String param) {
@@ -72,7 +72,7 @@ public class FiQuery {
 	}
 
 	public static void fhrDeActivateOptParam(StringProperty propSql, String param) {
-		propSql.set(deActivateOptParamMain(propSql.get(), param));
+		propSql.set(fsmDeActivateOptParamMain(propSql.get(), param));
 	}
 
 	/**
@@ -442,7 +442,7 @@ public class FiQuery {
 	/**
 	 * FiMapParam'da olan parametreleri aktive eder.
 	 * <p>
-	 * boActivateOnlyFullParams true olursa sadece dolu olan parametreleri aktif eder.
+	 * boActivateOnlyFullParams true olursa sadece dolu olan parametreleri aktif eder, dolu değilse deaktif eder.
 	 * <p>
 	 * String boş string degilse
 	 * <p>
@@ -459,34 +459,34 @@ public class FiQuery {
 					// Dolu olanları aktif edecek, boş olanları deaktif edecek
 					if (value instanceof String) {
 						if (!FiString.isEmpty((String) value)) {
-							String newQuery = fsmActivatedOptParamV1Main(getTxQuery(), key);
+							String newQuery = fsmActivateOptParamV1Main(getTxQuery(), key);
 							setTxQuery(newQuery);
 						} else {
-							String newQuery = deActivateOptParamMain(getTxQuery(), key);
+							String newQuery = fsmDeActivateOptParamMain(getTxQuery(), key);
 							setTxQuery(newQuery);
 							deActivatedParamList.add(key);
 						}
 					} else if (value instanceof Collection) {
 						if (!FiCollection.isEmpty((Collection) value)) {
-							String newQuery = fsmActivatedOptParamV1Main(getTxQuery(), key);
+							String newQuery = fsmActivateOptParamV1Main(getTxQuery(), key);
 							setTxQuery(newQuery);
 						} else {
-							String newQuery = deActivateOptParamMain(getTxQuery(), key);
+							String newQuery = fsmDeActivateOptParamMain(getTxQuery(), key);
 							setTxQuery(newQuery);
 							deActivatedParamList.add(key);
 						}
 					} else { // string ve collection tipinden dışında olanlar, null degilse aktif edilir
 						if (value != null) {
-							String newQuery = fsmActivatedOptParamV1Main(getTxQuery(), key);
+							String newQuery = fsmActivateOptParamV1Main(getTxQuery(), key);
 							setTxQuery(newQuery);
 						} else {
-							String newQuery = deActivateOptParamMain(getTxQuery(), key);
+							String newQuery = fsmDeActivateOptParamMain(getTxQuery(), key);
 							setTxQuery(newQuery);
 							deActivatedParamList.add(key);
 						}
 					}
 				} else { // boActivateOnlyFullParams false veya null ise, tüm parametreleri aktif eder
-					String newQuery = fsmActivatedOptParamV1Main(getTxQuery(), key);
+					String newQuery = fsmActivateOptParamV1Main(getTxQuery(), key);
 					setTxQuery(newQuery);
 				}
 			});
@@ -497,31 +497,33 @@ public class FiQuery {
 		}
 	}
 
+
 	/**
-	 * FiMapParam'da olan parametreleri aktive eder.
+	 * FiMapParam'da null olmayan parametreleri aktive eder, null olanları deAktif eder.
 	 * <p>
-	 * boActivateOnlyFullParams true olursa dolu olan parametreleri aktif eder
+	 * Deaktif edilmek istene parametreler null olarak gönderilir. !!!
 	 */
-	public void activateParamsNotNull(Boolean boActivateNotNullParams) {
+	public void activateParamsNotNull() {
 		if (getMapParams() != null) {
 			List<String> deActivatedParamList = new ArrayList<>();
 			getMapParams().forEach((key, value) -> {
-				if (FiBoolean.isTrue(boActivateNotNullParams)) {
-					// Null olanlar deaktif olacak
-					if (value != null) {
-						String newQuery = fsmActivatedOptParamV1Main(getTxQuery(), key);
-						setTxQuery(newQuery);
-					} else {
-						String newQuery = deActivateOptParamMain(getTxQuery(), key);
-						setTxQuery(newQuery);
-						deActivatedParamList.add(key);
-					}
-				} else { // boActivateNotNullParams false veya null ise, tüm parametreleri aktif eder
-					String newQuery = fsmActivatedOptParamV1Main(getTxQuery(), key);
+				//if (FiBoolean.isTrue(boActivateNotNullParams)) {
+				// Null olanlar deaktif olacak
+				if (value != null) { // null degilse aktif edilir.
+					String newQuery = fsmActivateOptParamV1Main(getTxQuery(), key);
 					setTxQuery(newQuery);
+				} else { // param null ise,deaktif edilir
+					String newQuery = fsmDeActivateOptParamMain(getTxQuery(), key);
+					setTxQuery(newQuery);
+					deActivatedParamList.add(key);
 				}
+//				} else { // boActivateNotNullParams false veya null ise, tüm parametreleri aktif eder
+//					String newQuery = fsmActivateOptParamV1Main(getTxQuery(), key);
+//					setTxQuery(newQuery);
+//				}
 			});
 
+			// deAktif edilen parametreler çıkarıldı.
 			for (String deActivatedParam : deActivatedParamList) {
 				getMapParams().remove(deActivatedParam);
 			}
@@ -606,14 +608,14 @@ public class FiQuery {
 
 
 	private Set<String> getParamOptionalsFromQuery() {
-		return findParamOptionals(getTxQuery());
+		return fsmFindParamOptionals(getTxQuery());
 	}
 
 	private Set<String> getParamsSqlAt() {
 		return findParams(getTxQuery());
 	}
 
-	public static Set<String> findParamOptionals(String sql) {
+	public static Set<String> fsmFindParamOptionals(String sql) {
 		// regexr: Sql Parametre List rg2011201511
 		String regEx = "--!(\\w*).*\\n";
 		return FiRegExp.matchGroupOneToSet(regEx, sql);
@@ -633,7 +635,7 @@ public class FiQuery {
 	 * @param param
 	 * @return
 	 */
-	public static String fsmActivatedOptParamV1Main(String sql, String param) {
+	public static String fsmActivateOptParamV1Main(String sql, String param) {
 
 		//final String regex = String.format("\\s*.*--!(%s)\\s*(.*)", param); // regex bulunan --- çıkarıldı // 4-11-19
 		//final String regex = String.format("--!(%s)(\\n|\\s.*\\n)(.*)", param);  // 16-03-2020 ve öncesi

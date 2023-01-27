@@ -5,7 +5,7 @@ import ozpasyazilim.utils.core.FiString;
 import javax.persistence.Column;
 import javax.persistence.Transient;
 
-public class TblModule {
+public class FiModule {
 	String txModuleCode;
 
 	/**
@@ -23,7 +23,7 @@ public class TblModule {
 	Boolean boIsNonValidate;
 
 	@Transient
-	TblModule upperModule;
+	FiModule upperModule;
 
 	@Column(length = 20)
 	String txShortName;
@@ -35,50 +35,55 @@ public class TblModule {
 	@Transient
 	Boolean boEnabled;
 
-	public TblModule() {
+	/**
+	 * Uuid
+	 */
+	String txUid;
+
+	public FiModule() {
 	}
 
-	public TblModule(String txModuleCode, String txModuleLabel) {
+	public FiModule(String txModuleCode, String txModuleLabel) {
 		setTxModuleCode(txModuleCode);
 		setTxModuleLabel(txModuleLabel);
 		setTxModuleDesc(txModuleLabel);
 	}
 
-	public TblModule(String txCode, TblModule fiModuleUpper, String txLabel) {
+	public FiModule(String txCode, FiModule fiModuleUpper, String txLabel) {
 		setTxModuleCode(txCode);
 		setTxModuleLabel(txLabel);
 		setUpperModule(fiModuleUpper);
 	}
 
-	public TblModule(String txModuleCode, String txModuleLabel, String txModuleDesc, String txModuleName) {
+	public FiModule(String txModuleCode, String txModuleLabel, String txModuleDesc, String txModuleName) {
 		this.setTxModuleCode(txModuleCode);
 		this.setTxModuleLabel(txModuleLabel);
 		this.setTxModuleDesc(txModuleDesc);
 		this.setTxModuleName(txModuleName);
 	}
 
-	public TblModule(String txModuleCode, String txModuleLabel, String txModuleName) {
+	public FiModule(String txModuleCode, String txModuleLabel, String txModuleName) {
 		this.setTxModuleCode(txModuleCode);
 		this.setTxModuleLabel(txModuleLabel);
 		this.setTxModuleName(txModuleName);
 	}
 
-	public TblModule(String txModuleCode, String txModuleLabel, Class classModule) {
+	public FiModule(String txModuleCode, String txModuleLabel, Class classModule) {
 		this.setTxModuleCode(txModuleCode);
 		this.setTxModuleLabel(txModuleLabel);
 		this.setTxModuleName(classModule.getSimpleName());
 		//this.clazz = classModule;
 	}
 
-	public TblModule buildLabel(String txLabel) {
+	public FiModule buildLabel(String txLabel) {
 		setTxModuleLabel(txLabel);
 		return this;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof TblModule) {
-			TblModule module = (TblModule) obj;
+		if (obj instanceof FiModule) {
+			FiModule module = (FiModule) obj;
 
 			// boş veya null ise de false olur
 			if (FiString.isEmptyTrim(getTxModuleCode()) || FiString.isEmptyTrim(module.getTxModuleCode())) {
@@ -147,11 +152,11 @@ public class TblModule {
 		this.boIsNonValidate = boIsNonValidate;
 	}
 
-	public TblModule getUpperModule() {
+	public FiModule getUpperModule() {
 		return upperModule;
 	}
 
-	public void setUpperModule(TblModule upperModule) {
+	public void setUpperModule(FiModule upperModule) {
 		this.upperModule = upperModule;
 		setTxModuleName(upperModule.getTxModuleName());
 	}
@@ -196,4 +201,11 @@ public class TblModule {
 		boDisabled = disabledModule;
 	}
 
+	public String getTxUid() {
+		return txUid;
+	}
+
+	public void setTxUid(String txUid) {
+		this.txUid = txUid;
+	}
 }
