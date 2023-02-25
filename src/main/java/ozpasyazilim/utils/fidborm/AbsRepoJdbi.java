@@ -3288,10 +3288,10 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 	 * <p>
 	 * Transaction Catch'i dışarıda yakalanıyor.
 	 *
-	 * @param fnTransactions
+	 * @param fnTransaction
 	 * @return
 	 */
-	public Fdr jdExecuteTransByUse(BiFunction<AbsRepoJdbi<EntClazz>, Handle, Fdr> fnTransactions) {
+	public Fdr jdExecuteTransByUse(BiFunction<AbsRepoJdbi<EntClazz>, Handle, Fdr> fnTransaction) {
 
 		Fdr fdrMain = new Fdr();
 
@@ -3301,17 +3301,18 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 			getJdbi().useTransaction(handle -> {
 				handle.begin();
 
-				Fdr fdr = fnTransactions.apply(this, handle);
+				Fdr fdr = fnTransaction.apply(this, handle);
 				fdrMain.combineAnd(fdr);
 
 				if (fdr.getException() != null) {
 					throw fdr.getException();
 				}
-
+				Loghelper.get(getClass()).debug("handle commit edilecek");
 				handle.commit();
 			});
 
 		} catch (Exception ex) {
+			Loghelper.get(getClass()).debug("Try/catch'de exception fırlatıldı.");
 			Loghelper.debugException(getClass(), ex);
 			//Loghelper.get(getClass()).debug("Genel Catch de Yakalandı");
 			fdrMain.setBoResult(false, ex);
