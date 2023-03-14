@@ -437,7 +437,8 @@ public class FxDialogShow {
 	public static void showFdr1PopOrFailModalWitLogAndMessageAndExc(Fdr fdr) {
 
 		if (fdr.getBoResult() == null) {
-			FxDialogShow.showPopInfo("İşlem sonucu alınamadı." + "\n" + FiString.orEmpty(fdr.getMessage()));
+			//FxDialogShow.showPopInfo("İşlem sonucu alınamadı." + "\n" + FiString.orEmpty(fdr.getMessage()));
+			FxDialogShow.showModalErrorWitLogAndMessageAndExc("İşlem Sonucu Alınamadı.", fdr);
 			return;
 		}
 
@@ -446,7 +447,7 @@ public class FxDialogShow {
 			return;
 		}
 
-		FxDialogShow.showModalErrorWitLogAndMessageAndExc("", fdr);
+		FxDialogShow.showModalErrorWitLogAndMessageAndExc("Hata !!!", fdr);
 	}
 
 

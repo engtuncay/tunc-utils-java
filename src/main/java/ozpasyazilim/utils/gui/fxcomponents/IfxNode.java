@@ -18,6 +18,11 @@ public interface IfxNode {
 
 	Boolean getBoInvalidData();
 
+	/**
+	 * OzColType göre çevrim yaparak döndürür
+	 *
+	 * @return
+	 */
 	Object getCompValueByColType();
 
 	@Deprecated

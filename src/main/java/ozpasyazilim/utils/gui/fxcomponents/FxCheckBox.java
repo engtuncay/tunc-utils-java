@@ -88,4 +88,8 @@ public class FxCheckBox extends CheckBox implements IFxEditorNode {
 			changeAction.accept(newValue);
 		});
 	}
+
+	public boolean getValue() {
+		return isSelected();
+	}
 }

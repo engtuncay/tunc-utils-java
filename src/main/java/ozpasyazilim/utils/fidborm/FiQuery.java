@@ -442,9 +442,11 @@ public class FiQuery {
 	/**
 	 * FiMapParam'da olan parametreleri aktive eder.
 	 * <p>
-	 * boActivateOnlyFullParams true olursa sadece dolu olan parametreleri aktif eder, dolu değilse deaktif eder.
+	 * boActivateOnlyFullParams true olursa sadece dolu olan parametreleri aktif eder, parametre dolu değilse (null dahil) deaktif eder.
 	 * <p>
-	 * String boş string degilse
+	 * Deaktif edilecek parametrelerde FiKeyBean'de bulunmalı
+	 * <p>
+	 * Dolu olma Şartları : String boş string degilse
 	 * <p>
 	 * Collection larda size > 0 olmalı
 	 * <p>

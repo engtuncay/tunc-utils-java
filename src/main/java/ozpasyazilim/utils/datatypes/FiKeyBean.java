@@ -85,7 +85,7 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
 		return this;
 	}
 
-	public FiKeyBean putObj(Object field, Object value) {
+	public FiKeyBean putObjTos(Object field, Object value) {
 		this.put(field.toString(), value);
 		return this;
 	}
@@ -257,7 +257,7 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
 
 
 	public void copyParamByFiColOrEmptyStr(FiCol fiColFrom, FiCol fiColTo) {
-		putObj(fiColTo, getOrDefault(fiColFrom.toString(), ""));
+		putObjTos(fiColTo, getOrDefault(fiColFrom.toString(), ""));
 	}
 
 }

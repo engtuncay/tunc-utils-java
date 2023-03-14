@@ -54,14 +54,12 @@ public class FxTreeTableView<EntClazz> extends TreeTableView<EntClazz> {
 
 
 
-	public void setColumnsOzTableCol(List<FiCol> tableColumns) {
+	public void setColumnsAsFiColList(List<FiCol> fiColList) {
 
 		this.getColumns().clear();
 
-		for (int colIndex = 0; colIndex < tableColumns.size(); colIndex++) {
-			FiCol fiTableCol = tableColumns.get(colIndex);
-
-
+		for (int colIndex = 0; colIndex < fiColList.size(); colIndex++) {
+			FiCol fiTableCol = fiColList.get(colIndex);
 
 			// Column geçerli değilse eklenmez
 			if (fiTableCol.getBoEnabled()!=null && !fiTableCol.getBoEnabled()) continue;
@@ -79,8 +77,6 @@ public class FxTreeTableView<EntClazz> extends TreeTableView<EntClazz> {
 				fxTableColumn.setEditable(true);
 				fxTableColumn.setAutoEditor();
 			}*/
-
-
 
 			fxTableColumn.setAutoColumnDefault();
 

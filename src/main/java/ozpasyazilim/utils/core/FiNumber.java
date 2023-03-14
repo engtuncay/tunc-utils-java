@@ -194,12 +194,16 @@ public class FiNumber {
 		return false;
 	}
 
-	public static Boolean isZero001(Double dbValue) {
+	public static Boolean isZeroBy0_001(Double dbValue) {
 		return isZero(dbValue, 0.001);
 	}
 
-	public static Boolean isZero25(Double dbValue) {
+	public static Boolean isZeroBy0_25(Double dbValue) {
 		return isZero(dbValue, 0.25);
+	}
+
+	public static Boolean isZeroBy0_95(Double dbValue) {
+		return isZero(dbValue, 0.95);
 	}
 
 	public static Boolean isZeroOrNull(Double dbValue, Double sifirHassasiyet) {

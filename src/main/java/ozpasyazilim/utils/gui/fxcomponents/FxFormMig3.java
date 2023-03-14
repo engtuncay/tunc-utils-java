@@ -15,6 +15,7 @@ import ozpasyazilim.utils.mvc.IFxModView;
 import ozpasyazilim.utils.returntypes.Fdr;
 import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.FiColInfHelper;
+import ozpasyazilim.utils.table.OzColType;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
@@ -127,7 +128,7 @@ public class FxFormMig3<EntClazz> extends FxMigPaneEnt<EntClazz> implements IFxM
 		return FxEditorFactory.bindFormToKeyBeanByEditorNode(getListFormElements());
 	}
 
-	public List<FiCol> getListFiColWithFormValue() {
+	public List<FiCol> getFormAsFiColListWithFormValue() {
 		FxEditorFactory.bindFormValueToFiColListByEditor(getListFormElements());
 		return getListFormElements();
 	}
@@ -429,6 +430,30 @@ public class FxFormMig3<EntClazz> extends FxMigPaneEnt<EntClazz> implements IFxM
 			return false;
 		}
 		return boReadOnlyForm;
+	}
+
+	public Boolean getValueAsBoolean(FiCol entBoAnacariBirlestir) {
+
+		FiCol fiCol = getFiCol(entBoAnacariBirlestir);
+
+		if(fiCol!=null){
+			if(fiCol.getColType().equals(OzColType.Boolean)){
+				Boolean value = (Boolean) fiCol.getColValue();
+				return value;
+			}
+		}
+
+		return null;
+	}
+
+	private FiCol getFiCol(FiCol entBoAnacariBirlestir) {
+		FiCol fiColFound = null;
+		for (FiCol fiCol : getListFormElements()) {
+			if (fiCol.getFieldName().equals(entBoAnacariBirlestir.getFieldName())) {
+				fiColFound = fiCol;
+			}
+		}
+		return fiColFound;
 	}
 
 	//	public void setupForm(List<FiCol> listFormElements, FormType formType) {
