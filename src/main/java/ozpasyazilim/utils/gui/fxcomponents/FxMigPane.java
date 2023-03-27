@@ -22,7 +22,7 @@ import ozpasyazilim.utils.core.FiString;
 public class FxMigPane extends MigPane {
 
 	//public static String lcStandardInset0Gap55 = "insets 0,gap 5 5"; // gap x y : x yatatya boşluk : y dikeyde boşluk
-	//	public static String lcDebug = ",debug";
+	//public static String lcDebug = ",debug";
 
 	public FxMigPane() {
 		super();

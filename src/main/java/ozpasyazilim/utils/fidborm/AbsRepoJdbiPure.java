@@ -160,7 +160,7 @@ public abstract class AbsRepoJdbiPure extends RepoGeneralJdbi implements IRepoJd
 		return fdr;
 	}
 
-	// XNOTE transaction için güzel bir örnek - jdbi
+	// XNOTE jdbi transaction için güzel bir örnek - jdbi
 	public Fdr jdUpdateBatchWitTrans(List<String> queryList, FiKeyBean mapParams) {
 
 		if (queryList == null || queryList.size() == 0) {

@@ -71,7 +71,7 @@ public class OzFrame extends JFrame {
 			dialog.setContentPane(controller.getOzPanel());
 			dialog.setTitle(controller.getModuleLabel());
 
-// XNOTE dilog ekran ortalanmak istenirseekrana ortalanması
+//  dilog ekran ortalanmak istenirseekrana ortalanması
 
 //			final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 //			final int x = (screenSize.width - dialog.getWidth()) / 2;
@@ -117,7 +117,7 @@ public class OzFrame extends JFrame {
 			dialog.setContentPane(controller.getOzPanel());
 			dialog.setTitle(controller.getModuleLabel());
 
-// XNOTE dilog ekran ortalanmak istenirseekrana ortalanması
+// dilog ekran ortalanmak istenirseekrana ortalanması
 //			final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 //			final int x = (screenSize.width - dialog.getWidth()) / 2;
 //			final int y = (screenSize.height - dialog.getHeight()) / 2;

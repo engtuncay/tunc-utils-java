@@ -300,4 +300,9 @@ public class FxMigHp {
 		lcgInsetAndGap(5, 0,5 );
 		return this;
 	}
+
+	public FxMigHp lcgInset5Gap55() {
+		lcgInsetAndGap(5, 5,5 );
+		return this;
+	}
 }

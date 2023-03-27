@@ -3,6 +3,7 @@ package ozpasyazilim.utils.gui.fxcomponents;
 import javafx.application.Platform;
 import javafx.geometry.Bounds;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
@@ -10,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Pair;
@@ -859,6 +861,8 @@ public class FxDialogShow {
 
 		Pane rootPane = fxModCont.getModView().getRootPane();
 
+		FxPaneHelper.setMaxHeightAndWidthForWindows(rootPane);
+
 		if (!FiString.isEmpty(dialogConfig.getCssFileName())) {
 			rootPane.getStylesheets().add(dialogConfig.getCssFileName());
 		}
@@ -869,6 +873,9 @@ public class FxDialogShow {
 			stage = new FxStage();
 			fxModCont.setFxStage(stage);
 		}
+
+
+
 
 		if (!FiString.isEmpty(dialogConfig.getTitle())) {
 			stage.setTitle(dialogConfig.getTitle());

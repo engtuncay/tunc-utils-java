@@ -28,7 +28,7 @@ public class FiFile {
 
 		String pathfile2 = "Y:\\TEST\\PANSIS\\SatisFaturasi-04.12.2019-20.45.xml";
 		String pathfile3 = "Y:\\TEST\\PANSIS\\SatisFaturasi-05.12.2019-20.45.xml";
-		File file =new File(pathfile2);
+		File file = new File(pathfile2);
 
 		String result = getStrFilePathWoutExt(file.getPath());
 
@@ -51,18 +51,18 @@ public class FiFile {
 			Matcher matcher = FiRegExp.match(sRegex, o1.getName());
 
 			String v1 = "";
-			if(matcher!=null && matcher.groupCount()>4){
-				v1 = matcher.group(3)+ matcher.group(2) + matcher.group(1)+ "_" + matcher.group(4) + matcher.group(5) ;
+			if (matcher != null && matcher.groupCount() > 4) {
+				v1 = matcher.group(3) + matcher.group(2) + matcher.group(1) + "_" + matcher.group(4) + matcher.group(5);
 			}
 
 			matcher = FiRegExp.match(sRegex, o2.getName());
 			String v2 = "";
-			if(matcher!=null && matcher.groupCount()>4){
-				v2 = matcher.group(3)+ matcher.group(2) + matcher.group(1)+ "_" + matcher.group(4) + matcher.group(5) ;
+			if (matcher != null && matcher.groupCount() > 4) {
+				v2 = matcher.group(3) + matcher.group(2) + matcher.group(1) + "_" + matcher.group(4) + matcher.group(5);
 			}
 
-			System.out.println("v1:"+v1);
-			System.out.println("v2:"+v2);
+			System.out.println("v1:" + v1);
+			System.out.println("v2:" + v2);
 
 			return collator.compare(v1, v2) * -1; // o1>o2 1,o1<o2 -1 :: -1 --> 1, küçükten büyüğe
 			// -1 ile çarpınca büyükten küçüğe döner
@@ -262,7 +262,7 @@ public class FiFile {
 			public boolean accept(File file) {
 
 				// null gelirse hepsini seçebilir
-				if(extension==null){
+				if (extension == null) {
 					return true;
 				}
 
@@ -372,8 +372,8 @@ public class FiFile {
 		Pattern pattern = Pattern.compile("(.+)\\\\([^\\\\]+)\\.(.*)$"); //
 		Matcher matcher = pattern.matcher(filename);
 
-		if (matcher.find() && matcher.groupCount()>1 && matcher.group(1) !=null && matcher.group(2)!=null ) {
-			return matcher.group(1)+ "\\" + matcher.group(2);
+		if (matcher.find() && matcher.groupCount() > 1 && matcher.group(1) != null && matcher.group(2) != null) {
+			return matcher.group(1) + "\\" + matcher.group(2);
 		} else {
 			return "-1";
 		}

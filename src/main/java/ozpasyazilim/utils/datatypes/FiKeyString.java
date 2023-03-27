@@ -7,9 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Custom Data Type
- * <p>
- * Map<String,String> DataTYpe
+ * Map [String,String] türünde özel tip
  */
 public class FiKeyString extends HashMap<String, String> {
 
@@ -22,8 +20,8 @@ public class FiKeyString extends HashMap<String, String> {
 
 	public void clearEmptyKeys() {
 		List<String> listToDelete = new ArrayList<>();
-		this.forEach((key,value) -> {
-			if(FiString.isEmpty(value)){
+		this.forEach((key, value) -> {
+			if (FiString.isEmpty(value)) {
 				listToDelete.add(key);
 			}
 		});
@@ -33,7 +31,7 @@ public class FiKeyString extends HashMap<String, String> {
 	}
 
 	public Boolean isEmptyKey(String txKey) {
-		if(this.containsKey(txKey)){
+		if (this.containsKey(txKey)) {
 			if (FiString.isEmpty(this.get(txKey))) {
 				return true;
 			}
@@ -42,13 +40,13 @@ public class FiKeyString extends HashMap<String, String> {
 	}
 
 	public String getTos(Object txKey) {
-		if(txKey==null) return null;
+		if (txKey == null) return null;
 		return get(txKey.toString());
 	}
 
 	public String getTosOrEmpty(Object txKey) {
-		if(txKey==null) return "";
-		if(!containsKey(txKey.toString())) return "";
+		if (txKey == null) return "";
+		if (!containsKey(txKey.toString())) return "";
 		return FiString.orEmpty(get(txKey.toString()));
 	}
 

@@ -134,7 +134,7 @@ public class OzPanel extends JXPanel {
 		JDialog dialog = new JDialog();
 		dialog.setContentPane(panel);
 		dialog.setSize(width, height);
-		// XNOTE ekrana ortalanması
+		// ekrana ortalanması
 		final Toolkit toolkit = Toolkit.getDefaultToolkit();
 		final Dimension screenSize = toolkit.getScreenSize();
 		final int x = (screenSize.width - dialog.getWidth()) / 2;

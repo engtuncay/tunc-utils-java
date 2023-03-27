@@ -208,6 +208,13 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 		return fdr;
 	}
 
+	public static Fdr creByBoResultAndErrorLog(Boolean boResult, String txErrorLog) {
+		Fdr fdr = new Fdr();
+		fdr.setBoResult(boResult);
+		fdr.addLogError(txErrorLog);
+		return fdr;
+	}
+
 	public Optional<Boolean> getOpResult() {
 		return Optional.ofNullable(getBoResult());
 	}

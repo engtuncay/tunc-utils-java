@@ -14,9 +14,9 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * String,Object türünde HashMap'dir.
+ * Map [String,Object] türünde HashMap tipidir.
  * <p>
- * Kullanımları
+ * Kullanımları :
  * <p>
  * Sql Sorgularında named parametrelere bind etmek için kullanılır.
  * <p>
