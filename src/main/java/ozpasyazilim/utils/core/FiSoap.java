@@ -39,7 +39,7 @@ public class FiSoap {
 			String wsURL = endPoint; //"<Endpoint of the webservice to be consumed>";
 
 			URL url = new URL(wsURL);
-			URLConnection connection = url.openConnection();
+			//URLConnection connection = url.openConnection();
 			HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
 
 			//soapRequest.getBytes();
