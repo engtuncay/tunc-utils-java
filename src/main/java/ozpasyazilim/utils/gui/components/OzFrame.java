@@ -1,5 +1,8 @@
 package ozpasyazilim.utils.gui.components;
 
+import ozpasyazilim.utils.core.FiException;
+import ozpasyazilim.utils.log.Loghelper;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -154,6 +157,7 @@ public class OzFrame extends JFrame {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception ex) {
 			System.out.println("Exception:" + ex.getStackTrace());
+			Loghelper.get(OzFrame.class).debug(FiException.exToLog(ex));
 		}
 
 		//        try {

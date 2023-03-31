@@ -26,7 +26,8 @@ public class FiSoap {
 	 * @param mapHeaders
 	 * @return
 	 */
-	public static Fdr<String> requestRaw(String endPoint, String soapRequest, FiKeyString mapHeaders) {
+	public static Fdr<String> requestRawHttp(String endPoint, String soapRequest, FiKeyString mapHeaders) {
+
 		//MalformedURLException, IOException daha geniş olduğu için çıkarıldı
 		//throws IOException
 		Fdr<String> fdr = new Fdr<>();
@@ -34,12 +35,12 @@ public class FiSoap {
 		try {
 			//Code to make a webservice HTTP request
 			String responseString = "";
-			String outputString = "";
+			StringBuilder outputString = new StringBuilder();
 			String wsURL = endPoint; //"<Endpoint of the webservice to be consumed>";
 
 			URL url = new URL(wsURL);
 			URLConnection connection = url.openConnection();
-			HttpURLConnection httpConn = (HttpURLConnection) connection;
+			HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
 
 			//soapRequest.getBytes();
 			byte[] buffer = soapRequest.getBytes(StandardCharsets.UTF_8);//new byte[soapRequest.length()];
@@ -92,9 +93,9 @@ public class FiSoap {
 				BufferedReader in = new BufferedReader(isr);
 				//Write the SOAP message response to a String.
 				while ((responseString = in.readLine()) != null) {
-					outputString = outputString + responseString;
+					outputString.append(responseString);
 				}
-				fdr.setValue(outputString);
+				fdr.setValue(outputString.toString());
 			} else {
 				fdr.setMessage("!!! Error Code:" + httpConn.getResponseCode());
 			}
@@ -163,15 +164,14 @@ public class FiSoap {
 			fdr.setLnResponseCode(httpConn.getResponseCode());
 
 			if (httpConn.getResponseCode() == 200) {
-				isr = new InputStreamReader(httpConn.getInputStream());
+				isr = new InputStreamReader(httpConn.getInputStream(),StandardCharsets.UTF_8);
 			} else {
-				if (httpConn.getErrorStream() != null) isr = new InputStreamReader(httpConn.getErrorStream());
+				if (httpConn.getErrorStream() != null) isr = new InputStreamReader(httpConn.getErrorStream(),StandardCharsets.UTF_8);
 				fdr.setLnErrorCode(httpConn.getResponseCode());
 			}
 
 			if (isr != null) {
 				BufferedReader in = new BufferedReader(isr);
-
 				//Write the SOAP message response to a String.
 				while ((responseString = in.readLine()) != null) {
 					outputString.append(responseString);
@@ -210,7 +210,7 @@ public class FiSoap {
 		if (FiBoolean.isTrue(boUseHttps)) {
 			fdrRequest = requestRawHttps(endPoint, soapRequestXml, mapHeaders);
 		} else {
-			fdrRequest = requestRaw(endPoint, soapRequestXml, mapHeaders);
+			fdrRequest = requestRawHttp(endPoint, soapRequestXml, mapHeaders);
 		}
 
 		//Loghelper.get(FiSoap.class).debug("Response:" + fdrRequest.getValue());
