@@ -1,12 +1,14 @@
 package ozpasyazilim.utils.core;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
 
 import ozpasyazilim.utils.gui.fxcomponents.FxTableModal;
+import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.OzColType;
 
@@ -176,6 +178,8 @@ public class FiHtmlReport {
 			// FIXME numara satırlarını yazdırmak için
 			for (FiCol fiTableCol : colList) {
 
+				//Loghelper.get(FiHtmlReport.class).debug("Field:" + fiTableCol.getFieldName());
+
 				String fieldName = fiTableCol.getFieldName();
 
 				if (FiString.isEmpty(fieldName)) continue;
@@ -184,7 +188,8 @@ public class FiHtmlReport {
 				String txCellValue = FiString.ToStrOrEmpty(objCellValue);
 
 				if (fiTableCol.getColType() == OzColType.Double || fiTableCol.getColType() == OzColType.Integer
-						|| fiTableCol.getColType() == OzColType.BigDecimal) {
+						|| fiTableCol.getColType() == OzColType.BigDecimal
+						|| fiTableCol.getColType() == OzColType.Date) {
 
 					if (objCellValue instanceof Double) {
 						if (objCellValue == null) objCellValue = 0d;
@@ -196,6 +201,11 @@ public class FiHtmlReport {
 						if (objCellValue == null) objCellValue = BigDecimal.ZERO;
 						Double dbValue = ((BigDecimal) objCellValue).doubleValue();
 						txCellValue = FiNumber.formatlaNumbertoString(dbValue);
+					}
+
+					if (objCellValue instanceof Date) {
+						Date dbValue = (Date) objCellValue;
+						txCellValue = FiDate.dateToStrAsddmmyyyyWitDot(dbValue);
 					}
 
 					htmlContent += tagTdNum + txCellValue + tagTdEnd;

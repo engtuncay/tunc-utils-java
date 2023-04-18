@@ -107,6 +107,8 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 	 */
 	private Boolean boLockAddLog;
 
+	private Boolean boPartialSucceed;
+
 	public Fdr() {
 	}
 
@@ -1083,4 +1085,13 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 		if (getLnResult() == 1 || getLnResult() == 2) return true;
 		return false;
 	}
+
+	public Boolean getBoPartialSucceed() {
+		return boPartialSucceed;
+	}
+
+	public void setBoPartialSucceed(Boolean boPartialSucceed) {
+		this.boPartialSucceed = boPartialSucceed;
+	}
+
 }
