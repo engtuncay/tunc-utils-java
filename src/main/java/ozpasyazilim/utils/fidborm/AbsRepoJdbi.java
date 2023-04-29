@@ -1673,6 +1673,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 	/**
 	 * Id Field in FiColList
+	 *
 	 * @param fiColList
 	 * @return
 	 */
@@ -1706,7 +1707,6 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 	}
 
 	/**
-	 *
 	 * Bind FiColValue
 	 *
 	 * @param fiColList
@@ -1727,7 +1727,6 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		Loghelper.get(getClass()).debug(sqlQuery);
 		return jdSelectListBindMap(fiQuery);
 	}
-
 
 
 	public Fdr jdUpdateFiColsBindEntityByIdFieldInClass(List<? extends IFiCol> listFields, EntClazz entity) {
@@ -2512,6 +2511,18 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 	}
 
 	/**
+	 * Tek Entity dönmesi için Jdbi'ın findFirst metodu kullanıldı.
+	 *
+	 * @param fiQuery
+	 * @return
+	 */
+	public Fdr<EntClazz> jdSelectEntityBindMap(FiQuery fiQuery) {
+		return jdSelectEntityBindMap(fiQuery.getTxQuery(), fiQuery.getMapParams());
+	}
+
+	/**
+	 * Tek Entity dönmesi için Jdbi'ın findFirst metodu kullanıldı.
+	 *
 	 * @param sql
 	 * @param mapParam
 	 * @return
@@ -3376,7 +3387,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 	 */
 	public Fdr<List<EntClazz>> jdSelectListWitPrep(String sql, FiKeyBean fiKeyBean) {
 		FiQuery fiQuery = new FiQuery(sql, fiKeyBean);
-		fiQuery.prepSqlParamsFull();
+		fiQuery.prepSqlParams1();
 //		Loghelper.get(getClass()).debug("Sql:" + fiQuery.getTxQuery());
 		return jdSelectListBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
 	}

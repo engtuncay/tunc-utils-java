@@ -420,19 +420,11 @@ public class FiQuery {
 
 	/**
 	 * FiMapde olan parametreleri aktif eder
+	 * <p>
+	 * Sorguda yoruma alınmış satır aynı şekilde kalır. DeAktivite yapılmaz.
 	 */
-	public void activateParamsByFiMap() {
+	public void activateParamsByMapParams() {
 		activateParamsMain(false);
-	}
-
-	/**
-	 * use activateParamsMain
-	 *
-	 * @param boActivateOnlyFullParams
-	 */
-	@Deprecated
-	public void activateParamsNotEmptyDep(Boolean boActivateOnlyFullParams) {
-		activateParamsMain(boActivateOnlyFullParams);
 	}
 
 	public void activateParamsNotEmpty() {
@@ -457,6 +449,7 @@ public class FiQuery {
 			List<String> deActivatedParamList = new ArrayList<>();
 
 			getMapParams().forEach((key, value) -> {
+
 				if (FiBoolean.isTrue(boActivateOnlyFullParams)) {
 					// Dolu olanları aktif edecek, boş olanları deaktif edecek
 					if (value instanceof String) {
@@ -503,13 +496,15 @@ public class FiQuery {
 	/**
 	 * FiMapParam'da null olmayan parametreleri aktive eder, null olanları deAktif eder.
 	 * <p>
-	 * Deaktif edilmek istene parametreler null olarak gönderilir. !!!
+	 * Deaktif edilmek istenen parametreler null olarak gönderilir !!!
 	 */
 	public void activateParamsNotNull() {
+
 		if (getMapParams() != null) {
-			List<String> deActivatedParamList = new ArrayList<>();
+
+			List<String> listParamsWillDeactivate = new ArrayList<>();
+
 			getMapParams().forEach((key, value) -> {
-				//if (FiBoolean.isTrue(boActivateNotNullParams)) {
 				// Null olanlar deaktif olacak
 				if (value != null) { // null degilse aktif edilir.
 					String newQuery = fsmActivateOptParamV1Main(getTxQuery(), key);
@@ -517,16 +512,12 @@ public class FiQuery {
 				} else { // param null ise,deaktif edilir
 					String newQuery = fsmDeActivateOptParamMain(getTxQuery(), key);
 					setTxQuery(newQuery);
-					deActivatedParamList.add(key);
+					listParamsWillDeactivate.add(key);
 				}
-//				} else { // boActivateNotNullParams false veya null ise, tüm parametreleri aktif eder
-//					String newQuery = fsmActivateOptParamV1Main(getTxQuery(), key);
-//					setTxQuery(newQuery);
-//				}
 			});
 
 			// deAktif edilen parametreler çıkarıldı.
-			for (String deActivatedParam : deActivatedParamList) {
+			for (String deActivatedParam : listParamsWillDeactivate) {
 				getMapParams().remove(deActivatedParam);
 			}
 		}
@@ -574,7 +565,7 @@ public class FiQuery {
 	 * <p>
 	 * 3. List tipinde parametre varsa, çoklu parametreye (convertMultiToSingle) çevirir
 	 */
-	public void prepSqlParamsFull() {
+	public void prepSqlParams1() {
 		if (getMapParams() != null) {
 
 			// list değer varsa işlem sonunda list paramları single paramlara çevrilecek

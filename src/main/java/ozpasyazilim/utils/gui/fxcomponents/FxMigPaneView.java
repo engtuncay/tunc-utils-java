@@ -1,12 +1,9 @@
 package ozpasyazilim.utils.gui.fxcomponents;
 
-import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
 import net.miginfocom.layout.AC;
 import net.miginfocom.layout.LC;
-import org.tbee.javafx.scene.layout.MigPane;
 import ozpasyazilim.utils.mvc.IFxModView;
-import ozpasyazilim.utils.mvc.IFxSimpleView;
 
 /**
  * View görevini üstlenen component (IfxModView interface tanımlı)

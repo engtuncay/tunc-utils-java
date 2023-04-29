@@ -1,9 +1,11 @@
 package ozpasyazilim.utils.gui.components;
 
 /**
- * combobox value becomes return String of tostring method
+ * toString metodu label değişkenini (özelliğini) döndürür.
+ * <p>
+ * toString method returns label property.
  *
- * @author ttn
+ * @author torak
  */
 public class ComboItemText {
 
@@ -32,11 +34,6 @@ public class ComboItemText {
 //	public ComboItem() {
 //	}
 
-	//	public ComboItem(Runnable onAction,String label) {
-//		this.label = label;
-//		this.onAction = onAction;
-//	}
-
 	public static ComboItemText build(Object objLabel, Object objValue) {
 		ComboItemText comboItem = new ComboItemText(objLabel.toString(), objValue.toString());
 		return comboItem;
@@ -54,14 +51,14 @@ public class ComboItemText {
 			return true;
 		}
 
-		if(obj==null) return false;
+		if (obj == null) return false;
 
 		if (obj.getClass() != this.getClass()) {
 
-			if(obj instanceof String){
-				if(getValue()==null) return false;
+			if (obj instanceof String) {
+				if (getValue() == null) return false;
 
-				if (getValue().equals((String)obj)) {
+				if (getValue().equals((String) obj)) {
 					return true;
 				}
 			}

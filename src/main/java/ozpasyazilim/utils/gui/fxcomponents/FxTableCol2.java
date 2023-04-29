@@ -41,10 +41,17 @@ public class FxTableCol2<EntClazz> extends TableColumn implements IFxTableCol<En
 		setCellValueFactory(new PropertyValueFactory<>(fieldName));
 	}
 
+	/**
+	 * FiCol'dan FxTableCol üretimi
+	 *
+	 * @param fiCol
+	 */
 	public FxTableCol2(FiCol fiCol) {
 		super();
 		setupFiTableListener();
 		setFiCol(fiCol);
+		// added 29-04-2023 tor (setId)
+		setId(fiCol.getFieldName());
 		fiCol.setFxTableCol2(this);
 		fiCol.setTableColumnFx(this);
 	}

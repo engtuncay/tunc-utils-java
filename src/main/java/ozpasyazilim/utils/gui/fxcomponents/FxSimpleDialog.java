@@ -184,11 +184,6 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 			return;
 		}
 
-		if (fxSimpleDialogType == FxSimpleDialogType.FormAutoByCandIdFields) {
-			initFormAutoByCandIdFields();
-			return;
-		}
-
 		if (fxSimpleDialogType == FxSimpleDialogType.InfoLabelDialog) {
 			initInfoLabelDialog();
 			return;

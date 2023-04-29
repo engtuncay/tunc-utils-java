@@ -43,7 +43,7 @@ class FiQueryTest {
 		fiKeyBean.buildPut("eceTxFirmaKod", "ozpas");
 
 		FiQuery fiQuery = new FiQuery(sql, fiKeyBean);
-		fiQuery.activateParamsByFiMap();
+		fiQuery.activateParamsByMapParams();
 		fiQuery.convertListParamToMultiParams();
 
 		System.out.println(fiQuery.getTxQuery());

@@ -121,7 +121,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 	}
 
 	public Boolean existColumn(String fieldName) {
-		for (FiCol fiTableCol : getFiTableColList()) {
+		for (FiCol fiTableCol : getFiColListOverListFxTableCol()) {
 			if (fiTableCol.getFieldName().equals(fieldName)) {
 				return true;
 			}
@@ -321,18 +321,22 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 	}
 
 	public <PrmEntClazz> PrmEntClazz getFilterEntity(Class<PrmEntClazz> clazz) {
-		return FxEditorFactory.bindFormToEntityByFilterNode(getFiTableColList(), clazz);
+		return FxEditorFactory.bindFormToEntityByFilterNode(getFiColListOverListFxTableCol(), clazz);
 	}
 
 	public FiKeyBean getFilterMap() {
-		return FxEditorFactory.bindFiColToMapByFilterNode(getFiTableColList());
+		return FxEditorFactory.bindFiColToMapByFilterNode(getFiColListOverListFxTableCol());
 	}
 
 	public EntClazz getFilterEntityGen() {
-		return FxEditorFactory.bindFormToEntityByFilterNode(getFiTableColList(), getEntityClassAuto());
+		return FxEditorFactory.bindFormToEntityByFilterNode(getFiColListOverListFxTableCol(), getEntityClassAuto());
 	}
 
-	public List<FiCol> getFiTableColList() {
+	/**
+	 *
+	 * @return
+	 */
+	public List<FiCol> getFiColListOverListFxTableCol() {
 		return getListFxTableCol().stream().map(FxTableCol2::getFiCol).collect(Collectors.toList());
 	}
 
@@ -423,8 +427,8 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 		return this;
 	}
 
-	public void addFiColAuto(FiCol fiTableCol) {
-		FxTableCol2 fxTableCol = new FxTableCol2(fiTableCol);
+	public void addFiColAuto(FiCol fiCol) {
+		FxTableCol2 fxTableCol = new FxTableCol2(fiCol);
 		addFxTableColAuto(fxTableCol);
 	}
 
@@ -1482,6 +1486,17 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 		return null;
 	}
 
+	public TableColumn getColumnByFieldName1(String fieldName) {
+
+		for (TableColumn tableColumn : getColumns()) {
+			if ( FiString.orEmpty(tableColumn.getId()).equals(fieldName)) {
+				return tableColumn;
+			}
+		}
+
+		return null;
+	}
+
 	public List<FxTableCol2> getListFxTableCol() {
 		if (listFxTableCol == null) {
 			listFxTableCol = new ArrayList<>();
@@ -1896,11 +1911,29 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 		getListFxTableCol().remove(fxTableCol);
 	}
 
-	public void removeFiTableCol(FiCol fxTableCol) {
-		if (fxTableCol.getFxTableCol2() != null) {
-			getColumns().remove(fxTableCol.getFxTableCol2());
-			getListFxTableCol().remove(fxTableCol.getFxTableCol2());
+	public void removeFiColByFxTableCol2(FiCol fiCol) {
+		if (fiCol.getFxTableCol2() != null) {
+			getColumns().remove(fiCol.getFxTableCol2());
+			getListFxTableCol().remove(fiCol.getFxTableCol2());
 		}
+	}
+
+	public void removeFiColById(FiCol fiCol) {
+
+		TableColumn tableColumn = getColumnByFieldName1(fiCol.getFieldName());
+
+		if(tableColumn!=null){
+			getColumns().remove(tableColumn);
+
+			if(tableColumn instanceof FxTableCol2){
+				Loghelper.get(getClass()).debug("FxTableCol2 instance");
+				getListFxTableCol().remove(tableColumn);
+			}else{
+				//Loghelper.get(getClass()).debug("TableCol FxTableCol2 instance degil !!!");
+			}
+
+		}
+
 	}
 
 	public void removeFxTableCol(FxTableCol2 fxTableCol) {
@@ -2543,4 +2576,6 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
 		return checkedByBoSelect.get(0);
 	}
+
+
 }

@@ -1231,11 +1231,11 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 		return tableColumnFx;
 	}
 
-	public void setTableColumnFx(TableColumn prmtableColProp) {
+	public void setTableColumnFx(TableColumn tableColumn) {
 //		if (tableColProp == null) {
 //			tableColProp = new SimpleObjectProperty<>();
 //		}
-		this.tableColumnFx.set(prmtableColProp);
+		this.tableColumnFx.set(tableColumn);
 	}
 
 	public TreeTableColumn getFxTreeTableCol() {
