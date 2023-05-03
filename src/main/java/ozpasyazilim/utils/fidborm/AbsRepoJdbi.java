@@ -818,7 +818,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		FiQuery fiQuery = new FiQuery(sql);
 		fiQuery.convertListParamToMultiParams(fiKeyBean);
 
-		return jdUpdateBindMapMain(fiQuery.getTxQuery(), fiKeyBean);
+		return jdUpdateBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
 	}
 
 	public Fdr jdhDeleteByCandId2IntList(List<Integer> listData, Handle handle) {
@@ -837,7 +837,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 //		Loghelper.get(getClass()).debug("Delete query(multi):" + fiQuery.getTxQuery());
 //		Loghelper.get(getClass()).debug(FiConsole.logMain(fiMapParams));
 
-		return jdhUpdateBindMap(fiQuery.getTxQuery(), fiKeyBean, handle);
+		return jdhUpdateBindMap(fiQuery.getTxQuery(), fiQuery.getMapParams(), handle);
 	}
 
 	public Fdr jdDeleteByCandId2MapStringList(List<String> listData) {
@@ -851,7 +851,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		FiQuery fiQuery = new FiQuery(sql);
 		fiQuery.convertListParamToMultiParams(fiKeyBean);
 
-		return jdUpdateBindMapMain(fiQuery.getTxQuery(), fiKeyBean);
+		return jdUpdateBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
 	}
 
 	public Fdr jdDeleteListByCandId(List<EntClazz> entityList) {
