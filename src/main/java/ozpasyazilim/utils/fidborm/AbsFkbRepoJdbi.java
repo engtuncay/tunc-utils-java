@@ -50,7 +50,7 @@ public abstract class AbsFkbRepoJdbi extends RepoGeneralJdbi implements IRepoJdb
 
 		try {
 			List<FiKeyBean> result = getJdbi().withHandle(handle -> {
-				return handle.createQuery(FiQuery.stoj(sqlQuery))
+				return handle.createQuery(FiQueryTools.stoj(sqlQuery))
 						.bindMap(mapBind)
 						.map(new FiKeyBeanMapper())
 						.list();
@@ -88,7 +88,7 @@ public abstract class AbsFkbRepoJdbi extends RepoGeneralJdbi implements IRepoJdb
 
 		try {
 			Optional<FiKeyBean> result = getJdbi().withHandle(handle -> {
-				return handle.createQuery(FiQuery.stoj(sqlQuery))
+				return handle.createQuery(FiQueryTools.stoj(sqlQuery))
 						.bindMap(mapBind)
 						.map(new FiKeyBeanMapper())
 						.findOne();
@@ -126,7 +126,7 @@ public abstract class AbsFkbRepoJdbi extends RepoGeneralJdbi implements IRepoJdb
 
 		try {
 			Optional<PrmEnt> result = getJdbi().withHandle(handle -> {
-				return handle.select(FiQuery.stoj(sql))
+				return handle.select(FiQueryTools.stoj(sql))
 						.bindMap(mapParam)
 						.mapTo(resultClazz)
 						.findFirst();
@@ -153,7 +153,7 @@ public abstract class AbsFkbRepoJdbi extends RepoGeneralJdbi implements IRepoJdb
 		Fdr fdrMain = new Fdr();
 		try {
 			Integer rowCountUpdate = getJdbi().withHandle(handle -> {
-				return handle.createUpdate(FiQuery.stoj(updateQuery))
+				return handle.createUpdate(FiQueryTools.stoj(updateQuery))
 						.bindMap(fiMapParams)
 						.execute(); // returns row count updated
 			});
@@ -174,7 +174,7 @@ public abstract class AbsFkbRepoJdbi extends RepoGeneralJdbi implements IRepoJdb
 
 		try {
 			List<EntMethodClazz> result = getJdbi().withHandle(handle -> {
-				return handle.createQuery(FiQuery.stoj(sqlQuery))
+				return handle.createQuery(FiQueryTools.stoj(sqlQuery))
 						.bindMap(mapBind)
 						.mapToBean(clazz)
 						.list();

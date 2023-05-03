@@ -91,7 +91,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		try {
 			result = jdbi.withHandle(handle -> {
-				return handle.createQuery(FiQuery.stoj(sqlQuery))
+				return handle.createQuery(FiQueryTools.stoj(sqlQuery))
 						.bindMap(mapBind)
 						.mapToBean(getEntityClass())
 						.list();
@@ -124,7 +124,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		try {
 			List<EntClazz> result = getJdbi().withHandle(handle -> {
-				return handle.createQuery(FiQuery.stoj(sqlQuery))
+				return handle.createQuery(FiQueryTools.stoj(sqlQuery))
 						.bindBean(entClazz)
 						.mapToBean(getEntityClass())
 						.list();
@@ -151,7 +151,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		try {
 			List<EntClazz> result = getJdbi().withHandle(handle -> {
-				return handle.createQuery(FiQuery.stoj(sqlQuery))
+				return handle.createQuery(FiQueryTools.stoj(sqlQuery))
 						.bindMap(mapParams)
 						.bindBean(entClazz)
 						.mapToBean(getEntityClass())
@@ -229,7 +229,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		try {
 			List<EntClazz> result = getJdbi().withHandle(handle -> {
-				return handle.createQuery(FiQuery.stoj(sqlQuery))
+				return handle.createQuery(FiQueryTools.stoj(sqlQuery))
 						.bindMap(mapBind)
 						.mapToBean(getEntityClass())
 						.list();
@@ -251,7 +251,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		try {
 			List<FiKeyBean> result = getJdbi().withHandle(handle -> {
-				return handle.createQuery(FiQuery.stoj(sqlQuery))
+				return handle.createQuery(FiQueryTools.stoj(sqlQuery))
 						.bindMap(mapBind)
 						.map(new FiKeyBeanMapper())
 						.list();
@@ -273,7 +273,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		try {
 			List<String> result = getJdbi().withHandle(handle -> {
-				return handle.select(FiQuery.stoj(sql))
+				return handle.select(FiQueryTools.stoj(sql))
 						.bindMap(fiKeyBean)
 						.mapTo(String.class)
 						.collect(Collectors.toList());
@@ -309,7 +309,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		List<EntClazz> result = null;
 		try {
 			result = jdbi.withHandle(handle -> {
-				return handle.createQuery(FiQuery.stoj(sqlQuery))
+				return handle.createQuery(FiQueryTools.stoj(sqlQuery))
 						.bindMap(mapBind)
 						.mapToBean(getEntityClass())
 						.list();
@@ -403,7 +403,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		for (Map.Entry<String, List> entry : mapParamMulti.entrySet()) {
 			//System.out.println(entry.getKey() + "/" + entry.getValue());
-			sqlQuery = FiQuery.fhrConvertSqlForMultiParamByTemplate2(sqlQuery, entry.getKey(), entry.getValue().size());
+			sqlQuery = FiQueryTools.convertSqlForMultiParamByTemplate2(sqlQuery, entry.getKey(), entry.getValue().size());
 			mapBind.remove(entry.getKey());
 		}
 
@@ -420,7 +420,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		List<EntClazz> result = null;
 		try {
 			result = jdbi.withHandle(handle -> {
-				return handle.select(FiQuery.stoj(sqlQuery))
+				return handle.select(FiQueryTools.stoj(sqlQuery))
 						.bindBean(bindEntity)
 						.mapToBean(getEntityClass())
 						.list();
@@ -545,7 +545,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		try {
 			result = getJdbi().withHandle(handle -> {
-				return handle.select(FiQuery.stoj(FiQueryGenerator.selectDtoFieldsWithWhere1(getEntityClass())))
+				return handle.select(FiQueryTools.stoj(FiQueryGenerator.selectDtoFieldsWithWhere1(getEntityClass())))
 						.bindBean(entity)
 						.mapToBean(getEntityClass())
 						.list();
@@ -569,7 +569,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		try {
 			result = getJdbi().withHandle(handle -> {
-				return handle.select(FiQuery.stoj(FiQueryGenerator.selectDtoFieldsByTxFirmCode(getEntityClass())))
+				return handle.select(FiQueryTools.stoj(FiQueryGenerator.selectDtoFieldsByTxFirmCode(getEntityClass())))
 						.bindBean(entity)
 						.mapToBean(getEntityClass())
 						.list();
@@ -593,7 +593,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		try {
 			result = getJdbi().withHandle(handle -> {
-				return handle.select(FiQuery.stoj(FiQueryGenerator.selectDtoFieldsByTxFirmCode(getEntityClass())))
+				return handle.select(FiQueryTools.stoj(FiQueryGenerator.selectDtoFieldsByTxFirmCode(getEntityClass())))
 						.bindMap(fiKeyBean)
 						.mapToBean(getEntityClass())
 						.list();
@@ -637,7 +637,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		Optional<Integer> result = null;
 		try {
 			result = jdbi.withHandle(handle -> {
-				return handle.select(FiQuery.stoj(FiQueryGenerator.selectQueryCountWherAllFields(getEntityClass(), entity)))
+				return handle.select(FiQueryTools.stoj(FiQueryGenerator.selectQueryCountWherAllFields(getEntityClass(), entity)))
 						.bindBean(entity)
 						.mapTo(Integer.class)
 						.findFirst();
@@ -742,7 +742,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		Fdr<Optional<Integer>> fdr = new Fdr<>();
 
 		try {
-			Optional<Integer> result = handle.select(FiQuery.stoj(sqlQuery))
+			Optional<Integer> result = handle.select(FiQueryTools.stoj(sqlQuery))
 					.bindMap(map)
 					.mapTo(Integer.class)
 					.findFirst();
@@ -942,7 +942,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 				for (String query : queryList) {
 					if (FiString.isEmpty(query.trim())) continue;
-					Integer rowAffected = handle.createUpdate(FiQuery.stoj(query)).bindMap(mapParams).execute();
+					Integer rowAffected = handle.createUpdate(FiQueryTools.stoj(query)).bindMap(mapParams).execute();
 					fdr.appendRowsAffected(rowAffected);
 				}
 				//Loghelperr.getInstance(getClass()).debug("Affected:"+ rowAffectedLast);
@@ -998,7 +998,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		try {
 			getJdbi().useTransaction(handle -> {
-				int[] rowAffected = handle.createScript(FiQuery.stoj(query)).bindMap(fiKeyBean).execute();
+				int[] rowAffected = handle.createScript(FiQueryTools.stoj(query)).bindMap(fiKeyBean).execute();
 				fdr.appendRowsAffected(rowAffected);
 				//Loghelperr.getInstance(getClass()).debug("Affected:"+ rowAffectedLast);
 			});
@@ -1188,9 +1188,9 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 				String sql = null;
 				if (FiBoolean.isTrue(boIncludeIdFields)) {
-					sql = FiQuery.stoj(FiQueryGenerator.insertQueryWithId(getEntityClass()));
+					sql = FiQueryTools.stoj(FiQueryGenerator.insertQueryWithId(getEntityClass()));
 				} else {
-					sql = FiQuery.stoj(FiQueryGenerator.insertQueryWoutId(getEntityClass()));
+					sql = FiQueryTools.stoj(FiQueryGenerator.insertQueryWoutId(getEntityClass()));
 				}
 
 				return handle.createUpdate(sql)
@@ -1215,7 +1215,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		Fdr fdr = new Fdr();
 
 		try {
-			String sql = FiQuery.stoj(FiQueryGenerator.insertQueryWoutId(getEntityClass()));
+			String sql = FiQueryTools.stoj(FiQueryGenerator.insertQueryWoutId(getEntityClass()));
 			Integer rowCountUpdate = handle.createUpdate(sql)
 					.bindBean(entity)
 					.execute(); // returns row count updated
@@ -1234,7 +1234,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		try {
 			Integer rowCountUpdate = getJdbi().withHandle(handle -> {
-				return handle.createUpdate(FiQuery.stoj(sqlInsert))
+				return handle.createUpdate(FiQueryTools.stoj(sqlInsert))
 						.bindBean(entity)
 						.execute(); // returns row count updated
 			});
@@ -1253,7 +1253,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		Fdr fdr = new Fdr();
 
 		try {
-			Integer rowCountUpdate = handle.createUpdate(FiQuery.stoj(sqlInsert))
+			Integer rowCountUpdate = handle.createUpdate(FiQueryTools.stoj(sqlInsert))
 					.bindBean(entity)
 					.execute(); // returns row count updated
 
@@ -1298,7 +1298,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 				try {
 					// transactions
 					listEntity.forEach(ent -> {
-						handle.createUpdate(FiQuery.stoj(FiQueryGenerator.insertQueryWoutId(getEntityClass())))
+						handle.createUpdate(FiQueryTools.stoj(FiQueryGenerator.insertQueryWoutId(getEntityClass())))
 								.bindBean(ent)
 								.execute(); // returns row count updated
 
@@ -1448,7 +1448,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		try {
 			Integer rowCountUpdate = jdbi.withHandle(handle -> {
-				return handle.createUpdate(FiQuery.stoj(updateQuery))
+				return handle.createUpdate(FiQueryTools.stoj(updateQuery))
 						.bindBean(bindEntity)
 						.execute(); // returns row count updated
 			});
@@ -1483,7 +1483,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		try {
 			Integer rowCountUpdate = jdbi.withHandle(handle -> {
-				return handle.createUpdate(FiQuery.stoj(updateQuery))
+				return handle.createUpdate(FiQueryTools.stoj(updateQuery))
 						.bindMap(fiKeyBean)
 						.bindBean(bindEntity)
 						.execute(); // returns row count updated
@@ -1521,7 +1521,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		try {
 			Integer rowsAffected = jdbi.withHandle(handle -> {
-				return handle.createUpdate(FiQuery.stoj(deleteQuery))
+				return handle.createUpdate(FiQueryTools.stoj(deleteQuery))
 						.bindBean(bindEntity)
 						.execute(); // returns row count updated
 			});
@@ -1553,7 +1553,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		try {
 			Integer rowCountUpdate = jdbi.withHandle(handle -> {
-				return handle.createUpdate(FiQuery.stoj(updateQuery))
+				return handle.createUpdate(FiQueryTools.stoj(updateQuery))
 						.bindMap(fiMapParams)
 						.execute(); // returns row count updated
 			});
@@ -1574,7 +1574,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		Fdr fdr = new Fdr();
 
 		try {
-			Integer rowCountUpdate = handle.createUpdate(FiQuery.stoj(updateQuery))
+			Integer rowCountUpdate = handle.createUpdate(FiQueryTools.stoj(updateQuery))
 					.bindMap(fiMapParams)
 					.execute(); // returns row count updated
 			//Loghelperr.getInstance(getClass()).debug("Row Count Update:"+rowCountUpdate);
@@ -1614,7 +1614,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		Fdr fdr = new Fdr();
 
 		try {
-			int rowsAffected = handle.createUpdate(FiQuery.stoj(updateQuery))
+			int rowsAffected = handle.createUpdate(FiQueryTools.stoj(updateQuery))
 					.bindBean(bindEntity)
 					.execute();
 			fdr.setBoResultAndRowsAff(true, rowsAffected); // 16-01-20 added.
@@ -1631,7 +1631,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		Fdr fdr = new Fdr();
 
 		try {
-			int rowsAffected = handle.createUpdate(FiQuery.stoj(updateQuery))
+			int rowsAffected = handle.createUpdate(FiQueryTools.stoj(updateQuery))
 					.bindBean(bindEntity)
 					.execute();
 			fdr.setBoResultAndRowsAff(true, rowsAffected);
@@ -1773,7 +1773,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 					// transactions
 					listEntity.forEach(ent -> {
 
-						Integer rowsAffectedUpdate = handle.createUpdate(FiQuery.stoj(sqlUpdate))
+						Integer rowsAffectedUpdate = handle.createUpdate(FiQueryTools.stoj(sqlUpdate))
 								.bindBean(ent)
 								.execute(); // returns row count updated
 
@@ -1913,7 +1913,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 								String idField = FiEntity.getListIdFields(getEntityClass()).get(0);
 								Class idClazz = FiReflection.getFieldClassType(getEntityClass(), idField);
 
-								Optional opId = handle.createUpdate(FiQuery.stoj(FiQueryGenerator.insertQueryJParamWoutId(getEntityClass())))
+								Optional opId = handle.createUpdate(FiQueryTools.stoj(FiQueryGenerator.insertQueryJParamWoutId(getEntityClass())))
 										.bindBean(ent)
 										.executeAndReturnGeneratedKeys(idField)
 										//.map(new FiBeanNestedRowMapper<>(getEntityClass())) // GENERATED_KEYS adında bir alana atama yapmaya çalışıyor
@@ -1925,7 +1925,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 								});
 
 							} else { // generated keyler alınmasına gerek yoksa
-								handle.createUpdate(FiQuery.stoj(FiQueryGenerator.insertQueryJParamWoutId(getEntityClass())))
+								handle.createUpdate(FiQueryTools.stoj(FiQueryGenerator.insertQueryJParamWoutId(getEntityClass())))
 										.bindBean(ent).execute();
 							}
 
@@ -1935,7 +1935,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 						// id Null degilse, update yap
 						if (FiBoolean.isFalse(boIdNull)) {
 							Loghelper.get(getClass()).debug("Update AddOrUpdate");
-							handle.createUpdate(FiQuery.stoj(sqlUpdate))
+							handle.createUpdate(FiQueryTools.stoj(sqlUpdate))
 									.bindBean(ent)
 									.execute(); // returns row count updated
 						}
@@ -1999,7 +1999,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 						// id Null degilse, update yap
 						if (true) {
 							//Loghelperr.getInstance(getClass()).debug("Update AddOrUpdate");
-							String sql = FiQuery.stoj(fnSqlUpdatePerEntity.apply(ent));
+							String sql = FiQueryTools.stoj(fnSqlUpdatePerEntity.apply(ent));
 							//FiConsole.debug("sql:" + sql);
 							if (!FiString.isEmpty(sql)) {
 								Integer rowsAffected1 = handle.createUpdate(sql)
@@ -2061,7 +2061,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 						// id Null degilse, update yap
 						if (true) {
 							//Loghelperr.getInstance(getClass()).debug("Update AddOrUpdate");
-							int execute = handle.createUpdate(FiQuery.stoj(sqlUpdate))
+							int execute = handle.createUpdate(FiQueryTools.stoj(sqlUpdate))
 									.bindMap(mapBind)
 									.bindBean(ent)
 									.execute();// returns row count updated
@@ -2134,7 +2134,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 						// id null ise insert yap
 						if (FiBoolean.isTrue(boIdNull)) {
 							//Loghelperr.getInstance(getClass()).debug("Insert AddOrUpdate");
-							handle.createUpdate(FiQuery.stoj(new FiQueryGenerator().insertQueryJParamWoutId(getEntityClass())))
+							handle.createUpdate(FiQueryTools.stoj(new FiQueryGenerator().insertQueryJParamWoutId(getEntityClass())))
 									.bindBean(ent)
 									.execute(); // returns row count updated
 						}
@@ -2142,7 +2142,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 						// id Null degilse, update yap
 						if (FiBoolean.isFalse(boIdNull)) {
 							//Loghelperr.getInstance(getClass()).debug("Update AddOrUpdate");
-							handle.createUpdate(FiQuery.stoj(fnSqlUpdatePerEntity.apply(ent)))
+							handle.createUpdate(FiQueryTools.stoj(fnSqlUpdatePerEntity.apply(ent)))
 									.bindBean(ent)
 									.execute(); // returns row count updated
 						}
@@ -2232,7 +2232,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		try {
 			result = jdbi.withHandle(handle -> {
-				return handle.select(FiQuery.stoj(sql))
+				return handle.select(FiQueryTools.stoj(sql))
 						.bindMap(mapParam)
 						.mapTo(String.class)
 						.findFirst();
@@ -2268,7 +2268,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		try {
 			Optional<PrmEnt> result = jdbi.withHandle(handle -> {
-				return handle.select(FiQuery.stoj(sql))
+				return handle.select(FiQueryTools.stoj(sql))
 						.bindMap(mapParam)
 						.mapTo(resultClazz)
 						.findFirst();
@@ -2302,7 +2302,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		try {
 			Optional<PrmEnt> result = getJdbi().withHandle(handle -> {
-				return handle.select(FiQuery.stoj(sql))
+				return handle.select(FiQueryTools.stoj(sql))
 						.bindMap(mapParam)
 						.mapTo(resultClazz)
 						.findFirst();
@@ -2408,7 +2408,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		try {
 			Optional<PrmEnt> result = jdbi.withHandle(handle -> {
-				return handle.select(FiQuery.stoj(sql))
+				return handle.select(FiQueryTools.stoj(sql))
 						.bindBean(entClazz)
 						.mapTo(resultClazz)
 						.findFirst();
@@ -2433,7 +2433,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		try {
 			Optional<PrmEnt> result = getJdbi().withHandle(handle -> {
-				return handle.select(FiQuery.stoj(sql))
+				return handle.select(FiQueryTools.stoj(sql))
 						.bindBean(entClazz)
 						.mapTo(resultClazz)
 						.findFirst();
@@ -2463,7 +2463,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		try {
 			Optional<Integer> result = getJdbi().withHandle(handle -> {
-				return handle.select(FiQuery.stoj(sql))
+				return handle.select(FiQueryTools.stoj(sql))
 						.bindBean(entClazz)
 						.mapTo(Integer.class)
 						.findFirst();
@@ -2494,7 +2494,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		try {
 			Optional<EntClazz> result = getJdbi().withHandle(handle -> {
-				return handle.select(FiQuery.stoj(sql))
+				return handle.select(FiQueryTools.stoj(sql))
 						.bindMap(mapParam)
 						.mapToBean(getEntityClass())
 						.findFirst();
@@ -2534,7 +2534,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		try {
 			Optional<EntClazz> result = getJdbi().withHandle(handle -> {
-				return handle.select(FiQuery.stoj(sql))
+				return handle.select(FiQueryTools.stoj(sql))
 						.bindMap(mapParam)
 						.mapToBean(getEntityClass())
 						.findFirst();
@@ -2564,7 +2564,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		try {
 			List<Map<String, Object>> result = jdbi.withHandle(handle -> {
-				return handle.select(FiQuery.stoj(sql))
+				return handle.select(FiQueryTools.stoj(sql))
 						.bindMap(mapParam)
 						.mapToMap()
 						.list();
@@ -2589,7 +2589,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		try {
 			Optional<EntClazz> result = getJdbi().withHandle(handle -> {
-				return handle.select(FiQuery.stoj(sql))
+				return handle.select(FiQueryTools.stoj(sql))
 						.bindBean(entity)
 						.mapToBean(getEntityClass())
 						.findFirst();
@@ -2878,7 +2878,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 			String idField = FiEntity.getListIdFields(getEntityClass()).get(0);
 			Class idClazz = FiReflection.getFieldClassType(getEntityClass(), idField);
 
-			Optional opId = handle.createUpdate(FiQuery.stoj(sql1 + ";SET NOCOUNT ON;" + sql2))
+			Optional opId = handle.createUpdate(FiQueryTools.stoj(sql1 + ";SET NOCOUNT ON;" + sql2))
 					.bindBean(ent)
 					.executeAndReturnGeneratedKeys(idField)
 					.mapTo(idClazz)
@@ -2891,7 +2891,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 			fdrBatch.appendRowsAffected(1);
 
 		} else { // generated keyler alınmasına gerek yoksa
-			int execute = handle.createUpdate(FiQuery.stoj(sql1 + "; " + sql2))
+			int execute = handle.createUpdate(FiQueryTools.stoj(sql1 + "; " + sql2))
 					.bindBean(ent)
 					.execute();// returns row count updated
 			fdrBatch.appendRowsAffected(execute);
@@ -2919,7 +2919,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 			Class idClazz = FiReflection.getFieldClassType(getEntityClass(), idField);
 
 			try {
-				Optional opId = handle.createUpdate(FiQuery.stoj(sql1 + ";SET NOCOUNT ON;" + sql2))
+				Optional opId = handle.createUpdate(FiQueryTools.stoj(sql1 + ";SET NOCOUNT ON;" + sql2))
 						.bindBean(ent)
 						.executeAndReturnGeneratedKeys(idField)
 						.mapTo(idClazz)
@@ -2937,7 +2937,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 			return fdrMain;
 		} else { // generated keyler alınmasına gerek yoksa
 			try {
-				int execute = handle.createUpdate(FiQuery.stoj(sql1 + "; " + sql2))
+				int execute = handle.createUpdate(FiQueryTools.stoj(sql1 + "; " + sql2))
 						.bindBean(ent)
 						.execute();// returns row count updated
 				fdrMain.appendRowsAffected(execute);
@@ -3015,7 +3015,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 					//Loghelper.debug(getClass(), "idClazz:" + idClazz);
 					//Loghelper.debug(getClass(), "sql1:" + fimSqlAt(sql1));
 
-					Optional optId = handle.createUpdate(FiQuery.stoj(sql1) + ";SET NOCOUNT ON;" + sql2)
+					Optional optId = handle.createUpdate(FiQueryTools.stoj(sql1) + ";SET NOCOUNT ON;" + sql2)
 							.bindBean(ent)
 							.executeAndReturnGeneratedKeys(idField)
 							.mapTo(idClazz)
@@ -3036,7 +3036,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 					String sqlUpScope = FiQueryGenerator.updateScopeIdFieldWithScopeIdFnById(getEntityClass(), fieldForScopeEntity);
 
-					int execute = handle.createUpdate(FiQuery.stoj(sql1 + "; " + sqlUpScope))
+					int execute = handle.createUpdate(FiQueryTools.stoj(sql1 + "; " + sqlUpScope))
 							.bindBean(ent)
 							.execute();// returns row count updated
 					fdrBatch.appendRowsAffected(execute);
@@ -3103,7 +3103,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 			//Loghelper.debug(getClass(), "sql1:" + fimSqlAt(sql1));
 
 			try {
-				Optional optId = handle.createUpdate(FiQuery.stoj(sql1) + ";SET NOCOUNT ON;" + sql2)
+				Optional optId = handle.createUpdate(FiQueryTools.stoj(sql1) + ";SET NOCOUNT ON;" + sql2)
 						.bindBean(ent)
 						.executeAndReturnGeneratedKeys(idField)
 						.mapTo(idClazz)
@@ -3133,7 +3133,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 			String sqlUpScope = FiQueryGenerator.updateScopeIdFieldWithScopeIdFnById(getEntityClass(), fieldForScopeEntity);
 
 			try {
-				int execute = handle.createUpdate(FiQuery.stoj(sql1 + "; " + sqlUpScope))
+				int execute = handle.createUpdate(FiQueryTools.stoj(sql1 + "; " + sqlUpScope))
 						.bindBean(ent)
 						.execute();// returns row count updated
 				fdrMain.appendRowsAffected(execute);
@@ -3172,7 +3172,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 				String idField = FiEntity.getListIdFields(getEntityClass()).get(0);
 				Class idClazz = FiReflection.getFieldClassType(getEntityClass(), idField);
 
-				Optional opId = handle.createUpdate(FiQuery.stoj(sql1 + ";SET NOCOUNT ON;" + sql2))
+				Optional opId = handle.createUpdate(FiQueryTools.stoj(sql1 + ";SET NOCOUNT ON;" + sql2))
 						.bindBean(ent)
 						.executeAndReturnGeneratedKeys(idField)
 						.mapTo(idClazz)
@@ -3184,7 +3184,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 				fdrMain.appendRowsAffected(1);
 
 			} else { // generated keyler alınmasına gerek yoksa
-				int execute = handle.createUpdate(FiQuery.stoj(sql1 + "; " + sql2))
+				int execute = handle.createUpdate(FiQueryTools.stoj(sql1 + "; " + sql2))
 						.bindBean(ent)
 						.execute();// returns row count updated
 				fdrMain.appendRowsAffected(execute);
@@ -3213,7 +3213,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 				String idField = FiEntity.getListIdFields(getEntityClass()).get(0);
 				Class idClazz = FiReflection.getFieldClassType(getEntityClass(), idField);
 
-				Optional opId = handle.createUpdate(FiQuery.stoj(sql1))
+				Optional opId = handle.createUpdate(FiQueryTools.stoj(sql1))
 						.bindBean(ent)
 						.executeAndReturnGeneratedKeys(idField)
 						.mapTo(idClazz)
@@ -3225,7 +3225,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 				fdrMain.appendRowsAffected(1);
 
 			} else { // generated keyler alınmasına gerek yoksa
-				int execute = handle.createUpdate(FiQuery.stoj(sql1))
+				int execute = handle.createUpdate(FiQueryTools.stoj(sql1))
 						.bindBean(ent)
 						.execute();// returns row count updated
 				fdrMain.appendRowsAffected(execute);

@@ -78,7 +78,7 @@ public abstract class AbsRepoJdbiPure extends RepoGeneralJdbi implements IRepoJd
 
 		for (Map.Entry<String, List> entry : mapParamMulti.entrySet()) {
 			//System.out.println(entry.getKey() + "/" + entry.getValue());
-			sqlQuery = FiQuery.fhrConvertSqlForMultiParamByTemplate2(sqlQuery, entry.getKey(), entry.getValue().size());
+			sqlQuery = FiQueryTools.convertSqlForMultiParamByTemplate2(sqlQuery, entry.getKey(), entry.getValue().size());
 			mapBind.remove(entry.getKey());
 		}
 
@@ -93,7 +93,7 @@ public abstract class AbsRepoJdbiPure extends RepoGeneralJdbi implements IRepoJd
 
 		try {
 			Optional<Integer> result = jdbi.withHandle(handle -> {
-				return handle.select(FiQuery.stoj(sqlQuery))
+				return handle.select(FiQueryTools.stoj(sqlQuery))
 						.bindMap(map)
 						.mapTo(Integer.class)
 						.findFirst();
@@ -174,7 +174,7 @@ public abstract class AbsRepoJdbiPure extends RepoGeneralJdbi implements IRepoJd
 
 				for (String query : queryList) {
 					if (FiString.isEmpty(query.trim())) continue;
-					Integer rowAffected = handle.createUpdate(FiQuery.stoj(query)).bindMap(mapParams).execute();
+					Integer rowAffected = handle.createUpdate(FiQueryTools.stoj(query)).bindMap(mapParams).execute();
 					fdr.appendRowsAffected(rowAffected);
 				}
 				//Loghelperr.getInstance(getClass()).debug("Affected:"+ rowAffectedLast);
@@ -196,7 +196,7 @@ public abstract class AbsRepoJdbiPure extends RepoGeneralJdbi implements IRepoJd
 
 		try {
 			Integer rowCountUpdate = jdbi.withHandle(handle -> {
-				return handle.createUpdate(FiQuery.stoj(updateQuery))
+				return handle.createUpdate(FiQueryTools.stoj(updateQuery))
 						.bindMap(fiMapParams)
 						.execute(); // returns row count updated
 			});
@@ -218,7 +218,7 @@ public abstract class AbsRepoJdbiPure extends RepoGeneralJdbi implements IRepoJd
 
 		try {
 			jdbi.useHandle(handle -> {
-				handle.createUpdate(FiQuery.stoj(updateQuery))
+				handle.createUpdate(FiQueryTools.stoj(updateQuery))
 						.bindMap(fiMapParams)
 						.execute(); // returns row count updated
 			});
@@ -290,7 +290,7 @@ public abstract class AbsRepoJdbiPure extends RepoGeneralJdbi implements IRepoJd
 //		Loghelper.get(getClass()).debug("Sql:" + FiQuery.stoj(sql));
 		try {
 			Optional<Integer> result = jdbi.withHandle(handle -> {
-				return handle.select(FiQuery.stoj(sql))
+				return handle.select(FiQueryTools.stoj(sql))
 						.bindMap(mapParam)
 						.mapTo(Integer.class)
 						.findFirst();
@@ -318,7 +318,7 @@ public abstract class AbsRepoJdbiPure extends RepoGeneralJdbi implements IRepoJd
 		//Loghelper.get(getClass()).debug("Sql:" + FiQuery.stoj(sql));
 		try {
 			List<Map<String,Integer>> result = getJdbi().withHandle(handle ->
-					handle.select(FiQuery.stoj(sql))
+					handle.select(FiQueryTools.stoj(sql))
 					.bindMap(mapParam)
 					.mapToMap(Integer.class)
 					.list());
@@ -351,7 +351,7 @@ public abstract class AbsRepoJdbiPure extends RepoGeneralJdbi implements IRepoJd
 
 		try {
 			Optional<PrmEnt> result = jdbi.withHandle(handle -> {
-				return handle.select(FiQuery.stoj(sql))
+				return handle.select(FiQueryTools.stoj(sql))
 						.bindMap(mapParam)
 						.mapTo(resultClazz)
 						.findFirst();

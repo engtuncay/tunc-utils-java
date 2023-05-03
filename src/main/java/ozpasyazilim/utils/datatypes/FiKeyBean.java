@@ -4,7 +4,7 @@ import javafx.beans.property.StringProperty;
 import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.fidborm.FiEntity;
 import ozpasyazilim.utils.fidborm.FiField;
-import ozpasyazilim.utils.fidborm.FiQuery;
+import ozpasyazilim.utils.fidborm.FiQueryTools;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.table.FiCol;
 
@@ -122,7 +122,7 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
 	public void bindAndActivateIfNotEmpty(Object objKey, Object value, AtomicReference<String> sql) {
 		if (value != null) {
 			this.put(objKey.toString(), value);
-			sql.set(FiQuery.activateOptParamMain(sql.get(), objKey.toString()));
+			sql.set(FiQueryTools.activateOptParamMain(sql.get(), objKey.toString()));
 		}
 	}
 
@@ -137,11 +137,11 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
 	 *
 	 * @param objKey
 	 * @param value
-	 * @param sql
+	 * @param sqlProp
 	 * @param addPercentage
 	 */
 	@Deprecated
-	public FiKeyBean bindAndActivateIfNotEmpty(Object objKey, Object value, StringProperty sql, Boolean addPercentage) {
+	public FiKeyBean bindAndActivateIfNotEmpty(Object objKey, Object value, StringProperty sqlProp, Boolean addPercentage) {
 		if (value != null) {
 			if (value instanceof String) {
 				if (FiString.isEmpty((String) value)) {
@@ -157,7 +157,8 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
 
 //			Loghelper.get(getClass()).debug("Aktive edildi Param:" + objKey.toString());
 			this.put(objKey.toString(), value);
-			FiQuery.fsmActivateOptParamForProp(sql, objKey.toString());
+			FiQueryTools.activateAndUpdateOptParam(sqlProp, objKey.toString());
+
 		} else {
 //			Loghelper.get(getClass()).debug("Aktive edilmedi Param:" + objKey.toString());
 		}

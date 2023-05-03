@@ -2,7 +2,6 @@ package ozpasyazilim.utils.fidborm;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.StringProperty;
 import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.datatypes.FiKeyBean;
 import ozpasyazilim.utils.log.Loghelper;
@@ -45,202 +44,22 @@ public class FiQuery {
 
 	// ******** Statik Metodlar ******* //
 
-	/**
-	 * tüm optional parametreleri ( --!optParam ) deaktif eder.
-	 *
-	 * @param sql
-	 * @return
-	 */
-	public static String deActivateAllOptParams(String sql) {
-		final String regex = "--!(\\w+).*\\s*.*"; // 15-10-19
-		final String subst = "--$1 deactivated"; // 15-10-19
-		return sql.replaceAll(regex, subst);
-	}
-
-	public static String fsmDeActivateOptParamMain(String sql, String param) {
-		final String regex = String.format("--!(%s).*\\s*.*", param); // 15-10-19
-		final String subst = "--$1 deactivated"; // 15-10-19
-		return sql.replaceAll(regex, subst);
-	}
-
 	public void deActivateOptParam(String txOptParamName) {
-		setTxQuery(fsmDeActivateOptParamMain(getTxQuery(), txOptParamName));
+		setTxQuery(FiQueryTools.deActivateOptParamMain(getTxQuery(), txOptParamName));
 	}
 
 	public void deActivateSqlAtParam(String param) {
-		setTxQuery(deactivateSqlAtParamMain(getTxQuery(), param));
+		setTxQuery(FiQueryTools.deactivateSqlAtParamMain(getTxQuery(), param));
 	}
-
-	public static void fhrDeActivateOptParam(StringProperty propSql, String param) {
-		propSql.set(fsmDeActivateOptParamMain(propSql.get(), param));
-	}
-
-	/**
-	 * Optional Sql Param Syntax : --!sqlparam
-	 * <p>
-	 * opsiyonel sql parametrelerin , parametre işaretini(!) kaldırır ve aktif eder.
-	 *
-	 * @param sql
-	 * @param param
-	 * @return
-	 */
-	public static String activateOptParamMain(String sql, String param) {
-		// 200317_1741 sql param altındaki ifade yorum satırı olursa, yorum satırını kaldırır.
-		final String regex240320 = "--!(%s)\\b.*\\s*-*(.*)";
-		final String regex = String.format(regex240320, param);
-
-		final String subst = "--$1 activated \\\n$2"; // 17-03-2020
-		return sql.replaceAll(regex, subst);
-	}
-
-	public static String activateSqlAtParamMain(String sql, String param) {
-		final String regexPatt = " *(--)*(.*)@(%s)\\b(.*)\\n";
-		final String subst = "$2@$3$4 --$3 activated\\\n"; // 17-03-2020
-
-		final String regex = String.format(regexPatt, param);
-		return sql.replaceAll(regex, subst);
-	}
-
-
-	public static String activateNamedParamMain(String sql, String param, String value) {
-		if (FiString.isEmptyTrim(value) || FiString.isEmptyTrim(param)) return sql;
-
-		final String regex = " *(--)*(.*)(\\{\\{%s\\}\\})(.*)\\n{0,1}";
-		final String subst = "$2%s$4 --%s activated\n";
-
-		final String substUp = String.format(subst, value, param);
-		final String regexUp = String.format(regex, param);
-
-		// System.out.println(regexUp);
-		// System.out.println(substUp);
-		return sql.replaceAll(regexUp, substUp);
-	}
-
-
-	public static String deactivateSqlAtParamMain(String sql, String param) {
-		final String regexPatt = "(.*)@(%s)\\b(.*)\\n";
-		final String subst = "--$1$2$3 --$2 deactivated\\\n";
-
-		final String regex = String.format(regexPatt, param);
-		return sql.replaceAll(regex, subst);
-	}
-
-	public static void fsmActivateOptParamForProp(StringProperty sql, String param) {
-		sql.set(activateOptParamMain(sql.get(), param));
-	}
-
-	/**
-	 * Comment içerisinde değişkenler varsa iptal eder.# işareti ile gösterir.
-	 * <br>
-	 *
-	 * @param sql
-	 * @return
-	 */
-	public static String fhrFixSqlProblems(String sql) {
-		// yorum satırların @ varsa # diyeze çevirir.
-		//return sql.replaceAll("(--.*)(@)", "$1#"); // yorum satırında iki tane @ olursa, sadece birini değiştiriyor
-		return sql.replaceAll("--(.*?)@(\\w+)(.*)", "--fixed$1$2"); // 23-12-22
-	}
-
-	/**
-	 * sql içindeki parametreyi, jdbi list parametre formatına çevirir.
-	 * <p>
-	 * parentez içindeki @ ile gösterilen parametreyi büyüktür küçüktür içerisine alır
-	 * <p>
-	 * Örnek
-	 * <p>
-	 * ( @xxx ) --> ( <xxx> )
-	 */
-	public static String fhrConvertSqlParamToListJdbiParamMain(String sql) {
-		String sqlNew = sql.replaceAll("\\(.*@(.*)\\)", "(<$1>)");
-		return sqlNew;
-	}
-
-	public static String genTemplateMultiParam2(String param, Integer index) {
-		return param + "_" + index.toString();
-	}
-
-	/**
-	 * sql sorgu içindeki parametreyi, parametre_index şeklinde multi parametreye çevirir.
-	 * <p>
-	 * param_1 param_2 gibi
-	 *
-	 * @param sql
-	 * @param param
-	 * @param count
-	 * @return
-	 */
-	public static String fhrConvertSqlForMultiParamByTemplate2(String sql, String param, Integer count) {
-
-		//sadece parentez içinde olanları bulmak için
-		//final String regex = String.format("\\(\\s*@%s\\s*\\)",param);
-		final String regex = String.format("@%s", param);
-
-		StringBuilder customParam = new StringBuilder();
-
-		for (int index = 0; index < count; index++) {
-			if (index != 0) customParam.append(",");
-			String sablon = genTemplateMultiParam2(param, index);
-			customParam.append("@" + sablon);
-		}
-
-		String sqlNew = sql.replaceAll(regex, String.format("%s", customParam)); //(%s)
-		return sqlNew;
-	}
-
-	public static void fhrConvertSqlForMultiParamByTemplate2(StringProperty sql, String param, Integer count) {
-		sql.set(fhrConvertSqlForMultiParamByTemplate2(sql.get(), param, count));
-	}
-
-	/**
-	 * @param sql
-	 * @return
-	 * @ leri : çevirir.
-	 */
-	public static String fhrConvertSqlParamToJdbiParamMain(String sql) {
-		return sql.replaceAll("@", ":");
-	}
-
-	public static String fhrConvertSqlParamToCommentMain(String key, String sql) {
-		if (!FiType.isEmptyWithTrim(key)) {
-			String regex = "\\n\\s*.*@(" + key + ").*";
-			String replacement = "\\\n-- $1 deactivated";
-			return sql.replaceAll(regex, replacement); // deactivated
-		}
-		return null;
-	}
-
-	/**
-	 * Convert Sql Param(@) To Java Param (:)
-	 * <p>
-	 * s(sql) to j(ava)
-	 * <p>
-	 * sorgudaki @ ifadeleri : ye çevirir.
-	 *
-	 * @param sqlQuery
-	 * @return
-	 */
-	public static String stoj(String sqlQuery) {
-		if (sqlQuery == null) return null;
-		sqlQuery = fhrFixSqlProblems(sqlQuery);
-		sqlQuery = fhrConvertSqlParamToJdbiParamMain(sqlQuery);
-		return sqlQuery;
-	}
-
-	// end of Statik Metodlar
 
 	// Obje Metodları
 
 	public void activateOptParam(String txOptParamName) {
-		setTxQuery(activateOptParamMain(getTxQuery(), txOptParamName));
+		setTxQuery(FiQueryTools.activateOptParamMain(getTxQuery(), txOptParamName));
 	}
 
 	public void activateSqlAtParam(String fieldName) {
-		setTxQuery(activateSqlAtParamMain(getTxQuery(), fieldName));
-	}
-
-	public static String genTemplateMultiParam(String param, Integer index) {
-		return param + "_" + index.toString();
+		setTxQuery(FiQueryTools.activateSqlAtParamMain(getTxQuery(), fieldName));
 	}
 
 	public void convertListParamToMultiParams() {
@@ -299,7 +118,7 @@ public class FiQuery {
 
 		int index = 0;
 		for (Object listDatum : collData) {
-			String sablonParam = FiQuery.genTemplateMultiParam(param, index);
+			String sablonParam = FiQueryTools.makeMultiParamTemplate(param, index);
 			if (index != 0) sbNewParamsForQuery.append(",");
 			sbNewParamsForQuery.append("@" + sablonParam);
 			paramsNew.put(sablonParam, listDatum);
@@ -325,32 +144,6 @@ public class FiQuery {
 	}
 
 	/**
-	 * sql sorgu içindeki parametreyi (@paramName), parametre_indexNo şeklinde multi parametreye çevirir. (@paramName_1,@paramName_2,...)
-	 * <p>
-	 * Örnek @paramName -> @paramName_1 , @paramName_2 , ...
-	 */
-	public static String fhrConvertSqlForMultiParamByTemplate(String sql, String param, Integer count) {
-
-		//sadece parentez içinde olanları bulmak istenirse
-		//final String regex = String.format("\\(\\s*@%s\\s*\\)",param);
-		final String regex = String.format("@%s", param);
-
-		StringBuilder customParam = new StringBuilder();
-
-		Integer indexParam = getMultiParamStartIndex();
-
-		for (int index = 0; index < count; index++) {
-			if (index != 0) customParam.append(",");
-			String sablon = genTemplateMultiParam(param, indexParam);
-			customParam.append("@" + sablon);
-			indexParam++;
-		}
-
-		String sqlNew = sql.replaceAll(regex, customParam.toString()); //(%s)
-		return sqlNew;
-	}
-
-	/**
 	 * sql sorgu içindeki parametreyi, parametre_index şeklinde multi parametreye çevirir.
 	 * <p>
 	 * param_1 param_2 gibi
@@ -365,10 +158,10 @@ public class FiQuery {
 
 		StringBuilder customParam = new StringBuilder();
 
-		Integer indexParam = getMultiParamStartIndex();
+		Integer indexParam = FiQueryTools.getMultiParamStartIndex();
 		for (int countPrm = 0; countPrm < count; countPrm++) {
 			if (countPrm != 0) customParam.append(",");
-			String sablon = genTemplateMultiParam(param, indexParam);
+			String sablon = FiQueryTools.makeMultiParamTemplate(param, indexParam);
 			customParam.append("@" + sablon);
 			indexParam++;
 		}
@@ -395,7 +188,6 @@ public class FiQuery {
 
 	public void activateFiSqlFieldIfExists(String txFieldName) {
 		if (getMapParams() != null && getMapParams().containsKey(txFieldName)) {
-//			fsmActivateOptParamForProp(txQueryProperty(), txFieldName);
 			activateOptParam(txFieldName);
 		}
 	}
@@ -406,12 +198,10 @@ public class FiQuery {
 
 			if (value instanceof String) {
 				if (!FiString.isEmpty((String) value)) {
-//					fsmActivateOptParamForProp(txQueryProperty(), txFieldName);
 					activateOptParam(txFieldName);
 				}
 			} else { // string tipinden dışında olanlar
 				if (value != null) {
-//					fsmActivateOptParamForProp(txQueryProperty(), txFieldName);
 					activateOptParam(txFieldName);
 				}
 			}
@@ -421,7 +211,8 @@ public class FiQuery {
 	/**
 	 * FiMapde olan parametreleri aktif eder
 	 * <p>
-	 * Sorguda yoruma alınmış satır aynı şekilde kalır. DeAktivite yapılmaz.
+	 * Sorguda yoruma alınmamış(!) satır aynı şekilde kalır. DeAktivite yapılmaz.
+	 *
 	 */
 	public void activateParamsByMapParams() {
 		activateParamsMain(false);
@@ -438,60 +229,75 @@ public class FiQuery {
 	 * <p>
 	 * Deaktif edilecek parametrelerde FiKeyBean'de bulunmalı
 	 * <p>
-	 * Dolu olma Şartları : String boş string degilse
-	 * <p>
-	 * Collection larda size > 0 olmalı
-	 * <p>
-	 * Diger türler için null olmamalı
+	 * Dolu olma Şartları : String boş string degilse, Collection larda size > 0 olmalı, Diger türler için null olmamalı
+	 *
 	 */
 	public void activateParamsMain(Boolean boActivateOnlyFullParams) {
 		if (getMapParams() != null) {
-			List<String> deActivatedParamList = new ArrayList<>();
-
-			getMapParams().forEach((key, value) -> {
-
-				if (FiBoolean.isTrue(boActivateOnlyFullParams)) {
-					// Dolu olanları aktif edecek, boş olanları deaktif edecek
-					if (value instanceof String) {
-						if (!FiString.isEmpty((String) value)) {
-							String newQuery = fsmActivateOptParamV1Main(getTxQuery(), key);
-							setTxQuery(newQuery);
-						} else {
-							String newQuery = fsmDeActivateOptParamMain(getTxQuery(), key);
-							setTxQuery(newQuery);
-							deActivatedParamList.add(key);
-						}
-					} else if (value instanceof Collection) {
-						if (!FiCollection.isEmpty((Collection) value)) {
-							String newQuery = fsmActivateOptParamV1Main(getTxQuery(), key);
-							setTxQuery(newQuery);
-						} else {
-							String newQuery = fsmDeActivateOptParamMain(getTxQuery(), key);
-							setTxQuery(newQuery);
-							deActivatedParamList.add(key);
-						}
-					} else { // string ve collection tipinden dışında olanlar, null degilse aktif edilir
-						if (value != null) {
-							String newQuery = fsmActivateOptParamV1Main(getTxQuery(), key);
-							setTxQuery(newQuery);
-						} else {
-							String newQuery = fsmDeActivateOptParamMain(getTxQuery(), key);
-							setTxQuery(newQuery);
-							deActivatedParamList.add(key);
-						}
-					}
-				} else { // boActivateOnlyFullParams false veya null ise, tüm parametreleri aktif eder
-					String newQuery = fsmActivateOptParamV1Main(getTxQuery(), key);
-					setTxQuery(newQuery);
-				}
-			});
-
-			for (String deActivatedParam : deActivatedParamList) {
-				getMapParams().remove(deActivatedParam);
-			}
+			setTxQuery(FiQueryTools.activateParamsMain(getTxQuery(), getMapParams(), boActivateOnlyFullParams));
 		}
 	}
 
+//	public void activateParamsMainOld(Boolean boActivateOnlyFullParams) {
+//		if (getMapParams() != null) {
+//
+//			List<String> listParamsWillDeActivate = new ArrayList<>();
+//
+//			getMapParams().forEach((key, value) -> {
+//
+//				if (FiBoolean.isTrue(boActivateOnlyFullParams)) {
+//
+//					// Dolu olanları aktif edecek, boş olanları deaktif edecek
+//					Boolean boTest = FiQueryTools.checkParamsEmpty(value);
+//
+//					if (FiBoolean.isFalse(boTest)) {
+//						String newQuery = FiQueryTools.activateOptParamMain(getTxQuery(), key);
+//						setTxQuery(newQuery);
+//					} else {
+//						String newQuery = FiQueryTools.deActivateOptParamMain(getTxQuery(), key);
+//						setTxQuery(newQuery);
+//						listParamsWillDeActivate.add(key);
+//					}
+//
+////					if (value instanceof String) {
+////						if (!FiString.isEmpty((String) value)) {
+////							String newQuery = FiQueryTools.activateOptParamMain(getTxQuery(), key);
+////							setTxQuery(newQuery);
+////						} else {
+////							String newQuery = FiQueryTools.deActivateOptParamMain(getTxQuery(), key);
+////							setTxQuery(newQuery);
+////							listParamsWillDeActivate.add(key);
+////						}
+////					} else if (value instanceof Collection) {
+////						if (!FiCollection.isEmpty((Collection) value)) {
+////							String newQuery = FiQueryTools.activateOptParamMain(getTxQuery(), key);
+////							setTxQuery(newQuery);
+////						} else {
+////							String newQuery = FiQueryTools.deActivateOptParamMain(getTxQuery(), key);
+////							setTxQuery(newQuery);
+////							listParamsWillDeActivate.add(key);
+////						}
+////					} else { // string ve collection tipinden dışında olanlar, null degilse aktif edilir
+////						if (value != null) {
+////							String newQuery = FiQueryTools.deActivateOptParamMain(getTxQuery(), key);
+////							setTxQuery(newQuery);
+////						} else {
+////							String newQuery = FiQueryTools.deActivateOptParamMain(getTxQuery(), key);
+////							setTxQuery(newQuery);
+////							listParamsWillDeActivate.add(key);
+////						}
+////					}
+//				} else { // boActivateOnlyFullParams false veya null ise, tüm parametreleri aktif eder
+//					String newQuery = FiQueryTools.activateOptParamMain(getTxQuery(), key);
+//					setTxQuery(newQuery);
+//				}
+//			});
+//
+//			for (String deActivatedParam : listParamsWillDeActivate) {
+//				getMapParams().remove(deActivatedParam);
+//			}
+//		}
+//	}
 
 	/**
 	 * FiMapParam'da null olmayan parametreleri aktive eder, null olanları deAktif eder.
@@ -507,10 +313,10 @@ public class FiQuery {
 			getMapParams().forEach((key, value) -> {
 				// Null olanlar deaktif olacak
 				if (value != null) { // null degilse aktif edilir.
-					String newQuery = fsmActivateOptParamV1Main(getTxQuery(), key);
+					String newQuery = FiQueryTools.activateOptParamMain(getTxQuery(), key);
 					setTxQuery(newQuery);
 				} else { // param null ise,deaktif edilir
-					String newQuery = fsmDeActivateOptParamMain(getTxQuery(), key);
+					String newQuery = FiQueryTools.deActivateOptParamMain(getTxQuery(), key);
 					setTxQuery(newQuery);
 					listParamsWillDeactivate.add(key);
 				}
@@ -601,54 +407,11 @@ public class FiQuery {
 
 
 	private Set<String> getParamOptionalsFromQuery() {
-		return fsmFindParamOptionals(getTxQuery());
+		return FiQueryTools.findParamsOptional(getTxQuery());
 	}
 
 	private Set<String> getParamsSqlAt() {
-		return findParams(getTxQuery());
-	}
-
-	public static Set<String> fsmFindParamOptionals(String sql) {
-		// regexr: Sql Parametre List rg2011201511
-		String regEx = "--!(\\w*).*\\n";
-		return FiRegExp.matchGroupOneToSet(regEx, sql);
-	}
-
-	public static Set<String> findParams(String sql) {
-		String regEx = "@(\\w*)";
-		return FiRegExp.matchGroupOneToSet(regEx, sql);
-	}
-
-	/**
-	 * Optional Param Syntax : --!paramName
-	 * <p>
-	 * opsiyonel sql parametrelerin , parametre işaretini(!) kaldırır ve aktif eder.
-	 *
-	 * @param sql
-	 * @param param
-	 * @return
-	 */
-	public static String fsmActivateOptParamV1Main(String sql, String param) {
-
-		//final String regex = String.format("\\s*.*--!(%s)\\s*(.*)", param); // regex bulunan --- çıkarıldı // 4-11-19
-		//final String regex = String.format("--!(%s)(\\n|\\s.*\\n)(.*)", param);  // 16-03-2020 ve öncesi
-		//final String regex = String.format("--!(%s).*\\s*-*(.*)", param);// 200317_1741 sql param altındaki ifade yorum satırı olursa, yorum satırını kaldırır.
-		final String regex240320 = "--!(%s)\\b.*\\s*-*(.*)";
-		final String regex = String.format(regex240320, param);
-
-		final String subst = "--$1 activated \\\n$2"; // 17-03-2020
-
-		String sqlYeni = sql.replaceAll(regex, subst);
-
-		return sqlYeni;
-	}
-
-	public static Boolean checkOptParamExist(String sql, String param) {
-
-		final String regex240320 = "--!(%s)\\b.*\\s*-*(.*)";
-		final String regex = String.format(regex240320, param);
-
-		return FiRegExp.checkPatternExist(sql, regex);
+		return FiQueryTools.findParams(getTxQuery());
 	}
 
 	public List<FiField> getQueryFieldList() {
@@ -721,9 +484,9 @@ public class FiQuery {
 		//@ multi paramlar , yeni sablon parametresi şeklinde mapParamsNew Olarak oluşturulur.
 		Map<String, Object> mapParamsNew = new HashMap<>();
 
-		Integer index = getMultiParamStartIndex();
+		Integer index = FiQueryTools.getMultiParamStartIndex();
 		for (Object paramValue : listData) {
-			String paramNameTemplate = genTemplateMultiParam(paramName, index);
+			String paramNameTemplate = FiQueryTools.makeMultiParamTemplate(paramName, index);
 			mapParamsNew.put(paramNameTemplate, paramValue);
 			index++;
 		}
@@ -734,10 +497,6 @@ public class FiQuery {
 
 		//@ sql sorgusu multi parama çevrilir
 		convertSqlParamToMultiParam(paramName, listData.size());
-	}
-
-	private static Integer getMultiParamStartIndex() {
-		return 0;
 	}
 
 	public void addParam(Object key, Object value) {
@@ -772,7 +531,7 @@ public class FiQuery {
 	 * @return
 	 */
 	public void deActivateOptionalParams() {
-		setTxQuery(deActivateAllOptParams(getTxQuery()));
+		setTxQuery(FiQueryTools.deActivateAllOptParams(getTxQuery()));
 	}
 
 	public void logQuery() {

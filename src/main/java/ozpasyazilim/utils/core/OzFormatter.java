@@ -1,7 +1,7 @@
 package ozpasyazilim.utils.core;
 
 import javafx.beans.property.StringProperty;
-import ozpasyazilim.utils.fidborm.FiQuery;
+import ozpasyazilim.utils.fidborm.FiQueryTools;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -40,7 +40,7 @@ public class OzFormatter {
 
 	public static String fimSqlAtTire(String sqlQuery) {
 		if (sqlQuery == null) return null;
-		sqlQuery = FiQuery.fhrFixSqlProblems(sqlQuery);
+		sqlQuery = FiQueryTools.fixSqlProblems(sqlQuery);
 		sqlQuery = sqlQuery.replaceAll("@_", ":");
 		return sqlQuery;
 	}
@@ -59,9 +59,9 @@ public class OzFormatter {
 	 * <br>AND ch.cari_sektor_kodu IN (@cari_sektor_kodu)
 	 */
 	public static String fimSqlQueryWithDeActType1(String sqlQuery) {
-		sqlQuery = FiQuery.deActivateAllOptParams(sqlQuery);
-		sqlQuery = FiQuery.fhrFixSqlProblems(sqlQuery);
-		return FiQuery.fhrConvertSqlParamToJdbiParamMain(sqlQuery);
+		sqlQuery = FiQueryTools.deActivateAllOptParams(sqlQuery);
+		sqlQuery = FiQueryTools.fixSqlProblems(sqlQuery);
+		return FiQueryTools.convertSqlParamToJdbiParamMain(sqlQuery);
 	}
 
 //	/**
@@ -101,7 +101,7 @@ public class OzFormatter {
 	 * @return
 	 */
 	public static String fhrFixAndDeActivateOptParams(String sql) {
-		return FiQuery.fhrFixSqlProblems(FiQuery.deActivateAllOptParams(sql));
+		return FiQueryTools.fixSqlProblems(FiQueryTools.deActivateAllOptParams(sql));
 	}
 
 	public static void main(String[] args) {
@@ -284,7 +284,7 @@ public class OzFormatter {
 	 */
 	private void fhrConvertSqlParamToListJdbiParam() {
 		// [Ii][Nn].* başına eklenebilir
-		this.value = FiQuery.fhrConvertSqlParamToListJdbiParamMain(this.value); //value.replaceAll("\\(.*@(.*)\\)", "(<$1>)");
+		this.value = FiQueryTools.convertSqlParamToListJdbiParamMain(this.value); //value.replaceAll("\\(.*@(.*)\\)", "(<$1>)");
 	}
 
 	public String sqlListAt() {
@@ -296,7 +296,7 @@ public class OzFormatter {
 	}
 
 	private void fhrFixSqlProblems() {
-		this.value = FiQuery.fhrFixSqlProblems(this.value); //str.replaceAll("(--.*)(@)", "$1#");
+		this.value = FiQueryTools.fixSqlProblems(this.value); //str.replaceAll("(--.*)(@)", "$1#");
 	}
 
 	public String getValue() {
@@ -350,7 +350,7 @@ public class OzFormatter {
 			this.value = this.value.replaceAll("--!" + key, "");
 		}
 
-		this.value = FiQuery.fhrFixSqlProblems(value);   //value.replaceAll("(--.*)(@)", "$1#");
+		this.value = FiQueryTools.fixSqlProblems(value);   //value.replaceAll("(--.*)(@)", "$1#");
 		return this;
 	}
 
@@ -391,22 +391,22 @@ public class OzFormatter {
 	}
 
 	public OzFormatter buildDeActivateAllOptParams() {
-		this.value = FiQuery.deActivateAllOptParams(value);
+		this.value = FiQueryTools.deActivateAllOptParams(value);
 		return this;
 	}
 
 	public OzFormatter buildDeActivateOptionalParam(String param) {
-		this.value = FiQuery.fsmDeActivateOptParamMain(value, param);
+		this.value = FiQueryTools.deActivateOptParamMain(value, param);
 		return this;
 	}
 
 	public OzFormatter buildActivateOptionalParamV1(String param) {
-		this.value = FiQuery.activateOptParamMain(this.value, param);
+		this.value = FiQueryTools.activateOptParamMain(this.value, param);
 		return this;
 	}
 
 	public OzFormatter fhrConvertSqlParamToComment(String key) {
-		String newSql = FiQuery.fhrConvertSqlParamToCommentMain(key, value);
+		String newSql = FiQueryTools.convertSqlParamToCommentMain(key, value);
 		if (newSql != null) this.value = newSql;
 		return this;
 	}
