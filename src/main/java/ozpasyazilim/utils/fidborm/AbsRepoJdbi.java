@@ -1560,11 +1560,11 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 			//Loghelperr.getInstance(getClass()).debug("Row Count Update:"+rowCountUpdate);
 			//fiDbResult.setLnSuccessWithUpBoResult(1, rowCountUpdate);
 			fdr.setBoResultAndRowsAff(true, rowCountUpdate);
-			fdr.setLnResult(1);
+			//fdr.setLnResult(1);
 		} catch (Exception ex) {
 			Loghelper.debugException(getClass(), ex);
 			fdr.setBoResult(false, ex);
-			fdr.setLnResult(0);
+			//fdr.setLnResult(0);
 		}
 		return fdr;
 	}

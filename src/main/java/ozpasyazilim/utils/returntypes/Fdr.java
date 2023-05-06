@@ -38,6 +38,10 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 	 */
 	private Boolean boResult;
 
+	/**
+	 * Çoklu işlemlerde false sonuç olduğunu gösterir (or birleştirmeleri için)
+	 */
+	private Boolean boFalseResultExist;
 
 	private EntClazz value;
 	private String message;
@@ -52,8 +56,20 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 
 	// fdr id
 	private String txId;
+
+	/**
+	 * listException olduğu için exception property çıkarılabilir
+	 */
 	private Exception exception;
-	// Op : Operation
+
+	/**
+	 * Tekil ve Çoklu işlemlerde exception burada biriktirilir.
+	 */
+	List<Exception> listException;
+
+	/**
+	 * Op : Operation
+	 */
 	private Integer lnSuccessOpCount;
 	private Integer lnFailureOpCount;
 	private Integer lnErrorCode;
@@ -64,12 +80,12 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 	Integer rowsAffectedExtraWorks;
 	Integer rowsAffectedExtraByEntity;
 
-	@Deprecated
-	/**
-	 * Kompleksleştirmemek için kaldırıldı (lnSuccessOpCount veya lnFailureOp ile anlaşılabilir kısmi başarılı )
-	 * 0 Başarısız, 1 Başarılı, 2 Kısmi Başarılı
-	 */
-	private Integer lnResult;
+//	@Deprecated
+//	/**
+//	 * Kompleksleştirmemek için kaldırıldı (lnSuccessOpCount veya lnFailureOp ile anlaşılabilir kısmi başarılı )
+//	 * 0 Başarısız, 1 Başarılı, 2 Kısmi Başarılı
+//	 */
+//	private Integer lnResult;
 
 	/**
 	 * Operasyon sonucu nedir , true işlem sonucu pozitif, false işlem sonucu negatif olur.
@@ -89,7 +105,7 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 	// Combined Operasyon ise alt sonuçlar burada saklanabilir
 	List<Fdr> listFdr;
 
-	List<Exception> listException;
+
 
 	List<String> messageList;
 
@@ -240,16 +256,16 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 		this.boResult = boResult;
 	}
 
-	public void setBoResultAndLnResult(Boolean boResult) {
-		this.boResult = boResult;
-		if (boResult != null) {
-			if (boResult) {
-				setLnResult(1); // true
-			} else {
-				setLnResult(0); // false
-			}
-		}
-	}
+//	public void setBoResultAndLnResult(Boolean boResult) {
+//		this.boResult = boResult;
+//		if (boResult != null) {
+//			if (boResult) {
+//				setLnResult(1); // true
+//			} else {
+//				setLnResult(0); // false
+//			}
+//		}
+//	}
 
 	// Tek tek kullanılmalı
 	@Deprecated
@@ -304,14 +320,6 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 
 	public String getMessageNotNull() {
 		if (message == null) return "";
-		return message;
-	}
-
-	public String getAllResMessPlusMessage() {
-//		String lastMess = getResMessage().toString();
-//		if (!FiString.isEmpty(message)) {
-//			lastMess += message;
-//		}
 		return message;
 	}
 
@@ -383,7 +391,6 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 		setLnUpdatedRows(FiNumber.orZero(getLnUpdatedRows()) + FiNumber.orZero(lnUpdatedRows));
 	}
 
-
 	public Exception getException() {
 		return exception;
 	}
@@ -440,14 +447,14 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 			setLnFailureOpCount(getLnFailureOpCount() + 1);
 			setException(fdrSub.getException()); // exception listesine eklenebilir - birden fazla olma ihtimali var.
 			getListExceptionInit().add(fdrSub.getException());
-			calcLnResult(0);
+			//calcLnResult(0);
 
 		}
 
 		if (FiBoolean.isTrue(fdrSub.getBoResult())) {
 			setLnSuccessOpCount(getLnSuccessOpCount() + 1);
 			if (getBoResult() == null) setBoResult(true);
-			calcLnResult(1);
+			//calcLnResult(1);
 		}
 
 		// null sonuçlar için combine işlemi
@@ -471,19 +478,19 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 		fdrSub.setBoLockAddLog(true);
 	}
 
-	/**
-	 * lnResult iptal edilecek , boResult kullanilacak
-	 *
-	 * @param lnResultNew
-	 */
-	@Deprecated
-	private void calcLnResult(int lnResultNew) {
-		if (getLnResult() == null) {
-			setLnResult(lnResultNew);
-		} else if (getLnResult() != lnResultNew) { // Başarısız durumda olan durumu kısmı başarılıya çeker
-			setLnResult(2);
-		} // lnResultNew aynı ise değişiklik yapmaz. Farklı ise partial success yapar
-	}
+//	/**
+//	 * lnResult iptal edilecek , boResult kullanilacak
+//	 *
+//	 * @param lnResultNew
+//	 */
+//	@Deprecated
+//	private void calcLnResult(int lnResultNew) {
+//		if (getLnResult() == null) {
+//			setLnResult(lnResultNew);
+//		} else if (getLnResult() != lnResultNew) { // Başarısız durumda olan durumu kısmı başarılıya çeker
+//			setLnResult(2);
+//		} // lnResultNew aynı ise değişiklik yapmaz. Farklı ise partial success yapar
+//	}
 
 	public void appendMessageLn(String message) {
 		if (message == null) return;
@@ -495,33 +502,34 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 	 * <p>
 	 * Or baglacı ile baglar
 	 *
-	 * @param fdrAlt
+	 * @param fdrAppend
 	 */
-	public void combineOr(Fdr fdrAlt) {
+	public void combineOr(Fdr fdrAppend) {
 
-		if (FiBoolean.isFalse(fdrAlt.getBoResult())) {
+		// false sonuç gelirse, boResult null ise false çevirir, yoksa değiştirmez
+		if (FiBoolean.isFalse(fdrAppend.getBoResult())) {
 			appendLnFailure(1);
-			setException(fdrAlt.getException());
+			setException(fdrAppend.getException());
+			getListExceptionInit().add(fdrAppend.getException());
 			if (getBoResult() == null) setBoResult(false);
-
-			calcLnResult(0);
-
+			//calcLnResult(0);
+			setBoFalseResultExist(true);
 			//getResMessage().append(fiDbResult.getResMessage().toString());
 		}
 
-		if (FiBoolean.isTrue(fdrAlt.getBoResult())) {
+		if (FiBoolean.isTrue(fdrAppend.getBoResult())) {
 			setBoResult(true);
 			appendLnSuccess(1);
 			// Başarısız durumda olan durumu kısmı başarılıya çeker
-			calcLnResult(1);
+			//calcLnResult(1);
 			//getResMessage().append(fiDbResult.getResMessage().toString());
 		}
 
-		appendRowsAffected(fdrAlt.getRowsAffectedOrEmpty());
+		appendRowsAffected(fdrAppend.getRowsAffectedOrEmpty());
 		// Tüm işlemlerde mesaj birleştirilir.
-		appendMessageLn(fdrAlt.getMessage());
-		if (!FiCollection.isEmpty(fdrAlt.getLogList())) getLogListInit().addAll(fdrAlt.getLogList());
-		fdrAlt.setBoLockAddLog(true);
+		appendMessageLn(fdrAppend.getMessage());
+		if (!FiCollection.isEmpty(fdrAppend.getLogList())) getLogListInit().addAll(fdrAppend.getLogList());
+		fdrAppend.setBoLockAddLog(true);
 	}
 
 	public void combineListData(Fdr fdr2) {
@@ -1060,31 +1068,31 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 		if (getBoResult() == null) setBoResult(boResult);
 	}
 
-	@Deprecated
-	public Integer getLnResult() {
-		return lnResult;
-	}
+//	@Deprecated
+//	public Integer getLnResult() {
+//		return lnResult;
+//	}
 
-	@Deprecated
-	public Integer getLnResultNtn() {
-		if (getLnResult() == null) return -1;
-		return lnResult;
-	}
+//	@Deprecated
+//	public Integer getLnResultNtn() {
+//		if (getLnResult() == null) return -1;
+//		return lnResult;
+//	}
 
-	@Deprecated
-	public void setLnResult(Integer lnResult) {
-		this.lnResult = lnResult;
-	}
+//	@Deprecated
+//	public void setLnResult(Integer lnResult) {
+//		this.lnResult = lnResult;
+//	}
 
-	public boolean isTrueLnResult() {
-		if (getLnResult() == 1) return true;
-		return false;
-	}
+//	public boolean isTrueLnResult() {
+//		if (getLnResult() == 1) return true;
+//		return false;
+//	}
 
-	public boolean isTrueOrPartialTrueLnResult() {
-		if (getLnResult() == 1 || getLnResult() == 2) return true;
-		return false;
-	}
+//	public boolean isTrueOrPartialTrueLnResult() {
+//		if (getLnResult() == 1 || getLnResult() == 2) return true;
+//		return false;
+//	}
 
 	public Boolean getBoPartialSucceed() {
 		return boPartialSucceed;
@@ -1094,4 +1102,11 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 		this.boPartialSucceed = boPartialSucceed;
 	}
 
+	public Boolean getBoFalseResultExist() {
+		return boFalseResultExist;
+	}
+
+	public void setBoFalseResultExist(Boolean boFalseResultExist) {
+		this.boFalseResultExist = boFalseResultExist;
+	}
 }
