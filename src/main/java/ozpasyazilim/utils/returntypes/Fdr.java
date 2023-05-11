@@ -42,7 +42,6 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 	 * Çoklu işlemlerde false sonuç olduğunu gösterir (or birleştirmeleri için)
 	 */
 	private Boolean boFalseResultExist;
-
 	private EntClazz value;
 	private String message;
 	private Integer rowsAffected;
@@ -50,12 +49,18 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 
 	// Advanced Configuration
 	private String txQueryType;
+	// Detaylı log tutmak için eklenmiştir
 	private Integer lnInsertedRows;
 	private Integer lnUpdatedRows;
 	private Integer lnDeletedRows;
 
-	// fdr id
+	// fdr id (başlık gibi ya da çoklu olduğu birbirinde ayırıcı bir id verilebilir)
 	private String txId;
+
+	/**
+	 * Fdr için verilecek özel bir isim
+	 */
+	String txName;
 
 	/**
 	 * listException olduğu için exception property çıkarılabilir
@@ -68,24 +73,22 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 	List<Exception> listException;
 
 	/**
+	 * Başarılı operasyon (sorgu vs..) toplamı
+	 * <p>
 	 * Op : Operation
 	 */
 	private Integer lnSuccessOpCount;
 	private Integer lnFailureOpCount;
+
+	/**
+	 * Fdr işlemi başarısız olduğunda sayısal bir hata kodu verilmek istenirse
+	 */
 	private Integer lnErrorCode;
 
+	/**
+	 * ???
+	 */
 	private Integer lnResponseCode;
-
-	// ???
-	Integer rowsAffectedExtraWorks;
-	Integer rowsAffectedExtraByEntity;
-
-//	@Deprecated
-//	/**
-//	 * Kompleksleştirmemek için kaldırıldı (lnSuccessOpCount veya lnFailureOp ile anlaşılabilir kısmi başarılı )
-//	 * 0 Başarısız, 1 Başarılı, 2 Kısmi Başarılı
-//	 */
-//	private Integer lnResult;
 
 	/**
 	 * Operasyon sonucu nedir , true işlem sonucu pozitif, false işlem sonucu negatif olur.
@@ -99,31 +102,32 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 	// Sorgu,işlem çalıştırılmadıysa false yapılır
 	Boolean boQueryExecuted;
 
-	// boResult birleştirilmiş operasyon mu
-	Boolean boCombinedOperation;
-
-	// Combined Operasyon ise alt sonuçlar burada saklanabilir
-	List<Fdr> listFdr;
-
-
-
-	List<String> messageList;
-
-	List<EntLog> logList;
-
+	/**
+	 * Birden fazla fdr birleştirilmiş ( combinedAnd veya or ile) mi ?
+	 */
 	Boolean boMultiFdr;
 
 	/**
-	 * Fdr için verilecek özel bir isim
+	 * Birden fazla fdr birleştirilmiş ( combinedAnd veya or ile) fdr ler burada tutulabilir
 	 */
-	String txName;
+	List<Fdr> listFdr;
 
 	/**
-	 * True olunca Log eklemeyi engeller. Birleştirmeden sonra yapılır, tekrar eski Fdr ye log eklenirse , ana Fdr de o loglar görünmez.
+	 *
+	 */
+	List<String> messageList;
+
+	/**
+	 *
+	 */
+	List<EntLog> logList;
+
+	/**
+	 * True olunca Log eklemeyi engeller. Birleştirmeden sonra yapılır, tekrar eski Fdr ye log eklenirse , ana Fdr de o loglar görünmez. Loglamayı durdurmaz fakat , loglarda hatalı log eklendiğini göstermek için kullanıldı.
 	 */
 	private Boolean boLockAddLog;
 
-	private Boolean boPartialSucceed;
+	// --------------- Methods
 
 	public Fdr() {
 	}
@@ -195,8 +199,8 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 		fdrNew.setRowsAffected(fdrOld.getRowsAffectedWithInit());
 		fdrNew.setException(fdrOld.getException());
 //		fdrNew.setBoPartialSuccces(fdrOld.getBoPartialSuccces());
-		fdrNew.setRowsAffectedExtraWorks(fdrOld.getRowsAffectedExtraWorks());
-		fdrNew.setRowsAffectedExtraByEntity(fdrOld.getRowsAffectedExtraByEntity());
+//		fdrNew.setRowsAffectedExtraWorks(fdrOld.getRowsAffectedExtraWorks());
+//		fdrNew.setRowsAffectedExtraByEntity(fdrOld.getRowsAffectedExtraByEntity());
 		fdrNew.setLnSuccessOpCount(fdrOld.getLnSuccessOpCount());
 		fdrNew.setLnFailureOpCount(fdrOld.getLnFailureOpCount());
 	}
@@ -300,7 +304,7 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 	}
 
 	public String getValueAsString() {
-		if(value==null) return null;
+		if (value == null) return null;
 		return (String) value;
 	}
 
@@ -369,12 +373,12 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 		}
 	}
 
-	public void appendLnSuccess(Integer lnSuccessCount) {
+	public void appendLnTrueResult(Integer lnSuccessCount) {
 		if (lnSuccessCount == null) return;
 		setLnSuccessOpCount(getLnSuccessOpCount() + lnSuccessCount);
 	}
 
-	public void appendLnFailure(Integer lnFailureCount) {
+	public void appendLnFalseResult(Integer lnFailureCount) {
 		if (lnFailureCount == null) return;
 		setLnFailureOpCount(getLnFailureOpCount() + lnFailureCount);
 	}
@@ -478,29 +482,15 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 		fdrSub.setBoLockAddLog(true);
 	}
 
-//	/**
-//	 * lnResult iptal edilecek , boResult kullanilacak
-//	 *
-//	 * @param lnResultNew
-//	 */
-//	@Deprecated
-//	private void calcLnResult(int lnResultNew) {
-//		if (getLnResult() == null) {
-//			setLnResult(lnResultNew);
-//		} else if (getLnResult() != lnResultNew) { // Başarısız durumda olan durumu kısmı başarılıya çeker
-//			setLnResult(2);
-//		} // lnResultNew aynı ise değişiklik yapmaz. Farklı ise partial success yapar
-//	}
-
 	public void appendMessageLn(String message) {
 		if (message == null) return;
 		setMessage(FiString.orEmpty(getMessage()) + FiString.addNewLineToBeginIfNotEmpty(message));
 	}
 
 	/**
-	 * İşlemlerden bir tane true varsa, genel sonuç true olur.
+	 * Eklenecek fdr'yi Or baglacı ile baglar
 	 * <p>
-	 * Or baglacı ile baglar
+	 * İşlemlerden bir tanesi true ise, genel sonuç true olur.
 	 *
 	 * @param fdrAppend
 	 */
@@ -508,20 +498,17 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 
 		// false sonuç gelirse, boResult null ise false çevirir, yoksa değiştirmez
 		if (FiBoolean.isFalse(fdrAppend.getBoResult())) {
-			appendLnFailure(1);
+			appendLnFalseResult(1);
 			setException(fdrAppend.getException());
 			getListExceptionInit().add(fdrAppend.getException());
 			if (getBoResult() == null) setBoResult(false);
-			//calcLnResult(0);
 			setBoFalseResultExist(true);
 			//getResMessage().append(fiDbResult.getResMessage().toString());
 		}
 
 		if (FiBoolean.isTrue(fdrAppend.getBoResult())) {
 			setBoResult(true);
-			appendLnSuccess(1);
-			// Başarısız durumda olan durumu kısmı başarılıya çeker
-			//calcLnResult(1);
+			appendLnTrueResult(1);
 			//getResMessage().append(fiDbResult.getResMessage().toString());
 		}
 
@@ -638,22 +625,6 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 		setException(exError);
 	}
 
-	public Integer getRowsAffectedExtraWorks() {
-		return rowsAffectedExtraWorks;
-	}
-
-	public void setRowsAffectedExtraWorks(Integer rowsAffectedExtraWorks) {
-		this.rowsAffectedExtraWorks = rowsAffectedExtraWorks;
-	}
-
-	public Integer getRowsAffectedExtraByEntity() {
-		return rowsAffectedExtraByEntity;
-	}
-
-	public void setRowsAffectedExtraByEntity(Integer rowsAffectedExtraByEntity) {
-		this.rowsAffectedExtraByEntity = rowsAffectedExtraByEntity;
-	}
-
 	public void setBoResultAndValue(Boolean boResult, EntClazz resValue, Integer rowsAffected) {
 		setBoResult(boResult);
 		setRowsAffected(rowsAffected);
@@ -708,14 +679,6 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 
 	public void setBoOprResult(Boolean boOprResult) {
 		this.boOprResult = boOprResult;
-	}
-
-	public Boolean getBoCombinedOperation() {
-		return boCombinedOperation;
-	}
-
-	public void setBoCombinedOperation(Boolean boCombinedOperation) {
-		this.boCombinedOperation = boCombinedOperation;
 	}
 
 	public void setResValue(EntClazz value) {
@@ -1094,19 +1057,23 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 //		return false;
 //	}
 
-	public Boolean getBoPartialSucceed() {
-		return boPartialSucceed;
-	}
-
-	public void setBoPartialSucceed(Boolean boPartialSucceed) {
-		this.boPartialSucceed = boPartialSucceed;
-	}
-
 	public Boolean getBoFalseResultExist() {
 		return boFalseResultExist;
 	}
 
 	public void setBoFalseResultExist(Boolean boFalseResultExist) {
 		this.boFalseResultExist = boFalseResultExist;
+	}
+
+	public String calcTxResultStatus() {
+		if(getBoResult()==null) return "Sonuçsuz (!!!)";
+		if(getBoResult()) {
+			if(FiBoolean.isTrue(getBoFalseResultExist())){
+				return "Kısmı Başarılı";
+			}
+			return "Başarılı";
+		}else{
+			return "Başarısız";
+		}
 	}
 }

@@ -910,7 +910,6 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		try {
 			getJdbi().useHandle(handle -> {
-
 				for (String query : queryList) {
 					if (FiString.isEmpty(query.trim())) continue;
 					Integer rowAffected = handle.createUpdate(query).execute();

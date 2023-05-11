@@ -1,9 +1,10 @@
 package ozpasyazilim.utils.datatypes;
 
-import ozpasyazilim.utils.annotations.FiExpiremental;
-
-// Genel Bilgi Saklamak Amacıyla kullanılabilir mi ???
-@FiExpiremental
+/**
+ * txKey, txValue propertylerine sahip (keyed/named object her property'sine karşılık gelir (key ve değer string)
+ * <p>
+ * txLabel,lnCode gibi ekstra özellikler eklenmiştir
+ */
 public class FiMeta {
 
 	/**
