@@ -305,7 +305,7 @@ public class FiQueryTools {
 		return spQuery.get();
 	}
 
-	public static String convertListParamToMultiParams(String txQuery,FiKeyBean mapParams,Boolean boKeepOldMParamInMapParams) {
+	public static String convertListParamToMultiParams(String txQuery,FiKeyBean mapParams,Boolean boKeepOldMultiParamInFkb) {
 
 		if (mapParams == null) return txQuery;
 
@@ -330,7 +330,7 @@ public class FiQueryTools {
 
 		for (String param : listMultiParamsName) {
 			Collection paramCollection = (Collection) mapParams.get(param);
-			String queryNew = convertSqlFromSingleParamToMultiParam(spQuery.get(), mapParams, param, paramCollection, boKeepOldMParamInMapParams);
+			String queryNew = convertSqlFromSingleParamToMultiParam(spQuery.get(), mapParams, param, paramCollection, boKeepOldMultiParamInFkb);
 			spQuery.set(queryNew);
 		}
 

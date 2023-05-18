@@ -42,6 +42,12 @@ public class FiMeta {
 		this.txLabel = txLabel;
 	}
 
+	public static FiMeta bui(String txKey) {
+		FiMeta fiMeta = new FiMeta();
+		fiMeta.setTxKey(txKey);
+		return fiMeta;
+	}
+
 	// Getter and Setter
 
 	public String getTxValue() {
