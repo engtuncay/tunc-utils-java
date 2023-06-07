@@ -394,7 +394,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 		return this;
 	}
 
-	public FxTableView2 addAllFiColsAutoForFiKeyBean(List<FiCol> listFiCol) {
+	public FxTableView2 addAllFiColsAutoAsFiKeyBean(List<FiCol> listFiCol) {
 		for (FiCol fiCol : listFiCol) {
 			addFiColAutoAsFiKeyBean(fiCol);
 		}

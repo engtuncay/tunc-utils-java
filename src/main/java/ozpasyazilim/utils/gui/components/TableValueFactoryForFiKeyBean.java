@@ -41,49 +41,54 @@ import ozpasyazilim.utils.datatypes.FiKeyBean;
 // * @see MapValueFactory
 // * @param <S> The type of the class contained within the TableView.items list.
 // * @param <T> The type of the class contained within the TableColumn cells.
-public class TableValueFactoryForFiKeyBean<S> implements Callback<CellDataFeatures<S,Object>, ObservableValue<Object>> {
+public class TableValueFactoryForFiKeyBean<S> implements Callback<CellDataFeatures<S, Object>, ObservableValue<Object>> {
 
-    private final String property;
+	private final String property;
 
 //    private Class<?> columnClass;
 //    private String previousProperty;
 //    private PropertyReference<T> propertyRef;
 
-    /**
-     * Creates a default PropertyValueFactory to extract the value from a given
-     * TableView row item reflectively, using the given property name.
-     *
-     * @param property The name of the property with which to attempt to
-     *      reflectively extract a corresponding value for in a given object.
-     */
-    public TableValueFactoryForFiKeyBean(@NamedArg("property") String property) {
-        this.property = property;
-    }
+	/**
+	 * Creates a default PropertyValueFactory to extract the value from a given
+	 * TableView row item reflectively, using the given property name.
+	 *
+	 * @param property The name of the property with which to attempt to
+	 *                 reflectively extract a corresponding value for in a given object.
+	 */
+	public TableValueFactoryForFiKeyBean(@NamedArg("property") String property) {
+		this.property = property;
+	}
 
-    /** {@inheritDoc} */
-    @Override public ObservableValue<Object> call(CellDataFeatures<S,Object> param) {
-        return getCellDataReflectively(param.getValue());
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public ObservableValue<Object> call(CellDataFeatures<S, Object> param) {
+		return getCellDataReflectively(param.getValue());
+	}
 
-    /**
-     * Returns the property name provided in the constructor.
-     */
-    public final String getProperty() { return property; }
+	/**
+	 * Returns the property name provided in the constructor.
+	 */
+	public final String getProperty() {
+		return property;
+	}
 
-    private ObservableValue<Object> getCellDataReflectively(S rowData) {
-        if (getProperty() == null || getProperty().isEmpty() || rowData == null) return null;
+	private ObservableValue<Object> getCellDataReflectively(S rowData) {
+		if (getProperty() == null || getProperty().isEmpty() || rowData == null) return null;
 
-        if(rowData instanceof FiKeyBean){
+		if (rowData instanceof FiKeyBean) {
 
-            FiKeyBean fiKeyBean = (FiKeyBean) rowData;
+			FiKeyBean fiKeyBean = (FiKeyBean) rowData;
 
-            if(fiKeyBean.containsKey(getProperty())){
-                Object value = fiKeyBean.get(getProperty());
-                return new ReadOnlyObjectWrapper<Object>(value);
-            }
-        }
+			if (fiKeyBean.containsKey(getProperty())) {
+				Object value = fiKeyBean.get(getProperty());
+				return new ReadOnlyObjectWrapper<Object>(value);
+			}
+		}
 
-        return null;
+		return null;
 
 //        } catch (IllegalStateException e) {
 //            // log the warning and move on
@@ -95,5 +100,5 @@ public class TableValueFactoryForFiKeyBean<S> implements Callback<CellDataFeatur
 //            }
 //        }
 
-    }
+	}
 }

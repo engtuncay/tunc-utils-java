@@ -59,15 +59,6 @@ public class FxDialogShow {
 
 	public static Fdr showPromptDialogYesNoFdr(String message, String title) {
 
-		//Platform.runLater(() -> {
-
-		// stage:pencere çerçevesi
-//		FxStage stage = new FxStage();
-//
-//		FxStackMigPane viewContainer = new FxStackMigPane();
-//
-//		FxScene scene = new FxScene(viewContainer.getRootPane());  //,width,height
-
 		FxMigPane migPane = new FxMigPane();
 		migPane.add(new Label(message), "span");
 
@@ -118,6 +109,8 @@ public class FxDialogShow {
 		stage.showAndWait();
 		return fdr;
 	}
+
+
 
 	public static Fdr showPromptDialogYesNoFdrNonModal(String message, String title) {
 

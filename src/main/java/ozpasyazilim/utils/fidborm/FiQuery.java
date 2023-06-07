@@ -412,6 +412,9 @@ public class FiQuery {
 		return "__";
 	}
 
+	public void logParams() {
+		Loghelper.get(getClass()).debug(FiConsole.textFiKeyBean(getMapParamsInit()));
+	}
 }
 
 
