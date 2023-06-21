@@ -1,10 +1,7 @@
 package ozpasyazilim.utils.ficodegen;
 
 import org.jdbi.v3.core.Jdbi;
-import ozpasyazilim.utils.core.FiException;
-import ozpasyazilim.utils.core.FiNumber;
-import ozpasyazilim.utils.core.FiString;
-import ozpasyazilim.utils.core.OzFormatter;
+import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.fidbanno.FiTable;
 import ozpasyazilim.utils.fidborm.FiEntity;
 import ozpasyazilim.utils.fidborm.FiField;
@@ -200,7 +197,7 @@ public class FiCodeHelper {
 	 * @param fieldPrefix
 	 * @return
 	 */
-	public static String codeFiTableColsMethodsFromHeaderAndFieldName(List<String> listHeaders, String methodName, List<String> listFields, String fieldPrefix) {
+	public static String codeFiColsMethodsFromHeaderAndFieldName(List<String> listHeaders, String methodName, List<String> listFields, String fieldPrefix) {
 
 		StringBuilder templateDetail = new StringBuilder();
 
@@ -236,6 +233,132 @@ public class FiCodeHelper {
 
 	}
 
+	/**
+	 *
+	 * FiCol dönen metodları oluşturur, genCols metodunu oluşturur.
+	 *
+	 *
+	 * @param listHeaders
+	 * @param listFields
+	 * @return
+	 */
+	public static String codeFiColsMethodsFromHeaderAndFieldNameForExcel(List<String> listHeaders, List<String> listFields) {
+
+		//String methodName
+    //, String fieldPrefix
+		//List<FiField> listFields = FiEntity.getListFieldsWoutStatic(entclazz, true);
+
+		StringBuilder txMethods = new StringBuilder();
+
+		StringBuilder txColListMethod = new StringBuilder();
+
+		//--* FiCol Metodları
+		for (int ind = 0; ind < listFields.size(); ind++) {
+			String fieldName = listFields.get(ind);
+			String label = listHeaders.get(ind);
+
+			String fieldGen = String.format("\npublic FiCol %s() {" +
+					"\n\t\tFiCol fiCol = new FiCol(\"%s\", \"%s\");", fieldName, fieldName, FiString.orEmpty(label));
+
+			fieldGen = fieldGen + String.format("\n\t\t//fiCol.buildColType(OzColType.%s);", "");
+			fieldGen = fieldGen + "\n\t\treturn fiCol;\n\t}\n";
+			txMethods.append(fieldGen);
+
+			txColListMethod.append(String.format("\tlistTableCols.add(FiTableColFactory.bui().%s());\n", fieldName));
+		}
+		//--end
+
+		//--* FiColList Metodu
+		String txListVarName = "listFiCols";
+
+		StringBuilder txFiColListDetail = new StringBuilder();
+
+		for (int ind = 0; ind < listFields.size(); ind++) {
+
+			String fieldName = listFields.get(ind);
+			//String fieldHeader = FiString.orEmpty(listHeaders.get(ind));
+
+			if (FiString.isEmptyTrim(fieldName)) {
+				continue;
+			}
+
+//			if (!FiString.isEmpty(fieldPrefix)) {
+//				fieldName = fieldPrefix + FiString.firstLetterUpperOnly(fieldName);
+//			}
+
+			txFiColListDetail.append(String.format("\t\t%s.add(FiColsMikro.%s());\n", txListVarName,  fieldName));
+
+		}
+
+		String txMetodFiColListTemplate = "\n\npublic List<FiCol> genCols(){\n" +
+				"\n" +
+				"\tList<FiCol> {2} = new ArrayList<>();\n" +
+				"\n" +
+				"{3}" +
+				"\t\n" +
+				"\treturn {2};\n" +
+				"\t\n" +
+				"\t}";// , "", txColListMethod.toString()
+
+		String fiColListDetail = FiStringNum.bui(txMetodFiColListTemplate).addParams(2, txListVarName)
+				.addParams(3, txFiColListDetail.toString()).tos();
+
+		txMethods.append("\n\n");
+		txMethods.append(fiColListDetail);
+
+		return txMethods.toString();
+
+	}
+
+	/**
+	 *
+	 * genCols metodunu oluşturur.
+	 *
+	 * FiColsMikro ile alanları doldurur.
+	 *
+	 *
+	 * @param listHeaders
+	 * @param listFields
+	 * @return
+	 */
+	public static String codeFiColListFromHeaderAndFieldNameByFiColsMikroWay(List<String> listHeaders, List<String> listFields) {
+
+		//--* FiColList Metodu
+		String txVarNameOfList = "listFiCols";
+
+		StringBuilder txFiColListDetail = new StringBuilder();
+
+		for (int ind = 0; ind < listFields.size(); ind++) {
+
+			String txFieldName = listFields.get(ind);
+			String txHeaderName = FiString.orEmpty(listHeaders.get(ind));
+
+			// excel başlık yoksa alınmadı
+			if (FiString.isEmptyTrim(txHeaderName)) {
+				continue;
+			}
+
+			//txFiColListDetail.append(String.format("\t\t%s.add(FiColsMikro.(),\"%s\");\n", txVarNameOfList, txHeaderName));
+			txFiColListDetail.append(String.format("\t// %s.add(FiColsMikro.().buiHeader(\"%s\")); // %s \n", txVarNameOfList, txHeaderName,txFieldName));
+			// listFiCols.add(FiColsMikro.cari_kod().buiHeader(""))
+		}
+
+		String txTemplate = "\n\npublic List<FiCol> genCols() {\n" +
+				"\n" +
+				"\tList<FiCol> {2} = new ArrayList<>();\n" +
+				"\n" +
+				"{3}" +
+				"\t\n" +
+				"\treturn {2};\n" +
+				"\n" +
+				"}";// , "", txColListMethod.toString()
+
+		String txFiColList = FiStringNum.bui(txTemplate).addParams(2, txVarNameOfList)
+				.addParams(3, txFiColListDetail.toString()).tos();
+
+		return txFiColList.toString();
+	}
+
 	public static String codeFiTableColsGeneraterMethodsByFiFields(Class entclazz) {
 
 		List<FiField> listFields = FiEntity.getListFieldsWoutStatic(entclazz, true);
@@ -250,15 +373,15 @@ public class FiCodeHelper {
 			String fieldName = field.getDbFieldName();
 
 			String fieldGen = String.format("\npublic FiCol %s() {" +
-					"\n\t\tFiCol fiCol = new FiCol(\"%s\", \"%s\");", fieldName, fieldName, FiString.orEmpty(field.getLabel()));
+					"\n\tFiCol fiCol = new FiCol(\"%s\", \"%s\");", fieldName, fieldName, FiString.orEmpty(field.getLabel()));
 
 			String simpleType = field.getClassNameSimple();
 
-			fieldGen = fieldGen + String.format("\n\t\tfiCol.buildColType(OzColType.%s);", simpleType);
+			fieldGen = fieldGen + String.format("\n\tfiCol.buildColType(OzColType.%s);", simpleType);
 
 			//field.getClassNameSimpleAsOzColType();
 
-			fieldGen = fieldGen + "\n\t\treturn fiCol;\n\t}\n";
+			fieldGen = fieldGen + "\n\treturn fiCol;\n\t}\n";
 
 			query.append(fieldGen);
 

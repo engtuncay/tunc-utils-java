@@ -2372,7 +2372,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 	 * @param fiMapParams
 	 * @return
 	 */
-	public Fdr<List<String>> jdSelectSingleCsvString(String sql, FiKeyBean fiMapParams) {
+	public Fdr<List<String>> jdSelectCsvStringAsList(String sql, FiKeyBean fiMapParams) {
 
 		Fdr<String> stringFdr = jdSelectSingleCustomEntityBindMap(sql, fiMapParams, String.class);
 

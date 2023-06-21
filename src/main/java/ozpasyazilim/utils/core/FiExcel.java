@@ -71,6 +71,10 @@ public class FiExcel {
 	}
 
 	public <E> List<E> readExcelFile(File excelfile, List<? extends IFiCol> listColumns, Class<E> entityclass) {
+		return readExcelFileMain(excelfile,listColumns,entityclass,null);
+	}
+
+	public <E> List<E> readExcelFileMain(File excelfile, List<? extends IFiCol> listColumns, Class<E> entityclass,String txSheetName) {
 
 		if (excelfile == null) {
 			Loghelper.get(getClass()).debug("Excel File Null");
@@ -80,10 +84,10 @@ public class FiExcel {
 		String extension = FilenameUtils.getExtension(excelfile.getName());
 
 		if (extension.toLowerCase().equals("xlsx"))
-			return readExcelXLSX(excelfile, listColumns, entityclass);
+			return readExcelXLSX(excelfile, listColumns, entityclass,txSheetName);
 
 		if (extension.toLowerCase().equals("xls"))
-			return readExcelXLS(excelfile, listColumns, entityclass);
+			return readExcelXlsV3(excelfile, listColumns, entityclass);
 
 		return null;
 	}
@@ -411,10 +415,23 @@ public class FiExcel {
 
 	}
 
-	public <E> List<E> readExcelXLSX(File fileExcelXlsx, List<? extends IFiCol> listColumns, Class<E> entityclass) {
+	public <E> List<E> readExcelXLSX(File fileExcelXlsx, List<? extends IFiCol> listColumns, Class<E> entityclass,String txSheetName) {
+
+		XSSFSheet sheet;
+
+		XSSFWorkbook workbookXlsx = getWorkbookFromExcelXlsxFile(fileExcelXlsx);
+
+		if(!FiString.isEmptyTrim(txSheetName)){
+			sheet = workbookXlsx.getSheet(txSheetName);
+			if(sheet == null){
+				sheet = workbookXlsx.getSheetAt(0);
+			}
+		}else{
+			sheet = workbookXlsx.getSheetAt(0);
+		}
 
 		// Get first sheet from the workbook
-		XSSFSheet sheet = getWorkbookFromExcelXlsxFile(fileExcelXlsx).getSheetAt(0);
+		//XSSFSheet sheet = getWorkbookFromExcelXlsxFile(fileExcelXlsx).getSheetAt(0);
 
 		List<Map<String, String>> listrows = new ArrayList<>();
 		//Not old usage //Iterator rows = sheet.rowIterator();
@@ -1020,9 +1037,7 @@ public class FiExcel {
 
 		List<E> list = new ArrayList<>();
 
-		List<Map<String, String>> listmap = listmapData;  //.getListmapexcel();
-
-		for (Iterator iterator = listmap.iterator(); iterator.hasNext(); ) {
+		for (Iterator iterator = listmapData.iterator(); iterator.hasNext(); ) {
 
 			Map<String, String> map = (Map<String, String>) iterator.next();
 
@@ -1056,7 +1071,6 @@ public class FiExcel {
 					String colTypeName = fieldsAsMap.getOrDefault(fiTableCol.getFieldName(), new FiField()).getClassNameSimple();
 					String colTypeName2 = colTypeName == null ? "" : colTypeName;
 
-
 					if (fiTableCol.equalsColType(OzColType.Date) || (fiTableCol.getColType() == null && colTypeName2.equals("Date"))) {
 						if (cellvalue != null) {
 							String strDate = cellvalue.toString();
@@ -1073,7 +1087,6 @@ public class FiExcel {
 					}
 
 					PropertyUtils.setProperty(entity, fiTableCol.getFieldName().trim(), cellvalue);
-
 
 				} catch (IllegalAccessException e) {
 					e.printStackTrace();

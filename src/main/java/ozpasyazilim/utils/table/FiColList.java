@@ -60,4 +60,9 @@ public class FiColList extends ArrayList<FiCol>{
 	public void setMapCols(Map<String, FiCol> mapCols) {
 		this.mapCols = mapCols;
 	}
+
+//	public void addWitHeader(FiCol fiCol, String txHeaderName) {
+//
+//	}
+
 }
