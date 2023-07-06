@@ -478,7 +478,7 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 		// Loglar birleştirilir.
 		if (!FiCollection.isEmpty(fdrSub.getLogList())) getLogListInit().addAll(fdrSub.getLogList());
 
-		// Birleştirme yapıldığı, log eklenmesi engellenir
+		// Birleştirme yapıldığı için eski Fdr'ye log eklenmesi engellenir
 		fdrSub.setBoLockAddLog(true);
 	}
 
