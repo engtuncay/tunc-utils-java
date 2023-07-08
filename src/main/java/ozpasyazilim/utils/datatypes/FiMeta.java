@@ -21,6 +21,9 @@ public class FiMeta {
 	 */
 	private Integer lnKey;
 
+	/**
+	 * Açıklama (Description) gibi düşünebiliriz
+	 */
 	private String txLabel;
 
 	private String txType;

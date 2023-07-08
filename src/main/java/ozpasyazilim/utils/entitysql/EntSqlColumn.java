@@ -10,6 +10,7 @@ public class EntSqlColumn {
 	String DATA_TYPE;
 //	String NUMERIC_PRECISION;
 //	String NUMERIC_PRECISION_RADIX;
+	String TX_KEY_TYPE;
 
 	// Getter and Setters
 
@@ -62,4 +63,11 @@ public class EntSqlColumn {
 		this.DATA_TYPE = DATA_TYPE;
 	}
 
+	public String getTX_KEY_TYPE() {
+		return TX_KEY_TYPE;
+	}
+
+	public void setTX_KEY_TYPE(String TX_KEY_TYPE) {
+		this.TX_KEY_TYPE = TX_KEY_TYPE;
+	}
 }

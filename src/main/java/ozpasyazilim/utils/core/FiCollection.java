@@ -969,8 +969,7 @@ public class FiCollection {
 	}
 
 	/**
-	 * True gelirse siler
-	 * False olanlar kalır
+	 * Predicate'den True dönen elemanları siler.
 	 *
 	 * @param listData
 	 * @param predRemove

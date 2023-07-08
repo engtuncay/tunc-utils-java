@@ -3,7 +3,7 @@ package ozpasyazilim.utils.gui.components;
 /**
  * toString metodu label değişkenini (özelliğini) döndürür.
  * <p>
- * toString method returns label property.
+ * ToString method returns label property.
  *
  * @author torak
  */

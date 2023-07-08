@@ -22,10 +22,9 @@ public class FxMenuItem extends MenuItem implements IFxSecureNode {
 		super(text, graphic);
 	}
 
-	public FxMenuItem(String text, EventHandler<ActionEvent> eventHandler, FxMenuButton mbButton) {
+	public FxMenuItem(String text, EventHandler<ActionEvent> eventHandler) {
 		super(text);
 		setOnAction(eventHandler);
-		mbButton.addItem(this);
 	}
 
 	@Override
