@@ -35,7 +35,7 @@ import ozpasyazilim.utils.datatypes.FiKeyBean;
  * <p>
  * Yo dawg, I heard you like maps, so I made you a mapper that maps rows into {@code Map<String,Object>}. Map
  * keys are column names, while map values are the values in those columns. Map keys are converted to lowercase by
- * default.
+ * default !!!.
  * <p>
  * //@see GenericMapMapperFactory
  */

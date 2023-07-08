@@ -820,4 +820,28 @@ public class FiString {
 		StrSubstitutor sub = new StrSubstitutor(fiKeyBean, "{{", "}}");
 		return sub.replace(txTemplate);
 	}
+
+	public static <PrmEnt1> String joinStrings(List<PrmEnt1> listData, Function<PrmEnt1,String> spStringValue, String txDelimiter) {
+
+		StringBuilder sbResult = new StringBuilder();
+
+		for (int index = 0; index < listData.size(); index++) {
+			PrmEnt1 prmEnt1 = listData.get(index);
+			if(index!=0) sbResult.append(FiString.orEmpty(txDelimiter));
+			sbResult.append(spStringValue.apply(prmEnt1));
+		}
+		return sbResult.toString();
+	}
+
+	public static String joinStrings(List<String> listData, String txDelimiter) {
+
+		StringBuilder sbResult = new StringBuilder();
+
+		for (int index = 0; index < listData.size(); index++) {
+			String txValue = listData.get(index);
+			if(index!=0) sbResult.append(FiString.orEmpty(txDelimiter));
+			sbResult.append(txValue);
+		}
+		return sbResult.toString();
+	}
 }

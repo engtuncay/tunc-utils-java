@@ -3201,6 +3201,10 @@ public class FiQueryGenerator {
 
 	}
 
+	public static String selectAllSimple(String txTableName) {
+		if(FiString.isEmptyTrim(txTableName)) return "";
+		return String.format("SELECT * FROM %s", txTableName);
+	}
 }
 
 /*

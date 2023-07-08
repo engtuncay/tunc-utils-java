@@ -3,6 +3,7 @@ package ozpasyazilim.utils.core;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import ozpasyazilim.utils.datatypes.FiKeyBean;
+import ozpasyazilim.utils.datatypes.FiListFkb;
 import ozpasyazilim.utils.datatypes.FiListKeyString;
 import ozpasyazilim.utils.datatypes.FiKeyString;
 import ozpasyazilim.utils.log.Loghelper;
@@ -83,11 +84,11 @@ public class FiConsole {
 	}
 
 	public static <E> void debugListObjectsNotNull(List<E> list, Class clazz) {
-		Loghelper.debugLog(clazz, String.format("List Detail (Not Null)\n\n%s", textListObjectsNotNull(list)));
+		Loghelper.debugLog(clazz, String.format("List Detail (Not Null)\n\n%s", textListObjectsNotNullFields(list)));
 	}
 
 	public static <E> String textDebugListObjectsNotNull(List<E> list, Class clazz) {
-		return String.format("List Detail (Not Null)\n\n%s", textListObjectsNotNull(list));
+		return String.format("List Detail (Not Null)\n\n%s", textListObjectsNotNullFields(list));
 	}
 
 	public static <E> void debugCollectionObjectsNotNull(Collection<E> collection, Class clazz) {
@@ -135,10 +136,10 @@ public class FiConsole {
 	}
 
 	public static <E> void printListObjectsNotNull(List<E> list) {
-		System.out.println(textListObjectsNotNull(list));
+		System.out.println(textListObjectsNotNullFields(list));
 	}
 
-	public static <E> String textListObjectsNotNull(List<E> list) {
+	public static <E> String textListObjectsNotNullFields(List<E> list) {
 
 		StringBuilder result = new StringBuilder("");
 		if (list == null || list.size() == 0) {
@@ -419,7 +420,7 @@ public class FiConsole {
 			}
 
 			debugListObjectsNotNull(list, FiConsole.class);
-			return String.format("List Detail (Not Null)\n\n%s", textListObjectsNotNull(list));
+			return String.format("List Detail (Not Null)\n\n%s", textListObjectsNotNullFields(list));
 		}
 
 		if (obj instanceof Collection) {
@@ -446,10 +447,8 @@ public class FiConsole {
 	}
 
 	public static String textObjectFieldsPlain(Object obj, Boolean boShowNull) {
-
 		FiConsoleConfig fiConsoleConfig = new FiConsoleConfig();
 		fiConsoleConfig.setBoShowNull(boShowNull);
-
 		return textObjectFieldsMain(obj, fiConsoleConfig);
 	}
 
@@ -740,5 +739,13 @@ public class FiConsole {
 
 	public static void printStringCollection(Collection<String> strings) {
 		System.out.println(textStringCollection(strings));
+	}
+
+	public static String textListFiKeyBean(FiListFkb fiListFkb) {
+		StringBuilder sbOutput = new StringBuilder("");
+		for (FiKeyBean fiKeyBean : fiListFkb) {
+			sbOutput.append(textFiKeyBean(fiKeyBean) + "\n");
+		}
+		return sbOutput.toString();
 	}
 }
