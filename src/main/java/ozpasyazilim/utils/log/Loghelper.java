@@ -10,36 +10,30 @@ import static org.apache.log4j.Logger.getLogger;
 
 public class Loghelper {
 
-	//private static final Logger logGlobal = Logger.getLogger("GLOBAL");
-
 	public static Logger get(Class clazz) {
 		return Logger.getLogger(clazz);
-	} // //LogManager.getLogger(logClass);
+	}
 
 	public static Logger getInstance(Class clazz) {
 		return Logger.getLogger(clazz);
 	}
 
-	//public static Logger get(String loggerAlias) {
-	//return Logger.getLogger(loggerAlias);
-	//}
-
 	public static void installLogger(Boolean boDebugModeEnabled) {
-		System.out.println("Logger(v1) yüklenecek. Loghelper.installLogger(boDebugMode)");
+		System.out.println("Logger(v1) yüklenecek. Loghelper.installLogger(boDebugMode):"+ boDebugModeEnabled);
 
-		if (FiBoolean.isTrue(boDebugModeEnabled)) { // || Loghelper.DEBUG_MODE
+		if (FiBoolean.isTrue(boDebugModeEnabled)) {
 			PropertyConfigurator.configure("log4jd.properties");
-			//System.out.println("Logger installing...(debug mode) (Log4jd)");
-			Loghelper.get(Loghelper.class).info("Log4jd (Debug) Mode");
+			Loghelper.get(Loghelper.class).info("Log4jd Props (Debug)");
 		} else {
 			//System.out.println("Logger installing...(production mode) (Log4jp)");
 			PropertyConfigurator.configure("log4jp.properties");
-			Loghelper.get(Loghelper.class).info("Log4jd (Production) Mode");
+			Loghelper.get(Loghelper.class).info("Log4jp Props Mode (Production)");
 		}
 
 	}
 
 	public static void main(String[] args) {
+		// For testing
 		Loghelper.installLogger(true);
 		//loggerr.info("Logging an INFO-level message");
 	}
@@ -72,3 +66,9 @@ public class Loghelper {
 	}
 
 }
+
+//public static Logger get(String loggerAlias) {
+//return Logger.getLogger(loggerAlias);
+//}
+
+//private static final Logger logGlobal = Logger.getLogger("GLOBAL");

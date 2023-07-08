@@ -4,7 +4,7 @@ import ozpasyazilim.utils.fidbanno.FiTable;
 import ozpasyazilim.utils.fidbanno.FiTransient;
 
 @FiTable(name = "INFORMATION_SCHEMA.TABLES")
-public class SqlTable {
+public class EntSqlTable {
 
 	String TABLE_CATALOG;
 	String TABLE_SCHEMA;

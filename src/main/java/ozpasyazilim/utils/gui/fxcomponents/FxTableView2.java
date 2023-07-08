@@ -394,7 +394,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 		return this;
 	}
 
-	public FxTableView2 addAllFiColsAutoAsFiKeyBean(List<FiCol> listFiCol) {
+	public FxTableView2 addFiColsAllAutoAsFiKeyBean(List<FiCol> listFiCol) {
 		for (FiCol fiCol : listFiCol) {
 			addFiColAutoAsFiKeyBean(fiCol);
 		}
@@ -434,7 +434,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
 	public void addFiColAutoAsFiKeyBean(FiCol fiTableCol) {
 		FxTableCol2 fxTableCol = new FxTableCol2(fiTableCol);
-		addFxTableColAutoAsFiKeyBean(fxTableCol);
+		addColumnAutoAsFiKeyBean(fxTableCol);
 	}
 
 	public FxTableView2 addAllFxTableCols2Auto(List<FxTableCol2> fxTableColList) {
@@ -452,7 +452,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 		addFxTableColFi(fxTableCol);
 	}
 
-	public void addFxTableColAutoAsFiKeyBean(FxTableCol2 fxTableCol) {
+	public void addColumnAutoAsFiKeyBean(FxTableCol2 fxTableCol) {
 		// Cell Value Factory and Editor Factory leri ayarlanır
 		setupCellValueAndEditorFactoryAsFiKeyBean(fxTableCol);
 		//Loghelperr.getInstance(getClass()).debug(" Fx TableView col id:"+fxTableCol.getId());

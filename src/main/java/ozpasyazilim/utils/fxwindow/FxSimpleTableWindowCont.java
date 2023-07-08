@@ -17,9 +17,9 @@ import java.util.List;
  *
  * @param <EntClazz> tablo satır entity
  */
-public class FxTableWindowCont<EntClazz> extends AbsFxSimpleCont implements IFxSimpleCont {
+public class FxSimpleTableWindowCont<EntClazz> extends AbsFxSimpleCont implements IFxSimpleCont {
 
-	FxTableWindowView<EntClazz> modView;
+	FxSimpleTableWindowView<EntClazz> modView;
 	String txSelected;
 
 	List<EntClazz> listEntityDefault;
@@ -37,22 +37,22 @@ public class FxTableWindowCont<EntClazz> extends AbsFxSimpleCont implements IFxS
 	private FxButton btnCrudReport;
 	private FxButton btnCrudSelect;
 
-	public FxTableWindowCont() {
-		setModuleLabel("Simple-Table-Window");
+	public FxSimpleTableWindowCont() {
+		setModuleLabel("simple-table-window");
 		setModuleCode("100");
 	}
 
 	@Override
-	public FxTableWindowView<EntClazz> getModView() {
+	public FxSimpleTableWindowView<EntClazz> getModView() {
 		return modView;
 	}
 
 	@Override
 	public void initCont() {
-		modView = new FxTableWindowView(true);
+		modView = new FxSimpleTableWindowView(true);
 	}
 
-	public FxTableWindowCont buildInit() {
+	public FxSimpleTableWindowCont buildInit() {
 		initCont();
 		return this;
 	}

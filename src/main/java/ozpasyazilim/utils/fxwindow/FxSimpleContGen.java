@@ -1,7 +1,10 @@
-package ozpasyazilim.utils.gui.fxcomponents;
+package ozpasyazilim.utils.fxwindow;
 
 import javafx.scene.Node;
 import ozpasyazilim.utils.core.FiBoolean;
+import ozpasyazilim.utils.gui.fxcomponents.FxDialogShow;
+import ozpasyazilim.utils.gui.fxcomponents.FxMigHp;
+import ozpasyazilim.utils.gui.fxcomponents.FxMigPaneView;
 import ozpasyazilim.utils.mvc.AbsFxSimpleCont;
 import ozpasyazilim.utils.mvc.IFxSimpSelectionCont;
 

@@ -1,6 +1,6 @@
 package ozpasyazilim.utils.entitysql;
 
-public class SqlColumn {
+public class EntSqlColumn {
 
 	String TABLE_CATALOG;
 	String TABLE_SCHEMA;

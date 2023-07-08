@@ -3,7 +3,6 @@ package ozpasyazilim.utils.gui.fxcomponents;
 import javafx.application.Platform;
 import javafx.geometry.Bounds;
 import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
@@ -11,7 +10,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Pair;
@@ -23,6 +21,9 @@ import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.mvc.*;
 import ozpasyazilim.utils.returntypes.Fdr;
 import ozpasyazilim.utils.returntypes.FnResult;
+import ozpasyazilim.utils.fxwindow.FxSimpleDialog;
+import ozpasyazilim.utils.fxwindow.FxSimpleDialog2;
+import ozpasyazilim.utils.fxwindow.FxSimpleDialogMetaType;
 
 import java.util.List;
 import java.util.Optional;
@@ -1127,7 +1128,7 @@ public class FxDialogShow {
 
 	public static void showModalInfo(String messageHeader, String message) {
 		Platform.runLater(() -> {
-			FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogType.DialogInfo, message);
+			FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogMetaType.DialogInfo, message);
 			fxSimpleDialog.setMessageHeader(messageHeader);
 			fxSimpleDialog.openAsDialogSync();
 		});
@@ -1135,7 +1136,7 @@ public class FxDialogShow {
 
 	public static void showModalError2(String messageHeader, String message) {
 		Platform.runLater(() -> {
-			FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogType.DialogError, message);
+			FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogMetaType.DialogError, message);
 			fxSimpleDialog.setMessageHeader(messageHeader);
 			fxSimpleDialog.openAsDialogSync();
 		});
@@ -1150,7 +1151,7 @@ public class FxDialogShow {
 				message += "\n Exception Tanımı \n\n" + FiException.exceptionIfToString(fdr.getException());
 			}
 
-			FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogType.DialogError, message, messageHeader);
+			FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogMetaType.DialogError, message, messageHeader);
 			fxSimpleDialog.openAsDialogSync();
 		});
 	}
@@ -1171,7 +1172,7 @@ public class FxDialogShow {
 				message += "\nException Tanımı : " + FiException.exceptionToStrSummary(fdr.getException());
 			}
 
-			FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogType.DialogError, message, messageHeader);
+			FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogMetaType.DialogError, message, messageHeader);
 			fxSimpleDialog.openAsDialogSync();
 		});
 	}

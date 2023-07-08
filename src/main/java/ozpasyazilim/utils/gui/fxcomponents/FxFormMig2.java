@@ -14,6 +14,7 @@ import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.mvc.IFxModView;
 import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.FiColInfHelper;
+import ozpasyazilim.utils.fxwindow.FxSimpleDialog;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.List;

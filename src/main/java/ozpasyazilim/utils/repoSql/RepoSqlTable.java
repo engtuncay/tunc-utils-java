@@ -1,13 +1,13 @@
 package ozpasyazilim.utils.repoSql;
 
-import ozpasyazilim.utils.entitysql.SqlTable;
+import ozpasyazilim.utils.entitysql.EntSqlTable;
 import org.jdbi.v3.core.Jdbi;
 import ozpasyazilim.utils.fidborm.AbsRepoJdbi;
 import ozpasyazilim.utils.returntypes.Fdr;
 
 import java.util.List;
 
-public class RepoSqlTable extends AbsRepoJdbi<SqlTable> {
+public class RepoSqlTable extends AbsRepoJdbi<EntSqlTable> {
 
 	public RepoSqlTable() {
 	}
@@ -16,7 +16,7 @@ public class RepoSqlTable extends AbsRepoJdbi<SqlTable> {
 		super(jdbi);
 	}
 
-	public Fdr<List<SqlTable>> selectTables() {
+	public Fdr<List<EntSqlTable>> selectTables() {
 		//sq202202260955
 		String sql = "--sq202202260955\n" +
 				"SELECT *\n" +
@@ -25,7 +25,7 @@ public class RepoSqlTable extends AbsRepoJdbi<SqlTable> {
 		return jdSelectListBindMapMain(sql, null);
 	}
 
-	public Fdr<List<SqlTable>> selectTablesWithCount() {
+	public Fdr<List<EntSqlTable>> selectTablesWithCount() {
 		//sq202203040959
 		String sql = "--sq202203040959\n" +
 				"SELECT T.name AS TABLE_NAME, I.rows AS lnCount\n" +

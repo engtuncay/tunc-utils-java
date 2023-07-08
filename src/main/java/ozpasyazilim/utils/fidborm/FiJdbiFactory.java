@@ -3,31 +3,36 @@ package ozpasyazilim.utils.fidborm;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.statement.SqlStatements;
 import org.jdbi.v3.sqlobject.SqlObjectPlugin;
+import ozpasyazilim.utils.configmisc.ServerConfig;
 import ozpasyazilim.utils.log.Loghelper;
 
 public class FiJdbiFactory {
 
-	public static Jdbi createJdbi(String server, String dbName, String user, String pass) {
+    public static Jdbi createJdbi(ServerConfig serverConfig) {
+        return createJdbi(serverConfig.getServer(), serverConfig.getServerDb(), serverConfig.getServerUser(), serverConfig.getServerKey());
+    }
 
-		if (!DbConfig.checkDriverClassMicrosoftJdbc()) {
-			String message = String.format("Sql Sürücü Kütüphanesi bulunamadı.");
-			Loghelper.get(FiJdbiFactory.class).error(message);
-			return null;
-		}
+    public static Jdbi createJdbi(String server, String dbName, String user, String pass) {
 
-		String url = DbConfig.getUrlMicrosoftJdbcSqlServer(server, dbName);
+        if (!DbConfig.checkDriverClassMicrosoftJdbc()) {
+            String message = String.format("Sql Sürücü Kütüphanesi bulunamadı.");
+            Loghelper.get(FiJdbiFactory.class).error(message);
+            return null;
+        }
 
-		Jdbi jdbi = Jdbi.create(url, user, pass);
-		jdbi.installPlugin(new SqlObjectPlugin());
-		jdbi.getConfig(SqlStatements.class).setUnusedBindingAllowed(true);
+        String url = DbConfig.getUrlMicrosoftJdbcSqlServer(server, dbName);
 
-		if (jdbi == null) {
-			String uyari = String.format("Server: %s Db: %s için bağlantı bilgilerinde hata var.", (server == null ? "" : server), (dbName == null ? "" : dbName));
-			Loghelper.get(FiJdbiFactory.class).error(uyari);
-			//System.out.println(uyari);
-		}
+        Jdbi jdbi = Jdbi.create(url, user, pass);
+        jdbi.installPlugin(new SqlObjectPlugin());
+        jdbi.getConfig(SqlStatements.class).setUnusedBindingAllowed(true);
 
-		return jdbi;
-	}
+        if (jdbi == null) {
+            String uyari = String.format("Server: %s Db: %s için bağlantı bilgilerinde hata var.", (server == null ? "" : server), (dbName == null ? "" : dbName));
+            Loghelper.get(FiJdbiFactory.class).error(uyari);
+            //System.out.println(uyari);
+        }
+
+        return jdbi;
+    }
 
 }

@@ -661,7 +661,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		String candId1First = FiQueryGenerator.getCandId1FirstField(getEntityClass());
 		String sqlQuery = FiQueryGenerator.selectQueryCountByCandIdFirst(getEntityClass());
-		FiKeyBean map = FiKeyBean.build().buildPut(candId1First, candId1Value);
+		FiKeyBean map = FiKeyBean.bui().buiPut(candId1First, candId1Value);
 
 		return jdSelectSingleOpCustomEntityBindMap(sqlQuery, map, Integer.class);
 	}
@@ -813,7 +813,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		String dbFieldName = FiEntity.getListFieldsCandId2(getEntityClass()).get(0).getDbFieldName();
 
-		FiKeyBean fiKeyBean = FiKeyBean.build().buildPut(dbFieldName, listData);
+		FiKeyBean fiKeyBean = FiKeyBean.bui().buiPut(dbFieldName, listData);
 
 		FiQuery fiQuery = new FiQuery(sql);
 		fiQuery.convertListParamToMultiParams(fiKeyBean);
@@ -829,7 +829,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		String dbFieldName = FiEntity.getListFieldsCandId2(getEntityClass()).get(0).getDbFieldName();
 
-		FiKeyBean fiKeyBean = FiKeyBean.build().buildPut(dbFieldName, listData);
+		FiKeyBean fiKeyBean = FiKeyBean.bui().buiPut(dbFieldName, listData);
 
 		FiQuery fiQuery = new FiQuery(sql);
 		fiQuery.convertListParamToMultiParams(fiKeyBean);
@@ -846,7 +846,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		String dbFieldName = FiEntity.getListFieldsCandId2(getEntityClass()).get(0).getDbFieldName();
 
-		FiKeyBean fiKeyBean = FiKeyBean.build().buildPut(dbFieldName, listData);
+		FiKeyBean fiKeyBean = FiKeyBean.bui().buiPut(dbFieldName, listData);
 
 		FiQuery fiQuery = new FiQuery(sql);
 		fiQuery.convertListParamToMultiParams(fiKeyBean);
@@ -1015,21 +1015,21 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 	public Fdr<Optional<EntClazz>> jdSelectEntityById(Integer id) {
 		String sql = FiQueryGenerator.selectQuery20ById(getEntityClass());
 		String idField = FiQueryGenerator.getIdField(getEntityClass());
-		FiKeyBean fiKeyBean = FiKeyBean.build().buildPut(idField, id);
+		FiKeyBean fiKeyBean = FiKeyBean.bui().buiPut(idField, id);
 		return jdSelectEntityOptBindMap(sql, fiKeyBean);
 	}
 
 	public Fdr<List<Map<String, Object>>> jdSelectListMapById(Integer id) {
 		String sql = FiQueryGenerator.selectQuery20ById(getEntityClass());
 		String idField = FiQueryGenerator.getIdField(getEntityClass());
-		FiKeyBean fiKeyBean = FiKeyBean.build().buildPut(idField, id);
+		FiKeyBean fiKeyBean = FiKeyBean.bui().buiPut(idField, id);
 		return jdSelectListMapBindMap(sql, fiKeyBean);
 	}
 
 	public Fdr<List<EntClazz>> jdSelectListById(Integer id) {
 		String sql = FiQueryGenerator.selectQuery20ById(getEntityClass());
 		String idField = FiQueryGenerator.getIdField(getEntityClass());
-		FiKeyBean fiKeyBean = FiKeyBean.build().buildPut(idField, id);
+		FiKeyBean fiKeyBean = FiKeyBean.bui().buiPut(idField, id);
 		return jdSelectListBindMapMain(sql, fiKeyBean);
 	}
 
@@ -1059,14 +1059,14 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 	public Fdr<Optional<EntClazz>> jdSelectEntityOptByStringCandId1(String txKod) {
 		String sql = FiQueryGenerator.selectQueryByCandIds(getEntityClass());
 		String txFieldName = FiQueryGenerator.getCandIdFieldFirst(getEntityClass());
-		FiKeyBean fiKeyBean = FiKeyBean.build().buildPut(txFieldName, txKod);
+		FiKeyBean fiKeyBean = FiKeyBean.bui().buiPut(txFieldName, txKod);
 		return jdSelectEntityOptBindMap(sql, fiKeyBean);
 	}
 
 	public Fdr<EntClazz> jdSelectEntityByStringCandId1(String txKod) {
 		String sql = FiQueryGenerator.selectQueryByCandIds(getEntityClass());
 		String txFieldName = FiQueryGenerator.getCandIdFieldFirst(getEntityClass());
-		FiKeyBean fiKeyBean = FiKeyBean.build().buildPut(txFieldName, txKod);
+		FiKeyBean fiKeyBean = FiKeyBean.bui().buiPut(txFieldName, txKod);
 		Fdr<Optional<EntClazz>> optionalFdr = jdSelectEntityOptBindMap(sql, fiKeyBean);
 		Fdr<EntClazz> fdr = new Fdr<>();
 		fdr.combineAnd(optionalFdr);
@@ -1081,7 +1081,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 	public Fdr<Optional<EntClazz>> jdSelectDtoEntityByStrCandId1(String txValue) {
 		FiQuery fiQuery = FiQueryGenerator.selectDtoEntityByCandId1Fi(getEntityClass());
-		FiKeyBean fiKeyBean = FiKeyBean.build().buildPut(fiQuery.getTxCandIdFieldName(), txValue);
+		FiKeyBean fiKeyBean = FiKeyBean.bui().buiPut(fiQuery.getTxCandIdFieldName(), txValue);
 		return jdSelectEntityOptBindMap(fiQuery.getTxQuery(), fiKeyBean);
 	}
 

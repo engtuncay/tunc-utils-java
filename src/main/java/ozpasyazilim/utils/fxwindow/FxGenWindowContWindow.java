@@ -8,6 +8,12 @@ import ozpasyazilim.utils.mvc.*;
 
 import java.util.List;
 
+/**
+ * çok fazla karmaşık olmuş formEntity fazlalık, amacı netleşmeli
+ *
+ * @param <FormClazz>
+ * @param <EntClazz>
+ */
 public abstract class FxGenWindowContWindow<FormClazz, EntClazz> extends AbsFxSimpleCont implements IFxSimpleCont, IFxSimpleEntityModule<EntClazz> {
 
 	FxGenWindowView modView;

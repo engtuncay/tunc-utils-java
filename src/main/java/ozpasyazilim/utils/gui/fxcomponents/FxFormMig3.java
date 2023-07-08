@@ -16,6 +16,7 @@ import ozpasyazilim.utils.returntypes.Fdr;
 import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.FiColInfHelper;
 import ozpasyazilim.utils.table.OzColType;
+import ozpasyazilim.utils.fxwindow.FxSimpleDialog;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.List;

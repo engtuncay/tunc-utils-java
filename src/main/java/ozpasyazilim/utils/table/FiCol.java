@@ -1232,9 +1232,6 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 	}
 
 	public void setTableColumnFx(TableColumn tableColumn) {
-//		if (tableColProp == null) {
-//			tableColProp = new SimpleObjectProperty<>();
-//		}
 		this.tableColumnFx.set(tableColumn);
 	}
 

@@ -5,7 +5,7 @@ import ozpasyazilim.utils.annotations.FiDraft;
 import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.datatypes.FiListString;
 import ozpasyazilim.utils.datatypes.FiKeyBean;
-import ozpasyazilim.utils.entitysql.SqlColumn;
+import ozpasyazilim.utils.entitysql.EntSqlColumn;
 import ozpasyazilim.utils.gui.fxcomponents.FxEditorFactory;
 import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.fidbanno.*;
@@ -3184,15 +3184,15 @@ public class FiQueryGenerator {
 	}
 
 	private static String getFieldsCommaSeperatedFromDb(String txTableName, Jdbi jdbi) {
-		Fdr<List<SqlColumn>> fieldListFilterAnno = new RepoSqlColumn(jdbi).selectColumnsAll(txTableName);
+		Fdr<List<EntSqlColumn>> fieldListFilterAnno = new RepoSqlColumn(jdbi).selectColumnsAll(txTableName);
 		StringBuilder query = new StringBuilder();
 
 		if (fieldListFilterAnno.isTrueBoResult()) {
 			Integer index = 0;
-			for (SqlColumn sqlColumn : fieldListFilterAnno.getValue()) {
+			for (EntSqlColumn entSqlColumn : fieldListFilterAnno.getValue()) {
 				index++;
 				if (index != 1) query.append(", ");
-				query.append(sqlColumn.getCOLUMN_NAME());
+				query.append(entSqlColumn.getCOLUMN_NAME());
 			}
 			return query.toString();
 		} else {

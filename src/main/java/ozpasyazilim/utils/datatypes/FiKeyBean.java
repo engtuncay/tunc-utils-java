@@ -43,12 +43,12 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
 		super(initialCapacity, loadFactor, accessOrder);
 	}
 
-	public static FiKeyBean build() {
+	public static FiKeyBean bui() {
 		return new FiKeyBean();
 	}
 
 	// üst sınıftan alamaz, üst sınıf FiKeyBean dönüyor
-	public FiKeyBean buildPut(Object fieldName, Object value) {
+	public FiKeyBean buiPut(Object fieldName, Object value) {
 		if (fieldName == null) return this;
 
 		this.put(fieldName.toString(), value);

@@ -8,22 +8,22 @@ import ozpasyazilim.utils.gui.fxcomponents.FxTableView2;
 import ozpasyazilim.utils.mvc.IFxModView;
 import ozpasyazilim.utils.mvc.IFxSimpleView;
 
-public class FxTableWindowView<EntClazz> implements IFxModView, IFxSimpleView {
+public class FxSimpleTableWindowView<EntClazz> implements IFxModView, IFxSimpleView {
 
 	// Containers
 	// rootMigPane super de
-	//private FxStackPane fxStackPane;
+	// private FxStackPane fxStackPane;
 	private FxMigPane fxMigPane;
 	private FxTableMig2<EntClazz> fxTableMig;
 	private FxMigPane fxMigToolbar;
 	private FxMigPane fxMigHeader;
 	private FxMigPane fxMigContent;
 
-	public FxTableWindowView() {
+	public FxSimpleTableWindowView() {
 
 	}
 
-	public FxTableWindowView(Boolean withInit) {
+	public FxSimpleTableWindowView(Boolean withInit) {
 		initGui();
 	}
 

@@ -3,7 +3,7 @@ package ozpasyazilim.utils.entitysql;
 import ozpasyazilim.utils.fidbanno.FiTable;
 
 @FiTable
-public class SysObjects {
+public class EntSysObjects {
 
 	String name;
 	Integer id;

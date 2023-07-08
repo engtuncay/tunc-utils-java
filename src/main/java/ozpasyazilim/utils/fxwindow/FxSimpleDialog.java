@@ -1,4 +1,4 @@
-package ozpasyazilim.utils.gui.fxcomponents;
+package ozpasyazilim.utils.fxwindow;
 
 import de.jensd.fx.glyphs.icons525.Icons525;
 import javafx.beans.property.SimpleStringProperty;
@@ -11,6 +11,7 @@ import ozpasyazilim.utils.core.FiString;
 import ozpasyazilim.utils.core.FxPredicateString;
 import ozpasyazilim.utils.fidborm.FiEntity;
 import ozpasyazilim.utils.fidborm.FiField;
+import ozpasyazilim.utils.gui.fxcomponents.*;
 import ozpasyazilim.utils.mvc.AbsFxSimpleCont;
 import ozpasyazilim.utils.returntypes.Fdr;
 import ozpasyazilim.utils.table.FiCol;
@@ -24,7 +25,7 @@ import java.util.function.Predicate;
 public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 	FxMigPaneView modView;
-	FxSimpleDialogType fxSimpleDialogType;
+	FxSimpleDialogMetaType fxSimpleDialogMetaType;
 	private FxButton btnOk;
 	private FxButton btnCancel;
 	private String messageContent;
@@ -54,12 +55,12 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 
 	public static void creInfoDialog(String message) {
-		FxSimpleDialog modDialogCont = FxSimpleDialog.build(FxSimpleDialogType.InfoLabelDialog).buiMessageContent(message);
+		FxSimpleDialog modDialogCont = FxSimpleDialog.build(FxSimpleDialogMetaType.InfoLabelDialog).buiMessageContent(message);
 		modDialogCont.openAsDialogSync();
 	}
 
 	public static FxSimpleDialog buiTextFieldDialog(String message) {
-		FxSimpleDialog modDialogCont = FxSimpleDialog.build(FxSimpleDialogType.TextField).buiMessageContent(message);
+		FxSimpleDialog modDialogCont = FxSimpleDialog.build(FxSimpleDialogMetaType.TextField).buiMessageContent(message);
 		modDialogCont.openAsDialogSync();
 		return modDialogCont;
 	}
@@ -73,9 +74,9 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 	}
 
-	public static FxSimpleDialog build(FxSimpleDialogType fxSimpleDialogType) {
+	public static FxSimpleDialog build(FxSimpleDialogMetaType fxSimpleDialogMetaType) {
 		FxSimpleDialog fxSimpleDialog = new FxSimpleDialog();
-		fxSimpleDialog.setFxSimpleDialogType(fxSimpleDialogType);
+		fxSimpleDialog.setFxSimpleDialogType(fxSimpleDialogMetaType);
 		return fxSimpleDialog;
 	}
 
@@ -87,11 +88,11 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 	/**
 	 * With start of initCont
 	 *
-	 * @param fxSimpleDialogType
+	 * @param fxSimpleDialogMetaType
 	 * @param messageContent
 	 */
-	public FxSimpleDialog(FxSimpleDialogType fxSimpleDialogType, String messageContent) {
-		setFxSimpleDialogType(fxSimpleDialogType);
+	public FxSimpleDialog(FxSimpleDialogMetaType fxSimpleDialogMetaType, String messageContent) {
+		setFxSimpleDialogType(fxSimpleDialogMetaType);
 		setMessageContent(messageContent);
 		//setiFxModCont(this);
 		initCont();
@@ -99,15 +100,15 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 
 
-	public FxSimpleDialog(FxSimpleDialogType fxSimpleDialogType, String messageContent,String messageHeader) {
-		setFxSimpleDialogType(fxSimpleDialogType);
+	public FxSimpleDialog(FxSimpleDialogMetaType fxSimpleDialogMetaType, String messageContent, String messageHeader) {
+		setFxSimpleDialogType(fxSimpleDialogMetaType);
 		setMessageContent(messageContent);
 		setMessageHeader(messageHeader);
 		initCont();
 	}
 
-	public FxSimpleDialog(FxSimpleDialogType fxSimpleDialogType) {
-		setFxSimpleDialogType(fxSimpleDialogType);
+	public FxSimpleDialog(FxSimpleDialogMetaType fxSimpleDialogMetaType) {
+		setFxSimpleDialogType(fxSimpleDialogMetaType);
 	}
 
 	public void openAsDialogSync() {
@@ -119,8 +120,8 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 		fxDialogShow.nodeModalByIFxSimpleCont(null, this);
 	}
 
-	public static FxSimpleDialog build(FxSimpleDialogType fxSimpleDialogType, String message) {
-		FxSimpleDialog modDialogCont = new FxSimpleDialog(fxSimpleDialogType, message);
+	public static FxSimpleDialog build(FxSimpleDialogMetaType fxSimpleDialogMetaType, String message) {
+		FxSimpleDialog modDialogCont = new FxSimpleDialog(fxSimpleDialogMetaType, message);
 		return modDialogCont;
 	}
 
@@ -140,71 +141,71 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 			return;
 		}
 
-		if (getFxSimpleDialogType() == FxSimpleDialogType.TextFieldDouble) {
+		if (getFxSimpleDialogType() == FxSimpleDialogMetaType.TextFieldDouble) {
 			setupTextHeaderLabel();
 			setupTextFieldDoubleDialog();
 			setupFooterOkCancel(null);
 			return;
 		}
 
-		if (getFxSimpleDialogType() == FxSimpleDialogType.TextFieldWithValidation) {
+		if (getFxSimpleDialogType() == FxSimpleDialogMetaType.TextFieldWithValidation) {
 			setupTextFieldWithValidation();
 			setupFooterWithValidateString();
 			return;
 		}
 
-		if (getFxSimpleDialogType() == FxSimpleDialogType.TextField) {
+		if (getFxSimpleDialogType() == FxSimpleDialogMetaType.TextField) {
 			initTextField();
 			return;
 		}
 
-		if (fxSimpleDialogType == FxSimpleDialogType.TextAreaString) {
+		if (fxSimpleDialogMetaType == FxSimpleDialogMetaType.TextAreaString) {
 			setupTextHeaderLabel();
 			setupTextAreaString();
 			setupFooterOkCancel(null);
 			return;
 		}
 
-		if (fxSimpleDialogType == FxSimpleDialogType.TextFieldInteger) {
+		if (fxSimpleDialogMetaType == FxSimpleDialogMetaType.TextFieldInteger) {
 			setupTextHeaderLabel();
 			setupTextFieldIntegerDialog();
 			setupFooterOkCancel(null);
 			return;
 		}
 
-		if (fxSimpleDialogType == FxSimpleDialogType.InfoTextFlowDialog) {
+		if (fxSimpleDialogMetaType == FxSimpleDialogMetaType.InfoTextFlowDialog) {
 			setupTextHeaderLabel();
 			setupInfoDialog();
 			setupFooterOkCancel(null);
 			return;
 		}
 
-		if (fxSimpleDialogType == FxSimpleDialogType.FormAutoByCandIdFields) {
+		if (fxSimpleDialogMetaType == FxSimpleDialogMetaType.FormAutoByCandIdFields) {
 			initFormAutoByCandIdFields();
 			return;
 		}
 
-		if (fxSimpleDialogType == FxSimpleDialogType.InfoLabelDialog) {
+		if (fxSimpleDialogMetaType == FxSimpleDialogMetaType.InfoLabelDialog) {
 			initInfoLabelDialog();
 			return;
 		}
 
-		if (fxSimpleDialogType == FxSimpleDialogType.DialogError) {
+		if (fxSimpleDialogMetaType == FxSimpleDialogMetaType.DialogError) {
 			initDialogError();
 			return;
 		}
 
-		if (fxSimpleDialogType == FxSimpleDialogType.DialogInfo) {
+		if (fxSimpleDialogMetaType == FxSimpleDialogMetaType.DialogInfo) {
 			initDialogInfo();
 			return;
 		}
 
-		if (fxSimpleDialogType == FxSimpleDialogType.FormDialog) {
+		if (fxSimpleDialogMetaType == FxSimpleDialogMetaType.FormDialog) {
 			initFormDialog();
 			return;
 		}
 
-		if (fxSimpleDialogType == FxSimpleDialogType.LogTable) {
+		if (fxSimpleDialogMetaType == FxSimpleDialogMetaType.LogTable) {
 			initLogTable();
 			return;
 		}
@@ -346,7 +347,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 	public void setupFormDialog(List<FiCol> fiCols, FormType formType) {
 		getFxFormInit().setup1(fiCols,FormType.PlainFormV1);
-		setFxSimpleDialogType(FxSimpleDialogType.Undefined);
+		setFxSimpleDialogType(FxSimpleDialogMetaType.Undefined);
 		initCont();
 		FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().getLcg());
 		fxContent.addGrowPushSpan(getFxFormInit());
@@ -373,7 +374,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 //		}
 
 		// Form Alanlarına validasyon eklenmişse onlar kontrol edilir.
-		if (getFxSimpleDialogType() == FxSimpleDialogType.FormDialog) {
+		if (getFxSimpleDialogType() == FxSimpleDialogMetaType.FormDialog) {
 
 			// Obje ile validasyon yapmak istersek
 //			if (getFxFormMig().getFxFormConfigInit().getFnValidateForm() != null) {
@@ -574,11 +575,11 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 		FxButton fxButton = new FxButton();
 
-		if (getFxSimpleDialogType() == FxSimpleDialogType.DialogInfo) {
+		if (getFxSimpleDialogType() == FxSimpleDialogMetaType.DialogInfo) {
 			fxButton.setFxIcon(Icons525.INFO);
 		}
 
-		if (getFxSimpleDialogType() == FxSimpleDialogType.DialogError) {
+		if (getFxSimpleDialogType() == FxSimpleDialogMetaType.DialogError) {
 			fxButton.setFxIcon(Icons525.WARNING_SIGN);
 		}
 
@@ -602,12 +603,12 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 	// Getter and Setter
 
-	public FxSimpleDialogType getFxSimpleDialogType() {
-		return fxSimpleDialogType;
+	public FxSimpleDialogMetaType getFxSimpleDialogType() {
+		return fxSimpleDialogMetaType;
 	}
 
-	public void setFxSimpleDialogType(FxSimpleDialogType fxSimpleDialogType) {
-		this.fxSimpleDialogType = fxSimpleDialogType;
+	public void setFxSimpleDialogType(FxSimpleDialogMetaType fxSimpleDialogMetaType) {
+		this.fxSimpleDialogMetaType = fxSimpleDialogMetaType;
 	}
 
 	public FxButton getBtnOk() {

@@ -1,5 +1,7 @@
 package ozpasyazilim.utils.gui.fxcomponents;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.MenuItem;
 import ozpasyazilim.utils.core.FiThread;
@@ -18,6 +20,12 @@ public class FxMenuItem extends MenuItem implements IFxSecureNode {
 
 	public FxMenuItem(String text, Node graphic) {
 		super(text, graphic);
+	}
+
+	public FxMenuItem(String text, EventHandler<ActionEvent> eventHandler, FxMenuButton mbButton) {
+		super(text);
+		setOnAction(eventHandler);
+		mbButton.addItem(this);
 	}
 
 	@Override

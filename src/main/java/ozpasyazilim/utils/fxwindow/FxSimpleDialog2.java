@@ -1,4 +1,7 @@
-package ozpasyazilim.utils.gui.fxcomponents;
+package ozpasyazilim.utils.fxwindow;
+
+import ozpasyazilim.utils.gui.fxcomponents.FxMigHp;
+import ozpasyazilim.utils.gui.fxcomponents.FxMigPaneView;
 
 public class FxSimpleDialog2<EntClazz> extends FxSimpleDialog<EntClazz> {
 

@@ -39,8 +39,8 @@ class FiQueryTest {
 		listEvraklar.add(30);
 		listEvraklar.add(31);
 //		listEvraklar.add(MetaMikroEvrakTip.CekGirisBordrosu.getCha_evrak_tip());
-		fiKeyBean.buildPut("cha_evrak_tip", listEvraklar);
-		fiKeyBean.buildPut("eceTxFirmaKod", "ozpas");
+		fiKeyBean.buiPut("cha_evrak_tip", listEvraklar);
+		fiKeyBean.buiPut("eceTxFirmaKod", "ozpas");
 
 		FiQuery fiQuery = new FiQuery(sql, fiKeyBean);
 		fiQuery.activateParamsByMapParams();
