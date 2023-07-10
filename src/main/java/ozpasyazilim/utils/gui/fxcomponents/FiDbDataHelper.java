@@ -2,9 +2,20 @@ package ozpasyazilim.utils.gui.fxcomponents;
 
 import ozpasyazilim.utils.core.FiString;
 
+/**
+ * Db Data ile ilgili işlemler
+ */
 public class FiDbDataHelper {
 
 
+    /**
+     *
+     * Gelen değeri , sql sorgusunu yazılabilecek şekle getirir, örneğin stringi tırnak içerisine alır.
+     *
+     * @param objValue
+     * @param dataType
+     * @return
+     */
     public static String getSqlValueWithQuote(Object objValue, String dataType) {
 
         if (objValue == null) return "null";

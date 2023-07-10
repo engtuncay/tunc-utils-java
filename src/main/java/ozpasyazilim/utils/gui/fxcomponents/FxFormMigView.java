@@ -6,13 +6,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import org.tbee.javafx.scene.layout.MigPane;
 import ozpasyazilim.utils.core.FiBoolean;
-import ozpasyazilim.utils.mvc.IFxModView;
+import ozpasyazilim.utils.mvc.IFxEntSimpleView;
 import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.table.FiColInfHelper;
 
 import java.util.List;
 
-public class FxFormMigView extends FxMigPane implements IFxModView {
+public class FxFormMigView extends FxMigPane implements IFxEntSimpleView {
 
 	HBox hboxToolbar;
 	MigPane migForm;
