@@ -66,22 +66,30 @@ public class FiPropertyFile {
 
 	}
 
-	public static Map<String, String> readPropFileByTor(String fileName) {
+	public static Map<String, String> readPropFile1(String fileName) {
 
 		Stream<String> propFileContentStream = null;
 
 		try {
 			propFileContentStream = Files.lines(Paths.get(fileName), StandardCharsets.UTF_8);
 		} catch (IOException exception) {
+			System.out.println("Prop File Okunurken Hata oluştu.");
+			Loghelper.get(getClassi()).debug("Prop File Okunurken Hata Oluştu.");
 			Loghelper.get(FiPropertyFile.class).error("Hata :" + FiException.exceptionToStrMain(exception));
+		}
+
+		// propFileContentStream null olabilir
+		if(propFileContentStream==null){
+			System.out.println("Prop File Bulunamadı !!! File:"+ fileName);
+			Loghelper.get(getClassi()).debug("Prop File Bulunamadı !!! File:"+ fileName);
+			return new HashMap<>();
 		}
 
 		List<String> listContent = propFileContentStream.collect(Collectors.toList());
 
 		Map<String, String> propMap = new HashMap<>();
 
-		for (Iterator iterator = listContent.iterator(); iterator.hasNext();) {
-			String rowprop = (String) iterator.next();
+		for (String rowprop : listContent) {
 
 			// comment rows skip
 			if (rowprop.matches("^#.*")) continue;

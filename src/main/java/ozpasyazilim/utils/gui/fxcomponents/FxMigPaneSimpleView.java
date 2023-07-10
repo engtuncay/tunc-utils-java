@@ -10,33 +10,33 @@ import ozpasyazilim.utils.mvc.IFxSimpleView;
  * <p>
  * IFxSimpleView arayüzü tanımlandı sadece
  */
-public class FxMigPaneViewSimp extends FxMigPane implements IFxSimpleView {
+public class FxMigPaneSimpleView extends FxMigPane implements IFxSimpleView {
 
-	public FxMigPaneViewSimp() {
+	public FxMigPaneSimpleView() {
 		super();
 	}
 
-	public FxMigPaneViewSimp(LC layoutConstraints) {
+	public FxMigPaneSimpleView(LC layoutConstraints) {
 		super(layoutConstraints);
 	}
 
-	public FxMigPaneViewSimp(LC layoutConstraints, AC colConstraints) {
+	public FxMigPaneSimpleView(LC layoutConstraints, AC colConstraints) {
 		super(layoutConstraints, colConstraints);
 	}
 
-	public FxMigPaneViewSimp(LC layoutConstraints, AC colConstraints, AC rowConstraints) {
+	public FxMigPaneSimpleView(LC layoutConstraints, AC colConstraints, AC rowConstraints) {
 		super(layoutConstraints, colConstraints, rowConstraints);
 	}
 
-	public FxMigPaneViewSimp(String layoutConstraints) {
+	public FxMigPaneSimpleView(String layoutConstraints) {
 		super(layoutConstraints);
 	}
 
-	public FxMigPaneViewSimp(String layoutConstraints, String colConstraints) {
+	public FxMigPaneSimpleView(String layoutConstraints, String colConstraints) {
 		super(layoutConstraints, colConstraints);
 	}
 
-	public FxMigPaneViewSimp(String layoutConstraints, String colConstraints, String rowConstraints) {
+	public FxMigPaneSimpleView(String layoutConstraints, String colConstraints, String rowConstraints) {
 		super(layoutConstraints, colConstraints, rowConstraints);
 	}
 
