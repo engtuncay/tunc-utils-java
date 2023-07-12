@@ -11,22 +11,22 @@ import java.util.regex.Pattern;
  *
  * Sql ile ilgili metodlar kaldırılacak
  */
-public class FiFormatter {
+public class FiStFormat {
 
     private String value;
     private Map<String, Object> namedArguments;
     private List<Object> posArguments;
 
-    private FiFormatter(String value) {
+    private FiStFormat(String value) {
         this.value = value;
     }
 
-    public static FiFormatter fif(String str) {
-        return new FiFormatter(str);
+    public static FiStFormat fif(String str) {
+        return new FiStFormat(str);
     }
 
-    public static FiFormatter fif(String str, Object... args) {
-        FiFormatter ozf = new FiFormatter(str);
+    public static FiStFormat fif(String str, Object... args) {
+        FiStFormat ozf = new FiStFormat(str);
         if (args != null) {
             ozf.posArguments = Arrays.asList(args);
         }
@@ -179,7 +179,7 @@ public class FiFormatter {
     }
 
 
-    public FiFormatter putNamed(String argName, Object object) {
+    public FiStFormat putNamed(String argName, Object object) {
         //this.failIfArgExists(argName);
         getNamedArguments().put(argName, object);
         return this;
@@ -193,7 +193,7 @@ public class FiFormatter {
      * @return
      */
     @Deprecated
-    public FiFormatter buildActivateSingleLineAndFix(String key) {
+    public FiStFormat buildActivateSingleLineAndFix(String key) {
 
         if (!FiType.isEmptyWithTrim(key)) {
             this.value = this.value.replaceAll("--!" + key, "");
@@ -243,7 +243,7 @@ public class FiFormatter {
 
     // use FiQueryTools
     @Deprecated
-    public FiFormatter fhrConvertSqlParamToComment(String key) {
+    public FiStFormat fhrConvertSqlParamToComment(String key) {
         String newSql = FiQueryTools.convertSqlParamToCommentMain(key, value);
         if (newSql != null) this.value = newSql;
         return this;

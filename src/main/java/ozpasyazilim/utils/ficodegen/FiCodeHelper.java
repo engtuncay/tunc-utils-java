@@ -469,7 +469,7 @@ public class FiCodeHelper {
 						"\n" +
 						"}\n";
 
-		return FiFormatter.fif(template).putNamed("className", clazz.getSimpleName()).generate();
+		return FiStFormat.fif(template).putNamed("className", clazz.getSimpleName()).generate();
 
 	}
 

@@ -22,7 +22,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static ozpasyazilim.utils.core.FiFormatter.*;
+import static ozpasyazilim.utils.core.FiStFormat.*;
 
 public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements IRepoJdbi {
 

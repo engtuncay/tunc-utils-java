@@ -9,7 +9,7 @@ import ozpasyazilim.utils.returntypes.Fdr;
 
 import java.util.*;
 
-import static ozpasyazilim.utils.core.FiFormatter.*;
+import static ozpasyazilim.utils.core.FiStFormat.*;
 
 public abstract class AbsRepoJdbiPure extends RepoGeneralJdbi implements IRepoJdbi {
 
