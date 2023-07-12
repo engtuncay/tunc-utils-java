@@ -2226,7 +2226,7 @@ public class FiQueryGenerator {
 		try {
 			result = jdbi.withHandle(handle -> {
 				//handle.registerRowMapper(FieldMapper.factory(TblFiyatVade.class));
-				return handle.select(OzFormatter.ofm(sql).sqlFmtAt())
+				return handle.select(FiFormatter.fif(sql).sqlFmtAt())
 						.bind("TableName", tableName)
 						.mapToBean(TableScheme.class)
 						.list();
@@ -2270,7 +2270,7 @@ public class FiQueryGenerator {
 
 		Optional<E> optEntity = jdbi.withHandle(handle -> {
 			//handle.registerRowMapper(FieldMapper.factory(TblFiyatVade.class));
-			return handle.select(OzFormatter.ofm(finalSqlSelectEntity).sqlFmtAt())
+			return handle.select(FiFormatter.fif(finalSqlSelectEntity).sqlFmtAt())
 					.mapToBean(clazz)
 					.findFirst();
 		});
@@ -2361,7 +2361,7 @@ public class FiQueryGenerator {
 
 		List<TableScheme> tableFields = jdbi.withHandle(handle -> {
 			//handle.registerRowMapper(FieldMapper.factory(TblFiyatVade.class));
-			return handle.select(OzFormatter.ofm(sql).sqlFmtAt())
+			return handle.select(FiFormatter.fif(sql).sqlFmtAt())
 					.bind("TableName", tableName)
 					.mapToBean(TableScheme.class)
 					.list();

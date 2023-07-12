@@ -2,11 +2,14 @@ package ozpasyazilim.utils.core;
 
 import org.w3c.dom.Document;
 
-public class FiDoc {
+/**
+ * w3c.dom.Document
+ */
+public class FiDomDoc {
 
 	Document doc;
 
-	public FiDoc(Document docXml) {
+	public FiDomDoc(Document docXml) {
 		setDoc(docXml);
 	}
 
@@ -19,8 +22,8 @@ public class FiDoc {
 	}
 
 	public String getElementValueByTagName(String tagName) {
-		if(doc.getElementsByTagName(tagName).getLength()>0){
-			return doc.getElementsByTagName(tagName).item(0).getTextContent();
+		if(getDoc().getElementsByTagName(tagName).getLength()>0){
+			return getDoc().getElementsByTagName(tagName).item(0).getTextContent();
 		}else{
 			return null;
 		}

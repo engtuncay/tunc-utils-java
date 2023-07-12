@@ -1,10 +1,13 @@
 package ozpasyazilim.utils.core;
 
+import com.github.underscore.lodash.U;
 import com.github.underscore.lodash.Xml;
 import org.apache.commons.lang3.text.StrSubstitutor;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import ozpasyazilim.utils.datatypes.FiKeyBean;
+import ozpasyazilim.utils.log.Loghelper;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -12,28 +15,24 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.util.Properties;
 
-import com.github.underscore.lodash.U;
-import ozpasyazilim.utils.datatypes.FiKeyString;
-
-public class FiXml {
+/**
+ * FiKeyString yerine FiKeyBean konuldu.
+ */
+public class FiXml2 {
 	private FiDomDoc fiDomDoc;
 	private String txXmlRaw;
 	private String txXmlTemplate;
-	private FiKeyString fksParams;
+	private FiKeyBean fkbParams;
 
-	public FiXml() {
+	public FiXml2() {
 	}
 
-	public FiXml(String txXmlTemplate) {
+	public FiXml2(String txXmlTemplate) {
 		this.txXmlTemplate = txXmlTemplate;
 	}
 
-	public static FiXml bui() {
-		return new FiXml();
-	}
-
-	public static FiXml buiMakeDocument() {
-		return new FiXml();
+	public static FiXml2 bui() {
+		return new FiXml2();
 	}
 
 	public static void main(String[] args) {
@@ -53,7 +52,7 @@ public class FiXml {
 				"</DisKullaniciKimlikDogrula2Response>" +
 				"</soap:Body></soap:Envelope>";
 
-		FiXml fiXml = FiXml.bui().makeDocument(xml);
+		FiXml2 fiXml = FiXml2.bui().makeDocument(xml);
 
 		//fiXml.getDocXml()
 		Document doc = fiXml.getDoc();
@@ -67,25 +66,33 @@ public class FiXml {
 
 	}
 
-	public FiXml makeDocument(String txXml){
+	public FiXml2 makeDocument(String txXml){
 		setDoc(parseXmlFile(txXml));
 		setTxXmlRaw(txXml);
 		return this;
 	}
 
-	public static Document parseXmlFile(String strXml) {
+	public static Document parseXmlFile(String txXml) {
 		try {
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder db = dbf.newDocumentBuilder();
-			InputSource is = new InputSource(new StringReader(strXml));
+			InputSource is = new InputSource(new StringReader(txXml));
 			return db.parse(is);
 		} catch (ParserConfigurationException e) {
-			throw new RuntimeException(e);
+			Loghelper.get(getClassi()).debug(FiException.exceptionIfToString(e));
+			//throw new RuntimeException(e);
 		} catch (SAXException e) {
-			throw new RuntimeException(e);
+			Loghelper.get(getClassi()).debug(FiException.exceptionIfToString(e));
+			//throw new RuntimeException(e);
 		} catch (IOException e) {
-			throw new RuntimeException(e);
+			Loghelper.get(getClassi()).debug(FiException.exceptionIfToString(e));
+			//throw new RuntimeException(e);
 		}
+		return null;
+	}
+
+	private static Class<FiXml2> getClassi() {
+		return FiXml2.class;
 	}
 
 	//format the XML in your String
@@ -184,15 +191,15 @@ public class FiXml {
 		this.txXmlTemplate = txXmlTemplate;
 	}
 
-	public FiKeyString getMapParamsInit() {
-		if (fksParams == null) {
-			fksParams = new FiKeyString();
+	public FiKeyBean getMapParamsInit() {
+		if (fkbParams == null) {
+			fkbParams = new FiKeyBean();
 		}
-		return fksParams;
+		return fkbParams;
 	}
 
-	public void setFksParams(FiKeyString fksParams) {
-		this.fksParams = fksParams;
+	public void setFkbParams(FiKeyBean fkbParams) {
+		this.fkbParams = fkbParams;
 	}
 
 	public Properties readXmlAsProp(String xmlFilename, Class clazz) {
@@ -200,7 +207,6 @@ public class FiXml {
 		File file = null;
 
 		try {
-
 			String fileName = xmlFilename + ".xml";
 			System.out.println(fileName);
 			String absPath = clazz.getResource("").getPath() + fileName;
@@ -237,6 +243,7 @@ public class FiXml {
 		if(getMapParamsInit().isEmpty()) {
 			setTxXmlRaw(getTxXmlRaw());
 		}else{
+			
 			StrSubstitutor sub = new StrSubstitutor(getMapParamsInit(), "{{", "}}");
 			setTxXmlRaw(sub.replace(getTxXmlTemplate()));
 		}

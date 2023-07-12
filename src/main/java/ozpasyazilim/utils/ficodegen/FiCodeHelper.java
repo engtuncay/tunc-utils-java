@@ -450,7 +450,7 @@ public class FiCodeHelper {
 
 	public static String codeRepoClass(Class clazz) {
 
-		String format =
+		String template =
 				"import ozpasyazilim.utils.fidborm.AbsRepoJdbi;\n" +
 						"\n" +
 						"import java.util.List;\n" +
@@ -469,7 +469,7 @@ public class FiCodeHelper {
 						"\n" +
 						"}\n";
 
-		return OzFormatter.ofm(format).putNamedd("className", clazz.getSimpleName()).generate();
+		return FiFormatter.fif(template).putNamed("className", clazz.getSimpleName()).generate();
 
 	}
 

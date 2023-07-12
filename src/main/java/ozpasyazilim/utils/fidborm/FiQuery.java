@@ -11,11 +11,11 @@ import java.util.*;
 /**
  * Syntax
  * <p>
- * Jdbi Param :paramName
+ * Jdbi Param ":paramName"
  * <p>
- * Sql (At) Param @paramName
+ * Sql (At) Param "@paramName"
  * <p>
- * Opt Param --!paramName
+ * Opt Param "--!paramName"
  */
 public class FiQuery {
 

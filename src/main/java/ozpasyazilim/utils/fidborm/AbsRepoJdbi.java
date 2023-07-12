@@ -22,7 +22,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static ozpasyazilim.utils.core.OzFormatter.*;
+import static ozpasyazilim.utils.core.FiFormatter.*;
 
 public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements IRepoJdbi {
 
@@ -176,7 +176,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		List<EntClazz> result = null;
 		try {
 			result = jdbi.withHandle(handle -> {
-				return handle.createQuery(fimSqlQueryWithDeActType1(sqlQuery))
+				return handle.createQuery(FiQueryTools.fimSqlQueryWithDeActType1(sqlQuery))
 						.bindMap(mapBind)
 						.mapToBean(getEntityClass())
 						.list();
@@ -198,7 +198,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		try {
 			List<EntClazz> result = getJdbi().withHandle(handle -> {
-				return handle.createQuery(fimSqlQueryWithDeActType1(sqlQuery))
+				return handle.createQuery(FiQueryTools.fimSqlQueryWithDeActType1(sqlQuery))
 						.bindMap(mapBind)
 						.mapToBean(getEntityClass())
 						.list();
@@ -331,7 +331,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		if (entityClass == null) setAutoClass();
 
-		sqlQuery = fhrFixAndDeActivateOptParams(sqlQuery);
+		sqlQuery = FiQueryTools.fhrFixAndDeActivateOptParams(sqlQuery);
 
 		String sqlNew = convertSqlAndMapToMultiParam(sqlQuery, mapBind);
 
@@ -350,7 +350,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		if (entityClass == null) setAutoClass();
 
-		sqlQuery = fhrFixAndDeActivateOptParams(sqlQuery);
+		sqlQuery = FiQueryTools.fhrFixAndDeActivateOptParams(sqlQuery);
 
 		String sqlNew = convertSqlAndMapToMultiParam(sqlQuery, mapBind);
 
@@ -362,7 +362,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		if (entityClass == null) setAutoClass();
 
-		sqlQuery = fhrFixAndDeActivateOptParams(sqlQuery);
+		sqlQuery = FiQueryTools.fhrFixAndDeActivateOptParams(sqlQuery);
 
 		String sqlNew = convertSqlAndMapToMultiParam(sqlQuery, mapBind);
 
@@ -443,7 +443,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		List<EntClazz> result = null;
 		try {
 			result = jdbi.withHandle(handle -> {
-				return handle.select(ofm(sqlQuery).sqlFmtAt())
+				return handle.select(fif(sqlQuery).sqlFmtAt())
 						.bindMap(mapBind)
 						.map(new FiBeanNestedRowMapper<>(getEntityClass()))
 						//.mapToBean(getEntityClass())
@@ -615,7 +615,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		List<EntClazz> result = null;
 		try {
 			result = jdbi.withHandle(handle -> {
-				return handle.select(ofm(new FiQueryGenerator().selectTopQueryLike(getEntityClass(), 100, entity)).sqlFmtAt())
+				return handle.select(fif(new FiQueryGenerator().selectTopQueryLike(getEntityClass(), 100, entity)).sqlFmtAt())
 						.bindBean(entity)
 						.mapToBean(getEntityClass())
 						.list();
@@ -697,7 +697,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		try {
 			Optional<Integer> result = getJdbi().withHandle(handle -> {
-				return handle.select(fimSqlQueryWithDeActType1(sqlQuery))
+				return handle.select(FiQueryTools.fimSqlQueryWithDeActType1(sqlQuery))
 						.bindMap(map)
 						.mapTo(Integer.class)
 						.findFirst();
@@ -720,7 +720,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		try {
 			Optional<Integer> result = getJdbi().withHandle(handle -> {
-				return handle.select(fimSqlQueryWithDeActType1(sqlQuery))
+				return handle.select(FiQueryTools.fimSqlQueryWithDeActType1(sqlQuery))
 						.bindBean(entClazz)
 						.mapTo(Integer.class)
 						.findFirst();
@@ -1576,28 +1576,6 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 			Integer rowCountUpdate = handle.createUpdate(FiQueryTools.stoj(updateQuery))
 					.bindMap(fiMapParams)
 					.execute(); // returns row count updated
-			//Loghelperr.getInstance(getClass()).debug("Row Count Update:"+rowCountUpdate);
-			//fiDbResult.setLnSuccessWithUpBoResult(1, rowCountUpdate);
-			fdr.setBoResultAndRowsAff(true, rowCountUpdate);
-		} catch (Exception ex) {
-			Loghelper.debugException(getClass(), ex);
-			fdr.setBoResult(false, ex);
-		}
-		return fdr;
-	}
-
-	public Fdr jdUpdateBindMapViaAtTire(String updateQuery, Map<String, Object> fiMapParams) {
-
-		Jdbi jdbi = getJdbi();
-
-		Fdr fdr = new Fdr();
-
-		try {
-			Integer rowCountUpdate = jdbi.withHandle(handle -> {
-				return handle.createUpdate(fimSqlAtTire(updateQuery))
-						.bindMap(fiMapParams)
-						.execute(); // returns row count updated
-			});
 			//Loghelperr.getInstance(getClass()).debug("Row Count Update:"+rowCountUpdate);
 			//fiDbResult.setLnSuccessWithUpBoResult(1, rowCountUpdate);
 			fdr.setBoResultAndRowsAff(true, rowCountUpdate);

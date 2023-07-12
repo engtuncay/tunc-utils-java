@@ -374,6 +374,41 @@ public class FiQueryTools {
 		return sqlNew;
 	}
 
+	/**
+	 * 1 fhrDeActivateAllOptionalParams
+	 * <p>
+	 * 2 fixSqlProblems
+	 * <p>
+	 * Önce opsiyonel parametreleri deaktivite yapar , daha sonra sql problemleri götürür
+	 * Daha sonra @ ifadelerini : ye çevirir.
+	 *
+	 * <br>
+	 * Deaktivite Yapacağı örnek satır. Ünlem işareti ile parametre olan satırın alt satırını siler
+	 * <br>--!cari_sektor_kodu
+	 * <br>AND ch.cari_sektor_kodu IN (@cari_sektor_kodu)
+	 * <p>
+	 *
+	 */
+	public static String fimSqlQueryWithDeActType1(String sqlQuery) {
+		sqlQuery = deActivateAllOptParams(sqlQuery);
+		sqlQuery = fixSqlProblems(sqlQuery);
+		return convertSqlParamToJdbiParamMain(sqlQuery);
+	}
+
+	/**
+	 * 1 fhrDeActivateAllOptionalParams
+	 * <p>
+	 * 2 fixSqlProblems
+	 * <p>
+	 * (!!! fhrConvertSqlParamToJdbi yapmıyor)
+	 *
+	 * @param sql
+	 * @return
+	 */
+	public static String fhrFixAndDeActivateOptParams(String sql) {
+		return fixSqlProblems(deActivateAllOptParams(sql));
+	}
+
 
 
 }

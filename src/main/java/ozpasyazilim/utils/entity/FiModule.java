@@ -75,7 +75,7 @@ public class FiModule {
 		//this.clazz = classModule;
 	}
 
-	public FiModule buildLabel(String txLabel) {
+	public FiModule buiTxLabel(String txLabel) {
 		setTxModuleLabel(txLabel);
 		return this;
 	}
