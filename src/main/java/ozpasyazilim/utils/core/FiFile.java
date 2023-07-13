@@ -1,6 +1,7 @@
 package ozpasyazilim.utils.core;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -108,7 +109,7 @@ public class FiFile {
 		return true;
 	}
 
-	public static Boolean existFileRelativeToApplicationDir(String filename) {
+	public static Boolean existFileRelative(String filename) {
 
 		File fileRelative4 = new File("./" + filename);
 		return fileRelative4.exists();
@@ -117,8 +118,8 @@ public class FiFile {
 
 	public static File getFileRelativeToApplicationDir(String filename) {
 
-		File fileRelative4 = new File("./" + filename);
-		return fileRelative4;
+		File fileRelative = new File("./" + filename);
+		return fileRelative;
 
 	}
 
@@ -160,8 +161,8 @@ public class FiFile {
 			// File afile = new File("C:\\folderA\\Afile.txt");
 			// File bfile = new File("C:\\folderB\\Afile.txt");
 
-			inStream = new FileInputStream(afile);
-			outStream = new FileOutputStream(bfile);
+			inStream = Files.newInputStream(afile.toPath());
+			outStream = Files.newOutputStream(bfile.toPath());
 
 			byte[] buffer = new byte[1024];
 
@@ -302,6 +303,22 @@ public class FiFile {
 		InputStream is = FiFile.class.getClassLoader().getResourceAsStream(resourceFileName);
 		BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 		return reader.lines().collect(Collectors.joining("\n"));
+	}
+
+	public static String getContent1OfRelativeFile(String fileName) {
+		String filePath = "./" + fileName;
+		try {
+			String result = new String(Files.readAllBytes(Paths.get(filePath)), StandardCharsets.UTF_8);
+			return result;
+		} catch (IOException e) {
+			Loghelper.get(getClassi()).error(FiException.exceptionIfToString(e));
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	private static Class<FiFile> getClassi() {
+		return FiFile.class;
 	}
 
 	public static List<File> findFiles(String strFilestartswith, String sExtension, String path, Boolean trCharacterException) {

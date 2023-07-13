@@ -69,6 +69,14 @@ public class FiConsole {
 		}
 	}
 
+	public static void printSet(Set<String> setData) {
+
+		for (String setDatum : setData) {
+			System.out.println(setDatum);
+		}
+
+	}
+
 	public static void printListOfObjects(List<Object> list) {
 
 		for (int i = 0; i < list.size(); i++) {
