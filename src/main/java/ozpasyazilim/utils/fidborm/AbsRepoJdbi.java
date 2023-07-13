@@ -1174,6 +1174,13 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 		return jdInsertEntityMain(entity, true);
 	}
 
+	/**
+	 * Entity'nin id alanları hariç, insert sorgusunu hazırlar.
+	 *
+	 * @param entity
+	 * @param boIncludeIdFields
+	 * @return
+	 */
 	public Fdr jdInsertEntityMain(EntClazz entity, Boolean boIncludeIdFields) {
 
 		Jdbi jdbi = getJdbi();
@@ -1203,6 +1210,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
 
 		} catch (Exception ex) {
 			Loghelper.debugException(getClass(), ex);
+			// URFIXME kısa hata açıklaması alanabilir
 			fdr.setBoResult(false, ex);
 		}
 

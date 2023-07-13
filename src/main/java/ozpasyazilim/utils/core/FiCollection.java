@@ -1382,4 +1382,18 @@ public class FiCollection {
 		}
 		return list;
 	}
+
+	public static <PrmEnt> Boolean containsEmptyString(List<PrmEnt> value, Function<PrmEnt,String> getApcTxValue) {
+
+		Boolean boEmptyfound = false;
+
+		for (PrmEnt prmEnt : value) {
+			if (FiString.isEmpty(getApcTxValue.apply(prmEnt))) {
+				boEmptyfound=true;
+				break;
+			}
+		}
+
+		return boEmptyfound;
+	}
 }

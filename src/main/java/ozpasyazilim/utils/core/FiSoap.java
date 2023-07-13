@@ -101,12 +101,16 @@ public class FiSoap {
 			}
 			//Loghelper.debugLog(FiSoap.class, "Soap Response:"+outputString);
 		} catch (IOException exception) {
-			Loghelper.get(FiSoap.class).debug(FiException.exceptionIfToString(exception));
+			Loghelper.get(getClassi()).debug(FiException.exceptionIfToString(exception));
 			fdr.setBoResult(false);
 			fdr.setException(exception);
 			fdr.setMessage("Soap isteği gerçekleşirken hata oluştu. Detay için Exception inceleyiniz.");
 		}
 		return fdr;
+	}
+
+	private static Class<FiSoap> getClassi() {
+		return FiSoap.class;
 	}
 
 	public static Fdr<String> requestRawHttps(String endPoint, String soapRequest, FiKeyString fksHeaders) {
