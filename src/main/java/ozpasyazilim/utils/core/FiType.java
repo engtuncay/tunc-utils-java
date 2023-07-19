@@ -144,6 +144,13 @@ public class FiType {
 		return value.equals(valueCheck);
 	}
 
+	/**
+	 * null değerleri kontrol etmez false döner.
+	 *
+	 * @param value
+	 * @param valueCheck
+	 * @return
+	 */
 	public static boolean equals(Object value, Object valueCheck) {
 		if (value == null) return false;
 		return value.equals(valueCheck);

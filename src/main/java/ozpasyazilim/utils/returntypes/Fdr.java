@@ -308,6 +308,11 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 		return (String) value;
 	}
 
+	public Integer getValueAsInteger() {
+		if (value == null) return null;
+		return (Integer) value;
+	}
+
 	public EntClazz getValueOr(EntClazz entClazz) {
 		if (value == null) return entClazz;
 		return value;
@@ -824,7 +829,7 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 		return listException;
 	}
 
-	public List<Exception> getListExceptionNotNull() {
+	public List<Exception> getListExceptionNtn() {
 		if (listException == null) {
 			return new ArrayList<>();
 		}

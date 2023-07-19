@@ -43,6 +43,12 @@ public class DbConfig {
 		// ;encrypt=true;trustServerCertificate=true
 	}
 
+	public static String getUrlMicrosoftJdbcSqlServerWoutDb(String server) {
+		return String.format("jdbc:sqlserver://%s;autoCommit=false",server);
+		// tls hatası engellemek için denendi
+		// ;encrypt=true;trustServerCertificate=true
+	}
+
 	public static String getUrlMicrosoftJdbcSqlServerWithUserAndPass(String server, String dbName, String user, String pass) {
 		return String.format("jdbc:sqlserver://%s;databaseName=%s;autoCommit=false;encrypt=true;trustServerCertificate=true;user=%s;password=%s",server,dbName,user,pass); //
 	}

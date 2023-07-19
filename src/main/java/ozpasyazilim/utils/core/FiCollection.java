@@ -1348,8 +1348,7 @@ public class FiCollection {
 	}
 
 	public static boolean isEmptyMap(Map mapData) {
-		if (mapData == null) return true;
-		if (mapData.size() == 0) return true;
+		if (mapData == null || mapData.size()==0) return true;
 		return false;
 	}
 

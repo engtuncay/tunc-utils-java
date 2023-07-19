@@ -359,52 +359,7 @@ public class FiCodeHelper {
 		return txFiColList.toString();
 	}
 
-	public static String codeFiTableColsGeneraterMethodsByFiFields(Class entclazz) {
 
-		List<FiField> listFields = FiEntity.getListFieldsWoutStatic(entclazz, true);
-
-		StringBuilder query = new StringBuilder();
-
-		StringBuilder colList = new StringBuilder();
-
-		int index = 0;
-		for (FiField field : listFields) {
-
-			String fieldName = field.getDbFieldName();
-
-			String fieldGen = String.format("\npublic FiCol %s() {" +
-					"\n\tFiCol fiCol = new FiCol(\"%s\", \"%s\");", fieldName, fieldName, FiString.orEmpty(field.getLabel()));
-
-			String simpleType = field.getClassNameSimple();
-
-			fieldGen = fieldGen + String.format("\n\tfiCol.buildColType(OzColType.%s);", simpleType);
-
-			//field.getClassNameSimpleAsOzColType();
-
-			fieldGen = fieldGen + "\n\treturn fiCol;\n\t}\n";
-
-			query.append(fieldGen);
-
-			colList.append(String.format("\tlistTableCols.add(FiTableColFactory.bui().%s());\n", fieldName));
-
-			index++;
-		}
-
-
-		String listColsTemplate = String.format("\n\npublic List<FiCol> genCols%s(){\n" +
-				"\n" +
-				"\tList<FiCol> listTableCols = new ArrayList<>();\n" +
-				"\n" +
-				"%s" +
-				"\t\n" +
-				"\treturn listTableCols;\n" +
-				"\t\n" +
-				"\t}", entclazz.getSimpleName(), colList.toString());
-
-
-		return query.toString() + listColsTemplate;
-
-	}
 
 	public static String codeClassFieldList(Class clazz) {
 

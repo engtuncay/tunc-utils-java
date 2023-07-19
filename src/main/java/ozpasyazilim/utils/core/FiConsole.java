@@ -488,6 +488,32 @@ public class FiConsole {
 		return textObjectFieldsMain(obj, fiConsoleConfig);
 	}
 
+	/**
+	 * Object alanlarının değerlerini gösterir.
+	 *
+	 * @param obj
+	 * @return
+	 */
+	public static String textObjectFields(Object obj) {
+
+		FiConsoleConfig fiConsoleConfig = new FiConsoleConfig();
+		fiConsoleConfig.setBoShowNull(true);
+		fiConsoleConfig.setBoEqualSignHide(true);
+		fiConsoleConfig.setBoTypeHide(true);
+
+		return textObjectFieldsMain(obj, fiConsoleConfig);
+	}
+
+	public static String textObjectFieldsNtn(Object obj) {
+
+		FiConsoleConfig fiConsoleConfig = new FiConsoleConfig();
+		fiConsoleConfig.setBoShowNull(false);
+		fiConsoleConfig.setBoEqualSignHide(true);
+		fiConsoleConfig.setBoTypeHide(true);
+
+		return textObjectFieldsMain(obj, fiConsoleConfig);
+	}
+
 	public static String textObjectFieldsHp2ForExcel(Object obj, Boolean boShowNull) {
 
 		FiConsoleConfig fiConsoleConfig = new FiConsoleConfig();
@@ -717,6 +743,10 @@ public class FiConsole {
 		System.out.println(textFiKeyString(mapData));
 	}
 
+	public static void printMap2(Map<String, Object> mapData) {
+		System.out.println(textMapStringObject(mapData));
+	}
+
 	public static void printMapFi(FiKeyBean mapData) {
 		System.out.println(textFiKeyBean(mapData));
 	}
@@ -732,6 +762,15 @@ public class FiConsole {
 			log.append(entry.getKey() + " : " + entry.getValue() + "\n"); //System.out.println(entry.getKey() + "/" + entry.getValue());
 		}
 
+		return log.toString();
+	}
+
+	public static String textMapStringObject(Map<String, Object> appMap) {
+
+		StringBuilder log = new StringBuilder("");
+		for (Map.Entry<String, Object> entry : appMap.entrySet()) {
+			log.append(entry.getKey() + " : " + entry.getValue() + "\n");
+		}
 		return log.toString();
 	}
 
