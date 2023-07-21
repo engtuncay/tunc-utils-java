@@ -694,7 +694,7 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 		return value;
 	}
 
-	public List getValueCollection() {
+	public List getValueAsListNtn() {
 		if (getValue() != null) return (List) getValue();
 		return new ArrayList();
 	}

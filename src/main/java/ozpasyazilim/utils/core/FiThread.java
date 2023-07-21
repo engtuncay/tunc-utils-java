@@ -267,7 +267,7 @@ public class FiThread {
 			Platform.runLater(() -> {
 				lblNodes.setText(textOld);
 				//lblNodes.setDisable(false);
-				fxTableView2.updatePageToolbar();
+				fxTableView2.updatePageToolbarComps();
 			});
 
 		};

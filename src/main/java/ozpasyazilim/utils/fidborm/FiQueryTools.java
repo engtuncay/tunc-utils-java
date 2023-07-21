@@ -276,7 +276,7 @@ public class FiQueryTools {
 	 */
 	public static String activateParamsMain(String txQuery, FiKeyBean mapParams, Boolean boActivateOnlyFullParams) {
 
-		List<String> listParamsWillDeActivate = new ArrayList<>();
+		List<String> listParamsDeActivated = new ArrayList<>();
 		StringProperty spQuery = new SimpleStringProperty(txQuery);
 
 		mapParams.forEach((key, value) -> {
@@ -290,7 +290,7 @@ public class FiQueryTools {
 					spQuery.set(activateOptParamMain(spQuery.get(), key));
 				} else {
 					spQuery.set(FiQueryTools.deActivateOptParamMain(spQuery.get(), key));
-					listParamsWillDeActivate.add(key);
+					listParamsDeActivated.add(key);
 				}
 
 			} else { // boActivateOnlyFullParams false veya null ise, tüm parametreleri aktif eder
@@ -298,8 +298,34 @@ public class FiQueryTools {
 			}
 		});
 
-		for (String deActivatedParam : listParamsWillDeActivate) {
+		for (String deActivatedParam : listParamsDeActivated) {
 			mapParams.remove(deActivatedParam);
+		}
+
+		return spQuery.get();
+	}
+
+	/**
+	 * Sorgu içinde bulunan optinal parametrelerden , mapParams kullanılmamışsa deactif eder.
+	 *
+	 * @param txQuery
+	 * @param mapParams
+	 * @return
+	 */
+	public static String deActivateOptParamsNotUsed(String txQuery, FiKeyBean mapParams) {
+
+		//List<String> listParamsWillDeActivate = new ArrayList<>();
+		StringProperty spQuery = new SimpleStringProperty(txQuery);
+		Set<String> hstParamsOptional = findParamsOptional(txQuery);
+
+		for (String optParam : hstParamsOptional) {
+
+			if (!mapParams.containsKey(optParam)) {
+				//listParamsWillDeActivate.add(optParam);
+				spQuery.set(FiQueryTools.deActivateOptParamMain(spQuery.get(), optParam));
+				//mapParams.remove(deActivatedParam);
+			}
+
 		}
 
 		return spQuery.get();

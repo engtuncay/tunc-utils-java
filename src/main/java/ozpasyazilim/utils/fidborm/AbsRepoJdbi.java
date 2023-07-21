@@ -499,8 +499,7 @@ public abstract class AbsRepoJdbi<EntClazz> extends RepoGeneralJdbi implements I
             fdr.setBoResult(true);
             fdr.setValue(result);
         } catch (Exception ex) {
-            Loghelper.errorLog(getClass(), "Query Problem");
-            Loghelper.errorException(getClass(), ex);
+            Loghelper.get(getClass()).error(FiException.exceptionToStrMain(ex));
             fdr.setBoResult(false, ex);
         }
 

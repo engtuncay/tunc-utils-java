@@ -100,7 +100,7 @@ public class FiConsole {
 	}
 
 	public static <E> void debugCollectionObjectsNotNull(Collection<E> collection, Class clazz) {
-		Loghelper.debugLog(clazz, String.format("List Detail (Not Null)\n\n%s", textCollectionObjectsNotNull(collection)));
+		Loghelper.debugLog(clazz, String.format("List Detail (Not Null)\n\n%s", textCollectionOfObjectsNtn(collection)));
 	}
 
 	public static void debugMapNotNull(Map map, Class clazz) {
@@ -132,11 +132,11 @@ public class FiConsole {
 	}
 
 	public static <E> void debugStringList(List<String> listString, Class clazz) {
-		Loghelper.debugLog(clazz, String.format("Array Detail \n\n%s", textStringCollection(listString)));
+		Loghelper.debugLog(clazz, String.format("Array Detail \n\n%s", textCollectionOfString(listString)));
 	}
 
 	public static <E> void debugStringList(Collection<String> stringCollection) {
-		Loghelper.debugLog(FiConsole.class, String.format("Array Detail \n\n%s", textStringCollection(stringCollection)));
+		Loghelper.debugLog(FiConsole.class, String.format("Array Detail \n\n%s", textCollectionOfString(stringCollection)));
 	}
 
 	public static <E> void debugListObjectsToString(List<E> list, Class clazz) {
@@ -165,11 +165,11 @@ public class FiConsole {
 	}
 
 
-	public static <E> String textCollectionObjectsNotNull(Collection<E> collection) {
-		return textCollection(collection, false);
+	public static <E> String textCollectionOfObjectsNtn(Collection<E> collection) {
+		return textCollectionOfObject(collection, false);
 	}
 
-	public static <E> String textCollection(Collection<E> collection, Boolean boShowNullFields) {
+	public static <E> String textCollectionOfObject(Collection<E> collection, Boolean boShowNullFields) {
 
 		StringBuilder result = new StringBuilder("");
 
@@ -228,7 +228,7 @@ public class FiConsole {
 
 	}
 
-	public static String textStringCollection(Collection<String> list) {
+	public static String textCollectionOfString(Collection<String> list) {
 
 		StringBuilder result = new StringBuilder("");
 
@@ -424,7 +424,7 @@ public class FiConsole {
 			List list = (List) obj;
 
 			if (list.size() > 0 && list.get(0) instanceof String) {
-				return String.format("Array Detail \n\n%s", textStringCollection((list)));
+				return String.format("Array Detail \n\n%s", textCollectionOfString((list)));
 			}
 
 			debugListObjectsNotNull(list, FiConsole.class);
@@ -433,7 +433,7 @@ public class FiConsole {
 
 		if (obj instanceof Collection) {
 			Collection collection = (Collection) obj;
-			return String.format("Collection Detail (Not Null Fields)\n\n%s", textCollectionObjectsNotNull(collection));
+			return String.format("Collection Detail (Not Null Fields)\n\n%s", textCollectionOfObjectsNtn(collection));
 		}
 
 		if (obj instanceof String[]) {
@@ -785,7 +785,7 @@ public class FiConsole {
 	}
 
 	public static void printStringCollection(Collection<String> strings) {
-		System.out.println(textStringCollection(strings));
+		System.out.println(textCollectionOfString(strings));
 	}
 
 	public static String textListFiKeyBean(FiListFkb fiListFkb) {
