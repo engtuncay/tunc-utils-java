@@ -597,6 +597,7 @@ public class FiString {
         for (String val : txtVal) {
             if (isEmptyTrim(val)) {
                 boFull = false;
+                return boFull;
             }
         }
         return boFull;
@@ -694,6 +695,18 @@ public class FiString {
         }
         if (txValue == null) return "";
         return txValue;
+    }
+
+    public static String combineWithSpace(String txValue1, String txValue2) {
+        if (!isEmptyTrim(txValue1)) {
+            if (!isEmptyTrim(txValue2)) {
+                return txValue1 + " " + txValue2;
+            } else { // txValue2 Empty
+                return FiString.orEmpty(txValue1);
+            }
+        } else { // txValue1 is empty
+            return FiString.orEmpty(txValue2);
+        }
     }
 
     public static Boolean checkEqualNotNull(String vdaireno, String cari_vdaire_no) {

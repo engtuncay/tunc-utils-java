@@ -456,6 +456,10 @@ public class FiEntity {
 			fiField.setBoFiSelect1(true);
 		}
 
+		if (field.isAnnotationPresent(FiWhere1.class)) {
+			fiField.setBoFiWhere1(true);
+		}
+
 		if (field.isAnnotationPresent(FiOnlyFirstInsert.class)) {
 			fiField.setBoOnlyFirstInsert(true);
 		}

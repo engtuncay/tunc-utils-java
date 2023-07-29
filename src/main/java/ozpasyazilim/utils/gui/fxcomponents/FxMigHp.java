@@ -188,7 +188,7 @@ public class FxMigHp {
 	}
 
 	/**
-	 * Layout Constraint
+	 * Layout Constraints
 	 * <p>
 	 * MigPane constructor na yazılır  (Lc,Lrc,Lcc)
 	 *

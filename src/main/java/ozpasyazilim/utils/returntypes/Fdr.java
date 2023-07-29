@@ -176,6 +176,12 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 		this.message = message;
 	}
 
+	public Fdr(Boolean boResult, String message,MetaLogType metaLogType) {
+		this.boResult = boResult;
+		this.message = message;
+		addLog(message, metaLogType);
+	}
+
 	public Fdr(Boolean boResult, String txMessage, Boolean boAddException) {
 		this.boResult = boResult;
 		this.message = txMessage;
@@ -694,6 +700,11 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 		return value;
 	}
 
+	/**
+	 * List'in size kontrolü yapılırken kullanılır, geriye null obje dönmez.
+	 *
+	 * @return
+	 */
 	public List getValueAsListNtn() {
 		if (getValue() != null) return (List) getValue();
 		return new ArrayList();

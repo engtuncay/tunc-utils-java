@@ -85,7 +85,7 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
         return this;
     }
 
-    public FiKeyBean putObjTos(Object field, Object value) {
+    public FiKeyBean putKeyTos(Object field, Object value) {
         this.put(field.toString(), value);
         return this;
     }
@@ -267,7 +267,27 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
 
 
     public void copyParamByFiColOrEmptyStr(FiCol fiColFrom, FiCol fiColTo) {
-        putObjTos(fiColTo, getOrDefault(fiColFrom.toString(), ""));
+        putKeyTos(fiColTo, getOrDefault(fiColFrom.toString(), ""));
     }
 
+    public boolean checkEmpty(FiCol fiCol) {
+        if(!containsKey(fiCol.toString())) return true;
+
+        Object objValue = get(fiCol.toString());
+
+        if(objValue==null) return true;
+
+        if(objValue instanceof String){
+            return FiString.isEmptyTrim((String) objValue);
+        }
+
+        return false;
+    }
+
+    public boolean checkEmptyFiColExist(List<FiCol> fiColList) {
+        for (FiCol fiCol : fiColList) {
+            if(checkEmpty(fiCol)) return true;
+        }
+        return false;
+    }
 }

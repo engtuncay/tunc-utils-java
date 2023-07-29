@@ -2115,7 +2115,7 @@ public class FiExcel {
 
 	}
 
-	public static <PrmEntClazz> void saveAndOpenSablonExcel(IFxSimpleCont iFxModCont, List<FiCol> listExcelColums, List<PrmEntClazz> listSampleData, Class<PrmEntClazz> clazzForAutoComment, String appDir) {
+	public static <PrmEntClazz> void saveAndOpenSablonExcel(IFxSimpleCont iFxSimpleCont, List<FiCol> listExcelColums, List<PrmEntClazz> listSampleData, Class<PrmEntClazz> clazzForAutoComment, String appDir) {
 
 		if (clazzForAutoComment != null) {
 			FiColInfHelper.autoComment(listExcelColums, clazzForAutoComment);
@@ -2123,7 +2123,7 @@ public class FiExcel {
 
 		String basepath = FiWinUtils.getDesktopDirectory();
 
-		String excelfilename = "Sablon-" + iFxModCont.getModuleLabel() + "-" + FiDate.datetoString_timestampt2(new Date()) + ".xlsx";
+		String excelfilename = "Sablon-" + iFxSimpleCont.getModuleLabel() + "-" + FiDate.datetoString_timestampt2(new Date()) + ".xlsx";
 
 		Path path = Paths.get(String.format("%s\\%s\\", basepath, appDir));
 

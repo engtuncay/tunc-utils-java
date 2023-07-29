@@ -855,7 +855,7 @@ public class FxDialogShow {
 
 		Pane rootPane = fxModCont.getModView().getRootPane();
 
-		FxPaneHelper.setMaxHeightAndWidthForWindows(rootPane);
+		FxWindowHelper.setMaxHeightAndWidthForWindows(rootPane);
 
 		if (!FiString.isEmpty(dialogConfig.getCssFileName())) {
 			rootPane.getStylesheets().add(dialogConfig.getCssFileName());

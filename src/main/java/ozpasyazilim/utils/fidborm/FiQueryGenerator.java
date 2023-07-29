@@ -327,7 +327,6 @@ public class FiQueryGenerator {
 		List<FiField> fieldListFilterAnno = FiEntity.getListFieldsShortWithId(clazz);
 
 		//String idField = getIdFieldSingle(fieldListFilterAnno);
-
 		//if (idField == null) return null;
 
 		String tableName = getTableName(clazz);
@@ -364,6 +363,58 @@ public class FiQueryGenerator {
 		//query.append("\nWHERE " + idField + "=:idvalue");
 
 		return query.toString();
+	}
+
+	public static String selectAllDtoByFiWhere1(Class clazz) {
+
+		List<FiField> fieldListFilterAnno = FiEntity.getListFieldsShortWithId(clazz);
+
+		//String idField = getIdFieldSingle(fieldListFilterAnno);
+		//if (idField == null) return null;
+
+		StringBuilder sbSelectQuery = selectAllDto(clazz, fieldListFilterAnno);
+
+		StringBuilder queryWhere = new StringBuilder();
+
+		int indexWhere = 0;
+		for (FiField fiField : fieldListFilterAnno) {
+			if (FiBoolean.isTrue(fiField.getBoFiWhere1())) {
+				indexWhere++;
+				if (indexWhere != 1) queryWhere.append(" AND ");
+				queryWhere.append(fiField.getName()).append(" = @").append(fiField.getName());
+			}
+		}
+
+		 sbSelectQuery.append("\nWHERE ").append(queryWhere);
+
+		if (queryWhere.length() < 1) {
+			sbSelectQuery = new StringBuilder();
+		}
+
+		return sbSelectQuery.toString();
+	}
+
+	public static StringBuilder selectAllDto(Class clazz,List<FiField> fieldListFilterAnno) {
+
+		//String idField = getIdFieldSingle(fieldListFilterAnno);
+		//if (idField == null) return null;
+
+		String tableName = getTableName(clazz);
+		StringBuilder query = new StringBuilder();
+		query.append("SELECT ");
+
+		int index = 0;
+		for (FiField fiField : fieldListFilterAnno) {
+
+			if (FiBoolean.isTrue(fiField.getBoDtoField())) {
+				index++;
+				if (index != 1) query.append(", ");
+				query.append(fiField.getName());  // + " = :" + fiField.getName());
+			}
+		}
+
+		query.append("\nFROM " + tableName);
+		return query;
 	}
 
 	public static String selectAllByFiSelectFields(Class clazz) {
@@ -818,7 +869,7 @@ public class FiQueryGenerator {
 		return query.toString();
 	}
 
-	public static String selectDtoFieldsWoutWhere(Class clazz) {
+	public static String selectDtoFieldsWoutWhereOrderByCandIdField(Class clazz) {
 
 		List<FiField> fieldList = FiEntity.getListFieldsShortWithId(clazz);
 
@@ -829,6 +880,7 @@ public class FiQueryGenerator {
 
 		query.append("SELECT ");
 
+		String idField = "";
 		Integer index = 0;
 		for (FiField fiField : fieldList) {
 
@@ -839,9 +891,17 @@ public class FiQueryGenerator {
 				query.append(fiField.getName());
 			}
 
+			if(FiBoolean.isTrue(fiField.getBoCandidateId1())){
+				idField = fiField.getDbFieldNameOrName();
+			}
+
 		}
 
 		query.append("\nFROM " + tableName);
+
+		if (!FiString.isEmptyTrim(idField)) {
+			query.append("\nORDER BY " + idField);
+		}
 
 		return query.toString();
 	}

@@ -271,14 +271,14 @@ public class FiDate {
 
 		Date dateSelected = null;
 
-		if (dateSelected == null) dateSelected = stringToDate_FormatNoCatch(date, "dd.MM.yyyy");
-		if (dateSelected == null) dateSelected = stringToDate_FormatNoCatch(date, "dd.MM.20yy");
-		if (dateSelected == null) dateSelected = stringToDate_FormatNoCatch(date, "dd,MM,yyyy");
-		if (dateSelected == null) dateSelected = stringToDate_FormatNoCatch(date, "dd,MM,20yy");
-		if (dateSelected == null) dateSelected = stringToDate_FormatNoCatch(date, "dd-MM-yyyy");
-		if (dateSelected == null) dateSelected = stringToDate_FormatNoCatch(date, "dd-MM-20yy");
-		if (dateSelected == null) dateSelected = stringToDate_FormatNoCatch(date, "dd/MM/yyyy");
-		if (dateSelected == null) dateSelected = stringToDate_FormatNoCatch(date, "dd/MM/20yy");
+		if (dateSelected == null) dateSelected = stringToDate_FormatWoutException(date, "dd.MM.yyyy");
+		if (dateSelected == null) dateSelected = stringToDate_FormatWoutException(date, "dd.MM.20yy");
+		if (dateSelected == null) dateSelected = stringToDate_FormatWoutException(date, "dd,MM,yyyy");
+		if (dateSelected == null) dateSelected = stringToDate_FormatWoutException(date, "dd,MM,20yy");
+		if (dateSelected == null) dateSelected = stringToDate_FormatWoutException(date, "dd-MM-yyyy");
+		if (dateSelected == null) dateSelected = stringToDate_FormatWoutException(date, "dd-MM-20yy");
+		if (dateSelected == null) dateSelected = stringToDate_FormatWoutException(date, "dd/MM/yyyy");
+		if (dateSelected == null) dateSelected = stringToDate_FormatWoutException(date, "dd/MM/20yy");
 
 		return dateSelected;
 
@@ -701,7 +701,7 @@ public class FiDate {
 
 	}
 
-	public static Date stringToDate_FormatNoCatch(String date, String format) {
+	public static Date stringToDate_FormatWoutException(String date, String format) {
 		SimpleDateFormat formatter = new SimpleDateFormat(format);
 		try {
 			return formatter.parse(date);
@@ -748,10 +748,21 @@ public class FiDate {
 		return false;
 	}
 
-	public static String getNowStringAsIso8601Date() {
+	/**
+	 * Saat bölgesine (+1,+2 gibi) gösterir.
+	 *
+	 * Örnek : 2023-07-26T09:34:59.505+03:00
+	 *
+	 * @return
+	 */
+	public static String getNowStringAsIso8601DatetimeWithZone() {
 		DateTime dt = new DateTime();
 		return dt.toString();
-		//System.out.println("Local Time (ISO8601): "+ dt.toString());
+	}
+
+	public static String getNowStringAsIso8601DatetimeWoutZone() {
+		LocalDateTime currentDateAndTime = LocalDateTime.now();
+		return currentDateAndTime.toString();
 	}
 
 	/**

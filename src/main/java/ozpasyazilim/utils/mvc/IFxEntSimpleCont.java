@@ -12,7 +12,7 @@ package ozpasyazilim.utils.mvc;
 public interface IFxEntSimpleCont extends IFxSimpleCont {
 
     /**
-     * IFxModView , IFxSimpleView ile aynı
+     * IFxEntSimpleCont ile IFxSimpleView aynı
      * @return
      */
     IFxEntSimpleView getModView();

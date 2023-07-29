@@ -39,7 +39,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 	private Class entityClass;
 	private FxFormMig2 fxFormMig;
 
-	private FxFormMig3 fxForm;
+	private FxFormMig3 fxFormMig3;
 	private List<FiCol> fiColList;
 	private Predicate<String> predValidateString;
 	private String validateErrorMessage;
@@ -234,7 +234,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 	}
 
 	public void initDialogInfo() {
-		setupDialogInfoWarnErrorWithTextArea();
+		setupDialogWithTextArea();
 		setupFooterOkCancel(null);
 	}
 
@@ -245,7 +245,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 	}
 
 	public FxSimpleDialog<EntClazz> initDialogError() {
-		setupDialogInfoWarnErrorWithTextArea();
+		setupDialogWithTextArea();
 		setupFooterOkCancel(true);
 		return this;
 	}
@@ -361,7 +361,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 		setupFormDialog(fiCols,formType);
 	}
 
-		@Override
+	@Override
 	public FxMigPaneView getModView() {
 		return modView;
 	}
@@ -563,7 +563,12 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 		getModView().add(fxContent, "wrap");
 	}
 
-	private void setupDialogInfoWarnErrorWithTextArea() {
+	/**
+	 * modView.prefHeight : 150d
+	 *
+	 *
+	 */
+	private void setupDialogWithTextArea() {
 
 		FxMigPane fxHeader = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().getLcg());
 		FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().getLcg());
@@ -771,15 +776,15 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 		this.txInitialValue = txInitialValue;
 	}
 
-	public FxFormMig3 getFxForm() {
-		return fxForm;
+	public FxFormMig3 getFxFormMig3() {
+		return fxFormMig3;
 	}
 
 	public FxFormMig3 getFxFormInit() {
-		if (fxForm == null) {
-			fxForm = new FxFormMig3<>();
+		if (fxFormMig3 == null) {
+			fxFormMig3 = new FxFormMig3<>();
 		}
-		return fxForm;
+		return fxFormMig3;
 	}
 
 	public Predicate<FxFormMig3> getPredValidateForm() {

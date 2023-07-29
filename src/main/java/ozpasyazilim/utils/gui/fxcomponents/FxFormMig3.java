@@ -177,9 +177,9 @@ public class FxFormMig3<EntClazz> extends FxMigPaneEnt<EntClazz> implements IFxE
 
 	// ********************* Main
 	public void initFormElementsMain() {
-		// form initialized edildiğini belirtir
+
 		setBoFormInitialized(true);
-		// Form Configden Degerler Yüklenir (doluysa eğer)
+
 
 		if (FiCollection.isEmpty(getListFormElements())) {
 			Loghelper.get(getClass()).debug("Form Alanları Tanımlanmamış.");
@@ -188,15 +188,6 @@ public class FxFormMig3<EntClazz> extends FxMigPaneEnt<EntClazz> implements IFxE
 
 		// default form type specified
 		if (getFormTypeSelected() == null) setFormTypeSelected(FormType.PlainFormV1);
-
-		// FiColList map halinde tutmak için
-		// if (getListFormElements() instanceof FiColList) {
-		// FiColList fiTableCols = (FiColList) getListFormElements();
-		// setFormElementsMap(fiTableCols.getMapCols());
-		// } else {
-		// Map<String, FiCol> formMap = getFormMap();
-		// setFormElementsMap(formMap);
-		// }
 
 		// Form Tiplerine Göre Form Oluşturma metodlarına Yönlendirme
 		if (getFormTypeSelected() == FormType.PlainFormV1) {

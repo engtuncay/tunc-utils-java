@@ -85,6 +85,8 @@ public class FiField {
 
 	String txUnique1Name;
 
+	Boolean boFiWhere1;
+
 	public FiField() {
 	}
 
@@ -397,5 +399,13 @@ public class FiField {
 
 	public void setTxUnique1Name(String txUnique1Name) {
 		this.txUnique1Name = txUnique1Name;
+	}
+
+	public Boolean getBoFiWhere1() {
+		return boFiWhere1;
+	}
+
+	public void setBoFiWhere1(Boolean boFiWhere1) {
+		this.boFiWhere1 = boFiWhere1;
 	}
 }
