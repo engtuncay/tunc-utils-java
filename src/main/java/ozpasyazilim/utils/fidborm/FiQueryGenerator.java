@@ -2565,7 +2565,7 @@ public class FiQueryGenerator {
 			return false;
 		}
 
-		AbsRepoJdbi repoGenericJdbi = new RepoJdbiCustom(jdbi, clazz);
+		AbsRepoGenJdbi repoGenericJdbi = new RepoJdbiCustom(jdbi, clazz);
 
 		List<String> listQuery = Arrays.asList(queryCreate);
 

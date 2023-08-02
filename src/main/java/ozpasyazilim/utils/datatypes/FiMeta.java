@@ -3,7 +3,7 @@ package ozpasyazilim.utils.datatypes;
 /**
  * txKey, txValue propertylerine sahip (keyed/named object her property'sine karşılık gelir (key ve değer string)
  * <p>
- * txLabel,lnCode gibi ekstra özellikler eklenmiştir
+ * txLabel,lnCode gibi ekstra özellikler eklenmiştir. Integer-String value şeklinde de kullanılabilir.
  */
 public class FiMeta {
 
@@ -32,9 +32,9 @@ public class FiMeta {
 
 	}
 
-	public FiMeta(Integer lnKey) {
-		this.lnKey = lnKey;
-	}
+//	public FiMeta(Integer lnKey) {
+//		this.lnKey = lnKey;
+//	}
 
 	public FiMeta(String txKey) {
 		this.txKey = txKey;

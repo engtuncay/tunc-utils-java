@@ -384,32 +384,15 @@ public class FiQuery {
 
     /**
      * Sorguda bulunan __userParam şeklindeki user parametrelerini bulur
+     *
+     * iki alt çizgi seçilmesinin nedeni, değişken tanımlarında _ alt çizgiye izin veriyor oluşu.
      * <p>
      * Bu parametreler eğer mapParams'da var ise, değeri yer değiştirir.
      */
     public void convertUserParamsToValue() {
 
-        if (getMapParamsInit().size() == 0) return;
-
-        String txPattern = "\\b" + getTxUserParamPrefix() + "\\w+\\b";
-        Set<String> setUserParam = FiRegExp.matchGroupZeroToSet(txPattern, getTxQuery());
-
-        if (setUserParam.size() > 0) {
-            for (String txUserParam : setUserParam) {
-                String sqlParam = txUserParam.substring(getTxUserParamPrefix().length()); // txUserParam.length() parametre çıkarıldı
-                //System.out.println("sqlparam:" + sqlParam);
-                if (getMapParams().containsKey(sqlParam)) {
-                    Object paramValue = getMapParams().get(sqlParam);
-                    if (paramValue != null) {
-                        // URFIX paramvalue sql injection engellebilir
-                        String upQuery = getTxQuery().replaceAll(String.format("\\b%s%s\\b", getTxUserParamPrefix(), sqlParam), paramValue.toString());
-                        setTxQuery(upQuery);
-                    } else {
-                        //getTxQuery().replaceAll(String.format("\\b__%s\\b", txUserParam), "NULL");
-                    }
-                }
-            }
-        }
+        if (getMapParamsInit().isEmpty()) return;
+        setTxQuery(FiQueryTools.convertUserParamsToValue(getTxQuery(), getMapParamsInit(), getTxUserParamPrefix()));
 
     }
 

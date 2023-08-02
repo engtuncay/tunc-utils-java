@@ -3,11 +3,11 @@ package ozpasyazilim.utils.datatypes;
 import ozpasyazilim.utils.core.FiString;
 
 /**
- * Meta Bilgileri Saklamak için yazıldı.
+ * Meta Bilgileri Saklamak için yazıldı. Sadece Key ihtiyaç olduğu yerde kullanılır.
  * <p>
  * ToString olarak TxKey döner. (FiMeta toString'de alan dönmüyor)
  */
-public class FiMeta2 {
+public class FiMetaKey {
 
     /**
      *
@@ -19,7 +19,7 @@ public class FiMeta2 {
 //	private String txLabel;
 //	private String txType;
 
-    public FiMeta2() {
+    public FiMetaKey() {
 
     }
 
@@ -27,7 +27,7 @@ public class FiMeta2 {
 //		this.lnKey = lnKey;
 //	}
 
-    public FiMeta2(String txKey) {
+    public FiMetaKey(String txKey) {
         this.txKey = txKey;
     }
 

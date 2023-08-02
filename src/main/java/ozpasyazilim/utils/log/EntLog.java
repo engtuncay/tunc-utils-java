@@ -48,4 +48,11 @@ public class EntLog {
 		this.txLogType = txLogType;
 	}
 
+	@Override
+	public String toString() {
+		return "EntLog{" +
+				"txMessage='" + txMessage + '\'' +
+				", txLogType='" + txLogType + '\'' +
+				'}';
+	}
 }

@@ -435,6 +435,41 @@ public class FiQueryTools {
 		return fixSqlProblems(deActivateAllOptParams(sql));
 	}
 
+	/**
+	 * Sorguda bulunan __userParam şeklindeki user parametrelerini bulur
+	 *
+	 * iki alt çizgi seçilmesinin nedeni, değişken tanımlarında _ alt çizgiye izin veriyor oluşu.
+	 * <p>
+	 * Bu parametreler eğer mapParams'da var ise, değeri yer değiştirir.
+	 */
+	public static String convertUserParamsToValue(String txQuery,FiKeyBean mapParams,String txUserParamPrefix) {
+
+		if (mapParams.isEmpty()) return txQuery;
+
+		// *** sorguda user_param sayısı tespit edilir, eğer varsa işlemler yapılır.
+		String txPattern = "\\b" + txUserParamPrefix + "\\w+\\b";
+		Set<String> setUserParam = FiRegExp.matchGroupZeroToSet(txPattern, txQuery);
+
+		if (!setUserParam.isEmpty()) {
+			for (String txUserParam : setUserParam) {
+				String sqlParam = txUserParam.substring(txUserParamPrefix.length()); // txUserParam.length() parametre çıkarıldı
+				//System.out.println("sqlparam:" + sqlParam);
+				if (mapParams.containsKey(sqlParam)) {
+					Object paramValue = mapParams.get(sqlParam);
+					if (paramValue != null) {
+						// URFIX paramvalue sql injection engellebilir
+						String upQuery = txQuery.replaceAll(String.format("\\b%s%s\\b", txUserParamPrefix, sqlParam), paramValue.toString());
+						return upQuery;
+					} else {
+						//getTxQuery().replaceAll(String.format("\\b__%s\\b", txUserParam), "NULL");
+					}
+				}
+			}
+		}
+
+		return txQuery;
+	}
+
 
 
 }

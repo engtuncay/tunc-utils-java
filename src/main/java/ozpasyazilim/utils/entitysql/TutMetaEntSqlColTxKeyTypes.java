@@ -1,11 +1,11 @@
 package ozpasyazilim.utils.entitysql;
 
-import ozpasyazilim.utils.datatypes.FiMeta2;
+import ozpasyazilim.utils.datatypes.FiMetaKey;
 
 public class TutMetaEntSqlColTxKeyTypes {
 
-    public static FiMeta2 primaryKey() {
-        FiMeta2 fiMeta = new FiMeta2("PK");
+    public static FiMetaKey primaryKey() {
+        FiMetaKey fiMeta = new FiMetaKey("PK");
         return fiMeta;
     }
 

@@ -100,7 +100,7 @@ public class FiRegExp {
 
 	/**
 	 *
-	 * matcher.group(0) sonucunu set halinde verir
+	 * matcher.group(0) sonuclarını set halinde verir
 	 *
 	 * @param txPattern
 	 * @param txValue

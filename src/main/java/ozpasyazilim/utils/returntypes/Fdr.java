@@ -112,10 +112,7 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 	 */
 	List<Fdr> listFdr;
 
-	/**
-	 *
-	 */
-	List<String> messageList;
+//	List<String> messageList;
 
 	/**
 	 *
@@ -879,34 +876,6 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 
 	public void setListFdr(List<Fdr> listFdr) {
 		this.listFdr = listFdr;
-	}
-
-	public List<String> getMessageList() {
-		return messageList;
-	}
-
-	public List<String> getMessageListInit() {
-		if (messageList == null) {
-			messageList = new ArrayList<>();
-		}
-		return messageList;
-	}
-
-	public void setMessageList(List<String> messageList) {
-		this.messageList = messageList;
-	}
-
-	public String getMessageListCombined() {
-		StringBuilder sb = new StringBuilder();
-
-		int index = 0;
-		for (String s : getMessageListInit()) {
-			if (index > 0) sb.append("\n");
-			sb.append(s);
-			index++;
-		}
-
-		return sb.toString();
 	}
 
 	public List<EntLog> getLogList() {

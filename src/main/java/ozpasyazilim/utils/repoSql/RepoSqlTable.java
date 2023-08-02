@@ -2,12 +2,12 @@ package ozpasyazilim.utils.repoSql;
 
 import ozpasyazilim.utils.entitysql.EntSqlTable;
 import org.jdbi.v3.core.Jdbi;
-import ozpasyazilim.utils.fidborm.AbsRepoJdbi;
+import ozpasyazilim.utils.fidborm.AbsRepoGenJdbi;
 import ozpasyazilim.utils.returntypes.Fdr;
 
 import java.util.List;
 
-public class RepoSqlTable extends AbsRepoJdbi<EntSqlTable> {
+public class RepoSqlTable extends AbsRepoGenJdbi<EntSqlTable> {
 
 	public RepoSqlTable() {
 	}

@@ -14,22 +14,22 @@ import static ozpasyazilim.utils.core.FiStFormat.*;
 /**
  * Nog: Not Generic (önceden pure kullanılmıştı)
  */
-public abstract class AbsRepoJdbiNog extends RepoGeneralJdbi implements IRepoJdbi {
+public abstract class AbsRepoNogJdbi extends AbsRepoJdbi { //implements IRepoJdbi
 
 	private Handle handleRepo;
 
-	public AbsRepoJdbiNog() {
+	public AbsRepoNogJdbi() {
 	}
 
-	public AbsRepoJdbiNog(String connProfile) {
+	public AbsRepoNogJdbi(String connProfile) {
 		this.connProfile = connProfile;
 	}
 
-	public AbsRepoJdbiNog(Jdbi jdbi) {
+	public AbsRepoNogJdbi(Jdbi jdbi) {
 		setJdbi(jdbi);
 	}
 
-	public AbsRepoJdbiNog(Handle handleRepo) {
+	public AbsRepoNogJdbi(Handle handleRepo) {
 		setHandleRepo(handleRepo);
 	}
 

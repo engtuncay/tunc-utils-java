@@ -3,12 +3,12 @@ package ozpasyazilim.utils.repoSql;
 import ozpasyazilim.utils.datatypes.FiKeyBean;
 import ozpasyazilim.utils.entitysql.EntSqlColumn;
 import org.jdbi.v3.core.Jdbi;
-import ozpasyazilim.utils.fidborm.AbsRepoJdbi;
+import ozpasyazilim.utils.fidborm.AbsRepoGenJdbi;
 import ozpasyazilim.utils.returntypes.Fdr;
 
 import java.util.List;
 
-public class RepoSqlColumn extends AbsRepoJdbi<EntSqlColumn> {
+public class RepoSqlColumn extends AbsRepoGenJdbi<EntSqlColumn> {
 
 	public RepoSqlColumn() {
 	}

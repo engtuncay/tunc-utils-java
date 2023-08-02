@@ -11,12 +11,17 @@ import ozpasyazilim.utils.returntypes.Fdr;
 
 import java.util.*;
 
-public abstract class AbsRepoFkbJdbi extends RepoGeneralJdbi implements IRepoJdbi {
+public abstract class AbsRepoFkbJdbi extends AbsRepoJdbi { //implements IRepoJdbi
 
     protected Handle handleRepo;
 
-    public AbsRepoFkbJdbi() {
+    // connProfile veya jdbi ile constructor kullanılmalı
+    //    public AbsRepoFkbJdbi() {
+    //
+    //    }
 
+    public AbsRepoFkbJdbi(Jdbi jdbi) {
+        setJdbi(jdbi);
     }
 
     public AbsRepoFkbJdbi(String connProfile) {
@@ -24,11 +29,6 @@ public abstract class AbsRepoFkbJdbi extends RepoGeneralJdbi implements IRepoJdb
     }
 
     public void setAutoClass() {
-
-    }
-
-    public AbsRepoFkbJdbi(Jdbi jdbi) {
-        this.jdbi = jdbi;
     }
 
     public Handle getHandleRepo() {
@@ -156,13 +156,10 @@ public abstract class AbsRepoFkbJdbi extends RepoGeneralJdbi implements IRepoJdb
                         .findFirst();
             });
 
-            if (result.isPresent()) {
-                fdr.setValue(result.get());
-            }
+            result.ifPresent(fdr::setValue);
             fdr.setBoResult(true);
         } catch (Exception ex) {
-            Loghelper.errorLog(getClass(), "Query Problem");
-            Loghelper.errorException(getClass(), ex);
+            Loghelper.get(getClass()).error(FiException.exceptionToStrMain(ex));
             fdr.setBoResult(false);
             fdr.setValue(null);
         }
