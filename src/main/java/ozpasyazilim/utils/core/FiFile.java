@@ -181,8 +181,8 @@ public class FiFile {
 			System.out.println("File is copied successful!");
 			return true;
 
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (IOException ex) {
+			Loghelper.get(getClassi()).error(FiException.exceptionToStrMain(ex));
 			return false;
 		}
 	}
