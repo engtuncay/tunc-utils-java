@@ -46,7 +46,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
     }
 
     public AbsRepoGenJdbi(String connProfile) {
-        this.connProfile = connProfile;
+        setConnProfile(connProfile);
         setAutoClass();
     }
 
@@ -1091,13 +1091,24 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
     }
 
     public Fdr<EntClazz> jdSelectEntityByStringCandId1(String txKod) {
+        //Loghelper.get(getClass()).debug("jdSelectEntityByStringCandId1 start");
+
         String sql = FiQueryGenerator.selectQueryByCandIds(getEntityClass());
+
         String txFieldName = FiQueryGenerator.getCandIdFieldFirst(getEntityClass());
         FiKeyBean fiKeyBean = FiKeyBean.bui().buiPut(txFieldName, txKod);
+
         Fdr<Optional<EntClazz>> optionalFdr = jdSelectEntityOptBindMap(sql, fiKeyBean);
+        //Loghelper.get(getClass()).debug("jdSelect Sorgu Bitti");
+
         Fdr<EntClazz> fdr = new Fdr<>();
         fdr.combineAnd(optionalFdr);
-        fdr.setValue(optionalFdr.getValue().get());
+
+        if(optionalFdr.getValue()!=null && optionalFdr.getValue().isPresent()) {
+            fdr.setValue(optionalFdr.getValue().get());
+        }
+
+        //Loghelper.get(getClass()).debug("jdSelectEntityByStringCandId1 end");
         return fdr;
     }
 
@@ -2537,6 +2548,8 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
         Fdr<Optional<EntClazz>> fdr = new Fdr<>();
         fdr.setValue(Optional.empty());
 
+        //if(checkJdbi(fdr).isFalseBoResult()) return fdr;
+
         try {
             Optional<EntClazz> result = getJdbi().withHandle(handle -> {
                 return handle.select(FiQueryTools.stoj(sql))
@@ -2548,11 +2561,27 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
             fdr.setValue(result);
             fdr.setBoResult(true);
         } catch (Exception ex) {
-            Loghelper.errorLog(getClass(), "Query Problem");
-            Loghelper.errorException(getClass(), ex);
+            Loghelper.get(getClass()).error(FiException.exceptionToStrMain(ex));
             fdr.setBoResult(false, ex);
         }
         return fdr;
+    }
+
+    private Fdr checkJdbi(Fdr<Optional<EntClazz>> fdr) {
+        if(getJdbi()==null){
+            Loghelper.get(getClass()).error("Null jdbi:"+getDatabaseName());
+            fdr.setBoResult(false);
+            fdr.setMessage("Jdbi Tanımlı Değil :" + getDatabaseName());
+            return fdr;
+        }
+        return fdr;
+    }
+
+    private Fdr checkJdbi() {
+        if(getJdbi()==null){
+            return Fdr.creBoResult(false).buiMessage("Jdbi Tanımlı Değil :" + getDatabaseName());
+        }
+        return Fdr.creBoResult(true);
     }
 
     /**

@@ -32,126 +32,73 @@ import java.util.function.Supplier;
 
 /**
  * Utility JavaFx Dialog Class
+ * <p>
+ * Pop Notifications (static)
  */
 public class FxDialogShow {
 
-	public static String titleGeneral;
+    public static String titleGeneral;
 
-	public static FxDialogShow build() {
-		return new FxDialogShow();
-	}
+    public static FxDialogShow build() {
+        return new FxDialogShow();
+    }
 
-	/**
-	 * Yes,No,Cancel Dialogu açar <br>
-	 * <p>
-	 * BoResult Değeri <br>
-	 * Yes : True <br>
-	 * No : False <br>
-	 * İptal : null <br>
-	 *
-	 * <br> 09-08-2019
-	 *
-	 * @param message
-	 * @return FnResult objesini döner
-	 */
-	public static FnResult showPromptDialogYesNo(String message) {
-		return showPromptDialogYesNo(message, null);
-	}
+    /**
+     * Yes,No,Cancel Dialogu açar <br>
+     * <p>
+     * BoResult Değeri <br>
+     * Yes : True <br>
+     * No : False <br>
+     * İptal : null <br>
+     *
+     * <br> 09-08-2019
+     *
+     * @param message
+     * @return FnResult objesini döner
+     */
+    public static FnResult showPromptDialogYesNo(String message) {
+        return showPromptDialogYesNo(message, null);
+    }
 
-	public static Fdr showPromptDialogYesNoFdr(String message, String title) {
+    public static Fdr showPromptDialogYesNoFdr(String message, String title) {
 
-		FxMigPane migPane = new FxMigPane();
-		migPane.add(new Label(message), "span");
+        FxMigPane migPane = new FxMigPane();
+        migPane.add(new Label(message), "span");
 
-		MigPane migFooter = new MigPane();
+        MigPane migFooter = new MigPane();
 
-		FxButton btnYes = new FxButton("Evet");
-		FxButton btnNo = new FxButton("Hayır");
-		FxButton btnCancel = new FxButton("İptal");
+        FxButton btnYes = new FxButton("Evet");
+        FxButton btnNo = new FxButton("Hayır");
+        FxButton btnCancel = new FxButton("İptal");
 
-		migFooter.add(btnYes, "gapafter 10");
-		migFooter.add(btnNo, "gapafter 10");
-		migFooter.add(btnCancel, "gapafter 10");
+        migFooter.add(btnYes, "gapafter 10");
+        migFooter.add(btnNo, "gapafter 10");
+        migFooter.add(btnCancel, "gapafter 10");
 
-		migPane.add(migFooter, "span");
+        migPane.add(migFooter, "span");
 
-		FxStage stage = new FxStage();
-		FxScene scene = new FxScene(migPane);
+        FxStage stage = new FxStage();
+        FxScene scene = new FxScene(migPane);
 
-		if (title == null && titleGeneral != null) stage.setTitle(titleGeneral);
-		if (title != null) stage.setTitle(title);
+        if (title == null && titleGeneral != null) stage.setTitle(titleGeneral);
+        if (title != null) stage.setTitle(title);
 
-		Fdr fdr = new Fdr();
+        Fdr fdr = new Fdr();
 
-		btnYes.setOnAction(event -> {
-			fdr.setBoResult(true);
-			stage.close();
-		});
+        btnYes.setOnAction(event -> {
+            fdr.setBoResult(true);
+            stage.close();
+        });
 
-		btnNo.setOnAction(event -> {
-			fdr.setBoResult(false);
-			stage.close();
-		});
+        btnNo.setOnAction(event -> {
+            fdr.setBoResult(false);
+            stage.close();
+        });
 
-		btnCancel.setOnAction(event -> {
-			fdr.setBoResult(null);
-			stage.close();
-		});
-
-//			if(parentNode!=null){
-//				Bounds bounds = parentNode.localToScreen(parentNode.getBoundsInLocal());
-//				stage.setX(bounds.getMaxX());
-//				stage.setY(bounds.getMinY());
-//			}
-
-		stage.initModality(Modality.APPLICATION_MODAL);
-		stage.setScene(scene);
-		stage.sizeToScene();
-		stage.showAndWait();
-		return fdr;
-	}
-
-
-
-	public static Fdr showPromptDialogYesNoFdrNonModal(String message, String title) {
-
-		FxMigPane migPane = new FxMigPane();
-		migPane.add(new Label(message), "span");
-
-		MigPane migFooter = new MigPane();
-
-		FxButton btnYes = new FxButton("Evet");
-		FxButton btnNo = new FxButton("Hayır");
-		FxButton btnCancel = new FxButton("İptal");
-
-		migFooter.add(btnYes, "gapafter 10");
-		migFooter.add(btnNo, "gapafter 10");
-		migFooter.add(btnCancel, "gapafter 10");
-
-		migPane.add(migFooter, "span");
-
-		FxStage stage = new FxStage();
-		FxScene scene = new FxScene(migPane);
-
-		if (title == null && titleGeneral != null) stage.setTitle(titleGeneral);
-		if (title != null) stage.setTitle(title);
-
-		Fdr fdr = new Fdr();
-
-		btnYes.setOnAction(event -> {
-			fdr.setBoResult(true);
-			stage.close();
-		});
-
-		btnNo.setOnAction(event -> {
-			fdr.setBoResult(false);
-			stage.close();
-		});
-
-		btnCancel.setOnAction(event -> {
-			fdr.setBoResult(null);
-			stage.close();
-		});
+        btnCancel.setOnAction(event -> {
+            fdr.setBoResult(null);
+            stage.close();
+        });
 
 //			if(parentNode!=null){
 //				Bounds bounds = parentNode.localToScreen(parentNode.getBoundsInLocal());
@@ -159,61 +106,53 @@ public class FxDialogShow {
 //				stage.setY(bounds.getMinY());
 //			}
 
-		stage.initModality(Modality.NONE);
-		stage.setScene(scene);
-		stage.sizeToScene();
-		stage.showAndWait();
-		return fdr;
-	}
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(scene);
+        stage.sizeToScene();
+        stage.showAndWait();
+        return fdr;
+    }
 
-	public static Fdr showPromptDialogDetailedYesNoFdrNonModal(String message, String title, String detail) {
 
-		FxMigPane migPane = new FxMigPane();
-		migPane.add(new Label(message), "span");
+    public static Fdr showPromptDialogYesNoFdrNonModal(String message, String title) {
 
-		FxMigPane migDetail = new FxMigPane();
+        FxMigPane migPane = new FxMigPane();
+        migPane.add(new Label(message), "span");
 
-		if (!FiString.isEmptyTrim(detail)) {
-			FxTextArea fxTextArea = new FxTextArea(detail);
-			fxTextArea.setPrefHeight(150d);
-			migDetail.add(fxTextArea, "span");
-		}
+        MigPane migFooter = new MigPane();
 
-		MigPane migFooter = new MigPane();
+        FxButton btnYes = new FxButton("Evet");
+        FxButton btnNo = new FxButton("Hayır");
+        FxButton btnCancel = new FxButton("İptal");
 
-		FxButton btnYes = new FxButton("Evet");
-		FxButton btnNo = new FxButton("Hayır");
-		FxButton btnCancel = new FxButton("İptal");
+        migFooter.add(btnYes, "gapafter 10");
+        migFooter.add(btnNo, "gapafter 10");
+        migFooter.add(btnCancel, "gapafter 10");
 
-		migFooter.add(btnYes, "gapafter 10");
-		migFooter.add(btnNo, "gapafter 10");
-		migFooter.add(btnCancel, "gapafter 10");
+        migPane.add(migFooter, "span");
 
-		migPane.add(migDetail, "span");
-		migPane.add(migFooter, "span");
+        FxStage stage = new FxStage();
+        FxScene scene = new FxScene(migPane);
 
-		FxStage stage = new FxStage();
-		FxScene scene = new FxScene(migPane);
+        if (title == null && titleGeneral != null) stage.setTitle(titleGeneral);
+        if (title != null) stage.setTitle(title);
 
-		if (title == null && titleGeneral != null) stage.setTitle(titleGeneral);
-		if (title != null) stage.setTitle(title);
+        Fdr fdr = new Fdr();
 
-		Fdr fdr = new Fdr();
+        btnYes.setOnAction(event -> {
+            fdr.setBoResult(true);
+            stage.close();
+        });
 
-		btnYes.setOnAction(event -> {
-			fdr.setBoResult(true);
-			stage.close();
-		});
+        btnNo.setOnAction(event -> {
+            fdr.setBoResult(false);
+            stage.close();
+        });
 
-		btnNo.setOnAction(event -> {
-			fdr.setBoResult(false);
-			stage.close();
-		});
-
-		btnCancel.setOnAction(event -> {
-			fdr.setBoResult(null);
-			stage.close();
-		});
+        btnCancel.setOnAction(event -> {
+            fdr.setBoResult(null);
+            stage.close();
+        });
 
 //			if(parentNode!=null){
 //				Bounds bounds = parentNode.localToScreen(parentNode.getBoundsInLocal());
@@ -221,119 +160,126 @@ public class FxDialogShow {
 //				stage.setY(bounds.getMinY());
 //			}
 
-		stage.initModality(Modality.NONE);
-		stage.setScene(scene);
-		stage.sizeToScene();
-		stage.showAndWait();
-		return fdr;
-	}
+        stage.initModality(Modality.NONE);
+        stage.setScene(scene);
+        stage.sizeToScene();
+        stage.showAndWait();
+        return fdr;
+    }
 
-	// 09-08-2019
-	public static FnResult showPromptDialogYesNo(String message, String title) {
+    public static Fdr showPromptDialogDetailedYesNoFdrNonModal(String message, String title, String detail) {
 
-		//Platform.runLater(() -> {
+        FxMigPane migPane = new FxMigPane();
+        migPane.add(new Label(message), "span");
 
-		// stage:pencere çerçevesi
+        FxMigPane migDetail = new FxMigPane();
+
+        if (!FiString.isEmptyTrim(detail)) {
+            FxTextArea fxTextArea = new FxTextArea(detail);
+            fxTextArea.setPrefHeight(150d);
+            migDetail.add(fxTextArea, "span");
+        }
+
+        MigPane migFooter = new MigPane();
+
+        FxButton btnYes = new FxButton("Evet");
+        FxButton btnNo = new FxButton("Hayır");
+        FxButton btnCancel = new FxButton("İptal");
+
+        migFooter.add(btnYes, "gapafter 10");
+        migFooter.add(btnNo, "gapafter 10");
+        migFooter.add(btnCancel, "gapafter 10");
+
+        migPane.add(migDetail, "span");
+        migPane.add(migFooter, "span");
+
+        FxStage stage = new FxStage();
+        FxScene scene = new FxScene(migPane);
+
+        if (title == null && titleGeneral != null) stage.setTitle(titleGeneral);
+        if (title != null) stage.setTitle(title);
+
+        Fdr fdr = new Fdr();
+
+        btnYes.setOnAction(event -> {
+            fdr.setBoResult(true);
+            stage.close();
+        });
+
+        btnNo.setOnAction(event -> {
+            fdr.setBoResult(false);
+            stage.close();
+        });
+
+        btnCancel.setOnAction(event -> {
+            fdr.setBoResult(null);
+            stage.close();
+        });
+
+//			if(parentNode!=null){
+//				Bounds bounds = parentNode.localToScreen(parentNode.getBoundsInLocal());
+//				stage.setX(bounds.getMaxX());
+//				stage.setY(bounds.getMinY());
+//			}
+
+        stage.initModality(Modality.NONE);
+        stage.setScene(scene);
+        stage.sizeToScene();
+        stage.showAndWait();
+        return fdr;
+    }
+
+    // 09-08-2019
+    public static FnResult showPromptDialogYesNo(String message, String title) {
+
+        //Platform.runLater(() -> {
+
+        // stage:pencere çerçevesi
 //		FxStage stage = new FxStage();
 //
 //		FxStackMigPane viewContainer = new FxStackMigPane();
 //
 //		FxScene scene = new FxScene(viewContainer.getRootPane());  //,width,height
 
-		FxMigPane migPane = new FxMigPane();
-		migPane.add(new Label(message), "span");
+        FxMigPane migPane = new FxMigPane();
+        migPane.add(new Label(message), "span");
 
-		MigPane migFooter = new MigPane();
+        MigPane migFooter = new MigPane();
 
-		FxButton btnYes = new FxButton("Evet");
-		FxButton btnNo = new FxButton("Hayır");
-		FxButton btnCancel = new FxButton("İptal");
+        FxButton btnYes = new FxButton("Evet");
+        FxButton btnNo = new FxButton("Hayır");
+        FxButton btnCancel = new FxButton("İptal");
 
 
-		migFooter.add(btnYes, "gapafter 10");
-		migFooter.add(btnNo, "gapafter 10");
-		migFooter.add(btnCancel, "gapafter 10");
+        migFooter.add(btnYes, "gapafter 10");
+        migFooter.add(btnNo, "gapafter 10");
+        migFooter.add(btnCancel, "gapafter 10");
 
-		migPane.add(migFooter, "span");
+        migPane.add(migFooter, "span");
 
-		FxStage stage = new FxStage();
-		FxScene scene = new FxScene(migPane);
+        FxStage stage = new FxStage();
+        FxScene scene = new FxScene(migPane);
 
-		if (title == null && titleGeneral != null) stage.setTitle(titleGeneral);
-		if (title != null) stage.setTitle(title);
+        if (title == null && titleGeneral != null) stage.setTitle(titleGeneral);
+        if (title != null) stage.setTitle(title);
 
-		FnResult fnResult = new FnResult();
+        FnResult fnResult = new FnResult();
 
-		btnYes.setOnAction(event -> {
-			fnResult.setBoResult(true);
-			stage.close();
+        btnYes.setOnAction(event -> {
+            fnResult.setBoResult(true);
+            stage.close();
 
-		});
+        });
 
-		btnNo.setOnAction(event -> {
-			fnResult.setBoResult(false);
-			stage.close();
-		});
+        btnNo.setOnAction(event -> {
+            fnResult.setBoResult(false);
+            stage.close();
+        });
 
-		btnCancel.setOnAction(event -> {
-			fnResult.setBoResult(null);
-			stage.close();
-		});
-
-//			if(parentNode!=null){
-//				Bounds bounds = parentNode.localToScreen(parentNode.getBoundsInLocal());
-//				stage.setX(bounds.getMaxX());
-//				stage.setY(bounds.getMinY());
-//			}
-
-		stage.initModality(Modality.APPLICATION_MODAL);
-		stage.setScene(scene);
-		stage.sizeToScene();
-		stage.showAndWait();
-		return fnResult;
-
-	}
-
-	// 22-12-2020
-	public static Fdr showPromptDialogTwoChoice(String message, String title, String choice1, String choice2) {
-
-		FxMigPane migPane = new FxMigPane();
-		migPane.add(new Label(message), "span");
-
-		MigPane migFooter = new MigPane();
-
-		FxButton btnYes = new FxButton(FiString.orEmpty(choice1));
-		FxButton btnNo = new FxButton(FiString.orEmpty(choice2));
-		FxButton btnCancel = new FxButton("İptal");
-
-		migFooter.add(btnYes, "gapafter 10");
-		migFooter.add(btnNo, "gapafter 10");
-		migFooter.add(btnCancel, "gapafter 10");
-
-		migPane.add(migFooter, "span");
-
-		FxStage stage = new FxStage();
-		FxScene scene = new FxScene(migPane);
-
-		if (title == null && titleGeneral != null) stage.setTitle(titleGeneral);
-		if (title != null) stage.setTitle(title);
-
-		Fdr fnResult = new Fdr();
-
-		btnYes.setOnAction(event -> {
-			fnResult.setBoResult(true);
-			stage.close();
-		});
-
-		btnNo.setOnAction(event -> {
-			fnResult.setBoResult(false);
-			stage.close();
-		});
-
-		btnCancel.setOnAction(event -> {
-			fnResult.setBoResult(null);
-			stage.close();
-		});
+        btnCancel.setOnAction(event -> {
+            fnResult.setBoResult(null);
+            stage.close();
+        });
 
 //			if(parentNode!=null){
 //				Bounds bounds = parentNode.localToScreen(parentNode.getBoundsInLocal());
@@ -341,132 +287,187 @@ public class FxDialogShow {
 //				stage.setY(bounds.getMinY());
 //			}
 
-		stage.initModality(Modality.APPLICATION_MODAL);
-		stage.setScene(scene);
-		stage.sizeToScene();
-		stage.showAndWait();
-		return fnResult;
-	}
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(scene);
+        stage.sizeToScene();
+        stage.showAndWait();
+        return fnResult;
+
+    }
+
+    // 22-12-2020
+    public static Fdr showPromptDialogTwoChoice(String message, String title, String choice1, String choice2) {
+
+        FxMigPane migPane = new FxMigPane();
+        migPane.add(new Label(message), "span");
+
+        MigPane migFooter = new MigPane();
+
+        FxButton btnYes = new FxButton(FiString.orEmpty(choice1));
+        FxButton btnNo = new FxButton(FiString.orEmpty(choice2));
+        FxButton btnCancel = new FxButton("İptal");
+
+        migFooter.add(btnYes, "gapafter 10");
+        migFooter.add(btnNo, "gapafter 10");
+        migFooter.add(btnCancel, "gapafter 10");
+
+        migPane.add(migFooter, "span");
+
+        FxStage stage = new FxStage();
+        FxScene scene = new FxScene(migPane);
+
+        if (title == null && titleGeneral != null) stage.setTitle(titleGeneral);
+        if (title != null) stage.setTitle(title);
+
+        Fdr fnResult = new Fdr();
+
+        btnYes.setOnAction(event -> {
+            fnResult.setBoResult(true);
+            stage.close();
+        });
+
+        btnNo.setOnAction(event -> {
+            fnResult.setBoResult(false);
+            stage.close();
+        });
+
+        btnCancel.setOnAction(event -> {
+            fnResult.setBoResult(null);
+            stage.close();
+        });
+
+//			if(parentNode!=null){
+//				Bounds bounds = parentNode.localToScreen(parentNode.getBoundsInLocal());
+//				stage.setX(bounds.getMaxX());
+//				stage.setY(bounds.getMinY());
+//			}
+
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(scene);
+        stage.sizeToScene();
+        stage.showAndWait();
+        return fnResult;
+    }
 
 
-	public static int showErrorAndGetDbResultForOptionalInt1(Fdr<Optional<Integer>> fdr) {
+    public static int showErrorAndGetDbResultForOptionalInt1(Fdr<Optional<Integer>> fdr) {
 
-		if (!fdr.getValue().isPresent()) {
-			FxDialogShow.showPopError("Kontrol Yapılırken Hata oluştu.Sistem Yöneticisine başvurun");
-			return -1;
-		}
+        if (!fdr.getValue().isPresent()) {
+            FxDialogShow.showPopError("Kontrol Yapılırken Hata oluştu.Sistem Yöneticisine başvurun");
+            return -1;
+        }
 
-		return fdr.getValue().get();
-	}
+        return fdr.getValue().get();
+    }
 
-	public static void showDbResultAsErrorIfFail(Fdr fdr) {
+    public static void showDbResultAsErrorIfFail(Fdr fdr) {
 
-		if (!fdr.isTrueBoResult()) {
-			if (fdr.isFalseBoResult()) FxDialogShow.showModalError2("Hata oluştu", fdr.getMessage());
+        if (!fdr.isTrueBoResult()) {
+            if (fdr.isFalseBoResult()) FxDialogShow.showModalError2("Hata oluştu", fdr.getMessage());
 
-			if (fdr.getBoResult() == null) FxDialogShow.showModalError2("İşlem sonucu alınamadı.", fdr.getMessage());
-		}
+            if (fdr.getBoResult() == null) FxDialogShow.showModalError2("İşlem sonucu alınamadı.", fdr.getMessage());
+        }
 
-	}
+    }
 
-	public static Boolean showDbResultIfFailAsPopWarn(Fdr fdr) {
-		if (!fdr.isTrueBoResult()) {
-			FxDialogShow.showPopWarn(fdr.getMessage());
-			return false;
-		}
-		return true;
-	}
+    public static Boolean showDbResultIfFailAsPopWarn(Fdr fdr) {
+        if (!fdr.isTrueBoResult()) {
+            FxDialogShow.showPopWarn(fdr.getMessage());
+            return false;
+        }
+        return true;
+    }
 
-	public static void showModalForLogIfNotTrue(Fdr fdr) {
+    public static void showModalForLogIfNotTrue(Fdr fdr) {
 
-		if (fdr.isTrueBoResult()) {
-			FxDialogShow.showModalInfo(fdr.getTxName(), fdr.getLogAsStringWitErrorInfo());
-		} else {
-			FxDialogShow.showModalError2(fdr.getTxName(), fdr.getLogAsStringWitErrorInfo());
-		}
+        if (fdr.isTrueBoResult()) {
+            FxDialogShow.showModalInfo(fdr.getTxName(), fdr.getLogAsStringWitErrorInfo());
+        } else {
+            FxDialogShow.showModalError2(fdr.getTxName(), fdr.getLogAsStringWitErrorInfo());
+        }
 
-	}
+    }
 
-	public static void showModalForLog(Fdr fdr) {
-		Platform.runLater(() -> {
-			FxSimpleDialog2.creInitWithMessageContent(fdr.getLogAsString())
-					.initDialogError().openAsNonModal();
-		});
-		//FxDialogShow.showModalError2(fdr.getTxName(), fdr.getLogAsStringWitErrorInfo());
-	}
+    public static void showModalForLog(Fdr fdr) {
+        Platform.runLater(() -> {
+            FxSimpleDialog2.creInitWithMessageContent(fdr.getLogAsString())
+                    .initDialogError().openAsNonModal();
+        });
+        //FxDialogShow.showModalError2(fdr.getTxName(), fdr.getLogAsStringWitErrorInfo());
+    }
 
-	public static void showFdr1PopOrFailModal(Fdr fdr) {
+    public static void showFdr1PopOrFailModal(Fdr fdr) {
 
-		if (fdr.getBoResult() == null) {
-			FxDialogShow.showPopInfo("İşlem sonucu alınamadı." + "\n" + FiString.orEmpty(fdr.getMessage()));
-			return;
-		}
+        if (fdr.getBoResult() == null) {
+            FxDialogShow.showPopInfo("İşlem sonucu alınamadı." + "\n" + FiString.orEmpty(fdr.getMessage()));
+            return;
+        }
 
-		if (fdr.isTrueBoResult()) {
-			FxDialogShow.showPopInfo("İşlem Başarı ile Gerçekleşti" + "\n" + FiString.orEmpty(fdr.getMessage()));
-			return;
-		}
+        if (fdr.isTrueBoResult()) {
+            FxDialogShow.showPopInfo("İşlem Başarı ile Gerçekleşti" + "\n" + FiString.orEmpty(fdr.getMessage()));
+            return;
+        }
 
-		FxDialogShow.showModalError2("Hata Oluştu", fdr.getMessage());
-	}
+        FxDialogShow.showModalError2("Hata Oluştu", fdr.getMessage());
+    }
 
-	public static void showFdr1PopOrFailModal2(Fdr fdr) {
+    public static void showFdr1PopOrFailModal2(Fdr fdr) {
 
-		if (fdr.getBoResult() == null) {
-			FxDialogShow.showPopInfo("İşlem sonucu alınamadı." + "\n" + FiString.orEmpty(fdr.getMessage()));
-			return;
-		}
+        if (fdr.getBoResult() == null) {
+            FxDialogShow.showPopInfo("İşlem sonucu alınamadı." + "\n" + FiString.orEmpty(fdr.getMessage()));
+            return;
+        }
 
-		if (fdr.isTrueBoResult()) {
-			FxDialogShow.showPopInfo("İşlem Başarı ile Gerçekleşti" + "\n" + FiString.orEmpty(fdr.getMessage()));
-			return;
-		}
+        if (fdr.isTrueBoResult()) {
+            FxDialogShow.showPopInfo("İşlem Başarı ile Gerçekleşti" + "\n" + FiString.orEmpty(fdr.getMessage()));
+            return;
+        }
 
-		FxDialogShow.showModalError2("", fdr);
-	}
+        FxDialogShow.showModalError2("", fdr);
+    }
 
-	/**
-	 * TextArea da Log , Mesaj ve Özet Exception bilgilerini verir
-	 *
-	 * @param fdr
-	 */
-	public static void showFdr1PopOrFailModalWitLogAndMessageAndExc(Fdr fdr) {
+    /**
+     * TextArea da Log , Mesaj ve Özet Exception bilgilerini verir
+     *
+     * @param fdr
+     */
+    public static void showFdr1PopOrFailModalWitLogAndMessageAndExc(Fdr fdr) {
 
-		if (fdr.getBoResult() == null) {
-			//FxDialogShow.showPopInfo("İşlem sonucu alınamadı." + "\n" + FiString.orEmpty(fdr.getMessage()));
-			FxDialogShow.showModalErrorWitLogAndMessageAndExc("İşlem Sonucu Alınamadı.", fdr);
-			return;
-		}
+        if (fdr.getBoResult() == null) {
+            //FxDialogShow.showPopInfo("İşlem sonucu alınamadı." + "\n" + FiString.orEmpty(fdr.getMessage()));
+            FxDialogShow.showModalErrorWitLogAndMessageAndExc("İşlem Sonucu Alınamadı.", fdr);
+            return;
+        }
 
-		if (fdr.isTrueBoResult()) {
-			FxDialogShow.showPopInfo("İşlem Başarı ile Gerçekleşti" + "\n" + FiString.orEmpty(fdr.getMessage()));
-			return;
-		}
+        if (fdr.isTrueBoResult()) {
+            FxDialogShow.showPopInfo("İşlem Başarı ile Gerçekleşti" + "\n" + FiString.orEmpty(fdr.getMessage()));
+            return;
+        }
 
-		FxDialogShow.showModalErrorWitLogAndMessageAndExc("Hata !!!", fdr);
-	}
-
-
-	/**
-	 * ShowandWait method ile gösterilebilir
-	 *
-	 * @param nodeContent
-	 * @param title
-	 * @param headerText
-	 * @return
-	 */
-	public FxDialog getOkDialog(Node nodeContent, String title, String headerText) {
-
-		FxDialog fxDialog = new FxDialog();
-
-		fxDialog.setTitle(title);
-		fxDialog.setHeaderText(headerText);
-		fxDialog.AddOkButton(null);
+        FxDialogShow.showModalErrorWitLogAndMessageAndExc("Hata !!!", fdr);
+    }
 
 
-		//MigPane rolePane = getChangeWsPane(fxDialog);
+    /**
+     * ShowandWait method ile gösterilebilir
+     *
+     * @param nodeContent
+     * @param title
+     * @param headerText
+     * @return
+     */
+    public FxDialog getOkDialog(Node nodeContent, String title, String headerText) {
 
-		//Label lblmessage = (Label) rolePane.lookup("#mesajchws");
+        FxDialog fxDialog = new FxDialog();
+
+        fxDialog.setTitle(title);
+        fxDialog.setHeaderText(headerText);
+        fxDialog.AddOkButton(null);
+
+
+        //MigPane rolePane = getChangeWsPane(fxDialog);
+
+        //Label lblmessage = (Label) rolePane.lookup("#mesajchws");
 
 		/*fxDialog.setFilterToOkButton(()->{
 
@@ -476,7 +477,7 @@ public class FxDialogShow {
 			//return result;
 		});*/
 
-		fxDialog.setContentPane(nodeContent);
+        fxDialog.setContentPane(nodeContent);
 
 		/*Optional<ComboItem> result = fxDialog.showAndWait();
 
@@ -493,32 +494,32 @@ public class FxDialogShow {
 
 		});*/
 
-		return fxDialog;
+        return fxDialog;
 
-	}
+    }
 
-	public <E> Optional<E> showOkCancelDialog(Node nodeContent, String title, String headerText, Supplier<E> dialogReturn) {
+    public <E> Optional<E> showOkCancelDialog(Node nodeContent, String title, String headerText, Supplier<E> dialogReturn) {
 
-		FxDialog<E> fxDialog = new FxDialog();
+        FxDialog<E> fxDialog = new FxDialog();
 
-		fxDialog.setTitle(title);
-		fxDialog.setHeaderText(headerText);
-		fxDialog.AddOkAndCancelButton(null, null);
+        fxDialog.setTitle(title);
+        fxDialog.setHeaderText(headerText);
+        fxDialog.AddOkAndCancelButton(null, null);
 
 		/*fxDialog.setFilterToOkButton(()->{
 			//if(!result) lblmessage.setText("Hata oluştu");
 			//return result;
 		});*/
 
-		fxDialog.setContentPane(nodeContent);
+        fxDialog.setContentPane(nodeContent);
 
-		fxDialog.setResultConverter(dialogButton -> {
+        fxDialog.setResultConverter(dialogButton -> {
 
-			if (dialogButton == fxDialog.getOkButtonType()) {
-				return dialogReturn.get();
-			}
-			return null;
-		});
+            if (dialogButton == fxDialog.getOkButtonType()) {
+                return dialogReturn.get();
+            }
+            return null;
+        });
 
 		/*Optional<ComboItem> result = fxDialog.showAndWait();
 
@@ -535,32 +536,32 @@ public class FxDialogShow {
 
 		});*/
 
-		return fxDialog.showAndWait();
+        return fxDialog.showAndWait();
 
-	}
+    }
 
-	public void showOkCancelDialog(String title, String headerText, Consumer<FxDialog> dialogOkMethod) {
+    public void showOkCancelDialog(String title, String headerText, Consumer<FxDialog> dialogOkMethod) {
 
-		FxDialog fxDialog = new FxDialog();
+        FxDialog fxDialog = new FxDialog();
 
-		fxDialog.setTitle(title);
-		fxDialog.setHeaderText(headerText);
-		fxDialog.AddOkAndCancelButton(null, null);
+        fxDialog.setTitle(title);
+        fxDialog.setHeaderText(headerText);
+        fxDialog.AddOkAndCancelButton(null, null);
 
 		/*fxDialog.setFilterToOkButton(()->{
 			//if(!result) lblmessage.setText("Hata oluştu");
 			//return result;
 		});*/
 
-		fxDialog.setContentPane(null);
+        fxDialog.setContentPane(null);
 
-		fxDialog.setResultConverter(dialogButton -> {
+        fxDialog.setResultConverter(dialogButton -> {
 
-			if (dialogButton == fxDialog.getOkButtonType()) {
-				dialogOkMethod.accept(fxDialog);
-			}
-			return null;
-		});
+            if (dialogButton == fxDialog.getOkButtonType()) {
+                dialogOkMethod.accept(fxDialog);
+            }
+            return null;
+        });
 
 		/*Optional<ComboItem> result = fxDialog.showAndWait();
 
@@ -577,69 +578,22 @@ public class FxDialogShow {
 
 		});*/
 
-		fxDialog.showAndWait();
+        fxDialog.showAndWait();
 
-	}
+    }
 
-	public void showOkDialog(Node nodeContent, String title, String headerText) {
+    public void showOkDialog(Node nodeContent, String title, String headerText) {
 
-		FxDialog fxDialog = new FxDialog();
+        FxDialog fxDialog = new FxDialog();
 
-		fxDialog.setTitle(title);
-		fxDialog.setHeaderText(headerText);
-		fxDialog.AddOkButton(null);
-
-
-		//MigPane rolePane = getChangeWsPane(fxDialog);
-
-		//Label lblmessage = (Label) rolePane.lookup("#mesajchws");
-
-		/*fxDialog.setFilterToOkButton(()->{
+        fxDialog.setTitle(title);
+        fxDialog.setHeaderText(headerText);
+        fxDialog.AddOkButton(null);
 
 
+        //MigPane rolePane = getChangeWsPane(fxDialog);
 
-			//if(!result) lblmessage.setText("Hata oluştu");
-			//return result;
-		});*/
-
-		fxDialog.setContentPane(nodeContent);
-
-		fxDialog.showAndWait();
-
-		/*Optional<ComboItem> result = fxDialog.showAndWait();
-
-
-		result.ifPresent(strSirket -> {
-
-			AppPropertiesImpl.setStrSirket(strSirket.getValue());
-			Loghelper.getInstance(getClass()).debug(" Str Sirket Güncellendi:"+ strSirket.getValue());
-			//Notifications.create().title("Özpaş Entegre").text("Şirket Değiştirildi:"+ strSirket.getLabel()).showInformation();
-			//changeWorkspace.setText("Şirket: "+ AppPropertiesImpl.getComboSirket().getLabel());
-			//buildButtonMenuRefresh();
-			new UserProp().saveUpdateProp("sirket", strSirket.getValue());
-			Loghelperr.getInstance(getClass()).debug("sirket prop Güncellendi");
-			//tabMain.getTabs().clear();
-
-		});*/
-
-		//return fxDialog;
-
-	}
-
-	public void showOkDialog(Node nodeContent, String title, String headerText, Integer prefWidt, Integer prefHeight, Boolean resizable) {
-
-		FxDialog fxDialog = new FxDialog();
-
-		fxDialog.setTitle(title);
-		fxDialog.setHeaderText(headerText);
-		fxDialog.AddOkButton(null);
-		if (resizable != null) fxDialog.setResizable(resizable);
-		if (prefHeight != null) fxDialog.setHeight(prefHeight);
-		if (prefWidt != null) fxDialog.setWidth(prefWidt);
-
-		//MigPane rolePane = getChangeWsPane(fxDialog);
-
-		//Label lblmessage = (Label) rolePane.lookup("#mesajchws");
+        //Label lblmessage = (Label) rolePane.lookup("#mesajchws");
 
 		/*fxDialog.setFilterToOkButton(()->{
 
@@ -649,10 +603,9 @@ public class FxDialogShow {
 			//return result;
 		});*/
 
-		fxDialog.setContentPane(nodeContent);
+        fxDialog.setContentPane(nodeContent);
 
-
-		fxDialog.showAndWait();
+        fxDialog.showAndWait();
 
 		/*Optional<ComboItem> result = fxDialog.showAndWait();
 
@@ -670,9 +623,57 @@ public class FxDialogShow {
 
 		});*/
 
-		//return fxDialog;
+        //return fxDialog;
 
-	}
+    }
+
+    public void showOkDialog(Node nodeContent, String title, String headerText, Integer prefWidt, Integer prefHeight, Boolean resizable) {
+
+        FxDialog fxDialog = new FxDialog();
+
+        fxDialog.setTitle(title);
+        fxDialog.setHeaderText(headerText);
+        fxDialog.AddOkButton(null);
+        if (resizable != null) fxDialog.setResizable(resizable);
+        if (prefHeight != null) fxDialog.setHeight(prefHeight);
+        if (prefWidt != null) fxDialog.setWidth(prefWidt);
+
+        //MigPane rolePane = getChangeWsPane(fxDialog);
+
+        //Label lblmessage = (Label) rolePane.lookup("#mesajchws");
+
+		/*fxDialog.setFilterToOkButton(()->{
+
+
+
+			//if(!result) lblmessage.setText("Hata oluştu");
+			//return result;
+		});*/
+
+        fxDialog.setContentPane(nodeContent);
+
+
+        fxDialog.showAndWait();
+
+		/*Optional<ComboItem> result = fxDialog.showAndWait();
+
+
+		result.ifPresent(strSirket -> {
+
+			AppPropertiesImpl.setStrSirket(strSirket.getValue());
+			Loghelper.getInstance(getClass()).debug(" Str Sirket Güncellendi:"+ strSirket.getValue());
+			//Notifications.create().title("Özpaş Entegre").text("Şirket Değiştirildi:"+ strSirket.getLabel()).showInformation();
+			//changeWorkspace.setText("Şirket: "+ AppPropertiesImpl.getComboSirket().getLabel());
+			//buildButtonMenuRefresh();
+			new UserProp().saveUpdateProp("sirket", strSirket.getValue());
+			Loghelperr.getInstance(getClass()).debug("sirket prop Güncellendi");
+			//tabMain.getTabs().clear();
+
+		});*/
+
+        //return fxDialog;
+
+    }
 
 
 
@@ -697,545 +698,520 @@ public class FxDialogShow {
 
 	});*/
 
-	public void showOkInfoDialog(String title, String headerText, String content) {
+    public void showOkInfoDialog(String title, String headerText, String content) {
 
-		FxDialog fxDialog = new FxDialog();
+        FxDialog fxDialog = new FxDialog();
 
-		fxDialog.setTitle(title);
-		fxDialog.setHeaderText(headerText);
-		fxDialog.AddOkButton(null);
-		fxDialog.setContentPane(null);
+        fxDialog.setTitle(title);
+        fxDialog.setHeaderText(headerText);
+        fxDialog.AddOkButton(null);
+        fxDialog.setContentPane(null);
 
-		if (!content.isEmpty()) {
-			MigPane nodeContent = new MigPane();  // getChangeWsPane(fxDialog);
-			TextArea textArea = new TextArea();
-			textArea.setText(content);
-			nodeContent.add(textArea);
-			fxDialog.setContentPane(nodeContent);
-		}
+        if (!content.isEmpty()) {
+            MigPane nodeContent = new MigPane();  // getChangeWsPane(fxDialog);
+            TextArea textArea = new TextArea();
+            textArea.setText(content);
+            nodeContent.add(textArea);
+            fxDialog.setContentPane(nodeContent);
+        }
 
-		fxDialog.showAndWait();
+        fxDialog.showAndWait();
 
-	}
+    }
 
-	public void showOkInfoDialog(String content) {
+    public void showOkInfoDialog(String content) {
 
-		FxDialog fxDialog = new FxDialog();
+        FxDialog fxDialog = new FxDialog();
 
-		fxDialog.setTitle("Özpaş Entegre");
-		fxDialog.setHeaderText(null);
-		fxDialog.AddOkButton(null);
-		fxDialog.setContentPane(null);
+        fxDialog.setTitle("Özpaş Entegre");
+        fxDialog.setHeaderText(null);
+        fxDialog.AddOkButton(null);
+        fxDialog.setContentPane(null);
 
-		if (!content.isEmpty()) {
-			MigPane nodeContent = new MigPane();  // getChangeWsPane(fxDialog);
-			TextArea textArea = new TextArea();
-			textArea.setText(content);
-			nodeContent.add(textArea);
-			fxDialog.setContentPane(nodeContent);
-		}
+        if (!content.isEmpty()) {
+            MigPane nodeContent = new MigPane();  // getChangeWsPane(fxDialog);
+            TextArea textArea = new TextArea();
+            textArea.setText(content);
+            nodeContent.add(textArea);
+            fxDialog.setContentPane(nodeContent);
+        }
 
-		fxDialog.showAndWait();
+        fxDialog.showAndWait();
 
-	}
+    }
 
-	public void nodeDialogViewContainer(Parent parentNode, IFxViewContainer viewContainer) {
-		nodeDialogViewContainer(parentNode, viewContainer, null, null);
-	}
+    public void nodeDialogViewContainer(Parent parentNode, IFxViewContainer viewContainer) {
+        nodeDialogViewContainer(parentNode, viewContainer, null, null);
+    }
 
-	public void nodeDialogViewContainer(Parent parentNode, IFxViewContainer viewContainer, Integer width, Integer height) {
+    public void nodeDialogViewContainer(Parent parentNode, IFxViewContainer viewContainer, Integer width, Integer height) {
 
-		Platform.runLater(() -> {
+        Platform.runLater(() -> {
 
-			FxStage stage = new FxStage();
-			FxScene scene = null;
+            FxStage stage = new FxStage();
+            FxScene scene = null;
 
-			if (width != null && height != null) {
-				scene = new FxScene(viewContainer.getView(), width, height);
-			} else {
-				scene = new FxScene(viewContainer.getView());
-			}
+            if (width != null && height != null) {
+                scene = new FxScene(viewContainer.getView(), width, height);
+            } else {
+                scene = new FxScene(viewContainer.getView());
+            }
 
-			if (parentNode != null) {
-				Bounds bounds = parentNode.localToScreen(parentNode.getBoundsInLocal());
-				stage.setX(bounds.getMaxX());
-				stage.setY(bounds.getMinY());
-			}
+            if (parentNode != null) {
+                Bounds bounds = parentNode.localToScreen(parentNode.getBoundsInLocal());
+                stage.setX(bounds.getMaxX());
+                stage.setY(bounds.getMinY());
+            }
 
-			viewContainer.setFxStage(stage);
+            viewContainer.setFxStage(stage);
 
-			stage.sizeToScene();
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setScene(scene);
-			stage.showAndWait();
+            stage.sizeToScene();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(scene);
+            stage.showAndWait();
 
-		});
+        });
 
 
-	}
+    }
 
-	public void nodeModalByIFxSimpleCont(Node nodeRelative, IFxSimpleCont ifxSimpleCont) {
-		nodeModalByIFxSimpleCont(nodeRelative, ifxSimpleCont, null, null, null);
-	}
+    public void nodeModalByIFxSimpleCont(Node nodeRelative, IFxSimpleCont ifxSimpleCont) {
+        nodeModalByIFxSimpleCont(nodeRelative, ifxSimpleCont, null, null, null);
+    }
 
-	public void nodeModalByIFxModCont(Node nodeRelative, IFxEntSimpleCont fxModCont, Integer width, Integer height, Boolean boNonModal, DialogConfig dialogConfig) {
+    public void nodeModalByIFxModCont(Node nodeRelative, IFxEntSimpleCont fxModCont, Integer width, Integer height, Boolean boNonModal, DialogConfig dialogConfig) {
 
-		if (dialogConfig == null) {
-			dialogConfig = new DialogConfig();
-		}
+        if (dialogConfig == null) {
+            dialogConfig = new DialogConfig();
+        }
 
-		dialogConfig.setNodeRelative(nodeRelative);
-		dialogConfig.setWidth(width.doubleValue());
-		dialogConfig.setHeight(height.doubleValue());
-		dialogConfig.setBoNonModal(boNonModal);
+        dialogConfig.setNodeRelative(nodeRelative);
+        dialogConfig.setWidth(width.doubleValue());
+        dialogConfig.setHeight(height.doubleValue());
+        dialogConfig.setBoNonModal(boNonModal);
 
-		nodeModalByIFxModContMain(fxModCont, dialogConfig);
+        nodeModalByIFxModContMain(fxModCont, dialogConfig);
 
-	}
+    }
 
-	public void nodeModalByIFxModContMain(IFxEntSimpleCont fxModCont, DialogConfig dialogConfig) {
+    public void nodeModalByIFxModContMain(IFxEntSimpleCont fxModCont, DialogConfig dialogConfig) {
 
-		if (dialogConfig == null) dialogConfig = new DialogConfig();
+        if (dialogConfig == null) dialogConfig = new DialogConfig();
 
-		if (!FiString.isEmpty(dialogConfig.getCssFileName())) {
-			fxModCont.getModView().getRootPane().getStylesheets().add(dialogConfig.getCssFileName());
-		}
+        if (!FiString.isEmpty(dialogConfig.getCssFileName())) {
+            fxModCont.getModView().getRootPane().getStylesheets().add(dialogConfig.getCssFileName());
+        }
 
-		Stage stage = fxModCont.getFxStage();
+        Stage stage = fxModCont.getFxStage();
 
-		if (stage == null) {
-			Loghelper.get(getClass()).debug("Modal Penceresi için Yeni Stage");
-			stage = new FxStage();
-			fxModCont.setFxStage(stage);
-		}
+        if (stage == null) {
+            Loghelper.get(getClass()).debug("Modal Penceresi için Yeni Stage");
+            stage = new FxStage();
+            fxModCont.setFxStage(stage);
+        }
 
-		if (!FiString.isEmpty(dialogConfig.getTitle())) {
-			stage.setTitle(dialogConfig.getTitle());
-		}
+        if (!FiString.isEmpty(dialogConfig.getTitle())) {
+            stage.setTitle(dialogConfig.getTitle());
+        }
 
-		FxScene scene = null;
+        FxScene scene = null;
 
-		if (dialogConfig.getWidth() != null && dialogConfig.getHeight() != null) {
-			scene = new FxScene(fxModCont.getModView().getRootPane(), dialogConfig.getWidth(), dialogConfig.getHeight());  //,width,height
-		} else {
-			scene = new FxScene(fxModCont.getModView().getRootPane());  //,width,height
-		}
+        if (dialogConfig.getWidth() != null && dialogConfig.getHeight() != null) {
+            scene = new FxScene(fxModCont.getModView().getRootPane(), dialogConfig.getWidth(), dialogConfig.getHeight());  //,width,height
+        } else {
+            scene = new FxScene(fxModCont.getModView().getRootPane());  //,width,height
+        }
 
 
-		if (dialogConfig.getNodeRelative() != null) {
-			Bounds bounds = dialogConfig.getNodeRelative().localToScreen(dialogConfig.getNodeRelative().getBoundsInLocal());
-			stage.setX(bounds.getMaxX());
-			stage.setY(bounds.getMinY());
-		}
+        if (dialogConfig.getNodeRelative() != null) {
+            Bounds bounds = dialogConfig.getNodeRelative().localToScreen(dialogConfig.getNodeRelative().getBoundsInLocal());
+            stage.setX(bounds.getMaxX());
+            stage.setY(bounds.getMinY());
+        }
 
-		stage.setScene(scene);
-		//stage.sizeToScene();
+        stage.setScene(scene);
+        //stage.sizeToScene();
 
-		if (dialogConfig.getWidth() != null) {
-			//Loghelper.debug(getClass(), "width ayarlanıyor" + dialogContext.getWidth());
-			stage.setWidth(dialogConfig.getWidth());
-		}
+        if (dialogConfig.getWidth() != null) {
+            //Loghelper.debug(getClass(), "width ayarlanıyor" + dialogContext.getWidth());
+            stage.setWidth(dialogConfig.getWidth());
+        }
 
-		if (dialogConfig.getWidth() == null && dialogConfig.getHeight() == null) {
-			stage.sizeToScene();
-		}
+        if (dialogConfig.getWidth() == null && dialogConfig.getHeight() == null) {
+            stage.sizeToScene();
+        }
 
-		if (FiBoolean.isTrue(dialogConfig.getBoNonModal())) {
-			stage.initModality(Modality.WINDOW_MODAL);
-		} else {
-			stage.initModality(Modality.APPLICATION_MODAL);
-		}
-		stage.showAndWait();
+        if (FiBoolean.isTrue(dialogConfig.getBoNonModal())) {
+            stage.initModality(Modality.WINDOW_MODAL);
+        } else {
+            stage.initModality(Modality.APPLICATION_MODAL);
+        }
+        stage.showAndWait();
 
-	}
+    }
 
-	public void nodeModalByIFxSimpleCont(IFxSimpleCont fxModCont, DialogConfig dialogConfig) {
+    public void nodeModalByIFxSimpleCont(IFxSimpleCont fxModCont, DialogConfig dialogConfig) {
 
-		if (dialogConfig == null) dialogConfig = new DialogConfig();
+        if (dialogConfig == null) dialogConfig = new DialogConfig();
 
-		Pane rootPane = fxModCont.getModView().getRootPane();
+        Pane rootPane = fxModCont.getModView().getRootPane();
 
-		FxWindowHelper.setMaxHeightAndWidthForWindows(rootPane);
+        FxWindowHelper.setMaxHeightAndWidthForWindows(rootPane);
 
-		if (!FiString.isEmpty(dialogConfig.getCssFileName())) {
-			rootPane.getStylesheets().add(dialogConfig.getCssFileName());
-		}
+        if (!FiString.isEmpty(dialogConfig.getCssFileName())) {
+            rootPane.getStylesheets().add(dialogConfig.getCssFileName());
+        }
 
-		Stage stage = fxModCont.getFxStage();
+        Stage stage = fxModCont.getFxStage();
 
-		if (stage == null) {
-			stage = new FxStage();
-			fxModCont.setFxStage(stage);
-		}
+        if (stage == null) {
+            stage = new FxStage();
+            fxModCont.setFxStage(stage);
+        }
 
 
+        if (!FiString.isEmpty(dialogConfig.getTitle())) {
+            stage.setTitle(dialogConfig.getTitle());
+        }
 
+        FxScene scene = null;
 
-		if (!FiString.isEmpty(dialogConfig.getTitle())) {
-			stage.setTitle(dialogConfig.getTitle());
-		}
+        if (dialogConfig.getWidth() != null && dialogConfig.getHeight() != null) {
+            scene = new FxScene(rootPane, dialogConfig.getWidth(), dialogConfig.getHeight());  //,width,height
+        } else {
+            scene = new FxScene(rootPane);  //,width,height
+        }
 
-		FxScene scene = null;
+        if (dialogConfig.getNodeRelative() != null) {
+            Bounds bounds = dialogConfig.getNodeRelative().localToScreen(dialogConfig.getNodeRelative().getBoundsInLocal());
+            stage.setX(bounds.getMaxX());
+            stage.setY(bounds.getMinY());
+        }
 
-		if (dialogConfig.getWidth() != null && dialogConfig.getHeight() != null) {
-			scene = new FxScene(rootPane, dialogConfig.getWidth(), dialogConfig.getHeight());  //,width,height
-		} else {
-			scene = new FxScene(rootPane);  //,width,height
-		}
+        stage.setScene(scene);
+        //stage.sizeToScene();
 
-		if (dialogConfig.getNodeRelative() != null) {
-			Bounds bounds = dialogConfig.getNodeRelative().localToScreen(dialogConfig.getNodeRelative().getBoundsInLocal());
-			stage.setX(bounds.getMaxX());
-			stage.setY(bounds.getMinY());
-		}
+        if (dialogConfig.getWidth() != null) {
+            //Loghelper.debug(getClass(), "width ayarlanıyor" + dialogContext.getWidth());
+            //stage.setWidth(dialogConfig.getWidth());
+            rootPane.setPrefWidth(dialogConfig.getWidth());
+        }
 
-		stage.setScene(scene);
-		//stage.sizeToScene();
+        if (dialogConfig.getWidth() == null && dialogConfig.getHeight() == null) {
+            stage.sizeToScene();
+        }
 
-		if (dialogConfig.getWidth() != null) {
-			//Loghelper.debug(getClass(), "width ayarlanıyor" + dialogContext.getWidth());
-			//stage.setWidth(dialogConfig.getWidth());
-			rootPane.setPrefWidth(dialogConfig.getWidth());
-		}
+        if (FiBoolean.isTrue(dialogConfig.getBoNonModal())) {
+            stage.initModality(Modality.WINDOW_MODAL);
+        } else {
+            stage.initModality(Modality.APPLICATION_MODAL);
+        }
+        stage.showAndWait();
 
-		if (dialogConfig.getWidth() == null && dialogConfig.getHeight() == null) {
-			stage.sizeToScene();
-		}
-
-		if (FiBoolean.isTrue(dialogConfig.getBoNonModal())) {
-			stage.initModality(Modality.WINDOW_MODAL);
-		} else {
-			stage.initModality(Modality.APPLICATION_MODAL);
-		}
-		stage.showAndWait();
-
-	}
-
-	public void nodeModalByIFxSimpleCont(Node nodeRelative, IFxSimpleCont fxSimpleCont, Integer width, Integer height, Boolean isNonModal) {
-
-		Stage stage = fxSimpleCont.getFxStage();
-
-		if (stage == null) {
-			stage = new FxStage();
-			fxSimpleCont.setFxStage(stage);
-			fxSimpleCont.setFxStage(stage);
-		}
-
-		FxScene scene = null;
-
-		if (width != null && height != null) {
-			scene = new FxScene(fxSimpleCont.getModView().getRootPane(), width, height);  //,width,height
-		} else {
-			scene = new FxScene(fxSimpleCont.getModView().getRootPane());  //,width,height
-		}
-
-		if (nodeRelative != null) {
-			Bounds bounds = nodeRelative.localToScreen(nodeRelative.getBoundsInLocal());
-			stage.setX(bounds.getMaxX());
-			stage.setY(bounds.getMinY());
-		}
-
-		stage.setScene(scene);
-		stage.sizeToScene();
-		if (FiBoolean.isTrue(isNonModal)) {
-			stage.initModality(Modality.APPLICATION_MODAL);
-		} else {
-			stage.initModality(Modality.WINDOW_MODAL);
-		}
+    }
 
-		stage.showAndWait();
-	}
+    public void nodeModalByIFxSimpleCont(Node nodeRelative, IFxSimpleCont ifxSimpleCont, Integer width, Integer height, Boolean isNonModal) {
+        Loghelper.get(getClass()).debug("nodeModalByIFxSimpleCont Giriş");
 
-	public void nodeDialogGenView(Parent nodeRelative, IFxViewContainer viewContainer) {
-		nodeDialogGenView(nodeRelative, viewContainer, null, null);
-	}
+        Stage stage = ifxSimpleCont.getFxStage();
 
-	public void nodeDialogGenView(Parent nodeRelative, IFxViewContainer viewContainer, Integer width, Integer height) {
+        if (stage == null) {
+            Loghelper.get(getClass()).debug("nodeModalByIFxSimpleCont-A1-Yeni stage-");
+            stage = new FxStage();
+            ifxSimpleCont.setFxStage(stage);
+        }
 
-		Platform.runLater(() -> {
+        FxScene scene = null;
 
-			Stage stage = viewContainer.getFxStage();
+        if (width != null && height != null) {
+            scene = new FxScene(ifxSimpleCont.getModView().getRootPane(), width, height);  //,width,height
+        } else {
+            scene = new FxScene(ifxSimpleCont.getModView().getRootPane());  //,width,height
+        }
 
-			if (stage == null) {
-				stage = new FxStage();
-				viewContainer.setFxStage(stage);
-			}
+        if (nodeRelative != null) {
+            Bounds bounds = nodeRelative.localToScreen(nodeRelative.getBoundsInLocal());
+            stage.setX(bounds.getMaxX());
+            stage.setY(bounds.getMinY());
+        }
 
-			FxScene scene = null;
+        stage.setScene(scene);
+        stage.sizeToScene();
+        if (FiBoolean.isTrue(isNonModal)) {
+            stage.initModality(Modality.APPLICATION_MODAL);
+        } else {
+            stage.initModality(Modality.WINDOW_MODAL);
+        }
 
-			if (width != null && height != null) {
-				scene = new FxScene(viewContainer.getRootPane(), width, height);  //,width,height
-			} else {
-				scene = new FxScene(viewContainer.getRootPane());  //,width,height
-			}
+        stage.showAndWait();
+    }
 
-			if (nodeRelative != null) {
-				Bounds bounds = nodeRelative.localToScreen(nodeRelative.getBoundsInLocal());
-				stage.setX(bounds.getMaxX());
-				stage.setY(bounds.getMinY());
-			}
+    public void nodeDialogGenView(Parent nodeRelative, IFxViewContainer viewContainer) {
+        nodeDialogGenView(nodeRelative, viewContainer, null, null);
+    }
 
-			stage.sizeToScene();
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setScene(scene);
-			stage.showAndWait();
-		});
-	}
+    public void nodeDialogGenView(Parent nodeRelative, IFxViewContainer viewContainer, Integer width, Integer height) {
 
-//	public void nodeDialogGenView(Parent nodeRelative, IFxModView viewContainer) {
-//		nodeDialogGenView(nodeRelative, viewContainer, null, null);
-//	}
+        Platform.runLater(() -> {
 
-//	public void nodeDialogGenView(Parent nodeRelative, IFxModView viewContainer, Integer width, Integer height) {
-//
-//		Platform.runLater(() -> {
-//
-//			Stage stage = viewContainer.getFxStage();
-//
-//			if (stage == null) {
-//				stage = new FxStage();
-//				viewContainer.setFxStage(stage);
-//			}
-//
-//			FxScene scene = null;
-//
-//			if (width != null && height != null) {
-//				scene = new FxScene(viewContainer.getRootPane(), width, height);  //,width,height
-//			} else {
-//				scene = new FxScene(viewContainer.getRootPane());  //,width,height
-//			}
-//
-//			if (nodeRelative != null) {
-//				Bounds bounds = nodeRelative.localToScreen(nodeRelative.getBoundsInLocal());
-//				stage.setX(bounds.getMaxX());
-//				stage.setY(bounds.getMinY());
-//			}
-//
-//			stage.sizeToScene();
-//			stage.initModality(Modality.APPLICATION_MODAL);
-//			stage.setScene(scene);
-//			stage.showAndWait();
-//		});
-//	}
+            Stage stage = viewContainer.getFxStage();
 
-	public void customDialog(Parent parentNode) {
+            if (stage == null) {
+                stage = new FxStage();
+                viewContainer.setFxStage(stage);
+            }
 
-		MigPane migPane = new MigPane();
-		migPane.add(new Label("Demo Blog"), "span");
+            FxScene scene = null;
 
+            if (width != null && height != null) {
+                scene = new FxScene(viewContainer.getRootPane(), width, height);  //,width,height
+            } else {
+                scene = new FxScene(viewContainer.getRootPane());  //,width,height
+            }
 
-		Platform.runLater(() -> {
+            if (nodeRelative != null) {
+                Bounds bounds = nodeRelative.localToScreen(nodeRelative.getBoundsInLocal());
+                stage.setX(bounds.getMaxX());
+                stage.setY(bounds.getMinY());
+            }
 
-			FxStage stage = new FxStage();
+            stage.sizeToScene();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(scene);
+            stage.showAndWait();
+        });
+    }
 
-			FxScene scene = new FxScene(migPane, 300, 200);
+    public void customDialog(Parent parentNode) {
 
-			Bounds bounds = parentNode.localToScreen(parentNode.getBoundsInLocal());
-			stage.setX(bounds.getMaxX());
-			stage.setY(bounds.getMinY());
+        MigPane migPane = new MigPane();
+        migPane.add(new Label("Demo Blog"), "span");
 
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setScene(scene);
-			stage.showAndWait();
 
-
-		});
-
-
-	}
+        Platform.runLater(() -> {
 
-	public <E> void tableDialog(Parent parentNode, List<IFiCol> listCol, List<E> listData) {
+            FxStage stage = new FxStage();
 
-		MigPane migPane = new MigPane();
-		migPane.add(new Label("Tablo"), "span");
+            FxScene scene = new FxScene(migPane, 300, 200);
 
-		FxTableView<E> tblBelgeList = new FxTableView();
-		tblBelgeList.addAllInfTableColumnList(listCol, true);
-		tblBelgeList.setItemsAsFilteredList(listData);
+            Bounds bounds = parentNode.localToScreen(parentNode.getBoundsInLocal());
+            stage.setX(bounds.getMaxX());
+            stage.setY(bounds.getMinY());
 
-		migPane.add(tblBelgeList, "span");
-
-		Platform.runLater(() -> {
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(scene);
+            stage.showAndWait();
 
-			FxStage stage = new FxStage();
-
-			FxScene scene = new FxScene(migPane, 300, 200);
 
-			if (parentNode != null) {
-				Bounds bounds = parentNode.localToScreen(parentNode.getBoundsInLocal());
-				stage.setX(bounds.getMaxX());
-				stage.setY(bounds.getMinY());
-			}
-
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setScene(scene);
-			stage.showAndWait();
-
-
-		});
-
-	}
-
-
-	public static void showModalWarning(String message) {
-		showModalWarning(message, null);
-	}
-
-	public static void showModalWarning(String message, String title) {
-		Platform.runLater(() -> {
-			Alert alert = new Alert(Alert.AlertType.WARNING);
-			if (title == null) {
-				alert.setTitle("UYARI");
-			} else {
-				alert.setTitle(title);
-			}
+        });
 
-			alert.setHeaderText(null);
-			alert.setContentText(message);
-			alert.show();
-		});
-	}
 
-	public static void showModalErrorWitAlert(String message) {
-		showModalErrorWitAlert(null, message);
-	}
+    }
 
-	public static void showModalErrorWitAlert(String title, String message) {
-		Platform.runLater(() -> {
-			Alert alert = new Alert(Alert.AlertType.ERROR);
+    public <E> void tableDialog(Parent parentNode, List<IFiCol> listCol, List<E> listData) {
 
-			if (title == null) {
-				alert.setTitle("UYARI");
-			} else {
-				alert.setTitle(title);
-			}
+        MigPane migPane = new MigPane();
+        migPane.add(new Label("Tablo"), "span");
 
-			alert.setHeaderText(null);
-			alert.setContentText(message);
-			alert.show();
-		});
-	}
+        FxTableView<E> tblBelgeList = new FxTableView();
+        tblBelgeList.addAllInfTableColumnList(listCol, true);
+        tblBelgeList.setItemsAsFilteredList(listData);
 
-	public static void showModalInfo(String message) {
-		Platform.runLater(() -> {
-			Alert alert = new Alert(Alert.AlertType.INFORMATION);
-			alert.setTitle("BİLGİ");
-			alert.setHeaderText(null);
-			alert.setContentText(message);
-			alert.show();
-		});
-	}
+        migPane.add(tblBelgeList, "span");
 
-	public static void showModalInfo(String messageHeader, String message) {
-		Platform.runLater(() -> {
-			FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogMetaType.DialogInfo, message);
-			fxSimpleDialog.setMessageHeader(messageHeader);
-			fxSimpleDialog.openAsDialogSync();
-		});
-	}
+        Platform.runLater(() -> {
 
-	public static void showModalError2(String messageHeader, String message) {
-		Platform.runLater(() -> {
-			FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogMetaType.DialogError, message);
-			fxSimpleDialog.setMessageHeader(messageHeader);
-			fxSimpleDialog.openAsDialogSync();
-		});
-	}
+            FxStage stage = new FxStage();
 
+            FxScene scene = new FxScene(migPane, 300, 200);
 
-	public static void showModalError2(String messageHeader, Fdr fdr) {
-		Platform.runLater(() -> {
-			String message = fdr.getMessage();
+            if (parentNode != null) {
+                Bounds bounds = parentNode.localToScreen(parentNode.getBoundsInLocal());
+                stage.setX(bounds.getMaxX());
+                stage.setY(bounds.getMinY());
+            }
 
-			if (fdr.getException() != null) {
-				message += "\n Exception Tanımı \n\n" + FiException.exceptionIfToString(fdr.getException());
-			}
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(scene);
+            stage.showAndWait();
 
-			FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogMetaType.DialogError, message, messageHeader);
-			fxSimpleDialog.openAsDialogSync();
-		});
-	}
 
-	public static void showModalErrorWitLogAndMessageAndExc(String messageHeader, Fdr fdr) {
-		Platform.runLater(() -> {
-			String message = "";
+        });
 
-			String logAsString = fdr.getLogAsStringWitErrorInfo();
-			if (!FiString.isEmptyTrim(logAsString)) {
-				message += "\n" + logAsString;
-			}
-			if (!FiString.isEmptyTrim(fdr.getMessage())) {
-				message += "\n" + fdr.getMessage();
-			}
+    }
 
-			if (fdr.getException() != null) {
-				message += "\nException Tanımı : " + FiException.exceptionToStrSummary(fdr.getException());
-			}
 
-			FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogMetaType.DialogError, message, messageHeader);
-			fxSimpleDialog.openAsDialogSync();
-		});
-	}
+    public static void showModalWarning(String message) {
+        showModalWarning(message, null);
+    }
 
-	public void alertFnResult(FnResult fnResult) {
+    public static void showModalWarning(String message, String title) {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            if (title == null) {
+                alert.setTitle("UYARI");
+            } else {
+                alert.setTitle(title);
+            }
 
-		if (FiBoolean.isTrue(fnResult.getBoResult())) {
+            alert.setHeaderText(null);
+            alert.setContentText(message);
+            alert.show();
+        });
+    }
 
-			showModalInfo(fnResult.getMessage());
+    public static void showModalErrorWitAlert(String message) {
+        showModalErrorWitAlert(null, message);
+    }
 
-		} else {
+    public static void showModalErrorWitAlert(String title, String message) {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
 
-			showModalWarning(fnResult.getMessage());
+            if (title == null) {
+                alert.setTitle("UYARI");
+            } else {
+                alert.setTitle(title);
+            }
 
-		}
+            alert.setHeaderText(null);
+            alert.setContentText(message);
+            alert.show();
+        });
+    }
 
+    public static void showModalInfoAlert(String message) {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("BİLGİ");
+            alert.setHeaderText(null);
+            alert.setContentText(message);
+            alert.show();
+        });
+    }
 
-	}
+    public static void showModalInfo(String messageHeader, String message) {
+        Platform.runLater(() -> {
+            FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogMetaType.DialogInfo, message);
+            fxSimpleDialog.setMessageHeader(messageHeader);
+            fxSimpleDialog.openAsDialogSync();
+        });
+    }
 
-	public FnResult showYesNoCancelDialog(String content) {
-		return showYesNoCancelDialog(content, null);
-	}
+    public static void showModalInfoNgt(String messageHeader, String message) {
+        FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogMetaType.DialogInfo, message);
+        fxSimpleDialog.setMessageHeader(messageHeader);
+        fxSimpleDialog.openAsDialogSync();
+    }
 
-	public FnResult showYesNoCancelDialog(String content, String title) {
+    public static void showModalError2(String messageHeader, String message) {
+        Platform.runLater(() -> {
+            FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogMetaType.DialogError, message);
+            fxSimpleDialog.setMessageHeader(messageHeader);
+            fxSimpleDialog.openAsDialogSync();
+        });
+    }
 
-		MigPane migPane = new MigPane();
-		migPane.add(new Label(content), "span");
+    public static void showModalError2Ngt(String messageHeader, String message) {
+        FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogMetaType.DialogError, message);
+        fxSimpleDialog.setMessageHeader(messageHeader);
+        fxSimpleDialog.openAsDialogSync();
+    }
 
-		MigPane migFooter = new MigPane();
 
-		FxButton btnYes = new FxButton("Evet");
-		FxButton btnNo = new FxButton("Hayır");
-		FxButton btnCancel = new FxButton("İptal");
+    public static void showModalError2(String messageHeader, Fdr fdr) {
+        Platform.runLater(() -> {
+            String message = fdr.getMessage();
 
-		migFooter.add(btnYes, "gapafter 10");
-		migFooter.add(btnNo, "gapafter 10");
-		migFooter.add(btnCancel, "gapafter 10");
+            if (fdr.getException() != null) {
+                message += "\n Exception Tanımı \n\n" + FiException.exceptionIfToString(fdr.getException());
+            }
 
-		migPane.add(migFooter, "span");
+            FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogMetaType.DialogError, message, messageHeader);
+            fxSimpleDialog.openAsDialogSync();
+        });
+    }
 
-		FxStage stage = new FxStage();
-		FxScene scene = new FxScene(migPane);
+    public static void showModalErrorWitLogAndMessageAndExc(String messageHeader, Fdr fdr) {
+        Platform.runLater(() -> {
+            String message = "";
 
-		if (title == null && titleGeneral != null) stage.setTitle(titleGeneral);
-		if (title != null) stage.setTitle(title);
+            String logAsString = fdr.getLogAsStringWitErrorInfo();
+            if (!FiString.isEmptyTrim(logAsString)) {
+                message += "\n" + logAsString;
+            }
+            if (!FiString.isEmptyTrim(fdr.getMessage())) {
+                message += "\n" + fdr.getMessage();
+            }
 
-		FnResult fnResult = new FnResult();
+            if (fdr.getException() != null) {
+                message += "\nException Tanımı : " + FiException.exceptionToStrSummary(fdr.getException());
+            }
 
-		btnYes.setOnAction(event -> {
-			fnResult.setBoResult(true);
-			stage.close();
+            FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogMetaType.DialogError, message, messageHeader);
+            fxSimpleDialog.openAsDialogSync();
+        });
+    }
 
-		});
+    public void alertFnResult(FnResult fnResult) {
 
-		btnNo.setOnAction(event -> {
-			fnResult.setBoResult(false);
-			stage.close();
-		});
+        if (FiBoolean.isTrue(fnResult.getBoResult())) {
 
-		btnCancel.setOnAction(event -> {
-			fnResult.setBoResult(null);
-			stage.close();
-		});
+            showModalInfoAlert(fnResult.getMessage());
+
+        } else {
+
+            showModalWarning(fnResult.getMessage());
+
+        }
+
+
+    }
+
+    public FnResult showYesNoCancelDialog(String content) {
+        return showYesNoCancelDialog(content, null);
+    }
+
+    public FnResult showYesNoCancelDialog(String content, String title) {
+
+        MigPane migPane = new MigPane();
+        migPane.add(new Label(content), "span");
+
+        MigPane migFooter = new MigPane();
+
+        FxButton btnYes = new FxButton("Evet");
+        FxButton btnNo = new FxButton("Hayır");
+        FxButton btnCancel = new FxButton("İptal");
+
+        migFooter.add(btnYes, "gapafter 10");
+        migFooter.add(btnNo, "gapafter 10");
+        migFooter.add(btnCancel, "gapafter 10");
+
+        migPane.add(migFooter, "span");
+
+        FxStage stage = new FxStage();
+        FxScene scene = new FxScene(migPane);
+
+        if (title == null && titleGeneral != null) stage.setTitle(titleGeneral);
+        if (title != null) stage.setTitle(title);
+
+        FnResult fnResult = new FnResult();
+
+        btnYes.setOnAction(event -> {
+            fnResult.setBoResult(true);
+            stage.close();
+
+        });
+
+        btnNo.setOnAction(event -> {
+            fnResult.setBoResult(false);
+            stage.close();
+        });
+
+        btnCancel.setOnAction(event -> {
+            fnResult.setBoResult(null);
+            stage.close();
+        });
 
 //			if(parentNode!=null){
 //				Bounds bounds = parentNode.localToScreen(parentNode.getBoundsInLocal());
@@ -1243,57 +1219,57 @@ public class FxDialogShow {
 //				stage.setY(bounds.getMinY());
 //			}
 
-		stage.initModality(Modality.APPLICATION_MODAL);
-		stage.setScene(scene);
-		stage.sizeToScene();
-		stage.showAndWait();
-		return fnResult;
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(scene);
+        stage.sizeToScene();
+        stage.showAndWait();
+        return fnResult;
 
-	}
+    }
 
-	public Fdr showYesNoCancelDialog(DialogConfig dialogConfig) {
+    public Fdr showYesNoCancelDialog(DialogConfig dialogConfig) {
 
-		if (dialogConfig == null) return new Fdr(false);
+        if (dialogConfig == null) return new Fdr(false);
 
-		FxMigPane migPane = new FxMigPane();
-		migPane.add(new Label(dialogConfig.getTxContent()), "span,grow,push");
+        FxMigPane migPane = new FxMigPane();
+        migPane.add(new Label(dialogConfig.getTxContent()), "span,grow,push");
 
-		FxMigPane migFooter = new FxMigPane();
+        FxMigPane migFooter = new FxMigPane();
 
-		FxButton btnYes = new FxButton("Evet");
-		FxButton btnNo = new FxButton("Hayır");
-		FxButton btnCancel = new FxButton("İptal");
+        FxButton btnYes = new FxButton("Evet");
+        FxButton btnNo = new FxButton("Hayır");
+        FxButton btnCancel = new FxButton("İptal");
 
-		migFooter.add(btnYes, "gapafter 10");
-		migFooter.add(btnNo, "gapafter 10");
-		migFooter.add(btnCancel, "gapafter 10");
+        migFooter.add(btnYes, "gapafter 10");
+        migFooter.add(btnNo, "gapafter 10");
+        migFooter.add(btnCancel, "gapafter 10");
 
-		migPane.add(migFooter, "span,growx");
+        migPane.add(migFooter, "span,growx");
 
-		FxStage stage = new FxStage();
-		FxScene scene = new FxScene(migPane);
+        FxStage stage = new FxStage();
+        FxScene scene = new FxScene(migPane);
 
-		String title = dialogConfig.getTitle();
+        String title = dialogConfig.getTitle();
 
-		if (title == null && titleGeneral != null) stage.setTitle(titleGeneral);
-		if (title != null) stage.setTitle(title);
+        if (title == null && titleGeneral != null) stage.setTitle(titleGeneral);
+        if (title != null) stage.setTitle(title);
 
-		Fdr fdrResult = new Fdr();
+        Fdr fdrResult = new Fdr();
 
-		btnYes.setOnAction(event -> {
-			fdrResult.setBoResult(true);
-			stage.close();
-		});
+        btnYes.setOnAction(event -> {
+            fdrResult.setBoResult(true);
+            stage.close();
+        });
 
-		btnNo.setOnAction(event -> {
-			fdrResult.setBoResult(false);
-			stage.close();
-		});
+        btnNo.setOnAction(event -> {
+            fdrResult.setBoResult(false);
+            stage.close();
+        });
 
-		btnCancel.setOnAction(event -> {
-			fdrResult.setBoResult(null);
-			stage.close();
-		});
+        btnCancel.setOnAction(event -> {
+            fdrResult.setBoResult(null);
+            stage.close();
+        });
 
 //			if(parentNode!=null){
 //				Bounds bounds = parentNode.localToScreen(parentNode.getBoundsInLocal());
@@ -1301,390 +1277,359 @@ public class FxDialogShow {
 //				stage.setY(bounds.getMinY());
 //			}
 
-		stage.initModality(Modality.APPLICATION_MODAL);
-		stage.setScene(scene);
-		stage.sizeToScene();
-		stage.showAndWait();
-		return fdrResult;
-	}
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(scene);
+        stage.sizeToScene();
+        stage.showAndWait();
+        return fdrResult;
+    }
 
-	public void showPopNotification(String title, String message) {
+    public void showPopNotification(String title, String message) {
 
-		Platform.runLater(() -> {
-			Notifications.create().title(title).text(message).showInformation();
-		});
-	}
+        Platform.runLater(() -> {
+            Notifications.create().title(title).text(message).showInformation();
+        });
+    }
 
-	public void showPopNotification(String message) {
+    public void showPopNotification(String message) {
 
-		Platform.runLater(() -> {
-			Notifications.create().title(FiType.orEmpty(FxDialogShow.titleGeneral)).text(message).showInformation();
-		});
+        Platform.runLater(() -> {
+            Notifications.create().title(FiType.orEmpty(FxDialogShow.titleGeneral)).text(message).showInformation();
+        });
 
-	}
+    }
 
-	public static void showPopWarn(String message) {
-		Platform.runLater(() -> {
-			Notifications.create().title(FiType.orEmpty(FxDialogShow.titleGeneral)).text(message).showWarning();
-		});
-	}
+    public static void showPopWarn(String message) {
+        Platform.runLater(() -> {
+            Notifications.create().title(FiType.orEmpty(FxDialogShow.titleGeneral)).text(message).showWarning();
+        });
+    }
 
-	public static void showPopInfo(String message) {
-		Platform.runLater(() -> {
-			Notifications.create().title(FiType.orEmpty(FxDialogShow.titleGeneral)).text(message).showInformation();
-		});
-	}
+    public static void showPopInfo(String message) {
+        Platform.runLater(() -> {
+            Notifications.create().title(FiType.orEmpty(FxDialogShow.titleGeneral)).text(message).showInformation();
+        });
+    }
 
-	/**
-	 * Headers olursa hepsi detay alanında gösterilir
-	 *
-	 * @param message
-	 */
-	public static void showPopOrModalInfo(String message) {
-		if (message == null) message = "";
+    /**
+     * Headers olursa hepsi detay alanında gösterilir
+     *
+     * @param message
+     */
+    public static void showPopOrModalInfo(String message) {
+        if (message == null) message = "";
 
-		if (message.length() < 301) {
-			showPopInfo(message);
-		} else {
-			showModalInfo("", message);
-		}
-	}
+        if (message.length() < 301) {
+            showPopInfo(message);
+        } else {
+            showModalInfo("", message);
+        }
+    }
 
-	public static void showPopOrModalLog(Fdr fdr, Boolean boPopInfo) {
+    public static void showPopOrModalLog(Fdr fdr, Boolean boPopInfo) {
 
-		String grup = !FiString.isEmpty(fdr.getTxName()) ? fdr.getTxName() + "\n" : "";
+        String grup = !FiString.isEmpty(fdr.getTxName()) ? fdr.getTxName() + "\n" : "";
 
-		if (fdr.isTrueBoResult()) {
+        if (fdr.isTrueBoResult()) {
 
-			Pair<String, Boolean> logAsStringAndErrorExist = fdr.getLogAsStringAndErrorExist();
+            Pair<String, Boolean> logAsStringAndErrorExist = fdr.getLogAsStringAndErrorExist();
 
-			if (FiBoolean.isTrue(boPopInfo)) {
-				if (logAsStringAndErrorExist.getValue()) {
-					showPopInfo(grup + "İşlem Başarılı, fakat bazı yerlerde hata oluştu.\n" + fdr.getLogAsStringWitErrorInfo());
-				} else {
-					showPopInfo(grup + "İşlem Başarılı\n" + fdr.getLogAsStringWitErrorInfo());
-				}
+            if (FiBoolean.isTrue(boPopInfo)) {
+                if (logAsStringAndErrorExist.getValue()) {
+                    showPopInfo(grup + "İşlem Başarılı, fakat bazı yerlerde hata oluştu.\n" + fdr.getLogAsStringWitErrorInfo());
+                } else {
+                    showPopInfo(grup + "İşlem Başarılı\n" + fdr.getLogAsStringWitErrorInfo());
+                }
 
-			} else {
-				if (logAsStringAndErrorExist.getValue()) {
-					showModalInfo(grup + "İşlem Başarılı, fakat bazı yerlerde hata oluştu. Detayı inceleyiniz. !!\n", fdr.getLogAsStringWitErrorInfo());
-				} else {
-					showModalInfo(grup + "İşlem Başarılı\n", fdr.getLogAsStringWitErrorInfo());
-				}
-			}
-		} else {
-			showModalErrorWitAlert(grup + "Hata Oluştu.", fdr.getLogAsStringWitErrorInfo());
-		}
-	}
+            } else {
+                if (logAsStringAndErrorExist.getValue()) {
+                    showModalInfo(grup + "İşlem Başarılı, fakat bazı yerlerde hata oluştu. Detayı inceleyiniz. !!\n", fdr.getLogAsStringWitErrorInfo());
+                } else {
+                    showModalInfo(grup + "İşlem Başarılı\n", fdr.getLogAsStringWitErrorInfo());
+                }
+            }
+        } else {
+            showModalErrorWitAlert(grup + "Hata Oluştu.", fdr.getLogAsStringWitErrorInfo());
+        }
+    }
 
-	private static void showPopOrModalInfo(String messageHeader, String messageDetail) {
+    private static void showPopOrModalInfo(String messageHeader, String messageDetail) {
 
-		if (messageDetail == null) messageDetail = "";
+        if (messageDetail == null) messageDetail = "";
 
-		if (messageDetail.length() < 301) {
-			showPopInfo(messageHeader + messageDetail);
-		} else {
-			showModalInfo(messageHeader, messageDetail);
-		}
-	}
+        if (messageDetail.length() < 301) {
+            showPopInfo(messageHeader + messageDetail);
+        } else {
+            showModalInfo(messageHeader, messageDetail);
+        }
+    }
 
-	/**
-	 * Mesaj uzunlunluğuna göre pop ya da modal olarak uyarı verir.
-	 *
-	 * @param message
-	 */
-	public static void showPopOrModalWarnByLength(String message) {
-		if (message != null && message.length() < 301) {
-			showPopWarn(message);
-		} else {
-			showModalWarning(message);
-		}
-	}
+    /**
+     * Mesaj uzunlunluğuna göre pop ya da modal olarak uyarı verir.
+     *
+     * @param message
+     */
+    public static void showPopOrModalWarnByLength(String message) {
+        if (message != null && message.length() < 301) {
+            showPopWarn(message);
+        } else {
+            showModalWarning(message);
+        }
+    }
 
-	public static void showPopInfoSuccess() {
-		Platform.runLater(() -> {
-			String message = "İşlem Başarılı";
-			Notifications.create().title(FiType.orEmpty(FxDialogShow.titleGeneral)).text(message).showInformation();
-		});
-	}
+    public static void showPopInfoSuccess() {
+        Platform.runLater(() -> {
+            String message = "İşlem Başarılı";
+            Notifications.create().title(FiType.orEmpty(FxDialogShow.titleGeneral)).text(message).showInformation();
+        });
+    }
 
-	public static void showPopError(String message) {
-		Platform.runLater(() -> {
-			Notifications.create().title(FiType.orEmpty(FxDialogShow.titleGeneral)).text(message).showError();
-		});
-	}
+    public static void showPopError(String message) {
+        Platform.runLater(() -> {
+            Notifications.create().title(FiType.orEmpty(FxDialogShow.titleGeneral)).text(message).showError();
+        });
+    }
 
-	public static String getTitleGeneral() {
-		if (titleGeneral == null) return "";
-		return titleGeneral;
-	}
+    public static String getTitleGeneral() {
+        if (titleGeneral == null) return "";
+        return titleGeneral;
+    }
 
-	public static void setTitleGeneral(String titleGeneral) {
-		FxDialogShow.titleGeneral = titleGeneral;
-	}
+    public static void setTitleGeneral(String titleGeneral) {
+        FxDialogShow.titleGeneral = titleGeneral;
+    }
 
-	public void showDeleteMessage(FnResult fnResult1) {
+    public void showDeleteMessage(FnResult fnResult1) {
 
-		if (FiType.isTrue(fnResult1)) {
-			showPopNotification("Kayıt Silindi...");
-		} else {
-			showPopNotification("Kayıt Silinirken hata oluştu !!!");
-		}
-	}
+        if (FiType.isTrue(fnResult1)) {
+            showPopNotification("Kayıt Silindi...");
+        } else {
+            showPopNotification("Kayıt Silinirken hata oluştu !!!");
+        }
+    }
 
-	public static void showDbResult(Fdr dbResult) {
-		showDbResult(dbResult, null);
-	}
+    public static void showDbResult(Fdr dbResult) {
+        showDbResult(dbResult, null);
+    }
 
-	public static void showDbResult2(Fdr dbResult, Runnable runIfTrue) {
-		showDbResult(dbResult, null);
-		if (dbResult.isTrueBoResult()) runIfTrue.run();
-	}
+    public static void showDbResult2(Fdr dbResult, Runnable runIfTrue) {
+        showDbResult(dbResult, null);
+        if (dbResult.isTrueBoResult()) runIfTrue.run();
+    }
 
-	public static void showDbResult(Fdr dbResult, String title) {
+    public static void showDbResult(Fdr dbResult, String title) {
 
-		if (dbResult == null) {
-			FxDialogShow.showModalErrorWitAlert("İşlem sonucu dönmedi.Sistem Yöneticisini bilgilendirin.");
-			return;
-		}
+        if (dbResult == null) {
+            FxDialogShow.showModalErrorWitAlert("İşlem sonucu dönmedi.Sistem Yöneticisini bilgilendirin.");
+            return;
+        }
 
-		if (dbResult.isTrueBoResult()) {
+        if (dbResult.isTrueBoResult()) {
 
-			String messageDetail = dbResult.getMessageNotNull();
+            String messageDetail = dbResult.getMessageNotNull();
 
-			if (dbResult.getRowsAffectedNotNull() > 0) {
-				String messageHeader = FiString.addNewLineToEndIfNotEmpty(title) + "İşlem Başarı ile Gerçekleşti :::\n";
+            if (dbResult.getRowsAffectedNotNull() > 0) {
+                String messageHeader = FiString.addNewLineToEndIfNotEmpty(title) + "İşlem Başarı ile Gerçekleşti :::\n";
 
-				if (FiNumber.orZero(dbResult.getLnInsertedRows()) > 0 || dbResult.getTxQueryType().equalsIgnoreCase(QueryType.bui().insert)) {
-					messageHeader += String.format("\nEklenen Yeni Kayıt Sayısı:%s", FiNumber.orZero(dbResult.getLnInsertedRows()));
-				}
+                if (FiNumber.orZero(dbResult.getLnInsertedRows()) > 0 || dbResult.getTxQueryType().equalsIgnoreCase(QueryType.bui().insert)) {
+                    messageHeader += String.format("\nEklenen Yeni Kayıt Sayısı:%s", FiNumber.orZero(dbResult.getLnInsertedRows()));
+                }
 
-				if (dbResult.getTxQueryType().equalsIgnoreCase(QueryType.bui().updatePop)) {
-					messageHeader += String.format("\nGüncellenen Kayıt Sayısı:%s", FiNumber.orZero(dbResult.getLnUpdatedRows()));
-				}
+                if (dbResult.getTxQueryType().equalsIgnoreCase(QueryType.bui().updatePop)) {
+                    messageHeader += String.format("\nGüncellenen Kayıt Sayısı:%s", FiNumber.orZero(dbResult.getLnUpdatedRows()));
+                }
 
-				FxDialogShow.showPopOrModalInfo(messageHeader, "");
-				//Loghelper.debug(FxDialogShow.class, "Message Det0ail:"+ messageDetail);
+                FxDialogShow.showPopOrModalInfo(messageHeader, "");
+                //Loghelper.debug(FxDialogShow.class, "Message Det0ail:"+ messageDetail);
 
-			} else {
-				String messageHeader = FiString.addNewLineToEndIfNotEmpty(title) + "İşlem Başarı ile Gerçekleşti.";
-				if (FiNumber.orZero(dbResult.getLnInsertedRows()) > 0 || dbResult.getTxQueryType().equals(QueryType.bui().insert)) {
-					messageHeader += String.format("\nEklenen Yeni Kayıt Sayısı:%s", FiNumber.orZero(dbResult.getLnInsertedRows()));
-				}
-				FxDialogShow.showPopOrModalInfo(messageHeader, messageDetail);
-			}
-
-
-		} else {
-
-			if (dbResult.isFalseBoResult()) {
-				String messageHeader = FiString.addNewLineToEndIfNotEmpty(title) + "Hata Oluştu !!!\n";
-				String messageDetail = FiString.addNewLineToEndIfNotEmpty(dbResult.getMessage()) + "\n Exception:\n" + FiException.exceptionIfToString(dbResult.getException());
-				FxDialogShow.showModalError2(messageHeader, messageDetail);
-			}
-
-			if (dbResult.isNullBoResult()) {
-				String messageDetail = dbResult.getMessage();
-				FxDialogShow.showModalInfo(FiString.addNewLineToEndIfNotEmpty(title) + "İşlem yapılacak kayıt bulunamadı.", messageDetail); //uygun kayıt bulunamadı.
-			}
+            } else {
+                String messageHeader = FiString.addNewLineToEndIfNotEmpty(title) + "İşlem Başarı ile Gerçekleşti.";
+                if (FiNumber.orZero(dbResult.getLnInsertedRows()) > 0 || dbResult.getTxQueryType().equals(QueryType.bui().insert)) {
+                    messageHeader += String.format("\nEklenen Yeni Kayıt Sayısı:%s", FiNumber.orZero(dbResult.getLnInsertedRows()));
+                }
+                FxDialogShow.showPopOrModalInfo(messageHeader, messageDetail);
+            }
 
 
-		}
+        } else {
 
-	}
+            if (dbResult.isFalseBoResult()) {
+                String messageHeader = FiString.addNewLineToEndIfNotEmpty(title) + "Hata Oluştu !!!\n";
+                String messageDetail = FiString.addNewLineToEndIfNotEmpty(dbResult.getMessage()) + "\n Exception:\n" + FiException.exceptionIfToString(dbResult.getException());
+                FxDialogShow.showModalError2(messageHeader, messageDetail);
+            }
 
-	public static void showDbResultFdrOr(Fdr fdr, String title) {
+            if (dbResult.isNullBoResult()) {
+                String messageDetail = dbResult.getMessage();
+                FxDialogShow.showModalInfo(FiString.addNewLineToEndIfNotEmpty(title) + "İşlem yapılacak kayıt bulunamadı.", messageDetail); //uygun kayıt bulunamadı.
+            }
 
-		if (fdr == null) {
-			FxDialogShow.showModalErrorWitAlert("İşlem sonucu dönmedi.Sistem Yöneticisini bilgilendirin.");
-			return;
-		}
 
-		if (fdr.isTrueBoResult()) {
+        }
 
-			String messageDetail = fdr.getMessageNotNull();
+    }
 
-			if (fdr.getLnFailureOpCount() <= 0 && fdr.getLnSuccessOpCount() > 0) {
+    public static void showDbResultFdrOr(Fdr fdr, String title) {
 
-				String messageHeader = FiString.addNewLineToEndIfNotEmpty(title) + "İşlem Başarı ile Gerçekleşti.\n";
+        if (fdr == null) {
+            FxDialogShow.showModalErrorWitAlert("İşlem sonucu dönmedi.Sistem Yöneticisini bilgilendirin.");
+            return;
+        }
+
+        if (fdr.isTrueBoResult()) {
+
+            String messageDetail = fdr.getMessageNotNull();
+
+            if (fdr.getLnFailureOpCountInit() <= 0 && fdr.getLnSuccessOpCount() > 0) {
+
+                String messageHeader = FiString.addNewLineToEndIfNotEmpty(title) + "İşlem Başarı ile Gerçekleşti.\n";
 
 //				if (FiNumber.orZero(fdr.getLnInsertedRows()) > 0 || fdr.getTxQueryType().equalsIgnoreCase(QueryType.bui().insert)) {
 //					messageHeader += String.format("\nEklenen Yeni Kayıt Sayısı:%s", FiNumber.orZero(fdr.getLnInsertedRows()));
 //				}
 
-				if (fdr.getTxQueryType().equalsIgnoreCase(QueryType.bui().updatePop)) {
-					messageHeader += String.format("\nGüncellenen Kayıt Sayısı:%s", FiNumber.orZero(fdr.getLnUpdatedRows()));
-				}
+                if (fdr.getTxQueryType().equalsIgnoreCase(QueryType.bui().updatePop)) {
+                    messageHeader += String.format("\nGüncellenen Kayıt Sayısı:%s", FiNumber.orZero(fdr.getLnUpdatedRows()));
+                }
 
-				FxDialogShow.showPopOrModalInfo(messageHeader, "");
-				//Loghelper.debug(FxDialogShow.class, "Message Det0ail:"+ messageDetail);
-				return;
-			}
+                FxDialogShow.showPopOrModalInfo(messageHeader, "");
+                //Loghelper.debug(FxDialogShow.class, "Message Det0ail:"+ messageDetail);
+                return;
+            }
 
-			if (fdr.getLnSuccessOpCount() > 0 || fdr.getLnFailureOpCount() > 0) {
-				String messageHeader = FiString.addNewLineToEndIfNotEmpty(title) + "İşlem bazı hatalarla birlikte başarılı tamamladı.";
+            if (fdr.getLnSuccessOpCount() > 0 || fdr.getLnFailureOpCountInit() > 0) {
+                String messageHeader = FiString.addNewLineToEndIfNotEmpty(title) + "İşlem bazı hatalarla birlikte başarılı tamamladı.";
 
 //				if (FiNumber.orZero(fdr.getLnInsertedRows()) > 0 || fdr.getTxQueryType().equals(QueryType.bui().insert)) {
 //					messageHeader += String.format("\nEklenen Yeni Kayıt Sayısı:%s", FiNumber.orZero(fdr.getLnInsertedRows()));
 //				}
-				FxDialogShow.showPopOrModalInfo(messageHeader, messageDetail);
-				return;
-			}
+                FxDialogShow.showPopOrModalInfo(messageHeader, messageDetail);
+                return;
+            }
 
-			FxDialogShow.showPopOrModalInfo("True Result", messageDetail);
-			return;
+            FxDialogShow.showPopOrModalInfo("True Result", messageDetail);
+            return;
 
-		} else {
+        } else {
 
-			if (fdr.isFalseBoResult()) {
-				String messageHeader = FiString.addNewLineToEndIfNotEmpty(title) + "Hata Oluştu !!!\n";
-				String messageDetail = FiString.addNewLineToEndIfNotEmpty(fdr.getMessage()) + "\n Exception:\n" + FiException.exceptionIfToString(fdr.getException());
-				FxDialogShow.showModalError2(messageHeader, messageDetail);
-			}
+            if (fdr.isFalseBoResult()) {
+                String messageHeader = FiString.addNewLineToEndIfNotEmpty(title) + "Hata Oluştu !!!\n";
+                String messageDetail = FiString.addNewLineToEndIfNotEmpty(fdr.getMessage()) + "\n Exception:\n" + FiException.exceptionIfToString(fdr.getException());
+                FxDialogShow.showModalError2(messageHeader, messageDetail);
+            }
 
-			if (fdr.isNullBoResult()) {
-				String messageDetail = fdr.getMessage();
-				FxDialogShow.showModalInfo(FiString.addNewLineToEndIfNotEmpty(title) + "İşlem yapılamadı.", messageDetail); //uygun kayıt bulunamadı.
-			}
-
-
-		}
-
-	}
+            if (fdr.isNullBoResult()) {
+                String messageDetail = fdr.getMessage();
+                FxDialogShow.showModalInfo(FiString.addNewLineToEndIfNotEmpty(title) + "İşlem yapılamadı.", messageDetail); //uygun kayıt bulunamadı.
+            }
 
 
-	public static void showDbResult2(Fdr dbResult) {
+        }
 
-		if (FiBoolean.isTrue(dbResult.getBoResult())) {
+    }
 
-			if (dbResult.isEmptyMessage()) {
-				dbResult.setMessage("İşlem Başarı ile Gerçekleşti.");
-			}
-			//showInfoDialog(dbResult.getMessage());
+    public static void showDbResultUpdate(Fdr dbResult) {
 
-			if (dbResult.getRowsAffectedNotNull() > 0) {
-				FxDialogShow.showPopInfo(dbResult.getMessage());
-			} else {
-				FxDialogShow.showPopInfo(dbResult.getMessage());
-			}
+        if (FiBoolean.isTrue(dbResult.getBoResult())) {
 
+            if (dbResult.isEmptyMessage()) {
+                dbResult.setMessage(String.format("İşlem Başarı ile Gerçekleşti.\n %s Adet Kayıt Güncellendi.", dbResult.getRowsAffectedNotNull()));
+            }
 
-		} else {
+            //showInfoDialog(dbResult.getMessage());
+            FxDialogShow.showModalInfoAlert(dbResult.getMessage());
 
-			if (dbResult.isEmptyMessage()) {
-				dbResult.setMessage("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getException()));
-			}
+        } else {
 
-			showModalWarning(dbResult.getMessage());
+            if (dbResult.isEmptyMessage()) {
+                dbResult.setMessage("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getException()));
+            }
 
-		}
+            showModalWarning(dbResult.getMessage());
 
-	}
+        }
 
+    }
 
-	public static void showDbResultUpdate(Fdr dbResult) {
+    public static void showFiDbResultWithAllModal(Fdr dbResult) {
 
-		if (FiBoolean.isTrue(dbResult.getBoResult())) {
+        if (FiBoolean.isTrue(dbResult.getBoResult())) {
 
-			if (dbResult.isEmptyMessage()) {
-				dbResult.setMessage(String.format("İşlem Başarı ile Gerçekleşti.\n %s Adet Kayıt Güncellendi.", dbResult.getRowsAffectedNotNull()));
-			}
+            if (FiString.isEmpty(dbResult.getMessage())) {
+                dbResult.setMessage(String.format("İşlem Başarı ile Gerçekleşti.\n %s Adet Kayıt Güncellendi.", dbResult.getRowsAffectedNotNull()));
+            }
 
-			//showInfoDialog(dbResult.getMessage());
-			FxDialogShow.showModalInfo(dbResult.getMessage());
+            //showInfoDialog(dbResult.getMessage());
+            FxDialogShow.showModalInfoAlert(dbResult.getMessage());
 
-		} else {
+        } else {
 
-			if (dbResult.isEmptyMessage()) {
-				dbResult.setMessage("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getException()));
-			}
+            if (dbResult.isFalseBoResult()) {
+                if (dbResult.getMessage() == null) {
+                    dbResult.setMessage("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getException()));
+                }
+            }
 
-			showModalWarning(dbResult.getMessage());
+            if (dbResult.isNullBoResult()) {
+                if (dbResult.getMessage() == null) {
+                    dbResult.setMessage("İşlem Yapılmadı.");
+                }
+            }
 
-		}
+            showModalWarning(dbResult.getMessage());
+        }
 
-	}
+    }
 
-	public static void showFiDbResultWithAllModal(Fdr dbResult) {
+    public static void showDbResultUpdatePop(Fdr dbResult) {
 
-		if (FiBoolean.isTrue(dbResult.getBoResult())) {
+        if (FiBoolean.isTrue(dbResult.getBoResult())) {
 
-			if (FiString.isEmpty(dbResult.getMessage())) {
-				dbResult.setMessage(String.format("İşlem Başarı ile Gerçekleşti.\n %s Adet Kayıt Güncellendi.", dbResult.getRowsAffectedNotNull()));
-			}
+            if (dbResult.getMessage() == null) {
+                dbResult.setMessage(String.format("İşlem Başarı ile Gerçekleşti.\n %s Adet Kayıt İşleme Alındı.", dbResult.getRowsAffectedNotNull()));
+            }
 
-			//showInfoDialog(dbResult.getMessage());
-			FxDialogShow.showModalInfo(dbResult.getMessage());
+            //showInfoDialog(dbResult.getMessage());
+            FxDialogShow.showPopInfo(dbResult.getMessage());
 
-		} else {
+        } else {
 
-			if (dbResult.isFalseBoResult()) {
-				if (dbResult.getMessage() == null) {
-					dbResult.setMessage("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getException()));
-				}
-			}
+            if (dbResult.getMessage() == null) {
+                dbResult.setMessage("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getException()));
+            }
 
-			if (dbResult.isNullBoResult()) {
-				if (dbResult.getMessage() == null) {
-					dbResult.setMessage("İşlem Yapılmadı.");
-				}
-			}
+            showModalWarning(dbResult.getMessage());
 
-			showModalWarning(dbResult.getMessage());
-		}
+        }
 
-	}
+    }
 
-	public static void showDbResultUpdatePop(Fdr dbResult) {
+    public void showDbResultWithOwner(Fdr dbResult, Window windowOwner) {
 
-		if (FiBoolean.isTrue(dbResult.getBoResult())) {
+        if (FiBoolean.isTrue(dbResult.getBoResult())) {
 
-			if (dbResult.getMessage() == null) {
-				dbResult.setMessage(String.format("İşlem Başarı ile Gerçekleşti.\n %s Adet Kayıt İşleme Alındı.", dbResult.getRowsAffectedNotNull()));
-			}
-
-			//showInfoDialog(dbResult.getMessage());
-			FxDialogShow.showPopInfo(dbResult.getMessage());
-
-		} else {
-
-			if (dbResult.getMessage() == null) {
-				dbResult.setMessage("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getException()));
-			}
-
-			showModalWarning(dbResult.getMessage());
-
-		}
-
-	}
-
-	public void showDbResultWithOwner(Fdr dbResult, Window windowOwner) {
-
-		if (FiBoolean.isTrue(dbResult.getBoResult())) {
-
-			if (dbResult.getMessage() == null) {
-				dbResult.setMessage("İşlem Başarı ile Gerçekleşti.");
-			}
-			//showInfoDialog(dbResult.getMessage());
-			if (windowOwner != null) {
-				Platform.runLater(() -> {
-					Notifications.create().owner(windowOwner).position(Pos.CENTER).text(dbResult.getMessage()).showInformation();
-				});
-			} else {
-				showPopNotification(dbResult.getMessage());
-			}
+            if (dbResult.getMessage() == null) {
+                dbResult.setMessage("İşlem Başarı ile Gerçekleşti.");
+            }
+            //showInfoDialog(dbResult.getMessage());
+            if (windowOwner != null) {
+                Platform.runLater(() -> {
+                    Notifications.create().owner(windowOwner).position(Pos.CENTER).text(dbResult.getMessage()).showInformation();
+                });
+            } else {
+                showPopNotification(dbResult.getMessage());
+            }
 
 
-		} else {
+        } else {
 
-			if (dbResult.getMessage() == null) {
-				dbResult.setMessage("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getException()));
-			}
-			showModalWarning(dbResult.getMessage());
+            if (dbResult.getMessage() == null) {
+                dbResult.setMessage("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getException()));
+            }
+            showModalWarning(dbResult.getMessage());
 
-		}
+        }
 
-	}
-
+    }
 
 }

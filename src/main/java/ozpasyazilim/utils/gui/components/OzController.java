@@ -32,7 +32,7 @@ public abstract class OzController {
 			//message = "null";
 
 		Platform.runLater(() -> {
-			 new FxDialogShow().showModalInfo(message);
+			 new FxDialogShow().showModalInfoAlert(message);
 		});
 
 //		Toolkit.getDefaultToolkit().beep();

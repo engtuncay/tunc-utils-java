@@ -55,12 +55,12 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 
 	public static void creInfoDialog(String message) {
-		FxSimpleDialog modDialogCont = FxSimpleDialog.build(FxSimpleDialogMetaType.InfoLabelDialog).buiMessageContent(message);
+		FxSimpleDialog modDialogCont = FxSimpleDialog.bui(FxSimpleDialogMetaType.InfoLabelDialog).buiMessageContent(message);
 		modDialogCont.openAsDialogSync();
 	}
 
 	public static FxSimpleDialog buiTextFieldDialog(String message) {
-		FxSimpleDialog modDialogCont = FxSimpleDialog.build(FxSimpleDialogMetaType.TextField).buiMessageContent(message);
+		FxSimpleDialog modDialogCont = FxSimpleDialog.bui(FxSimpleDialogMetaType.TextField).buiMessageContent(message);
 		modDialogCont.openAsDialogSync();
 		return modDialogCont;
 	}
@@ -74,7 +74,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 
 	}
 
-	public static FxSimpleDialog build(FxSimpleDialogMetaType fxSimpleDialogMetaType) {
+	public static FxSimpleDialog bui(FxSimpleDialogMetaType fxSimpleDialogMetaType) {
 		FxSimpleDialog fxSimpleDialog = new FxSimpleDialog();
 		fxSimpleDialog.setFxSimpleDialogType(fxSimpleDialogMetaType);
 		return fxSimpleDialog;
@@ -120,7 +120,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 		fxDialogShow.nodeModalByIFxSimpleCont(null, this);
 	}
 
-	public static FxSimpleDialog build(FxSimpleDialogMetaType fxSimpleDialogMetaType, String message) {
+	public static FxSimpleDialog bui(FxSimpleDialogMetaType fxSimpleDialogMetaType, String message) {
 		FxSimpleDialog modDialogCont = new FxSimpleDialog(fxSimpleDialogMetaType, message);
 		return modDialogCont;
 	}

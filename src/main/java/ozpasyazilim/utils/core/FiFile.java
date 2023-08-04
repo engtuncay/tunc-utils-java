@@ -123,46 +123,46 @@ public class FiFile {
 
 	}
 
-	public static Boolean copyFile(File afile, File bfile) {
+	public static Boolean copyFileWithIndexNo(File source, File destination) {
 
-		String fileNameAndExt = bfile.getName();
+		String fileNameAndExt = destination.getName();
 		String extension = getExtensionFromFilename(fileNameAndExt);
-		String filePathWoutExt = FiFile.getStrFilePathWoutExt(bfile.getPath());
-		String folderPathFromFileName = FiFile.getFolderPathFromFileName(bfile.getPath());
+		String filePathWoutExt = FiFile.getStrFilePathWoutExt(destination.getPath());
+		String folderPathFromFileName = FiFile.getFolderPathFromFileName(destination.getPath());
 
 		//Loghelper.debug(FiFile.class, "filename and ext:"+fileNameAndExt);
 //		Loghelper.debug(FiFile.class, "file path wout ext:"+filePathWoutExt);
 //		Loghelper.debug(FiFile.class, "folder path:"+folderPathFromFileName);
 
-		File fileBParent = new File(folderPathFromFileName); //bfile.getParentFile();
+		File fileDest = new File(folderPathFromFileName); //destination.getParentFile();
 
-//		Loghelper.debug(FiFile.class, "Dosya null mi fileBParenet:"+ fileBParent.getPath());
+//		Loghelper.debug(FiFile.class, "Dosya null mi fileBParenet:"+ fileDest.getPath());
 
-		if (!fileBParent.exists()) {
-			fileBParent.mkdirs();
+		if (!fileDest.exists()) {
+			fileDest.mkdirs();
 		}
 
 		//FIXME util metod boş dosya adı oluştur
 		// aynı adda dosya var olup olmadığı kontrol edilir, varsa index atılır
 		int i = 1;
-		while (bfile.exists()) {
-			bfile = new File(filePathWoutExt + "(" + i + ")." + extension);
+		while (destination.exists()) {
+			destination = new File(filePathWoutExt + "(" + i + ")." + extension);
 			i++;
 		}
 
 		// Loghelper.getInstance(thisclass).info("Parent Path:" +
-		// fileBParent.getPath());
+		// fileDest.getPath());
 
 		InputStream inStream = null;
 		OutputStream outStream = null;
 
 		try {
 
-			// File afile = new File("C:\\folderA\\Afile.txt");
-			// File bfile = new File("C:\\folderB\\Afile.txt");
+			// File source = new File("C:\\folderA\\Afile.txt");
+			// File destination = new File("C:\\folderB\\Afile.txt");
 
-			inStream = Files.newInputStream(afile.toPath());
-			outStream = Files.newOutputStream(bfile.toPath());
+			inStream = Files.newInputStream(source.toPath());
+			outStream = Files.newOutputStream(destination.toPath());
 
 			byte[] buffer = new byte[1024];
 
@@ -176,7 +176,7 @@ public class FiFile {
 			outStream.close();
 
 			// delete the original file
-			// afile.delete();
+			// source.delete();
 
 			System.out.println("File is copied successful!");
 			return true;
@@ -187,6 +187,56 @@ public class FiFile {
 		}
 	}
 
+	public static Boolean copyFileOverWrite(File source, File destination) {
+
+		String fileNameAndExt = destination.getName();
+		String extension = getExtensionFromFilename(fileNameAndExt);
+		String filePathWoutExt = FiFile.getStrFilePathWoutExt(destination.getPath());
+		String folderPathFromFileName = FiFile.getFolderPathFromFileName(destination.getPath());
+
+		//Loghelper.debug(FiFile.class, "filename and ext:"+fileNameAndExt);
+//		Loghelper.debug(FiFile.class, "file path wout ext:"+filePathWoutExt);
+//		Loghelper.debug(FiFile.class, "folder path:"+folderPathFromFileName);
+
+		File fileDest = new File(folderPathFromFileName); //destination.getParentFile();
+
+		//Loghelper.debug(FiFile.class, "Dosya null mi fileBParenet:"+ fileDest.getPath());
+
+		if (!fileDest.exists()) {
+			fileDest.mkdirs();
+		}
+
+		//if (destination.exists()) {}
+
+		InputStream inStream = null;
+		OutputStream outStream = null;
+
+		try {
+			inStream = Files.newInputStream(source.toPath());
+			outStream = Files.newOutputStream(destination.toPath());
+
+			byte[] buffer = new byte[1024];
+
+			int length;
+			// copy the file content in bytes
+			while ((length = inStream.read(buffer)) > 0) {
+				outStream.write(buffer, 0, length);
+			}
+
+			inStream.close();
+			outStream.close();
+
+			// delete the original file
+			// source.delete();
+
+			System.out.println("File is copied successful!");
+			return true;
+
+		} catch (IOException ex) {
+			Loghelper.get(getClassi()).error(FiException.exceptionToStrMain(ex));
+			return false;
+		}
+	}
 	private static String getFolderPathFromFileName(String filename) {
 		Pattern pattern = Pattern.compile("^(.+)\\\\([^\\\\]+)$");
 		Matcher matcher = pattern.matcher(filename);
@@ -396,6 +446,11 @@ public class FiFile {
 		}
 
 	}
+
+	public static String getWorkingDirectory() {
+		return System.getProperty("user.dir");
+	}
+
 }
 
 //	public List actReadfromcsvfiletolist_rut(File csvRutfile) {

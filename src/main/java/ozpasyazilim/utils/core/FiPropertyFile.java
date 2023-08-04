@@ -74,8 +74,8 @@ public class FiPropertyFile {
 			propFileContentStream = Files.lines(Paths.get(fileName), StandardCharsets.UTF_8);
 		} catch (IOException exception) {
 			System.out.println("Prop File Okunurken Hata oluştu.");
-			Loghelper.get(getClassi()).debug("Prop File Okunurken Hata Oluştu.");
-			Loghelper.get(FiPropertyFile.class).error("Hata :" + FiException.exceptionToStrMain(exception));
+			Loghelper.get(getClassi()).error("Prop File Okunurken Hata Oluştu :"+fileName);
+			Loghelper.get(FiPropertyFile.class).error(FiException.exceptionToStrMain(exception));
 		}
 
 		// propFileContentStream null olabilir

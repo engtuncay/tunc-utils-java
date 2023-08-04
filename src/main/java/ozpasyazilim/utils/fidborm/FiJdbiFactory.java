@@ -4,6 +4,7 @@ import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.statement.SqlStatements;
 import org.jdbi.v3.sqlobject.SqlObjectPlugin;
 import ozpasyazilim.utils.configmisc.ServerConfig;
+import ozpasyazilim.utils.core.FiException;
 import ozpasyazilim.utils.log.Loghelper;
 
 public class FiJdbiFactory {
@@ -14,6 +15,8 @@ public class FiJdbiFactory {
 
     public static Jdbi createJdbi(String server, String dbName, String user, String pass) {
 
+        Loghelper.get(getClassi()).debug("createJdbi Start");
+
         if (!DbConfig.checkDriverClassMicrosoftJdbc()) {
             String message = String.format("Sql Sürücü Kütüphanesi bulunamadı.");
             Loghelper.get(FiJdbiFactory.class).error(message);
@@ -22,17 +25,30 @@ public class FiJdbiFactory {
 
         String url = DbConfig.getUrlMicrosoftJdbcSqlServer(server, dbName);
 
-        Jdbi jdbi = Jdbi.create(url, user, pass);
-        jdbi.installPlugin(new SqlObjectPlugin());
-        jdbi.getConfig(SqlStatements.class).setUnusedBindingAllowed(true);
+
+
+        Jdbi jdbi = null;
+        try {
+
+            jdbi = Jdbi.create(url, user, pass);
+            jdbi.installPlugin(new SqlObjectPlugin());
+            jdbi.getConfig(SqlStatements.class).setUnusedBindingAllowed(true);
+            return jdbi;
+        } catch (Exception ex) {
+            Loghelper.get(getClassi()).error(FiException.exceptionToStrMain(ex));
+        }
 
         if (jdbi == null) {
             String uyari = String.format("Server: %s Db: %s için bağlantı bilgilerinde hata var.", (server == null ? "" : server), (dbName == null ? "" : dbName));
-            Loghelper.get(FiJdbiFactory.class).error(uyari);
-            //System.out.println(uyari);
+            Loghelper.get(getClassi()).error(uyari);
         }
 
-        return jdbi;
+        Loghelper.get(getClassi()).debug("createJdbi End");
+        return null;
+    }
+
+    private static Class<FiJdbiFactory> getClassi() {
+        return FiJdbiFactory.class;
     }
 
     public static Jdbi createJdbiToMasterDb(String server, String user, String pass) {
