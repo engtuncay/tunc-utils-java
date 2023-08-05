@@ -829,7 +829,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
         if (fxcol.getFiCol().getSummaryType() == null) {
 
-            Loghelper.get(getClass()).debug("Summary Node belirlenmemiş.Genel Boş Label Eklenir." + fxcol.getFiCol().getFieldName());
+            //Loghelper.get(getClass()).debug("Summary Node belirlenmemiş.Genel Boş Label Eklenir." + fxcol.getFiCol().getFieldName());
 
             FxLabel lblSummary = new FxLabel("");
 
@@ -1460,7 +1460,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         //Loghelperr.debugLog(getClass(), "update summary");
 
         if (getEnableSummaryHeaderNtn()) {
-            Loghelper.get(getClass()).debug("Tablonun Sütunlar için özet Fonksiyonu çalışacak");
+            //Loghelper.get(getClass()).debug("Tablonun Sütunlar için özet Fonksiyonu çalışacak");
 
             FiReportConfig fiReportConfig = new FiReportConfig();
             for (FxTableCol2 fxTableCol : getListFxTableCol()) {

@@ -54,8 +54,8 @@ public class FiThread {
 
 		Thread thread = new Thread(compoundRunnable);
 		thread.start();
-		return thread;
 
+		return thread;
 	}
 
 	public static Thread startThreadMb(Runnable runnable, FxMenuButton mbComp,Runnable runnableEnd) {

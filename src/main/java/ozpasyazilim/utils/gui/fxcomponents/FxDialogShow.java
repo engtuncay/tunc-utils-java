@@ -850,11 +850,11 @@ public class FxDialogShow {
 
     }
 
-    public void nodeModalByIFxSimpleCont(IFxSimpleCont fxModCont, DialogConfig dialogConfig) {
+    public void nodeModalByIFxSimpleCont(IFxSimpleCont iFxSimpleCont, DialogConfig dialogConfig) {
 
         if (dialogConfig == null) dialogConfig = new DialogConfig();
 
-        Pane rootPane = fxModCont.getModView().getRootPane();
+        Pane rootPane = iFxSimpleCont.getModView().getRootPane();
 
         FxWindowHelper.setMaxHeightAndWidthForWindows(rootPane);
 
@@ -862,11 +862,11 @@ public class FxDialogShow {
             rootPane.getStylesheets().add(dialogConfig.getCssFileName());
         }
 
-        Stage stage = fxModCont.getFxStage();
+        Stage stage = iFxSimpleCont.getFxStage();
 
         if (stage == null) {
             stage = new FxStage();
-            fxModCont.setFxStage(stage);
+            iFxSimpleCont.setFxStage(stage);
         }
 
 
@@ -911,9 +911,10 @@ public class FxDialogShow {
     }
 
     public void nodeModalByIFxSimpleCont(Node nodeRelative, IFxSimpleCont ifxSimpleCont, Integer width, Integer height, Boolean isNonModal) {
-        Loghelper.get(getClass()).debug("nodeModalByIFxSimpleCont Giriş");
+        //Loghelper.get(getClass()).debug("nodeModalByIFxSimpleCont Giriş");
 
         Stage stage = ifxSimpleCont.getFxStage();
+        Loghelper.get(getClass()).debug("nodeModalByIFxSimpleCont");
 
         if (stage == null) {
             Loghelper.get(getClass()).debug("nodeModalByIFxSimpleCont-A1-Yeni stage-");

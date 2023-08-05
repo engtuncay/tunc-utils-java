@@ -18,9 +18,9 @@ public abstract class AbsFxSimpleCont implements IFxSimpleCont {
 	public abstract IFxSimpleView getModView();
 
 	public Stage getFxStage() {
-		if (fxStage == null) {
-			fxStage = new FxStage();
-		}
+//		if (fxStage == null) {
+//			fxStage = new FxStage();
+//		}
 		return fxStage;
 	}
 

@@ -4,6 +4,7 @@ import de.jensd.fx.glyphs.icons525.Icons525;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
 import ozpasyazilim.utils.core.FiBoolean;
@@ -365,6 +366,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
 	public FxMigPaneView getModView() {
 		return modView;
 	}
+
 
 	private void actBtnOK() {
 //		if(getPredValidate()!=null){
