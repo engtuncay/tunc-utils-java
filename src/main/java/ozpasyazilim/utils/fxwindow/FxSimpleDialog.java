@@ -49,6 +49,11 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleBaseCont {
 	private Predicate<EntClazz> predValidate;
 
 	private Predicate<FxFormMig3> predValidateForm;
+
+	/**
+	 * Dialog penceresinde ok tıklandıktan sonra çalıştırılacak
+	 */
+	private Runnable runAfterOkEvent;
 	private EntClazz value;
 	private FxMigPane fxMigToolbar;
 	private FxTextField fxTextFieldGeneral;
@@ -115,9 +120,8 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleBaseCont {
 		if (!getBoInitExecutedNtn()) {
 			initCont();
 		}
-		FxDialogShow fxDialogShow = new FxDialogShow();
 		//getiFxModCont().getModView().getRootPane().getStylesheets().add("main.css");
-		fxDialogShow.nodeWindow(null, this);
+		FxDialogShow.nodeWindow(null, this);
 	}
 
 	public static FxSimpleDialog bui(FxSimpleDialogMetaType fxSimpleDialogMetaType, String message) {
@@ -235,7 +239,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleBaseCont {
 
 	public void initDialogInfo() {
 		setupDialogWithTextArea();
-		setupFooterOkCancel(null);
+		setupFooterOkCancel(true);
 	}
 
 	public void initInfoLabelDialog() {
@@ -256,12 +260,11 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleBaseCont {
 		FxMigPane migFooter = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().lcgNoGrid().getLcg());
 
 		btnOk = new FxButton("Ok", Icons525.OK);
-		btnCancel = new FxButton("İptal", Icons525.CANCEL);
-
 		btnOk.setOnAction(event -> actBtnOK());
-		btnCancel.setOnAction(event -> actBtnCancel());
 
 		if(!FiBoolean.isTrue(boDontAddCancel)){
+			btnCancel = new FxButton("İptal", Icons525.CANCEL);
+			btnCancel.setOnAction(event -> actBtnCancel());
 			migFooter.add(btnCancel);
 		}
 		migFooter.add(btnOk);
@@ -407,6 +410,10 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleBaseCont {
 
 			}
 
+		}
+
+		if (getRunAfterOkEvent()!=null) {
+			getRunAfterOkEvent().run();
 		}
 
 		super.closeStageWithDoneReason();
@@ -580,6 +587,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleBaseCont {
 		this.lblHeader = new FxLabel(getMessageHeader());
 
 		FxButton fxButton = new FxButton();
+		fxButton.setDisable(true);
 
 		if (getFxSimpleDialogType() == FxSimpleDialogMetaType.DialogInfo) {
 			fxButton.setFxIcon(Icons525.INFO);
@@ -589,7 +597,6 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleBaseCont {
 			fxButton.setFxIcon(Icons525.WARNING_SIGN);
 		}
 
-		fxButton.setDisable(true);
 		fxHeader.add(fxButton, "gapafter 5");
 		fxHeader.addGrowXPushXSpan(getLblHeader());
 
@@ -796,4 +803,11 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleBaseCont {
 		this.predValidateForm = predValidateForm;
 	}
 
+	public Runnable getRunAfterOkEvent() {
+		return runAfterOkEvent;
+	}
+
+	public void setRunAfterOkEvent(Runnable runAfterOkEvent) {
+		this.runAfterOkEvent = runAfterOkEvent;
+	}
 }

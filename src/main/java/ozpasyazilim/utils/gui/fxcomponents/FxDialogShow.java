@@ -26,7 +26,6 @@ import ozpasyazilim.utils.fxwindow.FxSimpleDialogMetaType;
 
 import java.util.Optional;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 /**
  * Utility JavaFx Dialog Class
@@ -379,7 +378,7 @@ public class FxDialogShow {
     public static void showModalForLogIfNotTrue(Fdr fdr) {
 
         if (fdr.isTrueBoResult()) {
-            FxDialogShow.showSimModalInfoAsyn(fdr.getTxName(), fdr.getLogAsStringWitErrorInfo());
+            FxDialogShow.showModalInfoAsyn(fdr.getTxName(), fdr.getLogAsStringWitErrorInfo());
         } else {
             FxDialogShow.showModalErrorAsyn(fdr.getTxName(), fdr.getLogAsStringWitErrorInfo());
         }
@@ -867,12 +866,12 @@ public class FxDialogShow {
     }
 
     /**
-     * sim : simple
+     *
      *
      * @param messageHeader
      * @param message
      */
-    public static void showSimModalInfoAsyn(String messageHeader, String message) {
+    public static void showModalInfoAsyn(String messageHeader, String message) {
         Platform.runLater(() -> {
             FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogMetaType.DialogInfo, message);
             fxSimpleDialog.setMessageHeader(messageHeader);
@@ -880,10 +879,31 @@ public class FxDialogShow {
         });
     }
 
-    public static void showModalInfoNgt(String messageHeader, String message) {
+    public static void showModalInfoAsyn(String messageHeader, String message,Runnable runAfterOkButton) {
+        Platform.runLater(() -> {
+            FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogMetaType.DialogInfo, message);
+            fxSimpleDialog.setRunAfterOkEvent(runAfterOkButton);
+            fxSimpleDialog.setMessageHeader(messageHeader);
+            fxSimpleDialog.openAsDialogSync();
+        });
+    }
+
+    public static FxSimpleDialog showModalInfoNgt(String messageHeader, String message) {
         FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogMetaType.DialogInfo, message);
         fxSimpleDialog.setMessageHeader(messageHeader);
         fxSimpleDialog.openAsDialogSync();
+        return fxSimpleDialog;
+    }
+
+    /**
+     * ngt : not gui thread , nmd: non-modal window
+     * @param messageHeader
+     * @param message
+     */
+    public static void showModalInfoNgtNmd(String messageHeader, String message) {
+        FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogMetaType.DialogInfo, message);
+        fxSimpleDialog.setMessageHeader(messageHeader);
+        fxSimpleDialog.openAsNonModal();
     }
 
     public static void showModalErrorAsyn(String messageHeader, String message) {
@@ -1109,9 +1129,9 @@ public class FxDialogShow {
 
             } else {
                 if (logAsStringAndErrorExist.getValue()) {
-                    showSimModalInfoAsyn(grup + "İşlem Başarılı, fakat bazı yerlerde hata oluştu. Detayı inceleyiniz. !!\n", fdr.getLogAsStringWitErrorInfo());
+                    showModalInfoAsyn(grup + "İşlem Başarılı, fakat bazı yerlerde hata oluştu. Detayı inceleyiniz. !!\n", fdr.getLogAsStringWitErrorInfo());
                 } else {
-                    showSimModalInfoAsyn(grup + "İşlem Başarılı\n", fdr.getLogAsStringWitErrorInfo());
+                    showModalInfoAsyn(grup + "İşlem Başarılı\n", fdr.getLogAsStringWitErrorInfo());
                 }
             }
         } else {
@@ -1126,7 +1146,7 @@ public class FxDialogShow {
         if (messageDetail.length() < 301) {
             showPopInfo(messageHeader + messageDetail);
         } else {
-            showSimModalInfoAsyn(messageHeader, messageDetail);
+            showModalInfoAsyn(messageHeader, messageDetail);
         }
     }
 
@@ -1210,7 +1230,7 @@ public class FxDialogShow {
 
             if (dbResult.isNullBoResult()) {
                 String messageDetail = dbResult.getMessage();
-                FxDialogShow.showSimModalInfoAsyn(FiString.addNewLineToEndIfNotEmpty(title) + "İşlem yapılacak kayıt bulunamadı.", messageDetail); //uygun kayıt bulunamadı.
+                FxDialogShow.showModalInfoAsyn(FiString.addNewLineToEndIfNotEmpty(title) + "İşlem yapılacak kayıt bulunamadı.", messageDetail); //uygun kayıt bulunamadı.
             }
 
 
