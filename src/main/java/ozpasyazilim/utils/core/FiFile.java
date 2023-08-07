@@ -17,6 +17,8 @@ import javax.swing.filechooser.FileFilter;
 
 import org.apache.commons.io.FilenameUtils;
 import ozpasyazilim.utils.log.Loghelper;
+import ozpasyazilim.utils.returntypes.Fdr;
+import ozpasyazilim.utils.returntypes.Fro;
 
 
 public class FiFile {
@@ -237,6 +239,58 @@ public class FiFile {
 			return false;
 		}
 	}
+
+	public static Fdr copyFileOverWriteFdr(File source, File destination) {
+
+		String fileNameAndExt = destination.getName();
+		String extension = getExtensionFromFilename(fileNameAndExt);
+		String filePathWoutExt = FiFile.getStrFilePathWoutExt(destination.getPath());
+		String folderPathFromFileName = FiFile.getFolderPathFromFileName(destination.getPath());
+
+		//Loghelper.debug(FiFile.class, "filename and ext:"+fileNameAndExt);
+//		Loghelper.debug(FiFile.class, "file path wout ext:"+filePathWoutExt);
+//		Loghelper.debug(FiFile.class, "folder path:"+folderPathFromFileName);
+
+		File fileDest = new File(folderPathFromFileName); //destination.getParentFile();
+
+		//Loghelper.debug(FiFile.class, "Dosya null mi fileBParenet:"+ fileDest.getPath());
+
+		if (!fileDest.exists()) {
+			fileDest.mkdirs();
+		}
+
+		//if (destination.exists()) {}
+
+		InputStream inStream = null;
+		OutputStream outStream = null;
+
+		try {
+			inStream = Files.newInputStream(source.toPath());
+			outStream = Files.newOutputStream(destination.toPath());
+
+			byte[] buffer = new byte[1024];
+
+			int length;
+			// copy the file content in bytes
+			while ((length = inStream.read(buffer)) > 0) {
+				outStream.write(buffer, 0, length);
+			}
+
+			inStream.close();
+			outStream.close();
+
+			// delete the original file
+			// source.delete();
+
+			System.out.println("File is copied successful!");
+			return Fdr.creBoResult(true);
+
+		} catch (IOException ex) {
+			Loghelper.get(getClassi()).error(FiException.exceptionToStrMain(ex));
+			return Fdr.creBoResult(false);
+		}
+	}
+
 	private static String getFolderPathFromFileName(String filename) {
 		Pattern pattern = Pattern.compile("^(.+)\\\\([^\\\\]+)$");
 		Matcher matcher = pattern.matcher(filename);

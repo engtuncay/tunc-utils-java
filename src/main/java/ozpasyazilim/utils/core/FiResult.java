@@ -25,7 +25,7 @@ public class FiResult {
 			FxDialogShow.build().showPopWarn("!!! Hata Oluştu.!!!");
 
 			if(fdr.getException()!=null){
-				FxDialogShow.build().showModalWarning("Hata Detayı:\n"+ fdr.getException().getMessage());
+				FxDialogShow.build().showModalWarningAlert("Hata Detayı:\n"+ fdr.getException().getMessage());
 			}
 
 		}

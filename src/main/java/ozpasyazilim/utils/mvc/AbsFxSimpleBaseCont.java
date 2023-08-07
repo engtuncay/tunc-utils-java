@@ -129,7 +129,7 @@ public abstract class AbsFxSimpleBaseCont implements IFxSimpleCont {
         }
 
         dialogConfig.setCssFileName("main.css");
-        fxDialogShow.nodeModalByIFxSimpleCont(this, dialogConfig);
+        FxDialogShow.nodeWindow(this, dialogConfig);
     }
 
     public String getConnProfile() {
@@ -139,4 +139,5 @@ public abstract class AbsFxSimpleBaseCont implements IFxSimpleCont {
     public void setConnProfile(String connProfile) {
         this.connProfile = connProfile;
     }
+    
 }

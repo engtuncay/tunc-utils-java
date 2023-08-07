@@ -50,7 +50,7 @@ public class FxSimpleContGen<E> extends AbsFxSimpleBaseCont implements IFxSimpSe
 		}
 
 		getModView().getRootPane().getStylesheets().add("app.css");
-		fxDialogShow.nodeModalByIFxSimpleCont(nodeRelative, this, width, height, boNonModal);
+		fxDialogShow.nodeWindow(nodeRelative, this, width, height, boNonModal);
 	}
 
 	@Override

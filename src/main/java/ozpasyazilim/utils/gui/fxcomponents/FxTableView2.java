@@ -1827,7 +1827,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
             new FiExcel2().openExcelFileWithApp(fileResult);
             return result.buildResult(true);
         } else {
-            new FxDialogShow().showModalWarning("Dosya Oluşturulamadı.Sistem Yöneticinize Başvurun.");
+            new FxDialogShow().showModalWarningAlert("Dosya Oluşturulamadı.Sistem Yöneticinize Başvurun.");
             return result.buildResult(false);
         }
 

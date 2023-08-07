@@ -4,89 +4,103 @@ import javafx.scene.Node;
 
 public class DialogConfig {
 
-	String txContent;
-	String title;
-	Double width;
-	Double height;
-	Boolean boNonModal;
-	Node nodeRelative;
-	String cssFileName;
+    String txContent;
+    String title;
+    Double width;
+    Double height;
 
-	//Double nmPrefWidth;
+    /**
+     * Modal Pencere : Uygulama Pasif Eder,Cevap Bekler
+     * <p>
+     * NonModal Pencere : Uygulama Pasif Etmez,Pencereyi arkaya alıp, başka çalışmalar yapmaya izin verir
+     */
+    Boolean boNonModal;
+    Node nodeRelative;
+    String cssFileName;
 
-	public DialogConfig() {
-	}
+    //Double nmPrefWidth;
 
-	public DialogConfig(String txContent) {
-		this.txContent = txContent;
-	}
+    public DialogConfig() {
+    }
 
-	public static DialogConfig factory() {
-		return new DialogConfig();
-	}
+    public DialogConfig(String txContent) {
+        this.txContent = txContent;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public static DialogConfig factory() {
+        return new DialogConfig();
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public DialogConfig buildTitle(String title) {
-		setTitle(title);
-		return this;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public DialogConfig buiContent(String txContent) {
-		setTxContent(txContent);
-		return this;
-	}
+    public DialogConfig buildTitle(String title) {
+        setTitle(title);
+        return this;
+    }
 
-	public Double getWidth() {
-		return width;
-	}
+    public DialogConfig buiContent(String txContent) {
+        setTxContent(txContent);
+        return this;
+    }
 
-	public void setWidth(Double width) {
-		this.width = width;
-	}
+    public Double getWidth() {
+        return width;
+    }
 
-	public Double getHeight() {
-		return height;
-	}
+    public void setWidth(Double width) {
+        this.width = width;
+    }
 
-	public void setHeight(Double height) {
-		this.height = height;
-	}
+    public Double getHeight() {
+        return height;
+    }
 
-	public DialogConfig buildWidth(double v) {
-		setWidth(v);
-		return this;
-	}
+    public void setHeight(Double height) {
+        this.height = height;
+    }
 
-	public String getTxContent() {
-		return txContent;
-	}
+    public DialogConfig buildWidth(double v) {
+        setWidth(v);
+        return this;
+    }
 
-	public void setTxContent(String txContent) {
-		this.txContent = txContent;
-	}
+    public String getTxContent() {
+        return txContent;
+    }
 
-	public Boolean getBoNonModal() {return boNonModal;}
+    public void setTxContent(String txContent) {
+        this.txContent = txContent;
+    }
 
-	public void setBoNonModal(Boolean boNonModal) {this.boNonModal = boNonModal;}
+    public Boolean getBoNonModal() {
+        return boNonModal;
+    }
 
-	public Node getNodeRelative() {return nodeRelative;}
+    public void setBoNonModal(Boolean boNonModal) {
+        this.boNonModal = boNonModal;
+    }
 
-	public void setNodeRelative(Node nodeRelative) {this.nodeRelative = nodeRelative;}
+    public Node getNodeRelative() {
+        return nodeRelative;
+    }
 
-	public String getCssFileName() {
-		return cssFileName;
-	}
+    public void setNodeRelative(Node nodeRelative) {
+        this.nodeRelative = nodeRelative;
+    }
 
-	public void setCssFileName(String cssFileName) {
-		this.cssFileName = cssFileName;
-	}
+    public String getCssFileName() {
+        return cssFileName;
+    }
+
+    public void setCssFileName(String cssFileName) {
+        this.cssFileName = cssFileName;
+    }
 
 
 }

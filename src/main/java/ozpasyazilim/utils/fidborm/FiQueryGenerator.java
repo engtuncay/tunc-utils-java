@@ -162,7 +162,7 @@ public class FiQueryGenerator {
 		return query.toString();
 	}
 
-	public static String selectQuery20ById(Class clazz) {
+	public static String selectQuery20ById_oldway(Class clazz) {
 
 		List<FiField> fieldListFilterAnno = FiEntity.getListFieldsShortWithId(clazz);
 
@@ -185,6 +185,48 @@ public class FiQueryGenerator {
 				indexWhere++;
 				if (indexWhere != 1) queryWhere.append(" AND ");
 				queryWhere.append(fiField.getName() + " = :" + fiField.getName());
+			}
+
+			index++;
+			if (index != 1) query.append(", ");
+			query.append(fiField.getName());  // + " = :" + fiField.getName());
+
+		}
+		query.append("\nFROM " + tableName);
+		query.append("\nWHERE " + queryWhere);
+
+		if (queryWhere.length() < 1) {
+			//query = new StringBuilder();
+		}
+
+		//query.append("\nWHERE " + idField + "=:idvalue");
+
+		return query.toString();
+	}
+
+	public static String selectQuery20ByIdNew(Class clazz) {
+
+		List<FiField> fieldListFilterAnno = FiEntity.getListFieldsShortWithId(clazz);
+
+		//String idField = getIdFieldSingle(fieldListFilterAnno);
+
+		//if (idField == null) return null;
+
+		String tableName = getTableName(clazz);
+
+		StringBuilder query = new StringBuilder();
+		StringBuilder queryWhere = new StringBuilder();
+
+		query.append("SELECT ");
+
+		Integer index = 0;
+		Integer indexWhere = 0;
+		for (FiField fiField : fieldListFilterAnno) {
+
+			if (FiBoolean.isTrue(fiField.getBoIdField())) {
+				indexWhere++;
+				if (indexWhere != 1) queryWhere.append(" AND ");
+				queryWhere.append(fiField.getName() + " = @" + fiField.getName());
 			}
 
 			index++;

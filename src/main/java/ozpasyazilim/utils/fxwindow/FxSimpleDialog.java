@@ -112,12 +112,12 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleBaseCont {
 	}
 
 	public void openAsDialogSync() {
-		if (!getBoInitExecuted()) {
+		if (!getBoInitExecutedNtn()) {
 			initCont();
 		}
 		FxDialogShow fxDialogShow = new FxDialogShow();
 		//getiFxModCont().getModView().getRootPane().getStylesheets().add("main.css");
-		fxDialogShow.nodeModalByIFxSimpleCont(null, this);
+		fxDialogShow.nodeWindow(null, this);
 	}
 
 	public static FxSimpleDialog bui(FxSimpleDialogMetaType fxSimpleDialogMetaType, String message) {
@@ -667,7 +667,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleBaseCont {
 		this.listText = listText;
 	}
 
-	public Boolean getBoInitExecuted() {
+	public Boolean getBoInitExecutedNtn() {
 		if (boInitExecuted == null) {
 			return false;
 		}

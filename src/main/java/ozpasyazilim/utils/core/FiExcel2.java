@@ -1424,7 +1424,7 @@ public class FiExcel2 {
 			Desktop.getDesktop().open(file);
 		} catch (IOException e) {
 			e.printStackTrace();
-			new FxDialogShow().showModalWarning("Dosya açılırken Sorunlar Karşılaşıldı.\n" + file.getPath());
+			new FxDialogShow().showModalWarningAlert("Dosya açılırken Sorunlar Karşılaşıldı.\n" + file.getPath());
 		}
 
 	}
@@ -1484,7 +1484,7 @@ public class FiExcel2 {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			new FxDialogShow().showModalWarning("hata oluştu.\nDetay:" + FiException.exceptionToStrMain(e));
+			new FxDialogShow().showModalWarningAlert("hata oluştu.\nDetay:" + FiException.exceptionToStrMain(e));
 		}
 	}
 
@@ -1541,7 +1541,7 @@ public class FiExcel2 {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			new FxDialogShow().showModalWarning("hata oluştu.\nDetay:" + FiException.exceptionToStrMain(e));
+			new FxDialogShow().showModalWarningAlert("hata oluştu.\nDetay:" + FiException.exceptionToStrMain(e));
 		}
 
 		return newFile;

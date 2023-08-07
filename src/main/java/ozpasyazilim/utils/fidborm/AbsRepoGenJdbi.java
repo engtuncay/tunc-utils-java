@@ -1023,28 +1023,29 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
     // Alt Sorgu Metodları
 
     public Fdr<Optional<EntClazz>> jdSelectEntityOptById(Integer id) {
-        String sql = FiQueryGenerator.selectQuery20ById(getEntityClass());
+        String sql = FiQueryGenerator.selectQuery20ById_oldway(getEntityClass());
         String idField = FiQueryGenerator.getIdField(getEntityClass());
         FiKeyBean fiKeyBean = FiKeyBean.bui().buiPut(idField, id);
         return jdSelectEntityOptBindMap(sql, fiKeyBean);
     }
 
     public Fdr<EntClazz> jdSelectEntityById(Integer id) {
-        String sql = FiQueryGenerator.selectQuery20ById(getEntityClass());
+        String sql = FiQueryGenerator.selectQuery20ByIdNew(getEntityClass());
+        //Loghelper.get(getClass()).debug("jdSelectEntityById sql:" + sql);
         String idField = FiQueryGenerator.getIdField(getEntityClass());
         FiKeyBean fiKeyBean = FiKeyBean.bui().buiPut(idField, id);
         return jdSelectEntityBindMap(sql, fiKeyBean);
     }
 
     public Fdr<List<Map<String, Object>>> jdSelectListMapById(Integer id) {
-        String sql = FiQueryGenerator.selectQuery20ById(getEntityClass());
+        String sql = FiQueryGenerator.selectQuery20ById_oldway(getEntityClass());
         String idField = FiQueryGenerator.getIdField(getEntityClass());
         FiKeyBean fiKeyBean = FiKeyBean.bui().buiPut(idField, id);
         return jdSelectListMapBindMap(sql, fiKeyBean);
     }
 
     public Fdr<List<EntClazz>> jdSelectListById(Integer id) {
-        String sql = FiQueryGenerator.selectQuery20ById(getEntityClass());
+        String sql = FiQueryGenerator.selectQuery20ById_oldway(getEntityClass());
         String idField = FiQueryGenerator.getIdField(getEntityClass());
         FiKeyBean fiKeyBean = FiKeyBean.bui().buiPut(idField, id);
         return jdSelectListBindMapMain(sql, fiKeyBean);

@@ -44,7 +44,7 @@ public class OzPanel extends JXPanel {
 		//JOptionPane.showMessageDialog(this, getStrpanelbilgi());
 
 		Platform.runLater(() -> {
-			new FxDialogShow().showModalInfoAlert(getStrpanelbilgi());
+			new FxDialogShow().showModalInfoAlertAsyn(getStrpanelbilgi());
 		});
 	}
 
@@ -107,7 +107,7 @@ public class OzPanel extends JXPanel {
 	public void showMessageDialog(String message) {
 		//JOptionPane.showMessageDialog(null, message);
 		Platform.runLater(() -> {
-			new FxDialogShow().showModalInfoAlert(message);
+			new FxDialogShow().showModalInfoAlertAsyn(message);
 		});
 	}
 
@@ -124,7 +124,7 @@ public class OzPanel extends JXPanel {
 
 		String finalMessage = message;
 		Platform.runLater(() -> {
-			new FxDialogShow().showModalWarning(finalMessage);
+			new FxDialogShow().showModalWarningAlert(finalMessage);
 		});
 	}
 

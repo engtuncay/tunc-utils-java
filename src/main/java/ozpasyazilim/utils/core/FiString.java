@@ -593,7 +593,7 @@ public class FiString {
      * @return
      */
     public static boolean isFullAllWithTrim(String... txtVal) {
-        Boolean boFull = true;
+        boolean boFull = true;
         for (String val : txtVal) {
             if (isEmptyTrim(val)) {
                 boFull = false;
@@ -601,6 +601,16 @@ public class FiString {
             }
         }
         return boFull;
+    }
+    public static boolean hasEmptyWithTrim(String... txtVal) {
+        boolean hasEmpty = false;
+        for (String val : txtVal) {
+            if (isEmptyTrim(val)) {
+                hasEmpty = true;
+                return hasEmpty;
+            }
+        }
+        return hasEmpty;
     }
 
     /**
