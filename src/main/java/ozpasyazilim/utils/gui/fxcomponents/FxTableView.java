@@ -2151,7 +2151,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 				//getRunnableSelectAndClose().run();
 				iFxMosCont.setEntitySelected(getSelectionModel().getSelectedItem());
 				iFxMosCont.setCloseReason("done");
-				iFxMosCont.getFxStage().close();
+				iFxMosCont.getFxStageInit().close();
 			}
 
 			// default olarak eklendi
@@ -2167,7 +2167,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 			//getRunnableSelectAndClose().run();
 			iFxMosCont.setEntitySelected(getSelectionModel().getSelectedItem());
 			iFxMosCont.setCloseReason("done");
-			iFxMosCont.getFxStage().close();
+			iFxMosCont.getFxStageInit().close();
 		});
 	}
 

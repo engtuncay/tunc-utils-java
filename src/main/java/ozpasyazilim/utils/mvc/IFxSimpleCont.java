@@ -1,6 +1,5 @@
 package ozpasyazilim.utils.mvc;
 
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
@@ -18,6 +17,8 @@ public interface IFxSimpleCont {
     //Pane getRootPane();
 
     // Stage tanımı controller üzerinden kullanılacak
+    Stage getFxStageInit();
+
     Stage getFxStage();
 
     void setFxStage(Stage stage);

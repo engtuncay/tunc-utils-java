@@ -802,7 +802,7 @@ public class FxDialogShow {
             fxModCont.getModView().getRootPane().getStylesheets().add(dialogConfig.getCssFileName());
         }
 
-        Stage stage = fxModCont.getFxStage();
+        Stage stage = fxModCont.getFxStageInit();
 
         if (stage == null) {
             Loghelper.get(getClass()).debug("Modal Penceresi için Yeni Stage");
@@ -862,7 +862,7 @@ public class FxDialogShow {
             rootPane.getStylesheets().add(dialogConfig.getCssFileName());
         }
 
-        Stage stage = iFxSimpleCont.getFxStage();
+        Stage stage = iFxSimpleCont.getFxStageInit();
 
         if (stage == null) {
             stage = new FxStage();
@@ -913,7 +913,7 @@ public class FxDialogShow {
     public void nodeModalByIFxSimpleCont(Node nodeRelative, IFxSimpleCont ifxSimpleCont, Integer width, Integer height, Boolean isNonModal) {
         //Loghelper.get(getClass()).debug("nodeModalByIFxSimpleCont Giriş");
 
-        Stage stage = ifxSimpleCont.getFxStage();
+        Stage stage = ifxSimpleCont.getFxStageInit();
         Loghelper.get(getClass()).debug("nodeModalByIFxSimpleCont");
 
         if (stage == null) {

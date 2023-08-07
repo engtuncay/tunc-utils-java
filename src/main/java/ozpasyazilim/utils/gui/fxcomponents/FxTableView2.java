@@ -864,7 +864,9 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
                 Boolean boStatus = fxCheckBox.isSelected();
 
+
                 getItemsAllFi().forEach(ent -> {
+
 
                     Boolean disabledSelection = false;
 
@@ -874,14 +876,17 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
                     }
 
                     if (!disabledSelection) {
+                        String fieldName = fxcol.getFiCol().getFieldName();
                         try {
-                            PropertyUtils.setNestedProperty(ent, fxcol.getFiCol().getFieldName(), false);
-                        } catch (IllegalAccessException e) {
-                            e.printStackTrace();
-                        } catch (InvocationTargetException e) {
-                            e.printStackTrace();
+                            PropertyUtils.setNestedProperty(ent, fieldName, false);
+                        } catch (IllegalAccessException | InvocationTargetException e) {
+                            //e.printStackTrace();
+                            Loghelper.get(getClass()).error(FiException.exceptionToStrMain(e));
+
                         } catch (NoSuchMethodException e) {
-                            e.printStackTrace();
+                            //e.printStackTrace();
+                            Loghelper.get(getClass()).error(FiException.exceptionToStrMain(e));
+                            Loghelper.get(getClass()).debug("Setter Metodu Mevcut Degil !!! Alan Adı: "+ fieldName);
                         }
                     }
                 });
@@ -895,14 +900,16 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
                     }
 
                     if (!disabledSelection) {
+                        String fieldName = fxcol.getFiCol().getFieldName();
                         try {
-                            PropertyUtils.setNestedProperty(ent, fxcol.getFiCol().getFieldName(), boStatus);
-                        } catch (IllegalAccessException e) {
-                            e.printStackTrace();
-                        } catch (InvocationTargetException e) {
-                            e.printStackTrace();
+                            PropertyUtils.setNestedProperty(ent, fieldName, boStatus);
+                        } catch (IllegalAccessException | InvocationTargetException e) {
+                            //e.printStackTrace();
+                            Loghelper.get(getClass()).error(FiException.exceptionToStrMain(e));
                         } catch (NoSuchMethodException e) {
-                            e.printStackTrace();
+                            //e.printStackTrace();
+                            Loghelper.get(getClass()).error(FiException.exceptionToStrMain(e));
+                            Loghelper.get(getClass()).debug("Setter Metodu Mevcut Degil !!! Alan Adı: "+ fieldName);
                         }
                     }
 
@@ -921,7 +928,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         }
 
         FxLabel lblSummary = new FxLabel("");
-        Loghelper.get(getClass()).debug("Summary Node Alanı açılacak.:" + fxcol.getFiCol().getFieldName());
+        //Loghelper.get(getClass()).debug("Summary Node Alanı açılacak.:" + fxcol.getFiCol().getFieldName());
 
         //lblSummary.setStyle("-fx-padding: 1px;");
         lblSummary.getStyleClass().add(getHeaderSummaryClass());
@@ -2169,7 +2176,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
         iFxSimpSelectionCont.setEntitySelected(selectedItem);
         iFxSimpSelectionCont.setCloseReason("done");
-        iFxSimpSelectionCont.getFxStage().close();
+        iFxSimpSelectionCont.getFxStageInit().close();
     }
 
     public void extensionSelectAndClose(IFxSimpleEntityModule iFxMosCont) {
@@ -2280,8 +2287,6 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     }
 
 
-
-
     public EventHandler<KeyEvent> getColFilterNodeKeyDownEvent() {
         if (colFilterNodeKeyDownEvent == null) {
             EventHandler<KeyEvent> customKeyEvent = keyEvent -> {
@@ -2376,7 +2381,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
                 setLnCurrentPageNoWithPageStartIndex(calcLnLastPageNo());
                 //getFnPageAction().accept((lnPageNo - 1) * getLnPageSize() + 1, lnPageNo * lnPageSize);
                 updatePageToolbarComps();
-                if(getFnPageChanged()!=null) getFnPageChanged().run();
+                if (getFnPageChanged() != null) getFnPageChanged().run();
                 if (getFnPageAction() != null)
                     getFnPageAction().accept(getLnPageStartIndexInit(), getLnPageStartIndexInit() + getLnPageSizeInit() - 1);
             });
@@ -2526,7 +2531,6 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         this.lnPageStartIndex = lnPageStartIndex;
         updatePageToolbarComps();
     }
-
 
 
     public FxLabel getLblPageNoIndex() {

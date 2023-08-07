@@ -1,14 +1,14 @@
 package ozpasyazilim.utils.fxwindow;
 
 import ozpasyazilim.utils.gui.fxcomponents.*;
-import ozpasyazilim.utils.mvc.AbsFxSimpleCont;
+import ozpasyazilim.utils.mvc.AbsFxSimpleBaseCont;
 import ozpasyazilim.utils.mvc.IFxSimpleCont;
 
 /**
  * Genel Pencere Yapısı (Toolbar-Content-Footer)
  *
  */
-public class FxSimpleWindowCont extends AbsFxSimpleCont implements IFxSimpleCont {
+public class FxSimpleWindowCont extends AbsFxSimpleBaseCont implements IFxSimpleCont {
 
 	FxSimpleWindowView modView;
 	String txSelected;

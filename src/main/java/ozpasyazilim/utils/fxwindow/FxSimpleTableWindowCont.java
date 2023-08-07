@@ -5,7 +5,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import ozpasyazilim.utils.core.FiCollection;
 import ozpasyazilim.utils.gui.fxcomponents.*;
-import ozpasyazilim.utils.mvc.AbsFxSimpleCont;
+import ozpasyazilim.utils.mvc.AbsFxSimpleBaseCont;
 import ozpasyazilim.utils.mvc.IFxSimpleCont;
 
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.List;
  *
  * @param <EntClazz> tablo satır entity
  */
-public class FxSimpleTableWindowCont<EntClazz> extends AbsFxSimpleCont implements IFxSimpleCont {
+public class FxSimpleTableWindowCont<EntClazz> extends AbsFxSimpleBaseCont implements IFxSimpleCont {
 
 	FxSimpleTableWindowView<EntClazz> modView;
 	String txSelected;

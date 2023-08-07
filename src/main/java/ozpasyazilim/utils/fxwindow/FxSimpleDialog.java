@@ -4,7 +4,6 @@ import de.jensd.fx.glyphs.icons525.Icons525;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
 import ozpasyazilim.utils.core.FiBoolean;
@@ -13,7 +12,7 @@ import ozpasyazilim.utils.core.FxPredicateString;
 import ozpasyazilim.utils.fidborm.FiEntity;
 import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.gui.fxcomponents.*;
-import ozpasyazilim.utils.mvc.AbsFxSimpleCont;
+import ozpasyazilim.utils.mvc.AbsFxSimpleBaseCont;
 import ozpasyazilim.utils.returntypes.Fdr;
 import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.OzColType;
@@ -23,7 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class FxSimpleDialog<EntClazz> extends AbsFxSimpleCont {
+public class FxSimpleDialog<EntClazz> extends AbsFxSimpleBaseCont {
 
 	FxMigPaneView modView;
 	FxSimpleDialogMetaType fxSimpleDialogMetaType;
