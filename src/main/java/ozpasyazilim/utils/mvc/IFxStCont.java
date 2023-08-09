@@ -9,9 +9,7 @@ public interface IFxStCont {
 
 	void setupTable();
 
-	//kaldırılacak
+	// review:kaldırılabilir mi
 	void setupEvents();
-	//void setupCompInits();
-
 
 }

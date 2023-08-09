@@ -2,6 +2,7 @@ package ozpasyazilim.utils.gui.fxcomponents;
 
 import ozpasyazilim.utils.core.FiString;
 import ozpasyazilim.utils.mvc.IFiCol;
+import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.OzColType;
 
 /**
@@ -264,17 +265,17 @@ public class FxMigHp {
 		this.cellConst = cellConst;
 	}
 
-	public FxMigHp addCcCompMaxWidthSizeByColType(IFiCol iFiCol) {
+	public FxMigHp addCcCompMaxWidthSizeByColTypeForFxForm(FiCol fiCol) {
 
-		if (iFiCol.getColType() == OzColType.Date || iFiCol.getColEditorClass().equals(FxDatePicker.class.getName())) {
+		if (fiCol.getColType() == OzColType.Date || fiCol.getColEditorClass().equals(FxDatePicker.class.getName())) {
 			appendCc("wmax 150");
 		}
 
-		if (iFiCol.getColType() == OzColType.Double) {
+		if (fiCol.getColType() == OzColType.Double) {
 			appendCc("wmax 200");
 		}
 
-		if (iFiCol.getColType() == OzColType.Integer) {
+		if (fiCol.getColType() == OzColType.Integer) {
 			appendCc("wmax 150");
 		}
 

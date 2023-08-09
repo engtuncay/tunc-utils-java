@@ -151,7 +151,7 @@ public class FxEditorFactory {
         return fdr;
     }
 
-    public static void clearFormFields(List<FiCol> listFormElements) {
+    public static void clearValuesOfFormFields(List<FiCol> listFormElements) {
 
         for (FiCol listFormElement : listFormElements) {
             clearValueForNodeCompMain(listFormElement, listFormElement.getColEditorClass(), listFormElement.getColEditorNode());
@@ -287,7 +287,7 @@ public class FxEditorFactory {
      * <p>
      * Lifecycle Methods
      * <p>
-     * getFnEditorNodeRendererBeforeSettingValue , getFnEditorNodeRendererAfterInitialValue1 , getFnEditorNodeRendererAfterInitialValue1 çalıştırır.
+     * getFnEditorNodeRendererBeforeSettingValue , getFnEditorNodeRendererAfterInitialValue çalıştırır.
      *
      * @param fiCol
      * @param entity
@@ -1504,9 +1504,9 @@ public class FxEditorFactory {
         return new Fdr(true);
     }
 
-    private static void clearValueForNodeCompMain(IFiCol ozTableCol, String colNodeClass, Node colNode) {
+    private static void clearValueForNodeCompMain(IFiCol iFiCol, String colNodeClass, Node colNode) {
 
-        //String colNodeClass = ozTableCol.getColFilterNodeClass();
+        //String colNodeClass = iFiCol.getColFilterNodeClass();
 
         if (colNode != null && colNode instanceof IfxNode) {
             IfxNode ifxNode = (IfxNode) colNode;
@@ -1519,10 +1519,10 @@ public class FxEditorFactory {
             return;
         }
 
-        //Node colNode = ozTableCol.getColFilterNode();
+        //Node colNode = iFiCol.getColFilterNode();
 
         if (colNodeClass.equals(FxTextField.class.getName())) {
-            //FiConsole.debug(ozTableCol);
+            //FiConsole.debug(iFiCol);
             FxTextField comp = (FxTextField) colNode;
             comp.setText("");
             comp.setTxValue("");
@@ -1533,8 +1533,8 @@ public class FxEditorFactory {
             FxTextFieldBtn comp = (FxTextFieldBtn) colNode;
             comp.setTxValue("");
             comp.getFxTextField().setText("");
-//			if (ozTableCol.getFnEditorNodeValueFormmatter() != null) {
-//				comp.getFxTextField().setText(ozTableCol.getFnEditorNodeValueFormmatter().apply(entity).toString());
+//			if (iFiCol.getFnEditorNodeValueFormmatter() != null) {
+//				comp.getFxTextField().setText(iFiCol.getFnEditorNodeValueFormmatter().apply(entity).toString());
 //			} else {
 //				comp.getFxTextField().setText(cellvalue.toString());
 //			}
@@ -1547,8 +1547,8 @@ public class FxEditorFactory {
             // Gerçek değeri txvalue da tutulur.
             comp.setTxValue("");
             comp.getFxTextField().setText("");
-//			if (ozTableCol.getFnEditorNodeValueFormmatter() != null) {
-//				comp.getFxTextField().setText(ozTableCol.getFnEditorNodeValueFormmatter().apply(entity).toString());
+//			if (iFiCol.getFnEditorNodeValueFormmatter() != null) {
+//				comp.getFxTextField().setText(iFiCol.getFnEditorNodeValueFormmatter().apply(entity).toString());
 //			} else {
 //				comp.getFxTextField().setText(cellvalue.toString());
 //			}

@@ -158,7 +158,7 @@ public class FxFormMig1<EntClazz> extends FxMigPaneGenView<EntClazz> implements 
 	}
 
 	public void clearFormFields() {
-		FxEditorFactory.clearFormFields(getListFormElements());
+		FxEditorFactory.clearValuesOfFormFields(getListFormElements());
 	}
 
 	public void setupFormElementsHp1(List<FiCol> listFormElements, FormType formType, EntClazz formEntityForEdit, EntClazz formEntityForInsert) {
@@ -363,7 +363,7 @@ public class FxFormMig1<EntClazz> extends FxMigPaneGenView<EntClazz> implements 
 			if (fiCol.getPrefSize() != null) {
 				add(node, String.format("width %s,wrap", fiCol.getPrefSize().toString()));
 			} else {
-				add(node, FxMigHp.bcc("growx,pushx,wrap").addCcCompMaxWidthSizeByColType(fiCol).getCcInit());
+				add(node, FxMigHp.bcc("growx,pushx,wrap").addCcCompMaxWidthSizeByColTypeForFxForm(fiCol).getCcInit());
 			}
 
 		} // tblCol for döngüsü sonu

@@ -1,4 +1,5 @@
 package ozpasyazilim.utils.mvc;
 
-public interface IModelOz {
+public interface IModalEnt {
+
 }

@@ -22,7 +22,6 @@ import ozpasyazilim.utils.gui.components.TableValueFactoryForFiKeyBean;
 import ozpasyazilim.utils.gui.fxTableViewExtra.NestedPropertyValueFactory;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.mvc.IFiCol;
-import ozpasyazilim.utils.mvc.IFxSimpleEntityModule;
 import ozpasyazilim.utils.mvc.IFxSimpSelectionCont;
 import ozpasyazilim.utils.core.FiReflection;
 import ozpasyazilim.utils.returntypes.FnResult;
@@ -2179,28 +2178,28 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         iFxSimpSelectionCont.getFxStageInit().close();
     }
 
-    public void extensionSelectAndClose(IFxSimpleEntityModule iFxMosCont) {
+//    public void extensionSelectAndClose(IFxSimpleEntityModule iFxMosCont) {
+//
+//        EntClazz selectedItem = getSelectionModel().getSelectedItem();
+//        if (selectedItem == null) return;
+//
+//        iFxMosCont.setSelectedEntity(selectedItem);
+//        iFxMosCont.setCloseReason("done");
+//        iFxMosCont.getFxStage().close();
+//    }
 
-        EntClazz selectedItem = getSelectionModel().getSelectedItem();
-        if (selectedItem == null) return;
-
-        iFxMosCont.setSelectedEntity(selectedItem);
-        iFxMosCont.setCloseReason("done");
-        iFxMosCont.getFxStage().close();
-    }
-
-    public void activateExtensionFxTableSelectAndClose(IFxSimpleEntityModule iFxSimpleModule) {
-
-        setOnKeyReleased(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                extensionSelectAndClose(iFxSimpleModule);
-            }
-        });
-
-        onRowDoubleClickEventFi(tableRow -> {
-            extensionSelectAndClose(iFxSimpleModule);
-        });
-    }
+//    public void activateExtensionFxTableSelectAndClose(IFxSimpleEntityModule iFxSimpleModule) {
+//
+//        setOnKeyReleased(event -> {
+//            if (event.getCode() == KeyCode.ENTER) {
+//                extensionSelectAndClose(iFxSimpleModule);
+//            }
+//        });
+//
+//        onRowDoubleClickEventFi(tableRow -> {
+//            extensionSelectAndClose(iFxSimpleModule);
+//        });
+//    }
 
 
     //public Event getPropTblKeyEvent() {
