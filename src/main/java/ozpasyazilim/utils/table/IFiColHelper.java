@@ -11,28 +11,28 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class FiColInfHelper {
+public class IFiColHelper {
 
 	List<? extends IFiCol> listFiColInf;
 	List<FiCol> listFiCol;
 
 	List<FxTreeTableCol> fxTreeTableColumnList;
 
-	public FiColInfHelper() {
+	public IFiColHelper() {
 	}
 
-	public FiColInfHelper(List<IFiCol> listFiColInf) {
+	public IFiColHelper(List<IFiCol> listFiColInf) {
 		setListFiColInf(listFiColInf);
 	}
 
-	public static FiColInfHelper build(List<? extends IFiCol> list) {
-		FiColInfHelper fiColInfHelper = new FiColInfHelper();
+	public static IFiColHelper build(List<? extends IFiCol> list) {
+		IFiColHelper fiColInfHelper = new IFiColHelper();
 		fiColInfHelper.setListFiColInf(list);
 		return fiColInfHelper;
 	}
 
-	public static FiColInfHelper buildFi(List<FiCol> list) {
-		FiColInfHelper fiColInfHelper = new FiColInfHelper();
+	public static IFiColHelper buildFi(List<FiCol> list) {
+		IFiColHelper fiColInfHelper = new IFiColHelper();
 		fiColInfHelper.setListFiColInf(list);
 		return fiColInfHelper;
 	}
@@ -57,11 +57,11 @@ public class FiColInfHelper {
 				FiField fiField = mapFiFieldsShort.get(fiTableCol.getFieldName());
 
 				if (FiBoolean.isFalse(fiField.getNullable())) {
-					fiTableCol.setColComment(FiString.orEmpty(FiString.addNewLineToEndIfNotEmpty(fiTableCol.getColComment()) + "Zorunlu Alan"));
+					fiTableCol.setColComment(FiString.addNewLineToEndIfNotEmpty(fiTableCol.getColComment()) + "Zorunlu Alan");
 				}
 
 				if (!FiString.isEmpty(fiField.getTxComment())) {
-					fiTableCol.setColComment(FiString.orEmpty(FiString.addNewLineToEndIfNotEmpty(fiTableCol.getColComment()) + FiString.orEmpty(fiField.getTxComment())));
+					fiTableCol.setColComment(FiString.addNewLineToEndIfNotEmpty(fiTableCol.getColComment()) + FiString.orEmpty(fiField.getTxComment()));
 				}
 
 			}
@@ -93,9 +93,9 @@ public class FiColInfHelper {
 		this.listFiColInf = listFiColInf;
 	}
 
-	public FiColInfHelper buildFxTreeTableCol() {
+	public IFiColHelper buildFxTreeTableCol() {
 
-		if (getListFiColInf().size() > 0) {
+		if (!getListFiColInf().isEmpty()) {
 
 			List<FxTreeTableCol> fxTreeTableColumnList1 = new ArrayList<>();
 

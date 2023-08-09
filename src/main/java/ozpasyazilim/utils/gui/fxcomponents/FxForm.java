@@ -2,7 +2,7 @@ package ozpasyazilim.utils.gui.fxcomponents;
 
 import javafx.scene.Node;
 import ozpasyazilim.utils.mvc.IFiCol;
-import ozpasyazilim.utils.table.FiColInfHelper;
+import ozpasyazilim.utils.table.IFiColHelper;
 
 import java.util.List;
 
@@ -24,14 +24,14 @@ public class FxForm {
 
 	public Node getEditorComp(String fieldName) {
 
-		IFiCol ozTableCol = FiColInfHelper.build(listElements).getFiTableColByID(fieldName);
+		IFiCol ozTableCol = IFiColHelper.build(listElements).getFiTableColByID(fieldName);
 		return ozTableCol.getColFilterNode();
 
 	}
 
 	public FxTextField getEditorCompFxTexfield(String fieldName) {
 
-		IFiCol ozTableCol = FiColInfHelper.build(listElements).getFiTableColByID(fieldName);
+		IFiCol ozTableCol = IFiColHelper.build(listElements).getFiTableColByID(fieldName);
 
 		if (ozTableCol.getFilterNodeClass().equals(FxTextField.class.getName())) {
 			FxTextField comp = (FxTextField) ozTableCol.getColFilterNode();
@@ -43,7 +43,7 @@ public class FxForm {
 
 	public FxDatePicker getEditorCompFxDatePicker(String fieldName) {
 
-		IFiCol ozTableCol = FiColInfHelper.build(listElements).getFiTableColByID(fieldName);
+		IFiCol ozTableCol = IFiColHelper.build(listElements).getFiTableColByID(fieldName);
 
 		if (ozTableCol.getFilterNodeClass().equals(FxDatePicker.class.getName())) {
 			FxDatePicker comp = (FxDatePicker) ozTableCol.getColFilterNode();

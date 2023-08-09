@@ -8,7 +8,7 @@ import org.tbee.javafx.scene.layout.MigPane;
 import ozpasyazilim.utils.core.FiBoolean;
 import ozpasyazilim.utils.mvc.IFxEntSimpleView;
 import ozpasyazilim.utils.mvc.IFiCol;
-import ozpasyazilim.utils.table.FiColInfHelper;
+import ozpasyazilim.utils.table.IFiColHelper;
 
 import java.util.List;
 
@@ -106,11 +106,11 @@ public class FxFormMigView extends FxMigPane implements IFxEntSimpleView {
 	}
 
 	public Node getCompByFieldName(String toString) {
-		return FiColInfHelper.build(getListFormElements()).findColumnByFieldName(toString).getColFilterNode();
+		return IFiColHelper.build(getListFormElements()).findColumnByFieldName(toString).getColFilterNode();
 	}
 
 	public IFiCol getColByFieldName(String toString) {
-		return FiColInfHelper.build(getListFormElements()).findColumnByFieldName(toString);
+		return IFiColHelper.build(getListFormElements()).findColumnByFieldName(toString);
 	}
 
 	public List<IFiCol> getListFormElements() {

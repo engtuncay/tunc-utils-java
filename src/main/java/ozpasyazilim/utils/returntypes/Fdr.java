@@ -45,28 +45,36 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
     private EntClazz value;
 
     /**
+     * Dönüş olarak kod veriliyorsa, bu alan kullanılır
+     * <p>
+     * Webservis Response'larden gelen dönüş kodu buraya yazılabilir
+     * <p>
+     * Error Kodu olarakda kullanılabilir
+     */
+    private Integer lnResponseValue;
+
+    /**
      * Başlık veya id verilmesi için
      */
     private String txId;
 
-    // *** Ek Alanlar
-    private Integer rowsAffected;
-    private Integer lnTotalCount;
-    /**
-     * Çoklu işlemlerde false sonuç olduğunu gösterir (or birleştirmeleri için)
-     */
-    private Boolean boFalseResultExist;
-
-    // Advanced Configurations
-    private String txQueryType;
-    // Detaylı log tutmak için eklenmiştir
-    private Integer lnInsertedRows;
-    private Integer lnUpdatedRows;
-    private Integer lnDeletedRows;
     /**
      * Fdr için verilecek özel bir isim
      */
     String txName;
+
+    // *** Ek Alanlar
+    private Integer rowsAffected;
+
+    /**
+     * Sayfalama Sorgularında Sorgunun toplam kayıt sayısını tutar
+     */
+    private Integer lnTotalCount;
+
+    /**
+     * Çoklu işlemlerde false sonuç olduğunu gösterir (or birleştirmeleri için)
+     */
+    private Boolean boFalseExist;
 
     /**
      * listException olduğu için exception property çıkarılabilir
@@ -78,6 +86,9 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
      */
     List<Exception> listException;
 
+
+    // Advanced Configurations
+
     /**
      * Başarılı operasyon (sorgu vs..) toplamı (true dönenler)
      * <p>
@@ -86,15 +97,11 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
     private Integer lnSuccessOpCount;
     private Integer lnFailureOpCount;
 
-    /**
-     * Fdr işlemi başarısız olduğunda sayısal bir hata kodu verilmek istenirse
-     */
-    private Integer lnErrorCode;
-
-    /**
-     * ???
-     */
-    private Integer lnResponseCode;
+    private String txQueryType;
+    // Detaylı log tutmak için eklenmiştir
+    private Integer lnInsertedRows;
+    private Integer lnUpdatedRows;
+    private Integer lnDeletedRows;
 
     /**
      * Kafa karışıklığı oluşturabilir,incelenecek, dikatli kullanılır
@@ -108,7 +115,7 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
     @Deprecated
     Boolean boOprResult;
 
-    // Sorgu,işlem çalıştırılmadıysa false yapılır
+    // Sorgunun execute edildiğini göstermek için
     Boolean boQueryExecuted;
 
     /**
@@ -120,8 +127,6 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
      * Birden fazla fdr birleştirilmiş ( combinedAnd veya or ile) fdr ler burada tutulabilir
      */
     List<Fdr> listFdr;
-
-//	List<String> messageList;
 
     /**
      *
@@ -507,7 +512,7 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
             setException(fdrAppend.getException());
             getListExceptionInit().add(fdrAppend.getException());
             if (getBoResult() == null) setBoResult(false);
-            setBoFalseResultExist(true);
+            setBoFalseExist(true);
             //getResMessage().append(fiDbResult.getResMessage().toString());
         }
 
@@ -607,14 +612,6 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
     public Fdr buiBoResult(Boolean b) {
         setBoResult(b);
         return this;
-    }
-
-    public Integer getLnErrorCode() {
-        return lnErrorCode;
-    }
-
-    public void setLnErrorCode(Integer lnErrorCode) {
-        this.lnErrorCode = lnErrorCode;
     }
 
     public void appendRowsAffected(Integer rowsAffected) {
@@ -843,19 +840,19 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
         this.listException = listException;
     }
 
-    public Integer getLnResponseCode() {
-        return lnResponseCode;
+    public Integer getLnResponseValue() {
+        return lnResponseValue;
     }
 
     public Integer getLnResponseCodeNtn() {
-        if (lnResponseCode == null) {
+        if (lnResponseValue == null) {
             return -1;
         }
-        return lnResponseCode;
+        return lnResponseValue;
     }
 
-    public void setLnResponseCode(Integer lnResponseCode) {
-        this.lnResponseCode = lnResponseCode;
+    public void setLnResponseValue(Integer lnResponseValue) {
+        this.lnResponseValue = lnResponseValue;
     }
 
     public List<Fdr> getListFdr() {
@@ -1050,18 +1047,18 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 //		return false;
 //	}
 
-    public Boolean getBoFalseResultExist() {
-        return boFalseResultExist;
+    public Boolean getBoFalseExist() {
+        return boFalseExist;
     }
 
-    public void setBoFalseResultExist(Boolean boFalseResultExist) {
-        this.boFalseResultExist = boFalseResultExist;
+    public void setBoFalseExist(Boolean boFalseExist) {
+        this.boFalseExist = boFalseExist;
     }
 
     public String calcTxResultStatus() {
         if (getBoResult() == null) return "Sonuçsuz (!!!)";
         if (getBoResult()) {
-            if (FiBoolean.isTrue(getBoFalseResultExist())) {
+            if (FiBoolean.isTrue(getBoFalseExist())) {
                 return "Kısmı Başarılı";
             }
             return "Başarılı";

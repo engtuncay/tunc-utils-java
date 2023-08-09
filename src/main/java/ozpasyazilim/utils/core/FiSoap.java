@@ -8,7 +8,6 @@ import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 
 public class FiSoap {
@@ -80,7 +79,7 @@ public class FiSoap {
 
 			//Read the response.
 			InputStreamReader isr = null;
-			fdr.setLnResponseCode(httpConn.getResponseCode());
+			fdr.setLnResponseValue(httpConn.getResponseCode());
 
 			if (httpConn.getResponseCode() == 200) {
 				isr = new InputStreamReader(httpConn.getInputStream(),StandardCharsets.UTF_8);
@@ -165,13 +164,13 @@ public class FiSoap {
 
 			//Read the response.
 			InputStreamReader isr = null;
-			fdr.setLnResponseCode(httpConn.getResponseCode());
+			fdr.setLnResponseValue(httpConn.getResponseCode());
 
 			if (httpConn.getResponseCode() == 200) {
 				isr = new InputStreamReader(httpConn.getInputStream(),StandardCharsets.UTF_8);
 			} else {
 				if (httpConn.getErrorStream() != null) isr = new InputStreamReader(httpConn.getErrorStream(),StandardCharsets.UTF_8);
-				fdr.setLnErrorCode(httpConn.getResponseCode());
+				//fdr.setLnErrorCode(httpConn.getResponseCode());
 			}
 
 			if (isr != null) {
@@ -227,8 +226,8 @@ public class FiSoap {
 				fdrXmlDoc.setValue(fiXml);
 			}
 
-			fdrXmlDoc.setLnResponseCode(fdrRequest.getLnResponseCode());
-			fdrXmlDoc.setLnErrorCode(fdrRequest.getLnErrorCode());
+			fdrXmlDoc.setLnResponseValue(fdrRequest.getLnResponseValue());
+			//fdrXmlDoc.setLnErrorCode(fdrRequest.getLnErrorCode());
 			fdrXmlDoc.setMessage(fdrRequest.getMessage());
 			fdrXmlDoc.combineAnd(fdrRequest);
 		} else {

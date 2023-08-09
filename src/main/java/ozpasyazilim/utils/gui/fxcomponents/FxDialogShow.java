@@ -895,6 +895,14 @@ public class FxDialogShow {
         return fxSimpleDialog;
     }
 
+    public static FxSimpleDialog showModalInfoNgt(String messageHeader, String message,Runnable runAfterOkEvent) {
+        FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogMetaType.DialogInfo, message);
+        fxSimpleDialog.setRunAfterOkEvent(runAfterOkEvent);
+        fxSimpleDialog.setMessageHeader(messageHeader);
+        fxSimpleDialog.openAsDialogSync();
+        return fxSimpleDialog;
+    }
+
     /**
      * ngt : not gui thread , nmd: non-modal window
      * @param messageHeader
@@ -909,6 +917,15 @@ public class FxDialogShow {
     public static void showModalErrorAsyn(String messageHeader, String message) {
         Platform.runLater(() -> {
             FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogMetaType.DialogError, message);
+            fxSimpleDialog.setMessageHeader(messageHeader);
+            fxSimpleDialog.openAsDialogSync();
+        });
+    }
+
+    public static void showModalErrorAsyn(String messageHeader, String message,Runnable runAfterOkEvent) {
+        Platform.runLater(() -> {
+            FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogMetaType.DialogError, message);
+            fxSimpleDialog.setRunAfterOkEvent(runAfterOkEvent);
             fxSimpleDialog.setMessageHeader(messageHeader);
             fxSimpleDialog.openAsDialogSync();
         });

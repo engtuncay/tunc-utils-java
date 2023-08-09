@@ -33,7 +33,7 @@ import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.mvc.IFxSimpleCont;
 import ozpasyazilim.utils.table.FiCol;
-import ozpasyazilim.utils.table.FiColInfHelper;
+import ozpasyazilim.utils.table.IFiColHelper;
 import ozpasyazilim.utils.table.OzColType;
 import ozpasyazilim.utils.windows.FiWinUtils;
 
@@ -2118,7 +2118,7 @@ public class FiExcel {
 	public static <PrmEntClazz> void saveAndOpenSablonExcel(IFxSimpleCont iFxSimpleCont, List<FiCol> listExcelColums, List<PrmEntClazz> listSampleData, Class<PrmEntClazz> clazzForAutoComment, String appDir) {
 
 		if (clazzForAutoComment != null) {
-			FiColInfHelper.autoComment(listExcelColums, clazzForAutoComment);
+			IFiColHelper.autoComment(listExcelColums, clazzForAutoComment);
 		}
 
 		String basepath = FiWinUtils.getDesktopDirectory();

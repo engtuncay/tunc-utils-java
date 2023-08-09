@@ -37,7 +37,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleBaseCont {
 	private Boolean boInitExecuted;
 	private FxLabel lblHeader;
 	private Class entityClass;
-	private FxFormMig2 fxFormMig;
+	private FxFormc fxFormMig;
 
 	private FxFormMig3 fxFormMig3;
 	private List<FiCol> fiColList;
@@ -328,7 +328,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleBaseCont {
 
 		FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().getLcg());
 
-		fxFormMig = new FxFormMig2();
+		fxFormMig = new FxFormc();
 
 		List<FiField> listFiFieldsCandId = FiEntity.getListFieldsCandId(getEntityClass());
 
@@ -693,11 +693,11 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleBaseCont {
 		this.entityClass = entityClass;
 	}
 
-	public FxFormMig2 getFxFormMig() {
+	public FxFormc getFxFormMig() {
 		return fxFormMig;
 	}
 
-	public void setFxFormMig(FxFormMig2 fxFormMig) {
+	public void setFxFormMig(FxFormc fxFormMig) {
 		this.fxFormMig = fxFormMig;
 	}
 

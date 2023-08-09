@@ -14,7 +14,7 @@ import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.mvc.IFxEntSimpleView;
 import ozpasyazilim.utils.returntypes.Fdr;
 import ozpasyazilim.utils.table.FiCol;
-import ozpasyazilim.utils.table.FiColInfHelper;
+import ozpasyazilim.utils.table.IFiColHelper;
 import ozpasyazilim.utils.table.OzColType;
 import ozpasyazilim.utils.fxwindow.FxSimpleDialog;
 
@@ -28,7 +28,7 @@ import java.util.function.Function;
  *
  * @param <EntClazz> Form alanın değerlerinin aktarılacağı veya alınacağı sınıf
  */
-public class FxFormMig3<EntClazz> extends FxMigPaneEnt<EntClazz> implements IFxEntSimpleView {
+public class FxFormMig3<EntClazz> extends FxMigPaneGenView<EntClazz> implements IFxEntSimpleView {
 	private Class<EntClazz> entityClazz;
 	private String guid;
 	private Boolean boFormInitialized;
@@ -86,11 +86,11 @@ public class FxFormMig3<EntClazz> extends FxMigPaneEnt<EntClazz> implements IFxE
 	}
 
 	public Node getCompByFieldName(String toString) {
-		return FiColInfHelper.build(getListFormElements()).findColumnByFieldName(toString).getColEditorNode();
+		return IFiColHelper.build(getListFormElements()).findColumnByFieldName(toString).getColEditorNode();
 	}
 
 	public IFiCol getColByFieldName(String toString) {
-		return FiColInfHelper.build(getListFormElements()).findColumnByFieldName(toString);
+		return IFiColHelper.build(getListFormElements()).findColumnByFieldName(toString);
 	}
 
 	public List<FiCol> getListFormElements() {
@@ -99,7 +99,7 @@ public class FxFormMig3<EntClazz> extends FxMigPaneEnt<EntClazz> implements IFxE
 
 	public FxDatePicker getEditorCompAsFxDatePicker(String fieldName) {
 
-		IFiCol ozTableCol = FiColInfHelper.build(getListFormElements()).getFiTableColByID(fieldName);
+		IFiCol ozTableCol = IFiColHelper.build(getListFormElements()).getFiTableColByID(fieldName);
 
 		if (ozTableCol.getColEditorClass().equals(FxDatePicker.class.getName())) {
 			FxDatePicker comp = (FxDatePicker) ozTableCol.getColEditorNode();
