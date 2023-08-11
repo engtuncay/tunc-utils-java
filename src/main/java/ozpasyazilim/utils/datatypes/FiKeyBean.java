@@ -284,10 +284,29 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
         return false;
     }
 
-    public boolean checkEmptyFiColExist(List<FiCol> fiColList) {
+    /**
+     * key-value setlerinden value'sı empty olan var mı kontrolü.
+     *
+     * @param fiColList
+     * @return True : Boş var , False: Yok
+     */
+    public boolean checkEmptyValueInFkb(List<FiCol> fiColList) {
         for (FiCol fiCol : fiColList) {
             if(checkEmpty(fiCol)) return true;
         }
         return false;
+    }
+
+    public boolean containsKeyValueFi(FiCol fiCol, Object value) {
+        if (containsKey(fiCol.toString())) {
+            Object objValue = get(fiCol.toString());
+
+            return objValue.equals(value);
+        }
+        return false;
+    }
+
+    public void logParams() {
+        Loghelper.get(getClass()).debug(FiConsole.textFiKeyBean(this));
     }
 }

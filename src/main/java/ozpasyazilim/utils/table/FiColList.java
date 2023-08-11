@@ -46,20 +46,39 @@ public class FiColList extends ArrayList<FiCol>{
 
 	@Override
 	public boolean add(FiCol fiTableCol) {
-		getMapCols().put(fiTableCol.getFieldName(), fiTableCol);
+		getMapColsInit().put(fiTableCol.getFieldName(), fiTableCol);
 		return super.add(fiTableCol);
 	}
 
-	public Map<String, FiCol> getMapCols() {
+	// URFIX statik map, dinamik map'e çevrilmeli (alan kaldırılmalı)
+	public Map<String, FiCol> getMapColsInit() {
 		if (mapCols == null) {
 			mapCols = new HashMap<>();
 		}
 		return mapCols;
 	}
 
+	public Map<String, FiCol> formMapCols() {
+		Map<String, FiCol> mapCols = new HashMap<>();
+		this.forEach(fiCol -> mapCols.put(fiCol.getFieldName(),fiCol));
+		return mapCols;
+	}
+
 	public void setMapCols(Map<String, FiCol> mapCols) {
 		this.mapCols = mapCols;
 	}
+
+//	public void equalsKey(String txKey, Object value) {
+//
+//		Map<String, FiCol> fiColMap = formMapCols();
+//
+//		if (fiColMap.containsKey(txKey)) {
+//			FiCol fiCol = fiColMap.get(txKey);
+//
+//
+//		}
+//
+//	}
 
 //	public void addWitHeader(FiCol fiCol, String txHeaderName) {
 //

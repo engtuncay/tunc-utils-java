@@ -211,7 +211,7 @@ public class FxFormMig1<EntClazz> extends FxMigPaneGenView<EntClazz> implements 
 		// ?????
 		if (getListFormElements() instanceof FiColList) {
 			FiColList fiTableCols = (FiColList) listFormElements;
-			setFormElementsMap(fiTableCols.getMapCols());
+			setFormElementsMap(fiTableCols.getMapColsInit());
 		} else {
 			Map<String, FiCol> formMap = FiCollection.listToMapSingle(listFormElements,FiCol::getFieldName);
 			setFormElementsMap(formMap);

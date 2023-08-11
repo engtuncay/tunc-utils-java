@@ -57,6 +57,17 @@ public class FxDialogShow {
         return showPromptDialogYesNo(message, null);
     }
 
+    /**
+     * Yes --> True BoResult
+     * <p>
+     * No --> False BoResult
+     * <p>
+     * Cancel -> NullBoResult
+     *
+     * @param message
+     * @param title
+     * @return
+     */
     public static Fdr showPromptDialogYesNoFdr(String message, String title) {
 
         FxMigPane migPane = new FxMigPane();
@@ -866,8 +877,6 @@ public class FxDialogShow {
     }
 
     /**
-     *
-     *
      * @param messageHeader
      * @param message
      */
@@ -879,7 +888,7 @@ public class FxDialogShow {
         });
     }
 
-    public static void showModalInfoAsyn(String messageHeader, String message,Runnable runAfterOkButton) {
+    public static void showModalInfoAsyn(String messageHeader, String message, Runnable runAfterOkButton) {
         Platform.runLater(() -> {
             FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogMetaType.DialogInfo, message);
             fxSimpleDialog.setRunAfterOkEvent(runAfterOkButton);
@@ -895,7 +904,7 @@ public class FxDialogShow {
         return fxSimpleDialog;
     }
 
-    public static FxSimpleDialog showModalInfoNgt(String messageHeader, String message,Runnable runAfterOkEvent) {
+    public static FxSimpleDialog showModalInfoNgt(String messageHeader, String message, Runnable runAfterOkEvent) {
         FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogMetaType.DialogInfo, message);
         fxSimpleDialog.setRunAfterOkEvent(runAfterOkEvent);
         fxSimpleDialog.setMessageHeader(messageHeader);
@@ -905,6 +914,7 @@ public class FxDialogShow {
 
     /**
      * ngt : not gui thread , nmd: non-modal window
+     *
      * @param messageHeader
      * @param message
      */
@@ -922,7 +932,7 @@ public class FxDialogShow {
         });
     }
 
-    public static void showModalErrorAsyn(String messageHeader, String message,Runnable runAfterOkEvent) {
+    public static void showModalErrorAsyn(String messageHeader, String message, Runnable runAfterOkEvent) {
         Platform.runLater(() -> {
             FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogMetaType.DialogError, message);
             fxSimpleDialog.setRunAfterOkEvent(runAfterOkEvent);
@@ -984,7 +994,6 @@ public class FxDialogShow {
     }
 
     /**
-     *
      * FnResult yerine Fdr li kullan
      *
      * @param content
@@ -1175,7 +1184,6 @@ public class FxDialogShow {
     }
 
 
-
     public static String getTitleGeneral() {
         if (titleGeneral == null) return "";
         return titleGeneral;
@@ -1358,7 +1366,6 @@ public class FxDialogShow {
         }
 
     }
-
 
 
 }

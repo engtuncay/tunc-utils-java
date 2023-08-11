@@ -119,7 +119,7 @@ public class FxFormc<EntClazz> extends FxMigPaneGenView<EntClazz> implements IFi
         //Loghelperr.debug(getClass(), "Plain Form By Editor");
 
         // fxform migpane daha önceden doldurulmuşsa, çıkarılıp temizlenir
-        if (getChildren().size() > 0) {
+        if (!getChildren().isEmpty()) {
             getChildren().remove(0, getChildren().size() - 1);
         }
 
@@ -144,7 +144,6 @@ public class FxFormc<EntClazz> extends FxMigPaneGenView<EntClazz> implements IFi
             }
 
             Label lblForm = new Label(fiCol.getHeaderName());
-            Loghelper.get(getClass()).debug("lblForm yükleniyor.");
             add(lblForm, "width 30%,wmax 150,wmin 120");
 
             // Editor comp (node) oluşturulur

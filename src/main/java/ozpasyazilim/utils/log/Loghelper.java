@@ -2,7 +2,6 @@ package ozpasyazilim.utils.log;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
-import org.xml.sax.ErrorHandler;
 import ozpasyazilim.utils.core.FiBoolean;
 import ozpasyazilim.utils.core.FiException;
 
@@ -14,9 +13,9 @@ public class Loghelper {
 		return Logger.getLogger(clazz);
 	}
 
-	public static Logger getInstance(Class clazz) {
-		return Logger.getLogger(clazz);
-	}
+//	public static Logger get(Class clazz) {
+//		return Logger.getLogger(clazz);
+//	}
 
 	public static void installLogger(Boolean boDebugModeEnabled) {
 		System.out.println("Logger(v1) yüklenecek. Loghelper.installLogger(boDebugMode):"+ boDebugModeEnabled);

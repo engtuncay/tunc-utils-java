@@ -20,6 +20,9 @@ import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.returntypes.Fdr;
 import ozpasyazilim.utils.returntypes.Fro;
 
+import java.io.IOException;
+import java.net.InetAddress;
+
 
 public class FiFile {
 
@@ -27,49 +30,51 @@ public class FiFile {
 
         Loghelper.installLogger(true);
 
-        String pathfile = "Y:\\TEST\\PANSIS\\SatisFaturasi-04.12.2019-17.37-Lite.xml";
+        checkHostName("SERVER");
 
-        String pathfile2 = "Y:\\TEST\\PANSIS\\SatisFaturasi-04.12.2019-20.45.xml";
-        String pathfile3 = "Y:\\TEST\\PANSIS\\SatisFaturasi-05.12.2019-20.45.xml";
-        File file = new File(pathfile2);
-
-        String result = getStrFilePathWoutExt(file.getPath());
-
-        System.out.println(result);
-
-        File file1 = new File(pathfile);
-        File file2 = new File(pathfile2);
-        File file3 = new File(pathfile3);
-
-        List<File> files = new ArrayList();
-        files.add(file1);
-        files.add(file2);
-        //files.add(file3);
-
-        // XNOTE md note alalım
-        Collections.sort(files, (o1, o2) -> {
-            Collator collator = Collator.getInstance(Locale.getDefault());
-
-            String sRegex = ".*-(\\d{2})\\.(\\d{2})\\.(\\d{4})-(\\d{2})\\.(\\d{2}).*";
-            Matcher matcher = FiRegExp.match(sRegex, o1.getName());
-
-            String v1 = "";
-            if (matcher != null && matcher.groupCount() > 4) {
-                v1 = matcher.group(3) + matcher.group(2) + matcher.group(1) + "_" + matcher.group(4) + matcher.group(5);
-            }
-
-            matcher = FiRegExp.match(sRegex, o2.getName());
-            String v2 = "";
-            if (matcher != null && matcher.groupCount() > 4) {
-                v2 = matcher.group(3) + matcher.group(2) + matcher.group(1) + "_" + matcher.group(4) + matcher.group(5);
-            }
-
-            System.out.println("v1:" + v1);
-            System.out.println("v2:" + v2);
-
-            return collator.compare(v1, v2) * -1; // o1>o2 1,o1<o2 -1 :: -1 --> 1, küçükten büyüğe
-            // -1 ile çarpınca büyükten küçüğe döner
-        });
+//        String pathfile = "Y:\\TEST\\PANSIS\\SatisFaturasi-04.12.2019-17.37-Lite.xml";
+//
+//        String pathfile2 = "Y:\\TEST\\PANSIS\\SatisFaturasi-04.12.2019-20.45.xml";
+//        String pathfile3 = "Y:\\TEST\\PANSIS\\SatisFaturasi-05.12.2019-20.45.xml";
+//        File file = new File(pathfile2);
+//
+//        String result = getStrFilePathWoutExt(file.getPath());
+//
+//        System.out.println(result);
+//
+//        File file1 = new File(pathfile);
+//        File file2 = new File(pathfile2);
+//        File file3 = new File(pathfile3);
+//
+//        List<File> files = new ArrayList();
+//        files.add(file1);
+//        files.add(file2);
+//        //files.add(file3);
+//
+//        // XNOTE md note alalım
+//        Collections.sort(files, (o1, o2) -> {
+//            Collator collator = Collator.getInstance(Locale.getDefault());
+//
+//            String sRegex = ".*-(\\d{2})\\.(\\d{2})\\.(\\d{4})-(\\d{2})\\.(\\d{2}).*";
+//            Matcher matcher = FiRegExp.match(sRegex, o1.getName());
+//
+//            String v1 = "";
+//            if (matcher != null && matcher.groupCount() > 4) {
+//                v1 = matcher.group(3) + matcher.group(2) + matcher.group(1) + "_" + matcher.group(4) + matcher.group(5);
+//            }
+//
+//            matcher = FiRegExp.match(sRegex, o2.getName());
+//            String v2 = "";
+//            if (matcher != null && matcher.groupCount() > 4) {
+//                v2 = matcher.group(3) + matcher.group(2) + matcher.group(1) + "_" + matcher.group(4) + matcher.group(5);
+//            }
+//
+//            System.out.println("v1:" + v1);
+//            System.out.println("v2:" + v2);
+//
+//            return collator.compare(v1, v2) * -1; // o1>o2 1,o1<o2 -1 :: -1 --> 1, küçükten büyüğe
+//            // -1 ile çarpınca büyükten küçüğe döner
+//        });
 
         //FiConsole.debug(files.get(0));
 
@@ -511,6 +516,26 @@ public class FiFile {
     public static String getWorkingDirectory() {
         return System.getProperty("user.dir");
     }
+
+
+    public static boolean checkHostName(String txHostName) {
+
+        try {
+            InetAddress target = InetAddress.getByName(txHostName);
+            boolean reachable = target.isReachable(5000); // 5 saniye boyunca yanıt bekleyin
+            if (reachable) {
+                //System.out.println("Bilgisayar erişilebilir durumda.");
+            } else {
+                //System.out.println("Bilgisayar erişilemez durumda.");
+            }
+            return reachable;
+        } catch (IOException e) {
+            //Loghelper.get(getClassi()).error(FiException.exceptionToStrMain(e));
+            return false;
+        }
+
+    }
+
 
 }
 

@@ -39,15 +39,15 @@ import ozpasyazilim.utils.windows.FiWinUtils;
 
 public class FiExcel {
 
-	// Başlık sütunlarını, kaçıncı satıra kadar arayacak
-	private Integer lastRowIndexForHeaderSearch = 101;
+    // Başlık sütunlarını, kaçıncı satıra kadar arayacak
+    private final Integer lastRowIndexForHeaderSearch = 101;
 
-	// 300 sütundan sonra sütun aramalarını bırakır
-	private Short lastColIndexForHeaders = 300;
+    // 300 sütundan sonra sütun aramalarını bırakır
+    private Short lastColIndexForHeaders = 300;
 
-	FileInputStream fileInputStream;
+    FileInputStream fileInputStream;
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
 //		File fileExcel = new File("Y:\\ornekexcelxlsx.xlsx");
 //		ModelExcelHelper modelExcelHelper = new ModelExcelHelper(fileExcel);
@@ -64,173 +64,173 @@ public class FiExcel {
 //		iskProSablons.forEach(iskProSablon -> System.out.println("entity:" + iskProSablon.getUstlimiti()));
 
 
-	}
+    }
 
-	public static FiExcel build() {
-		return new FiExcel();
-	}
+    public static FiExcel build() {
+        return new FiExcel();
+    }
 
-	public <E> List<E> readExcelFile(File excelfile, List<? extends IFiCol> listColumns, Class<E> entityclass) {
-		return readExcelFileMain(excelfile,listColumns,entityclass,null);
-	}
+    public <E> List<E> readExcelFile(File excelfile, List<? extends IFiCol> listColumns, Class<E> entityclass) {
+        return readExcelFileMain(excelfile, listColumns, entityclass, null);
+    }
 
-	public <E> List<E> readExcelFileMain(File excelfile, List<? extends IFiCol> listColumns, Class<E> entityclass,String txSheetName) {
+    public <E> List<E> readExcelFileMain(File excelfile, List<? extends IFiCol> listColumns, Class<E> entityclass, String txSheetName) {
 
-		if (excelfile == null) {
-			Loghelper.get(getClass()).debug("Excel File Null");
-			return null;
-		}
+        if (excelfile == null) {
+            Loghelper.get(getClass()).debug("Excel File Null");
+            return null;
+        }
 
-		String extension = FilenameUtils.getExtension(excelfile.getName());
+        String extension = FilenameUtils.getExtension(excelfile.getName());
 
-		if (extension.toLowerCase().equals("xlsx"))
-			return readExcelXLSX(excelfile, listColumns, entityclass,txSheetName);
+        if (extension.toLowerCase().equals("xlsx"))
+            return readExcelXLSX(excelfile, listColumns, entityclass, txSheetName);
 
-		if (extension.toLowerCase().equals("xls"))
-			return readExcelXlsV3(excelfile, listColumns, entityclass);
+        if (extension.toLowerCase().equals("xls"))
+            return readExcelXlsV3(excelfile, listColumns, entityclass);
 
-		return null;
-	}
+        return null;
+    }
 
-	public <E> List<E> readExcelXLS(File excelfile, List<? extends IFiCol> listColumns, Class<E> entityclass) {
+    public <E> List<E> readExcelXLS(File excelfile, List<? extends IFiCol> listColumns, Class<E> entityclass) {
 
-		// 16-08-2019 çevirme yapılıyor
-		// excelfile = new FiExcel().convertXlsToXlsxByVbs(excelfile,"entegre");
-		//return readExcelXLSX(excelfile,listColumns,entityclass);
+        // 16-08-2019 çevirme yapılıyor
+        // excelfile = new FiExcel().convertXlsToXlsxByVbs(excelfile,"entegre");
+        //return readExcelXLSX(excelfile,listColumns,entityclass);
 
-		// 17-08-2019
-		return readExcelXlsV3(excelfile, listColumns, entityclass);
+        // 17-08-2019
+        return readExcelXlsV3(excelfile, listColumns, entityclass);
 
-	}
+    }
 
-	public FiListKeyString readExcelFileAsMap(File excelfile, List<? extends IFiCol> listColumns) {
+    public FiListKeyString readExcelFileAsMap(File excelfile, List<? extends IFiCol> listColumns) {
 
-		if (excelfile == null) {
-			Loghelper.get(getClass()).debug("Excel File Null");
-			return null;
-		}
+        if (excelfile == null) {
+            Loghelper.get(getClass()).debug("Excel File Null");
+            return null;
+        }
 
-		String extension = FilenameUtils.getExtension(excelfile.getName());
+        String extension = FilenameUtils.getExtension(excelfile.getName());
 
-		if (extension.equalsIgnoreCase("xlsx"))
-			return readExcelXLSXAsMapString(excelfile, listColumns);
+        if (extension.equalsIgnoreCase("xlsx"))
+            return readExcelXLSXAsMapString(excelfile, listColumns);
 
 //		if (extension.toLowerCase().equals("xls"))
 //			return readExcelXLS(excelfile, listColumns, entityclass);
 
-		return null;
-	}
+        return null;
+    }
 
-	public <E> List<E> readExcelXlsV1(File excelfile, List<IFiCol> listColumns, Class<E> entityclass) {
+    public <E> List<E> readExcelXlsV1(File excelfile, List<IFiCol> listColumns, Class<E> entityclass) {
 
-		FileInputStream file = null;
-		HSSFWorkbook workbook = null;
+        FileInputStream file = null;
+        HSSFWorkbook workbook = null;
 
-		try {
-			file = new FileInputStream(excelfile);
-			// Get the workbook instance for XLS file
-			workbook = new HSSFWorkbook(file);
+        try {
+            file = new FileInputStream(excelfile);
+            // Get the workbook instance for XLS file
+            workbook = new HSSFWorkbook(file);
 
-		} catch (FileNotFoundException e1) {
-			Loghelper.debugException(getClass(), e1);
-			//FIXME
-			LogListener.setLogMessage("Excel Dosya Bulunamadı.");
-		} catch (IOException e2) {
-			Loghelper.debugException(getClass(), e2);
-			//LogListener.setLogMessageAndDetail("IO Hatası Oluştu.", e2);
-		}
+        } catch (FileNotFoundException e1) {
+            Loghelper.debugException(getClass(), e1);
+            //FIXME
+            LogListener.setLogMessage("Excel Dosya Bulunamadı.");
+        } catch (IOException e2) {
+            Loghelper.debugException(getClass(), e2);
+            //LogListener.setLogMessageAndDetail("IO Hatası Oluştu.", e2);
+        }
 
-		List<Map<String, String>> listrows = new ArrayList<>();
-		HSSFSheet sheet = null;
+        List<Map<String, String>> listrows = new ArrayList<>();
+        HSSFSheet sheet = null;
 
-		// FIXME sheet boş gelebiliyor
-		try {
-			// Try to Get first sheet from the workbook
-			sheet = workbook.getSheetAt(0);
+        // FIXME sheet boş gelebiliyor
+        try {
+            // Try to Get first sheet from the workbook
+            sheet = workbook.getSheetAt(0);
 
-		} catch (Exception e) {
-			Loghelper.get(this.getClass()).error("Hata :" + FiException.exceptionToStrMain(e));
-			return null;
-		}
+        } catch (Exception e) {
+            Loghelper.get(this.getClass()).error("Hata :" + FiException.exceptionToStrMain(e));
+            return null;
+        }
 
-		//Iterator rows = sheet.rowIterator();
+        //Iterator rows = sheet.rowIterator();
 
-		Integer lastRowNumber = sheet.getLastRowNum();
+        Integer lastRowNumber = sheet.getLastRowNum();
 
-		//Object stringe çevrildi.14/08/18
-		String[] rowHeader = null;
+        //Object stringe çevrildi.14/08/18
+        String[] rowHeader = null;
 
-		//HSSFRow row;
-		//HSSFCell cell;
+        //HSSFRow row;
+        //HSSFCell cell;
 
-		// ** start header row okunur
-		Integer rowIndexExcel = 0;
+        // ** start header row okunur
+        Integer rowIndexExcel = 0;
 
-		HSSFRow rowHeaderExcel = null; // = sheet.getRow(rowIndexExcel);
+        HSSFRow rowHeaderExcel = null; // = sheet.getRow(rowIndexExcel);
 
-		//Loghelper.getInstance(getClass()).debug("Başlık Satırı Aranacak");
-		//Loghelper.getInstance(getClass()).debug("Last Row Number:" + lastRowNumber);
+        //Loghelper.getInstance(getClass()).debug("Başlık Satırı Aranacak");
+        //Loghelper.getInstance(getClass()).debug("Last Row Number:" + lastRowNumber);
 
-		// Eğer sütun isimleri daha alt satırlardaysa bulmaya yarar
-		Boolean colFound = false;
+        // Eğer sütun isimleri daha alt satırlardaysa bulmaya yarar
+        Boolean colFound = false;
 
-		//Loghelper.getInstance(getClass()).debug(" aranan col:" + listColumns.get(0).getHeader());
+        //Loghelper.getInstance(getClass()).debug(" aranan col:" + listColumns.get(0).getHeader());
 
-		List<String> headers = null;
+        List<String> headers = null;
 
-		// Öncelikle Başlıkların olduğu satır aranıyor
-		for (; rowIndexExcel <= lastRowNumber; rowIndexExcel++) {
+        // Öncelikle Başlıkların olduğu satır aranıyor
+        for (; rowIndexExcel <= lastRowNumber; rowIndexExcel++) {
 
-			//Loghelper.getInstance(getClass()).debug(" Row Index Cell:" + rowIndexExcel);
+            //Loghelper.getInstance(getClass()).debug(" Row Index Cell:" + rowIndexExcel);
 
-			rowHeaderExcel = sheet.getRow(rowIndexExcel);
+            rowHeaderExcel = sheet.getRow(rowIndexExcel);
 
-			if (rowHeaderExcel == null) continue;
+            if (rowHeaderExcel == null) continue;
 
-			Short lastColNumber = rowHeaderExcel.getLastCellNum(); // 1 başlayarak, son sütün hücre numarası
+            Short lastColNumber = rowHeaderExcel.getLastCellNum(); // 1 başlayarak, son sütün hücre numarası
 
-			rowHeader = new String[lastColNumber];
+            rowHeader = new String[lastColNumber];
 
-			for (int cn = 0; cn < lastColNumber; cn++) {
+            for (int cn = 0; cn < lastColNumber; cn++) {
 
-				HSSFCell cell = rowHeaderExcel.getCell(cn);
-				if (cell == null) continue;
-				rowHeader[cn] = getCellStringValueXLS(cell);   //cell.getStringCellValue();
+                HSSFCell cell = rowHeaderExcel.getCell(cn);
+                if (cell == null) continue;
+                rowHeader[cn] = getCellStringValueXLS(cell);   //cell.getStringCellValue();
 
-			}
+            }
 
-			if (rowHeader[0] == null) rowHeader[0] = "";
+            if (rowHeader[0] == null) rowHeader[0] = "";
 
-			headers = Arrays.asList(rowHeader);
+            headers = Arrays.asList(rowHeader);
 
-			headers = headers.stream().map(b -> {
-				if (b != null) return b.trim();
-				return null;
-			}).collect(Collectors.toList());
+            headers = headers.stream().map(b -> {
+                if (b != null) return b.trim();
+                return null;
+            }).collect(Collectors.toList());
 
-			//Loghelper.getInstance(getClass()).debug(" headar1 : " + rowHeader[0]);
+            //Loghelper.getInstance(getClass()).debug(" headar1 : " + rowHeader[0]);
 
-			if (headers.contains(listColumns.get(0).getHeaderName().trim())) {
-				//Loghelper.getInstance(getClass()).debug(" Başlık bulundu:" + rowIndexExcel);
-				colFound = true;
-				break;
-			}
+            if (headers.contains(listColumns.get(0).getHeaderName().trim())) {
+                //Loghelper.getInstance(getClass()).debug(" Başlık bulundu:" + rowIndexExcel);
+                colFound = true;
+                break;
+            }
 
-			if (rowIndexExcel.equals(lastRowNumber)) {
-				Loghelper.get(getClass()).debug("Son satır erişti başlık yok");
-			}
+            if (rowIndexExcel.equals(lastRowNumber)) {
+                Loghelper.get(getClass()).debug("Son satır erişti başlık yok");
+            }
 
-		}
+        }
 
-		if (!colFound) return new ArrayList<>();
+        if (!colFound) return new ArrayList<>();
 
-		List<String> finalHeaders = headers;
+        List<String> finalHeaders = headers;
 
-		listColumns.forEach(entity -> {
-			if (finalHeaders.contains(entity.getHeaderName().trim())) {
-				entity.setBoEnabled(true);
-			}
-		});
+        listColumns.forEach(entity -> {
+            if (finalHeaders.contains(entity.getHeaderName().trim())) {
+                entity.setBoEnabled(true);
+            }
+        });
 
 
 //		// ilk satır başlık olacak
@@ -271,8 +271,8 @@ public class FiExcel {
 //		}
 
 
-		// alternatif yol
-		// for (Row row : sheet) {
+        // alternatif yol
+        // for (Row row : sheet) {
 //		while (rows.hasNext()) {
 //
 //			//Object[] rowobject = new Object[row.getLastCellNum()];
@@ -342,569 +342,567 @@ public class FiExcel {
 //
 //		}
 
-		//Loghelper.getInstance(getClass()).debug(" Row Headers Length:"+rowHeader.length));
-		// not : alternatif yol : for (Row row : sheet)
+        //Loghelper.getInstance(getClass()).debug(" Row Headers Length:"+rowHeader.length));
+        // not : alternatif yol : for (Row row : sheet)
 
 
-		// Exceldeki Data Satırları Okunuyor
-		Integer lastColNumber = rowHeader.length;              //rowHeaderExcel.getLastCellNum(); // 1 başlayarak, son sütün hücre numarası
+        // Exceldeki Data Satırları Okunuyor
+        Integer lastColNumber = rowHeader.length;              //rowHeaderExcel.getLastCellNum(); // 1 başlayarak, son sütün hücre numarası
 
-		rowIndexExcel++;
-		for (; rowIndexExcel <= lastRowNumber; rowIndexExcel++) {
+        rowIndexExcel++;
+        for (; rowIndexExcel <= lastRowNumber; rowIndexExcel++) {
 
-			//Object[] rowobject = new Object[rowContent.getLastCellNum()];
-			//rowContent = (XSSFRow) rows.next();
-			//Loghelper.getInstance(getClass()).debug("Read Row:"+ rowIndex);
+            //Object[] rowobject = new Object[rowContent.getLastCellNum()];
+            //rowContent = (XSSFRow) rows.next();
+            //Loghelper.getInstance(getClass()).debug("Read Row:"+ rowIndex);
 
-			HSSFRow rowContent = sheet.getRow(rowIndexExcel);
+            HSSFRow rowContent = sheet.getRow(rowIndexExcel);
 
-			if (rowContent == null) continue;
+            if (rowContent == null) continue;
 
-			//Iterator<Cell> iterRowCells = rowContent.cellIterator();
+            //Iterator<Cell> iterRowCells = rowContent.cellIterator();
 
-			Map<String, String> maprow = new HashMap<>();
+            Map<String, String> maprow = new HashMap<>();
 
-			//while (iterRowCells.hasNext())
-			Boolean empty = true;
-			for (int cn = 0; cn < lastColNumber; cn++) {   //rowContent.getLastCellNum()
+            //while (iterRowCells.hasNext())
+            Boolean empty = true;
+            for (int cn = 0; cn < lastColNumber; cn++) {   //rowContent.getLastCellNum()
 
-				//Loghelper.getInstance(getClass()).debug(" col:"+cn);
+                //Loghelper.getInstance(getClass()).debug(" col:"+cn);
 
-				String header = "";
+                String header = "";
 
-				if (rowHeader[cn] == null) {
-					//Loghelper.getInstance(getClass()).debug(" header cn null"+ cn);
-					continue;
-				}
+                if (rowHeader[cn] == null) {
+                    //Loghelper.getInstance(getClass()).debug(" header cn null"+ cn);
+                    continue;
+                }
 
-				header = rowHeader[cn].toString();
+                header = rowHeader[cn].toString();
 
-				//if (rowHeader.length > cn) arsiv
-				//if(!iterRowCells.hasNext()) arsiv
+                //if (rowHeader.length > cn) arsiv
+                //if(!iterRowCells.hasNext()) arsiv
 
-				HSSFCell cell = rowContent.getCell(cn);
+                HSSFCell cell = rowContent.getCell(cn);
 
-				if (cell == null) {
-					//Loghelper.getInstance(getClass()).debug(" header cell null"+ header);
-					maprow.put(header, "");
-					continue;
-				}
+                if (cell == null) {
+                    //Loghelper.getInstance(getClass()).debug(" header cell null"+ header);
+                    maprow.put(header, "");
+                    continue;
+                }
 
-				String strCellValue = getCellStringValueXLS(cell);
-				maprow.put(header, strCellValue);
+                String strCellValue = getCellStringValueXLS(cell);
+                maprow.put(header, strCellValue);
 
-				if (!strCellValue.equals("")) empty = false;
+                if (!strCellValue.equals("")) empty = false;
 
-			}
+            }
 
-			if (!empty) {
-				//Loghelper.getInstance(getClass()).debug("eklendi");
-				listrows.add(maprow);
-			}
+            if (!empty) {
+                //Loghelper.getInstance(getClass()).debug("eklendi");
+                listrows.add(maprow);
+            }
 
-		}
+        }
 
 
-		try {
-			file.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+        try {
+            file.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-		return bindEntityExcel(listrows, listColumns, entityclass);
+        return bindEntityExcel(listrows, listColumns, entityclass);
 
-	}
+    }
 
-	public <E> List<E> readExcelXLSX(File fileExcelXlsx, List<? extends IFiCol> listColumns, Class<E> entityclass,String txSheetName) {
+    public <E> List<E> readExcelXLSX(File fileExcelXlsx, List<? extends IFiCol> listColumns, Class<E> entityclass, String txSheetName) {
 
-		XSSFSheet sheet;
+        XSSFSheet sheet;
 
-		XSSFWorkbook workbookXlsx = getWorkbookFromExcelXlsxFile(fileExcelXlsx);
+        XSSFWorkbook workbookXlsx = getWorkbookFromExcelXlsxFile(fileExcelXlsx);
 
-		if(!FiString.isEmptyTrim(txSheetName)){
-			sheet = workbookXlsx.getSheet(txSheetName);
-			if(sheet == null){
-				sheet = workbookXlsx.getSheetAt(0);
-			}
-		}else{
-			sheet = workbookXlsx.getSheetAt(0);
-		}
+        if (!FiString.isEmptyTrim(txSheetName)) {
+            sheet = workbookXlsx.getSheet(txSheetName);
+            if (sheet == null) {
+                sheet = workbookXlsx.getSheetAt(0);
+            }
+        } else {
+            sheet = workbookXlsx.getSheetAt(0);
+        }
 
-		// Get first sheet from the workbook
-		//XSSFSheet sheet = getWorkbookFromExcelXlsxFile(fileExcelXlsx).getSheetAt(0);
+        // Get first sheet from the workbook
+        //XSSFSheet sheet = getWorkbookFromExcelXlsxFile(fileExcelXlsx).getSheetAt(0);
 
-		List<Map<String, String>> listrows = new ArrayList<>();
-		//Not old usage //Iterator rows = sheet.rowIterator();
+        List<Map<String, String>> listrows = new ArrayList<>();
+        //Not old usage //Iterator rows = sheet.rowIterator();
 
-		// exceldeki son satır nosu (satır no 1 den başlar)
-		Integer lastRowNumber = sheet.getLastRowNum();
+        // exceldeki son satır nosu (satır no 1 den başlar)
+        Integer lastRowNumber = sheet.getLastRowNum();
 
-		//Excel başlık satırlarını arar , kaçıncı satırda bulduğunu ve satır listesini verir
-		//Excelde listColumns daki sütunları arar required ve bir tane sütun bulursa eğer bulundu yapar
-		Pair<Integer, List<String>> excelHeadersXLSX = findHeadersInExcel(sheet, listColumns);
+        //Excel başlık satırlarını arar , kaçıncı satırda bulduğunu ve satır listesini verir
+        //Excelde listColumns daki sütunları arar required ve bir tane sütun bulursa eğer bulundu yapar
+        Pair<Integer, List<String>> excelHeadersXLSX = findHeadersInExcel(sheet, listColumns);
 
-		Boolean colFound = false;
+        Boolean colFound = false;
 
-		if (excelHeadersXLSX != null) colFound = true;
+        if (excelHeadersXLSX != null) colFound = true;
 
-		if (!colFound) return new ArrayList<>();
+        if (!colFound) return new ArrayList<>();
 
-		List<String> finalHeaders = excelHeadersXLSX.getValue1();
+        List<String> finalHeaders = excelHeadersXLSX.getValue1();
 
-		// ?? finalheaders null olarak dönmüşse , başlık satırlarını bulamamış
-		if (finalHeaders == null) {
-			Loghelper.get(getClass()).debug("Başlık Satırları bulunamadı...");
-			return null;
-		}
+        // ?? finalheaders null olarak dönmüşse , başlık satırlarını bulamamış
+        if (finalHeaders == null) {
+            Loghelper.get(getClass()).debug("Başlık Satırları bulunamadı...");
+            return null;
+        }
 
-		listColumns.forEach(fiTableCol -> {
-			if (fiTableCol.getHeaderName() == null) return;
+        listColumns.forEach(fiTableCol -> {
+            if (fiTableCol.getHeaderName() == null) return;
 
-			if (finalHeaders.contains(fiTableCol.getHeaderName().trim())) {
-				fiTableCol.setBoEnabled(true);
-			}
-		});
+            if (finalHeaders.contains(fiTableCol.getHeaderName().trim())) {
+                fiTableCol.setBoEnabled(true);
+            }
+        });
 
-		// not : alternatif yol : for (Row row : sheet)
-		Integer rowIndexExcel = excelHeadersXLSX.getValue0();
+        // not : alternatif yol : for (Row row : sheet)
+        Integer rowIndexExcel = excelHeadersXLSX.getValue0();
 
-		// Exceldeki Data Satırları Okunuyor
-		Integer lastColNumber = finalHeaders.size();  //rowHeader.length;              //rowHeaderExcel.getLastCellNum(); // 1 başlayarak, son sütün hücre numarası
+        // Exceldeki Data Satırları Okunuyor
+        Integer lastColNumber = finalHeaders.size();  //rowHeader.length;              //rowHeaderExcel.getLastCellNum(); // 1 başlayarak, son sütün hücre numarası
 
-		// index = Excel Satır - 1 dir. ( Index 0 dan başlar ) (Excel 1 den başlar)
-		// Loghelper.getInstance(getClass()).debug(" Row Index (Header Index)(Satır Sıralaması 0 dan başlar):"+ rowIndexExcel);
-		rowIndexExcel++;
-		for (; rowIndexExcel <= lastRowNumber; rowIndexExcel++) {
-			XSSFRow rowContent = sheet.getRow(rowIndexExcel);
-			if (rowContent == null) continue;
-			Map<String, String> maprow = new HashMap<>();
-			Boolean empty = true;
+        // index = Excel Satır - 1 dir. ( Index 0 dan başlar ) (Excel 1 den başlar)
+        // Loghelper.getInstance(getClass()).debug(" Row Index (Header Index)(Satır Sıralaması 0 dan başlar):"+ rowIndexExcel);
+        rowIndexExcel++;
+        for (; rowIndexExcel <= lastRowNumber; rowIndexExcel++) {
+            XSSFRow rowContent = sheet.getRow(rowIndexExcel);
+            if (rowContent == null) continue;
+            Map<String, String> maprow = new HashMap<>();
+            Boolean empty = true;
 
-			for (int cn = 0; cn < lastColNumber; cn++) {   //rowContent.getLastCellNum()
-				//Loghelper.getInstance(getClass()).debug(" col:"+cn);
-				String header = "";
-				if (finalHeaders.get(cn) == null) {
-					//Loghelper.getInstance(getClass()).debug(" header cn null"+ cn);
-					continue;
-				}
+            for (int cn = 0; cn < lastColNumber; cn++) {   //rowContent.getLastCellNum()
+                //Loghelper.getInstance(getClass()).debug(" col:"+cn);
+                String header = "";
+                if (finalHeaders.get(cn) == null) {
+                    //Loghelper.getInstance(getClass()).debug(" header cn null"+ cn);
+                    continue;
+                }
 
-				header = finalHeaders.get(cn).toString();
+                header = finalHeaders.get(cn).toString();
 
-				//if (rowHeader.length > cn) arsiv
-				//if(!iterRowCells.hasNext()) arsiv
+                //if (rowHeader.length > cn) arsiv
+                //if(!iterRowCells.hasNext()) arsiv
 
-				XSSFCell cell = rowContent.getCell(cn);
+                XSSFCell cell = rowContent.getCell(cn);
 
-				if (cell == null) {
-					//Loghelper.getInstance(getClass()).debug(" header cell null"+ header);
-					maprow.put(header, "");
-					continue;
-				}
+                if (cell == null) {
+                    //Loghelper.getInstance(getClass()).debug(" header cell null"+ header);
+                    maprow.put(header, "");
+                    continue;
+                }
 
-				//cell = (XSSFCell) iterRowCells.next();
+                //cell = (XSSFCell) iterRowCells.next();
 
-				String strCellValue = getCellStringValueXLSX(cell);
-				maprow.put(header, strCellValue);
+                String strCellValue = getCellStringValueXLSX(cell);
+                maprow.put(header, strCellValue);
 
-				if (!strCellValue.equals("")) empty = false;
+                if (!strCellValue.equals("")) empty = false;
 
-			}
+            }
 
-			if (!empty) {
-				//Loghelper.getInstance(getClass()).debug("eklendi");
-				listrows.add(maprow);
-			}
+            if (!empty) {
+                //Loghelper.getInstance(getClass()).debug("eklendi");
+                listrows.add(maprow);
+            }
 
-		}
+        }
 
-		if (getFileInputStream() != null) {
+        if (getFileInputStream() != null) {
 
-			try {
-				getFileInputStream().close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+            try {
+                getFileInputStream().close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
-		return bindEntityExcel(listrows, listColumns, entityclass);
+        return bindEntityExcel(listrows, listColumns, entityclass);
 
-	}
+    }
 
-	public FiListKeyString readExcelXLSXAsMapString(File fileExcelXlsx, List<? extends IFiCol> listColumns) {
+    public FiListKeyString readExcelXLSXAsMapString(File fileExcelXlsx, List<? extends IFiCol> listColumns) {
 
-		// Get first sheet from the workbook
-		XSSFSheet sheet = getWorkbookFromExcelXlsxFile(fileExcelXlsx).getSheetAt(0);
+        // Get first sheet from the workbook
+        XSSFSheet sheet = getWorkbookFromExcelXlsxFile(fileExcelXlsx).getSheetAt(0);
 
-		FiListKeyString listrows = new FiListKeyString();
-		//Not old usage //Iterator rows = sheet.rowIterator();
+        FiListKeyString listrows = new FiListKeyString();
+        //Not old usage //Iterator rows = sheet.rowIterator();
 
-		// exceldeki son satır nosu (satır no 1 den başlar)
-		Integer lastRowNumber = sheet.getLastRowNum();
+        // exceldeki son satır nosu (satır no 1 den başlar)
+        Integer lastRowNumber = sheet.getLastRowNum();
 
-		//Excel başlık satırlarını arar , kaçıncı satırda bulduğunu ve satır listesini verir
-		//Excelde listColumns daki sütunları arar required ve bir tane sütun bulursa eğer bulundu yapar
-		Pair<Integer, List<String>> pairHeaderExcel = findHeadersInExcel(sheet, listColumns);
+        //Excel başlık satırlarını arar , kaçıncı satırda bulduğunu ve satır listesini verir
+        //Excelde listColumns daki sütunları arar required ve bir tane sütun bulursa eğer bulundu yapar
+        Pair<Integer, List<String>> pairHeaderExcel = findHeadersInExcel(sheet, listColumns);
 
-		Boolean colFound = false;
-		if (pairHeaderExcel != null) colFound = true;
-		if (!colFound) return new FiListKeyString();
+        Boolean colFound = false;
+        if (pairHeaderExcel != null) colFound = true;
+        if (!colFound) return new FiListKeyString();
 
-		List<String> finalHeaders = pairHeaderExcel.getValue1();
+        List<String> finalHeaders = pairHeaderExcel.getValue1();
 
-		// ?? finalheaders null olarak dönmüşse , başlık satırlarını bulamamış
-		if (FiCollection.isEmpty(finalHeaders)) {
-			Loghelper.get(getClass()).debug("Başlık Satırları bulunamadı...");
-			return null;
-		}
+        // ?? finalheaders null olarak dönmüşse , başlık satırlarını bulamamış
+        if (FiCollection.isEmpty(finalHeaders)) {
+            Loghelper.get(getClass()).debug("Başlık Satırları bulunamadı...");
+            return null;
+        }
 
-		listColumns.forEach(fiTableCol -> {
-			if (fiTableCol.getHeaderName() == null) return;
+        listColumns.forEach(fiTableCol -> {
+            if (fiTableCol.getHeaderName() == null) return;
 
-			if (finalHeaders.contains(fiTableCol.getHeaderName().trim())) {
-				fiTableCol.setBoEnabled(true);
-			}
-		});
+            if (finalHeaders.contains(fiTableCol.getHeaderName().trim())) {
+                fiTableCol.setBoEnabled(true);
+            }
+        });
 
-		// not : alternatif yol : for (Row row : sheet)
-		Integer rowIndexExcel = pairHeaderExcel.getValue0();
+        // not : alternatif yol : for (Row row : sheet)
+        Integer rowIndexExcel = pairHeaderExcel.getValue0();
 
-		// Exceldeki Data Satırları Okunuyor
-		Integer lastColNumber = finalHeaders.size();  //rowHeader.length;              //rowHeaderExcel.getLastCellNum(); // 1 başlayarak, son sütün hücre numarası
+        // Exceldeki Data Satırları Okunuyor
+        Integer lastColNumber = finalHeaders.size();  //rowHeader.length;              //rowHeaderExcel.getLastCellNum(); // 1 başlayarak, son sütün hücre numarası
 
-		// index = Excel Satır - 1 dir. ( Index 0 dan başlar ) (Excel 1 den başlar)
-		// Loghelper.getInstance(getClass()).debug(" Row Index (Header Index)(Satır Sıralaması 0 dan başlar):"+ rowIndexExcel);
-		rowIndexExcel++;
-		for (; rowIndexExcel <= lastRowNumber; rowIndexExcel++) {
-			XSSFRow rowContent = sheet.getRow(rowIndexExcel);
-			if (rowContent == null) continue;
-			FiKeyString maprow = new FiKeyString();
-			Boolean empty = true;
+        // index = Excel Satır - 1 dir. ( Index 0 dan başlar ) (Excel 1 den başlar)
+        // Loghelper.getInstance(getClass()).debug(" Row Index (Header Index)(Satır Sıralaması 0 dan başlar):"+ rowIndexExcel);
+        rowIndexExcel++;
+        for (; rowIndexExcel <= lastRowNumber; rowIndexExcel++) {
+            XSSFRow rowContent = sheet.getRow(rowIndexExcel);
+            if (rowContent == null) continue;
+            FiKeyString maprow = new FiKeyString();
+            Boolean empty = true;
 
-			for (int cn = 0; cn < lastColNumber; cn++) {   //rowContent.getLastCellNum()
-				//Loghelper.getInstance(getClass()).debug(" col:"+cn);
-				String header = "";
-				if (finalHeaders.get(cn) == null) {
-					//Loghelper.getInstance(getClass()).debug(" header cn null"+ cn);
-					continue;
-				}
-				header = finalHeaders.get(cn).toString();
-				XSSFCell cell = rowContent.getCell(cn);
+            for (int cn = 0; cn < lastColNumber; cn++) {   //rowContent.getLastCellNum()
+                //Loghelper.getInstance(getClass()).debug(" col:"+cn);
+                String header = "";
+                if (finalHeaders.get(cn) == null) {
+                    //Loghelper.getInstance(getClass()).debug(" header cn null"+ cn);
+                    continue;
+                }
+                header = finalHeaders.get(cn).toString();
+                XSSFCell cell = rowContent.getCell(cn);
 
-				if (cell == null) {
-					//Loghelper.getInstance(getClass()).debug(" header cell null"+ header);
-					maprow.put(header, "");
-					continue;
-				}
-				//cell = (XSSFCell) iterRowCells.next();
-				String strCellValue = getCellStringValueXLSX(cell);
-				maprow.put(header, strCellValue);
-				if (!strCellValue.equals("")) empty = false;
-			}
+                if (cell == null) {
+                    //Loghelper.getInstance(getClass()).debug(" header cell null"+ header);
+                    maprow.put(header, "");
+                    continue;
+                }
+                //cell = (XSSFCell) iterRowCells.next();
+                String strCellValue = getCellStringValueXLSX(cell);
+                maprow.put(header, strCellValue);
+                if (!strCellValue.equals("")) empty = false;
+            }
 
-			if (!empty) {
-				//Loghelper.getInstance(getClass()).debug("eklendi");
-				listrows.add(maprow);
-			}
+            if (!empty) {
+                //Loghelper.getInstance(getClass()).debug("eklendi");
+                listrows.add(maprow);
+            }
 
-		}
+        }
 
-		if (getFileInputStream() != null) {
-			try {
-				getFileInputStream().close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+        if (getFileInputStream() != null) {
+            try {
+                getFileInputStream().close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
-		return bindExcelToListMapStr(listrows, listColumns);
-	}
+        return bindExcelToListMapStr(listrows, listColumns);
+    }
 
-	public FileInputStream getFileInputStream() {
-		return fileInputStream;
-	}
+    public FileInputStream getFileInputStream() {
+        return fileInputStream;
+    }
 
-	public void setFileInputStream(FileInputStream fileInputStream) {
-		this.fileInputStream = fileInputStream;
-	}
+    public void setFileInputStream(FileInputStream fileInputStream) {
+        this.fileInputStream = fileInputStream;
+    }
 
-	public XSSFWorkbook getWorkbookFromExcelXlsxFile(File excelXlsxFile) {
+    public XSSFWorkbook getWorkbookFromExcelXlsxFile(File excelXlsxFile) {
 
-		FileInputStream file = null;
-		XSSFWorkbook workbook = null;
+        FileInputStream file = null;
+        XSSFWorkbook workbook = null;
 
-		try {
-			file = new FileInputStream(excelXlsxFile);
-			// Get the workbook instance for XLS file
-			workbook = new XSSFWorkbook(file);
-			setFileInputStream(file);
+        try {
+            file = new FileInputStream(excelXlsxFile);
+            // Get the workbook instance for XLS file
+            workbook = new XSSFWorkbook(file);
+            setFileInputStream(file);
 
-		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
-		} catch (IOException e2) {
-			e2.printStackTrace();
-		}
+        } catch (IOException ex) {
+            Loghelper.get(getClass()).error(FiException.exceptionToStrMain(ex));
+        }
 
-		// Get first sheet from the workbook
-		//XSSFSheet sheet = workbook.getSheetAt(sheetIndex);
+        // Get first sheet from the workbook
+        //XSSFSheet sheet = workbook.getSheetAt(sheetIndex);
 
-		return workbook;
+        return workbook;
 
-	}
+    }
 
-	public HSSFWorkbook getWorkbookFromExcelXlsFile(File excelFile) {
+    public HSSFWorkbook getWorkbookFromExcelXlsFile(File excelFile) {
 
-		FileInputStream file = null;
-		HSSFWorkbook workbook = null;
-
-		try {
-			file = new FileInputStream(excelFile);
-			// Get the workbook instance for XLS file
-			workbook = new HSSFWorkbook(file);
-			setFileInputStream(file);
+        FileInputStream file = null;
+        HSSFWorkbook workbook = null;
 
-		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
-		} catch (IOException e2) {
-			e2.printStackTrace();
-		}
+        try {
+            file = new FileInputStream(excelFile);
+            // Get the workbook instance for XLS file
+            workbook = new HSSFWorkbook(file);
+            setFileInputStream(file);
 
-		// Get first sheet from the workbook
-		//XSSFSheet sheet = workbook.getSheetAt(sheetIndex);
+        } catch (FileNotFoundException e1) {
+            e1.printStackTrace();
+        } catch (IOException e2) {
+            e2.printStackTrace();
+        }
 
-		return workbook;
+        // Get first sheet from the workbook
+        //XSSFSheet sheet = workbook.getSheetAt(sheetIndex);
 
-	}
+        return workbook;
 
-	public List<String> readExcelHeadersXLSX(File excelXlsxFile, List<IFiCol> listColumns) {
+    }
 
-		XSSFSheet sheet = getWorkbookFromExcelXlsxFile(excelXlsxFile).getSheetAt(0);
-		List<String> excelHeadersXLSX = findHeadersInExcel(sheet, listColumns).getValue1();
+    public List<String> readExcelHeadersXLSX(File excelXlsxFile, List<IFiCol> listColumns) {
 
-		if (getFileInputStream() != null) {
-			try {
-				getFileInputStream().close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		return excelHeadersXLSX;
+        XSSFSheet sheet = getWorkbookFromExcelXlsxFile(excelXlsxFile).getSheetAt(0);
+        List<String> excelHeadersXLSX = findHeadersInExcel(sheet, listColumns).getValue1();
 
-	}
+        if (getFileInputStream() != null) {
+            try {
+                getFileInputStream().close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return excelHeadersXLSX;
 
-	/**
-	 * @param sheet
-	 * @param listColumns
-	 * @return Pair Prm1: Başlıkların bulunduğu satır index i , Prm2: Başlıklar???
-	 */
-	public Pair<Integer, List<String>> findHeadersInExcel(XSSFSheet sheet, List<? extends IFiCol> listColumns) {
+    }
 
-		//Not Iterator rows = sheet.rowIterator();
+    /**
+     * @param sheet
+     * @param listColumns
+     * @return Pair Prm1: Başlıkların bulunduğu satır index i , Prm2: Başlıklar???
+     */
+    public Pair<Integer, List<String>> findHeadersInExcel(XSSFSheet sheet, List<? extends IFiCol> listColumns) {
 
-		// 1 başlayarak, exceldeki son satır nosu
-		Integer lastRowNumber = sheet.getLastRowNum();
+        //Not Iterator rows = sheet.rowIterator();
 
-		// Başlıklar bu arrayde tutulacak
-		String[] rowHeader = null;  // map<int,string> de tanımlabilir
+        // 1 başlayarak, exceldeki son satır nosu
+        Integer lastRowNumber = sheet.getLastRowNum();
 
-		XSSFRow rowItemExcel = null; // = sheet.getRow(rowIndexExcel);
+        // Başlıklar bu arrayde tutulacak
+        String[] rowHeader = null;  // map<int,string> de tanımlabilir
 
-		//Loghelper.getInstance(getClass()).debug("Başlık Satırı Aranacak");
-		//Loghelper.getInstance(getClass()).debug("Last Row Number:" + lastRowNumber);
+        XSSFRow rowItemExcel = null; // = sheet.getRow(rowIndexExcel);
 
-		// Eğer sütun isimleri daha alt satırlardaysa bulmaya yarar
-		Boolean colFound = false;
+        //Loghelper.getInstance(getClass()).debug("Başlık Satırı Aranacak");
+        //Loghelper.getInstance(getClass()).debug("Last Row Number:" + lastRowNumber);
 
-		//Loghelper.getInstance(getClass()).debug(" aranan col:" + listColumns.get(0).getHeader());
-		List<String> headers = null;
+        // Eğer sütun isimleri daha alt satırlardaysa bulmaya yarar
+        Boolean colFound = false;
 
-		Map<String, ? extends IFiCol> mapHeaderToFiCol = FiCollection.listToMapSingle(listColumns, ozTableCol -> ozTableCol.getHeaderName().trim());
+        //Loghelper.getInstance(getClass()).debug(" aranan col:" + listColumns.get(0).getHeader());
+        List<String> headers = null;
 
-		// ** rowIndexExcel start header row okunur
-		Integer rowIndexExcel = 0;
-		// Öncelikle Başlıkların olduğu satır aranıyor
-		IntRef intRef = IntRef.bui();
-		for (; rowIndexExcel <= lastRowNumber; rowIndexExcel++) {
-			//Loghelper.getInstance(getClass()).debug(" Searching Header Row Number (index+1): " + (rowIndexExcel + 1));
-			rowItemExcel = sheet.getRow(rowIndexExcel);
-			if (rowItemExcel == null) continue;
+        Map<String, ? extends IFiCol> mapHeaderToFiCol = FiCollection.listToMapSingle(listColumns, ozTableCol -> ozTableCol.getHeaderName().trim());
 
-			Short lastColNumber = rowItemExcel.getLastCellNum(); // 1 başlayarak, son sütün(col) hücre numarası
-			//Loghelper.getInstance(getClass()).debug("Last Col Number:" + lastColNumber);
-			if (lastColNumber == -1 || lastColNumber == 0) continue;
-			rowHeader = new String[lastColNumber];
+        // ** rowIndexExcel start header row okunur
+        Integer rowIndexExcel = 0;
+        // Öncelikle Başlıkların olduğu satır aranıyor
+        IntRef intRef = IntRef.bui();
+        for (; rowIndexExcel <= lastRowNumber; rowIndexExcel++) {
+            //Loghelper.getInstance(getClass()).debug(" Searching Header Row Number (index+1): " + (rowIndexExcel + 1));
+            rowItemExcel = sheet.getRow(rowIndexExcel);
+            if (rowItemExcel == null) continue;
 
-			for (int colIndex = 0; colIndex < lastColNumber; colIndex++) {
-				XSSFCell cell = rowItemExcel.getCell(colIndex);
-				if (cell == null) {
-					//Loghelperr.getInstance(getClass()).debug(String.format("(%s,%s)=%s",rowIndexExcel,colIndex,"null"));
-					continue;
-				}
-				String cellValue = getCellStringValueXLSX(cell);
-				//Loghelperr.debugLog(getClass(),String.format("(%s,%s)=%s",rowIndexExcel,colIndex,cellValue),intRef,10);
-				rowHeader[colIndex] = cellValue.trim();
+            Short lastColNumber = rowItemExcel.getLastCellNum(); // 1 başlayarak, son sütün(col) hücre numarası
+            //Loghelper.getInstance(getClass()).debug("Last Col Number:" + lastColNumber);
+            if (lastColNumber == -1 || lastColNumber == 0) continue;
+            rowHeader = new String[lastColNumber];
 
-				if (mapHeaderToFiCol.containsKey(cellValue.trim())) {
-					IFiCol fiCol = mapHeaderToFiCol.get(cellValue.trim());
-					colFound = true;
-					fiCol.setColIndex(colIndex);
-					fiCol.setBoExist(true);
-				}
+            for (int colIndex = 0; colIndex < lastColNumber; colIndex++) {
+                XSSFCell cell = rowItemExcel.getCell(colIndex);
+                if (cell == null) {
+                    //Loghelperr.getInstance(getClass()).debug(String.format("(%s,%s)=%s",rowIndexExcel,colIndex,"null"));
+                    continue;
+                }
+                String cellValue = getCellStringValueXLSX(cell);
+                //Loghelperr.debugLog(getClass(),String.format("(%s,%s)=%s",rowIndexExcel,colIndex,cellValue),intRef,10);
+                rowHeader[colIndex] = cellValue.trim();
 
-				// 100 sütundan sonra sütuna bakmasın
-				if (lastColNumber == 100) {
-					break;
-				}
-			}
+                if (mapHeaderToFiCol.containsKey(cellValue.trim())) {
+                    IFiCol fiCol = mapHeaderToFiCol.get(cellValue.trim());
+                    colFound = true;
+                    fiCol.setColIndex(colIndex);
+                    fiCol.setBoExist(true);
+                }
 
-			//required olan column bulunmamışsa colfund false yapılır
-			for (IFiCol iTableCol : listColumns) {
+                // 100 sütundan sonra sütuna bakmasın
+                if (lastColNumber == 100) {
+                    break;
+                }
+            }
 
-				if (colFound && FiBoolean.isTrue(iTableCol.getBoRequired()) && FiBoolean.isNullOrFalse(iTableCol.getBoExist())) {
-					colFound = false;
-					Loghelper.debugLog(getClass(), "Required Col olmadığı için colfound false a çevrildi");
-				}
+            //required olan column bulunmamışsa colfund false yapılır
+            for (IFiCol iTableCol : listColumns) {
 
-			}
+                if (colFound && FiBoolean.isTrue(iTableCol.getBoRequired()) && FiBoolean.isNullOrFalse(iTableCol.getBoExist())) {
+                    colFound = false;
+                    Loghelper.debugLog(getClass(), "Required Col olmadığı için colfound false a çevrildi");
+                }
 
-			//if (rowHeader[0] == null) rowHeader[0] = "";
+            }
 
-			if (rowHeader.length > 0) {
-				headers = Arrays.asList(rowHeader);
-			}
+            //if (rowHeader[0] == null) rowHeader[0] = "";
 
-			if (colFound) break;
+            if (rowHeader.length > 0) {
+                headers = Arrays.asList(rowHeader);
+            }
 
-			// 100 satırdan sonra başlık aramasın
-			if (rowIndexExcel == this.lastRowIndexForHeaderSearch) break;
+            if (colFound) break;
 
-			if (rowIndexExcel.equals(lastRowNumber)) {
-				Loghelper.get(getClass()).debug("Son satıra erişti, başlıklar bulunamadı.");
-			}
+            // 100 satırdan sonra başlık aramasın
+            if (rowIndexExcel == this.lastRowIndexForHeaderSearch) break;
 
+            if (rowIndexExcel.equals(lastRowNumber)) {
+                Loghelper.get(getClass()).debug("Son satıra erişti, başlıklar bulunamadı.");
+            }
 
-		}
 
-		if (!colFound) {
-			return new Pair<>(null, null);
-		}
+        }
 
-		List<String> finalHeaders = headers;
+        if (!colFound) {
+            return new Pair<>(null, null);
+        }
 
-		// ??????? bulunan satırları colEnabled prop si true yapılmış , nedeni anlaşıldı , bunun yerine boIsExist var olduğu belirtilmişti
-		listColumns.forEach(entity -> {
-			if (finalHeaders.contains(entity.getHeaderName().trim())) {
-				entity.setBoEnabled(true);
-			}
-		});
+        List<String> finalHeaders = headers;
 
-		//Loghelper.getInstance(getClass()).debug(" Row Headers Length:"+rowHeader.length));
-		//not : alternatif yol : for (Row row : sheet)
+        // ??????? bulunan satırları colEnabled prop si true yapılmış , nedeni anlaşıldı , bunun yerine boIsExist var olduğu belirtilmişti
+        listColumns.forEach(entity -> {
+            if (finalHeaders.contains(entity.getHeaderName().trim())) {
+                entity.setBoEnabled(true);
+            }
+        });
 
-		Integer lastColNumber = rowHeader.length;  //rowItemExcel.getLastCellNum(); // 1 başlayarak, son sütün hücre numarası
+        //Loghelper.getInstance(getClass()).debug(" Row Headers Length:"+rowHeader.length));
+        //not : alternatif yol : for (Row row : sheet)
 
-		Pair<Integer, List<String>> result = new Pair<>(null, null);
+        Integer lastColNumber = rowHeader.length;  //rowItemExcel.getLastCellNum(); // 1 başlayarak, son sütün hücre numarası
 
-		if (colFound) {
-			result = new Pair<>(rowIndexExcel, finalHeaders);
-		}
+        Pair<Integer, List<String>> result = new Pair<>(null, null);
 
-		return result;
+        if (colFound) {
+            result = new Pair<>(rowIndexExcel, finalHeaders);
+        }
 
-	}
+        return result;
 
-	/**
-	 * XLS Excel dosyaları için
-	 *
-	 * @param sheet
-	 * @param listColumns
-	 * @return Pair Prm1: Başlıkların bulunduğu satır index i , Prm2: Başlıklar???
-	 */
-	public Pair<Integer, List<String>> findHeadersInExcel(HSSFSheet sheet, List<? extends IFiCol> listColumns) {
+    }
 
-		//Not Iterator rows = sheet.rowIterator();
+    /**
+     * XLS Excel dosyaları için
+     *
+     * @param sheet
+     * @param listColumns
+     * @return Pair Prm1: Başlıkların bulunduğu satır index i , Prm2: Başlıklar???
+     */
+    public Pair<Integer, List<String>> findHeadersInExcel(HSSFSheet sheet, List<? extends IFiCol> listColumns) {
 
-		// 1 başlayarak, exceldeki son satır nosu
-		Integer lastRowNumber = sheet.getLastRowNum();
+        //Not Iterator rows = sheet.rowIterator();
 
-		// Başlıklar bu arrayde tutulacak
-		String[] rowHeader = null;  // map<int,string> de tanımlabilir
+        // 1 başlayarak, exceldeki son satır nosu
+        Integer lastRowNumber = sheet.getLastRowNum();
 
-		// ** start header row okunur
-		Integer rowIndexExcel = 0;
+        // Başlıklar bu arrayde tutulacak
+        String[] rowHeader = null;  // map<int,string> de tanımlabilir
 
-		HSSFRow rowHeaderExcel = null; // = sheet.getRow(rowIndexExcel);
+        // ** start header row okunur
+        Integer rowIndexExcel = 0;
 
-		//Loghelper.getInstance(getClass()).debug("Başlık Satırı Aranacak");
-		//Loghelper.getInstance(getClass()).debug("Last Row Number:" + lastRowNumber);
+        HSSFRow rowHeaderExcel = null; // = sheet.getRow(rowIndexExcel);
 
-		// Eğer sütun isimleri daha alt satırlardaysa bulmaya yarar
-		Boolean colFound = false;
+        //Loghelper.getInstance(getClass()).debug("Başlık Satırı Aranacak");
+        //Loghelper.getInstance(getClass()).debug("Last Row Number:" + lastRowNumber);
 
-		//Loghelper.getInstance(getClass()).debug(" aranan col:" + listColumns.get(0).getHeader());
-		List<String> headers = null;
+        // Eğer sütun isimleri daha alt satırlardaysa bulmaya yarar
+        Boolean colFound = false;
 
-		Map<String, ? extends IFiCol> mapOztableCol = FiCollection.listToMapSingle(listColumns, ozTableCol -> ozTableCol.getHeaderName().trim());
+        //Loghelper.getInstance(getClass()).debug(" aranan col:" + listColumns.get(0).getHeader());
+        List<String> headers = null;
 
-		// Öncelikle Başlıkların olduğu satır aranıyor
-		for (; rowIndexExcel <= lastRowNumber; rowIndexExcel++) {
+        Map<String, ? extends IFiCol> mapOztableCol = FiCollection.listToMapSingle(listColumns, ozTableCol -> ozTableCol.getHeaderName().trim());
 
-			//Loghelper.getInstance(getClass()).debug(" Searching Header Row Number (index+1): " + (rowIndexExcel + 1));
+        // Öncelikle Başlıkların olduğu satır aranıyor
+        for (; rowIndexExcel <= lastRowNumber; rowIndexExcel++) {
 
-			rowHeaderExcel = sheet.getRow(rowIndexExcel);
+            //Loghelper.getInstance(getClass()).debug(" Searching Header Row Number (index+1): " + (rowIndexExcel + 1));
 
-			if (rowHeaderExcel == null) continue;
+            rowHeaderExcel = sheet.getRow(rowIndexExcel);
 
-			Short lastColNumber = rowHeaderExcel.getLastCellNum(); // 1 başlayarak, son sütün hücre numarası
+            if (rowHeaderExcel == null) continue;
 
-			//Loghelper.get(getClass()).debug("Last Col Number:" + lastColNumber);
+            Short lastColNumber = rowHeaderExcel.getLastCellNum(); // 1 başlayarak, son sütün hücre numarası
 
-			if (lastColNumber == -1 || lastColNumber == 0) continue;
+            //Loghelper.get(getClass()).debug("Last Col Number:" + lastColNumber);
 
-			rowHeader = new String[lastColNumber];
+            if (lastColNumber == -1 || lastColNumber == 0) continue;
 
-			for (int cn = 0; cn < lastColNumber; cn++) {
+            rowHeader = new String[lastColNumber];
 
-				HSSFCell cell = rowHeaderExcel.getCell(cn);
-				if (cell == null) continue;
-				String cellValue = getCellStringValueXls(cell);
-				rowHeader[cn] = cellValue.trim();   //cell.getStringCellValue();
+            for (int cn = 0; cn < lastColNumber; cn++) {
 
-				if (mapOztableCol.containsKey(cellValue.trim())) {
+                HSSFCell cell = rowHeaderExcel.getCell(cn);
+                if (cell == null) continue;
+                String cellValue = getCellStringValueXls(cell);
+                rowHeader[cn] = cellValue.trim();   //cell.getStringCellValue();
 
-					IFiCol ozTableCol = mapOztableCol.get(cellValue.trim());
-					colFound = true;
-					ozTableCol.setColIndex(cn);
-					ozTableCol.setBoExist(true);
-				}
+                if (mapOztableCol.containsKey(cellValue.trim())) {
 
-				// IMPO 300 sütundan sonrasına bakmadık , uzun bir döngüye girmesin
-				if (lastColNumber == this.lastColIndexForHeaders) {
-					break;
-				}
-			}
+                    IFiCol ozTableCol = mapOztableCol.get(cellValue.trim());
+                    colFound = true;
+                    ozTableCol.setColIndex(cn);
+                    ozTableCol.setBoExist(true);
+                }
 
-			// Required olan column bulunmamışsa colFound false yapılır
-			for (IFiCol iTableCol : listColumns) {
+                // IMPO 300 sütundan sonrasına bakmadık , uzun bir döngüye girmesin
+                if (lastColNumber == this.lastColIndexForHeaders) {
+                    break;
+                }
+            }
 
-				if (colFound && FiBoolean.isTrue(iTableCol.getBoRequired()) && FiBoolean.isNullOrFalse(iTableCol.getBoExist())) {
-					colFound = false;
-					Loghelper.debugLog(getClass(), "Required Col olmadığı için colfound false a çevrildi");
-				}
+            // Required olan column bulunmamışsa colFound false yapılır
+            for (IFiCol iTableCol : listColumns) {
 
-			}
+                if (colFound && FiBoolean.isTrue(iTableCol.getBoRequired()) && FiBoolean.isNullOrFalse(iTableCol.getBoExist())) {
+                    colFound = false;
+                    Loghelper.debugLog(getClass(), "Required Col olmadığı için colfound false a çevrildi");
+                }
 
-			//if (rowHeader[0] == null) rowHeader[0] = "";
+            }
 
-			if (rowHeader.length > 0) {
-				headers = Arrays.asList(rowHeader);
-			}
+            //if (rowHeader[0] == null) rowHeader[0] = "";
+
+            if (rowHeader.length > 0) {
+                headers = Arrays.asList(rowHeader);
+            }
 
 //			headers = headers.stream().map(b -> {
 //				if (b != null) return b.trim();
 //				return null;
 //			}).collect(Collectors.toList());
 
-			// Loghelper.getInstance(getClass()).debug(" headar1 : " + rowHeader[0]);
+            // Loghelper.getInstance(getClass()).debug(" headar1 : " + rowHeader[0]);
 
 //			for (OzTableCol ozTableCol :listColumns) {
 //
@@ -917,278 +915,278 @@ public class FiExcel {
 //				}
 //			}
 
-			if (colFound) break;
+            if (colFound) break;
 
-			// 100 satırdan sonra başlık aramasın
-			if (rowIndexExcel == this.lastRowIndexForHeaderSearch) break;
+            // 100 satırdan sonra başlık aramasın
+            if (rowIndexExcel == this.lastRowIndexForHeaderSearch) break;
 
-			if (rowIndexExcel.equals(lastRowNumber)) {
-				Loghelper.get(getClass()).debug("Son satır erişti başlık yok");
-			}
-
-
-		}
-
-		if (!colFound) return new Pair<>(null, null);
-
-		List<String> finalHeaders = headers;
-
-		listColumns.forEach(entity -> {
-			if (finalHeaders.contains(entity.getHeaderName().trim())) {
-				entity.setBoEnabled(true);
-			}
-		});
-
-		//Loghelper.getInstance(getClass()).debug(" Row Headers Length:"+rowHeader.length));
-		// not : alternatif yol : for (Row row : sheet)
+            if (rowIndexExcel.equals(lastRowNumber)) {
+                Loghelper.get(getClass()).debug("Son satır erişti başlık yok");
+            }
 
 
-		// Exceldeki Data Satırları Okunuyor
+        }
 
-		Integer lastColNumber = rowHeader.length;              //rowHeaderExcel.getLastCellNum(); // 1 başlayarak, son sütün hücre numarası
+        if (!colFound) return new Pair<>(null, null);
 
-		Pair<Integer, List<String>> result = new Pair<>(null, null);
+        List<String> finalHeaders = headers;
 
-		if (colFound) {
-			result = new Pair<>(rowIndexExcel, finalHeaders);
-		}
+        listColumns.forEach(entity -> {
+            if (finalHeaders.contains(entity.getHeaderName().trim())) {
+                entity.setBoEnabled(true);
+            }
+        });
 
-		return result;
+        //Loghelper.getInstance(getClass()).debug(" Row Headers Length:"+rowHeader.length));
+        // not : alternatif yol : for (Row row : sheet)
 
-	}
 
-	public String getCellStringValueXLS(HSSFCell cell) {
+        // Exceldeki Data Satırları Okunuyor
 
-		switch (cell.getCellType()) {
-			case XSSFCell.CELL_TYPE_BOOLEAN:
-				return String.valueOf(cell.getBooleanCellValue());
+        Integer lastColNumber = rowHeader.length;              //rowHeaderExcel.getLastCellNum(); // 1 başlayarak, son sütün hücre numarası
 
-			case XSSFCell.CELL_TYPE_NUMERIC:
+        Pair<Integer, List<String>> result = new Pair<>(null, null);
+
+        if (colFound) {
+            result = new Pair<>(rowIndexExcel, finalHeaders);
+        }
+
+        return result;
+
+    }
+
+    public String getCellStringValueXLS(HSSFCell cell) {
+
+        switch (cell.getCellType()) {
+            case XSSFCell.CELL_TYPE_BOOLEAN:
+                return String.valueOf(cell.getBooleanCellValue());
+
+            case XSSFCell.CELL_TYPE_NUMERIC:
 				/*int i = (int)cell.getNumericCellValue();
 				strCellValue = String.valueOf(i);*/
-				// XIM araştır format
-				double num = cell.getNumericCellValue();
+                // XIM araştır format
+                double num = cell.getNumericCellValue();
 
-				DecimalFormat pattern = new DecimalFormat("#,#,#,#,#,#,#,#,#,#");
-				NumberFormat testNumberFormat = NumberFormat.getNumberInstance();
-				String mob = testNumberFormat.format(num);
-				Number n = null;
-				try {
-					n = pattern.parse(mob);
-					return String.valueOf(n);
-				} catch (ParseException e) {
-					Loghelper.debugException(getClass(), e);
-					return String.valueOf(cell.getNumericCellValue());
-				}
+                DecimalFormat pattern = new DecimalFormat("#,#,#,#,#,#,#,#,#,#");
+                NumberFormat testNumberFormat = NumberFormat.getNumberInstance();
+                String mob = testNumberFormat.format(num);
+                Number n = null;
+                try {
+                    n = pattern.parse(mob);
+                    return String.valueOf(n);
+                } catch (ParseException e) {
+                    Loghelper.debugException(getClass(), e);
+                    return String.valueOf(cell.getNumericCellValue());
+                }
 
-			case XSSFCell.CELL_TYPE_STRING:
-				return cell.getStringCellValue();
+            case XSSFCell.CELL_TYPE_STRING:
+                return cell.getStringCellValue();
 
-			case XSSFCell.CELL_TYPE_FORMULA:
-				return cell.getRichStringCellValue().getString();
+            case XSSFCell.CELL_TYPE_FORMULA:
+                return cell.getRichStringCellValue().getString();
 
-			case XSSFCell.CELL_TYPE_BLANK:
-			case XSSFCell.CELL_TYPE_ERROR:
-			default:
-				return "";
+            case XSSFCell.CELL_TYPE_BLANK:
+            case XSSFCell.CELL_TYPE_ERROR:
+            default:
+                return "";
 
-		}
+        }
 
-		//return cell.getStringCellValue();
-	}
+        //return cell.getStringCellValue();
+    }
 
-	public String getCellStringValueXLSX(XSSFCell cell) {
-		switch (cell.getCellType()) {
-			case XSSFCell.CELL_TYPE_BOOLEAN:
-				//maprow.put(header, cell.getBooleanCellValue());
-				return cell.getRawValue();
-			case XSSFCell.CELL_TYPE_NUMERIC:
-				return cell.getRawValue();
-			case XSSFCell.CELL_TYPE_STRING:
-				return cell.getStringCellValue();
-			case XSSFCell.CELL_TYPE_BLANK:
-			case XSSFCell.CELL_TYPE_FORMULA:
-			case XSSFCell.CELL_TYPE_ERROR:
-			default:
-				return "";
-		}
-	}
+    public String getCellStringValueXLSX(XSSFCell cell) {
+        switch (cell.getCellType()) {
+            case XSSFCell.CELL_TYPE_BOOLEAN:
+                //maprow.put(header, cell.getBooleanCellValue());
+                return cell.getRawValue();
+            case XSSFCell.CELL_TYPE_NUMERIC:
+                return cell.getRawValue();
+            case XSSFCell.CELL_TYPE_STRING:
+                return cell.getStringCellValue();
+            case XSSFCell.CELL_TYPE_BLANK:
+            case XSSFCell.CELL_TYPE_FORMULA:
+            case XSSFCell.CELL_TYPE_ERROR:
+            default:
+                return "";
+        }
+    }
 
-	public String getCellStringValueXls(HSSFCell cell) {
+    public String getCellStringValueXls(HSSFCell cell) {
 
-		switch (cell.getCellType()) {
-			case HSSFCell.CELL_TYPE_BOOLEAN:
-				//maprow.put(header, cell.getBooleanCellValue());
-				return String.valueOf(cell.getBooleanCellValue());  // RawValue idi (xlsx)
-			case HSSFCell.CELL_TYPE_NUMERIC:
-				return String.valueOf(cell.getNumericCellValue()); // rawValue idi
-			case HSSFCell.CELL_TYPE_STRING:
-				return cell.getStringCellValue();
-			case HSSFCell.CELL_TYPE_BLANK:
-			case HSSFCell.CELL_TYPE_FORMULA:
-			case HSSFCell.CELL_TYPE_ERROR:
-			default:
-				return "";
-		}
+        switch (cell.getCellType()) {
+            case HSSFCell.CELL_TYPE_BOOLEAN:
+                //maprow.put(header, cell.getBooleanCellValue());
+                return String.valueOf(cell.getBooleanCellValue());  // RawValue idi (xlsx)
+            case HSSFCell.CELL_TYPE_NUMERIC:
+                return String.valueOf(cell.getNumericCellValue()); // rawValue idi
+            case HSSFCell.CELL_TYPE_STRING:
+                return cell.getStringCellValue();
+            case HSSFCell.CELL_TYPE_BLANK:
+            case HSSFCell.CELL_TYPE_FORMULA:
+            case HSSFCell.CELL_TYPE_ERROR:
+            default:
+                return "";
+        }
 
-	}
+    }
 
-	public <E> List<E> bindEntityExcel(List<Map<String, String>> listmapData, List<? extends IFiCol> listColumns, Class<E> entityclass) {
+    public <E> List<E> bindEntityExcel(List<Map<String, String>> listmapData, List<? extends IFiCol> listColumns, Class<E> entityclass) {
 
-		List<E> list = new ArrayList<>();
+        List<E> list = new ArrayList<>();
 
-		for (Iterator iterator = listmapData.iterator(); iterator.hasNext(); ) {
+        for (Iterator iterator = listmapData.iterator(); iterator.hasNext(); ) {
 
-			Map<String, String> map = (Map<String, String>) iterator.next();
+            Map<String, String> map = (Map<String, String>) iterator.next();
 
-			E entity = null;
-			try {
-				entity = entityclass.newInstance();
-			} catch (InstantiationException e) {
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			}
+            E entity = null;
+            try {
+                entity = entityclass.newInstance();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
 
-			Map<String, FiField> fieldsAsMap = FiReflection.getFieldsAsMap(entityclass);
+            Map<String, FiField> fieldsAsMap = FiReflection.getFieldsAsMap(entityclass);
 
-			for (int i = 0; i < listColumns.size(); i++) {
+            for (int i = 0; i < listColumns.size(); i++) {
 
-				IFiCol fiTableCol = listColumns.get(i);
+                IFiCol fiTableCol = listColumns.get(i);
 
-				// Excelden gelen veride bu sütun yoksa atlanır
-				if (!map.containsKey(fiTableCol.getHeaderName())) {
-					// FIXME bir defa gösterilmeli
-					//Loghelper.getInstance(getClass()).debug(" Sütun bulunamadı:" + fiTableCol.getHeader());
-					continue;
-				}
+                // Excelden gelen veride bu sütun yoksa atlanır
+                if (!map.containsKey(fiTableCol.getHeaderName())) {
+                    // FIXME bir defa gösterilmeli
+                    //Loghelper.getInstance(getClass()).debug(" Sütun bulunamadı:" + fiTableCol.getHeader());
+                    continue;
+                }
 
-				try {
-					Object cellvalue = map.get(fiTableCol.getHeaderName());
+                try {
+                    Object cellvalue = map.get(fiTableCol.getHeaderName());
 
-					if (cellvalue != null && ((String) cellvalue).isEmpty()) cellvalue = null;
+                    if (cellvalue != null && ((String) cellvalue).isEmpty()) cellvalue = null;
 
-					String colTypeName = fieldsAsMap.getOrDefault(fiTableCol.getFieldName(), new FiField()).getClassNameSimple();
-					String colTypeName2 = colTypeName == null ? "" : colTypeName;
+                    String colTypeName = fieldsAsMap.getOrDefault(fiTableCol.getFieldName(), new FiField()).getClassNameSimple();
+                    String colTypeName2 = colTypeName == null ? "" : colTypeName;
 
-					if (fiTableCol.equalsColType(OzColType.Date) || (fiTableCol.getColType() == null && colTypeName2.equals("Date"))) {
-						if (cellvalue != null) {
-							String strDate = cellvalue.toString();
-							cellvalue = FiDate.strToDateGeneric2(strDate);
-						}
-					}
+                    if (fiTableCol.equalsColType(OzColType.Date) || (fiTableCol.getColType() == null && colTypeName2.equals("Date"))) {
+                        if (cellvalue != null) {
+                            String strDate = cellvalue.toString();
+                            cellvalue = FiDate.strToDateGeneric2(strDate);
+                        }
+                    }
 
-					if (fiTableCol.equalsColType(OzColType.Integer) || (fiTableCol.getColType() == null && colTypeName2.equals("Integer"))) {
-						cellvalue = FiNumber.strToInt(cellvalue);
-					}
+                    if (fiTableCol.equalsColType(OzColType.Integer) || (fiTableCol.getColType() == null && colTypeName2.equals("Integer"))) {
+                        cellvalue = FiNumber.strToInt(cellvalue);
+                    }
 
-					if (fiTableCol.equalsColType(OzColType.Double) || (fiTableCol.getColType() == null && colTypeName2.equals("Double"))) {
-						cellvalue = FiNumber.strToDouble(cellvalue);
-					}
+                    if (fiTableCol.equalsColType(OzColType.Double) || (fiTableCol.getColType() == null && colTypeName2.equals("Double"))) {
+                        cellvalue = FiNumber.strToDouble(cellvalue);
+                    }
 
-					PropertyUtils.setProperty(entity, fiTableCol.getFieldName().trim(), cellvalue);
+                    PropertyUtils.setProperty(entity, fiTableCol.getFieldName().trim(), cellvalue);
 
-				} catch (IllegalAccessException e) {
-					e.printStackTrace();
-				} catch (InvocationTargetException e) {
-					e.printStackTrace();
-				} catch (NoSuchMethodException e) {
-					e.printStackTrace();
-				}
-			}
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                }
+            }
 
-			if (entity != null) list.add(entity);
-
-
-		}
-
-		return list;
-	}
+            if (entity != null) list.add(entity);
 
 
-	public FiListKeyString bindExcelToListMapStr(FiListKeyString listmapData, List<? extends IFiCol> listColumns) {
+        }
 
-		FiListKeyString fiListMapEntity = new FiListKeyString();
+        return list;
+    }
 
-		for (Iterator iterator = listmapData.iterator(); iterator.hasNext(); ) {
-			Map<String, String> mapExcelRow = (Map<String, String>) iterator.next();
 
-			FiKeyString fiMapEntity = new FiKeyString();
-			for (int i = 0; i < listColumns.size(); i++) {
-				IFiCol fiTableCol = listColumns.get(i);
-				// Excelden gelen veride bu sütun yoksa atlanır
-				if (!mapExcelRow.containsKey(fiTableCol.getHeaderName())) continue;
+    public FiListKeyString bindExcelToListMapStr(FiListKeyString listmapData, List<? extends IFiCol> listColumns) {
 
-				String cellvalue = mapExcelRow.get(fiTableCol.getHeaderName());
-				if (FiString.isEmpty(cellvalue)) cellvalue = null;
-				// Tip Çevrilmesi yapılmadan String olarak Eklendi
-				fiMapEntity.put(fiTableCol.getFieldName().trim(), cellvalue);
-			}
-			if (fiMapEntity.size() >0 ) fiListMapEntity.add(fiMapEntity);
-		}
+        FiListKeyString fiListMapEntity = new FiListKeyString();
 
-		return fiListMapEntity;
-	}
+        for (Iterator iterator = listmapData.iterator(); iterator.hasNext(); ) {
+            Map<String, String> mapExcelRow = (Map<String, String>) iterator.next();
 
-	public <E> void printExcelList(List<E> listdata, List<IFiCol> columnList, Integer size) {
+            FiKeyString fiMapEntity = new FiKeyString();
+            for (int i = 0; i < listColumns.size(); i++) {
+                IFiCol fiTableCol = listColumns.get(i);
+                // Excelden gelen veride bu sütun yoksa atlanır
+                if (!mapExcelRow.containsKey(fiTableCol.getHeaderName())) continue;
 
-		System.out.println("");
-		System.out.print("Sütünlar :");
-		//listmapexcel.get(0).keySet().forEach(s -> System.out.print(s + " : "));
-		columnList.forEach(entity -> {
-			if (entity.getBoEnabled() != null && entity.getBoEnabled())
-				System.out.print(entity.getHeaderName() + " :: ");
-		});
-		System.out.println("");
-		System.out.println("Satır Sayısı : " + listdata.size() + "\n");
+                String cellvalue = mapExcelRow.get(fiTableCol.getHeaderName());
+                if (FiString.isEmpty(cellvalue)) cellvalue = null;
+                // Tip Çevrilmesi yapılmadan String olarak Eklendi
+                fiMapEntity.put(fiTableCol.getFieldName().trim(), cellvalue);
+            }
+            if (fiMapEntity.size() > 0) fiListMapEntity.add(fiMapEntity);
+        }
 
-		if (size == null) size = listdata.size();
+        return fiListMapEntity;
+    }
 
-		for (int indexRow = 0; indexRow < size; indexRow++) { // For each
+    public <E> void printExcelList(List<E> listdata, List<IFiCol> columnList, Integer size) {
 
-			Object rowent = listdata.get(indexRow);
+        System.out.println("");
+        System.out.print("Sütünlar :");
+        //listmapexcel.get(0).keySet().forEach(s -> System.out.print(s + " : "));
+        columnList.forEach(entity -> {
+            if (entity.getBoEnabled() != null && entity.getBoEnabled())
+                System.out.print(entity.getHeaderName() + " :: ");
+        });
+        System.out.println("");
+        System.out.println("Satır Sayısı : " + listdata.size() + "\n");
 
-			System.out.print("Satir:" + (indexRow + 1) + " :");
+        if (size == null) size = listdata.size();
 
-			for (int cols = 0; cols < columnList.size(); cols++) { // For each table column
+        for (int indexRow = 0; indexRow < size; indexRow++) { // For each
 
-				String fieldname = columnList.get(cols).getFieldName();
+            Object rowent = listdata.get(indexRow);
 
-				String value = "";
-				Object obj = null;
+            System.out.print("Satir:" + (indexRow + 1) + " :");
 
-				if (fieldname != null) {
+            for (int cols = 0; cols < columnList.size(); cols++) { // For each table column
 
-					try {
-						obj = PropertyUtils.getProperty(rowent, fieldname);
-					} catch (IllegalAccessException e) {
-						//e.printStackTrace();
-						FiException.exceptionToStrMain(e);
-					} catch (InvocationTargetException e) {
-						//e.printStackTrace();
-						FiException.exceptionToStrMain(e);
-					} catch (NoSuchMethodException e) {
-						//e.printStackTrace();
-						Loghelper.get(FiExcel2.class).debug(" Metod Bulunamdı:" + fieldname);
-						FiException.exceptionToStrMain(e);
-					}
+                String fieldname = columnList.get(cols).getFieldName();
 
-				}
+                String value = "";
+                Object obj = null;
 
-				if (obj != null) {
-					System.out.print(fieldname + ":" + obj.toString() + " :: ");
-				} else {
+                if (fieldname != null) {
 
-				}
+                    try {
+                        obj = PropertyUtils.getProperty(rowent, fieldname);
+                    } catch (IllegalAccessException e) {
+                        //e.printStackTrace();
+                        FiException.exceptionToStrMain(e);
+                    } catch (InvocationTargetException e) {
+                        //e.printStackTrace();
+                        FiException.exceptionToStrMain(e);
+                    } catch (NoSuchMethodException e) {
+                        //e.printStackTrace();
+                        Loghelper.get(FiExcel2.class).debug(" Metod Bulunamdı:" + fieldname);
+                        FiException.exceptionToStrMain(e);
+                    }
 
-			}
-			System.out.println(" }");
+                }
 
-		}
+                if (obj != null) {
+                    System.out.print(fieldname + ":" + obj.toString() + " :: ");
+                } else {
 
-		System.out.println("");
+                }
 
-		//AtomicReference<Boolean> first= new AtomicReference<>(true);
+            }
+            System.out.println(" }");
+
+        }
+
+        System.out.println("");
+
+        //AtomicReference<Boolean> first= new AtomicReference<>(true);
 
 //			stringStringMap.keySet().forEach(s -> {
 //				if(!first.get()) System.out.print(",");
@@ -1196,502 +1194,496 @@ public class FiExcel {
 //				first.set(false);
 //			});
 
-		//System.out.println("");
+        //System.out.println("");
 
-		//});
+        //});
 
 
-	}
+    }
 
-	// old methods
+    // old methods
 
-	public List<Map<String, String>> readExcelXLSXtoListMapString(File excel_xlsx_file) {
+    public List<Map<String, String>> readExcelXLSXtoListMapString(File excel_xlsx_file) {
 
-		FileInputStream file = null;
-		XSSFWorkbook workbook = null;
+        FileInputStream file = null;
+        XSSFWorkbook workbook = null;
 
-		try {
-			file = new FileInputStream(excel_xlsx_file);
-			// Get the workbook instance for XLS file
-			workbook = new XSSFWorkbook(file);
+        try {
+            file = new FileInputStream(excel_xlsx_file);
+            // Get the workbook instance for XLS file
+            workbook = new XSSFWorkbook(file);
 
-		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
-		} catch (IOException e2) {
-			e2.printStackTrace();
-		}
+        } catch (FileNotFoundException e1) {
+            e1.printStackTrace();
+        } catch (IOException e2) {
+            e2.printStackTrace();
+        }
 
-		// Get first sheet from the workbook
-		XSSFSheet sheet = workbook.getSheetAt(0);
+        // Get first sheet from the workbook
+        XSSFSheet sheet = workbook.getSheetAt(0);
 
-		List<Map<String, String>> listrows = new ArrayList<>();
+        List<Map<String, String>> listrows = new ArrayList<>();
 
-		//Iterator rows = sheet.rowIterator();
-		Integer lastRowNumber = sheet.getLastRowNum(); // 1 başlayarak, exceldeki son satır nosu
-		String[] rowHeader = null;  // map<int,string> de tanımlabilir
+        //Iterator rows = sheet.rowIterator();
+        Integer lastRowNumber = sheet.getLastRowNum(); // 1 başlayarak, exceldeki son satır nosu
+        String[] rowHeader = null;  // map<int,string> de tanımlabilir
 
-		// ** start header row okunur
+        // ** start header row okunur
 
-		XSSFRow rowHeaderExcel = sheet.getRow(0);
-		//rows.hasNext()
-		// ilk satır başlık olacak
+        XSSFRow rowHeaderExcel = sheet.getRow(0);
+        //rows.hasNext()
+        // ilk satır başlık olacak
 
-		if (rowHeaderExcel == null) return listrows;
+        if (rowHeaderExcel == null) return listrows;
 
-		//rowHeaderExcel = (XSSFRow) rows.next();
-		//Iterator cells = rowHeaderExcel.cellIterator();
+        //rowHeaderExcel = (XSSFRow) rows.next();
+        //Iterator cells = rowHeaderExcel.cellIterator();
 
-		Short lastColNumber = rowHeaderExcel.getLastCellNum(); // 1 başlayarak, son sütün hücre numarası
-		//rowHeaderExcel.getLastCellNum()
+        Short lastColNumber = rowHeaderExcel.getLastCellNum(); // 1 başlayarak, son sütün hücre numarası
+        //rowHeaderExcel.getLastCellNum()
 
-		rowHeader = new String[lastColNumber];
+        rowHeader = new String[lastColNumber];
 
-		//while (cells.hasNext())
-		for (int cn = 0; cn < lastColNumber; cn++) {
+        //while (cells.hasNext())
+        for (int cn = 0; cn < lastColNumber; cn++) {
 
-			XSSFCell cell = rowHeaderExcel.getCell(cn);
+            XSSFCell cell = rowHeaderExcel.getCell(cn);
 
-			if (cell == null) continue;
-			//cell = (XSSFCell) cells.next();
+            if (cell == null) continue;
+            //cell = (XSSFCell) cells.next();
 
-			rowHeader[cn] = cell.getStringCellValue();
+            rowHeader[cn] = cell.getStringCellValue();
 
-			//Loghelper.getInstance(getClass()).debug("header eklendi:" + cell.getStringCellValue());
+            //Loghelper.getInstance(getClass()).debug("header eklendi:" + cell.getStringCellValue());
 
-		}
+        }
 
-		//Loghelper.getInstance(getClass()).debug("Row Header Okundu");
+        //Loghelper.getInstance(getClass()).debug("Row Header Okundu");
 
 
-		// ** end header row okuma
+        // ** end header row okuma
 
-		//Loghelper.getInstance(getClass()).debug(" Row Headers Length:"+rowHeader.length));
+        //Loghelper.getInstance(getClass()).debug(" Row Headers Length:"+rowHeader.length));
 
-		// alternatif yol
-		// for (Row row : sheet) {
-		//while (rows.hasNext())
+        // alternatif yol
+        // for (Row row : sheet) {
+        //while (rows.hasNext())
 
-		for (int rowIndex = 1; rowIndex <= lastRowNumber; rowIndex++) {
+        for (int rowIndex = 1; rowIndex <= lastRowNumber; rowIndex++) {
 
-			//Object[] rowobject = new Object[rowContent.getLastCellNum()];
-			//rowContent = (XSSFRow) rows.next();
-			//Loghelper.getInstance(getClass()).debug("Read Row:"+ rowIndex);
+            //Object[] rowobject = new Object[rowContent.getLastCellNum()];
+            //rowContent = (XSSFRow) rows.next();
+            //Loghelper.getInstance(getClass()).debug("Read Row:"+ rowIndex);
 
-			XSSFRow rowContent = sheet.getRow(rowIndex);
+            XSSFRow rowContent = sheet.getRow(rowIndex);
 
-			if (rowContent == null) continue;
+            if (rowContent == null) continue;
 
-			//Iterator<Cell> iterRowCells = rowContent.cellIterator();
+            //Iterator<Cell> iterRowCells = rowContent.cellIterator();
 
-			Map<String, String> maprow = new HashMap<>();
+            Map<String, String> maprow = new HashMap<>();
 
-			//while (iterRowCells.hasNext())
-			Boolean empty = true;
-			for (int cn = 0; cn < lastColNumber; cn++) {   //rowContent.getLastCellNum()
+            //while (iterRowCells.hasNext())
+            Boolean empty = true;
+            for (int cn = 0; cn < lastColNumber; cn++) {   //rowContent.getLastCellNum()
 
-				//Loghelper.getInstance(getClass()).debug(" col:"+cn);
+                //Loghelper.getInstance(getClass()).debug(" col:"+cn);
 
-				String header = "";
+                String header = "";
 
-				if (rowHeader[cn] == null) {
-					//Loghelper.getInstance(getClass()).debug(" header cn null"+ cn);
-					continue;
-				}
+                if (rowHeader[cn] == null) {
+                    //Loghelper.getInstance(getClass()).debug(" header cn null"+ cn);
+                    continue;
+                }
 
-				header = rowHeader[cn]; //.toString();
+                header = rowHeader[cn]; //.toString();
 
-				//if (rowHeader.length > cn) arsiv
-				//if(!iterRowCells.hasNext()) arsiv
+                //if (rowHeader.length > cn) arsiv
+                //if(!iterRowCells.hasNext()) arsiv
 
-				XSSFCell cell = rowContent.getCell(cn);
+                XSSFCell cell = rowContent.getCell(cn);
 
-				if (cell == null) {
-					//Loghelper.getInstance(getClass()).debug(" header cell null"+ header);
-					maprow.put(header, "");
-					continue;
-				}
+                if (cell == null) {
+                    //Loghelper.getInstance(getClass()).debug(" header cell null"+ header);
+                    maprow.put(header, "");
+                    continue;
+                }
 
-				//cell = (XSSFCell) iterRowCells.next();
+                //cell = (XSSFCell) iterRowCells.next();
 
 
-				switch (cell.getCellType()) {
-					case XSSFCell.CELL_TYPE_BOOLEAN:
-						//maprow.put(header, cell.getBooleanCellValue());
-						maprow.put(header, cell.getRawValue());
-						empty = false;
-						break;
-					case XSSFCell.CELL_TYPE_NUMERIC:
-						maprow.put(header, cell.getRawValue());
-						empty = false;
-						//rowobject[cn] = cell.getNumericCellValue();
-						break;
-					case XSSFCell.CELL_TYPE_STRING:
-						maprow.put(header, cell.getStringCellValue());
-						empty = false;
-						//rowobject[cn] = cell.getStringCellValue();
-						break;
-					case XSSFCell.CELL_TYPE_BLANK:
-					case XSSFCell.CELL_TYPE_FORMULA:
-					case XSSFCell.CELL_TYPE_ERROR:
-						//rowobject[cn] = "";
-						//break;
-					default:
-						maprow.put(header, "");
-						//rowHeader[cn] = "";
+                switch (cell.getCellType()) {
+                    case XSSFCell.CELL_TYPE_BOOLEAN:
+                        //maprow.put(header, cell.getBooleanCellValue());
+                        maprow.put(header, cell.getRawValue());
+                        empty = false;
+                        break;
+                    case XSSFCell.CELL_TYPE_NUMERIC:
+                        maprow.put(header, cell.getRawValue());
+                        empty = false;
+                        //rowobject[cn] = cell.getNumericCellValue();
+                        break;
+                    case XSSFCell.CELL_TYPE_STRING:
+                        maprow.put(header, cell.getStringCellValue());
+                        empty = false;
+                        //rowobject[cn] = cell.getStringCellValue();
+                        break;
+                    case XSSFCell.CELL_TYPE_BLANK:
+                    case XSSFCell.CELL_TYPE_FORMULA:
+                    case XSSFCell.CELL_TYPE_ERROR:
+                        //rowobject[cn] = "";
+                        //break;
+                    default:
+                        maprow.put(header, "");
+                        //rowHeader[cn] = "";
 
-				}
+                }
 
-			}
+            }
 
-			if (!empty) {
-				//Loghelper.getInstance(getClass()).debug("eklendi");
-				listrows.add(maprow);
-			}
+            if (!empty) {
+                //Loghelper.getInstance(getClass()).debug("eklendi");
+                listrows.add(maprow);
+            }
 
-		}
+        }
 
 
-		try {
-			file.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+        try {
+            file.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-		return listrows;
+        return listrows;
 
-	}
+    }
 
-	public List<String> readExcelRowIndex(File excelXlsxFile, Integer rowIndexToRead) {
+    public List<String> readExcelRowIndex(File excelXlsxFile, Integer rowIndexToRead) {
 
-		FileInputStream file = null;
-		XSSFWorkbook workbook = null;
+        FileInputStream file = null;
+        XSSFWorkbook workbook = null;
 
-		try {
-			file = new FileInputStream(excelXlsxFile);
-			// Get the workbook instance for XLS file
-			workbook = new XSSFWorkbook(file);
+        try {
+            file = new FileInputStream(excelXlsxFile);
+            // Get the workbook instance for XLS file
+            workbook = new XSSFWorkbook(file);
 
-		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
-		} catch (IOException e2) {
-			e2.printStackTrace();
-		}
-		List<String> listHeaders = new ArrayList<>();
+        } catch (FileNotFoundException e1) {
+            e1.printStackTrace();
+        } catch (IOException e2) {
+            e2.printStackTrace();
+        }
+        List<String> listHeaders = new ArrayList<>();
 
-		// Get first sheet from the workbook
-		XSSFSheet sheet = workbook.getSheetAt(0);
+        // Get first sheet from the workbook
+        XSSFSheet sheet = workbook.getSheetAt(0);
 
-		XSSFRow rowContent = sheet.getRow(rowIndexToRead); // index nodaki satır okunur (row 0 dan başlıyor)
+        XSSFRow rowContent = sheet.getRow(rowIndexToRead); // index nodaki satır okunur (row 0 dan başlıyor)
 
-		Short lastColNumber = rowContent.getLastCellNum(); // 1 başlayarak, son sütün hücre numarası
+        Short lastColNumber = rowContent.getLastCellNum(); // 1 başlayarak, son sütün hücre numarası
 
-		//if (rowContent == null) return listHeaders;
+        //if (rowContent == null) return listHeaders;
 
-		for (int colIndexTemp = 0; colIndexTemp < lastColNumber; colIndexTemp++) {
+        for (int colIndexTemp = 0; colIndexTemp < lastColNumber; colIndexTemp++) {
 
-			XSSFCell cell = rowContent.getCell(colIndexTemp);
-			if (cell == null) {
-				listHeaders.add("");
-			} else {
-				listHeaders.add(getCellStringValueXLSX(cell));
-			}
+            XSSFCell cell = rowContent.getCell(colIndexTemp);
+            if (cell == null) {
+                listHeaders.add("");
+            } else {
+                listHeaders.add(getCellStringValueXLSX(cell));
+            }
 
 
-		}
+        }
 
-		try {
-			file.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+        try {
+            file.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-		return listHeaders;
+        return listHeaders;
 
-	}
+    }
 
-	public Map<String, Integer> convertObjectcol_to_mapcol_lowercase(Object[] arrColrow) {
+    public Map<String, Integer> convertObjectcol_to_mapcol_lowercase(Object[] arrColrow) {
 
-		Map<String, Integer> mapcol = new HashMap<>();
+        Map<String, Integer> mapcol = new HashMap<>();
 
-		for (int j = 0; j < arrColrow.length; j++) {
+        for (int j = 0; j < arrColrow.length; j++) {
 
-			Object colobject = arrColrow[j];
+            Object colobject = arrColrow[j];
 
-			//Loghelper.getInstance(this.getClass()).info("debug:okunan sutun" + colobject.toString());
+            //Loghelper.getInstance(this.getClass()).info("debug:okunan sutun" + colobject.toString());
 
-			if (colobject != null) {
-				mapcol.put(colobject.toString().toLowerCase(), j);
-			}
+            if (colobject != null) {
+                mapcol.put(colobject.toString().toLowerCase(), j);
+            }
 
 
-		}
+        }
 
-		// > sutunların belirlenmesi
+        // > sutunların belirlenmesi
 
 
-		return mapcol;
+        return mapcol;
 
-	}
+    }
 
-	// xlsx metodu xls ye çevrildi , numeric için rawValue desteği yoktu. 17-08-2019
-	public <E> List<E> readExcelXlsV3(File excelXlsFile, List<? extends IFiCol> listColumns, Class<E> entityclass) {
+    // xlsx metodu xls ye çevrildi , numeric için rawValue desteği yoktu. 17-08-2019
+    public <E> List<E> readExcelXlsV3(File excelXlsFile, List<? extends IFiCol> listColumns, Class<E> entityclass) {
 
-		// Get first sheet from the workbook
-		HSSFSheet sheet = getWorkbookFromExcelXlsFile(excelXlsFile).getSheetAt(0);   //  workbook.getSheetAt(0);
+        // Get first sheet from the workbook
+        HSSFSheet sheet = getWorkbookFromExcelXlsFile(excelXlsFile).getSheetAt(0);   //  workbook.getSheetAt(0);
 
-		List<Map<String, String>> listrows = new ArrayList<>();
+        List<Map<String, String>> listrows = new ArrayList<>();
 
-		//Not Iterator rows = sheet.rowIterator();
+        //Not Iterator rows = sheet.rowIterator();
 
-		// 1 başlayarak, exceldeki son satır nosu
-		Integer lastRowNumber = sheet.getLastRowNum();
+        // 1 başlayarak, exceldeki son satır nosu
+        Integer lastRowNumber = sheet.getLastRowNum();
 
-		// Pair prm1: headerların bulunduğu satır indexi
-		Pair<Integer, List<String>> excelHeadersXLSX = findHeadersInExcel(sheet, listColumns);
+        // Pair prm1: headerların bulunduğu satır indexi
+        Pair<Integer, List<String>> excelHeadersXLSX = findHeadersInExcel(sheet, listColumns);
 
-		Boolean colHeadersFound = false;
+        Boolean colHeadersFound = false;
 
-		if (excelHeadersXLSX != null) colHeadersFound = true;
+        if (excelHeadersXLSX != null) colHeadersFound = true;
 
-		if (!colHeadersFound) return new ArrayList<>();
+        if (!colHeadersFound) return new ArrayList<>();
 
-		List<String> finalHeaders = excelHeadersXLSX.getValue1();
+        List<String> finalHeaders = excelHeadersXLSX.getValue1();
 
-		listColumns.forEach(entity -> {
-			if (finalHeaders.contains(entity.getHeaderName().trim())) {
-				entity.setBoEnabled(true);
-			}
-		});
+        listColumns.forEach(entity -> {
+            if (finalHeaders.contains(entity.getHeaderName().trim())) {
+                entity.setBoEnabled(true);
+            }
+        });
 
 
-		// not : alternatif yol : for (Row row : sheet)
-		Integer rowIndexExcel = excelHeadersXLSX.getValue0();
+        // not : alternatif yol : for (Row row : sheet)
+        Integer rowIndexExcel = excelHeadersXLSX.getValue0();
 
-		// Exceldeki Data Satırları Okunuyor
-		Integer lastColNumber = finalHeaders.size();  //rowHeader.length;              //rowHeaderExcel.getLastCellNum(); // 1 başlayarak, son sütün hücre numarası
+        // Exceldeki Data Satırları Okunuyor
+        Integer lastColNumber = finalHeaders.size();  //rowHeader.length;              //rowHeaderExcel.getLastCellNum(); // 1 başlayarak, son sütün hücre numarası
 
-		// index = Excel Satır - 1 dir. ( Index 0 dan başlar ) (Excel 1 den başlar)
-		// Loghelper.getInstance(getClass()).debug(" Row Index (Header Index)(Satır Sıralaması 0 dan başlar):"+ rowIndexExcel);
-		// Loghelper.getInstance(getClass()).debug(" Row Headers Col Length:"+ lastColNumber);
+        // index = Excel Satır - 1 dir. ( Index 0 dan başlar ) (Excel 1 den başlar)
+        // Loghelper.getInstance(getClass()).debug(" Row Index (Header Index)(Satır Sıralaması 0 dan başlar):"+ rowIndexExcel);
+        // Loghelper.getInstance(getClass()).debug(" Row Headers Col Length:"+ lastColNumber);
 
-		rowIndexExcel++;
+        rowIndexExcel++;
 
-		for (; rowIndexExcel <= lastRowNumber; rowIndexExcel++) {
+        for (; rowIndexExcel <= lastRowNumber; rowIndexExcel++) {
 
-			HSSFRow rowContent = sheet.getRow(rowIndexExcel);
+            HSSFRow rowContent = sheet.getRow(rowIndexExcel);
 
-			if (rowContent == null) continue;
+            if (rowContent == null) continue;
 
-			Map<String, String> maprow = new HashMap<>();
+            Map<String, String> maprow = new HashMap<>();
 
-			Boolean empty = true;
+            Boolean empty = true;
 
-			for (int cn = 0; cn < lastColNumber; cn++) {   //rowContent.getLastCellNum()
+            for (int cn = 0; cn < lastColNumber; cn++) {   //rowContent.getLastCellNum()
 
-				//Loghelper.getInstance(getClass()).debug(" col:"+cn);
+                //Loghelper.getInstance(getClass()).debug(" col:"+cn);
 
-				String header = "";
+                String header = "";
 
-				if (finalHeaders.get(cn) == null) {
-					//Loghelper.getInstance(getClass()).debug(" header cn null"+ cn);
-					continue;
-				}
+                if (finalHeaders.get(cn) == null) {
+                    //Loghelper.getInstance(getClass()).debug(" header cn null"+ cn);
+                    continue;
+                }
 
-				header = finalHeaders.get(cn).toString();
+                header = finalHeaders.get(cn).toString();
 
-				//if (rowHeader.length > cn) arsiv
-				//if(!iterRowCells.hasNext()) arsiv
+                //if (rowHeader.length > cn) arsiv
+                //if(!iterRowCells.hasNext()) arsiv
 
-				HSSFCell cell = rowContent.getCell(cn);
+                HSSFCell cell = rowContent.getCell(cn);
 
-				if (cell == null) {
-					//Loghelper.getInstance(getClass()).debug(" header cell null"+ header);
-					maprow.put(header, "");
-					continue;
-				}
+                if (cell == null) {
+                    //Loghelper.getInstance(getClass()).debug(" header cell null"+ header);
+                    maprow.put(header, "");
+                    continue;
+                }
 
-				//cell = (XSSFCell) iterRowCells.next();
+                //cell = (XSSFCell) iterRowCells.next();
 
-				String strCellValue = getCellStringValueXls(cell);
-				maprow.put(header, strCellValue);
+                String strCellValue = getCellStringValueXls(cell);
+                maprow.put(header, strCellValue);
 
-				if (!strCellValue.equals("")) empty = false;
+                if (!strCellValue.equals("")) empty = false;
 
-			}
+            }
 
-			if (!empty) {
-				//Loghelper.getInstance(getClass()).debug("eklendi");
-				listrows.add(maprow);
-			}
+            if (!empty) {
+                //Loghelper.getInstance(getClass()).debug("eklendi");
+                listrows.add(maprow);
+            }
 
-		}
+        }
 
-		if (getFileInputStream() != null) {
+        if (getFileInputStream() != null) {
 
-			try {
-				getFileInputStream().close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+            try {
+                getFileInputStream().close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
-		return bindEntityExcel(listrows, listColumns, entityclass);
+        return bindEntityExcel(listrows, listColumns, entityclass);
 
-	}
+    }
 
-	public List<Object[]> readExcelXlstoListObject(File excelfile) {
+    public List<Object[]> readExcelXlstoListObject(File excelfile) {
 
-		FileInputStream file = null;
-		HSSFWorkbook workbook = null;
+        FileInputStream file = null;
+        HSSFWorkbook workbook = null;
 
-		try {
-			file = new FileInputStream(excelfile);
-			// Get the workbook instance for XLS file
-			workbook = new HSSFWorkbook(file);
+        try {
+            file = new FileInputStream(excelfile);
+            // Get the workbook instance for XLS file
+            workbook = new HSSFWorkbook(file);
 
-		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
-		} catch (IOException e2) {
-			e2.printStackTrace();
-		}
+        } catch (IOException ex) {
+            Loghelper.get(getClass()).error(FiException.exceptionToStrMain(ex));
+        }
 
-		// Get first sheet from the workbook
-		HSSFSheet sheet = workbook.getSheetAt(0);
+        // Get first sheet from the workbook
+        HSSFSheet sheet = workbook.getSheetAt(0);
 
-		List<Object[]> listrows = new ArrayList<>();
+        List<Object[]> listrows = new ArrayList<>();
 
-		for (Row row : sheet) {
+        for (Row row : sheet) {
 
-			Object[] rowobject = new Object[row.getLastCellNum()];
+            Object[] rowobject = new Object[row.getLastCellNum()];
 
-			for (int cn = 0; cn < row.getLastCellNum(); cn++) {
+            for (int cn = 0; cn < row.getLastCellNum(); cn++) {
 
-				// If the cell is missing from the file, generate a blank one
-				// (Works by specifying a MissingCellPolicy)
+                // If the cell is missing from the file, generate a blank one
+                // (Works by specifying a MissingCellPolicy)
 
-				Cell cell = row.getCell(cn, Row.CREATE_NULL_AS_BLANK);
+                Cell cell = row.getCell(cn, Row.CREATE_NULL_AS_BLANK);
 
-				switch (cell.getCellType()) {
-					case Cell.CELL_TYPE_BOOLEAN:
-						rowobject[cn] = cell.getBooleanCellValue();
-						break;
-					case Cell.CELL_TYPE_NUMERIC:
-						rowobject[cn] = cell.getNumericCellValue();
-						break;
-					case Cell.CELL_TYPE_STRING:
-						rowobject[cn] = cell.getStringCellValue();
-						break;
-					case Cell.CELL_TYPE_BLANK:
-					case Cell.CELL_TYPE_FORMULA:
-					case Cell.CELL_TYPE_ERROR:
-						rowobject[cn] = "";
-						break;
+                switch (cell.getCellType()) {
+                    case Cell.CELL_TYPE_BOOLEAN:
+                        rowobject[cn] = cell.getBooleanCellValue();
+                        break;
+                    case Cell.CELL_TYPE_NUMERIC:
+                        rowobject[cn] = cell.getNumericCellValue();
+                        break;
+                    case Cell.CELL_TYPE_STRING:
+                        rowobject[cn] = cell.getStringCellValue();
+                        break;
+                    case Cell.CELL_TYPE_BLANK:
+                    case Cell.CELL_TYPE_FORMULA:
+                    case Cell.CELL_TYPE_ERROR:
+                        rowobject[cn] = "";
+                        break;
+                }
 
-				}
+                // Print the cell for debugging ( 0:numeric,1:String,2:Formula,3:Blank,4:Boolean,5:Error
+                // System.out.print("CELL: "
+                // + cn
+                // + " --> "
+                // + cell.toString()
+                // + " --> "
+                // + cell.getCellType());
+                // Logmain.info("");
 
-				// Print the cell for debugging ( 0:numeric,1:String,2:Formula,3:Blank,4:Boolean,5:Error
-				// System.out.print("CELL: "
-				// + cn
-				// + " --> "
-				// + cell.toString()
-				// + " --> "
-				// + cell.getCellType());
-				// Logmain.info("");
+            }
 
-			}
+            // FIXME : row tümü boşsa ekleme
 
-			// FIXME : row tümü boşsa ekleme
+            listrows.add(rowobject);
+        }
 
-			listrows.add(rowobject);
-		}
+        try {
+            file.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-		try {
-			file.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+        return listrows;
 
-		return listrows;
+    }
 
-	}
+    public Map<String, Integer> convertObjectcol_to_mapcol_lowercasePANEK(Object[] arrColrow) {
 
-	public Map<String, Integer> convertObjectcol_to_mapcol_lowercasePANEK(Object[] arrColrow) {
+        Map<String, Integer> mapcol = new HashMap<>();
 
-		Map<String, Integer> mapcol = new HashMap<>();
+        for (int j = 0; j < arrColrow.length; j++) {
 
-		for (int j = 0; j < arrColrow.length; j++) {
+            Object colobject = arrColrow[j];
 
-			Object colobject = arrColrow[j];
+            Loghelper.get(this.getClass()).info("debug:okunan sutun" + colobject.toString());
 
-			Loghelper.get(this.getClass()).info("debug:okunan sutun" + colobject.toString());
+            if (colobject != null) {
+                mapcol.put(colobject.toString().toLowerCase(), j);
+            }
 
-			if (colobject != null) {
-				mapcol.put(colobject.toString().toLowerCase(), j);
-			}
 
+        }
 
-		}
+        // > sutunların belirlenmesi
+        return mapcol;
+    }
 
-		// > sutunların belirlenmesi
+    // header lar array çevirilip index ile yapılabilir.
+    public List<Map<String, String>> readExcelXLStoListMap(File excelfile) {
 
+        FileInputStream file = null;
+        HSSFWorkbook workbook = null;
 
-		return mapcol;
+        try {
+            file = new FileInputStream(excelfile);
+            // Get the workbook instance for XLS file
+            workbook = new HSSFWorkbook(file);
 
-	}
+        } catch (FileNotFoundException e1) {
+            Loghelper.debugException(getClass(), e1);
+            LogListener.setLogMessage("Excel Dosya Bulunamadı.");
+        } catch (IOException e2) {
+            Loghelper.debugException(getClass(), e2);
+            LogListener.setLogMessageAndDetail("IO Hatası Oluştu.", e2);
+        }
 
-	// header lar array çevirilip index ile yapılabilir.
-	public List<Map<String, String>> readExcelXLStoListMap(File excelfile) {
 
-		FileInputStream file = null;
-		HSSFWorkbook workbook = null;
+        List<Map<String, String>> listrows = new ArrayList<>();
+        HSSFSheet sheet = null;
 
-		try {
-			file = new FileInputStream(excelfile);
-			// Get the workbook instance for XLS file
-			workbook = new HSSFWorkbook(file);
+        // FIXME sheet boş gelebiliyor
+        try {
+            // Try to Get first sheet from the workbook
+            sheet = workbook.getSheetAt(0);
 
-		} catch (FileNotFoundException e1) {
-			Loghelper.debugException(getClass(), e1);
-			LogListener.setLogMessage("Excel Dosya Bulunamadı.");
-		} catch (IOException e2) {
-			Loghelper.debugException(getClass(), e2);
-			LogListener.setLogMessageAndDetail("IO Hatası Oluştu.", e2);
-		}
+        } catch (Exception e) {
+            Loghelper.get(this.getClass()).error("Hata :" + FiException.exceptionToStrMain(e));
+            return null;
+        }
 
+        Iterator rows = sheet.rowIterator();
 
-		List<Map<String, String>> listrows = new ArrayList<>();
-		HSSFSheet sheet = null;
+        Object[] rowHeader = null;
 
-		// FIXME sheet boş gelebiliyor
-		try {
-			// Try to Get first sheet from the workbook
-			sheet = workbook.getSheetAt(0);
+        HSSFRow row;
+        HSSFCell cell;
 
-		} catch (Exception e) {
-			Loghelper.get(this.getClass()).error("Hata :" + FiException.exceptionToStrMain(e));
-			return null;
-		}
+        // ilk satır başlık olacak
+        if (rows.hasNext()) {
 
-		Iterator rows = sheet.rowIterator();
+            row = (HSSFRow) rows.next();
+            Iterator cells = row.cellIterator();
 
-		Object[] rowHeader = null;
+            rowHeader = new Object[row.getLastCellNum()];
 
-		HSSFRow row;
-		HSSFCell cell;
+            //while (cells.hasNext())
+            for (int cn = 0; cn < row.getLastCellNum(); cn++) {
+                cell = (HSSFCell) cells.next();
 
-		// ilk satır başlık olacak
-		if (rows.hasNext()) {
-
-			row = (HSSFRow) rows.next();
-			Iterator cells = row.cellIterator();
-
-			rowHeader = new Object[row.getLastCellNum()];
-
-			//while (cells.hasNext())
-			for (int cn = 0; cn < row.getLastCellNum(); cn++) {
-				cell = (HSSFCell) cells.next();
-
-				rowHeader[cn] = cell.getStringCellValue();
+                rowHeader[cn] = cell.getStringCellValue();
 
 				/*switch (cell.getCellType()) {
 					case HSSFCell.CELL_TYPE_BOOLEAN:
@@ -1713,347 +1705,347 @@ public class FiExcel {
 						rowHeader[cn] = cell.getRichStringCellValue();
 				}*/
 
-			}
-		}
+            }
+        }
 
-		// alternatif yol
-		// for (Row row : sheet) {
-		while (rows.hasNext()) {
+        // alternatif yol
+        // for (Row row : sheet) {
+        while (rows.hasNext()) {
 
-			//Object[] rowobject = new Object[row.getLastCellNum()];
+            //Object[] rowobject = new Object[row.getLastCellNum()];
 
-			row = (HSSFRow) rows.next();
+            row = (HSSFRow) rows.next();
 
-			Iterator cells = row.cellIterator();
+            Iterator cells = row.cellIterator();
 
-			Map<String, String> maprow = new HashMap<>();
+            Map<String, String> maprow = new HashMap<>();
 
-			Boolean empty = true;
+            Boolean empty = true;
 
-			//while (cells.hasNext())
-			for (int cn = 0; cn < row.getLastCellNum(); cn++) {
-				cell = (HSSFCell) cells.next();
+            //while (cells.hasNext())
+            for (int cn = 0; cn < row.getLastCellNum(); cn++) {
+                cell = (HSSFCell) cells.next();
 
-				String header = "";
-				if (rowHeader.length > cn) {
-					header = rowHeader[cn].toString();
-				} else {
-					continue;
-				}
+                String header = "";
+                if (rowHeader.length > cn) {
+                    header = rowHeader[cn].toString();
+                } else {
+                    continue;
+                }
 
-				switch (cell.getCellType()) {
-					case XSSFCell.CELL_TYPE_BOOLEAN:
-						maprow.put(header, String.valueOf(cell.getBooleanCellValue()));
-						empty = false;
-						break;
-					case XSSFCell.CELL_TYPE_NUMERIC:
+                switch (cell.getCellType()) {
+                    case XSSFCell.CELL_TYPE_BOOLEAN:
+                        maprow.put(header, String.valueOf(cell.getBooleanCellValue()));
+                        empty = false;
+                        break;
+                    case XSSFCell.CELL_TYPE_NUMERIC:
 						/*int i = (int)cell.getNumericCellValue();
 						strCellValue = String.valueOf(i);*/
-						// XIM araştır format
-						double num = cell.getNumericCellValue();
-						DecimalFormat pattern = new DecimalFormat("#,#,#,#,#,#,#,#,#,#");
-						NumberFormat testNumberFormat = NumberFormat.getNumberInstance();
-						String mob = testNumberFormat.format(num);
-						Number n = null;
-						try {
-							n = pattern.parse(mob);
-							maprow.put(header, String.valueOf(n));
-						} catch (ParseException e) {
-							maprow.put(header, String.valueOf(cell.getNumericCellValue()));
-							e.printStackTrace();
-						}
-						//maprow.put(header, String.valueOf(cell.getNumericCellValue()));
-						empty = false;
-						break;
-					case XSSFCell.CELL_TYPE_STRING:
-						maprow.put(header, cell.getStringCellValue());
-						empty = false;
-						break;
+                        // XIM araştır format
+                        double num = cell.getNumericCellValue();
+                        DecimalFormat pattern = new DecimalFormat("#,#,#,#,#,#,#,#,#,#");
+                        NumberFormat testNumberFormat = NumberFormat.getNumberInstance();
+                        String mob = testNumberFormat.format(num);
+                        Number n = null;
+                        try {
+                            n = pattern.parse(mob);
+                            maprow.put(header, String.valueOf(n));
+                        } catch (ParseException e) {
+                            maprow.put(header, String.valueOf(cell.getNumericCellValue()));
+                            e.printStackTrace();
+                        }
+                        //maprow.put(header, String.valueOf(cell.getNumericCellValue()));
+                        empty = false;
+                        break;
+                    case XSSFCell.CELL_TYPE_STRING:
+                        maprow.put(header, cell.getStringCellValue());
+                        empty = false;
+                        break;
 
-					case XSSFCell.CELL_TYPE_FORMULA:
-						maprow.put(header, cell.getRichStringCellValue().getString());
-						empty = false;
+                    case XSSFCell.CELL_TYPE_FORMULA:
+                        maprow.put(header, cell.getRichStringCellValue().getString());
+                        empty = false;
 
-					case XSSFCell.CELL_TYPE_BLANK:
-					case XSSFCell.CELL_TYPE_ERROR:
-					default:
-						maprow.put(header, "");
-
-				}
-
-			}
-
-			if (!empty) listrows.add(maprow);
+                    case XSSFCell.CELL_TYPE_BLANK:
+                    case XSSFCell.CELL_TYPE_ERROR:
+                    default:
+                        maprow.put(header, "");
 
-		}
+                }
 
+            }
 
-		try {
-			file.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+            if (!empty) listrows.add(maprow);
 
-		return listrows;
+        }
 
-	}
 
-	public static void writeXLSXFile() throws IOException {
+        try {
+            file.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-		String excelFileName = "C:/Test.xlsx";//name of excel file
+        return listrows;
 
-		String sheetName = "Sheet1";//name of sheet
+    }
 
-		XSSFWorkbook wb = new XSSFWorkbook();
-		XSSFSheet sheet = wb.createSheet(sheetName);
+    public static void writeXLSXFile() throws IOException {
 
-		//iterating r number of rows
-		for (int r = 0; r < 5; r++) {
-			XSSFRow row = sheet.createRow(r);
+        String excelFileName = "C:/Test.xlsx";//name of excel file
 
-			//iterating c number of columns
-			for (int c = 0; c < 5; c++) {
-				XSSFCell cell = row.createCell(c);
+        String sheetName = "Sheet1";//name of sheet
 
-				cell.setCellValue("Cell " + r + " " + c);
-			}
-		}
+        XSSFWorkbook wb = new XSSFWorkbook();
+        XSSFSheet sheet = wb.createSheet(sheetName);
 
-		FileOutputStream fileOut = new FileOutputStream(excelFileName);
+        //iterating r number of rows
+        for (int r = 0; r < 5; r++) {
+            XSSFRow row = sheet.createRow(r);
 
-		//write this workbook to an Outputstream.
-		wb.write(fileOut);
-		fileOut.flush();
-		fileOut.close();
-	}
+            //iterating c number of columns
+            for (int c = 0; c < 5; c++) {
+                XSSFCell cell = row.createCell(c);
 
-	public List<Object[]> readExcelXLSXtoListArray(File excelfile) {
+                cell.setCellValue("Cell " + r + " " + c);
+            }
+        }
 
-		FileInputStream file = null;
-		XSSFWorkbook workbook = null;
+        FileOutputStream fileOut = new FileOutputStream(excelFileName);
 
-		try {
-			file = new FileInputStream(excelfile);
-			// Get the workbook instance for XLS file
-			workbook = new XSSFWorkbook(file);
+        //write this workbook to an Outputstream.
+        wb.write(fileOut);
+        fileOut.flush();
+        fileOut.close();
+    }
 
-		} catch (FileNotFoundException e1) {
-			
-			e1.printStackTrace();
-		} catch (IOException e2) {
-			e2.printStackTrace();
-		}
+    public List<Object[]> readExcelXLSXtoListArray(File excelfile) {
 
-		// Get first sheet from the workbook
-		XSSFSheet sheet = workbook.getSheetAt(0);
+        FileInputStream file = null;
+        XSSFWorkbook workbook = null;
 
-		List<Object[]> listrows = new ArrayList<>();
+        try {
+            file = new FileInputStream(excelfile);
+            // Get the workbook instance for XLS file
+            workbook = new XSSFWorkbook(file);
 
-		XSSFRow row;
-		XSSFCell cell;
+        } catch (FileNotFoundException e1) {
 
-		Iterator rows = sheet.rowIterator();
+            e1.printStackTrace();
+        } catch (IOException e2) {
+            e2.printStackTrace();
+        }
 
-		// alternatif yol
-		// for (Row row : sheet) {
-		while (rows.hasNext()) {
+        // Get first sheet from the workbook
+        XSSFSheet sheet = workbook.getSheetAt(0);
 
-			row = (XSSFRow) rows.next();
-			Iterator cells = row.cellIterator();
+        List<Object[]> listrows = new ArrayList<>();
 
-			Object[] rowobject = new Object[row.getLastCellNum()];
+        XSSFRow row;
+        XSSFCell cell;
 
-			for (int cn = 0; cn < row.getLastCellNum(); cn++) {
-				cell = (XSSFCell) cells.next();
+        Iterator rows = sheet.rowIterator();
 
-				switch (cell.getCellType()) {
-					case XSSFCell.CELL_TYPE_BOOLEAN:
-						rowobject[cn] = cell.getBooleanCellValue();
-						break;
-					case XSSFCell.CELL_TYPE_NUMERIC:
-						rowobject[cn] = cell.getNumericCellValue();
-						break;
-					case XSSFCell.CELL_TYPE_STRING:
-						rowobject[cn] = cell.getStringCellValue();
-						break;
-					case XSSFCell.CELL_TYPE_BLANK:
-					case XSSFCell.CELL_TYPE_FORMULA:
-					case XSSFCell.CELL_TYPE_ERROR:
-						rowobject[cn] = "";
-						break;
+        // alternatif yol
+        // for (Row row : sheet) {
+        while (rows.hasNext()) {
 
-				}
+            row = (XSSFRow) rows.next();
+            Iterator cells = row.cellIterator();
 
-			}
+            Object[] rowobject = new Object[row.getLastCellNum()];
 
-			//System.out.println();
-			listrows.add(rowobject);
+            for (int cn = 0; cn < row.getLastCellNum(); cn++) {
+                cell = (XSSFCell) cells.next();
 
-		}
+                switch (cell.getCellType()) {
+                    case XSSFCell.CELL_TYPE_BOOLEAN:
+                        rowobject[cn] = cell.getBooleanCellValue();
+                        break;
+                    case XSSFCell.CELL_TYPE_NUMERIC:
+                        rowobject[cn] = cell.getNumericCellValue();
+                        break;
+                    case XSSFCell.CELL_TYPE_STRING:
+                        rowobject[cn] = cell.getStringCellValue();
+                        break;
+                    case XSSFCell.CELL_TYPE_BLANK:
+                    case XSSFCell.CELL_TYPE_FORMULA:
+                    case XSSFCell.CELL_TYPE_ERROR:
+                        rowobject[cn] = "";
+                        break;
 
+                }
 
-		try {
-			file.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+            }
 
-		return listrows;
+            //System.out.println();
+            listrows.add(rowobject);
 
-	}
+        }
 
-	public <E> List<E> readExcelXLSX_V1(File excelXlsxFile, List<IFiCol> listColumns, Class<E> entityclass) {
 
-		// Get first sheet from the workbook
-		XSSFSheet sheet = getWorkbookFromExcelXlsxFile(excelXlsxFile).getSheetAt(0);   //  workbook.getSheetAt(0);
+        try {
+            file.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-		List<Map<String, String>> listrows = new ArrayList<>();
+        return listrows;
 
-		//Not Iterator rows = sheet.rowIterator();
+    }
 
-		// 1 başlayarak, exceldeki son satır nosu
-		Integer lastRowNumber = sheet.getLastRowNum();
+    public <E> List<E> readExcelXLSX_V1(File excelXlsxFile, List<IFiCol> listColumns, Class<E> entityclass) {
 
-		// Başlıklar bu arrayde tutulacak
-		String[] rowHeader = null;  // map<int,string> de tanımlabilir
+        // Get first sheet from the workbook
+        XSSFSheet sheet = getWorkbookFromExcelXlsxFile(excelXlsxFile).getSheetAt(0);   //  workbook.getSheetAt(0);
 
-		// ** start header row okunur
-		Integer rowIndexExcel = 0;
+        List<Map<String, String>> listrows = new ArrayList<>();
 
-		XSSFRow rowHeaderExcel = null; // = sheet.getRow(rowIndexExcel);
+        //Not Iterator rows = sheet.rowIterator();
 
-		//Loghelper.getInstance(getClass()).debug("Başlık Satırı Aranacak");
-		//Loghelper.getInstance(getClass()).debug("Last Row Number:" + lastRowNumber);
+        // 1 başlayarak, exceldeki son satır nosu
+        Integer lastRowNumber = sheet.getLastRowNum();
 
-		// Eğer sütun isimleri daha alt satırlardaysa bulmaya yarar
-		Boolean colFound = false;
+        // Başlıklar bu arrayde tutulacak
+        String[] rowHeader = null;  // map<int,string> de tanımlabilir
 
-		//Loghelper.getInstance(getClass()).debug(" aranan col:" + listColumns.get(0).getHeader());
-		List<String> headers = null;
+        // ** start header row okunur
+        Integer rowIndexExcel = 0;
 
-		// Öncelikle Başlıkların olduğu satır aranıyor
-		for (; rowIndexExcel <= lastRowNumber; rowIndexExcel++) {
+        XSSFRow rowHeaderExcel = null; // = sheet.getRow(rowIndexExcel);
 
-			Loghelper.get(getClass()).debug(" Searching Header Row Number (index+1): " + (rowIndexExcel + 1));
+        //Loghelper.getInstance(getClass()).debug("Başlık Satırı Aranacak");
+        //Loghelper.getInstance(getClass()).debug("Last Row Number:" + lastRowNumber);
 
-			rowHeaderExcel = sheet.getRow(rowIndexExcel);
+        // Eğer sütun isimleri daha alt satırlardaysa bulmaya yarar
+        Boolean colFound = false;
 
-			if (rowHeaderExcel == null) continue;
+        //Loghelper.getInstance(getClass()).debug(" aranan col:" + listColumns.get(0).getHeader());
+        List<String> headers = null;
 
-			Short lastColNumber = rowHeaderExcel.getLastCellNum(); // 1 başlayarak, son sütün hücre numarası
+        // Öncelikle Başlıkların olduğu satır aranıyor
+        for (; rowIndexExcel <= lastRowNumber; rowIndexExcel++) {
 
-			if (lastColNumber == -1 || lastColNumber == 0) continue;
+            Loghelper.get(getClass()).debug(" Searching Header Row Number (index+1): " + (rowIndexExcel + 1));
 
-			rowHeader = new String[lastColNumber];
+            rowHeaderExcel = sheet.getRow(rowIndexExcel);
 
-			for (int cn = 0; cn < lastColNumber; cn++) {
+            if (rowHeaderExcel == null) continue;
 
-				XSSFCell cell = rowHeaderExcel.getCell(cn);
-				if (cell == null) continue;
-				rowHeader[cn] = getCellStringValueXLSX(cell);   //cell.getStringCellValue();
+            Short lastColNumber = rowHeaderExcel.getLastCellNum(); // 1 başlayarak, son sütün hücre numarası
 
-			}
+            if (lastColNumber == -1 || lastColNumber == 0) continue;
 
-			if (rowHeader[0] == null) rowHeader[0] = "";
+            rowHeader = new String[lastColNumber];
 
-			headers = Arrays.asList(rowHeader);
+            for (int cn = 0; cn < lastColNumber; cn++) {
 
-			headers = headers.stream().map(b -> {
-				if (b != null) return b.trim();
-				return null;
-			}).collect(Collectors.toList());
+                XSSFCell cell = rowHeaderExcel.getCell(cn);
+                if (cell == null) continue;
+                rowHeader[cn] = getCellStringValueXLSX(cell);   //cell.getStringCellValue();
 
-			// Loghelper.getInstance(getClass()).debug(" headar1 : " + rowHeader[0]);
+            }
 
-			// FIXME bütün zorunlu sütunlar aratılabilir
-			if (headers.contains(listColumns.get(0).getHeaderName().trim())) {
-				//Loghelper.getInstance(getClass()).debug(" Başlık bulundu:" + rowIndexExcel);
-				colFound = true;
-				break;
-			}
+            if (rowHeader[0] == null) rowHeader[0] = "";
 
-			if (listColumns.size() > 1 && headers.contains(listColumns.get(1).getHeaderName().trim())) {
-				//Loghelper.getInstance(getClass()).debug(" Başlık bulundu:" + rowIndexExcel);
-				colFound = true;
-				break;
-			}
+            headers = Arrays.asList(rowHeader);
 
-			if (listColumns.size() > 2 && headers.contains(listColumns.get(2).getHeaderName().trim())) {
-				//Loghelper.getInstance(getClass()).debug(" Başlık bulundu:" + rowIndexExcel);
-				colFound = true;
-				break;
-			}
+            headers = headers.stream().map(b -> {
+                if (b != null) return b.trim();
+                return null;
+            }).collect(Collectors.toList());
 
-			if (rowIndexExcel.equals(lastRowNumber)) {
-				Loghelper.get(getClass()).debug("Son satır erişti başlık yok");
-			}
+            // Loghelper.getInstance(getClass()).debug(" headar1 : " + rowHeader[0]);
 
-		}
+            // FIXME bütün zorunlu sütunlar aratılabilir
+            if (headers.contains(listColumns.get(0).getHeaderName().trim())) {
+                //Loghelper.getInstance(getClass()).debug(" Başlık bulundu:" + rowIndexExcel);
+                colFound = true;
+                break;
+            }
 
-		if (!colFound) return new ArrayList<>();
+            if (listColumns.size() > 1 && headers.contains(listColumns.get(1).getHeaderName().trim())) {
+                //Loghelper.getInstance(getClass()).debug(" Başlık bulundu:" + rowIndexExcel);
+                colFound = true;
+                break;
+            }
 
-		List<String> finalHeaders = headers;
+            if (listColumns.size() > 2 && headers.contains(listColumns.get(2).getHeaderName().trim())) {
+                //Loghelper.getInstance(getClass()).debug(" Başlık bulundu:" + rowIndexExcel);
+                colFound = true;
+                break;
+            }
 
-		listColumns.forEach(entity -> {
-			if (finalHeaders.contains(entity.getHeaderName().trim())) {
-				entity.setBoEnabled(true);
-			}
-		});
+            if (rowIndexExcel.equals(lastRowNumber)) {
+                Loghelper.get(getClass()).debug("Son satır erişti başlık yok");
+            }
 
-		//Loghelper.getInstance(getClass()).debug(" Row Headers Length:"+rowHeader.length));
-		// not : alternatif yol : for (Row row : sheet)
+        }
 
+        if (!colFound) return new ArrayList<>();
 
-		// Exceldeki Data Satırları Okunuyor
-		Integer lastColNumber = rowHeader.length;              //rowHeaderExcel.getLastCellNum(); // 1 başlayarak, son sütün hücre numarası
+        List<String> finalHeaders = headers;
 
-		rowIndexExcel++;
-		for (; rowIndexExcel <= lastRowNumber; rowIndexExcel++) {
+        listColumns.forEach(entity -> {
+            if (finalHeaders.contains(entity.getHeaderName().trim())) {
+                entity.setBoEnabled(true);
+            }
+        });
 
-			//Object[] rowobject = new Object[rowContent.getLastCellNum()];
-			//rowContent = (XSSFRow) rows.next();
-			//Loghelper.getInstance(getClass()).debug("Read Row:"+ rowIndex);
+        //Loghelper.getInstance(getClass()).debug(" Row Headers Length:"+rowHeader.length));
+        // not : alternatif yol : for (Row row : sheet)
 
-			XSSFRow rowContent = sheet.getRow(rowIndexExcel);
 
-			if (rowContent == null) continue;
+        // Exceldeki Data Satırları Okunuyor
+        Integer lastColNumber = rowHeader.length;              //rowHeaderExcel.getLastCellNum(); // 1 başlayarak, son sütün hücre numarası
 
-			//Iterator<Cell> iterRowCells = rowContent.cellIterator();
+        rowIndexExcel++;
+        for (; rowIndexExcel <= lastRowNumber; rowIndexExcel++) {
 
-			Map<String, String> maprow = new HashMap<>();
+            //Object[] rowobject = new Object[rowContent.getLastCellNum()];
+            //rowContent = (XSSFRow) rows.next();
+            //Loghelper.getInstance(getClass()).debug("Read Row:"+ rowIndex);
 
-			//while (iterRowCells.hasNext())
-			Boolean empty = true;
-			for (int cn = 0; cn < lastColNumber; cn++) {   //rowContent.getLastCellNum()
+            XSSFRow rowContent = sheet.getRow(rowIndexExcel);
 
-				//Loghelper.getInstance(getClass()).debug(" col:"+cn);
+            if (rowContent == null) continue;
 
-				String header = "";
+            //Iterator<Cell> iterRowCells = rowContent.cellIterator();
 
-				if (rowHeader[cn] == null) {
-					//Loghelper.getInstance(getClass()).debug(" header cn null"+ cn);
-					continue;
-				}
+            Map<String, String> maprow = new HashMap<>();
 
-				header = rowHeader[cn].toString();
+            //while (iterRowCells.hasNext())
+            Boolean empty = true;
+            for (int cn = 0; cn < lastColNumber; cn++) {   //rowContent.getLastCellNum()
 
-				//if (rowHeader.length > cn) arsiv
-				//if(!iterRowCells.hasNext()) arsiv
+                //Loghelper.getInstance(getClass()).debug(" col:"+cn);
 
-				XSSFCell cell = rowContent.getCell(cn);
+                String header = "";
 
-				if (cell == null) {
-					//Loghelper.getInstance(getClass()).debug(" header cell null"+ header);
-					maprow.put(header, "");
-					continue;
-				}
+                if (rowHeader[cn] == null) {
+                    //Loghelper.getInstance(getClass()).debug(" header cn null"+ cn);
+                    continue;
+                }
 
-				//cell = (XSSFCell) iterRowCells.next();
+                header = rowHeader[cn].toString();
 
-				String strCellValue = getCellStringValueXLSX(cell);
-				maprow.put(header, strCellValue);
+                //if (rowHeader.length > cn) arsiv
+                //if(!iterRowCells.hasNext()) arsiv
 
-				if (!strCellValue.equals("")) empty = false;
+                XSSFCell cell = rowContent.getCell(cn);
+
+                if (cell == null) {
+                    //Loghelper.getInstance(getClass()).debug(" header cell null"+ header);
+                    maprow.put(header, "");
+                    continue;
+                }
+
+                //cell = (XSSFCell) iterRowCells.next();
+
+                String strCellValue = getCellStringValueXLSX(cell);
+                maprow.put(header, strCellValue);
+
+                if (!strCellValue.equals("")) empty = false;
 
 
 //				switch (cell.getCellType()) {
@@ -2082,70 +2074,74 @@ public class FiExcel {
 //						//rowHeader[cn] = "";
 //				}
 
-			}
+            }
 
-			if (!empty) {
-				//Loghelper.getInstance(getClass()).debug("eklendi");
-				listrows.add(maprow);
-			}
+            if (!empty) {
+                //Loghelper.getInstance(getClass()).debug("eklendi");
+                listrows.add(maprow);
+            }
 
-		}
+        }
 
-		if (getFileInputStream() != null) {
+        if (getFileInputStream() != null) {
 
-			try {
-				getFileInputStream().close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+            try {
+                getFileInputStream().close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
-		return bindEntityExcel(listrows, listColumns, entityclass);
+        return bindEntityExcel(listrows, listColumns, entityclass);
 
-	}
+    }
 
-	public static <PrmEntClazz> void saveSablonExcelByClass(IFxSimpleCont iFxModCont, List<PrmEntClazz> listSampleData
-			, Class<PrmEntClazz> clazzForAutoComment, String appDir) {
+    public static <PrmEntClazz> void saveSablonExcelByClass(IFxSimpleCont iFxModCont, List<PrmEntClazz> listSampleData
+            , Class<PrmEntClazz> clazzForAutoComment, String appDir) {
 
-		List<FiField> listFiFieldsSummary = FiEntity.getListFieldsWoutStatic(clazzForAutoComment);
+        List<FiField> listFiFieldsSummary = FiEntity.getListFieldsWoutStatic(clazzForAutoComment);
 
-		List<FiCol> fiTableColList = FiCol.convertListFiField(listFiFieldsSummary);
+        List<FiCol> fiTableColList = FiCol.convertListFiField(listFiFieldsSummary);
 
-		saveAndOpenSablonExcel(iFxModCont, fiTableColList, listSampleData, clazzForAutoComment, appDir);
+        saveAndOpenSablonExcel(iFxModCont, fiTableColList, listSampleData, clazzForAutoComment, appDir);
 
-	}
+    }
 
-	public static <PrmEntClazz> void saveAndOpenSablonExcel(IFxSimpleCont iFxSimpleCont, List<FiCol> listExcelColums, List<PrmEntClazz> listSampleData, Class<PrmEntClazz> clazzForAutoComment, String appDir) {
+    public static <PrmEntClazz> void saveAndOpenSablonExcel(IFxSimpleCont iFxSimpleCont, List<FiCol> listExcelColums, List<PrmEntClazz> listSampleData, Class<PrmEntClazz> clazzForAutoComment, String appDir) {
 
-		if (clazzForAutoComment != null) {
-			IFiColHelper.autoComment(listExcelColums, clazzForAutoComment);
-		}
+        if (clazzForAutoComment != null) {
+            IFiColHelper.autoComment(listExcelColums, clazzForAutoComment);
+        }
 
-		String basepath = FiWinUtils.getDesktopDirectory();
+        String basepath = FiWinUtils.getDesktopDirectory();
 
-		String excelfilename = "Sablon-" + iFxSimpleCont.getModuleLabel() + "-" + FiDate.datetoString_timestampt2(new Date()) + ".xlsx";
+        String excelfilename = "Sablon-" + iFxSimpleCont.getModuleLabel() + "-" + FiDate.datetoString_timestampt2(new Date()) + ".xlsx";
 
-		Path path = Paths.get(String.format("%s\\%s\\", basepath, appDir));
+        Path path = Paths.get(String.format("%s\\%s\\", basepath, appDir));
 
-		if (!Files.exists(path)) {
-			new File(path.toString()).mkdirs();
-		}
+        if (!Files.exists(path)) {
+            new File(path.toString()).mkdirs();
+        }
 
-		path = Paths.get(String.format("%s\\%s\\%s", basepath, appDir, excelfilename));
+        path = Paths.get(String.format("%s\\%s\\%s", basepath, appDir, excelfilename));
 
-		//Loghelper2.getInstance(getClass()).debug(" path:" + path.toString());
+        //Loghelper2.getInstance(getClass()).debug(" path:" + path.toString());
 
-		if (listSampleData == null) listSampleData = new ArrayList();
+        if (listSampleData == null) listSampleData = new ArrayList();
 
-		try {
-			FiExcel2.writeListDataToExcelWithComment(listSampleData, listExcelColums, path);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+        try {
+            FiExcel2.writeListDataToExcelWithComment(listSampleData, listExcelColums, path);
+        } catch (IOException e) {
+            Loghelper.get(getClassi()).error(FiException.exceptionToStrMain(e));
+        }
 
-		File file = new File(path.toString());
-		new FiExcel2().openExcelFileWithApp(file);
-	}
+        File file = new File(path.toString());
+        new FiExcel2().openExcelFileWithApp(file);
+    }
+
+    private static Class<FiExcel> getClassi() {
+        return FiExcel.class;
+    }
 
 
 }
