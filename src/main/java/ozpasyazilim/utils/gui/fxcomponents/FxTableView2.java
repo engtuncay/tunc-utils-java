@@ -423,7 +423,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     private FiCol getFiColSelection() {
         FiCol fiTableCol = new FiCol(getSelectionColName(), getSelectionHeaderName());
         fiTableCol.setPrefSize(40d);
-        fiTableCol.buildColType(OzColType.Boolean).buiBoEditable(true).buildSumType(OzColSummaryType.CheckBox);
+        fiTableCol.buiColType(OzColType.Boolean).buiBoEditable(true).buiSumType(OzColSummaryType.CheckBox);
         return fiTableCol;
     }
 
@@ -885,7 +885,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
                         } catch (NoSuchMethodException e) {
                             //e.printStackTrace();
                             Loghelper.get(getClass()).error(FiException.exceptionToStrMain(e));
-                            Loghelper.get(getClass()).debug("Setter Metodu Mevcut Degil !!! Alan Adı: "+ fieldName);
+                            Loghelper.get(getClass()).debug("Setter Metodu Mevcut Degil !!! Alan Adı: " + fieldName);
                         }
                     }
                 });
@@ -908,7 +908,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
                         } catch (NoSuchMethodException e) {
                             //e.printStackTrace();
                             Loghelper.get(getClass()).error(FiException.exceptionToStrMain(e));
-                            Loghelper.get(getClass()).debug("Setter Metodu Mevcut Degil !!! Alan Adı: "+ fieldName);
+                            Loghelper.get(getClass()).debug("Setter Metodu Mevcut Degil !!! Alan Adı: " + fieldName);
                         }
                     }
 
@@ -2405,38 +2405,39 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
      */
     public void updatePageToolbarComps() {
 
-        Integer pageCurrent = getLnCurrentPageNoInit();
-        String txPageForwardTooltip = String.valueOf(pageCurrent + 1); // 1/20 =0.1+1 =1+1 =2
-        getBtnPageForward().setSimpleTooltip(txPageForwardTooltip);
-
         Platform.runLater(() -> {
+
+            Integer pageCurrent = getLnCurrentPageNoInit();
+            String txPageForwardTooltip = String.valueOf(pageCurrent + 1); // 1/20 =0.1+1 =1+1 =2
+
+            getBtnPageForward().setSimpleTooltip(txPageForwardTooltip);
             getLblPageNoIndex().setText(pageCurrent.toString() + "/" + calcLnLastPageNo().toString());
+
+            //Loghelper.debug(getClass(), "LnPageStartIndex :"+ getLnPageStartIndex());
+
+            // İlk Sayfada Prev ve Begin Disable olur
+            if (getLnPageStartIndexInit() == 1) {
+                getBtnPagePrev().setDisable(true);
+                getBtnPagePrev().setSimpleTooltip("");
+                getBtnPageBegin().setDisable(true);
+            } else {
+                getBtnPagePrev().setDisable(false);
+                String pagePrev = String.valueOf(pageCurrent - 1);
+                getBtnPagePrev().setSimpleTooltip(pagePrev);
+                getBtnPageBegin().setDisable(false);
+            }
+
+            // Loghelper.debug(getClass(), "Page Start Index:" + getLnPageStartIndex().toString());
+
+            // Son sayfada ise PageForward,PageEnd Disable yapılır
+            if (getLnCurrentPageNoInit() == calcLnLastPageNo()) {
+                getBtnPageForward().setDisable(true);
+                getBtnPageEnd().setDisable(true);
+            } else {
+                getBtnPageForward().setDisable(false);
+                getBtnPageEnd().setDisable(false);
+            }
         });
-
-        //Loghelper.debug(getClass(), "LnPageStartIndex :"+ getLnPageStartIndex());
-
-        // İlk Sayfada Prev ve Begin Disable olur
-        if (getLnPageStartIndexInit() == 1) {
-            getBtnPagePrev().setDisable(true);
-            getBtnPagePrev().setSimpleTooltip("");
-            getBtnPageBegin().setDisable(true);
-        } else {
-            getBtnPagePrev().setDisable(false);
-            String pagePrev = String.valueOf(pageCurrent - 1);
-            getBtnPagePrev().setSimpleTooltip(pagePrev);
-            getBtnPageBegin().setDisable(false);
-        }
-
-        // Loghelper.debug(getClass(), "Page Start Index:" + getLnPageStartIndex().toString());
-
-        // Son sayfada ise PageForward,PageEnd Disable yapılır
-        if (getLnCurrentPageNoInit() == calcLnLastPageNo()) {
-            getBtnPageForward().setDisable(true);
-            getBtnPageEnd().setDisable(true);
-        } else {
-            getBtnPageForward().setDisable(false);
-            getBtnPageEnd().setDisable(false);
-        }
 
     }
 

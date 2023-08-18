@@ -73,7 +73,7 @@ public class FxMigPane extends MigPane {
 	}
 
 	public static FxMigPane buiStandard() {
-		return new FxMigPane(FxMigHp.lgcStandard1InsetZeroGap00);
+		return new FxMigPane(FxMigHp.lcgStandard1InsetZeroGap00);
 	}
 
 	public void wrapFi() {

@@ -42,13 +42,13 @@ public interface IFiCol<N> {
 
 	// <-- Build Methods
 
-	IFiCol buildColType(OzColType colType);
+	IFiCol buiColType(OzColType colType);
 
-	IFiCol buildPrefSize(Double prefSize);
+	IFiCol buiPrefSize(Double prefSize);
 
 	IFiCol buildPrintSize(Integer printSize);
 
-	IFiCol buildSumType(OzColSummaryType summaryType);
+	IFiCol buiSumType(OzColSummaryType summaryType);
 
 	IFiCol buiHeader(String header);
 

@@ -227,4 +227,8 @@ public class FxTextField<EntClazz> extends TextField {
 	}
 
 
+	public FxTextField buiDisable(boolean boDisable) {
+		setDisable(boDisable);
+		return this;
+	}
 }

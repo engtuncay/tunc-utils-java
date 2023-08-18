@@ -31,7 +31,7 @@ public class FxSimpleWindowView implements IFxEntSimpleView, IFxSimpleView {
 		//setRootMigPane(fxMigPane);
 
 		migToolbar = new FxMigPane(FxMigHp.bui().lcgInset3Gap33().lcgNoGrid().getLcg()); // lcStandard2WithInset3
-		migContent = new FxMigPane(FxMigHp.lgcStandard1InsetZeroGap50);
+		migContent = new FxMigPane(FxMigHp.lcgStandard1InsetZeroGap50);
 		migFooter = new FxMigPane(FxMigHp.bui().lcgInset0Gap00().getLcgPrep2());
 
 		// Container Setup

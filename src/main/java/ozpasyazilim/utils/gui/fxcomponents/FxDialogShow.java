@@ -555,46 +555,16 @@ public class FxDialogShow {
         if (prefWidt != null) fxDialog.setWidth(prefWidt);
 
         //MigPane rolePane = getChangeWsPane(fxDialog);
-
         //Label lblmessage = (Label) rolePane.lookup("#mesajchws");
-
 		/*fxDialog.setFilterToOkButton(()->{
-
-
-
 			//if(!result) lblmessage.setText("Hata oluştu");
 			//return result;
 		});*/
 
         fxDialog.setContentPane(nodeContent);
-
-
         fxDialog.showAndWait();
 
-		/*Optional<ComboItem> result = fxDialog.showAndWait();
-
-
-		result.ifPresent(strSirket -> {
-
-			AppPropertiesImpl.setStrSirket(strSirket.getValue());
-			Loghelper.getInstance(getClass()).debug(" Str Sirket Güncellendi:"+ strSirket.getValue());
-			//Notifications.create().title("Özpaş Entegre").text("Şirket Değiştirildi:"+ strSirket.getLabel()).showInformation();
-			//changeWorkspace.setText("Şirket: "+ AppPropertiesImpl.getComboSirket().getLabel());
-			//buildButtonMenuRefresh();
-			new UserProp().saveUpdateProp("sirket", strSirket.getValue());
-			Loghelperr.getInstance(getClass()).debug("sirket prop Güncellendi");
-			//tabMain.getTabs().clear();
-
-		});*/
-
-        //return fxDialog;
-
     }
-
-
-
-
-
 
 	/*MigPane migPane = new MigPane();
 	Button btnExcelAc = new Button("Aç");

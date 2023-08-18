@@ -297,12 +297,12 @@ public class FxTreeTableCol<E> extends TreeTableColumn implements IFiCol<E> {
 	}
 
 	@Override
-	public IFiCol buildColType(OzColType colType) {
+	public IFiCol buiColType(OzColType colType) {
 		return null;
 	}
 
 	@Override
-	public FxTreeTableCol buildPrefSize(Double prefSize) {
+	public FxTreeTableCol buiPrefSize(Double prefSize) {
 		setPrefSize(prefSize);
 		return this;
 	}
@@ -320,7 +320,7 @@ public class FxTreeTableCol<E> extends TreeTableColumn implements IFiCol<E> {
 	}
 
 	@Override
-	public IFiCol buildSumType(OzColSummaryType summaryType) {
+	public IFiCol buiSumType(OzColSummaryType summaryType) {
 		return null;
 	}
 

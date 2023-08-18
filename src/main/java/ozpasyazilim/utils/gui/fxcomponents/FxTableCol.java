@@ -319,12 +319,12 @@ public class FxTableCol<Clazz> extends TableColumn implements IFiCol<Clazz> {
 
 	}
 
-	public FxTableCol buildColType(OzColType colType) {
+	public FxTableCol buiColType(OzColType colType) {
 		setColType(colType);
 		return this;
 	}
 
-	public FxTableCol buildPrefSize(Double prefSize) {
+	public FxTableCol buiPrefSize(Double prefSize) {
 		setPrefSize(prefSize);
 		return this;
 	}
@@ -345,7 +345,7 @@ public class FxTableCol<Clazz> extends TableColumn implements IFiCol<Clazz> {
 		return this;
 	}
 
-	public FxTableCol buildSumType(OzColSummaryType summaryType) {
+	public FxTableCol buiSumType(OzColSummaryType summaryType) {
 		setSummaryType(summaryType);
 		return this;
 	}

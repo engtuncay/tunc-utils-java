@@ -1749,7 +1749,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
 
     public Fdr jdUpdateFiColsBindColValueByIdFieldList(List<FiCol> fiColList) {
 
-        String sqlQuery = FiQueryGenerator.updateQueryWithFiColListByIdList(getEntityClass(), fiColList);
+        String sqlQuery = FiQueryGenerator.updateQueryWithFiColListWhereInIdFields(getEntityClass(), fiColList);
 
         FiKeyBean fkbParams = new FiKeyBean();
         for (IFiCol fiCol : fiColList) {

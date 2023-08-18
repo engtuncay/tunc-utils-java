@@ -45,7 +45,7 @@ public class FxMigPaneGenView<EntClazz> extends FxMigPane implements IFxEntSimpl
 	}
 
 	public static FxMigPaneGenView buiStandard() {
-		return new FxMigPaneGenView(FxMigHp.lgcStandard1InsetZeroGap00);
+		return new FxMigPaneGenView(FxMigHp.lcgStandard1InsetZeroGap00);
 	}
 
 	@Override

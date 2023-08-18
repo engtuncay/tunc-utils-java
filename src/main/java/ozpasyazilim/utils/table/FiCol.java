@@ -547,7 +547,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
         return new FiCol(fieldName, header, colType);
     }
 
-    public FiCol buildColType(OzColType colType) {
+    public FiCol buiColType(OzColType colType) {
         setColType(colType);
         return this;
     }
@@ -557,12 +557,12 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
         return this;
     }
 
-    public FiCol buildPrefSize(Double prefSize) {
+    public FiCol buiPrefSize(Double prefSize) {
         setPrefSize(prefSize);
         return this;
     }
 
-    public FiCol buildPrefSize(Integer prefSize) {
+    public FiCol buiPrefSize(Integer prefSize) {
         if (prefSize == null) setPrefSize(null);
         setPrefSize(prefSize.doubleValue());
         return this;
@@ -585,7 +585,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
     }
 
 
-    public FiCol buildSumType(OzColSummaryType summaryType) {
+    public FiCol buiSumType(OzColSummaryType summaryType) {
         setSummaryType(summaryType);
         return this;
     }
@@ -675,7 +675,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
         return this;
     }
 
-    public FiCol buildColFilterable(Boolean boColFilterable) {
+    public FiCol buiColFilterable(Boolean boColFilterable) {
         setBoFilterable(boColFilterable);
         return this;
     }
