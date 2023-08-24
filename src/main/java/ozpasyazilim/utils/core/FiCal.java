@@ -192,15 +192,15 @@ public class FiCal {
 	//	LocalDateTime.from(dt.toInstant()).plusDays(1);
 
 	/**
-	 * startDate - EndDate
+	 * End Date - Start Date
 	 *
 	 * @param startDate
 	 * @param endDate
 	 * @return
 	 */
 	public static Long dateDiffByDay2(Date startDate, Date endDate) {
-		LocalDate lcEnd = FiCal.convertLocalDate(endDate);
 		LocalDate lcStart = FiCal.convertLocalDate(startDate);
+		LocalDate lcEnd = FiCal.convertLocalDate(endDate);
 		long daysBetween = ChronoUnit.DAYS.between(lcStart, lcEnd);
 		return daysBetween;
 	}
