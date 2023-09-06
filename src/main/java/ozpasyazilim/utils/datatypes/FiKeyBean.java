@@ -306,6 +306,27 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
         return false;
     }
 
+    public boolean containsKeyNotEmpty(FiCol fiCol) {
+        if (containsKey(fiCol.toString())) {
+
+            Object objValue = get(fiCol.toString());
+            //Loghelper.get(getClass()).debug("Değer:"+objValue);
+
+            if(objValue instanceof String){
+                //Loghelper.get(getClass()).debug("String");
+                return !FiString.isEmpty((String) objValue);
+            }
+
+
+            if(objValue!=null){
+                return true;
+            }
+
+            return false;
+        }
+        return false;
+    }
+
     public void logParams() {
         Loghelper.get(getClass()).debug(FiConsole.textFiKeyBean(this));
     }

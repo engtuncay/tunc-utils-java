@@ -787,7 +787,7 @@ public class FxEditorFactory {
 
         // IfxNode türünde ise CompValue metoduyla kendisine değer atamasını kendisi yapar
         if (colNode instanceof IfxNode) {
-            Loghelper.get(FxEditorFactory.class).debug("IfxNode Set CompValue :" + iFiCol.getHeaderName());
+            //Loghelper.get(FxEditorFactory.class).debug("IfxNode Set CompValue :" + iFiCol.getHeaderName());
             IfxNode ifxNode = (IfxNode) colNode;
             ifxNode.setCompValue(cellvalue);
             return;
