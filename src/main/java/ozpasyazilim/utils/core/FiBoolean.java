@@ -7,6 +7,13 @@ public class FiBoolean {
 		return boolVar;
 	}
 
+	/**
+	 *
+	 * false ise true , true veya null ise false gönderir
+	 *
+	 * @param boValue
+	 * @return
+	 */
 	public static boolean isFalse(Boolean boValue) {
 		if (boValue == null) return false;
 		return !boValue; // false ise true , true ise false gönderir

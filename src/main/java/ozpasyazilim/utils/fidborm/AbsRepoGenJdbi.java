@@ -224,18 +224,18 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
     }
 
     /**
-     * Return (Not Null) Default ArrayList
+     * Fdr Value (Not Null) Default ArrayList
      *
      * @param sqlQuery
      * @param mapBind
-     * @return
+     *
+     * @return Fdr<List<EntClazz>>
      */
-    public Fdr<List<EntClazz>> jdSelectListBindMapMain(String sqlQuery, Map<String, Object> mapBind) {
+    public Fdr<List<EntClazz>> jdSelectListBindMapMainNtn(String sqlQuery, Map<String, Object> mapBind) {
 
         if (entityClass == null) setAutoClass();
 
-        Fdr<List<EntClazz>> fdr = new Fdr<>();
-        fdr.setValue(new ArrayList<>());
+        Fdr<List<EntClazz>> fdrMain = new Fdr<>();
 
         try {
             List<EntClazz> result = getJdbi().withHandle(handle -> {
@@ -244,14 +244,17 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
                         .mapToBean(getEntityClass())
                         .list();
             });
-            fdr.setBoResultAndValue(true, result, 1);
+            fdrMain.setBoResultAndValue(true, result, 1);
         } catch (Exception ex) {
             Loghelper.get(getClass()).error("Query Problem");
-            Loghelper.get(getClass()).error("Hata (Exception):\n" + FiException.exceptionToStrMain(ex));
-            fdr.setBoResult(false, ex);
+            Loghelper.get(getClass()).error("Hata (Exception):\n" + FiException.exTosMain(ex));
+            fdrMain.setBoResult(false, ex);
         }
 
-        return fdr;
+        // Ntn
+        if(fdrMain.getValue()==null) fdrMain.setValue(new ArrayList<>());
+
+        return fdrMain;
     }
 
     public Fdr<List<FiKeyBean>> jdSelectFkbListBindMapMain(String sqlQuery, Map<String, Object> mapBind) {
@@ -270,7 +273,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
 
         } catch (Exception ex) {
             Loghelper.get(getClass()).error("Query Problem");
-            Loghelper.get(getClass()).error("Hata (Exception):\n" + FiException.exceptionToStrMain(ex));
+            Loghelper.get(getClass()).error("Hata (Exception):\n" + FiException.exTosMain(ex));
             fdr.setBoResult(false, ex);
         }
 
@@ -364,7 +367,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
 
         String sqlNew = convertSqlAndMapToMultiParam(sqlQuery, mapBind);
 
-        return jdSelectListBindMapMain(sqlNew, mapBind);
+        return jdSelectListBindMapMainNtn(sqlNew, mapBind);
 
     }
 
@@ -508,7 +511,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
             fdr.setBoResult(true);
             fdr.setValue(result);
         } catch (Exception ex) {
-            Loghelper.get(getClass()).error(FiException.exceptionToStrMain(ex));
+            Loghelper.get(getClass()).error(FiException.exTosMain(ex));
             fdr.setBoResult(false, ex);
         }
 
@@ -958,7 +961,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
             });
             fdrMain.setBoResult(true);
         } catch (Exception ex) {
-            Loghelper.get(getClass()).error(FiException.exceptionToStrMain(ex));
+            Loghelper.get(getClass()).error(FiException.exTosMain(ex));
             fdrMain.setBoResult(false, ex);
         }
 
@@ -1048,7 +1051,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
         String sql = FiQueryGenerator.selectQuery20ById_oldway(getEntityClass());
         String idField = FiQueryGenerator.getIdField(getEntityClass());
         FiKeyBean fiKeyBean = FiKeyBean.bui().buiPut(idField, id);
-        return jdSelectListBindMapMain(sql, fiKeyBean);
+        return jdSelectListBindMapMainNtn(sql, fiKeyBean);
     }
 
     public Fdr<List<EntClazz>> jdSelectListByCandIds(EntClazz entClazz) {
@@ -1081,7 +1084,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
 
     public Fdr<List<EntClazz>> jdSelectEntityTop1() {
         String sql = FiQueryGenerator.selectTopQuery(getEntityClass(), 1);
-        return jdSelectListBindMapMain(sql, null);
+        return jdSelectListBindMapMainNtn(sql, null);
     }
 
     public Fdr<Optional<EntClazz>> jdSelectEntityOptByStringCandId1(String txKod) {
@@ -1163,7 +1166,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
      */
     public Fdr<List<EntClazz>> jdSelectListFiSel1(Integer topCount) {
         String query = FiQueryGenerator.selectQueryFiSelect1WithTop(getEntityClass(), topCount);
-        return jdSelectListBindMapMain(query, null);
+        return jdSelectListBindMapMainNtn(query, null);
     }
 
     public List<EntClazz> jdSelectListDtoFieldsBySeperatedFieldRaw(FiKeyBean fiKeyBean) {
@@ -1188,7 +1191,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
 
     public Fdr<List<EntClazz>> jdSelect1ListByCandId(FiKeyBean fiKeyBean) {
         String query = FiQueryGenerator.select1FieldsByCandId(getEntityClass());
-        return jdSelectListBindMapMain(query, fiKeyBean);
+        return jdSelectListBindMapMainNtn(query, fiKeyBean);
     }
 
 
@@ -1278,7 +1281,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
 
         try {
 
-            String sql = FiQueryTools.stoj(FiQueryGenerator.insertQueryWoutId(getEntityClass()));
+            String sql; //= FiQueryTools.stoj(FiQueryGenerator.insertQueryWoutId(getEntityClass()));
 
             if (FiBoolean.isTrue(boIncludeIdFields)) {
                 sql = FiQueryTools.stoj(FiQueryGenerator.insertQueryWithId(getEntityClass()));
@@ -1292,7 +1295,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
             fdrMain.setBoResult(true);
             fdrMain.setRowsAffected(rowCountUpdate);
         } catch (Exception ex) {
-            Loghelper.debugException(getClass(), ex);
+            Loghelper.errorException(getClass(), ex);
             fdrMain.setBoResult(false, ex);
         }
 
@@ -2562,7 +2565,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
             fdr.setValue(result);
             fdr.setBoResult(true);
         } catch (Exception ex) {
-            Loghelper.get(getClass()).error(FiException.exceptionToStrMain(ex));
+            Loghelper.get(getClass()).error(FiException.exTosMain(ex));
             fdr.setBoResult(false, ex);
         }
         return fdr;
@@ -2618,7 +2621,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
             fdr.setBoResult(true);
         } catch (Exception ex) {
             Loghelper.get(getClass()).error("Query Problem");
-            Loghelper.get(getClass()).debug(FiException.exceptionToStrMain(ex));
+            Loghelper.get(getClass()).debug(FiException.exTosMain(ex));
             fdr.setBoResult(false, ex);
         }
 
@@ -2701,7 +2704,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
             fdrMain.setBoResult(true);
         } catch (Exception ex) {
             Loghelper.get(getClass()).debug("Query Problem");
-            Loghelper.get(getClass()).debug(FiException.exceptionToStrMain(ex));
+            Loghelper.get(getClass()).debug(FiException.exTosMain(ex));
             fdrMain.setException(ex);
             fdrMain.setBoResult(false);
         }
@@ -3085,7 +3088,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
             fdrMain.appendRowsAffected(1);
             fdrMain.setBoResult(true);
         } catch (Exception ex) {
-            Loghelper.get(getClass()).debug(FiException.exceptionToStrMain(ex));
+            Loghelper.get(getClass()).debug(FiException.exTosMain(ex));
             fdrMain.setBoResult(false);
             fdrMain.setException(ex);
         }
@@ -3120,7 +3123,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
             fdrMain.appendRowsAffected(1);
             fdrMain.setBoResult(true);
         } catch (Exception ex) {
-            Loghelper.get(getClass()).debug(FiException.exceptionToStrMain(ex));
+            Loghelper.get(getClass()).debug(FiException.exTosMain(ex));
             fdrMain.setBoResult(false);
             fdrMain.setException(ex);
         }
@@ -3465,7 +3468,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
             });
 
         } catch (Exception ex) {
-            Loghelper.get(getClass()).error(FiException.exceptionToStrMain(ex));
+            Loghelper.get(getClass()).error(FiException.exTosMain(ex));
             fdrMain.setBoResult(false, ex);
         }
 
@@ -3501,7 +3504,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
             });
 
         } catch (Exception ex) {
-            Loghelper.get(getClass()).debug(FiException.exceptionToStrMain(ex));
+            Loghelper.get(getClass()).debug(FiException.exTosMain(ex));
             //Loghelper.get(getClass()).debug("Genel Catch de Yakalandı");
             fdrMain.setBoResult(false, ex);
         }
@@ -3548,11 +3551,11 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
     }
 
     public Fdr<List<EntClazz>> jdSelectListBindMap(FiQuery fiQuery) {
-        return jdSelectListBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
+        return jdSelectListBindMapMainNtn(fiQuery.getTxQuery(), fiQuery.getMapParams());
     }
 
     public Fdr<List<EntClazz>> jdSelectList(FiQuery fiQuery) {
-        return jdSelectListBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
+        return jdSelectListBindMapMainNtn(fiQuery.getTxQuery(), fiQuery.getMapParams());
     }
 
     /**
@@ -3566,14 +3569,14 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
         FiQuery fiQuery = new FiQuery(sql, fiKeyBean);
         fiQuery.prepSqlParams1();
 //		Loghelper.get(getClass()).debug("Sql:" + fiQuery.getTxQuery());
-        return jdSelectListBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
+        return jdSelectListBindMapMainNtn(fiQuery.getTxQuery(), fiQuery.getMapParams());
     }
 
     public Fdr<List<EntClazz>> jdSelectListWitMultiOnly(String sql, FiKeyBean fiKeyBean) {
         FiQuery fiQuery = new FiQuery(sql, fiKeyBean);
         fiQuery.convertListParamToMultiParams();
         //Loghelper.get(getClass()).debug("sql:" + fiQuery.getTxQuery());
-        return jdSelectListBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
+        return jdSelectListBindMapMainNtn(fiQuery.getTxQuery(), fiQuery.getMapParams());
     }
 
 }

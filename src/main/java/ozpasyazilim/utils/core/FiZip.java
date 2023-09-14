@@ -111,7 +111,7 @@ public class FiZip {
 			return zipfile;
 
 		} catch (IOException ex) {
-			Loghelper.get(FiZip.class).error("Hata (zipleme):" + FiException.exceptionToStrMain(ex));
+			Loghelper.get(FiZip.class).error("Hata (zipleme):" + FiException.exTosMain(ex));
 		}
 
 		return null;

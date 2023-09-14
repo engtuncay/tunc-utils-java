@@ -144,7 +144,7 @@ public class FiReflection {
 			PropertyUtils.setProperty(objectt, fiCol.getFieldName(), cellvalue); //cellvalue == null ? strCellvalue : cellvalue
 			return true;
 		} catch (Exception e) {
-			Loghelper.get(FiReflection.class).debug(FiException.exceptionToStrMain(e));
+			Loghelper.get(FiReflection.class).debug(FiException.exTosMain(e));
 		}
 //		} catch (IllegalAccessException e) {
 //			Loghelper.get(FiReflection.class).debug(FiException.exceptiontostring(e));

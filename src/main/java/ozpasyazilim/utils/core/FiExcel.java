@@ -149,7 +149,7 @@ public class FiExcel {
             sheet = workbook.getSheetAt(0);
 
         } catch (Exception e) {
-            Loghelper.get(this.getClass()).error("Hata :" + FiException.exceptionToStrMain(e));
+            Loghelper.get(this.getClass()).error("Hata :" + FiException.exTosMain(e));
             return null;
         }
 
@@ -639,7 +639,7 @@ public class FiExcel {
             setFileInputStream(file);
 
         } catch (IOException ex) {
-            Loghelper.get(getClass()).error(FiException.exceptionToStrMain(ex));
+            Loghelper.get(getClass()).error(FiException.exTosMain(ex));
         }
 
         // Get first sheet from the workbook
@@ -1161,14 +1161,14 @@ public class FiExcel {
                         obj = PropertyUtils.getProperty(rowent, fieldname);
                     } catch (IllegalAccessException e) {
                         //e.printStackTrace();
-                        FiException.exceptionToStrMain(e);
+                        FiException.exTosMain(e);
                     } catch (InvocationTargetException e) {
                         //e.printStackTrace();
-                        FiException.exceptionToStrMain(e);
+                        FiException.exTosMain(e);
                     } catch (NoSuchMethodException e) {
                         //e.printStackTrace();
                         Loghelper.get(FiExcel2.class).debug(" Metod Bulunamdı:" + fieldname);
-                        FiException.exceptionToStrMain(e);
+                        FiException.exTosMain(e);
                     }
 
                 }
@@ -1548,7 +1548,7 @@ public class FiExcel {
             workbook = new HSSFWorkbook(file);
 
         } catch (IOException ex) {
-            Loghelper.get(getClass()).error(FiException.exceptionToStrMain(ex));
+            Loghelper.get(getClass()).error(FiException.exTosMain(ex));
         }
 
         // Get first sheet from the workbook
@@ -1660,7 +1660,7 @@ public class FiExcel {
             sheet = workbook.getSheetAt(0);
 
         } catch (Exception e) {
-            Loghelper.get(this.getClass()).error("Hata :" + FiException.exceptionToStrMain(e));
+            Loghelper.get(this.getClass()).error("Hata :" + FiException.exTosMain(e));
             return null;
         }
 
@@ -2132,7 +2132,7 @@ public class FiExcel {
         try {
             FiExcel2.writeListDataToExcelWithComment(listSampleData, listExcelColums, path);
         } catch (IOException e) {
-            Loghelper.get(getClassi()).error(FiException.exceptionToStrMain(e));
+            Loghelper.get(getClassi()).error(FiException.exTosMain(e));
         }
 
         File file = new File(path.toString());

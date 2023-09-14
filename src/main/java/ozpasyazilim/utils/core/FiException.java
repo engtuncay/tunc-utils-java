@@ -5,7 +5,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 
 public class FiException {
 
-	public static String exceptionToStrMain(Exception e) {
+	public static String exTosMain(Exception e) {
 		if (e == null) return "";
 		return getStackTraceString(e, "");
 	}
@@ -76,7 +76,7 @@ public class FiException {
 	}
 
 	public static String exToLog(Exception ex) {
-		return exceptionToStrMain(ex);
+		return exTosMain(ex);
 	}
 
 	public static String exceptionToStrSummary(Exception exception) {

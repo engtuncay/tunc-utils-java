@@ -970,6 +970,25 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
         return sb.toString();
     }
 
+    public String getMessageAndLogAsString() {
+        StringBuilder sb = new StringBuilder();
+
+        int index = 0;
+
+        if (!FiString.isEmpty(getMessage())) {
+            sb.append(getMessage());
+            index++;
+        }
+
+        for (EntLog entLog : getLogListInit()) {
+            if (index > 0) sb.append("\n");
+            sb.append(entLog.getTxMessage());
+            index++;
+        }
+
+        return sb.toString();
+    }
+
     public Pair<String, Boolean> getLogAsStringAndErrorExist() {
         StringBuilder sb = new StringBuilder("");
         int index = 0;

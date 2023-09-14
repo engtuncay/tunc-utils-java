@@ -35,7 +35,7 @@ public class FiJdbiFactory {
             jdbi.getConfig(SqlStatements.class).setUnusedBindingAllowed(true);
             return jdbi;
         } catch (Exception ex) {
-            Loghelper.get(getClassi()).error(FiException.exceptionToStrMain(ex));
+            Loghelper.get(getClassi()).error(FiException.exTosMain(ex));
         }
 
         if (jdbi == null) {

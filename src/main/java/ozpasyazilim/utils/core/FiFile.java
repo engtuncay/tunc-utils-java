@@ -5,7 +5,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.Collator;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -18,7 +17,6 @@ import javax.swing.filechooser.FileFilter;
 import org.apache.commons.io.FilenameUtils;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.returntypes.Fdr;
-import ozpasyazilim.utils.returntypes.Fro;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -123,6 +121,13 @@ public class FiFile {
 
     }
 
+    public static Boolean existFileAbsolute(String fileWithAbsPath) {
+
+        File fileRelative4 = new File(fileWithAbsPath);
+        return fileRelative4.isAbsolute();
+
+    }
+
     public static File getFileRelativeToApplicationDir(String filename) {
 
         File fileRelative = new File("./" + filename);
@@ -189,7 +194,7 @@ public class FiFile {
             return true;
 
         } catch (IOException ex) {
-            Loghelper.get(getClassi()).error(FiException.exceptionToStrMain(ex));
+            Loghelper.get(getClassi()).error(FiException.exTosMain(ex));
             return false;
         }
     }
@@ -247,7 +252,7 @@ public class FiFile {
             return true;
 
         } catch (IOException ex) {
-            Loghelper.get(getClassi()).error(FiException.exceptionToStrMain(ex));
+            Loghelper.get(getClassi()).error(FiException.exTosMain(ex));
             return false;
         }
     }
@@ -298,7 +303,7 @@ public class FiFile {
             return Fdr.creBoResult(true);
 
         } catch (IOException ex) {
-            Loghelper.get(getClassi()).error(FiException.exceptionToStrMain(ex));
+            Loghelper.get(getClassi()).error(FiException.exTosMain(ex));
             return Fdr.creBoResult(false);
         }
     }
@@ -423,6 +428,18 @@ public class FiFile {
 
     public static String getContent1OfRelativeFile(String fileName) {
         String filePath = "./" + fileName;
+        try {
+            String result = new String(Files.readAllBytes(Paths.get(filePath)), StandardCharsets.UTF_8);
+            return result;
+        } catch (IOException e) {
+            Loghelper.get(getClassi()).error(FiException.exceptionIfToString(e));
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static String getContent1OfAbsoluteFile(String fileName) {
+        String filePath = fileName;
         try {
             String result = new String(Files.readAllBytes(Paths.get(filePath)), StandardCharsets.UTF_8);
             return result;

@@ -60,7 +60,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbi { //implements IRepoJdb
 
         } catch (Exception ex) {
             Loghelper.get(getClass()).error("Query Problem");
-            Loghelper.get(getClass()).error("Hata (Exception):\n" + FiException.exceptionToStrMain(ex));
+            Loghelper.get(getClass()).error("Hata (Exception):\n" + FiException.exTosMain(ex));
             fdr.setBoResult(false, ex);
         }
 
@@ -83,7 +83,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbi { //implements IRepoJdb
             fdr.setBoResultAndValue(true, fiListFkb, 1);
         } catch (Exception ex) {
             Loghelper.get(getClass()).error("Query Problem");
-            Loghelper.get(getClass()).error("Hata (Exception):\n" + FiException.exceptionToStrMain(ex));
+            Loghelper.get(getClass()).error("Hata (Exception):\n" + FiException.exTosMain(ex));
             fdr.setBoResult(false, ex);
         }
 
@@ -123,7 +123,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbi { //implements IRepoJdb
 
         } catch (Exception ex) {
             Loghelper.get(getClass()).error("Query Problem");
-            Loghelper.get(getClass()).error("Hata (Exception):\n" + FiException.exceptionToStrMain(ex));
+            Loghelper.get(getClass()).error("Hata (Exception):\n" + FiException.exTosMain(ex));
             fdr.setBoResult(false, ex);
         }
 
@@ -159,7 +159,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbi { //implements IRepoJdb
             result.ifPresent(fdr::setValue);
             fdr.setBoResult(true);
         } catch (Exception ex) {
-            Loghelper.get(getClass()).error(FiException.exceptionToStrMain(ex));
+            Loghelper.get(getClass()).error(FiException.exTosMain(ex));
             fdr.setBoResult(false);
             fdr.setValue(null);
         }
@@ -203,7 +203,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbi { //implements IRepoJdb
             fdr.setBoResultAndValue(true, result, 1);
         } catch (Exception ex) {
             Loghelper.get(getClass()).error("Query Problem");
-            Loghelper.get(getClass()).error("Hata (Exception):\n" + FiException.exceptionToStrMain(ex));
+            Loghelper.get(getClass()).error("Hata (Exception):\n" + FiException.exTosMain(ex));
             fdr.setBoResult(false, ex);
         }
         return fdr;

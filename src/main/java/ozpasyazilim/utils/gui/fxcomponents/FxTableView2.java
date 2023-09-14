@@ -880,11 +880,11 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
                             PropertyUtils.setNestedProperty(ent, fieldName, false);
                         } catch (IllegalAccessException | InvocationTargetException e) {
                             //e.printStackTrace();
-                            Loghelper.get(getClass()).error(FiException.exceptionToStrMain(e));
+                            Loghelper.get(getClass()).error(FiException.exTosMain(e));
 
                         } catch (NoSuchMethodException e) {
                             //e.printStackTrace();
-                            Loghelper.get(getClass()).error(FiException.exceptionToStrMain(e));
+                            Loghelper.get(getClass()).error(FiException.exTosMain(e));
                             Loghelper.get(getClass()).debug("Setter Metodu Mevcut Degil !!! Alan Adı: " + fieldName);
                         }
                     }
@@ -904,10 +904,10 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
                             PropertyUtils.setNestedProperty(ent, fieldName, boStatus);
                         } catch (IllegalAccessException | InvocationTargetException e) {
                             //e.printStackTrace();
-                            Loghelper.get(getClass()).error(FiException.exceptionToStrMain(e));
+                            Loghelper.get(getClass()).error(FiException.exTosMain(e));
                         } catch (NoSuchMethodException e) {
                             //e.printStackTrace();
-                            Loghelper.get(getClass()).error(FiException.exceptionToStrMain(e));
+                            Loghelper.get(getClass()).error(FiException.exTosMain(e));
                             Loghelper.get(getClass()).debug("Setter Metodu Mevcut Degil !!! Alan Adı: " + fieldName);
                         }
                     }

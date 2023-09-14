@@ -104,7 +104,7 @@ public class FiNumber {
 		try {
 			return Optional.of(df.parse(sNumber).doubleValue());
 		} catch (ParseException e) {
-			Loghelper.get(FiNumber.class).error("Hata :" + FiException.exceptionToStrMain(e));
+			Loghelper.get(FiNumber.class).error("Hata :" + FiException.exTosMain(e));
 			return Optional.empty();
 		}
 
@@ -264,7 +264,7 @@ public class FiNumber {
 		} catch (Exception e) {
 
 			Loghelper.get(FiString.class)
-					.info("Double çeviri hata" + FiException.exceptionToStrMain(e));
+					.info("Double çeviri hata" + FiException.exTosMain(e));
 			value = 0.0D;
 		}
 
@@ -301,7 +301,7 @@ public class FiNumber {
 			value = decimalpattern.parse(number).doubleValue();
 		} catch (Exception e) {
 			Loghelper.get(FiString.class)
-					.info("Double çeviri hata" + FiException.exceptionToStrMain(e));
+					.info("Double çeviri hata" + FiException.exTosMain(e));
 			value = 0.0D;
 		}
 

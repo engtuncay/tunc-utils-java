@@ -54,7 +54,7 @@ public class FiAes {
                  InvalidKeyException | BadPaddingException | IllegalBlockSizeException e) {
             //throw new RuntimeException(e);
             e.printStackTrace();
-            Loghelper.get(getClassi()).error(FiException.exceptionToStrMain(e));
+            Loghelper.get(getClassi()).error(FiException.exTosMain(e));
             fdrMain.setBoResult(false, e);
         }
 
@@ -76,7 +76,7 @@ public class FiAes {
                  InvalidKeyException | BadPaddingException | IllegalBlockSizeException e) {
             //throw new RuntimeException(e);
             e.printStackTrace();
-            Loghelper.get(getClassi()).error(FiException.exceptionToStrMain(e));
+            Loghelper.get(getClassi()).error(FiException.exTosMain(e));
             fdrMain.setBoResult(false, e);
         }
 

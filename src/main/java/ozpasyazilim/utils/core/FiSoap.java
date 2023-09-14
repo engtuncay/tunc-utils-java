@@ -27,9 +27,8 @@ public class FiSoap {
 	 */
 	public static Fdr<String> requestRawHttp(String endPoint, String soapRequest, FiKeyString mapHeaders) {
 
-		//MalformedURLException, IOException daha geniş olduğu için çıkarıldı
-		//throws IOException
-		Fdr<String> fdr = new Fdr<>();
+		//MalformedURLException, IOException daha geniş olduğu için çıkarıldı //throws IOException
+		Fdr<String> fdrMain = new Fdr<>();
 
 		try {
 			//Code to make a webservice HTTP request
@@ -79,11 +78,11 @@ public class FiSoap {
 
 			//Read the response.
 			InputStreamReader isr = null;
-			fdr.setLnResponseValue(httpConn.getResponseCode());
+			fdrMain.setLnResponseValue(httpConn.getResponseCode());
 
 			if (httpConn.getResponseCode() == 200) {
 				isr = new InputStreamReader(httpConn.getInputStream(),StandardCharsets.UTF_8);
-				fdr.setBoResult(true);
+				fdrMain.setBoResult(true);
 			} else {
 				if (httpConn.getErrorStream() != null) isr = new InputStreamReader(httpConn.getErrorStream(),StandardCharsets.UTF_8);
 			}
@@ -94,18 +93,18 @@ public class FiSoap {
 				while ((responseString = in.readLine()) != null) {
 					outputString.append(responseString);
 				}
-				fdr.setValue(outputString.toString());
+				fdrMain.setValue(outputString.toString());
 			} else {
-				fdr.setMessage("!!! Error Code:" + httpConn.getResponseCode());
+				fdrMain.setMessage("!!! Error Code:" + httpConn.getResponseCode());
 			}
 			//Loghelper.debugLog(FiSoap.class, "Soap Response:"+outputString);
 		} catch (IOException exception) {
 			Loghelper.get(getClassi()).debug(FiException.exceptionIfToString(exception));
-			fdr.setBoResult(false);
-			fdr.setException(exception);
-			fdr.setMessage("Soap isteği gerçekleşirken hata oluştu. Detay için Exception inceleyiniz.");
+			fdrMain.setBoResult(false);
+			fdrMain.setException(exception);
+			fdrMain.setMessage("Soap isteği gerçekleşirken hata oluştu. Detay için Exception inceleyiniz.");
 		}
-		return fdr;
+		return fdrMain;
 	}
 
 	private static Class<FiSoap> getClassi() {

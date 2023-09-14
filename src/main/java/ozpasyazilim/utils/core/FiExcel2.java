@@ -880,14 +880,14 @@ public class FiExcel2 {
                 obj = PropertyUtils.getProperty(rowent, tblcol.getId());
             } catch (IllegalAccessException e) {
                 //e.printStackTrace();
-                FiException.exceptionToStrMain(e);
+                FiException.exTosMain(e);
             } catch (InvocationTargetException e) {
                 //e.printStackTrace();
-                FiException.exceptionToStrMain(e);
+                FiException.exTosMain(e);
             } catch (NoSuchMethodException e) {
                 //e.printStackTrace();
                 Loghelper.get(FiExcel2.class).debug(" Metod Bulunamdı:" + tblcol.getId());
-                FiException.exceptionToStrMain(e);
+                FiException.exTosMain(e);
             }
 
             if (obj != null) {
@@ -966,14 +966,14 @@ public class FiExcel2 {
                 obj = PropertyUtils.getProperty(rowent, tblcol.getId());
             } catch (IllegalAccessException e) {
                 //e.printStackTrace();
-                FiException.exceptionToStrMain(e);
+                FiException.exTosMain(e);
             } catch (InvocationTargetException e) {
                 //e.printStackTrace();
-                FiException.exceptionToStrMain(e);
+                FiException.exTosMain(e);
             } catch (NoSuchMethodException e) {
                 //e.printStackTrace();
                 Loghelper.get(FiExcel2.class).debug(" Metod Bulunamdı:" + tblcol.getId());
-                FiException.exceptionToStrMain(e);
+                FiException.exTosMain(e);
             }
 
             if (obj != null) {
@@ -1081,14 +1081,14 @@ public class FiExcel2 {
                 obj = PropertyUtils.getProperty(rowent, tblcol.getId());
             } catch (IllegalAccessException e) {
                 //e.printStackTrace();
-                FiException.exceptionToStrMain(e);
+                FiException.exTosMain(e);
             } catch (InvocationTargetException e) {
                 //e.printStackTrace();
-                FiException.exceptionToStrMain(e);
+                FiException.exTosMain(e);
             } catch (NoSuchMethodException e) {
                 //e.printStackTrace();
                 Loghelper.get(FiExcel2.class).debug(" Metod Bulunamdı:" + tblcol.getId());
-                FiException.exceptionToStrMain(e);
+                FiException.exTosMain(e);
             }
 
             if (obj != null) {
@@ -1173,14 +1173,14 @@ public class FiExcel2 {
                         obj = PropertyUtils.getProperty(rowent, fieldname);
                     } catch (IllegalAccessException e) {
                         //e.printStackTrace();
-                        FiException.exceptionToStrMain(e);
+                        FiException.exTosMain(e);
                     } catch (InvocationTargetException e) {
                         //e.printStackTrace();
-                        FiException.exceptionToStrMain(e);
+                        FiException.exTosMain(e);
                     } catch (NoSuchMethodException e) {
                         //e.printStackTrace();
                         Loghelper.get(FiExcel2.class).debug(" Metod Bulunamdı:" + fieldname);
-                        FiException.exceptionToStrMain(e);
+                        FiException.exTosMain(e);
                     }
 
                 }
@@ -1254,10 +1254,10 @@ public class FiExcel2 {
                     try {
                         cellValue = PropertyUtils.getProperty(rowEntity, fieldname);
                     } catch (IllegalAccessException | InvocationTargetException e) {
-                        Loghelper.get(getClassi()).error(FiException.exceptionToStrMain(e));
+                        Loghelper.get(getClassi()).error(FiException.exTosMain(e));
                     } catch (NoSuchMethodException e) {
                         Loghelper.get(getClassi()).error("Excel Write : Metod Bulunamdı:" + fieldname);
-                        Loghelper.get(getClassi()).error(FiException.exceptionToStrMain(e));
+                        Loghelper.get(getClassi()).error(FiException.exTosMain(e));
                     }
 
                 }
@@ -1483,7 +1483,7 @@ public class FiExcel2 {
 
         } catch (Exception e) {
             e.printStackTrace();
-            new FxDialogShow().showModalWarningAlert("hata oluştu.\nDetay:" + FiException.exceptionToStrMain(e));
+            new FxDialogShow().showModalWarningAlert("hata oluştu.\nDetay:" + FiException.exTosMain(e));
         }
     }
 
@@ -1540,7 +1540,7 @@ public class FiExcel2 {
 
         } catch (Exception e) {
             e.printStackTrace();
-            new FxDialogShow().showModalWarningAlert("hata oluştu.\nDetay:" + FiException.exceptionToStrMain(e));
+            new FxDialogShow().showModalWarningAlert("hata oluştu.\nDetay:" + FiException.exTosMain(e));
         }
 
         return newFile;

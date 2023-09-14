@@ -123,9 +123,9 @@ public class FiXmlParser {
 		try {
 			$xmldom = $(file); // $xmldom match objesi
 		} catch (SAXException e) {
-			Loghelper.get(FiXmlParser.class).error("Hata :" + FiException.exceptionToStrMain(e));
+			Loghelper.get(FiXmlParser.class).error("Hata :" + FiException.exTosMain(e));
 		} catch (IOException e) {
-			Loghelper.get(FiXmlParser.class).error("Hata :" + FiException.exceptionToStrMain(e));
+			Loghelper.get(FiXmlParser.class).error("Hata :" + FiException.exTosMain(e));
 		}
 
 		return $xmldom;
@@ -139,9 +139,9 @@ public class FiXmlParser {
 			$matchDoc = $(document); //.find("root");
 			return $matchDoc;
 		} catch (SAXException e) {
-			Loghelper.get(FiXmlParser.class).error("Hata :" + FiException.exceptionToStrMain(e));
+			Loghelper.get(FiXmlParser.class).error("Hata :" + FiException.exTosMain(e));
 		} catch (IOException e) {
-			Loghelper.get(FiXmlParser.class).error("Hata :" + FiException.exceptionToStrMain(e));
+			Loghelper.get(FiXmlParser.class).error("Hata :" + FiException.exTosMain(e));
 		}
 
 		return null;

@@ -38,11 +38,11 @@ public class Loghelper {
 	}
 
 	public static void debugException(Class logClass, Exception e) {
-		Loghelper.get(logClass).debug("Hata (Exception): " + FiException.exceptionToStrMain(e));
+		Loghelper.get(logClass).debug("Hata (Exception): " + FiException.exTosMain(e));
 	}
 
 	public static void errorException(Class logClass, Exception e) {
-		Loghelper.get(logClass).error("Hata (Exception): " + FiException.exceptionToStrMain(e));
+		Loghelper.get(logClass).error("Hata (Exception): " + FiException.exTosMain(e));
 	}
 
 	public static void errorLog(Class logClass, String message) {

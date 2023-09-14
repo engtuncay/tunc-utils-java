@@ -22,7 +22,7 @@ public class RepoSqlTable extends AbsRepoGenJdbi<EntSqlTable> {
 				"SELECT *\n" +
 				"FROM INFORMATION_SCHEMA.TABLES\n" +
 				"WHERE TABLE_TYPE='BASE TABLE'\n";
-		return jdSelectListBindMapMain(sql, null);
+		return jdSelectListBindMapMainNtn(sql, null);
 	}
 
 	public Fdr<List<EntSqlTable>> selectTablesWithCount() {
@@ -33,6 +33,6 @@ public class RepoSqlTable extends AbsRepoGenJdbi<EntSqlTable> {
 				"INNER JOIN sys.sysindexes AS I ON T.object_id = I.id AND I.indid < 2 \n" +
 				"ORDER  BY I.rows DESC";
 
-		return jdSelectListBindMapMain(sql, null);
+		return jdSelectListBindMapMainNtn(sql, null);
 	}
 }

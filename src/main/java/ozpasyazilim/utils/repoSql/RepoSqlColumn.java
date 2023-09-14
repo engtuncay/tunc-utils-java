@@ -25,7 +25,7 @@ public class RepoSqlColumn extends AbsRepoGenJdbi<EntSqlColumn> {
 				"SELECT col.COLUMN_NAME,col.DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS col\n" +
 				"WHERE TABLE_NAME = @txTableName";
 
-		return jdSelectListBindMapMain(sql, fiKeyBean);
+		return jdSelectListBindMapMainNtn(sql, fiKeyBean);
 	}
 
 	public Fdr<List<EntSqlColumn>> selectColumnsAllDetailed(String txTableName) {
@@ -53,6 +53,6 @@ public class RepoSqlColumn extends AbsRepoGenJdbi<EntSqlColumn> {
 				"WHERE c.TABLE_NAME = @txTableName\n" +
 				"ORDER BY c.TABLE_SCHEMA,c.TABLE_NAME, c.ORDINAL_POSITION ";
 
-		return jdSelectListBindMapMain(sql, fiKeyBean);
+		return jdSelectListBindMapMainNtn(sql, fiKeyBean);
 	}
 }

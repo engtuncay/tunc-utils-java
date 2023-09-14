@@ -92,4 +92,13 @@ public class FiMeta {
 	public void setTxType(String txType) {
 		this.txType = txType;
 	}
+
+	/**
+	 * txKey boş ise lnkey dönsün diye de mekanizma kurulabilir.
+	 * @return
+	 */
+	@Override
+	public String toString() {
+		return getTxKey();
+	}
 }

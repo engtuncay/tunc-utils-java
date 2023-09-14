@@ -85,7 +85,7 @@ public class FiDate {
 		try {
 			return sdf.parse(stDate);
 		} catch (ParseException e) {
-			Loghelper.get(FiDate.class).debug(FiException.exceptionToStrMain(e));
+			Loghelper.get(FiDate.class).debug(FiException.exTosMain(e));
 			return null;
 		}
 	}
@@ -437,7 +437,7 @@ public class FiDate {
 				cellvalue = date;
 
 			} catch (ParseException e) {
-				Loghelper.get(FiDate.class).debug(FiException.exceptionToStrMain(e));
+				Loghelper.get(FiDate.class).debug(FiException.exTosMain(e));
 			}
 
 			return cellvalue;
@@ -501,7 +501,7 @@ public class FiDate {
 				cellvalue = date;
 
 			} catch (ParseException e) {
-				Loghelper.get(FiDate.class).debug(FiException.exceptionToStrMain(e));
+				Loghelper.get(FiDate.class).debug(FiException.exTosMain(e));
 			}
 
 			return cellvalue;
@@ -695,7 +695,7 @@ public class FiDate {
 		try {
 			return formatter.parse(date);
 		} catch (ParseException e) {
-			Loghelper.get(FiDate.class).info("Error :" + FiException.exceptionToStrMain(e));
+			Loghelper.get(FiDate.class).info("Error :" + FiException.exTosMain(e));
 			return null;
 		}
 
@@ -778,7 +778,7 @@ public class FiDate {
 			//System.out.println("String To Date: "+ FiDate.datetoString_timestampt2(date));
 			return date;
 		} catch (Exception ex) {
-			Loghelper.get(FiDate.class).debug(FiException.exceptionToStrMain(ex));
+			Loghelper.get(FiDate.class).debug(FiException.exTosMain(ex));
 			return null;
 		}
 	}
