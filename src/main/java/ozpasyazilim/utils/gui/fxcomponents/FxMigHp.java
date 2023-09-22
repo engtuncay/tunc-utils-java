@@ -321,4 +321,9 @@ public class FxMigHp {
         appendCc("gapafter "+ txGapxPx);
         return this;
     }
+
+    public FxMigHp ccGapBefore(String txGapxPx) {
+        appendCc("gapbefore "+ txGapxPx);
+        return this;
+    }
 }

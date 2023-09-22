@@ -254,6 +254,11 @@ public class FxButton extends Button implements IFxSecureNode {
 		setOnAction(event -> FiThread.startThread(runnable,this));
 	}
 
+	/**
+	 * uzun işlemlerde arayüzü kastırıyor, işlem yaptırmıyor
+	 * @param runnable
+	 */
+	@Deprecated
 	public void setOnActionWithGuiThread(Runnable runnable) {
 		setOnAction(event -> FiThread.startGuiThread(runnable,this));
 	}

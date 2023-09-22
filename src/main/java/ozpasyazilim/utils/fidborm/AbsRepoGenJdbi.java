@@ -1517,8 +1517,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
     public Fdr jdUpdateBindObjectMain(String updateQuery, Object bindEntity) {
 
         Jdbi jdbi = getJdbi();
-
-        Fdr fdr = new Fdr();
+        Fdr fdrMain = new Fdr();
 
         try {
             Integer rowCountUpdate = jdbi.withHandle(handle -> {
@@ -1527,19 +1526,20 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
                         .execute(); // returns row count updated
             });
             //fiDbResult.setRowsAffectedWithUpBoResult(rowCountUpdate);
-            fdr.setBoResultAndRowsAff(true, rowCountUpdate); // 16-01-20 çevrildi.
-            //fdr.setTxQueryType(QueryType.bui().update);
+            fdrMain.setBoResultAndRowsAff(true, rowCountUpdate); // 16-01-20 çevrildi.
+            //fdrMain.setTxQueryType(QueryType.bui().update);
             if (rowCountUpdate > 0) {
-                fdr.setLnUpdatedRows(rowCountUpdate);
+                fdrMain.setLnUpdatedRows(rowCountUpdate);
             }
             //Loghelper.get(getClass()).debug("Row Affected:"+rowCountUpdate);
 
         } catch (Exception ex) {
             Loghelper.debugException(getClass(), ex);
-            fdr.setBoResult(false, ex);
+            fdrMain.setBoResult(false, ex);
+            fdrMain.appendMessageLn(FiException.excToStrSummary(ex));
         }
 
-        return fdr;
+        return fdrMain;
     }
 
     /**

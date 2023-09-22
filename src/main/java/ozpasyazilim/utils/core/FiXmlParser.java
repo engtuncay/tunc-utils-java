@@ -16,6 +16,7 @@ import ozpasyazilim.utils.table.OzColType;
 
 import java.io.*;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -134,17 +135,15 @@ public class FiXmlParser {
 	public static Match openXml(String txXml) {
 		Match $matchDoc = null;
 		try {
-			InputStream targetStream = IOUtils.toInputStream(txXml, Charset.forName("UTF-8"));
+			InputStream targetStream = IOUtils.toInputStream(txXml, StandardCharsets.UTF_8);
 			Document document = JOOX.builder().parse(targetStream); // $matchDoc match objesi
 			$matchDoc = $(document); //.find("root");
 			return $matchDoc;
-		} catch (SAXException e) {
-			Loghelper.get(FiXmlParser.class).error("Hata :" + FiException.exTosMain(e));
-		} catch (IOException e) {
-			Loghelper.get(FiXmlParser.class).error("Hata :" + FiException.exTosMain(e));
+		} catch (SAXException | IOException ex) {
+			Loghelper.get(FiXmlParser.class).error("Hata :" + FiException.exTosMain(ex));
 		}
 
-		return null;
+        return null;
 	}
 
 

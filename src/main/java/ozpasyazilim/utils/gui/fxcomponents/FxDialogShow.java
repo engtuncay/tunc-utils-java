@@ -441,6 +441,10 @@ public class FxDialogShow {
      */
     public static void showFdr1PopOrFailModalWitLogAndMessageAndExc(Fdr fdr) {
 
+        if(fdr==null){
+            FxDialogShow.showModalErrorAsyn("","Fdr Tanımsız !!!. Sistem Yöneticinize Danışın.");
+        }
+
         if (fdr.getBoResult() == null) {
             //FxDialogShow.showPopInfo("İşlem sonucu alınamadı." + "\n" + FiString.orEmpty(fdr.getMessage()));
             FxDialogShow.showModalErrorWitLogAndMessageAndExc("İşlem Sonucu Alınamadı.", fdr);
@@ -944,7 +948,7 @@ public class FxDialogShow {
             }
 
             if (fdr.getException() != null) {
-                message += "\nException Tanımı : " + FiException.exceptionToStrSummary(fdr.getException());
+                message += "\nException Tanımı : " + FiException.excToStrSummary(fdr.getException());
             }
 
             FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogMetaType.DialogError, message, messageHeader);

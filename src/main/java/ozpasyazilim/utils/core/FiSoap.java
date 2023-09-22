@@ -34,9 +34,9 @@ public class FiSoap {
 			//Code to make a webservice HTTP request
 			String responseString = "";
 			StringBuilder outputString = new StringBuilder();
-			String wsURL = endPoint; //"<Endpoint of the webservice to be consumed>";
+			//String wsURL = endPoint; //"<Endpoint of the webservice to be consumed>";
 
-			URL url = new URL(wsURL);
+			URL url = new URL(endPoint);
 			//URLConnection connection = url.openConnection();
 			HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
 
@@ -46,13 +46,13 @@ public class FiSoap {
 			// ByteArrayOutputStream baouts = new ByteArrayOutputStream();
 			// baouts.write(buffer);
 			// byte[] boutAsArr = baouts.toByteArray();
-			byte[] boutAsArr = buffer;
+			//byte[] boutAsArr = buffer;
 
 			//String SOAPAction = soapAction; //"<SOAP action of the webservice to be consumed>";
 
 			//Set the appropriate HTTP parameters. (default parameters)
 			httpConn.setRequestProperty("Content-Type", "text/xml;charset=utf-8;"); //
-			httpConn.setRequestProperty("Content-Length", String.valueOf(boutAsArr.length));
+			httpConn.setRequestProperty("Content-Length", String.valueOf(buffer.length)); //boutAsArr
 			//httpConn.setRequestProperty("Postman-Token","8052f355-19cf-492b-8608-9f796aaeb59b");
 			//httpConn.setRequestProperty("User-Agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36"); 		//PostmanRuntime/7.28.4
 			//httpConn.setRequestProperty("Accept-Encoding","gzip, deflate, br");
@@ -72,7 +72,7 @@ public class FiSoap {
 
 			OutputStream out = httpConn.getOutputStream();
 			//Write the content of the request to the outputstream of the HTTP Connection.
-			out.write(boutAsArr);
+			out.write(buffer); //boutAsArr
 			out.close();
 			//Ready with sending the request.
 

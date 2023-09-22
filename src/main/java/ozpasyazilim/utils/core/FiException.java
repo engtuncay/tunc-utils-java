@@ -79,7 +79,7 @@ public class FiException {
 		return exTosMain(ex);
 	}
 
-	public static String exceptionToStrSummary(Exception exception) {
+	public static String excToStrSummary(Exception exception) {
 		if (exception == null) return "Exception Tanımı yok";
 		return exception.getMessage();
 	}
