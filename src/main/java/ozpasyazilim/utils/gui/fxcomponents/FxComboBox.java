@@ -27,371 +27,376 @@ import java.util.function.Predicate;
 
 public class FxComboBox<T> extends ComboBox<T> {
 
-	// Componentin Ekrandan görünen değerden(txLabel) farklı olarak arka planda tutulan değeri
-	private StringProperty txValue = new SimpleStringProperty();
-	private ObjectProperty objValue;
-	private FilteredList<T> filteredList;
-	private StringProperty txFilter;
-	private Tooltip filterTooltip;
-	//OzColType comboBoxValueType;
+    // Componentin Ekrandan görünen değerden(txLabel) farklı olarak arka planda tutulan değeri
+    private StringProperty txValue = new SimpleStringProperty();
+    private ObjectProperty objValue;
+    private FilteredList<T> filteredList;
+    private StringProperty txFilter;
+    private Tooltip filterTooltip;
+    //OzColType comboBoxValueType;
 
-	public FxComboBox() {
-		super();
-	}
+    public FxComboBox() {
+        super();
+    }
 
-	public FxComboBox(ObservableList<T> items) {
-		super(items);
-	}
+    public FxComboBox(ObservableList<T> items) {
+        super(items);
+    }
 
-	public void setItemsAsList(List<T> list) {
-		setItems(FXCollections.observableList(list));
-	}
+    public void setItemsAsList(List<T> list) {
+        setItems(FXCollections.observableList(list));
+    }
 
-	public void addListenerFiSelectedItemChange(ChangeListener<? super T> listener) {
-		getSelectionModel().selectedItemProperty().addListener(listener);
-	}
+    public void addListenerFiSelectedItemChange(ChangeListener<? super T> listener) {
+        getSelectionModel().selectedItemProperty().addListener(listener);
+    }
 
-	public void addListenerValue(ChangeListener<? super T> listener) {
-		valueProperty().addListener(listener);
-	}
+    public void addListenerValue(ChangeListener<? super T> listener) {
+        valueProperty().addListener(listener);
+    }
 
 
-	public enum ComboAfterSelectType {
-		ZeroIndex,Null,DoNothing
-	}
+    public enum ComboAfterSelectType {
+        ZeroIndex, Null, DoNothing
+    }
 
-	public T getSelectedItemFi() {
-		return getSelectionModel().getSelectedItem();
-	}
+    public T getSelectedItemFi() {
+        return getSelectionModel().getSelectedItem();
+    }
 
-	public String getTxValue() {
-		return txValue.get();
-	}
+    public String getTxValue() {
+        return txValue.get();
+    }
 
-	public StringProperty txValueProperty() {
-		return txValue;
-	}
+    public StringProperty txValueProperty() {
+        return txValue;
+    }
 
-	public void setTxValue(String txValue) {
-		this.txValue.set(txValue);
-	}
+    public void setTxValue(String txValue) {
+        this.txValue.set(txValue);
+    }
 
-	public void setSelectedComboItemByTxValue() {
+    public void setSelectedComboItemByTxValue() {
 
-		if (FiString.isEmpty(getTxValue()) || isEmptyComboBox()) return;
+        if (FiString.isEmpty(getTxValue()) || isEmptyComboBox()) return;
 
-		ObservableList<ComboItemText> items = (ObservableList<ComboItemText>) getItems();
+        ObservableList<ComboItemText> items = (ObservableList<ComboItemText>) getItems();
 
-		for (int index = 0; index < items.size(); index++) {
+        for (int index = 0; index < items.size(); index++) {
 
-			ComboItemText item = items.get(index);
-			if (item.getValue() == null) continue;
+            ComboItemText item = items.get(index);
+            if (item.getValue() == null) continue;
 
-			if (item.getValue().equals(getTxValue())) {
-				setSelectedItemFi(index);
-			}
+            if (item.getValue().equals(getTxValue())) {
+                setSelectedItemFiAsync(index);
+            }
 
-		}
-	}
+        }
+    }
 
-	public boolean isEmptyComboBox() {
-		if (getItems() == null) return true;
-		if (getItems().size() == 0) return true;
-		return false;
-	}
+    public boolean isEmptyComboBox() {
+        if (getItems() == null) return true;
+        if (getItems().size() == 0) return true;
+        return false;
+    }
 
-	public void setSelectedItemFi(Integer index) {
-		if (index == null) return;
-		Platform.runLater(() -> {
-			getSelectionModel().select(index);
-		});
+    public void setSelectedItemFiAsync(Integer index) {
+        if (index == null) return;
+        Platform.runLater(() -> {
+            getSelectionModel().select(index);
+        });
 
-	}
+    }
 
-	public void clearSelectionFi() {
-		Platform.runLater(() -> {
-			getSelectionModel().clearSelection();
-		});
-	}
+    public void setSelectedItemFiSync(Integer index) {
+        if (index == null) return;
+        getSelectionModel().select(index);
+    }
 
-	public void addComboItem(T item) {
-		getItems().add(item);
-	}
+    public void clearSelectionFi() {
+        Platform.runLater(() -> {
+            getSelectionModel().clearSelection();
+        });
+    }
 
-	public <PrmEnt> void addFiList(FxComboBox<ComboItemText> compCombo, List<PrmEnt> list, Function<PrmEnt, Object> fnValue, Function<PrmEnt, Object> fnLabel) {
+    public void addComboItem(T item) {
+        getItems().add(item);
+    }
 
-		for (PrmEnt prmEnt : list) {
-			compCombo.addComboItem(ComboItemText.build(fnLabel.apply(prmEnt), fnValue.apply(prmEnt)));
-		}
+    public <PrmEnt> void addFiList(FxComboBox<ComboItemText> compCombo, List<PrmEnt> list, Function<PrmEnt, Object> fnValue, Function<PrmEnt, Object> fnLabel) {
 
-	}
+        for (PrmEnt prmEnt : list) {
+            compCombo.addComboItem(ComboItemText.build(fnLabel.apply(prmEnt), fnValue.apply(prmEnt)));
+        }
 
-	public void activateSelectedItem(FxComboBox<ComboItemText> compCombo) {
+    }
 
-		if (FiString.isEmpty(getTxValue())) {
-			compCombo.getSelectionModel().select(0);
-		} else {
-			compCombo.setFiSelectedItemByTxValue(compCombo);
-		}
+    public void activateSelectedItem(FxComboBox<ComboItemText> compCombo) {
 
-	}
+        if (FiString.isEmpty(getTxValue())) {
+            compCombo.getSelectionModel().select(0);
+        } else {
+            compCombo.setFiSelectedItemByTxValue(compCombo);
+        }
 
-	public void setFiSelectedItemByTxValue(FxComboBox<ComboItemText> compCombo) {
+    }
 
-		if (FiString.isEmpty(getTxValue()) || isEmptyComboBox()) return;
+    public void setFiSelectedItemByTxValue(FxComboBox<ComboItemText> compCombo) {
 
-		ObservableList<ComboItemText> items = compCombo.getItems();
+        if (FiString.isEmpty(getTxValue()) || isEmptyComboBox()) return;
 
-		for (int index = 0; index < items.size(); index++) {
+        ObservableList<ComboItemText> items = compCombo.getItems();
 
-			ComboItemText item = items.get(index);
-			if (item.getValue() == null) continue;
+        for (int index = 0; index < items.size(); index++) {
 
-			if (item.getValue().equals(getTxValue())) {
-				setSelectedItemFi(index);
-			}
+            ComboItemText item = items.get(index);
+            if (item.getValue() == null) continue;
 
-		}
-	}
+            if (item.getValue().equals(getTxValue())) {
+                setSelectedItemFiAsync(index);
+            }
 
-	public void activateSetComboItemAfterAction(Boolean afterSelectZeroIndex) {
-		if(FiBoolean.isTrue(afterSelectZeroIndex)){
-			activateSetComboItemAfterAction(ComboAfterSelectType.ZeroIndex);
-		}else{
-			activateSetComboItemAfterAction(ComboAfterSelectType.DoNothing);
-		}
-	}
+        }
+    }
 
-	public void activateSetComboItemAfterAction(ComboAfterSelectType comboAfterSelectType) {
+    public void activateSetComboItemAfterAction(Boolean afterSelectZeroIndex) {
+        if (FiBoolean.isTrue(afterSelectZeroIndex)) {
+            activateSetComboItemAfterAction(ComboAfterSelectType.ZeroIndex);
+        } else {
+            activateSetComboItemAfterAction(ComboAfterSelectType.DoNothing);
+        }
+    }
 
-		addListenerFiSelectedItemChange((observable, oldValue, newValue) -> {
+    public void activateSetComboItemAfterAction(ComboAfterSelectType comboAfterSelectType) {
 
-			if(newValue==null)return;
+        addListenerFiSelectedItemChange((observable, oldValue, newValue) -> {
 
-			ComboItemText cbi = (ComboItemText) newValue;
+            if (newValue == null) return;
 
-			if (cbi.getOnAction() != null) {
-				cbi.getOnAction().run();
-			}
+            ComboItemText cbi = (ComboItemText) newValue;
 
-			if (comboAfterSelectType == ComboAfterSelectType.ZeroIndex) {
-				Platform.runLater(() -> {
-					getSelectionModel().select(0);
-				});
-			}
+            if (cbi.getOnAction() != null) {
+                cbi.getOnAction().run();
+            }
 
-			if (comboAfterSelectType == ComboAfterSelectType.Null) {
-				Platform.runLater(() -> {
-					getSelectionModel().select(null);
-				});
-			}
+            if (comboAfterSelectType == ComboAfterSelectType.ZeroIndex) {
+                Platform.runLater(() -> {
+                    getSelectionModel().select(0);
+                });
+            }
 
-		});
-	}
+            if (comboAfterSelectType == ComboAfterSelectType.Null) {
+                Platform.runLater(() -> {
+                    getSelectionModel().select(null);
+                });
+            }
 
-	public void activateSetNullAfterAction() {
-		activateSetComboItemAfterAction(ComboAfterSelectType.Null);
-	}
+        });
+    }
 
-	public void activateAutoComplete() {
+    public void activateSetNullAfterAction() {
+        activateSetComboItemAfterAction(ComboAfterSelectType.Null);
+    }
+
+    public void activateAutoComplete() {
 //		setOnKeyPressed(this::handleOnKeyPressed);
-		addEventHandler(KeyEvent.KEY_RELEASED, this::handleOnKeyPressed);
+        addEventHandler(KeyEvent.KEY_RELEASED, this::handleOnKeyPressed);
 
-		getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 //			Loghelper.get(getClass()).debug("selection fired");
-			if (newValue != null) {
-				getFilterTooltip().hide();
+            if (newValue != null) {
+                getFilterTooltip().hide();
 //				hide();
-			}
+            }
 
-		});
+        });
 
-		//setTooltip(getSearchTooltip());
+        //setTooltip(getSearchTooltip());
 //		setOnHidden(this::handleOnHiding);
 //		setOnShown(event -> Loghelper.get(getClass()).debug("setonshown"));
 
-		showingProperty().addListener((observable, wasShowing, isNowShowing) -> {
-			if (isNowShowing) {
-				showFilterToolTip();
+        showingProperty().addListener((observable, wasShowing, isNowShowing) -> {
+            if (isNowShowing) {
+                showFilterToolTip();
 //				Loghelper.get(getClass()).debug("showing");
-			} else {
+            } else {
 //				Loghelper.get(getClass()).debug("hiding choice box");
-				getFilterTooltip().hide();
-				//T s = getSelectionModel().getSelectedItem();
-				//cmb.getTooltip().hide();
-				//getFilteredList().setPredicate(t -> true);
-				//getSelectionModel().select(s);
-			}
-		});
+                getFilterTooltip().hide();
+                //T s = getSelectionModel().getSelectedItem();
+                //cmb.getTooltip().hide();
+                //getFilteredList().setPredicate(t -> true);
+                //getSelectionModel().select(s);
+            }
+        });
 
 
 //		onMouseClickedProperty().addListener((observable, oldValue, newValue) -> {
 //			Loghelper.get(getClass()).debug("mouse clicked");
 //		});
 
-		txFilterProperty().addListener((observable, oldValue, newValue) -> {
+        txFilterProperty().addListener((observable, oldValue, newValue) -> {
 
-			if (newValue == null) {
-				getFilterTooltip().setText("");
-			} else {
-				getFilterTooltip().setText(newValue);
-			}
+            if (newValue == null) {
+                getFilterTooltip().setText("");
+            } else {
+                getFilterTooltip().setText(newValue);
+            }
 
-			//Loghelper.get(getClass()).debug("New Value:"+newValue);
-			//Loghelper.get(getClass()).debug("TxFilter:"+getTxFilter());
-			//Loghelper.get(getClass()).debug("----");
+            //Loghelper.get(getClass()).debug("New Value:"+newValue);
+            //Loghelper.get(getClass()).debug("TxFilter:"+getTxFilter());
+            //Loghelper.get(getClass()).debug("----");
 
-			getFilteredList().setPredicate(t -> {
-				//Loghelper.get(getClass()).debug("T:"+t.toString());
-				if (FiString.isEmpty(getTxFilter())) return true;
-				if (t.toString().toLowerCase().contains(getTxFilter().toLowerCase())) {
-					return true;
-				}
-				return false;
-			});
+            getFilteredList().setPredicate(t -> {
+                //Loghelper.get(getClass()).debug("T:"+t.toString());
+                if (FiString.isEmpty(getTxFilter())) return true;
+                if (t.toString().toLowerCase().contains(getTxFilter().toLowerCase())) {
+                    return true;
+                }
+                return false;
+            });
 
-			//Loghelper.get(getClass()).debug("Show box");
-			//Loghelper.get(getClass()).debug("F size:"+getFilteredList().size());
+            //Loghelper.get(getClass()).debug("Show box");
+            //Loghelper.get(getClass()).debug("F size:"+getFilteredList().size());
 
-			showFilterToolTip();
-			// bazen açık görünüp kapalı oluyor - filtered list 0 olunca
-			if (getFilteredList().size() > 0) {
-				// filteredlist size 0 olunca show yapılırsa problem oluyor
-				show(); //show olunca triggerdan showFilterTooltip yapacak
-			} else {
-				hide();
-			}
-		});
-	}
+            showFilterToolTip();
+            // bazen açık görünüp kapalı oluyor - filtered list 0 olunca
+            if (getFilteredList().size() > 0) {
+                // filteredlist size 0 olunca show yapılırsa problem oluyor
+                show(); //show olunca triggerdan showFilterTooltip yapacak
+            } else {
+                hide();
+            }
+        });
+    }
 
-	public void handleOnKeyPressed(KeyEvent e) {
+    public void handleOnKeyPressed(KeyEvent e) {
 
-		//ObservableList<T> filteredList = FXCollections.observableArrayList();
-		KeyCode code = e.getCode();
+        //ObservableList<T> filteredList = FXCollections.observableArrayList();
+        KeyCode code = e.getCode();
 
-		if (code == KeyCode.ENTER){
-			return;
-		}
+        if (code == KeyCode.ENTER) {
+            return;
+        }
 
-		if (!FiString.isEmpty(e.getText())) { //code.isLetterKey()
-			setTxFilter(getTxFilter() + e.getText()); //filter += e.getText();
-			//Loghelper.get(getClass()).debug("txFilter:" + getTxFilter());
-			return;
-		}
+        if (!FiString.isEmpty(e.getText())) { //code.isLetterKey()
+            setTxFilter(getTxFilter() + e.getText()); //filter += e.getText();
+            //Loghelper.get(getClass()).debug("txFilter:" + getTxFilter());
+            return;
+        }
 
-		if (code == KeyCode.BACK_SPACE && getTxFilter().length() > 0) {
-			//Loghelper.get(getClass()).debug("backspace");
-			setTxFilter(getTxFilter().substring(0, getTxFilter().length() - 1));
-		}
+        if (code == KeyCode.BACK_SPACE && getTxFilter().length() > 0) {
+            //Loghelper.get(getClass()).debug("backspace");
+            setTxFilter(getTxFilter().substring(0, getTxFilter().length() - 1));
+        }
 
-		if (code == KeyCode.SPACE && getTxFilter().length() > 0) {
-			//Loghelper.get(getClass()).debug("");
+        if (code == KeyCode.SPACE && getTxFilter().length() > 0) {
+            //Loghelper.get(getClass()).debug("");
 //			setTxFilter(getTxFilter() + " ");
 //			showFilterToolTip();
-			//e.consume();
-		}
+            //e.consume();
+        }
 
-		if (code == KeyCode.ESCAPE) {
+        if (code == KeyCode.ESCAPE) {
 //			Loghelper.get(getClass()).debug("esc pressed");
-			setTxFilter(""); //this.txFilter = ""; //filter = "";
-		}
+            setTxFilter(""); //this.txFilter = ""; //filter = "";
+        }
 
 //		cmb.getItems().setAll(filteredList);
 
-	}
+    }
 
 
-	public void showFilterToolTip() {
-		//Loghelper.get(getClass()).debug("show Filter Tooltip");
-		if (getTxFilter().length() == 0) {
-			getFilterTooltip().hide();
-		} else {
-			Window stage = getScene().getWindow();
-			double posX = stage.getX() + getBoundsInParent().getMinX();
-			double posY = stage.getY() + getBoundsInParent().getMinY();
-			Bounds bounds = localToScreen(getBoundsInLocal());
-			//cmb.getTooltip().show(stage, posX, posY);
-			getFilterTooltip().show(stage, bounds.getMinX() - 10, bounds.getMinY() - 30);
-			//show();
-		}
-	}
+    public void showFilterToolTip() {
+        //Loghelper.get(getClass()).debug("show Filter Tooltip");
+        if (getTxFilter().length() == 0) {
+            getFilterTooltip().hide();
+        } else {
+            Window stage = getScene().getWindow();
+            double posX = stage.getX() + getBoundsInParent().getMinX();
+            double posY = stage.getY() + getBoundsInParent().getMinY();
+            Bounds bounds = localToScreen(getBoundsInLocal());
+            //cmb.getTooltip().show(stage, posX, posY);
+            getFilterTooltip().show(stage, bounds.getMinX() - 10, bounds.getMinY() - 30);
+            //show();
+        }
+    }
 
-	public void setItemsAsFilteredListMain(Collection dataList) {
-		if (dataList == null) dataList = new ArrayList();
-		FilteredList filteredList = new FilteredList(FXCollections.observableArrayList(dataList), getFilterPredicatesAll());
-		setFilteredList(filteredList);
-		setItems(filteredList);
-		//eventsAfterTableViewDataChange();
-	}
+    public void setItemsAsFilteredListMain(Collection dataList) {
+        if (dataList == null) dataList = new ArrayList();
+        FilteredList filteredList = new FilteredList(FXCollections.observableArrayList(dataList), getFilterPredicatesAll());
+        setFilteredList(filteredList);
+        setItems(filteredList);
+        //eventsAfterTableViewDataChange();
+    }
 
-	public void setFilteredList(FilteredList<T> filteredList) {
-		this.filteredList = filteredList;
-	}
+    public void setFilteredList(FilteredList<T> filteredList) {
+        this.filteredList = filteredList;
+    }
 
-	public FilteredList<T> getFilteredList() {
-		return filteredList;
-	}
+    public FilteredList<T> getFilteredList() {
+        return filteredList;
+    }
 
-	private Predicate getFilterPredicatesAll() {
-		Predicate predAll = ent -> true;
+    private Predicate getFilterPredicatesAll() {
+        Predicate predAll = ent -> true;
 
-		//if (getPredFilterLocal() != null) predAll = predAll.and(getPredFilterLocal());
+        //if (getPredFilterLocal() != null) predAll = predAll.and(getPredFilterLocal());
 
-		// bu out olmalı
-		//if (getPredFilterRemote() != null) predAll = predAll.and(getPredFilterRemote());
+        // bu out olmalı
+        //if (getPredFilterRemote() != null) predAll = predAll.and(getPredFilterRemote());
 
-		//if (FiCollection.isNotEmpty(getPredFilterExtraList())) {
-		//Loghelperr.getInstance(getClass()).debug("Size Filter Out : "+ getListPredFilterExtra().size());
+        //if (FiCollection.isNotEmpty(getPredFilterExtraList())) {
+        //Loghelperr.getInstance(getClass()).debug("Size Filter Out : "+ getListPredFilterExtra().size());
 //		for (Predicate predItem : getPredFilterExtraList()) {
 //			predAll = predAll.and(predItem);
 //		}
-		//}
+        //}
 
-		return predAll;
-	}
+        return predAll;
+    }
 
-	public String getTxFilter() {
-		return txFilterProperty().get();
-	}
+    public String getTxFilter() {
+        return txFilterProperty().get();
+    }
 
-	public StringProperty txFilterProperty() {
-		if (txFilter == null) {
-			txFilter = new SimpleStringProperty("");
-		}
-		return txFilter;
-	}
+    public StringProperty txFilterProperty() {
+        if (txFilter == null) {
+            txFilter = new SimpleStringProperty("");
+        }
+        return txFilter;
+    }
 
-	public void setTxFilter(String txFilter) {
-		txFilterProperty().set(txFilter);
-	}
+    public void setTxFilter(String txFilter) {
+        txFilterProperty().set(txFilter);
+    }
 
-	public Tooltip getFilterTooltip() {
-		if (filterTooltip == null) {
-			filterTooltip = new Tooltip();
-		}
-		return filterTooltip;
-	}
+    public Tooltip getFilterTooltip() {
+        if (filterTooltip == null) {
+            filterTooltip = new Tooltip();
+        }
+        return filterTooltip;
+    }
 
-	public void setFilterTooltip(Tooltip filterTooltip) {
-		this.filterTooltip = filterTooltip;
-	}
+    public void setFilterTooltip(Tooltip filterTooltip) {
+        this.filterTooltip = filterTooltip;
+    }
 
-	public void addSelectedItemListenerFi(ChangeListener<? super T> listener){
-		getSelectionModel().selectedItemProperty().addListener(listener);
-	}
+    public void addSelectedItemListenerFi(ChangeListener<? super T> listener) {
+        getSelectionModel().selectedItemProperty().addListener(listener);
+    }
 
-	public Object getObjValue() {
-		return objValueProperty().get();
-	}
+    public Object getObjValue() {
+        return objValueProperty().get();
+    }
 
-	public ObjectProperty objValueProperty() {
-		if (objValue == null) {
-			objValue = new SimpleObjectProperty();
-		}
-		return objValue;
-	}
+    public ObjectProperty objValueProperty() {
+        if (objValue == null) {
+            objValue = new SimpleObjectProperty();
+        }
+        return objValue;
+    }
 
-	public void setObjValue(Object objValue) {
-		this.objValueProperty().set(objValue);
-	}
+    public void setObjValue(Object objValue) {
+        this.objValueProperty().set(objValue);
+    }
 }

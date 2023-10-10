@@ -68,7 +68,7 @@ public class FxComboBoxSimple extends FxComboBox<ComboItemText> {
 			if (item.getValue() == null) continue;
 
 			if (item.getValue().equals(getTxValue())) {
-				setSelectedItemFi(index);
+				setSelectedItemFiAsync(index);
 			}
 
 		}

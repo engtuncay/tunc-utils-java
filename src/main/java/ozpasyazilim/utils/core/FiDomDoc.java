@@ -3,7 +3,7 @@ package ozpasyazilim.utils.core;
 import org.w3c.dom.Document;
 
 /**
- * w3c.dom.Document
+ * Wrapper class for w3c.dom.Document
  */
 public class FiDomDoc {
 

@@ -1,17 +1,8 @@
 package ozpasyazilim.utils.core;
 
-import com.github.underscore.lodash.U;
-import com.github.underscore.lodash.Xml;
 import org.apache.commons.lang3.text.StrSubstitutor;
 import org.w3c.dom.Document;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 import ozpasyazilim.utils.datatypes.FiKeyBean;
-import ozpasyazilim.utils.log.Loghelper;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.util.Properties;
 
@@ -20,7 +11,11 @@ import java.util.Properties;
  */
 public class FiXml2 {
 	private FiDomDoc fiDomDoc;
-	private String txXmlRaw;
+	private String txXmlValue;
+
+	/**
+	 * xml'in ilk haline, değişkenler dönüştürülmemiş hali
+	 */
 	private String txXmlTemplate;
 	private FiKeyBean fkbParams;
 
@@ -67,56 +62,14 @@ public class FiXml2 {
 	}
 
 	public FiXml2 makeDocument(String txXml){
-		setDoc(parseXmlFile(txXml));
-		setTxXmlRaw(txXml);
+		setDoc(FiXmlUtil.parseXmlFile(txXml));
+		setTxXmlValue(txXml);
 		return this;
 	}
 
-	public static Document parseXmlFile(String txXml) {
-		try {
-			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-			DocumentBuilder db = dbf.newDocumentBuilder();
-			InputSource is = new InputSource(new StringReader(txXml));
-			return db.parse(is);
-		} catch (ParserConfigurationException e) {
-			Loghelper.get(getClassi()).debug(FiException.exceptionIfToString(e));
-			//throw new RuntimeException(e);
-		} catch (SAXException e) {
-			Loghelper.get(getClassi()).debug(FiException.exceptionIfToString(e));
-			//throw new RuntimeException(e);
-		} catch (IOException e) {
-			Loghelper.get(getClassi()).debug(FiException.exceptionIfToString(e));
-			//throw new RuntimeException(e);
-		}
-		return null;
-	}
-
-	private static Class<FiXml2> getClassi() {
-		return FiXml2.class;
-	}
-
-	//format the XML in your String
-	public static String formatXML(String unformattedXml) {
-		return U.formatXml(unformattedXml);
-//		try {
-//
-//			Document document = parseXmlFile(unformattedXml);
-//			OutputFormat format = new OutputFormat(document);
-//			format.setIndenting(true);
-//			format.setIndent(3);
-//			format.setOmitXMLDeclaration(true);
-//			Writer out = new StringWriter();
-//			XMLSerializer serializer = new XMLSerializer(out, format);
-//			serializer.serialize(document);
-//			return out.toString();
-//
-//		} catch (IOException e) {
-//			throw new RuntimeException(e);
-//		}
-	}
 
 	public String getTxXmlRawFormatted() {
-		return U.formatXml(FiString.orEmpty(getTxXmlRaw()), Xml.XmlStringBuilder.Step.TABS);
+		return FiXmlUtil.formatXML(getTxXmlValue());
 	}
 
 	public static void test() {
@@ -133,34 +86,21 @@ public class FiXml2 {
 				"</employees>";
 
 		//Use method to convert XML string content to XML Document object
-		Document doc = convertStringToXMLDocument(xmlStr);
+		Document doc = FiXmlUtil.convertStringToXMLDocument(xmlStr);
 
 		//Verify XML document is build correctly
 		System.out.println(doc.getFirstChild().getNodeName());
 	}
 
-	public static Document convertStringToXMLDocument(String xmlString) {
-		//Parser that produces DOM object trees from XML content
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
-		//API to obtain DOM Document instance
-		DocumentBuilder builder = null;
-		try {
-			//Create DocumentBuilder with default configuration
-			builder = factory.newDocumentBuilder();
-
-			//Parse the content to Document object
-			Document doc = builder.parse(new InputSource(new StringReader(xmlString)));
-			return doc;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
 
 	public Document getDoc() {
 		if(fiDomDoc ==null) return null;
-		return fiDomDoc.getDoc();
+		return getFiDomDocInit().getDoc();
+	}
+
+	public Document getDocInit() {
+		return getFiDomDocInit().getDoc();
 	}
 
 	public void setDoc(Document docXml) {
@@ -171,16 +111,36 @@ public class FiXml2 {
 		return fiDomDoc;
 	}
 
+	public FiDomDoc getFiDomDocInit() {
+		if (fiDomDoc == null) {
+			// Xml Value Boş degilse, Xml Value Document oluşturur
+			if(!FiString.isEmpty(getTxXmlValue())){
+			   makeDocument(getTxXmlValue());
+			}else{
+				makeDocument(getTxXmlTemplate());
+			}
+		}
+		return fiDomDoc;
+	}
+
+	public FiDomDoc getFiDomDoc() {
+		return fiDomDoc;
+	}
+
+	public void setFiDomDoc(FiDomDoc fiDomDoc) {
+		this.fiDomDoc = fiDomDoc;
+	}
+
 	public void setFiDoc(FiDomDoc fiDomDoc) {
 		this.fiDomDoc = fiDomDoc;
 	}
 
-	public String getTxXmlRaw() {
-		return txXmlRaw;
+	public String getTxXmlValue() {
+		return txXmlValue;
 	}
 
-	public void setTxXmlRaw(String txXmlRaw) {
-		this.txXmlRaw = txXmlRaw;
+	public void setTxXmlValue(String txXmlValue) {
+		this.txXmlValue = txXmlValue;
 	}
 
 	public String getTxXmlTemplate() {
@@ -239,19 +199,27 @@ public class FiXml2 {
 		return prop;
 	}
 
-	public String getXmlConverted() {
+	/**
+	 *
+	 * @return
+	 */
+	public String bindXmlVariables() {
+
 		if(getMapParamsInit().isEmpty()) {
-			setTxXmlRaw(getTxXmlRaw());
+			setTxXmlValue(getTxXmlTemplate());
 		}else{
-			
 			StrSubstitutor sub = new StrSubstitutor(getMapParamsInit(), "{{", "}}");
-			setTxXmlRaw(sub.replace(getTxXmlTemplate()));
+			setTxXmlValue(sub.replace(getTxXmlTemplate()));
 		}
-		return getTxXmlRaw();
+		return getTxXmlValue();
 	}
 
 	public String getElementValueByTagName(String txTagName) {
 		return getFiDoc().getElementValueByTagName(txTagName);
+	}
+
+	public FiKeyBean getFkbParams() {
+		return fkbParams;
 	}
 
 	// Xml Example For Prop

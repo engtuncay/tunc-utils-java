@@ -438,6 +438,16 @@ public class FiFile {
         }
     }
 
+    public static String getContent1OfFile(File file) {
+        try {
+            String result = new String(Files.readAllBytes(Paths.get(file.getAbsolutePath())), StandardCharsets.UTF_8);
+            return result;
+        } catch (IOException e) {
+            Loghelper.get(getClassi()).error(FiException.exceptionIfToString(e));
+            return null;
+        }
+    }
+
     public static String getContent1OfAbsoluteFile(String fileName) {
         String filePath = fileName;
         try {
