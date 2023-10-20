@@ -751,7 +751,7 @@ public class FiCollection {
 
     public static Boolean isEmpty(Collection collection) {
         if (collection == null) return true;
-        if (collection.size() == 0) return true;
+        if (collection.isEmpty()) return true;
         return false;
     }
 

@@ -20,9 +20,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * c -> config'li FxForm
+ * FxForm with FxFormConfig - config bilgileri objeye çekildi.
  * <p>
  * Form config bilgileri, FxFormConfig objesinde tutulur.
+ * <p>
+ * (c -> config'li FxForm)
  *
  * @param <EntClazz>
  */
@@ -31,6 +33,7 @@ public class FxFormc<EntClazz> extends FxMigPaneGenView<EntClazz> implements IFi
     private String uid;
     private FxFormConfig<EntClazz> fxFormConfig; // added 27-01-21
     private Boolean boFormInitialized;
+
     /**
      *
      */
@@ -60,14 +63,18 @@ public class FxFormc<EntClazz> extends FxMigPaneGenView<EntClazz> implements IFi
     public FxFormc(List<FiCol> listFormElements, Boolean boInit) {
         super("insets 0");
         if (FiBoolean.isTrue(boInit)) {
-            initDefaultForm(listFormElements);
+            initContWitDefaultForm(listFormElements);
         }
     }
 
     public FxFormc(FxFormConfig<EntClazz> fxFormConfig) {
-        initForm(fxFormConfig);
+        initContWitConfig(fxFormConfig);
     }
 
+    public void initContWitConfig(FxFormConfig fxFormConfig) {
+        setFxFormConfig(fxFormConfig);
+        initCont();
+    }
 
     // ********************* Main
     public void initCont() {
@@ -91,8 +98,9 @@ public class FxFormc<EntClazz> extends FxMigPaneGenView<EntClazz> implements IFi
 
         if (getFormTypeSelected() == FormType.PlainFormV1) initPlainFormV1();
 
-        if (getFormEntity() != null)
+        if (getFormEntity() != null) {
             FxEditorFactory.bindEntityToFormByEditorValue(getListFormElementsInit(), getFormEntity());
+        }
 
         // Form Değerleri Yüklendikten sonraki Lifecycle metodu çalıştırılır
         trigEventAfterLoadFormValue();
@@ -100,17 +108,8 @@ public class FxFormc<EntClazz> extends FxMigPaneGenView<EntClazz> implements IFi
         //Loghelper.get(getClass()).debug("Null Form Type");
     }
 
-    public void initForm(FxFormConfig fxFormConfig) {
-        setFxFormConfig(fxFormConfig);
-        initCont();
-    }
 
     private void initPlainFormV1() {
-
-//        if (!FiBoolean.isTrue(getBoFormInitialized())) {
-//            initCont();
-//            return;
-//        }
 
         List<FiCol> listFormElements = getListFormElementsInit();
 
@@ -280,7 +279,7 @@ public class FxFormc<EntClazz> extends FxMigPaneGenView<EntClazz> implements IFi
     }
 
     // Helper Setups
-    public void initDefaultForm(List<FiCol> listFormElements) {
+    public void initContWitDefaultForm(List<FiCol> listFormElements) {
         FxFormConfig fxFormConfig = new FxFormConfig();
         fxFormConfig.setListFormElements(listFormElements);
         fxFormConfig.setFormType(FormType.PlainFormV1);
@@ -288,15 +287,13 @@ public class FxFormc<EntClazz> extends FxMigPaneGenView<EntClazz> implements IFi
         initCont();
     }
 
-    public void initForm(List<FiCol> listFormElements, FormType formType) {
+    public void initContWitFormType(List<FiCol> listFormElements, FormType formType) {
         FxFormConfig fxFormConfig = new FxFormConfig();
         fxFormConfig.setListFormElements(listFormElements);
         fxFormConfig.setFormType(formType);
         setFxFormConfig(fxFormConfig);
         initCont();
     }
-
-
 
 
     public Object getEntityByFilterNode(Class clazz) {
