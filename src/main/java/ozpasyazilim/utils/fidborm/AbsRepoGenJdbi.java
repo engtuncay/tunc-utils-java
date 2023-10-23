@@ -245,10 +245,9 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
                         .list();
             });
             fdrMain.setBoResultAndValue(true, result, 1);
-            Loghelper.get(getClass()).debug("sorgu başarılı");
+//            Loghelper.get(getClass()).debug("sorgu başarılı");
         } catch (Exception ex) {
-            Loghelper.get(getClass()).debug("sorguda hata oluştu");
-
+//            Loghelper.get(getClass()).debug("sorguda hata oluştu");
             Loghelper.get(getClass()).error("Query Problem");
             Loghelper.get(getClass()).error("Hata (Exception):\n" + FiException.exTosMain(ex));
             fdrMain.setBoResult(false, ex);
