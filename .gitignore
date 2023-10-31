@@ -1,0 +1,6 @@
+.classpath
+.project
+.settings/
+target/
+.sts4-cache/
+debug.log
