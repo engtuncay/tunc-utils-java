@@ -136,6 +136,8 @@
             <version>1.7.36</version>
         </dependency>
 
+<!--org.slf4j:slf4j-reload4j:jar:1.7.36-->
+
         <!--log (2) 17/07/23-->
 
         <!-- log api (1) slf4j-log4j -->
