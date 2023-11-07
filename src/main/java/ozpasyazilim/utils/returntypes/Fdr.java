@@ -1,10 +1,8 @@
 package ozpasyazilim.utils.returntypes;
 
 import javafx.util.Pair;
-import ozpasyazilim.utils.core.FiBoolean;
-import ozpasyazilim.utils.core.FiCollection;
-import ozpasyazilim.utils.core.FiNumber;
-import ozpasyazilim.utils.core.FiString;
+import ozpasyazilim.utils.core.*;
+
 import ozpasyazilim.utils.log.EntLog;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.log.MetaLogType;
@@ -876,7 +874,7 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 
     public List<EntLog> getLogListInit() {
         if (logList == null) {
-            logList = new ArrayList<>();
+            logList = new ArrayList<EntLog>();
         }
         return logList;
     }
@@ -1083,6 +1081,19 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
             return "Başarılı";
         } else {
             return "Başarısız";
+        }
+    }
+
+    public boolean getIsFalseExist() {
+        return FiBoolean.isTrue(getBoFalseExist());
+    }
+
+    public void addLogErrorException(List<Exception> listExceptionInit) {
+        if (getBoLockAddLogNtn()) Loghelper.get(getClass()).debug("Error: Added Log to Blocked Fdr !!!!!!!!");
+        if(!listExceptionInit.isEmpty()){
+            for (Exception exception1 : listExceptionInit) {
+                getLogListInit().add(new EntLog(FiException.excToStrSummary(exception1), MetaLogType.ERROR));
+            }
         }
     }
 

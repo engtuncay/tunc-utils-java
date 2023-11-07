@@ -132,11 +132,11 @@
 
         <dependency>
             <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
+            <artifactId>slf4j-reload4j</artifactId>  <!--slf4j-log4j12 -->
             <version>1.7.36</version>
         </dependency>
 
-<!--org.slf4j:slf4j-reload4j:jar:1.7.36-->
+<!--org.slf4j:slf4j-reload4j:jar:1.7.36  slf4j-reload4j-->
 
         <!--log (2) 17/07/23-->
 
@@ -346,11 +346,11 @@
         </dependency>
 
         <!-- dropdown button -->
-        <dependency>
-            <groupId>org.netbeans.api</groupId>
-            <artifactId>org-openide-awt</artifactId>
-            <version>RELEASE731</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.netbeans.api</groupId>-->
+<!--            <artifactId>org-openide-awt</artifactId>-->
+<!--            <version>RELEASE731</version>-->
+<!--        </dependency>-->
 
         <!-- icon -->
 

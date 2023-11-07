@@ -970,7 +970,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
         return fdrMain;
     }
 
-    public Fdr jdUpdateQueryListBindBeanWithTrans(List<String> queryList, Object bean) {
+    public Fdr jdUpdateQueryListBindEntityWithTrans(List<String> queryList, Object bean) {
 
         if (queryList == null || queryList.size() == 0) {
             return new Fdr(null, "Çalıştırılacak sorgu yok.");
