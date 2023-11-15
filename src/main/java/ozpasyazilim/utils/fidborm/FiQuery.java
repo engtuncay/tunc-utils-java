@@ -119,7 +119,7 @@ public class FiQuery {
     }
 
     /**
-     * "--!" optional işareti olan satırların alt satırını kapatır, deactivated edildiği belirtir.
+     * "--!" optional işareti olan satırların alt satırını kapatır, deactivated edildiği belirtir. (alt satır yoruma alınmasa bile deaktif olur)
      * <p>
      * --! satırlar optional satırdır.
      * <p>

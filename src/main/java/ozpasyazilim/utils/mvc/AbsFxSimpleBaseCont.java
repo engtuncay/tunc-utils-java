@@ -5,6 +5,9 @@ import ozpasyazilim.utils.gui.fxcomponents.DialogConfig;
 import ozpasyazilim.utils.gui.fxcomponents.FxDialogShow;
 import ozpasyazilim.utils.gui.fxcomponents.FxStage;
 
+/**
+ * Basitce Tüm Kontrollerde olması gereken alanlar ve metodlar
+ */
 public abstract class AbsFxSimpleBaseCont implements IFxSimpleCont {
 
     protected Stage fxStage;
@@ -75,11 +78,19 @@ public abstract class AbsFxSimpleBaseCont implements IFxSimpleCont {
     }
 
     public void closeStageWithDoneReason() {
-        closeStage("done");
+        closeStage(getDoneText());
+    }
+
+    public static String getDoneText() {
+        return "done";
+    }
+
+    public static String getCancelText() {
+        return "cancel";
     }
 
     public void closeStageWithCancelReason() {
-        closeStage("cancel");
+        closeStage(getCancelText());
     }
 
     protected void closeStage(String closeReason) {
@@ -92,11 +103,7 @@ public abstract class AbsFxSimpleBaseCont implements IFxSimpleCont {
     }
 
     public Boolean checkClosedWithDone() {
-
-        if (getCloseReason().equals("done")) {
-            return true;
-        }
-        return false;
+        return getCloseReason().equals(getDoneText());
     }
 
     public void openAsNonModal() {
@@ -139,5 +146,5 @@ public abstract class AbsFxSimpleBaseCont implements IFxSimpleCont {
     public void setConnProfile(String connProfile) {
         this.connProfile = connProfile;
     }
-    
+
 }

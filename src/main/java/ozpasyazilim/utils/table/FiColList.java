@@ -18,7 +18,7 @@ public class FiColList extends ArrayList<FiCol>{
 		return this;
 	}
 
-	public FiColList addFieldfh(Object field, Object header) {
+	public FiColList addFieldManual(Object field, Object header) {
 		FiCol fiTableCol = new FiCol(field.toString(),header.toString());
 		add(fiTableCol);
 		return this;

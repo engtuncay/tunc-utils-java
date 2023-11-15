@@ -258,6 +258,10 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         return list;
     }
 
+    public List<EntClazz> getItemsFiCheckedBySelColNameAsList() {
+        return getItemsFiCheckedByBoolFieldAsList(getSelectionColName());
+    }
+
     /**
      * SourceList içinde satır silinince,otomatik filtered list etkilenip, filt.list'den de çıkartılıyor,dinamik olarak.
      * <p>

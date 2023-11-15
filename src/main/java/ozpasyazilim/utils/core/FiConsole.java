@@ -127,6 +127,10 @@ public class FiConsole {
 		Loghelper.debugLog(clazz, String.format("Array Detail \n\n%s", textStringArray(arrString)));
 	}
 
+	public static <E> void debugStringArray(String[] arrString) {
+		Loghelper.get(FiConsole.class).debug(String.format("Array Detail \n\n%s", textStringArray(arrString)));
+	}
+
 	public static <E> void debugString(String arrString, Class clazz) {
 		Loghelper.debugLog(clazz, arrString);
 	}

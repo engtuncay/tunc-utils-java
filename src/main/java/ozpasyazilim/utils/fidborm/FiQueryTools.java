@@ -16,7 +16,7 @@ import java.util.Set;
 public class FiQueryTools {
 
 	/**
-	 * Tüm optional parametreleri ( --!optParam ) deaktif eder.
+	 * Tüm optional parametreleri ( --!optParam ) deaktif eder. (alt satır yoruma alınmasa bile deaktif olur)
 	 *
 	 * @param sql
 	 * @return
