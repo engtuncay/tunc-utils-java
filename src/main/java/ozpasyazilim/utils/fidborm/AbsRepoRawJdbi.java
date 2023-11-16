@@ -12,24 +12,24 @@ import java.util.*;
 import static ozpasyazilim.utils.core.FiStFormat.*;
 
 /**
- * Nog: Not Generic (önceden pure kullanılmıştı)
+ * Raw means - Raw usage , Not Generic (önceden pure ve nog (not generic) kullanılmıştı)
  */
-public abstract class AbsRepoNogJdbi extends AbsRepoJdbi { //implements IRepoJdbi
+public abstract class AbsRepoRawJdbi extends AbsRepoJdbi { //implements IRepoJdbi
 
 	private Handle handleRepo;
 
-	public AbsRepoNogJdbi() {
+	public AbsRepoRawJdbi() {
 	}
 
-	public AbsRepoNogJdbi(String connProfile) {
+	public AbsRepoRawJdbi(String connProfile) {
 		this.connProfile = connProfile;
 	}
 
-	public AbsRepoNogJdbi(Jdbi jdbi) {
+	public AbsRepoRawJdbi(Jdbi jdbi) {
 		setJdbi(jdbi);
 	}
 
-	public AbsRepoNogJdbi(Handle handleRepo) {
+	public AbsRepoRawJdbi(Handle handleRepo) {
 		setHandleRepo(handleRepo);
 	}
 

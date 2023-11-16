@@ -2313,9 +2313,9 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
             colFilterNodeEnterEventWrapper = (keyEvent) -> {
                 if (keyEvent.getCode() == KeyCode.ENTER) {
                     if (getColRemoteFilterEnterEvent() != null) {
+                        //sayfalamayı reset eder (1 sayfaya getirir)
                         updatePageSystemBeforeRemoteFilter();
                         getColRemoteFilterEnterEvent().handle(keyEvent);
-
                     }
                 }
             };
@@ -2334,11 +2334,30 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
             btnPageForward = new FxButton(">");
             btnPageBegin.setSimpleTooltip("Başa Dön");
             btnPageEnd = new FxButton(">>");
+
+            FxComboBoxObj cmbPageSize = new FxComboBoxObj();
+            cmbPageSize.setObjValue(30);
+            cmbPageSize.addComboItem(30, "30");
+            cmbPageSize.addComboItem(100, "100");
+            cmbPageSize.addComboItem(500, "500");
+            cmbPageSize.addComboItem(1000, "1000");
+            cmbPageSize.addComboItem(2000, "2000");
+            cmbPageSize.addComboItem(5000, "5000");
+            cmbPageSize.setSelectedItemByObjValueFi();
+
+            cmbPageSize.trigSelectedItemListenerFi((observable, oldValue, newValue) -> {
+                if (newValue != null && newValue.getValue() instanceof Integer) {
+                    setLnPageSizeAndLnCurrentPageNo((Integer) newValue.getValue(), 1);
+                    if (getFnPageChanged() != null) getFnPageChanged().run();
+                }
+            });
+
             getFxTableMig().getTableHeaderPane().add(btnPageBegin);
             getFxTableMig().getTableHeaderPane().add(btnPagePrev);
             getFxTableMig().getTableHeaderPane().add(lblPageNoIndex);
             getFxTableMig().getTableHeaderPane().add(btnPageForward);
             getFxTableMig().getTableHeaderPane().add(btnPageEnd);
+            getFxTableMig().getTableHeaderPane().add(cmbPageSize);
             //setLnPageNo(1);
             //if (getLnPageSize()==null) {setLnPageSize(30);}
 
@@ -2350,7 +2369,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
             btnPageBegin.setOnAction(event -> {
                 //setLnPageStartIndex(1); // 21-20 = 1
-                setLnCurrentPageNoWithPageStartIndex(1);
+                setLnCurrentPageNoAndPageStartIndex(1);
                 updatePageToolbarComps();
                 if (getFnPageChanged() != null) getFnPageChanged().run();
                 if (getFnPageAction() != null)
@@ -2360,7 +2379,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
             btnPagePrev.setOnAction(event -> {
                 if (getLnCurrentPageNoInit() == 1) return;
                 if (getLnCurrentPageNoInit() > 1) {
-                    setLnCurrentPageNoWithPageStartIndex(getLnCurrentPageNoInit() - 1);
+                    setLnCurrentPageNoAndPageStartIndex(getLnCurrentPageNoInit() - 1);
                     updatePageToolbarComps();
                     if (getFnPageAction() != null)
                         getFnPageAction().accept(getLnPageStartIndexInit(), getLnPageStartIndexInit() + getLnPageSizeInit() - 1);
@@ -2370,7 +2389,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
             btnPageForward.setOnAction(event -> {
                 if (getLnCurrentPageNoInit() < calcLnLastPageNo()) {
-                    setLnCurrentPageNoWithPageStartIndex(getLnCurrentPageNoInit() + 1);
+                    setLnCurrentPageNoAndPageStartIndex(getLnCurrentPageNoInit() + 1);
                     updatePageToolbarComps();
                     if (getFnPageChanged() != null) getFnPageChanged().run();
                     if (getFnPageAction() != null)
@@ -2381,7 +2400,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
             btnPageEnd.setOnAction(event -> {
                 //lnPageNo = (getLnTotalSize() / getLnPageSize()) + 1;
                 if (getLnCurrentPageNoInit() == calcLnLastPageNo()) return;
-                setLnCurrentPageNoWithPageStartIndex(calcLnLastPageNo());
+                setLnCurrentPageNoAndPageStartIndex(calcLnLastPageNo());
                 //getFnPageAction().accept((lnPageNo - 1) * getLnPageSize() + 1, lnPageNo * lnPageSize);
                 updatePageToolbarComps();
                 if (getFnPageChanged() != null) getFnPageChanged().run();
@@ -2398,7 +2417,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
      * RemoteFilter çalışmazdan önce Sayfalama güncellenmesi gereken işlemler
      */
     private void updatePageSystemBeforeRemoteFilter() {
-        setLnCurrentPageNoWithPageStartIndex(1);
+        setLnCurrentPageNoAndPageStartIndex(1);
         updatePageToolbarComps();
     }
 
@@ -2441,6 +2460,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
                 getBtnPageForward().setDisable(false);
                 getBtnPageEnd().setDisable(false);
             }
+
         });
 
     }
@@ -2492,17 +2512,20 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         // 1 -> 1+20-1=20
         // return getLnPageStartIndexInit() +  getLnPageSizeInit() - 1;
         // 1 -> 20 , 2-> 40
-        return getLnCurrentPageNoInit() * getLnPageSizeInit();
+        //return getLnCurrentPageNoInit() * getLnPageSizeInit();
+        return getLnPageStartIndexInit() + getLnPageSizeInit() - 1;
     }
 
     public void setLnPageSize(Integer lnPageSize) {
         this.lnPageSize = lnPageSize;
     }
 
+    @Deprecated
     public BiConsumer<Integer, Integer> getFnPageAction() {
         return fnPageAction;
     }
 
+    @Deprecated
     public void setFnPageAction(BiConsumer<Integer, Integer> fnPageAction) {
         this.fnPageAction = fnPageAction;
     }
@@ -2643,10 +2666,26 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         return lnCurrentPageNo;
     }
 
-    public void setLnCurrentPageNoWithPageStartIndex(Integer lnPageNo) {
-        this.lnCurrentPageNo = lnPageNo;
+    public void setLnCurrentPageNoAndPageStartIndex(Integer lnPageNo) {
+        setLnCurrentPageNo(lnPageNo);
         // 1 -> 0*20+1=1  2->(2-1)*20+1=21
-        this.lnPageStartIndex = (lnPageNo - 1) * getLnPageSizeInit() + 1;
+        //this.lnPageStartIndex =
+        setLnPageStartIndex((lnPageNo - 1) * getLnPageSizeInit() + 1);
+    }
+
+    /**
+     * Ayrıca pageStartIndex'i de günceller.
+     *
+     * @param lnPageSize
+     * @param lnPageNo
+     */
+    public void setLnPageSizeAndLnCurrentPageNo(Integer lnPageSize, Integer lnPageNo) {
+        setLnPageSize(lnPageSize);
+        setLnCurrentPageNoAndPageStartIndex(lnPageNo);
+    }
+
+    public void setLnCurrentPageNo(Integer lnCurrentPageNo) {
+        this.lnCurrentPageNo = lnCurrentPageNo;
     }
 
     public FxButton getBtnPageEnd() {

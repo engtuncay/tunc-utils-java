@@ -381,7 +381,7 @@ public class FxComboBox<T> extends ComboBox<T> {
         this.filterTooltip = filterTooltip;
     }
 
-    public void addSelectedItemListenerFi(ChangeListener<? super T> listener) {
+    public void trigSelectedItemListenerFi(ChangeListener<? super T> listener) {
         getSelectionModel().selectedItemProperty().addListener(listener);
     }
 

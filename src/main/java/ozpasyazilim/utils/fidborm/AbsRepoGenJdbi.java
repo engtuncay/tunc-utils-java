@@ -2320,16 +2320,16 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
      * @param <PrmEnt>
      * @return
      */
-    public <PrmEnt> Fdr<Optional<PrmEnt>> jdSelectSingleOpCustomEntityBindMap(String sql, Map<String
-            , Object> mapParam, Class<PrmEnt> resultClazz) {
-
-        Jdbi jdbi = getJdbi();
+    public <PrmEnt> Fdr<Optional<PrmEnt>> jdSelectSingleOpCustomEntityBindMap(String sql, Map<String, Object> mapParam, Class<PrmEnt> resultClazz) {
 
         Fdr<Optional<PrmEnt>> fdr = new Fdr<>();
         fdr.setValue(Optional.empty());
 
+        Loghelper.get(getClass()).debug("Jdbi isnull:" + getJdbi() == null);
+
+
         try {
-            Optional<PrmEnt> result = jdbi.withHandle(handle -> {
+            Optional<PrmEnt> result = getJdbi().withHandle(handle -> {
                 return handle.select(FiQueryTools.stoj(sql))
                         .bindMap(mapParam)
                         .mapTo(resultClazz)
