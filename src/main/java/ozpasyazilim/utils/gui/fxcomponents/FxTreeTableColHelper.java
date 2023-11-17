@@ -14,26 +14,27 @@ public class FxTreeTableColHelper {
 
 		for (int colIndex = 0; colIndex < listFiCol.size(); colIndex++) {
 
-			FiCol fiTableCol = listFiCol.get(colIndex);
+			FiCol fiCol = listFiCol.get(colIndex);
 
 			// Column geçerli değilse eklenmez
-			if (fiTableCol.getBoEnabled()!=null && !fiTableCol.getBoEnabled()) continue;
+			if (fiCol.getBoEnabled()!=null && !fiCol.getBoEnabled()) continue;
 
 			FxTreeTableCol fxTableColumn = new FxTreeTableCol();
-			fxTableColumn.setHeader(fiTableCol.getHeaderName());
-			fxTableColumn.setFieldName(fiTableCol.getFieldName());
-			fxTableColumn.setId(fiTableCol.getFieldName());
-			if(fiTableCol.getColType()==null) fiTableCol.setColType(OzColType.String);
-			fxTableColumn.setColType(fiTableCol.getColType().toString());
-			if(fiTableCol.getPrefSize()!=null){
-				fxTableColumn.setPrefWidth(fiTableCol.getPrefSize());
+			fxTableColumn.setFiCol(fiCol);
+			//fxTableColumn.setHeader(fiCol.getHeaderName());
+			//fxTableColumn.setFieldName(fiCol.getFieldName());
+			fxTableColumn.setId(fiCol.getFieldName());
+			if(fiCol.getColType()==null) fiCol.setColType(OzColType.String);
+			//fxTableColumn.setColType(fiCol.getColType().toString());
+			if(fiCol.getPrefSize()!=null){
+				fxTableColumn.setPrefWidth(fiCol.getPrefSize());
 			}
-			if(fiTableCol.getBoEditable()!=null && fiTableCol.getBoEditable()){
+			if(fiCol.getBoEditable()!=null && fiCol.getBoEditable()){
 				fxTableColumn.setEditable(true);
 				fxTableColumn.setAutoEditor();
 			}
 
-			fxTableColumn.setAutoColumnDefault();
+			fxTableColumn.setAutoColumnDefaultByFiCol();
 
 			//Loghelperr.getInstance(getClass()).debug(" Fx TableView col id:"+fxTableColumn.getId());
 			getFxTableColumnList().add(fxTableColumn);

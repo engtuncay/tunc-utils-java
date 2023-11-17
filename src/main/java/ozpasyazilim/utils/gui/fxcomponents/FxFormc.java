@@ -182,7 +182,7 @@ public class FxFormc<EntClazz> extends FxMigPaneGenView<EntClazz> implements IFi
 
     public FxDatePicker getEditorCompFxDatePicker(String fieldName) {
 
-        IFiCol ozTableCol = IFiColHelper.build(getListFormElementsInit()).getFiTableColByID(fieldName);
+        IFiCol ozTableCol = IFiColHelper.build(getListFormElementsInit()).getIFiColByID(fieldName);
 
         if (ozTableCol.getColEditorClass().equals(FxDatePicker.class.getName())) {
             FxDatePicker comp = (FxDatePicker) ozTableCol.getColEditorNode();

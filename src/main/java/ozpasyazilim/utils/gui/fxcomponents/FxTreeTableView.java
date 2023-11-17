@@ -2,7 +2,6 @@ package ozpasyazilim.utils.gui.fxcomponents;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
-import javafx.util.Callback;
 import ozpasyazilim.utils.table.OzColType;
 import ozpasyazilim.utils.table.FiCol;
 
@@ -54,31 +53,32 @@ public class FxTreeTableView<EntClazz> extends TreeTableView<EntClazz> {
 
 
 
-	public void setColumnsAsFiColList(List<FiCol> fiColList) {
+	public void setColumnsByFiColList(List<FiCol> fiColList) {
 
 		this.getColumns().clear();
 
 		for (int colIndex = 0; colIndex < fiColList.size(); colIndex++) {
-			FiCol fiTableCol = fiColList.get(colIndex);
+			FiCol fiCol = fiColList.get(colIndex);
 
 			// Column geçerli değilse eklenmez
-			if (fiTableCol.getBoEnabled()!=null && !fiTableCol.getBoEnabled()) continue;
+			if (fiCol.getBoEnabled()!=null && !fiCol.getBoEnabled()) continue;
 
 			FxTreeTableCol fxTableColumn = new FxTreeTableCol();
-			fxTableColumn.setHeader(fiTableCol.getHeaderName());
-			fxTableColumn.setFieldName(fiTableCol.getFieldName());
-			fxTableColumn.setId(fiTableCol.getFieldName());
-			if(fiTableCol.getColType()==null) fiTableCol.setColType(OzColType.String);
-			fxTableColumn.setColType(fiTableCol.getColType().toString());
-			if(fiTableCol.getPrefSize()!=null){
-				fxTableColumn.setPrefWidth(fiTableCol.getPrefSize());
+			fxTableColumn.setFiCol(fiCol);
+//			fxTableColumn.setHeader(fiCol.getHeaderName());
+//			fxTableColumn.setFieldName(fiCol.getFieldName());
+			fxTableColumn.setId(fiCol.getFieldName());
+			if(fiCol.getColType()==null) fiCol.setColType(OzColType.String);
+			//fxTableColumn.setColType(fiCol.getColType().toString());
+			if(fiCol.getPrefSize()!=null){
+				fxTableColumn.setPrefWidth(fiCol.getPrefSize());
 			}
 			/*if(ozTableCol.getEditable()!=null && ozTableCol.getEditable()){
 				fxTableColumn.setEditable(true);
 				fxTableColumn.setAutoEditor();
 			}*/
 
-			fxTableColumn.setAutoColumnDefault();
+			fxTableColumn.setAutoColumnDefaultByFiCol();
 
 			//Loghelperr.getInstance(getClass()).debug(" Fx TableView col id:"+fxTableColumn.getId());
 
@@ -158,14 +158,6 @@ public class FxTreeTableView<EntClazz> extends TreeTableView<EntClazz> {
 	}
 
 
-	public void setItemsAsList(List listRapor, String groupField) {
-
-
-
-
-
-	}
-
 	public void setItemMapList(Map<EntClazz,List<EntClazz>> dataMap){
 
 		TreeItem root = new TreeItem();
@@ -189,35 +181,35 @@ public class FxTreeTableView<EntClazz> extends TreeTableView<EntClazz> {
 
 	}
 
-	public void setItemsAsList2(List<EntClazz> listRapor, Callback<EntClazz,String> callback) {
-
-		//listRapor.stream().collect(Collectors.toMap());
-
-		Map<String,List<EntClazz>> mapList = new HashMap<>();
-
-		listRapor.forEach(entClazz -> {
-
-			String key="Tanımsiz";
-
-			if(callback.call(entClazz)!=null) key=callback.call(entClazz);
-
-			if(!mapList.containsKey(key)) mapList.put(key,new ArrayList<>());
-
-			mapList.get(key).add(entClazz);
-
-		});
-
-
-		mapList.keySet().forEach(s -> {
-
-			//TreeItem treeItem = new TreeItem("");
-
-			//treeItem.getChildren().addAll(FXCollections.observableArrayList(map));
-
-
-		});
-
-	}
+//	public void setItemsAsList2(List<EntClazz> listRapor, Callback<EntClazz,String> callback) {
+//
+//		//listRapor.stream().collect(Collectors.toMap());
+//
+//		Map<String,List<EntClazz>> mapList = new HashMap<>();
+//
+//		listRapor.forEach(entClazz -> {
+//
+//			String key="Tanımsiz";
+//
+//			if(callback.call(entClazz)!=null) key=callback.call(entClazz);
+//
+//			if(!mapList.containsKey(key)) mapList.put(key,new ArrayList<>());
+//
+//			mapList.get(key).add(entClazz);
+//
+//		});
+//
+//
+//		mapList.keySet().forEach(s -> {
+//
+//			//TreeItem treeItem = new TreeItem("");
+//
+//			//treeItem.getChildren().addAll(FXCollections.observableArrayList(map));
+//
+//
+//		});
+//
+//	}
 
 	public Map<String, Object> getStyleMap() {
 		if(this.styleMap==null)styleMap=new HashMap<>();
@@ -273,8 +265,6 @@ public class FxTreeTableView<EntClazz> extends TreeTableView<EntClazz> {
 		}
 		return mapTableRowEventsByEntity;
 	}
-
-
 
 
 }

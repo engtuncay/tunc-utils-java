@@ -84,7 +84,7 @@ public class FxTableCol2<EntClazz> extends TableColumn implements IFxTableCol<En
 		setStyle("-fx-alignment: CENTER");
 	}
 
-	@Override
+	//@Override
 	public FiCol getFiCol() {
 		if (fiCol.get() == null) {
 			//fiTableCol = new SimpleObjectProperty<>();

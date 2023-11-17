@@ -443,6 +443,23 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
         return null;
     }
 
+    /**
+     * Eksik ihtiyaçlara göre doldurulması lazım
+     * @param iFiCol
+     * @return
+     */
+    public static FiCol buildFromIFiCol(IFiCol iFiCol) {
+        FiCol fiCol = new FiCol();
+
+        fiCol.setHeaderName(iFiCol.getHeaderName());
+        fiCol.setFieldName(iFiCol.getFieldName());
+        fiCol.setColType(iFiCol.getColType());
+        fiCol.setPrefSize(iFiCol.getPrefSize());
+        fiCol.setBoEditable(iFiCol.getBoEditable());
+
+        return fiCol;
+    }
+
     // build Methods
 
     public FiCol buiHeader(String header) {

@@ -24,14 +24,14 @@ public class FxForm {
 
 	public Node getEditorComp(String fieldName) {
 
-		IFiCol ozTableCol = IFiColHelper.build(listElements).getFiTableColByID(fieldName);
+		IFiCol ozTableCol = IFiColHelper.build(listElements).getIFiColByID(fieldName);
 		return ozTableCol.getColFilterNode();
 
 	}
 
 	public FxTextField getEditorCompFxTexfield(String fieldName) {
 
-		IFiCol ozTableCol = IFiColHelper.build(listElements).getFiTableColByID(fieldName);
+		IFiCol ozTableCol = IFiColHelper.build(listElements).getIFiColByID(fieldName);
 
 		if (ozTableCol.getFilterNodeClass().equals(FxTextField.class.getName())) {
 			FxTextField comp = (FxTextField) ozTableCol.getColFilterNode();
@@ -43,7 +43,7 @@ public class FxForm {
 
 	public FxDatePicker getEditorCompFxDatePicker(String fieldName) {
 
-		IFiCol ozTableCol = IFiColHelper.build(listElements).getFiTableColByID(fieldName);
+		IFiCol ozTableCol = IFiColHelper.build(listElements).getIFiColByID(fieldName);
 
 		if (ozTableCol.getFilterNodeClass().equals(FxDatePicker.class.getName())) {
 			FxDatePicker comp = (FxDatePicker) ozTableCol.getColFilterNode();

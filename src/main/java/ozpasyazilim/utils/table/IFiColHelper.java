@@ -13,28 +13,35 @@ import java.util.Map;
 
 public class IFiColHelper {
 
-	List<? extends IFiCol> listFiColInf;
+	/**
+	 * IFiCol Türevi Genel kullanım olursa
+	 */
+	List<? extends IFiCol> listIFiCol;
+
+	/**
+	 * FiCol kullanılırsa
+	 */
 	List<FiCol> listFiCol;
 
-	List<FxTreeTableCol> fxTreeTableColumnList;
+	List<FxTreeTableCol> listFxTreeTableCol;
 
 	public IFiColHelper() {
 	}
 
-	public IFiColHelper(List<IFiCol> listFiColInf) {
-		setListFiColInf(listFiColInf);
+	public IFiColHelper(List<IFiCol> listIFiCol) {
+		setListIFiCol(listIFiCol);
 	}
 
 	public static IFiColHelper build(List<? extends IFiCol> list) {
-		IFiColHelper fiColInfHelper = new IFiColHelper();
-		fiColInfHelper.setListFiColInf(list);
-		return fiColInfHelper;
+		IFiColHelper iFiColHelper = new IFiColHelper();
+		iFiColHelper.setListIFiCol(list);
+		return iFiColHelper;
 	}
 
 	public static IFiColHelper buildFi(List<FiCol> list) {
-		IFiColHelper fiColInfHelper = new IFiColHelper();
-		fiColInfHelper.setListFiColInf(list);
-		return fiColInfHelper;
+		IFiColHelper iFiColHelper = new IFiColHelper();
+		iFiColHelper.setListIFiCol(list);
+		return iFiColHelper;
 	}
 
 	public static List<IFiCol> build() {
@@ -72,9 +79,9 @@ public class IFiColHelper {
 	}
 
 
-	public IFiCol getFiTableColByID(String colID) {
+	public IFiCol getIFiColByID(String colID) {
 
-		for (IFiCol fiTableCol : getListFiColInf()) {
+		for (IFiCol fiTableCol : getListIFiColInit()) {
 			if (fiTableCol.getFieldName().equalsIgnoreCase(colID)) {
 				return fiTableCol;
 			}
@@ -82,71 +89,75 @@ public class IFiColHelper {
 		return null;
 	}
 
-	public List<? extends IFiCol> getListFiColInf() {
-		if (listFiColInf == null) {
-			listFiColInf = new ArrayList<>();
+	public List<? extends IFiCol> getListIFiColInit() {
+		if (listIFiCol == null) {
+			listIFiCol = new ArrayList<>();
 		}
-		return listFiColInf;
+		return listIFiCol;
 	}
 
-	public void setListFiColInf(List<? extends IFiCol> listFiColInf) {
-		this.listFiColInf = listFiColInf;
+	public void setListIFiCol(List<? extends IFiCol> listIFiCol) {
+		this.listIFiCol = listIFiCol;
 	}
 
 	public IFiColHelper buildFxTreeTableCol() {
 
-		if (!getListFiColInf().isEmpty()) {
+		if (!getListIFiColInit().isEmpty()) {
 
 			List<FxTreeTableCol> fxTreeTableColumnList1 = new ArrayList<>();
 
-			for (int colIndex = 0; colIndex < getListFiColInf().size(); colIndex++) {
+			for (int colIndex = 0; colIndex < getListIFiColInit().size(); colIndex++) {
 
-				IFiCol ozTableCol = getListFiColInf().get(colIndex);
+				IFiCol iFiCol = getListIFiColInit().get(colIndex);
+
+				FiCol fiCol = FiCol.buildFromIFiCol(iFiCol);
 
 				// Column geçerli değilse eklenmez
-				if (ozTableCol.getBoEnabled() != null && !ozTableCol.getBoEnabled()) continue;
+				if (iFiCol.getBoEnabled() != null && !iFiCol.getBoEnabled()) continue;
 
 				FxTreeTableCol fxTableColumn = new FxTreeTableCol();
-				fxTableColumn.setHeader(ozTableCol.getHeaderName());
-				fxTableColumn.setFieldName(ozTableCol.getFieldName());
-				fxTableColumn.setId(ozTableCol.getFieldName());
-				if (ozTableCol.getColType() == null) ozTableCol.setColType(OzColType.String);
-				fxTableColumn.setColType(ozTableCol.getColType().toString());
-				if (ozTableCol.getPrefSize() != null) {
-					fxTableColumn.setPrefWidth(ozTableCol.getPrefSize());
+				fxTableColumn.setFiCol(fiCol);
+//				fxTableColumn.setHeader(iFiCol.getHeaderName());
+//				fxTableColumn.setFieldName(iFiCol.getFieldName());
+				fxTableColumn.setId(iFiCol.getFieldName());
+				if (fiCol.getColType() == null) fiCol.setColType(OzColType.String);
+//				fxTableColumn.setColType(iFiCol.getColType().toString());
+				if (fiCol.getPrefSize() != null) {
+					fxTableColumn.setPrefWidth(iFiCol.getPrefSize());
 				}
-				if (ozTableCol.getBoEditable() != null && ozTableCol.getBoEditable()) {
+
+				if (FiBoolean.isTrue(fiCol.getBoEditable())) {
 					fxTableColumn.setEditable(true);
 					fxTableColumn.setAutoEditor();
 				}
 
-				fxTableColumn.setAutoColumnDefault();
+				fxTableColumn.setAutoColumnDefaultByFiCol();
 
 				//Loghelperr.getInstance(getClass()).debug(" Fx TableView col id:"+fxTableColumn.getId());
 				fxTreeTableColumnList1.add(fxTableColumn);
 
 			}
 
-			setFxTreeTableColumnList(fxTreeTableColumnList1);
+			setListFxTreeTableCol(fxTreeTableColumnList1);
 
 		}
 
 		return this;
 	}
 
-	public List<FxTreeTableCol> getFxTreeTableColumnList() {
-		return fxTreeTableColumnList;
+	public List<FxTreeTableCol> getListFxTreeTableCol() {
+		return listFxTreeTableCol;
 	}
 
-	public void setFxTreeTableColumnList(List<FxTreeTableCol> fxTreeTableColumnList) {
-		if (fxTreeTableColumnList == null) {
-			fxTreeTableColumnList = new ArrayList<>();
+	public void setListFxTreeTableCol(List<FxTreeTableCol> listFxTreeTableCol) {
+		if (listFxTreeTableCol == null) {
+			listFxTreeTableCol = new ArrayList<>();
 		}
-		this.fxTreeTableColumnList = fxTreeTableColumnList;
+		this.listFxTreeTableCol = listFxTreeTableCol;
 	}
 
 	public IFiCol findColumnByFieldName(List<IFiCol> listColumns, String fieldName) {
-		setListFiColInf(listColumns);
+		setListIFiCol(listColumns);
 		return findColumnByFieldName(fieldName);
 	}
 
@@ -156,9 +167,9 @@ public class IFiColHelper {
 
 	public IFiCol findColumnByFieldName(String fieldName) {
 
-		if (getListFiColInf().size() > 0) {
+		if (getListIFiColInit().size() > 0) {
 
-			for (IFiCol ozTableCol : getListFiColInf()) {
+			for (IFiCol ozTableCol : getListIFiColInit()) {
 				if (ozTableCol.getFieldName().equals(fieldName)) {
 					return ozTableCol;
 				}
