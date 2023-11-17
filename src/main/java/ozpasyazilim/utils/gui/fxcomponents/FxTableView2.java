@@ -258,7 +258,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         return list;
     }
 
-    public List<EntClazz> getItemsFiCheckedBySelColNameAsList() {
+    public List<EntClazz> getItemsFiCheckedBySelectColAsList() {
         return getItemsFiCheckedByBoolFieldAsList(getSelectionColName());
     }
 
@@ -2152,6 +2152,10 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     }
 
 
+    /**
+     * Enter veya Double Click ile Seç ve Kapat
+     * @param iFxSimpSelectionCont
+     */
     public void activateExtensionFxTableSelectAndClose(IFxSimpSelectionCont iFxSimpSelectionCont) {
 
         setOnKeyReleased(event -> {

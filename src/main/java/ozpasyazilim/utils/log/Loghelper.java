@@ -56,6 +56,7 @@ public class Loghelper {
 	public static void debug(Class clazz, String message) {
 		Loghelper.get(clazz).debug(message);
 	}
+
 	public static void logexceptionOnlyMail(String message) {
 		Loghelper.get(Loghelper.class).debug(message);
 	}

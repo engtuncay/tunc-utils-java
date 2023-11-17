@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.datatypes.FiKeyBean;
+import ozpasyazilim.utils.log.Loghelper;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -171,6 +172,10 @@ public class FiQueryTools {
 		return sql.replaceAll("@", ":");
 	}
 
+	public static String convertSqlParamToJdbiParamMainExcludeSpec(String sql) {
+		return sql.replaceAll("@(?!__)", ":");
+	}
+
 	public static String convertSqlParamToCommentMain(String key, String sql) {
 		if (!FiType.isEmptyWithTrim(key)) {
 			String regex = "\\n\\s*.*@(" + key + ").*";
@@ -194,6 +199,14 @@ public class FiQueryTools {
 		if (sqlQuery == null) return null;
 		sqlQuery = fixSqlProblems(sqlQuery);
 		sqlQuery = convertSqlParamToJdbiParamMain(sqlQuery);
+		return sqlQuery;
+	}
+
+	public static String stojExcludeSpecVar(String sqlQuery) {
+		if (sqlQuery == null) return null;
+		sqlQuery = fixSqlProblems(sqlQuery);
+		sqlQuery = convertSqlParamToJdbiParamMainExcludeSpec(sqlQuery);
+		//Loghelper.get(FiQueryTools.class).debug("Sql:" + sqlQuery);
 		return sqlQuery;
 	}
 

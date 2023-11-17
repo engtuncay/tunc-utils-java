@@ -1629,7 +1629,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
 
         try {
             Integer rowCountUpdate = jdbi.withHandle(handle -> {
-                return handle.createUpdate(FiQueryTools.stoj(updateQuery))
+                return handle.createUpdate(FiQueryTools.stojExcludeSpecVar(updateQuery))
                         .bindMap(fiMapParams)
                         .execute(); // returns row count updated
             });
@@ -1638,7 +1638,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
             fdr.setBoResultAndRowsAff(true, rowCountUpdate);
             //fdr.setLnResult(1);
         } catch (Exception ex) {
-            Loghelper.debugException(getClass(), ex);
+            Loghelper.get(getClass()).error(FiException.exTosMain(ex));
             fdr.setBoResult(false, ex);
             //fdr.setLnResult(0);
         }
