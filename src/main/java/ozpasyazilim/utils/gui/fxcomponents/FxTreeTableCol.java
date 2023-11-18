@@ -14,7 +14,7 @@ import java.text.*;
 import java.util.Date;
 import java.util.Locale;
 
-public class FxTreeTableCol<E> extends TreeTableColumn implements IFxTableCol<E> { //implements IFiCol<E>
+public class FxTreeTableCol<E> extends TreeTableColumn implements IFxTableCol<E> { //implements IFiCol<E> // commented 23-11-17
 
 	FiCol<E> fiCol;
 
