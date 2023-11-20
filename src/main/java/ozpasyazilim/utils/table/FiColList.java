@@ -1,11 +1,19 @@
 package ozpasyazilim.utils.table;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 public class FiColList extends ArrayList<FiCol>{
 	Map<String, FiCol> mapCols;
+
+	public FiColList() {
+	}
+
+	public FiColList(Collection<? extends FiCol> c) {
+		super(c);
+	}
 
 	public static FiColList build() {
 		FiColList fiColList = new FiColList();

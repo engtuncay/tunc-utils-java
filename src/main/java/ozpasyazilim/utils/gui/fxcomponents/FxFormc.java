@@ -12,6 +12,7 @@ import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.mvc.IFiComp;
 import ozpasyazilim.utils.table.FiCol;
+import ozpasyazilim.utils.table.FiColsUtil;
 import ozpasyazilim.utils.table.IFiColHelper;
 import ozpasyazilim.utils.fxwindow.FxSimpleDialog;
 
@@ -172,8 +173,12 @@ public class FxFormc<EntClazz> extends FxMigPaneGenView<EntClazz> implements IFi
         return IFiColHelper.build(getListFormElementsInit()).findColumnByFieldName(toString).getColEditorNode();
     }
 
-    public IFiCol getColByFieldName(String toString) {
-        return IFiColHelper.build(getListFormElementsInit()).findColumnByFieldName(toString);
+    public FiCol getColByFieldName(String txFieldName) {
+        return FiColsUtil.bui(getListFormElementsInit()).findColumnByFieldName(txFieldName);
+    }
+
+    public FiColsUtil getFiColsUtil() {
+        return FiColsUtil.bui(getListFormElementsInit());
     }
 
     public List<FiCol> getListFormElementsInit() {
