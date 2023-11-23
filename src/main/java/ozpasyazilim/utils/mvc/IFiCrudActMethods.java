@@ -2,10 +2,10 @@ package ozpasyazilim.utils.mvc;
 
 public interface IFiCrudActMethods {
 
-	void actBtnAdd();
+	void actBtnCrudAdd();
 
-	void actBtnEdit();
+	void actBtnCrudEdit();
 
-	void actBtnDelete();
+	void actBtnCrudDelete();
 
 }
