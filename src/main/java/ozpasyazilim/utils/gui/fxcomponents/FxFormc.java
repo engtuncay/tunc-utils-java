@@ -21,11 +21,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * FxForm with FxFormConfig - config bilgileri objeye çekildi.
+ * FxFormc -> FxForm with FxFormConfig
  * <p>
  * Form config bilgileri, FxFormConfig objesinde tutulur.
- * <p>
- * (c -> config'li FxForm)
  *
  * @param <EntClazz>
  */
@@ -78,17 +76,15 @@ public class FxFormc<EntClazz> extends FxMigPaneGenView<EntClazz> implements IFi
     }
 
     // ********************* Main
+
     public void initCont() {
         // form initialized edildiğini belirtir
         setBoFormInitialized(true);
 
         // Form Elemanları Kontrolü
-        if (getFxFormConfig() == null) {
-            Loghelper.get(getClass()).debug("Form Config Tanımlanmamış");
-            return;
-        } else if (FiCollection.isEmpty(getFxFormConfig().getListFormElements())) {
-            add(new FxLabel("Form Elemanları Yüklenmemiş !!!"), "span,pushx,growx");
-            Loghelper.get(getClass()).debug("Form Alanları Tanımlanmamış.");
+        if (FiCollection.isEmpty(getFxFormConfigInit().getListFormElements())) {
+            add(new FxLabel("Form Elemanları Tanımlanmamış !!!"), "span,pushx,growx");
+            Loghelper.get(getClass()).debug("Form Elemanları Tanımlanmamış");
             return;
         }
 
@@ -104,7 +100,7 @@ public class FxFormc<EntClazz> extends FxMigPaneGenView<EntClazz> implements IFi
         }
 
         // Form Değerleri Yüklendikten sonraki Lifecycle metodu çalıştırılır
-        trigEventAfterLoadFormValue();
+        trigEventsAfterLoadFormValue();
 
         //Loghelper.get(getClass()).debug("Null Form Type");
     }
@@ -209,10 +205,6 @@ public class FxFormc<EntClazz> extends FxMigPaneGenView<EntClazz> implements IFi
         FxEditorFactory.bindEntityToFormByEditorValue(getListFormElementsInit(), formMikroKodDegistir);
     }
 
-    public FiKeyBean getFormAsFiMapParams() {
-        return FxEditorFactory.bindFormToKeyBeanByEditorNode(getListFormElementsInit());
-    }
-
     public FiKeyBean getFormAsFiKeyBean() {
         return FxEditorFactory.bindFormToKeyBeanByEditorNode(getListFormElementsInit());
     }
@@ -267,7 +259,7 @@ public class FxFormc<EntClazz> extends FxMigPaneGenView<EntClazz> implements IFi
         return FiCollection.listToMapSingle(getListFormElementsInit(), FiCol::getFieldName);
     }
 
-    private void trigEventAfterLoadFormValue() {
+    private void trigEventsAfterLoadFormValue() {
 
         getListFormElementsInit().forEach(fiTableCol -> {
             if (fiTableCol.getFnEditorNodeRendererAfterFormLoad() != null) {
@@ -339,10 +331,6 @@ public class FxFormc<EntClazz> extends FxMigPaneGenView<EntClazz> implements IFi
         getFxFormConfigInit().setListFormElements(listFormElements);
     }
 
-//	public void setFormElementsMap(Map<String, FiCol> formElementsMap) {
-//		this.formElementsMap = formElementsMap;
-//	}
-
     public FxFormConfig<EntClazz> getFxFormConfigInit() {
         if (fxFormConfig == null) {
             fxFormConfig = new FxFormConfig<>();
@@ -391,7 +379,7 @@ public class FxFormc<EntClazz> extends FxMigPaneGenView<EntClazz> implements IFi
 //		}
 
         FxEditorFactory.bindEntityToFormByEditorValue(getListFormElementsInit(), getFormEntity());
-        trigEventAfterLoadFormValue();
+        trigEventsAfterLoadFormValue();
     }
 
     public EntClazz getFormEntity() {

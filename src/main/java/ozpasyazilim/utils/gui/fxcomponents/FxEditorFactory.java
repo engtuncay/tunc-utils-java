@@ -208,18 +208,18 @@ public class FxEditorFactory {
     /**
      * Tablodaki filtrelerdeki compler için kullanılıyor
      *
-     * @param ozTableCol
+     * @param iFiCol
      * @return
      */
-    public static Node generateAndSetFilterNode(IFiCol ozTableCol) {
+    public static Node generateAndSetFilterNode(IFiCol iFiCol) {
 
-        Node comp = generateNodeByClassNameMain(ozTableCol.getColType(), ozTableCol.getFilterNodeClass(), null);
+        Node comp = generateNodeByClassNameMain(iFiCol.getColType(), iFiCol.getFilterNodeClass(), null);
 
         // generator içinden çıkarılıp buraya eklendi, esas amaç anlaşılmadı
-        setNodeValueByCompClass(comp, ozTableCol.getFilterNodeClass(), ozTableCol.getFilterValue());
+        setNodeValueByCompClass(comp, iFiCol.getFilterNodeClass(), iFiCol.getFilterValue());
 
-        if (ozTableCol.getFilterNodeClass() == null) ozTableCol.setFilterNodeClass(comp.getClass().getName());
-        if (comp != null) ozTableCol.setColFilterNode(comp);
+        if (iFiCol.getFilterNodeClass() == null) iFiCol.setFilterNodeClass(comp.getClass().getName());
+        if (comp != null) iFiCol.setColFilterNode(comp);
         return comp;
 
     }
@@ -395,13 +395,22 @@ public class FxEditorFactory {
     }
 
     // Component Node oluşturmak için
+
+    /**
+     *
+     * FiCol'dan extra özellikler alması için eklendi
+     *
+     * @param ozColType
+     * @param txClassName
+     * @param fiCol
+     * @return
+     */
     public static Node generateNodeByClassNameMain(OzColType ozColType, String txClassName, FiCol fiCol) { //, Object compValue
 
         //Loghelper.getInstance(FxEditorFactory.class).debug(" Ozcoltype:"+ozColType.toString());
         //Loghelper.getInstance(FxEditorFactory.class).debug(" Prm Comp Class:"+txClassName);
-        if (fiCol == null) {
-            fiCol = new FiCol();
-        }
+
+        if (fiCol == null) fiCol = new FiCol();
 
         if (txClassName == null) {
             //iFiCol.setColFxNodeClass(FxTextField.class.getName());

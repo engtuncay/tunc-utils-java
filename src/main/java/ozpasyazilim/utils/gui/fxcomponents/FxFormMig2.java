@@ -3,7 +3,6 @@ package ozpasyazilim.utils.gui.fxcomponents;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
 import ozpasyazilim.utils.core.FiBoolean;
 import ozpasyazilim.utils.core.FiCollection;
 import ozpasyazilim.utils.core.FiString;
@@ -24,11 +23,11 @@ import java.util.Map;
 import java.util.function.Function;
 
 /**
- * FxFormMig3 de FormConfig çıkarıldı. Ana Alanlar direk FxFormMig3 sınıfına eklendi.
+ * FxFormMig2 de FormConfig çıkarıldı. Ana Alanlar direk FxFormMig2 sınıfına eklendi.
  *
  * @param <EntClazz> Form alanın değerlerinin aktarılacağı veya alınacağı sınıf
  */
-public class FxFormMig3<EntClazz> extends FxMigPaneGenView<EntClazz> implements IFxEntSimpleView {
+public class FxFormMig2<EntClazz> extends FxMigPaneGenView<EntClazz> implements IFxEntSimpleView {
 	private Class<EntClazz> entityClazz;
 	private String guid;
 	private Boolean boFormInitialized;
@@ -44,13 +43,13 @@ public class FxFormMig3<EntClazz> extends FxMigPaneGenView<EntClazz> implements 
 
 	private Boolean boReadOnlyForm;
 
-	private Function<FxFormMig3, Fdr> fnValidateForm;
+	private Function<FxFormMig2, Fdr> fnValidateForm;
 
-	public FxFormMig3() {
+	public FxFormMig2() {
 		super("insets 0");
 	}
 
-	public FxFormMig3(Class<EntClazz> entityClazz) {
+	public FxFormMig2(Class<EntClazz> entityClazz) {
 		super("insets 0");
 		this.entityClazz = entityClazz;
 	}
@@ -58,31 +57,15 @@ public class FxFormMig3<EntClazz> extends FxMigPaneGenView<EntClazz> implements 
 	/**
 	 * @param listFormElements
 	 */
-	public FxFormMig3(List<FiCol> listFormElements) {
+	public FxFormMig2(List<FiCol> listFormElements) {
 		super("insets 0");
 		this.listFormElements = listFormElements;
 	}
 
-	public FxFormMig3(List<FiCol> colsForm, FormType formType) {
+	public FxFormMig2(List<FiCol> colsForm, FormType formType) {
 		super("insets 0");
 		this.listFormElements = colsForm;
 		this.formType = formType;
-	}
-
-//	public FxFormMig3(List<FiCol> listFormElements, Boolean boInit) {
-//		super("insets 0");
-//		if (FiBoolean.isTrue(boInit)) {
-//			setupWitDefaultFormType(listFormElements);
-//		}
-//	}
-
-	@Override
-	public Pane getRootPane() {
-		return this;
-	}
-
-	@Override
-	public void initGui() {
 	}
 
 	public Node getCompByFieldName(String toString) {
@@ -156,24 +139,6 @@ public class FxFormMig3<EntClazz> extends FxMigPaneGenView<EntClazz> implements 
 		setFormEntity(formEntity);
 		initFormElementsMain();
 	}
-
-//	public void setupFormElementsHp3(List<FiCol> listFormElements, FormType formType, EntClazz formEntity) {
-//		FxFormConfig<EntClazz> fxFormConfig = new FxFormConfig();
-//		fxFormConfig.setFormType(formType);
-//		fxFormConfig.setListFormElements(listFormElements);
-//		fxFormConfig.setFormEntity(formEntity);
-//		setFxFormSetup(fxFormConfig);
-//		initFormElementsMain();
-//	}
-
-//	public void setupFormElementsHp2(List<FiCol> listFormElements, FormType formType) {
-//		FxFormConfig<EntClazz> fxFormConfig = new FxFormConfig();
-//		fxFormConfig.setFormType(formType);
-//		fxFormConfig.setListFormElements(listFormElements);
-//		setFxFormSetup(fxFormConfig);
-//
-//		initFormElementsMain();
-//	}
 
 	// ********************* Main
 	public void initFormElementsMain() {
@@ -447,14 +412,6 @@ public class FxFormMig3<EntClazz> extends FxMigPaneGenView<EntClazz> implements 
 		}
 		return fiColFound;
 	}
-
-	//	public void setupForm(List<FiCol> listFormElements, FormType formType) {
-//		FxFormConfig fxFormConfig = new FxFormConfig();
-//		fxFormConfig.setListFormElements(listFormElements);
-//		fxFormConfig.setFormType(formType);
-//		setFxFormSetup(fxFormConfig);
-//		initFormElementsMain();
-//	}
 
 }
 

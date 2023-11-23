@@ -2,6 +2,9 @@ package ozpasyazilim.utils.gui.fxcomponents;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
+import ozpasyazilim.utils.core.FiBoolean;
+import ozpasyazilim.utils.mvc.IFiCol;
+import ozpasyazilim.utils.table.IFiColHelper;
 import ozpasyazilim.utils.table.OzColType;
 import ozpasyazilim.utils.table.FiCol;
 
@@ -160,24 +163,24 @@ public class FxTreeTableView<EntClazz> extends TreeTableView<EntClazz> {
 
 	public void setItemMapList(Map<EntClazz,List<EntClazz>> dataMap){
 
-		TreeItem root = new TreeItem();
+		TreeItem rootTreeItem = new TreeItem();
 
 		dataMap.keySet().forEach(entClazz -> {
 
-			List list = dataMap.get(entClazz);
+			List listSubData = dataMap.get(entClazz);
 
 			TreeItem subRoot= new TreeItem(entClazz);
-			//subRoot.getChildren().addAll(FXCollections.observableArrayList(list));
-			list.forEach(entData -> {
+			//subRoot.getChildren().addAll(FXCollections.observableArrayList(listSubData));
+			listSubData.forEach(entData -> {
 				TreeItem treeItem = new TreeItem(entData);
 				subRoot.getChildren().add(treeItem);
 			});
 
-			root.getChildren().add(subRoot);
+			rootTreeItem.getChildren().add(subRoot);
 
 		});
 
-		setRoot(root);
+		setRoot(rootTreeItem);
 
 	}
 

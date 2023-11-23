@@ -39,7 +39,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleBaseCont {
 	private Class entityClass;
 	private FxFormc fxFormMig;
 
-	private FxFormMig3 fxFormMig3;
+	private FxFormMig2 fxFormMig2;
 	private List<FiCol> fiColList;
 	private Predicate<String> predValidateString;
 	private String validateErrorMessage;
@@ -48,7 +48,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleBaseCont {
 	// Experimental
 	private Predicate<EntClazz> predValidate;
 
-	private Predicate<FxFormMig3> predValidateForm;
+	private Predicate<FxFormMig2> predValidateForm;
 
 	/**
 	 * Dialog penceresinde ok tıklandıktan sonra çalıştırılacak
@@ -784,22 +784,22 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleBaseCont {
 		this.txInitialValue = txInitialValue;
 	}
 
-	public FxFormMig3 getFxFormMig3() {
-		return fxFormMig3;
+	public FxFormMig2 getFxFormMig3() {
+		return fxFormMig2;
 	}
 
-	public FxFormMig3 getFxFormInit() {
-		if (fxFormMig3 == null) {
-			fxFormMig3 = new FxFormMig3<>();
+	public FxFormMig2 getFxFormInit() {
+		if (fxFormMig2 == null) {
+			fxFormMig2 = new FxFormMig2<>();
 		}
-		return fxFormMig3;
+		return fxFormMig2;
 	}
 
-	public Predicate<FxFormMig3> getPredValidateForm() {
+	public Predicate<FxFormMig2> getPredValidateForm() {
 		return predValidateForm;
 	}
 
-	public void setPredValidateForm(Predicate<FxFormMig3> predValidateForm) {
+	public void setPredValidateForm(Predicate<FxFormMig2> predValidateForm) {
 		this.predValidateForm = predValidateForm;
 	}
 

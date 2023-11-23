@@ -307,6 +307,28 @@ public class FiCollection {
 
     }
 
+    public static <T, KeyVal> Map<KeyVal, List<T>> listToLinkedMapMulti(Collection<T> listtum, Function<T, KeyVal> fnGetId) {
+
+        Map<KeyVal, List<T>> mapList = new LinkedHashMap<>();
+
+        for (Iterator iterator = listtum.iterator(); iterator.hasNext(); ) {
+
+            T t = (T) iterator.next();
+
+            KeyVal keyValValue = fnGetId.apply(t);
+
+            if (keyValValue == null) continue;
+
+            if (!mapList.containsKey(keyValValue)) mapList.put(keyValValue, new ArrayList());
+
+            mapList.get(keyValValue).add(t);
+
+        }
+
+        return mapList;
+
+    }
+
     /**
      * Verilen Listedeki elemanları belli bir key ye (fnGetId den dönen değer) göre toplar map<id,list<entity>> şeklinde oluşur
      * <p>
