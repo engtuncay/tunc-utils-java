@@ -757,7 +757,7 @@ public class FiExcel {
             //required olan column bulunmamışsa colfund false yapılır
             for (IFiCol iTableCol : listColumns) {
 
-                if (colFound && FiBoolean.isTrue(iTableCol.getBoRequired()) && FiBoolean.isNullOrFalse(iTableCol.getBoExist())) {
+                if (colFound && FiBool.isTrue(iTableCol.getBoRequired()) && FiBool.isFalseOrNull(iTableCol.getBoExist())) {
                     colFound = false;
                     Loghelper.debugLog(getClass(), "Required Col olmadığı için colfound false a çevrildi");
                 }
@@ -884,7 +884,7 @@ public class FiExcel {
             // Required olan column bulunmamışsa colFound false yapılır
             for (IFiCol iTableCol : listColumns) {
 
-                if (colFound && FiBoolean.isTrue(iTableCol.getBoRequired()) && FiBoolean.isNullOrFalse(iTableCol.getBoExist())) {
+                if (colFound && FiBool.isTrue(iTableCol.getBoRequired()) && FiBool.isFalseOrNull(iTableCol.getBoExist())) {
                     colFound = false;
                     Loghelper.debugLog(getClass(), "Required Col olmadığı için colfound false a çevrildi");
                 }

@@ -229,7 +229,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
         return getItemsCurrentFi(ent -> {
             try {
-                return FiBoolean.convertBooleanElseFalse(PropertyUtils.getNestedProperty(ent, fieldnameForSelection));
+                return FiBool.convertBooleanElseFalse(PropertyUtils.getNestedProperty(ent, fieldnameForSelection));
             } catch (Exception e) {
                 e.printStackTrace();
                 return false;
@@ -244,16 +244,36 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
         FilteredList<EntClazz> itemsCurrentFi = getItemsCurrentFi(ent -> {
             try {
-                return FiBoolean.convertBooleanElseFalse(PropertyUtils.getNestedProperty(ent, fieldForSelection));
+                return FiBool.convertBooleanElseFalse(PropertyUtils.getNestedProperty(ent, fieldForSelection));
             } catch (Exception e) {
-                e.printStackTrace();
+                Loghelper.get(getClass()).error(FiException.exTosMain(e));
                 return false;
             }
         });
 
-        for (EntClazz entClazz : itemsCurrentFi) {
-            list.add(entClazz);
-        }
+        list.addAll(itemsCurrentFi);
+
+        return list;
+    }
+
+    public List<EntClazz> getItemsFiUnCheckedBySelFieldAsList() {
+        return getItemsFiUnCheckedByBoolFieldAsList(getSelectionColName());
+    }
+
+    public List<EntClazz> getItemsFiUnCheckedByBoolFieldAsList(String fieldForSelection) {
+
+        List<EntClazz> list = new ArrayList<>();
+
+        FilteredList<EntClazz> itemsCurrentFi = getItemsCurrentFi(ent -> {
+            try {
+                return FiBool.isFalseOrNull(FiBool.convertBoolean(PropertyUtils.getNestedProperty(ent, fieldForSelection)));
+            } catch (Exception e) {
+                Loghelper.get(getClass()).error(FiException.exTosMain(e));
+                return false;
+            }
+        });
+
+        list.addAll(itemsCurrentFi);
 
         return list;
     }
@@ -273,7 +293,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
         FilteredList<EntClazz> itemsCurrentFi = getItemsCurrentFi(ent -> {
             try {
-                return FiBoolean.convertBooleanElseFalse(PropertyUtils.getNestedProperty(ent, getFiColSelection().getFieldName()));
+                return FiBool.convertBooleanElseFalse(PropertyUtils.getNestedProperty(ent, getFiColSelection().getFieldName()));
             } catch (Exception e) {
                 e.printStackTrace();
                 return false;
@@ -294,7 +314,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
         FilteredList<EntClazz> itemsCurrentFi = getItemsCurrentFi(ent -> {
             try {
-                return FiBoolean.convertBooleanElseFalse(PropertyUtils.getNestedProperty(ent, fieldForSelection));
+                return FiBool.convertBooleanElseFalse(PropertyUtils.getNestedProperty(ent, fieldForSelection));
             } catch (Exception e) {
                 e.printStackTrace();
                 return false;
@@ -312,7 +332,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
         FilteredList<EntClazz> itemsCurrentFi = getItemsCurrentFi(ent -> {
             try {
-                return FiBoolean.convertBooleanElseFalse(PropertyUtils.getNestedProperty(ent, fieldForSelection));
+                return FiBool.convertBooleanElseFalse(PropertyUtils.getNestedProperty(ent, fieldForSelection));
             } catch (Exception e) {
                 e.printStackTrace();
                 return false;
@@ -326,7 +346,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
         FilteredList<EntClazz> itemsCurrentFi = getItemsAllFi(ent -> {
             try {
-                return FiBoolean.convertBooleanElseFalse(PropertyUtils.getNestedProperty(ent, getFiColSelection().getFieldName()));
+                return FiBool.convertBooleanElseFalse(PropertyUtils.getNestedProperty(ent, getFiColSelection().getFieldName()));
             } catch (Exception e) {
                 Loghelper.get(getClass()).debug(FiException.exceptiontostring1(e));
                 return false;
@@ -356,7 +376,6 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     public List<FiCol> getFiColListOverListFxTableCol() {
         return getListFxTableCol().stream().map(FxTableCol2::getFiCol).collect(Collectors.toList());
     }
-
 
     public static Node defAutoEditorClass(List<IFiCol> listColumn) {
 
@@ -713,7 +732,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     private void activateFilterSearch(FxTableCol2 fxTableCol) {
 
         // Col Filterable değilse, hiçbir işlem yapılmaz
-        if (FiBoolean.isFalse(fxTableCol.getFiCol().getBoFilterable())) {
+        if (FiBool.isFalse(fxTableCol.getFiCol().getBoFilterable())) {
             return;
         }
 
@@ -811,7 +830,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         node = defAutoEditorClass(Arrays.asList(fxTableCol.getFiCol()));
         node.setId("filterNode");
 
-        if (FiBoolean.isFalse(fxTableCol.getFiCol().getBoFilterable())) {
+        if (FiBool.isFalse(fxTableCol.getFiCol().getBoFilterable())) {
             //Loghelperr.getInstance(getClass()).debug("Node Filter Pasif");
             node.setDisable(true);
         }
@@ -1167,7 +1186,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
                         }
 
                         Double valueCol = (Double) objCellValue;
-                        String txValueCol = new FiNumber().formatNumberPlain(valueCol);
+                        String txValueCol = FiNumber.formatNumberPlain(valueCol);
                         txValueCol = txValueCol.replace("-", "");
 
                         if (txFilterValue.matches("^![0-9]*")) {
@@ -1228,7 +1247,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
                         // Loghelperr.logSingle("filter1",getClass(),"value filter :"+ valueFilter2);
                         // W2 Expo Number To String
-                        String txFilter = new FiNumber().formatStringExpoNumber(objFilterValue.toString());
+                        String txFilter = FiNumber.formatStringExpoNumber(objFilterValue.toString());
 
                         //Loghelperr.getInstance(getClass()).debug(String.format("Double Obj Value : %s , Filter Value: %s",txValueCol,txFilter));
                         if (!txValueCol.toString().matches(txFilter + ".*")) {
@@ -1256,8 +1275,8 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
                         if (objFilterValue == null) continue;
 
                         if (objCellValue == null) {
-//							filterCheckResult = false;
-//							return filterCheckResult;
+                        //	filterCheckResult = false;
+                        //	return filterCheckResult;
                             predAllCols = predAllCols.and(entTmp -> false);
                             break;
                             //continue;
@@ -1322,7 +1341,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
                     if (objCellValue instanceof Boolean) {
 
-                        objFilterValue = FiBoolean.convertBooleanElseValue(objFilterValue, null);
+                        objFilterValue = FiBool.convertBooleanElseValue(objFilterValue, null);
 
                         //FiConsole.printObjectDefinitonLimityByClass(objFilterValue, "Filter Value", getClass());
 
@@ -1332,7 +1351,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
                         //Loghelperr.getInstance(getClass()).debug(" Obj Filter :" + objFilterValue + " Obj Cell Value" + objCellValue.toString());
 
                         //if (objCellValue == null) objCellValue = false;
-                        Boolean boCellValue = FiBoolean.convertBooleanElseFalse(objCellValue);
+                        Boolean boCellValue = FiBool.convertBooleanElseFalse(objCellValue);
 
                         //FiConsole.printObjectDefinitonLimityByClass(boCellValue, "Bo Cell Value", getClass());
 
@@ -1367,13 +1386,13 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     private boolean checkColFilterableLocal(FxTableCol2 fxTableColumn) {
 
-        if (FiBoolean.isFalse(fxTableColumn.getFiCol().getBoFilterable())) {
+        if (FiBool.isFalse(fxTableColumn.getFiCol().getBoFilterable())) {
             return false;
         }
 
         // fiCol.colFilterable true ise ve enableLocalFilterEditor false edilmemişse
-        if (FiBoolean.isTrue(fxTableColumn.getFiCol().getBoFilterable())
-                && !FiBoolean.isFalse(getEnableLocalFilterEditorNtn())) {
+        if (FiBool.isTrue(fxTableColumn.getFiCol().getBoFilterable())
+                && !FiBool.isFalse(getEnableLocalFilterEditorNtn())) {
             //Loghelperr.getInstance(getClass()).debug("FiTableCol ColFilterable is True");
             return true;
         }
@@ -1391,7 +1410,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
         //if (FiBoolean.isTrue(fxTableColumn.getFiTableCol().getColFilterable()) && !FiBoolean.isFalse(getEnableRemoteFilterEditor())) return true;
 
-        if (getEnableRemoteFilterEditorNtn() && !FiBoolean.isFalse(fxTableColumn.getFiCol().getBoFilterable())) {
+        if (getEnableRemoteFilterEditorNtn() && !FiBool.isFalse(fxTableColumn.getFiCol().getBoFilterable())) {
             return true;
         }
 
@@ -1692,7 +1711,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
                 }
 
                 // null da bulunmamış kabul edildi.
-                if (FiBoolean.isNullOrFalse(found)) {
+                if (FiBool.isFalseOrNull(found)) {
                     listEklenecek.add(newItem);
                 }
             }
@@ -2330,7 +2349,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     public void activatePageToolbar() {
 
-        if (getFxTableMig() != null && !FiBoolean.isTrue(getBoPagingActive())) {
+        if (getFxTableMig() != null && !FiBool.isTrue(getBoPagingActive())) {
             setBoPagingActive(true);
             btnPageBegin = new FxButton("<<");
             lblPageNoIndex = new FxLabel("");

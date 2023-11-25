@@ -71,7 +71,7 @@ public class FxEditorFactory {
 
             Object property = null;
 
-            if (FiBoolean.isFalse(fiField.getNullable())) {
+            if (FiBool.isFalse(fiField.getNullable())) {
 
                 if (property == null) property = FiReflection.getProperty(entity, fiField.getName());
 
@@ -90,7 +90,7 @@ public class FxEditorFactory {
                     String txProperty = (String) property;
                     if (txProperty.length() > fiField.getLength()) {
 
-                        if (FiBoolean.isTrue(boTrimIfNeed)) {
+                        if (FiBool.isTrue(boTrimIfNeed)) {
                             //Loghelper.debug(FxEditorFactory.class,"FiField Length:"+fiField.getLength());
                             txProperty = txProperty.substring(0, fiField.getLength() - 1);
                             FiReflection.setter(entity, fiField.getName(), txProperty);
@@ -131,7 +131,7 @@ public class FxEditorFactory {
                     String txProperty = (String) property;
                     if (txProperty.length() > fiField.getLength()) {
 
-                        if (FiBoolean.isTrue(boTrimIfNeed)) {
+                        if (FiBool.isTrue(boTrimIfNeed)) {
                             //Loghelper.debug(FxEditorFactory.class,"FiField Length:"+fiField.getLength());
                             txProperty = txProperty.substring(0, fiField.getLength() - 1);
                             FiReflection.setter(entity, fiField.getName(), txProperty);
@@ -177,7 +177,7 @@ public class FxEditorFactory {
             Object nodeObjValue = getNodeObjValueByFilterNode(fiCol, fiCol.getFilterNodeClass());
 
             //FIXME buraya alan string kontrolü eklenmeli
-            if (FiBoolean.isTrue(fiCol.getBoFilterLike()) && nodeObjValue != null && nodeObjValue instanceof String) {
+            if (FiBool.isTrue(fiCol.getBoFilterLike()) && nodeObjValue != null && nodeObjValue instanceof String) {
                 fiKeyBean.add(fiCol.getFieldName(), "%" + nodeObjValue + "%");
                 continue;
             }
@@ -442,7 +442,7 @@ public class FxEditorFactory {
                 //comp.setAlignment(Pos.BASELINE_RIGHT);
             }
 
-            if (FiBoolean.isTrue(fiCol.getBoEditorOnlyNumber())) {
+            if (FiBool.isTrue(fiCol.getBoEditorOnlyNumber())) {
                 comp.convertNumberDoubleTextField1();
             }
 
@@ -679,7 +679,7 @@ public class FxEditorFactory {
             ozTableCol.setFilterValue(cellvalue);
 
             // Hidden ise component e değer ataması yapılmaz
-            if (FiBoolean.isTrue(ozTableCol.getBoHidden())) {
+            if (FiBool.isTrue(ozTableCol.getBoHidden())) {
                 continue;
             }
 
@@ -687,7 +687,7 @@ public class FxEditorFactory {
 
             // Form Node özellikleri buradan atanır
             if (ozTableCol.getColFilterNode() != null) {
-                if (FiBoolean.isTrue(ozTableCol.getBoNonEditableForForm())) {
+                if (FiBool.isTrue(ozTableCol.getBoNonEditableForForm())) {
                     ozTableCol.getColFilterNode().setDisable(true);
                 }
             }
@@ -725,7 +725,7 @@ public class FxEditorFactory {
             fiCol.setColEditorValue(cellvalue);
 
             // Hidden ise, node comp üretilmediği için değer ataması yapılmaz.
-            if (FiBoolean.isTrue(fiCol.getBoHidden())) {
+            if (FiBool.isTrue(fiCol.getBoHidden())) {
                 continue;
             }
 
@@ -734,7 +734,7 @@ public class FxEditorFactory {
 
             // Form Node özellikleri buradan atanır
             if (fiCol.getColEditorNode() != null) {
-                if (FiBoolean.isTrue(fiCol.getBoNonEditableForForm())) {
+                if (FiBool.isTrue(fiCol.getBoNonEditableForForm())) {
                     fiCol.getColEditorNode().setDisable(true);
                 }
             }
@@ -760,7 +760,7 @@ public class FxEditorFactory {
 
     }
 
-    public static FiKeyBean bindFormToKeyBeanByEditorNode(List<? extends IFiCol> listColumns) {
+    public static FiKeyBean bindFormToFiKeyBeanByEditorNode(List<? extends IFiCol> listColumns) {
         FiKeyBean fiKeyBean = new FiKeyBean();
         for (int i = 0; i < listColumns.size(); i++) {
             IFiCol iFiCol = listColumns.get(i);
@@ -1255,11 +1255,11 @@ public class FxEditorFactory {
 
             IFiCol ozTableCol = listColumns.get(i);
 
-            if (FiBoolean.isTrue(ozTableCol.getBoHidden())) {
+            if (FiBool.isTrue(ozTableCol.getBoHidden())) {
                 continue;
             }
 
-            if (FiBoolean.isTrue(ozTableCol.getBoEditable())) continue;
+            if (FiBool.isTrue(ozTableCol.getBoEditable())) continue;
 
             // editable is Null or False , then
 
@@ -1415,7 +1415,7 @@ public class FxEditorFactory {
 
         for (IFiCol iFiTableCol : listCol) {
 
-            if (FiBoolean.isTrue(iFiTableCol.getBoRequired()) || FiBoolean.isFalse(iFiTableCol.getBoNullable())) {
+            if (FiBool.isTrue(iFiTableCol.getBoRequired()) || FiBool.isFalse(iFiTableCol.getBoNullable())) {
 
                 Object propertyNested = FiReflection.getPropertyNested(entity, iFiTableCol.getFieldName());
 
@@ -1467,7 +1467,7 @@ public class FxEditorFactory {
         for (FiCol fiTableCol : colsForm) {
 
             // boRequired True, BoNullable False yapılmışsa boş geçilemez.
-            if (FiBoolean.isTrue(fiTableCol.getBoRequired()) || FiBoolean.isFalse(fiTableCol.getBoNullable())) {
+            if (FiBool.isTrue(fiTableCol.getBoRequired()) || FiBool.isFalse(fiTableCol.getBoNullable())) {
 
                 Object cellValue = fiTableCol.getColEditorValue();
 
@@ -1495,7 +1495,7 @@ public class FxEditorFactory {
         for (FiCol fiTableCol : colsForm) {
 
             // boRequired True, BoNullable False yapılmışsa boş geçilemez.
-            if (FiBoolean.isTrue(fiTableCol.getBoRequired()) || FiBoolean.isFalse(fiTableCol.getBoNullable())) {
+            if (FiBool.isTrue(fiTableCol.getBoRequired()) || FiBool.isFalse(fiTableCol.getBoNullable())) {
 
                 //Object cellValue = fiTableCol.getColEditorValue();
                 Object cellValue = FxEditorFactory.getNodeObjValueByEditorNode(fiTableCol, fiTableCol.getColEditorClass());

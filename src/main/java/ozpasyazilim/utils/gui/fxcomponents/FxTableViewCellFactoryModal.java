@@ -6,7 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.util.Callback;
-import ozpasyazilim.utils.core.FiBoolean;
+import ozpasyazilim.utils.core.FiBool;
 import ozpasyazilim.utils.core.FiString;
 import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.gui.fxTableViewExtra.EnumColNodeType;
@@ -270,7 +270,7 @@ public class FxTableViewCellFactoryModal {
 								node.setSelected(false);
 							}
 
-							if (FiBoolean.isTrue(fxTableCol.getFiCol().getBoEditable())) {
+							if (FiBool.isTrue(fxTableCol.getFiCol().getBoEditable())) {
 
 								Object entity = getTableView().getItems().get(getIndex());
 

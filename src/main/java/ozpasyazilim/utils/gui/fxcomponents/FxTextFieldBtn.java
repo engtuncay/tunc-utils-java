@@ -4,7 +4,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import ozpasyazilim.utils.core.FiBoolean;
+import ozpasyazilim.utils.core.FiBool;
 import ozpasyazilim.utils.javafx.FiNodeFx;
 import ozpasyazilim.utils.table.OzColType;
 
@@ -92,7 +92,7 @@ public class FxTextFieldBtn<EntClazz> extends FxMigPane implements IfxNode {
 		getFxTextField().txAltValueProperty().addListener((observable, oldValue, newValue) -> {
 			if (newValue != null) {
 				fxLabel.setText(newValue);
-				if (!FiBoolean.isTrue(getFxTextField().getBoInvalidData())) {
+				if (!FiBool.isTrue(getFxTextField().getBoInvalidData())) {
 //					Loghelper.get(getClass()).debug("tx value atandı.label");
 					fxLabel.setTxValue(newValue);
 				} else {
@@ -147,7 +147,7 @@ public class FxTextFieldBtn<EntClazz> extends FxMigPane implements IfxNode {
 
 	@Override
 	public Object getCompValueByColType(OzColType ozColType) {
-		if(FiBoolean.isTrue(getFxTextField().getBoInvalidData())) return null;
+		if(FiBool.isTrue(getFxTextField().getBoInvalidData())) return null;
 		if(ozColType==null){
 			return getTxValue();
 		}else{

@@ -1226,7 +1226,7 @@ public class FiCollection {
         listData.forEach(ent -> {
 
             try {
-                Boolean aBoolean = FiBoolean.convertBooleanElseFalse(PropertyUtils.getNestedProperty(ent, boolField));
+                Boolean aBoolean = FiBool.convertBooleanElseFalse(PropertyUtils.getNestedProperty(ent, boolField));
                 if (aBoolean) {
                     listSelect.add(ent);
                 }

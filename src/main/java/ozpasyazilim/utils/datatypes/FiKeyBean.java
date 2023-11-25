@@ -73,7 +73,7 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
         if (fieldName == null) return this;
         if (FiType.isEmptyGen(value)) return this;
 
-        if (FiBoolean.isTrue(addPercentage)) {
+        if (FiBool.isTrue(addPercentage)) {
             if (value instanceof String) {
                 this.put(fieldName.toString(), "%" + value + "%");
             } else {
@@ -148,7 +148,7 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
                     Loghelper.get(getClass()).debug("Aktive edilmedi Param:" + objKey.toString());
                     return this;
                 }
-                if (FiBoolean.isTrue(addPercentage)) value = "%" + value.toString() + "%";
+                if (FiBool.isTrue(addPercentage)) value = "%" + value.toString() + "%";
             }
 
             if (value instanceof Collection) {
@@ -191,7 +191,7 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
             if (fieldValue != null) {
                 FiField fiField = FiEntity.setupFiFieldBasic(field, null);
 
-                if (FiBoolean.isTrue(fiField.getBoFilterLike())) {
+                if (FiBool.isTrue(fiField.getBoFilterLike())) {
                     String txValue = (String) fieldValue;
                     txValue = "%" + txValue + "%";
                     fiKeyBean.add(fiField.getDbFieldName(), txValue);
@@ -234,11 +234,21 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
         return get(txKey.toString());
     }
 
+    /**
+     * Get KeyValue As String
+     *
+     * @param fiCol
+     * @return
+     */
     public String getAsString(FiCol fiCol) {
         if (fiCol == null || FiString.isEmpty(fiCol.getFieldName())) return null;
 
         if (containsKey(fiCol.getFieldName())) {
-            return (String) get(fiCol.getFieldName());
+            Object objValue = get(fiCol.getFieldName());
+
+            if (objValue == null) return null;
+
+            return (String) objValue;
         }
 
         return null;
@@ -271,13 +281,13 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
     }
 
     public boolean checkEmpty(FiCol fiCol) {
-        if(!containsKey(fiCol.toString())) return true;
+        if (!containsKey(fiCol.toString())) return true;
 
         Object objValue = get(fiCol.toString());
 
-        if(objValue==null) return true;
+        if (objValue == null) return true;
 
-        if(objValue instanceof String){
+        if (objValue instanceof String) {
             return FiString.isEmptyTrim((String) objValue);
         }
 
@@ -292,7 +302,7 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
      */
     public boolean checkEmptyValueInFkb(List<FiCol> fiColList) {
         for (FiCol fiCol : fiColList) {
-            if(checkEmpty(fiCol)) return true;
+            if (checkEmpty(fiCol)) return true;
         }
         return false;
     }
@@ -312,13 +322,13 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
             Object objValue = get(fiCol.toString());
             //Loghelper.get(getClass()).debug("Değer:"+objValue);
 
-            if(objValue instanceof String){
+            if (objValue instanceof String) {
                 //Loghelper.get(getClass()).debug("String");
                 return !FiString.isEmpty((String) objValue);
             }
 
 
-            if(objValue!=null){
+            if (objValue != null) {
                 return true;
             }
 

@@ -2,9 +2,6 @@ package ozpasyazilim.utils.gui.fxcomponents;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
-import ozpasyazilim.utils.core.FiBoolean;
-import ozpasyazilim.utils.mvc.IFiCol;
-import ozpasyazilim.utils.table.IFiColHelper;
 import ozpasyazilim.utils.table.OzColType;
 import ozpasyazilim.utils.table.FiCol;
 

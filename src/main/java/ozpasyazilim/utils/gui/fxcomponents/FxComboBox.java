@@ -16,7 +16,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Window;
-import ozpasyazilim.utils.core.FiBoolean;
+import ozpasyazilim.utils.core.FiBool;
 import ozpasyazilim.utils.core.FiString;
 import ozpasyazilim.utils.gui.components.ComboItemText;
 
@@ -160,7 +160,7 @@ public class FxComboBox<T> extends ComboBox<T> {
     }
 
     public void activateSetComboItemAfterAction(Boolean afterSelectZeroIndex) {
-        if (FiBoolean.isTrue(afterSelectZeroIndex)) {
+        if (FiBool.isTrue(afterSelectZeroIndex)) {
             activateSetComboItemAfterAction(ComboAfterSelectType.ZeroIndex);
         } else {
             activateSetComboItemAfterAction(ComboAfterSelectType.DoNothing);

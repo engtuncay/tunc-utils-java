@@ -2,7 +2,7 @@ package ozpasyazilim.utils.log;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
-import ozpasyazilim.utils.core.FiBoolean;
+import ozpasyazilim.utils.core.FiBool;
 import ozpasyazilim.utils.core.FiException;
 
 import static org.apache.log4j.Logger.getLogger;
@@ -20,7 +20,7 @@ public class Loghelper {
 	public static void installLogger(Boolean boDebugModeEnabled) {
 		System.out.println("Logger(v1) yüklenecek. Loghelper.installLogger(boDebugMode):"+ boDebugModeEnabled);
 
-		if (FiBoolean.isTrue(boDebugModeEnabled)) {
+		if (FiBool.isTrue(boDebugModeEnabled)) {
 			PropertyConfigurator.configure("log4jd.properties");
 			Loghelper.get(Loghelper.class).info("Log4jd Props (Debug)");
 		} else {

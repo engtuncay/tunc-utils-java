@@ -62,21 +62,35 @@ public class FiQuery {
     /**
      * Collection (List,Set) Türündeki parametreleri multi param (abc_1,abc_2... gibi) çevirir
      */
-    public void convertListParamToMultiParams() {
+    public void convertListParamsToMultiParams() {
         if (getMapParams() == null) return;
 
-        setTxQuery(FiQueryTools.convertListParamToMultiParams(getTxQuery(), getMapParams(), false));
+        setTxQuery(FiQueryTools.convertListParamsToMultiParams(getTxQuery(), getMapParams(), false));
     }
 
-    public void convertListParamToMultiParamsWithKeep() {
+
+
+    public void convertListParamsToMultiParamsWithKeep() {
         if (getMapParams() == null) return;
 
-        setTxQuery(FiQueryTools.convertListParamToMultiParams(getTxQuery(), getMapParams(), true));
+        setTxQuery(FiQueryTools.convertListParamsToMultiParams(getTxQuery(), getMapParams(), true));
     }
 
-    public void convertListParamToMultiParams(FiKeyBean mapBind) {
+    public void convertListParamsToMultiParams(FiKeyBean mapBind) {
         setMapParams(mapBind);
-        convertListParamToMultiParams();
+        convertListParamsToMultiParams();
+    }
+
+    /**
+     * Parametreyi multi parametreye çevirir, birleştirme olarak new line kullanır. Parametreyi mapParam'dan çıkarır. multiler kalır.
+     *
+     * @param txParamName
+     * @param collParams
+     */
+    public void convertParamToMultiParamsWithSqlNewLine(String txParamName, Collection collParams) {
+        if (getMapParams() == null) return;
+        String txCombineSeperator = "+char(13)+char(10)+";
+        setTxQuery(FiQueryTools.convertSingleParamToMultiParam2(getTxQuery(), getMapParams(),txParamName, collParams, false, txCombineSeperator));
     }
 
     public FiKeyBean getMapParams() {
@@ -315,7 +329,7 @@ public class FiQuery {
             }
 
             if (boListDegerVarMi.getValue()) {
-                convertListParamToMultiParams();
+                convertListParamsToMultiParams();
             }
 
         }
@@ -330,7 +344,7 @@ public class FiQuery {
 //					return this;
                     return this;
                 }
-                if (FiBoolean.isTrue(addPercentage)) value = "%" + value.toString() + "%";
+                if (FiBool.isTrue(addPercentage)) value = "%" + value.toString() + "%";
                 getMapParamsInit().put(objKey.toString(), value);
                 activateOptParam(objKey.toString());
                 return this;

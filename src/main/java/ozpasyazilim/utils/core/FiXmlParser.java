@@ -15,7 +15,6 @@ import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.OzColType;
 
 import java.io.*;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -203,7 +202,7 @@ public class FiXmlParser {
 
 				Match elementChild = xmlMatch.find(fiColParent.getHeaderName());
 
-				if (FiBoolean.isTrue(boChildSameClassCheck) && fiColParent.getChildClazz().equals(clazz)) {
+				if (FiBool.isTrue(boChildSameClassCheck) && fiColParent.getChildClazz().equals(clazz)) {
 					parseMatchToEntityWithOneChild(elementChild, fiColParent.getListChildCol(), fiColParent.getChildClazz(), boChildSameClassCheck, entity);
 
 				} else {

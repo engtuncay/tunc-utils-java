@@ -2,7 +2,7 @@ package ozpasyazilim.utils.gui.fxcomponents;
 
 import java.util.List;
 
-public class FxFormMig extends FxFormMig2<Object> {
+public class FxFormMig extends FxFormMigGen<Object> {
 
 	public FxFormMig() {
 	}

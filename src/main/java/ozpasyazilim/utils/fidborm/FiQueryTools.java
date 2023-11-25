@@ -4,7 +4,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.datatypes.FiKeyBean;
-import ozpasyazilim.utils.log.Loghelper;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -294,12 +293,12 @@ public class FiQueryTools {
 
 		mapParams.forEach((key, value) -> {
 
-			if (FiBoolean.isTrue(boActivateOnlyFullParams)) {
+			if (FiBool.isTrue(boActivateOnlyFullParams)) {
 
 				// Dolu olanları aktif edecek, boş olanları deaktif edecek
 				Boolean boCheckParamsEmpty = FiQueryTools.checkParamsEmpty(value);
 
-				if (FiBoolean.isFalse(boCheckParamsEmpty)) {
+				if (FiBool.isFalse(boCheckParamsEmpty)) {
 					spQuery.set(activateOptParamMain(spQuery.get(), key));
 				} else {
 					spQuery.set(FiQueryTools.deActivateOptParamMain(spQuery.get(), key));
@@ -344,12 +343,13 @@ public class FiQueryTools {
 		return spQuery.get();
 	}
 
-	public static String convertListParamToMultiParams(String txQuery,FiKeyBean mapParams,Boolean boKeepOldMultiParamInFkb) {
+	public static String convertListParamsToMultiParams(String txQuery, FiKeyBean mapParams, Boolean boKeepListParamInFkb) {
 
 		if (mapParams == null) return txQuery;
 
 		// (1) List türündeki parametreler bulunur.
 		List<String> listMultiParamsName = new ArrayList<>();
+
 		mapParams.forEach((param, value) -> {
 
 			// concurrent modification olmaması amacıyla convert işlemi ayrı yapılacak (aşağıda)
@@ -369,7 +369,7 @@ public class FiQueryTools {
 
 		for (String param : listMultiParamsName) {
 			Collection paramCollection = (Collection) mapParams.get(param);
-			String queryNew = convertSqlFromSingleParamToMultiParam(spQuery.get(), mapParams, param, paramCollection, boKeepOldMultiParamInFkb);
+			String queryNew = convertSingleParamToMultiParamWithComma(spQuery.get(), mapParams, param, paramCollection, boKeepListParamInFkb);
 			spQuery.set(queryNew);
 		}
 
@@ -383,7 +383,7 @@ public class FiQueryTools {
 	 * @param collParamData
 	 * @param boKeepOldParam
 	 */
-	private static String convertSqlFromSingleParamToMultiParam(String txQuery, FiKeyBean mapParams, String param, Collection collParamData, Boolean boKeepOldParam) {
+	private static String convertSingleParamToMultiParamWithComma(String txQuery, FiKeyBean mapParams, String param, Collection collParamData, Boolean boKeepOldParam) {
 
 		// (1) şablona göre yeni eklenecek parametre listesi
 		FiKeyBean paramsNew = new FiKeyBean();
@@ -393,7 +393,7 @@ public class FiQueryTools {
 		for (Object listDatum : collParamData) {
 			String sablonParam = FiQueryTools.makeMultiParamTemplate(param, index);
 			if (index != 0) sbNewParamsForQuery.append(",");
-			sbNewParamsForQuery.append("@" + sablonParam);
+			sbNewParamsForQuery.append("@").append(sablonParam);
 			paramsNew.put(sablonParam, listDatum);
 			index++;
 		}
@@ -404,11 +404,55 @@ public class FiQueryTools {
 		String sqlNew = txQuery.replaceAll("@" + param, sbNewParamsForQuery.toString()); //(%s)
 
 		// map paramden eski parametre çıkarılıp, yenileri eklenir
-		if (!FiBoolean.isTrue(boKeepOldParam)) {
+		if (!FiBool.isTrue(boKeepOldParam)) {
 			mapParams.remove(param);
 		}
 
 		mapParams.putAll(paramsNew);
+
+		return sqlNew;
+	}
+
+
+	/**
+	 * txCombineSeperator nasıl birleştirileceği belirtilir
+	 *
+	 * @param txQuery
+	 * @param mapParams
+	 * @param param
+	 * @param collParamData
+	 * @param boKeepOldParam
+	 * @param txCombineSeperator
+	 * @return
+	 */
+	public static String convertSingleParamToMultiParam2(String txQuery, FiKeyBean mapParams, String param, Collection collParamData, Boolean boKeepOldParam, String txCombineSeperator) {
+
+		// (1) şablona göre yeni eklenecek parametre listesi
+		//FiKeyBean paramsNew = new FiKeyBean();
+		StringBuilder sbNewParamsForQuery = new StringBuilder();
+
+		int index = 0;
+		for (Object listDatum : collParamData) {
+			String sablonParam = FiQueryTools.makeMultiParamTemplate(param, index);
+			if (index != 0) sbNewParamsForQuery.append(txCombineSeperator);
+			sbNewParamsForQuery.append("@").append(sablonParam);
+			//paramsNew.put(sablonParam, listDatum);
+			mapParams.put(sablonParam, listDatum);
+			index++;
+		}
+		// end-1
+
+		// Sorgu cümlesi güncellenir (eski parametre çıkarılır , yeni multi parametreler eklenir.)
+		// setTxQuery(fhrConvertSqlForMultiParamByTemplate(getTxQuery(), param, collParamData.size()));
+		String sqlNew = txQuery.replaceAll("@" + param, sbNewParamsForQuery.toString()); //(%s)
+
+		// map paramden eski parametre çıkarılır (tutulması istenmezse)
+		if (!FiBool.isTrue(boKeepOldParam)) {
+			mapParams.remove(param);
+		}
+
+		// yenileri eklenir (yukarıda direk eklendi)
+		//mapParams.putAll(paramsNew);
 
 		return sqlNew;
 	}

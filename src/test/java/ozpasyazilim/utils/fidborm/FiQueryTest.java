@@ -44,7 +44,7 @@ class FiQueryTest {
 
 		FiQuery fiQuery = new FiQuery(sql, fiKeyBean);
 		fiQuery.activateParamsByMapParams();
-		fiQuery.convertListParamToMultiParams();
+		fiQuery.convertListParamsToMultiParams();
 
 		System.out.println(fiQuery.getTxQuery());
 		FiConsole.printMapFi(fiQuery.getMapParams());

@@ -1,7 +1,7 @@
 package ozpasyazilim.utils.fxwindow;
 
 import javafx.scene.layout.Pane;
-import ozpasyazilim.utils.gui.fxcomponents.FxFormMig1;
+import ozpasyazilim.utils.gui.fxcomponents.FxFormMigDep;
 import ozpasyazilim.utils.gui.fxcomponents.FxMigHp;
 import ozpasyazilim.utils.gui.fxcomponents.FxMigPane;
 import ozpasyazilim.utils.gui.fxcomponents.FxTableMig2;
@@ -14,7 +14,7 @@ public class FxGenWindowView implements IFxSimpleView {
 	private FxMigPane fxMigToolbar;
 	private FxMigPane fxContent;
 
-	private FxFormMig1 fxFormMig;
+	private FxFormMigDep fxFormMig;
 	private FxTableMig2 fxTableMig;
 
 
@@ -38,7 +38,7 @@ public class FxGenWindowView implements IFxSimpleView {
 		fxRootMigPane = new FxMigPane(FxMigHp.bui().lcgInset3Gap33().getLcgPrep2());
 
 		// Container Initial.
-		fxFormMig = new FxFormMig1();
+		fxFormMig = new FxFormMigDep();
 		fxMigToolbar = new FxMigPane(FxMigHp.bui().lcgInset3Gap33().getLcgPrep2());
 		fxTableMig = new FxTableMig2();
 		fxContent = new FxMigPane(FxMigHp.bui().lcgInset0Gap50().getLcgPrep2());
@@ -61,7 +61,7 @@ public class FxGenWindowView implements IFxSimpleView {
 		return fxRootMigPane;
 	}
 
-	public FxFormMig1 getFxFormMig() {
+	public FxFormMigDep getFxFormMig() {
 		return fxFormMig;
 	}
 

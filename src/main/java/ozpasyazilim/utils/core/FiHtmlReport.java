@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.function.BiFunction;
 
 import ozpasyazilim.utils.gui.fxcomponents.FxTableModal;
-import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.OzColType;
 
@@ -221,7 +220,7 @@ public class FiHtmlReport {
 
 
 		// toplam satırı var mı ?
-		if (FiBoolean.isTrue(fiReportConfig.getBoSummaryEnabled())) {
+		if (FiBool.isTrue(fiReportConfig.getBoSummaryEnabled())) {
 
 			htmlContent += "<tr>\r\n";
 			for (FiCol fiTableCol : colList) {

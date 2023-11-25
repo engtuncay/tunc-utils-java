@@ -1,5 +1,8 @@
 package ozpasyazilim.utils.table;
 
+import ozpasyazilim.utils.gui.fxcomponents.FxDatePicker;
+import ozpasyazilim.utils.mvc.IFiCol;
+
 import java.util.Date;
 import java.util.List;
 
@@ -45,13 +48,44 @@ public class FiColsUtil {
     }
 
     public Date getColValueAsDate(Object objectFieldName) {
+        if (objectFieldName == null) return null;
+
         FiCol fiCol = findColumnByFieldName(objectFieldName.toString());
 
-        if (fiCol.getColValue() instanceof Date){
-            return (Date)fiCol.getColValue();
+        if (fiCol.getColValue() instanceof Date) {
+            return (Date) fiCol.getColValue();
         }
 
         return null;
+    }
+
+    public String getColValueAsString(Object objectFieldName) {
+        if (objectFieldName == null) return null;
+
+        FiCol fiCol = findColumnByFieldName(objectFieldName.toString());
+
+        if (fiCol.getColValue() instanceof String) {
+            return (String) fiCol.getColValue();
+        }
+
+        return null;
+    }
+
+    public FxDatePicker getEditorCompAsFxDatePicker(String fieldName) {
+
+        FiCol fiCol = findColumnByFieldName(fieldName); //IFiColHelper.build(getListFormElements()).getIFiColByID(fieldName);
+
+        if (fiCol.getColEditorClass().equals(FxDatePicker.class.getName())) {
+            FxDatePicker comp = (FxDatePicker) fiCol.getColEditorNode();
+            return comp;
+        }
+
+        return null;
+    }
+
+    public static FiCol changeFieldNameWithNew(FiCol fiCol){
+        fiCol.setFieldName(fiCol.getFieldName()+ "_new");
+        return fiCol;
     }
 
 

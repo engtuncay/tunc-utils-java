@@ -6,7 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import ozpasyazilim.utils.annotations.FiDraft;
-import ozpasyazilim.utils.core.FiBoolean;
+import ozpasyazilim.utils.core.FiBool;
 import ozpasyazilim.utils.core.FiString;
 import ozpasyazilim.utils.gui.components.ComboItemText;
 import ozpasyazilim.utils.log.Loghelper;
@@ -25,7 +25,7 @@ public class FxComboBoxSimple extends FxComboBox<ComboItemText> {
 	}
 
 	public void enableListenValue(Boolean isEnabledListenValue) {
-		if(FiBoolean.isTrue(isEnabledListenValue)){
+		if(FiBool.isTrue(isEnabledListenValue)){
 			getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> setTxValue(newValue.getValue()));
 		}
 	}

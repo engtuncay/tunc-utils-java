@@ -104,7 +104,7 @@ public class FiConsole {
     }
 
     public static void debugMapNotNull(Map map, Class clazz) {
-        Loghelper.debugLog(clazz, String.format("Map Detail (Not Null)\n\n%s", textMapNotNull(map)));
+        Loghelper.get(FiConsole.class).debug(String.format("Map Detail (Not Null) - Debug Class: %s\n\n%s", clazz.getSimpleName() ,textMapNotNull(map)));
     }
 
     public static void debugListMap(FiListKeyString listMap, Class clazz, Boolean boShowNulls) {
@@ -113,7 +113,7 @@ public class FiConsole {
             return;
         }
         for (FiKeyString fiKeyString : listMap) {
-            if (FiBoolean.isTrue(boShowNulls)) {
+            if (FiBool.isTrue(boShowNulls)) {
                 Loghelper.debugLog(clazz, String.format("Map Detail (Not Null)\n\n%s", textFiKeyString(fiKeyString)));
             } else {
                 Loghelper.debugLog(clazz, String.format("Map Detail (Not Null)\n\n%s", textMapNotNull(fiKeyString)));
@@ -538,7 +538,7 @@ public class FiConsole {
             return strBuffer.toString();
         }
 
-        strBuffer.append("\n\n" + obj.getClass().getSimpleName() + " Sınıfının Objesinin Tanımlı Alanları " + (FiBoolean.isTrue(fiConsoleConfig.getBoShowNull()) ? "(With Null)" : "(Without Null)") + "\n\n");
+        strBuffer.append("\n\n" + obj.getClass().getSimpleName() + " Sınıfının Objesinin Tanımlı Alanları " + (FiBool.isTrue(fiConsoleConfig.getBoShowNull()) ? "(With Null)" : "(Without Null)") + "\n\n");
 
         Field[] fields = obj.getClass().getDeclaredFields(); // declared idi
 
@@ -552,7 +552,7 @@ public class FiConsole {
 
                 try {
                     value = f.get(obj);
-                    if (value == null && !FiBoolean.isTrue(fiConsoleConfig.getBoShowNull())) {
+                    if (value == null && !FiBool.isTrue(fiConsoleConfig.getBoShowNull())) {
                         continue;
                     }
                 } catch (IllegalAccessException e) {
@@ -560,17 +560,17 @@ public class FiConsole {
                     strBuffer.append("N/A");
                 }
 
-                if (!FiBoolean.isTrue(fiConsoleConfig.getBoTypeHide())) {
+                if (!FiBool.isTrue(fiConsoleConfig.getBoTypeHide())) {
                     strBuffer.append(f.getType().getSimpleName());
                     strBuffer.append("\t");
                 }
 
-                if (!FiBoolean.isTrue(fiConsoleConfig.getBoFieldNameHide())) {
+                if (!FiBool.isTrue(fiConsoleConfig.getBoFieldNameHide())) {
                     strBuffer.append(f.getName());
                     strBuffer.append("\t");
                 }
 
-                if (FiBoolean.isNotTrue(fiConsoleConfig.getBoEqualSignHide())) {
+                if (FiBool.isNotTrue(fiConsoleConfig.getBoEqualSignHide())) {
                     strBuffer.append("=\t");
                 }
 
@@ -606,7 +606,7 @@ public class FiConsole {
 
                 try {
                     value = f.get(obj);
-                    if (value == null && !FiBoolean.isTrue(boShowNullFields)) continue;
+                    if (value == null && !FiBool.isTrue(boShowNullFields)) continue;
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                     buffer.append("N/A");

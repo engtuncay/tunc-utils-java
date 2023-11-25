@@ -1,7 +1,7 @@
 package ozpasyazilim.utils.fxwindow;
 
 import javafx.scene.Node;
-import ozpasyazilim.utils.core.FiBoolean;
+import ozpasyazilim.utils.core.FiBool;
 import ozpasyazilim.utils.gui.fxcomponents.FxDialogShow;
 import ozpasyazilim.utils.gui.fxcomponents.FxMigHp;
 import ozpasyazilim.utils.gui.fxcomponents.FxMigPaneView;
@@ -19,7 +19,7 @@ public class FxSimpleContGen<E> extends AbsFxSimpleBaseCont implements IFxSimpSe
 	}
 
 	public FxSimpleContGen(Boolean withInit) {
-		if (FiBoolean.isTrue(withInit)) {
+		if (FiBool.isTrue(withInit)) {
 			initCont();
 		}
 	}

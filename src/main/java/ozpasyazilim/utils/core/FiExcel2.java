@@ -330,7 +330,7 @@ public class FiExcel2 {
 
             FxTableCol tblcol = (FxTableCol) table.getColumns().get(indexColExcel);
 
-            if (FiBoolean.isTrue(tblcol.getBoIsNotExportedExcel())) continue;
+            if (FiBool.isTrue(tblcol.getBoIsNotExportedExcel())) continue;
             indexCol++;
 
             Object nodeHeader = tblcol.getGraphic();
@@ -382,7 +382,7 @@ public class FiExcel2 {
 
             FxTableCol tableColumn = (FxTableCol) table.getColumns().get(indexColExcel);
 
-            if (FiBoolean.isTrue(tableColumn.getBoIsNotExportedExcel())) continue;
+            if (FiBool.isTrue(tableColumn.getBoIsNotExportedExcel())) continue;
             indexCol++;
 
             String columnId = tableColumn.getId();
@@ -520,7 +520,7 @@ public class FiExcel2 {
 
             FxTableCol2 tblcol = (FxTableCol2) table.getColumns().get(indexColExcel);
 
-            if (FiBoolean.isTrue(tblcol.getFiCol().getBoDontExportExcel())) continue;
+            if (FiBool.isTrue(tblcol.getFiCol().getBoDontExportExcel())) continue;
             indexCol++;
 
             Object nodeHeader = tblcol.getGraphic();
@@ -572,7 +572,7 @@ public class FiExcel2 {
 
             FxTableCol2 tableColumn = (FxTableCol2) table.getColumns().get(indexColExcel);
 
-            if (FiBoolean.isTrue(tableColumn.getFiCol().getBoDontExportExcel())) continue;
+            if (FiBool.isTrue(tableColumn.getFiCol().getBoDontExportExcel())) continue;
             indexCol++;
 
             String columnId = tableColumn.getId();
@@ -867,7 +867,7 @@ public class FiExcel2 {
             FxTableCol tblcol = (FxTableCol) table.getColumns().get(colIndexExcel);
             //ObservableValue obsval = (ObservableValue) tblcol.getCellObservableValue(row).getValue();
             //Object obj = obsval.getValue();
-            if (FiBoolean.isTrue(tblcol.getBoIsNotExportedExcel())) continue;
+            if (FiBool.isTrue(tblcol.getBoIsNotExportedExcel())) continue;
             colIndexContent++;
 
             String value = "";
@@ -953,7 +953,7 @@ public class FiExcel2 {
             FxTableCol2 tblcol = (FxTableCol2) table.getColumns().get(colIndexExcel);
             //ObservableValue obsval = (ObservableValue) tblcol.getCellObservableValue(row).getValue();
             //Object obj = obsval.getValue();
-            if (FiBoolean.isTrue(tblcol.getFiCol().getBoDontExportExcel())) continue;
+            if (FiBool.isTrue(tblcol.getFiCol().getBoDontExportExcel())) continue;
             colIndexContent++;
 
             String value = "";
@@ -1216,7 +1216,7 @@ public class FiExcel2 {
             IFiCol fiCol = columnList.get(colCounterIndex);
             //Loghelper.debug(getClazz(),"fitable col field"+fiCol.getFieldName());
 
-            if (FiBoolean.isTrue(fiCol.getBoDontExportExcelTemplate())) {
+            if (FiBool.isTrue(fiCol.getBoDontExportExcelTemplate())) {
                 continue;
             }
 
@@ -1242,7 +1242,7 @@ public class FiExcel2 {
 
                 IFiCol fiTableCol = columnList.get(colCounterIndex);
 
-                if (FiBoolean.isTrue(fiTableCol.getBoDontExportExcelTemplate())) {
+                if (FiBool.isTrue(fiTableCol.getBoDontExportExcelTemplate())) {
                     continue;
                 }
 

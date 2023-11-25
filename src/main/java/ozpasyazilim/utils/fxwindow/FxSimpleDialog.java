@@ -6,7 +6,7 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
-import ozpasyazilim.utils.core.FiBoolean;
+import ozpasyazilim.utils.core.FiBool;
 import ozpasyazilim.utils.core.FiString;
 import ozpasyazilim.utils.core.FxPredicateString;
 import ozpasyazilim.utils.fidborm.FiEntity;
@@ -39,7 +39,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleBaseCont {
 	private Class entityClass;
 	private FxFormc fxFormMig;
 
-	private FxFormMig2 fxFormMig2;
+	private FxFormMigGen fxFormMigGen;
 	private List<FiCol> fiColList;
 	private Predicate<String> predValidateString;
 	private String validateErrorMessage;
@@ -48,7 +48,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleBaseCont {
 	// Experimental
 	private Predicate<EntClazz> predValidate;
 
-	private Predicate<FxFormMig2> predValidateForm;
+	private Predicate<FxFormMigGen> predValidateForm;
 
 	/**
 	 * Dialog penceresinde ok tıklandıktan sonra çalıştırılacak
@@ -262,7 +262,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleBaseCont {
 		btnOk = new FxButton("Ok", Icons525.OK);
 		btnOk.setOnAction(event -> actBtnOK());
 
-		if(!FiBoolean.isTrue(boDontAddCancel)){
+		if(!FiBool.isTrue(boDontAddCancel)){
 			btnCancel = new FxButton("İptal", Icons525.CANCEL);
 			btnCancel.setOnAction(event -> actBtnCancel());
 			migFooter.add(btnCancel);
@@ -784,22 +784,22 @@ public class FxSimpleDialog<EntClazz> extends AbsFxSimpleBaseCont {
 		this.txInitialValue = txInitialValue;
 	}
 
-	public FxFormMig2 getFxFormMig3() {
-		return fxFormMig2;
+	public FxFormMigGen getFxFormMig3() {
+		return fxFormMigGen;
 	}
 
-	public FxFormMig2 getFxFormInit() {
-		if (fxFormMig2 == null) {
-			fxFormMig2 = new FxFormMig2<>();
+	public FxFormMigGen getFxFormInit() {
+		if (fxFormMigGen == null) {
+			fxFormMigGen = new FxFormMigGen<>();
 		}
-		return fxFormMig2;
+		return fxFormMigGen;
 	}
 
-	public Predicate<FxFormMig2> getPredValidateForm() {
+	public Predicate<FxFormMigGen> getPredValidateForm() {
 		return predValidateForm;
 	}
 
-	public void setPredValidateForm(Predicate<FxFormMig2> predValidateForm) {
+	public void setPredValidateForm(Predicate<FxFormMigGen> predValidateForm) {
 		this.predValidateForm = predValidateForm;
 	}
 

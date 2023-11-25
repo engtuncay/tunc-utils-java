@@ -2,7 +2,7 @@ package ozpasyazilim.utils.gui.fxcomponents;
 
 import javafx.scene.control.Label;
 import org.tbee.javafx.scene.layout.MigPane;
-import ozpasyazilim.utils.core.FiBoolean;
+import ozpasyazilim.utils.core.FiBool;
 import ozpasyazilim.utils.mvc.IFiCol;
 
 import java.util.List;
@@ -13,7 +13,7 @@ public class FxFormFactory {
 
 		listFormElements.forEach( ozTableCol -> {
 
-			if(!FiBoolean.isTrue(ozTableCol.getBoHidden())){
+			if(!FiBool.isTrue(ozTableCol.getBoHidden())){
 				Label lblForm = new Label(ozTableCol.getHeaderName());
 				migForm1.add(lblForm,"width 100");
 				migForm1.add(new FxEditorFactory().generateAndSetFilterNode(ozTableCol),"wrap");

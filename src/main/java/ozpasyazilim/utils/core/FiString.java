@@ -719,6 +719,22 @@ public class FiString {
         }
     }
 
+    public static String combineListWithNewLine(List<String> listNew) {
+        if (FiCollection.isEmpty(listNew)) {
+            return "";
+        }
+
+        StringBuilder txResult = new StringBuilder();
+        for (int index = 0; index < listNew.size(); index++) {
+            if(index!=0){
+                txResult.append("\n");
+            }
+            txResult.append(FiString.orEmpty(listNew.get(index)));
+        }
+
+        return txResult.toString();
+    }
+
     public static Boolean checkEqualNotNull(String vdaireno, String cari_vdaire_no) {
         if (vdaireno == null || cari_vdaire_no == null) return false;
 

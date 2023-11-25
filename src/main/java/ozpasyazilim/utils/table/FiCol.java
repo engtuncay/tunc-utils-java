@@ -10,7 +10,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.input.KeyEvent;
 import org.reactfx.util.TriConsumer;
-import ozpasyazilim.utils.core.FiBoolean;
+import ozpasyazilim.utils.core.FiBool;
 import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.gui.fxcomponents.*;
 import ozpasyazilim.utils.mvc.IFiCol;
@@ -423,7 +423,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
         List<FiCol> fiTableColList = new ArrayList<>();
 
         for (FiField fiField : listFiFieldsSummary) {
-            if (FiBoolean.isTrue(fiField.getBoExcludeFromAutoColList())) continue;
+            if (FiBool.isTrue(fiField.getBoExcludeFromAutoColList())) continue;
             FiCol fiTableCol = new FiCol(fiField.getName(), fiField.getName());
             fiTableCol.setColType(convertOzColType(fiField.getClassNameSimple()));
             fiTableColList.add(fiTableCol);

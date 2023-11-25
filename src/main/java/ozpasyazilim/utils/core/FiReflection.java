@@ -340,7 +340,7 @@ public class FiReflection {
 			} catch (InvocationTargetException e) {
 				Loghelper.get(FiReflection.class).debug(FiException.exceptionIfToString(e));
 			} catch (NoSuchMethodException e) {
-				if (!FiBoolean.isTrue(boDoNotShowNotSuchMethodException)) {
+				if (!FiBool.isTrue(boDoNotShowNotSuchMethodException)) {
 					Loghelper.get(FiReflection.class).debug("Objenin Metodu Yok:" + key);
 				}
 			}
@@ -714,7 +714,7 @@ public class FiReflection {
 		for (Field field : fields) {
 			Object property = FiReflection.getProperty(entity, field.getName());
 
-			if(FiBoolean.isTrue(boAddOnlyNtnFields)){
+			if(FiBool.isTrue(boAddOnlyNtnFields)){
 				if(property!=null) {
 					keyBean.put(field.getName(), property);
 				}

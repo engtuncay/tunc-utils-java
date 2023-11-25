@@ -209,7 +209,7 @@ public class FiSoap {
 		Fdr<FiXml> fdrXmlDoc = new Fdr<>();
 
 		Fdr<String> fdrRequest = null;
-		if (FiBoolean.isTrue(boUseHttps)) {
+		if (FiBool.isTrue(boUseHttps)) {
 			fdrRequest = requestRawHttps(endPoint, soapRequestXml, mapHeaders);
 		} else {
 			fdrRequest = requestRawHttp(endPoint, soapRequestXml, mapHeaders);

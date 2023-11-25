@@ -104,7 +104,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 		return getItemsCurrent(ent -> {
 
 			try {
-				return FiBoolean.convertBooleanElseFalse(PropertyUtils.getNestedProperty(ent, fieldForSelection));
+				return FiBool.convertBooleanElseFalse(PropertyUtils.getNestedProperty(ent, fieldForSelection));
 			} catch (Exception e) {
 				e.printStackTrace();
 				return false;
@@ -283,7 +283,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 									node.setSelected(false);
 								}
 
-								if (FiBoolean.isTrue(fxTableCol.getBoEditable())) {
+								if (FiBool.isTrue(fxTableCol.getBoEditable())) {
 
 									if (fxTableCol.getPredFiEditorDisable() != null) {
 										node.setDisable(fxTableCol.getPredFiEditorDisable().test(getTableView().getItems().get(getIndex())));
@@ -842,7 +842,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 			IFiCol ifiTableCol = tableColumns.get(colIndex);
 			// Column geçerli değilse eklenmez
-			if (FiBoolean.isFalse(ifiTableCol.getBoEnabled())) continue;
+			if (FiBool.isFalse(ifiTableCol.getBoEnabled())) continue;
 			listFxTableCol.add(new FxTableCol(ifiTableCol));
 		}
 
@@ -1019,11 +1019,11 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 		Boolean headerAdded = false;
 
-		if (FiBoolean.isFalse(fxTableCol.getBoFilterable())) {
+		if (FiBool.isFalse(fxTableCol.getBoFilterable())) {
 			return;
 		}
 
-		if (FiBoolean.isTrue(fxTableCol.getBoFilterable())) {
+		if (FiBool.isTrue(fxTableCol.getBoFilterable())) {
 			setupHeaderFilterNode(fxTableCol);
 			headerAdded = true;
 		}
@@ -1054,7 +1054,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 			//fxTableCol.getTxfFilter().textProperty().addListener(changeListener);
 		}
 
-		if (getEnabledRemoteFilterEditor() && !FiBoolean.isFalse(fxTableCol.getBoFilterable())) {
+		if (getEnabledRemoteFilterEditor() && !FiBool.isFalse(fxTableCol.getBoFilterable())) {
 
 			if (!headerAdded) {
 				if (fxTableCol.getBoFilterable() == null) fxTableCol.setBoFilterable(true);
@@ -1155,7 +1155,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 		node = defAutoEditorClass(Arrays.asList(fxcol));
 		node.setId("filterNode");
 
-		if (FiBoolean.isFalse(fxcol.getBoFilterable())) {
+		if (FiBool.isFalse(fxcol.getBoFilterable())) {
 			//Loghelperr.getInstance(getClass()).debug("Node Filter Pasif");
 			node.setDisable(true);
 		}
@@ -1363,7 +1363,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 			for (FxTableCol fxTableColumn : getFxTableColList()) {
 
 				// sütun filtrelenebilir olması gerekir
-				if (FiBoolean.isTrue(fxTableColumn.getBoFilterable())) {
+				if (FiBool.isTrue(fxTableColumn.getBoFilterable())) {
 
 					// filterCheckResult false olursa filtreden geçmez , sonuca girmez.
 					// true olursa , filtreden geçerek sonuca dahil olur, eklenir.
@@ -1553,7 +1553,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 					if (objCellValue instanceof Boolean) {
 
-						objFilterValue = FiBoolean.convertBooleanElseValue(objFilterValue, null);
+						objFilterValue = FiBool.convertBooleanElseValue(objFilterValue, null);
 
 						//FiConsole.printObjectDefinitonLimityByClass(objFilterValue, "Filter Value", getClass());
 
@@ -1563,7 +1563,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 						//Loghelperr.getInstance(getClass()).debug(" Obj Filter :" + objFilterValue + " Obj Cell Value" + objCellValue.toString());
 
 						//if (objCellValue == null) objCellValue = false;
-						Boolean boCellValue = FiBoolean.convertBooleanElseFalse(objCellValue);
+						Boolean boCellValue = FiBool.convertBooleanElseFalse(objCellValue);
 
 						//FiConsole.printObjectDefinitonLimityByClass(boCellValue, "Bo Cell Value", getClass());
 

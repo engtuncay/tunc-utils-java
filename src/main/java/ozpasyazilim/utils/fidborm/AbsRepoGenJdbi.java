@@ -10,7 +10,7 @@ import ozpasyazilim.utils.datatypes.FiKeyBean;
 import ozpasyazilim.utils.jdbi.FiKeyBeanMapper;
 import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.annotations.FiDraft;
-import ozpasyazilim.utils.core.FiBoolean;
+import ozpasyazilim.utils.core.FiBool;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.core.FiReflection;
 import ozpasyazilim.utils.returntypes.Fdr;
@@ -830,7 +830,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
         FiKeyBean fiKeyBean = FiKeyBean.bui().buiPut(dbFieldName, listData);
 
         FiQuery fiQuery = new FiQuery(sql);
-        fiQuery.convertListParamToMultiParams(fiKeyBean);
+        fiQuery.convertListParamsToMultiParams(fiKeyBean);
 
         return jdUpdateBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
     }
@@ -846,7 +846,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
         FiKeyBean fiKeyBean = FiKeyBean.bui().buiPut(dbFieldName, listData);
 
         FiQuery fiQuery = new FiQuery(sql);
-        fiQuery.convertListParamToMultiParams(fiKeyBean);
+        fiQuery.convertListParamsToMultiParams(fiKeyBean);
 
 //		Loghelper.get(getClass()).debug("Delete query(multi):" + fiQuery.getTxQuery());
 //		Loghelper.get(getClass()).debug(FiConsole.logMain(fiMapParams));
@@ -863,7 +863,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
         FiKeyBean fiKeyBean = FiKeyBean.bui().buiPut(dbFieldName, listData);
 
         FiQuery fiQuery = new FiQuery(sql);
-        fiQuery.convertListParamToMultiParams(fiKeyBean);
+        fiQuery.convertListParamsToMultiParams(fiKeyBean);
 
         return jdUpdateBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
     }
@@ -1242,7 +1242,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
             rowCountUpdate = jdbi.withHandle(handle -> {
 
                 String sql = null;
-                if (FiBoolean.isTrue(boIncludeIdFields)) {
+                if (FiBool.isTrue(boIncludeIdFields)) {
                     sql = FiQueryTools.stoj(FiQueryGenerator.insertQueryWithId(getEntityClass()));
                 } else {
                     sql = FiQueryTools.stoj(FiQueryGenerator.insertQueryWoutId(getEntityClass()));
@@ -1285,7 +1285,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
 
             String sql; //= FiQueryTools.stoj(FiQueryGenerator.insertQueryWoutId(getEntityClass()));
 
-            if (FiBoolean.isTrue(boIncludeIdFields)) {
+            if (FiBool.isTrue(boIncludeIdFields)) {
                 sql = FiQueryTools.stoj(FiQueryGenerator.insertQueryWithId(getEntityClass()));
             } else {
                 sql = FiQueryTools.stoj(FiQueryGenerator.insertQueryWoutId(getEntityClass()));
@@ -1762,7 +1762,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
         }
 
         FiQuery fiQuery = new FiQuery(sqlQuery, fkbParams);
-        fiQuery.convertListParamToMultiParamsWithKeep();
+        fiQuery.convertListParamsToMultiParamsWithKeep();
 
         Loghelper.get(getClass()).debug(sqlQuery);
         return jdUpdateBindMapMain(fiQuery);
@@ -1784,7 +1784,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
         }
 
         FiQuery fiQuery = new FiQuery(sqlQuery, fkbParams);
-        fiQuery.convertListParamToMultiParamsWithKeep();
+        fiQuery.convertListParamsToMultiParamsWithKeep();
 
         Loghelper.get(getClass()).debug(sqlQuery);
         return jdSelectListBindMap(fiQuery);
@@ -1906,7 +1906,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
 
         Boolean boIdNull = FiEntity.checkIdFieldsAnyNull(entity, getEntityClass());
 
-        if (FiBoolean.isTrue(boIdNull)) { // insert
+        if (FiBool.isTrue(boIdNull)) { // insert
             return jdInsertEntity(entity);
         } else { // update
             return jdUpdateFiColsBindEntityByIdFieldInFiCols(fiTableColList, entity);
@@ -1925,7 +1925,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
 
         Boolean boIdNull = FiEntity.checkDtCreatedFieldsNull(entity, getEntityClass());
 
-        if (FiBoolean.isTrue(boIdNull)) { // insert
+        if (FiBool.isTrue(boIdNull)) { // insert
             return jdInsertEntity(entity);
         } else { // update
             return jdUpdateFiColsBindEntityByIdFieldInFiCols(fiTableColList, entity);
@@ -1966,11 +1966,11 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
                         //Loghelperr.getInstance(getClass()).debug("Is Null:"+boIdNull.toString());
 
                         // id null ise insert yap
-                        if (FiBoolean.isTrue(boIdNull)) {
+                        if (FiBool.isTrue(boIdNull)) {
                             // Loghelperr.getInstance(getClass()).debug("Insert AddOrUpdate");
                             // generated key elde etmek için opsiyonel olması lazım
 
-                            if (FiBoolean.isTrue(boBindGeneratedKey)) {
+                            if (FiBool.isTrue(boBindGeneratedKey)) {
 
                                 String idField = FiEntity.getListIdFields(getEntityClass()).get(0);
                                 Class idClazz = FiReflection.getFieldClassType(getEntityClass(), idField);
@@ -1995,7 +1995,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
                         }
 
                         // id Null degilse, update yap
-                        if (FiBoolean.isFalse(boIdNull)) {
+                        if (FiBool.isFalse(boIdNull)) {
                             Loghelper.get(getClass()).debug("Update AddOrUpdate");
                             handle.createUpdate(FiQueryTools.stoj(sqlUpdate))
                                     .bindBean(ent)
@@ -2194,7 +2194,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
                         //Loghelperr.getInstance(getClass()).debug("Is Null:"+boIdNull.toString());
 
                         // id null ise insert yap
-                        if (FiBoolean.isTrue(boIdNull)) {
+                        if (FiBool.isTrue(boIdNull)) {
                             //Loghelperr.getInstance(getClass()).debug("Insert AddOrUpdate");
                             handle.createUpdate(FiQueryTools.stoj(new FiQueryGenerator().insertQueryJParamWoutId(getEntityClass())))
                                     .bindBean(ent)
@@ -2202,7 +2202,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
                         }
 
                         // id Null degilse, update yap
-                        if (FiBoolean.isFalse(boIdNull)) {
+                        if (FiBool.isFalse(boIdNull)) {
                             //Loghelperr.getInstance(getClass()).debug("Update AddOrUpdate");
                             handle.createUpdate(FiQueryTools.stoj(fnSqlUpdatePerEntity.apply(ent)))
                                     .bindBean(ent)
@@ -2977,7 +2977,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
             fdrBatch.combineAnd(fdrBeforeMainByEntity);
         }
 
-        if (FiBoolean.isTrue(boBindGeneratedKey)) { // generated key'de alınacak
+        if (FiBool.isTrue(boBindGeneratedKey)) { // generated key'de alınacak
 
             String idField = FiEntity.getListIdFields(getEntityClass()).get(0);
             Class idClazz = FiReflection.getFieldClassType(getEntityClass(), idField);
@@ -3017,7 +3017,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
 
         Fdr fdrMain = new Fdr();
 
-        if (FiBoolean.isTrue(boBindGeneratedKey)) { // generated key'de alınacak
+        if (FiBool.isTrue(boBindGeneratedKey)) { // generated key'de alınacak
 
             String idField = FiEntity.getListIdFields(getEntityClass()).get(0);
             Class idClazz = FiReflection.getFieldClassType(getEntityClass(), idField);
@@ -3185,7 +3185,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
                 }
 
                 // transactions
-                if (FiBoolean.isTrue(boBindGeneratedKey)) {
+                if (FiBool.isTrue(boBindGeneratedKey)) {
 
                     //String sql2 = FiQueryHelper.updateScopeIdFieldWithSIdById(getEntityClass(), fieldForScopeEntity);
                     String sql2 = FiQueryGenerator.updateScopeIdFieldWithScopeIdFnById(getEntityClass(), fieldForScopeEntity);
@@ -3272,7 +3272,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
 
         String sql1 = FiQueryGenerator.insertQueryWoutId(getEntityClass());
 
-        if (FiBoolean.isTrue(boBindGeneratedKey)) {
+        if (FiBool.isTrue(boBindGeneratedKey)) {
 
             //String sql2 = FiQueryGenerator.updateScopeIdFieldWithSIdById(getEntityClass(), fieldForScopeEntity);
             String sql2 = FiQueryGenerator.updateScopeIdFieldWithScopeIdFnById(getEntityClass(), fieldForScopeEntity);
@@ -3349,7 +3349,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
         try {
 
             // transactions
-            if (FiBoolean.isTrue(boBindGeneratedKey)) {
+            if (FiBool.isTrue(boBindGeneratedKey)) {
 
                 String idField = FiEntity.getListIdFields(getEntityClass()).get(0);
                 Class idClazz = FiReflection.getFieldClassType(getEntityClass(), idField);
@@ -3390,7 +3390,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
         String sql1 = FiQueryGenerator.insertQueryWoutId(getEntityClass());
 
         try {
-            if (FiBoolean.isTrue(boBindGeneratedKey)) {
+            if (FiBool.isTrue(boBindGeneratedKey)) {
 
                 String idField = FiEntity.getListIdFields(getEntityClass()).get(0);
                 Class idClazz = FiReflection.getFieldClassType(getEntityClass(), idField);
@@ -3576,7 +3576,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
 
     public Fdr<List<EntClazz>> jdSelectListWitMultiOnly(String sql, FiKeyBean fiKeyBean) {
         FiQuery fiQuery = new FiQuery(sql, fiKeyBean);
-        fiQuery.convertListParamToMultiParams();
+        fiQuery.convertListParamsToMultiParams();
         //Loghelper.get(getClass()).debug("sql:" + fiQuery.getTxQuery());
         return jdSelectListBindMapMainNtn(fiQuery.getTxQuery(), fiQuery.getMapParams());
     }

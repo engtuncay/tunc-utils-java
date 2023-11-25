@@ -45,7 +45,7 @@ public class FiQueryGenerator {
         Integer indexWhere = 0;
         for (FiField fiField : fieldListFilterAnno) {
 
-            if (FiBoolean.isTrue(fiField.getBoIdField())) {
+            if (FiBool.isTrue(fiField.getBoIdField())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
                 queryWhere.append(fiField.getName() + " = @" + fiField.getName());
@@ -78,7 +78,7 @@ public class FiQueryGenerator {
         Integer indexWhere = 0;
         for (FiField fiField : fieldListFilterAnno) {
 
-            if (FiBoolean.isTrue(fiField.getBoCandidateId1())) {
+            if (FiBool.isTrue(fiField.getBoCandidateId1())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
                 queryWhere.append(fiField.getName() + " = @" + fiField.getName());
@@ -111,7 +111,7 @@ public class FiQueryGenerator {
         Integer indexWhere = 0;
         for (FiField fiField : fieldListFilterAnno) {
 
-            if (FiBoolean.isTrue(fiField.getBoCandidateId2())) {
+            if (FiBool.isTrue(fiField.getBoCandidateId2())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
                 queryWhere.append(fiField.getName() + " = @" + fiField.getName());
@@ -144,7 +144,7 @@ public class FiQueryGenerator {
         Integer indexWhere = 0;
         for (FiField fiField : fieldListFilterAnno) {
 
-            if (FiBoolean.isTrue(fiField.getBoCandidateId2())) {
+            if (FiBool.isTrue(fiField.getBoCandidateId2())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
                 queryWhere.append(fiField.getName() + " IN ( @" + fiField.getName() + " )");
@@ -181,7 +181,7 @@ public class FiQueryGenerator {
         Integer indexWhere = 0;
         for (FiField fiField : fieldListFilterAnno) {
 
-            if (FiBoolean.isTrue(fiField.getBoIdField())) {
+            if (FiBool.isTrue(fiField.getBoIdField())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
                 queryWhere.append(fiField.getName() + " = :" + fiField.getName());
@@ -223,7 +223,7 @@ public class FiQueryGenerator {
         Integer indexWhere = 0;
         for (FiField fiField : fieldListFilterAnno) {
 
-            if (FiBoolean.isTrue(fiField.getBoIdField())) {
+            if (FiBool.isTrue(fiField.getBoIdField())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
                 queryWhere.append(fiField.getName() + " = @" + fiField.getName());
@@ -266,7 +266,7 @@ public class FiQueryGenerator {
         Integer indexWhere = 0;
         for (FiField fiField : fieldListFilterAnno) {
 
-            if (FiBoolean.isTrue(fiField.getBoCandidateId1())) {
+            if (FiBool.isTrue(fiField.getBoCandidateId1())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
                 queryWhere.append(fiField.getName() + " = @" + fiField.getName());
@@ -293,7 +293,7 @@ public class FiQueryGenerator {
         FiQuery fiQuery = new FiQuery();
 
         for (FiField fiField : selectFieldList) {
-            if (FiBoolean.isTrue(fiField.getBoCandidateId2())) fieldsWhere.add(fiField);
+            if (FiBool.isTrue(fiField.getBoCandidateId2())) fieldsWhere.add(fiField);
         }
 
         fiQuery.setTxQuery(genSelectQuery(selectFieldList, fieldsWhere, clazz));
@@ -382,13 +382,13 @@ public class FiQueryGenerator {
         Integer indexWhere = 0;
         for (FiField fiField : fieldListFilterAnno) {
 
-            if (FiBoolean.isTrue(fiField.getBoFiSelect())) {
+            if (FiBool.isTrue(fiField.getBoFiSelect())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
                 queryWhere.append(fiField.getName() + " = @" + fiField.getName());
             }
 
-            if (FiBoolean.isTrue(fiField.getBoDtoField())) {
+            if (FiBool.isTrue(fiField.getBoDtoField())) {
                 index++;
                 if (index != 1) query.append(", ");
                 query.append(fiField.getName());  // + " = :" + fiField.getName());
@@ -420,7 +420,7 @@ public class FiQueryGenerator {
 
         int indexWhere = 0;
         for (FiField fiField : fieldListFilterAnno) {
-            if (FiBoolean.isTrue(fiField.getBoFiWhere1())) {
+            if (FiBool.isTrue(fiField.getBoFiWhere1())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
                 queryWhere.append(fiField.getName()).append(" = @").append(fiField.getName());
@@ -448,7 +448,7 @@ public class FiQueryGenerator {
         int index = 0;
         for (FiField fiField : fieldListFilterAnno) {
 
-            if (FiBoolean.isTrue(fiField.getBoDtoField())) {
+            if (FiBool.isTrue(fiField.getBoDtoField())) {
                 index++;
                 if (index != 1) query.append(", ");
                 query.append(fiField.getName());  // + " = :" + fiField.getName());
@@ -478,7 +478,7 @@ public class FiQueryGenerator {
         Integer indexWhere = 0;
         for (FiField fiField : fieldListFilterAnno) {
 
-            if (FiBoolean.isTrue(fiField.getBoFiSelect())) {
+            if (FiBool.isTrue(fiField.getBoFiSelect())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
                 queryWhere.append(fiField.getName() + " = @" + fiField.getName());
@@ -514,13 +514,13 @@ public class FiQueryGenerator {
         int indexWhere = 0;
         for (FiField fiField : fieldListFilterAnno) {
 
-            if (FiBoolean.isTrue(fiField.getBoCandidateId1())) {
+            if (FiBool.isTrue(fiField.getBoCandidateId1())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
                 queryWhere.append(fiField.getName() + " = :" + fiField.getName());
             }
 
-            if (FiBoolean.isNotTrue(fiField.getBoFiSelect1())) continue;
+            if (FiBool.isNotTrue(fiField.getBoFiSelect1())) continue;
 
             index++;
             if (index != 1) query.append(", ");
@@ -549,7 +549,7 @@ public class FiQueryGenerator {
         Integer indexWhere = 0;
         for (FiField fiField : fieldList) {
 
-            if (FiBoolean.isTrue(fiField.getBoCandidateId1())) {
+            if (FiBool.isTrue(fiField.getBoCandidateId1())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
                 queryWhere.append(fiField.getName() + " = :" + fiField.getName());
@@ -630,7 +630,7 @@ public class FiQueryGenerator {
         int index = 0;
         for (FiField fiField : fieldList) {
 
-            if (FiBoolean.isNotTrue(fiField.getBoFiSelect1())) continue;
+            if (FiBool.isNotTrue(fiField.getBoFiSelect1())) continue;
 
             index++;
             if (index != 1) query.append(", ");
@@ -688,7 +688,7 @@ public class FiQueryGenerator {
 
         for (FiField fiField : fieldList) {
 
-            if (FiBoolean.isTrue(fiField.getTransient())) continue;
+            if (FiBool.isTrue(fiField.getTransient())) continue;
 
             index++;
             if (index != 1) query.append(", ");
@@ -703,7 +703,7 @@ public class FiQueryGenerator {
 
             for (FiField fiField : fieldList) {
 
-                if (FiBoolean.isTrue(fiField.getTransient())) continue;
+                if (FiBool.isTrue(fiField.getTransient())) continue;
 
                 Object fieldValue = FiReflection.getProperty(objectt, fiField.getName());
 
@@ -737,7 +737,7 @@ public class FiQueryGenerator {
         //Integer index = 0;
         for (FiField fiField : fieldList) {
 
-            if (FiBoolean.isTrue(fiField.getBoIdField())) {
+            if (FiBool.isTrue(fiField.getBoIdField())) {
                 query.append(String.format(" count(%s) ", fiField.getName()));
                 break;
             }
@@ -800,15 +800,15 @@ public class FiQueryGenerator {
         Integer indexWhere = 0;
         for (FiField fiField : fieldList) {
 
-            if (FiBoolean.isTrue(fiField.getBoCandidateId1())) {
+            if (FiBool.isTrue(fiField.getBoCandidateId1())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" and ");
                 queryWhere.append(String.format("%s = @%s", fiField.getName(), fiField.getName()));
                 fiQuery.setTxCandIdFieldName(fiField.getDbFieldName());
             }
 
-            if (FiBoolean.isTrue(fiField.getBoDtoField()) || FiBoolean.isTrue(fiField.getBoIdField())
-                    || FiBoolean.isTrue(fiField.getBoCandidateId1())) {
+            if (FiBool.isTrue(fiField.getBoDtoField()) || FiBool.isTrue(fiField.getBoIdField())
+                    || FiBool.isTrue(fiField.getBoCandidateId1())) {
                 index++;
                 if (index != 1) query.append(", ");
                 query.append(fiField.getName());
@@ -840,13 +840,13 @@ public class FiQueryGenerator {
         Integer indexWhere = 0;
         for (FiField fiField : fieldList) {
 
-            if (FiBoolean.isTrue(fiField.getBoGuidField())) {
+            if (FiBool.isTrue(fiField.getBoGuidField())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" and ");
                 queryWhere.append(String.format("%s = @%s", fiField.getName(), fiField.getName()));
             }
 
-            if (FiBoolean.isTrue(fiField.getBoIdField())) {
+            if (FiBool.isTrue(fiField.getBoIdField())) {
                 index++;
                 if (index != 1) query.append(", ");
                 query.append(fiField.getName());
@@ -887,14 +887,14 @@ public class FiQueryGenerator {
         Integer indexWhere = 0;
         for (FiField fiField : fieldList) {
 
-            if (FiBoolean.isTrue(fiField.getBoFirmField())) {
+            if (FiBool.isTrue(fiField.getBoFirmField())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" and ");
                 queryWhere.append(String.format("%s = @%s", fiField.getName(), fiField.getName()));
             }
 
-            if (FiBoolean.isTrue(fiField.getBoDtoField()) || FiBoolean.isTrue(fiField.getBoIdField())
-                    || FiBoolean.isTrue(fiField.getBoCandidateId1())) {
+            if (FiBool.isTrue(fiField.getBoDtoField()) || FiBool.isTrue(fiField.getBoIdField())
+                    || FiBool.isTrue(fiField.getBoCandidateId1())) {
                 index++;
                 if (index != 1) query.append(", ");
                 query.append(fiField.getName());
@@ -926,14 +926,14 @@ public class FiQueryGenerator {
         Integer index = 0;
         for (FiField fiField : fieldList) {
 
-            if (FiBoolean.isTrue(fiField.getBoDtoField()) || FiBoolean.isTrue(fiField.getBoIdField())
-                    || FiBoolean.isTrue(fiField.getBoCandidateId1())) {
+            if (FiBool.isTrue(fiField.getBoDtoField()) || FiBool.isTrue(fiField.getBoIdField())
+                    || FiBool.isTrue(fiField.getBoCandidateId1())) {
                 index++;
                 if (index != 1) query.append(", ");
                 query.append(fiField.getName());
             }
 
-            if (FiBoolean.isTrue(fiField.getBoCandidateId1())) {
+            if (FiBool.isTrue(fiField.getBoCandidateId1())) {
                 idField = fiField.getDbFieldNameOrName();
             }
 
@@ -963,14 +963,14 @@ public class FiQueryGenerator {
         Integer indexWhere = 0;
         for (FiField fiField : fieldList) {
 
-            if (FiBoolean.isTrue(fiField.getBoWhere1())) {
+            if (FiBool.isTrue(fiField.getBoWhere1())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" and ");
                 queryWhere.append(String.format("%s = @%s", fiField.getName(), fiField.getName()));
             }
 
-            if (FiBoolean.isTrue(fiField.getBoDtoField()) || FiBoolean.isTrue(fiField.getBoIdField())
-                    || FiBoolean.isTrue(fiField.getBoCandidateId1())) {
+            if (FiBool.isTrue(fiField.getBoDtoField()) || FiBool.isTrue(fiField.getBoIdField())
+                    || FiBool.isTrue(fiField.getBoCandidateId1())) {
                 index++;
                 if (index != 1) query.append(", ");
                 query.append(fiField.getName());
@@ -999,14 +999,14 @@ public class FiQueryGenerator {
         Integer indexWhere = 0;
         for (FiField fiField : fieldList) {
 
-            if (FiBoolean.isTrue(fiField.getBoDtoField()) || FiBoolean.isTrue(fiField.getBoIdField())
-                    || FiBoolean.isTrue(fiField.getBoCandidateId1())) {
+            if (FiBool.isTrue(fiField.getBoDtoField()) || FiBool.isTrue(fiField.getBoIdField())
+                    || FiBool.isTrue(fiField.getBoCandidateId1())) {
                 indexSelect++;
                 if (indexSelect != 1) query.append(", ");
                 query.append(fiField.getName());
             }
 
-            if (FiBoolean.isTrue(fiField.getBoFirmField())) {
+            if (FiBool.isTrue(fiField.getBoFirmField())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" and ");
                 queryWhere.append(String.format("%s = @%s", fiField.getName(), fiField.getName()));
@@ -1035,13 +1035,13 @@ public class FiQueryGenerator {
         Integer indexWhere = 0;
         for (FiField fiField : fieldList) {
 
-            if (FiBoolean.isTrue(fiField.getBoFirmField())) {
+            if (FiBool.isTrue(fiField.getBoFirmField())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" and ");
                 queryWhere.append(String.format("%s = @%s", fiField.getName(), fiField.getName()));
             }
 
-            if (FiBoolean.isTrue(fiField.getBoComboField())) {
+            if (FiBool.isTrue(fiField.getBoComboField())) {
                 index++;
                 if (index != 1) query.append(", ");
                 query.append(fiField.getName());
@@ -1103,7 +1103,7 @@ public class FiQueryGenerator {
 
         for (FiField fiField : fieldList) {
 
-            if (FiBoolean.isTrue(fiField.getBoCandidateId1())) {
+            if (FiBool.isTrue(fiField.getBoCandidateId1())) {
                 if (index > 0) {
                     queryWhere.append(" AND ");
                 }
@@ -1244,14 +1244,14 @@ public class FiQueryGenerator {
 
         for (FiField fiField : fieldListFilterAnno) {
 
-            if (FiBoolean.isTrue(fiField.getBoIdField())) {
+            if (FiBool.isTrue(fiField.getBoIdField())) {
                 continue;
             }
 
             index++;
             if (index != 1) query.append(", ");
 
-            if (FiBoolean.isTrue(fiField.getBoInsertMaxPlus())) {
+            if (FiBool.isTrue(fiField.getBoInsertMaxPlus())) {
                 //(SELECT MAX(no)+1  FROM PERSON)
                 query.append(String.format("(SELECT MAX(%s)+1 FROM %s)", fiField.getName(), tableName));
                 continue;
@@ -1332,14 +1332,14 @@ public class FiQueryGenerator {
         Integer indexWhere = 0;
         for (FiField fiField : fieldListFilterAnno) {
 
-            if (FiBoolean.isTrue(fiField.getBoCandidateId1())) {
+            if (FiBool.isTrue(fiField.getBoCandidateId1())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
                 queryWhere.append(fiField.getName() + " = :" + fiField.getName());
                 continue;
             }
 
-            if (FiBoolean.isTrue(fiField.getBoIdField())) {
+            if (FiBool.isTrue(fiField.getBoIdField())) {
                 continue;
             }
 
@@ -1377,15 +1377,15 @@ public class FiQueryGenerator {
         Integer indexWhere = 0;
         for (FiField fiField : fieldListFilterAnno) {
 
-            if (FiBoolean.isTrue(fiField.getBoCandidateId1())) {
+            if (FiBool.isTrue(fiField.getBoCandidateId1())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
                 queryWhere.append(fiField.getDbFieldName() + " = :" + fiField.getDbParamName());
                 continue;
             }
 
-            if (!FiBoolean.isTrue(includeOnlyFirstInsertFields)) {
-                if (FiBoolean.isTrue(fiField.getBoOnlyFirstInsert())) {
+            if (!FiBool.isTrue(includeOnlyFirstInsertFields)) {
+                if (FiBool.isTrue(fiField.getBoOnlyFirstInsert())) {
                     continue;
                 }
             }
@@ -1419,14 +1419,14 @@ public class FiQueryGenerator {
         Integer indexWhere = 0;
         for (FiField fiField : fieldListFilterAnno) {
 
-            if (FiBoolean.isTrue(fiField.getBoIdField())) {
+            if (FiBool.isTrue(fiField.getBoIdField())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
                 queryWhere.append(fiField.getName() + " = @" + fiField.getDbFieldName());
                 continue;
             }
 
-            if (FiBoolean.isTrue(fiField.getBoIdField())) continue;
+            if (FiBool.isTrue(fiField.getBoIdField())) continue;
 
             index++;
             if (index != 1) query.append(", ");
@@ -1470,7 +1470,7 @@ public class FiQueryGenerator {
         }
 
         for (FiField fiField : listClassFields) {
-            if (FiBoolean.isTrue(fiField.getBoIdField())) {
+            if (FiBool.isTrue(fiField.getBoIdField())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
                 queryWhere.append(fiField.getName() + " = @" + fiField.getName());
@@ -1511,12 +1511,12 @@ public class FiQueryGenerator {
         for (IFiCol fiTableCol : listFields) {
 
             // id field dahil edilmez
-            if (FiBoolean.isTrue(listClassFields.getOrDefault(fiTableCol.getFieldName(), new FiField()).getBoIdField())) {
+            if (FiBool.isTrue(listClassFields.getOrDefault(fiTableCol.getFieldName(), new FiField()).getBoIdField())) {
                 continue;
             }
 
             // non updatable alanlar dahil edilmez
-            if (FiBoolean.isTrue(fiTableCol.getBoNonUpdatable())) {
+            if (FiBool.isTrue(fiTableCol.getBoNonUpdatable())) {
                 continue;
             }
 
@@ -1527,14 +1527,14 @@ public class FiQueryGenerator {
 
         for (FiField fiField : listClassFields.values()) {
 
-            if (FiBoolean.isTrue(fiField.getBoIdField())) {
+            if (FiBool.isTrue(fiField.getBoIdField())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
                 queryWhere.append(fiField.getName() + " = @" + fiField.getName());
                 continue;
             }
 
-            if (FiBoolean.isTrue(fiField.getBoDefaultUpdateField())) {
+            if (FiBool.isTrue(fiField.getBoDefaultUpdateField())) {
                 index++;
                 if (index != 1) query.append(", ");
                 query.append(fiField.getName() + " = @" + fiField.getName());
@@ -1578,7 +1578,7 @@ public class FiQueryGenerator {
         for (FiCol fiCol : listFields) {
 
             // id field dahil edilmez
-            if (FiBoolean.isTrue(fiCol.getBoKeyField())) {
+            if (FiBool.isTrue(fiCol.getBoKeyField())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
                 queryWhere.append(fiCol.getFieldName() + " IN ( @" + fiCol.getFieldName() + " )");
@@ -1589,7 +1589,7 @@ public class FiQueryGenerator {
             //			}
 
             // non updatable alanlar dahil edilmez
-            if (FiBoolean.isTrue(fiCol.getBoNonUpdatable())) {
+            if (FiBool.isTrue(fiCol.getBoNonUpdatable())) {
                 continue;
             }
 
@@ -1638,7 +1638,7 @@ public class FiQueryGenerator {
             if (index != 1) query.append(", ");
             query.append(fiCol.getFieldName());
             // idCol kayıt edilir
-            if (FiBoolean.isTrue(fiCol.getBoKeyField())) fiColId = fiCol;
+            if (FiBool.isTrue(fiCol.getBoKeyField())) fiColId = fiCol;
         }
 
         if (fiColId != null) {
@@ -1653,7 +1653,7 @@ public class FiQueryGenerator {
         Integer indexWhere = 0;
         for (FiCol fiCol : listFields) {
 
-            if (FiBoolean.isTrue(fiCol.getBoKeyField())) {
+            if (FiBool.isTrue(fiCol.getBoKeyField())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
                 queryWhere.append(fiCol.getFieldName() + " IN ( @" + fiCol.getFieldName() + " )");
@@ -1699,7 +1699,7 @@ public class FiQueryGenerator {
         }
 
         for (FiField fiField : listClassFields) {
-            if (FiBoolean.isTrue(fiField.getBoCandidateId1())) {
+            if (FiBool.isTrue(fiField.getBoCandidateId1())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
                 queryWhere.append(fiField.getName() + " = @" + fiField.getDbParamName());
@@ -1734,13 +1734,13 @@ public class FiQueryGenerator {
         Integer index = 0;
         Integer indexWhere = 0;
         for (FiCol fiCol : fiCols) {
-            if (FiBoolean.isTrue(fiCol.getBoUpdateField())) {
+            if (FiBool.isTrue(fiCol.getBoUpdateField())) {
                 index++;
                 if (index != 1) query.append(", ");
                 query.append(fiCol.getFieldName() + " = @" + fiCol.getFieldName());
             }
 
-            if (FiBoolean.isTrue(fiCol.getBoKeyField())) {
+            if (FiBool.isTrue(fiCol.getBoKeyField())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
                 queryWhere.append(fiCol.getFieldName() + " = @" + fiCol.getFieldName()); // dbFieldName kullanımı ile geliştirilebilir
@@ -1775,13 +1775,13 @@ public class FiQueryGenerator {
                 String fieldName = FiString.getIfNotEmptytOr(fiCol.getTxDbFieldName(), fiCol.getFieldName());
                 String paramName = FiString.getIfNotEmptytOr(fiCol.getTxParamName(), fiCol.getFieldName());
 
-                if (!FiBoolean.isTrue(fiCol.getBoKeyField()) && !FiBoolean.isTrue(fiCol.getBoNonUpdatable())) {
+                if (!FiBool.isTrue(fiCol.getBoKeyField()) && !FiBool.isTrue(fiCol.getBoNonUpdatable())) {
                     index++;
                     if (index != 1) query.append(", ");
                     query.append(fieldName + " = @" + paramName);
                 }
 
-                if (FiBoolean.isTrue(fiCol.getBoKeyField())) {
+                if (FiBool.isTrue(fiCol.getBoKeyField())) {
                     indexWhere++;
                     if (indexWhere != 1) queryWhere.append(" AND ");
                     queryWhere.append(fieldName + " = @" + paramName); // dbFieldName kullanımı ile geliştirilebilir
@@ -1828,7 +1828,7 @@ public class FiQueryGenerator {
         }
 
         for (FiField fiField : listClassFields) {
-            if (FiBoolean.isTrue(fiField.getBoCandidateId1())) {
+            if (FiBool.isTrue(fiField.getBoCandidateId1())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
                 queryWhere.append(fiField.getName() + " = @" + fiField.getDbParamName());
@@ -2361,7 +2361,7 @@ public class FiQueryGenerator {
 
         String sqlSelectEntity = "select top 1 * from " + tableName;
 
-        if ((!FiString.isEmpty(keyField)) && FiBoolean.isTrue(lastRecordPulling)) {
+        if ((!FiString.isEmpty(keyField)) && FiBool.isTrue(lastRecordPulling)) {
             sqlSelectEntity += " order by " + keyField + " DESC";
         }
 
@@ -2604,7 +2604,7 @@ public class FiQueryGenerator {
         String queryCreate = createQuery20(clazz);
         Loghelper.get(getClassi()).debug("Query:\n" + queryCreate);
 
-        if (FiBoolean.isTrue(onlyPrintConsole)) {
+        if (FiBool.isTrue(onlyPrintConsole)) {
             Loghelper.get(getClassi()).debug("Only Console");
             return false;
         }
@@ -2613,7 +2613,7 @@ public class FiQueryGenerator {
 
         List<String> listQuery = Arrays.asList(queryCreate);
 
-        return FiBoolean.convertDbResultGteZero(repoGenericJdbi.jdRunBatchUpdateQuery(listQuery));
+        return FiBool.convertDbResultGteZero(repoGenericJdbi.jdRunBatchUpdateQuery(listQuery));
 
     }
 
@@ -2662,7 +2662,7 @@ public class FiQueryGenerator {
         int index = 0;
         for (FiField field : listFields) {
 
-            if (FiBoolean.isTrue(field.getBoUnique1())) {
+            if (FiBool.isTrue(field.getBoUnique1())) {
                 if (index != 0) sbFields.append("\n,");
                 if (index != 0) sbFieldsForName.append("_");
 
@@ -2786,17 +2786,17 @@ public class FiQueryGenerator {
 
             // Field Alanın özellikleri eklenir
 
-            if (FiBoolean.isTrue(field.getBoIdField())) {
+            if (FiBool.isTrue(field.getBoIdField())) {
                 if (field.getIdGenerationType() == FiIdGenerationType.Identity) {
                     fieldAttributes += " IDENTITY(1,1)";
                 }
                 fieldAttributes += "  NOT NULL PRIMARY KEY ";
             }
 
-            if (FiBoolean.isTrue(field.getUnique()) && !FiBoolean.isTrue(field.getBoIdField()))
+            if (FiBool.isTrue(field.getUnique()) && !FiBool.isTrue(field.getBoIdField()))
                 fieldAttributes += " UNIQUE";
 
-            if (FiBoolean.isFalse(field.getNullable()) && !FiBoolean.isTrue(field.getBoIdField()))
+            if (FiBool.isFalse(field.getNullable()) && !FiBool.isTrue(field.getBoIdField()))
                 fieldAttributes += " NOT NULL";
 
             if (!FiString.isEmpty(field.getDefaultValue())) {
@@ -2823,7 +2823,7 @@ public class FiQueryGenerator {
 
         String suffix = "";
 
-        if (FiBoolean.isTrue(field.getBoUtfSupport())) suffix += "Utf";
+        if (FiBool.isTrue(field.getBoUtfSupport())) suffix += "Utf";
 
         if (javaSimpleType.equals("Integer")) {
             if (field.getPrecision() != null && field.getPrecision() == 1) suffix = "P1";
@@ -2999,7 +2999,7 @@ public class FiQueryGenerator {
         Integer indexWhere = 0;
         for (FiField fiField : fieldListFilterAnno) {
 
-            if (FiBoolean.isTrue(fiField.getBoIdField())) {
+            if (FiBool.isTrue(fiField.getBoIdField())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
                 queryWhere.append(fiField.getName() + " = SCOPE_IDENTITY()");
@@ -3037,7 +3037,7 @@ public class FiQueryGenerator {
         Integer indexWhere = 0;
         for (FiField fiField : fieldListFilterAnno) {
 
-            if (FiBoolean.isTrue(fiField.getBoIdField())) {
+            if (FiBool.isTrue(fiField.getBoIdField())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
                 queryWhere.append(fiField.getName() + " = @scopeId");
@@ -3067,7 +3067,7 @@ public class FiQueryGenerator {
         List<FiField> fieldList = FiEntity.getListFieldsShortWithId(clazz);
 
         for (FiField fiField : fieldList) {
-            if (FiBoolean.isTrue(fiField.getBoIdField())) {
+            if (FiBool.isTrue(fiField.getBoIdField())) {
                 return fiField.getName();
             }
         }
@@ -3080,7 +3080,7 @@ public class FiQueryGenerator {
         List<FiField> fieldList = FiEntity.getListFieldsShortWithId(clazz);
 
         for (FiField fiField : fieldList) {
-            if (FiBoolean.isTrue(fiField.getBoCandidateId1())) {
+            if (FiBool.isTrue(fiField.getBoCandidateId1())) {
                 return fiField.getName();
             }
         }
@@ -3098,7 +3098,7 @@ public class FiQueryGenerator {
     public static String getCandId1FirstField(List<FiField> fiFields) {
 
         for (FiField fiField : fiFields) {
-            if (FiBoolean.isTrue(fiField.getBoCandidateId1())) {
+            if (FiBool.isTrue(fiField.getBoCandidateId1())) {
                 return fiField.getName();
             }
         }
@@ -3111,7 +3111,7 @@ public class FiQueryGenerator {
         List<FiField> fieldList = FiEntity.getListFieldsShortWithId(entityClass);
 
         for (FiField fiField : fieldList) {
-            if (FiBoolean.isTrue(fiField.getBoScopeIdField())) {
+            if (FiBool.isTrue(fiField.getBoScopeIdField())) {
                 return fiField.getName();
             }
         }
@@ -3309,6 +3309,10 @@ public class FiQueryGenerator {
         if (FiString.isEmptyTrim(txTableName)) return "";
         return String.format("SELECT * FROM %s", txTableName);
     }
+
+
+
+
 }
 
 /*

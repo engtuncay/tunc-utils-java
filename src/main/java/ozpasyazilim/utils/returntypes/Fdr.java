@@ -195,7 +195,7 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
         this.boResult = boResult;
         this.message = txMessage;
 
-        if (FiBoolean.isTrue(boAddException)) {
+        if (FiBool.isTrue(boAddException)) {
             setException(new Exception(txMessage));
         }
 
@@ -298,12 +298,12 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 
     public void checkAndRefreshResult(Boolean boResult) {
         // rows affected 0 dan büyük olmalı true olması için
-        if (FiBoolean.isTrue(boResult) && getRowsAffectedNotNull() < 1) {
+        if (FiBool.isTrue(boResult) && getRowsAffectedNotNull() < 1) {
             this.boResult = false;
             this.boQueryExecuted = true;
         }
 
-        if (FiBoolean.isFalse(boResult)) {
+        if (FiBool.isFalse(boResult)) {
             setRowsAffectedWithUpBoResult(-1);
         }
     }
@@ -454,7 +454,7 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
      */
     public void combineAnd(Fdr fdrSub) {
 
-        if (FiBoolean.isFalse(fdrSub.getBoResult())) {
+        if (FiBool.isFalse(fdrSub.getBoResult())) {
             setBoResult(false);
             setLnFailureOpCount(getLnFailureOpCountInit() + 1);
             if (fdrSub.getException() != null) {
@@ -463,7 +463,7 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
             }
         }
 
-        if (FiBoolean.isTrue(fdrSub.getBoResult())) {
+        if (FiBool.isTrue(fdrSub.getBoResult())) {
             setLnSuccessOpCount(getLnSuccessOpCount() + 1);
             if (getBoResult() == null) setBoResult(true);
             //calcLnResult(1);
@@ -505,7 +505,7 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
     public void combineOr(Fdr fdrAppend) {
 
         // false sonuç gelirse, boResult null ise false çevirir, yoksa değiştirmez
-        if (FiBoolean.isFalse(fdrAppend.getBoResult())) {
+        if (FiBool.isFalse(fdrAppend.getBoResult())) {
             appendLnFalseResult(1);
             setException(fdrAppend.getException());
             getListExceptionInit().add(fdrAppend.getException());
@@ -514,7 +514,7 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
             //getResMessage().append(fiDbResult.getResMessage().toString());
         }
 
-        if (FiBoolean.isTrue(fdrAppend.getBoResult())) {
+        if (FiBool.isTrue(fdrAppend.getBoResult())) {
             setBoResult(true);
             appendLnTrueResult(1);
             //getResMessage().append(fiDbResult.getResMessage().toString());
@@ -721,25 +721,25 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
     }
 
     public boolean isTrueBoResult() {
-        return FiBoolean.isTrue(getBoResult());
+        return FiBool.isTrue(getBoResult());
     }
 
     public boolean isTrueResultAndValueNtn() {
-        if (FiBoolean.isTrue(getBoResult()) && getValue() != null) return true;
+        if (FiBool.isTrue(getBoResult()) && getValue() != null) return true;
         return false;
     }
 
     public boolean isTrueBoResultAndValueExists() {
-        return FiBoolean.isTrue(getBoResult()) && getValue() != null;
+        return FiBool.isTrue(getBoResult()) && getValue() != null;
     }
 
     public boolean isFalseBoResult() {
-        return FiBoolean.isFalse(getBoResult());
+        return FiBool.isFalse(getBoResult());
     }
 
     public boolean isFalseOrNullBoResult() {
         if (getBoResult() == null) return true;
-        return FiBoolean.isFalse(getBoResult());
+        return FiBool.isFalse(getBoResult());
     }
 
     public boolean isNullBoResult() {
@@ -1075,7 +1075,7 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
     public String calcTxResultStatus() {
         if (getBoResult() == null) return "Sonuçsuz (!!!)";
         if (getBoResult()) {
-            if (FiBoolean.isTrue(getBoFalseExist())) {
+            if (FiBool.isTrue(getBoFalseExist())) {
                 return "Kısmı Başarılı";
             }
             return "Başarılı";
@@ -1085,7 +1085,7 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
     }
 
     public boolean getIsFalseExist() {
-        return FiBoolean.isTrue(getBoFalseExist());
+        return FiBool.isTrue(getBoFalseExist());
     }
 
     public void addLogErrorException(List<Exception> listExceptionInit) {

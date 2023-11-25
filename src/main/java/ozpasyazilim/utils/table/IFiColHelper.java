@@ -1,6 +1,6 @@
 package ozpasyazilim.utils.table;
 
-import ozpasyazilim.utils.core.FiBoolean;
+import ozpasyazilim.utils.core.FiBool;
 import ozpasyazilim.utils.core.FiString;
 import ozpasyazilim.utils.fidborm.FiEntity;
 import ozpasyazilim.utils.fidborm.FiField;
@@ -63,7 +63,7 @@ public class IFiColHelper {
 
 				FiField fiField = mapFiFieldsShort.get(fiTableCol.getFieldName());
 
-				if (FiBoolean.isFalse(fiField.getNullable())) {
+				if (FiBool.isFalse(fiField.getNullable())) {
 					fiTableCol.setColComment(FiString.addNewLineToEndIfNotEmpty(fiTableCol.getColComment()) + "Zorunlu Alan");
 				}
 
@@ -126,7 +126,7 @@ public class IFiColHelper {
 					fxTableColumn.setPrefWidth(iFiCol.getPrefSize());
 				}
 
-				if (FiBoolean.isTrue(fiCol.getBoEditable())) {
+				if (FiBool.isTrue(fiCol.getBoEditable())) {
 					fxTableColumn.setEditable(true);
 					fxTableColumn.setAutoEditor();
 				}
@@ -167,7 +167,7 @@ public class IFiColHelper {
 
 	public IFiCol findColumnByFieldName(String fieldName) {
 
-		if (getListIFiColInit().size() > 0) {
+		if (!getListIFiColInit().isEmpty()) {
 
 			for (IFiCol ozTableCol : getListIFiColInit()) {
 				if (ozTableCol.getFieldName().equals(fieldName)) {

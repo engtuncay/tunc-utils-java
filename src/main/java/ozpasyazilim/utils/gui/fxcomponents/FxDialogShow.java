@@ -719,7 +719,7 @@ public class FxDialogShow {
             stage.sizeToScene();
         }
 
-        if (FiBoolean.isTrue(dialogConfig.getBoNonModal())) {
+        if (FiBool.isTrue(dialogConfig.getBoNonModal())) {
             stage.initModality(Modality.WINDOW_MODAL);
         } else {
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -756,7 +756,7 @@ public class FxDialogShow {
 
         stage.setScene(scene);
         stage.sizeToScene();
-        if (FiBoolean.isTrue(isNonModal)) {
+        if (FiBool.isTrue(isNonModal)) {
             stage.initModality(Modality.APPLICATION_MODAL);
         } else {
             stage.initModality(Modality.WINDOW_MODAL);
@@ -1120,7 +1120,7 @@ public class FxDialogShow {
 
             Pair<String, Boolean> logAsStringAndErrorExist = fdr.getLogAsStringAndErrorExist();
 
-            if (FiBoolean.isTrue(boPopInfo)) {
+            if (FiBool.isTrue(boPopInfo)) {
                 if (logAsStringAndErrorExist.getValue()) {
                     showPopInfo(grup + "İşlem Başarılı, fakat bazı yerlerde hata oluştu.\n" + fdr.getLogAsStringWitErrorInfo());
                 } else {
@@ -1239,7 +1239,7 @@ public class FxDialogShow {
 
     public static void showDbResultUpdate(Fdr dbResult) {
 
-        if (FiBoolean.isTrue(dbResult.getBoResult())) {
+        if (FiBool.isTrue(dbResult.getBoResult())) {
 
             if (dbResult.isEmptyMessage()) {
                 dbResult.setMessage(String.format("İşlem Başarı ile Gerçekleşti.\n %s Adet Kayıt Güncellendi.", dbResult.getRowsAffectedNotNull()));
@@ -1262,7 +1262,7 @@ public class FxDialogShow {
 
     public static void showFdrDbResultWithAllModal(Fdr dbResult) {
 
-        if (FiBoolean.isTrue(dbResult.getBoResult())) {
+        if (FiBool.isTrue(dbResult.getBoResult())) {
 
             if (FiString.isEmpty(dbResult.getMessage())) {
                 dbResult.setMessage(String.format("İşlem Başarı ile Gerçekleşti.\n %s Adet Kayıt Güncellendi.", dbResult.getRowsAffectedNotNull()));
@@ -1292,7 +1292,7 @@ public class FxDialogShow {
 
     public static void showDbResultUpdatePop(Fdr dbResult) {
 
-        if (FiBoolean.isTrue(dbResult.getBoResult())) {
+        if (FiBool.isTrue(dbResult.getBoResult())) {
 
             if (dbResult.getMessage() == null) {
                 dbResult.setMessage(String.format("İşlem Başarı ile Gerçekleşti.\n %s Adet Kayıt İşleme Alındı.", dbResult.getRowsAffectedNotNull()));
@@ -1315,7 +1315,7 @@ public class FxDialogShow {
 
     public void showDbResultWithOwner(Fdr dbResult, Window windowOwner) {
 
-        if (FiBoolean.isTrue(dbResult.getBoResult())) {
+        if (FiBool.isTrue(dbResult.getBoResult())) {
 
             if (dbResult.getMessage() == null) {
                 dbResult.setMessage("İşlem Başarı ile Gerçekleşti.");

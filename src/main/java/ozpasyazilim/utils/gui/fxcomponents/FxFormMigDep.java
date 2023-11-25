@@ -4,7 +4,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
-import ozpasyazilim.utils.core.FiBoolean;
+import ozpasyazilim.utils.core.FiBool;
 import ozpasyazilim.utils.core.FiCollection;
 import ozpasyazilim.utils.core.FiString;
 import ozpasyazilim.utils.datatypes.FiKeyBean;
@@ -22,7 +22,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class FxFormMig1<EntClazz> extends FxMigPaneGenView<EntClazz> implements IFxEntSimpleView {
+/**
+ * use FxFormC veya FxFormMig kullan
+ * @param <EntClazz>
+ */
+@Deprecated
+public class FxFormMigDep<EntClazz> extends FxMigPaneGenView<EntClazz> implements IFxEntSimpleView {
 	private Class<EntClazz> entityClazz;
 	private Boolean boEditableForm;
 	private List<FiCol> listFormElements;
@@ -40,28 +45,28 @@ public class FxFormMig1<EntClazz> extends FxMigPaneGenView<EntClazz> implements 
 	private Boolean boFormInitialized;
 	private ChangeListener<Boolean> fnFocusedChangeListener;
 
-	public FxFormMig1() {
+	public FxFormMigDep() {
 		super("insets 0");
 	}
 
-	public FxFormMig1(Class<EntClazz> entityClazz) {
+	public FxFormMigDep(Class<EntClazz> entityClazz) {
 		super("insets 0");
 		this.entityClazz = entityClazz;
 	}
 
-	public FxFormMig1(List<FiCol> listFormElements) {
+	public FxFormMigDep(List<FiCol> listFormElements) {
 		super("insets 0");
 		setupListFormElementsDefault(listFormElements);
 	}
 
-	public FxFormMig1(List<FiCol> listFormElements, Boolean boInit) {
+	public FxFormMigDep(List<FiCol> listFormElements, Boolean boInit) {
 		super("insets 0");
-		if (FiBoolean.isTrue(boInit)) {
+		if (FiBool.isTrue(boInit)) {
 			setupListFormElementsDefault(listFormElements);
 		}
 	}
 
-	public FxFormMig1(FxFormConfig fxFormConfig) {
+	public FxFormMigDep(FxFormConfig fxFormConfig) {
 		setupForm(fxFormConfig);
 	}
 
@@ -137,11 +142,11 @@ public class FxFormMig1<EntClazz> extends FxMigPaneGenView<EntClazz> implements 
 	}
 
 	public FiKeyBean getFormAsFiKeyBean() {
-		return FxEditorFactory.bindFormToKeyBeanByEditorNode(getListFormElements());
+		return FxEditorFactory.bindFormToFiKeyBeanByEditorNode(getListFormElements());
 	}
 
 	public FiKeyBean getFormAsKeyBean() {
-		return FxEditorFactory.bindFormToKeyBeanByEditorNode(getListFormElements());
+		return FxEditorFactory.bindFormToFiKeyBeanByEditorNode(getListFormElements());
 	}
 
 	public List<FiCol> getListFiColWithFormValue() {
@@ -283,7 +288,7 @@ public class FxFormMig1<EntClazz> extends FxMigPaneGenView<EntClazz> implements 
 
 		listFormElements.forEach(infTableCol -> {
 
-			if (FiBoolean.isTrue(infTableCol.getBoHidden())) {
+			if (FiBool.isTrue(infTableCol.getBoHidden())) {
 				return;
 			}
 
@@ -301,7 +306,7 @@ public class FxFormMig1<EntClazz> extends FxMigPaneGenView<EntClazz> implements 
 			Label lblForm = new Label(infTableCol.getHeaderName());
 			add(lblForm, "width 100");
 			Node node = FxEditorFactory.generateAndSetFilterNode(infTableCol);
-			node.setDisable(FiBoolean.isFalse(boEditableForm));
+			node.setDisable(FiBool.isFalse(boEditableForm));
 			add(node, String.format("width %s,wrap", "300"));
 			//}
 
@@ -321,7 +326,7 @@ public class FxFormMig1<EntClazz> extends FxMigPaneGenView<EntClazz> implements 
 
 //			Loghelper.get(getClass()).debug("FiCol in Form" + fiCol.getFieldName());
 
-			if (FiBoolean.isTrue(fiCol.getBoHidden())) {
+			if (FiBool.isTrue(fiCol.getBoHidden())) {
 				continue;
 			}
 
@@ -346,17 +351,17 @@ public class FxFormMig1<EntClazz> extends FxMigPaneGenView<EntClazz> implements 
 			// Editor comp (node) oluşturulur
 			Node node = FxEditorFactory.generateEditorNodeFullLifeCycle(fiCol, entityForNode);
 
-			if (FiBoolean.isFalse(getBoEditableForm())) {
+			if (FiBool.isFalse(getBoEditableForm())) {
 				node.setDisable(true);
 			}
 
-			if (FiBoolean.isTrue(fiCol.getBoNonEditableForForm()) || FiBoolean.isFalse(fiCol.getBoEditable())) {
+			if (FiBool.isTrue(fiCol.getBoNonEditableForForm()) || FiBool.isFalse(fiCol.getBoEditable())) {
 				node.setDisable(true);
 			}
 
 			// getFormEntityForEdit() yerin getFormEntity getirildi 213010
 			// 19-11-22 'de getFormEntity , getBoUpdateFormInit() değiştirildi (form update olduğunu anlamak için)
-			if (getBoUpdateFormInit() && FiBoolean.isTrue(fiCol.getBoNonUpdatable())) {
+			if (getBoUpdateFormInit() && FiBool.isTrue(fiCol.getBoNonUpdatable())) {
 				node.setDisable(true);
 			}
 

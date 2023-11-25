@@ -1,6 +1,6 @@
 package ozpasyazilim.utils.fidborm;
 
-import ozpasyazilim.utils.core.FiBoolean;
+import ozpasyazilim.utils.core.FiBool;
 import ozpasyazilim.utils.core.FiString;
 import ozpasyazilim.utils.fidbanno.*;
 import ozpasyazilim.utils.log.Loghelper;
@@ -101,7 +101,7 @@ public class FiEntity {
 			FiField fiField = new FiField();
 			setupFiFieldAll(field, fiField);
 
-			if (FiBoolean.isTrue(includeExtra)) {
+			if (FiBool.isTrue(includeExtra)) {
 				assignFiFieldExtraRelatedDb(field, fiField);
 			}
 
@@ -153,7 +153,7 @@ public class FiEntity {
 		List<FiField> fiFieldList = new ArrayList<>();
 
 		for (FiField fiField : listFiFieldsSummary) {
-			if (FiBoolean.isTrue(fiField.getBoCandidateId1())) {
+			if (FiBool.isTrue(fiField.getBoCandidateId1())) {
 				fiFieldList.add(fiField);
 			}
 		}
@@ -167,7 +167,7 @@ public class FiEntity {
 		List<FiField> fiFieldList = new ArrayList<>();
 
 		for (FiField fiField : listFiFieldsSummary) {
-			if (FiBoolean.isTrue(fiField.getBoIdField())) {
+			if (FiBool.isTrue(fiField.getBoIdField())) {
 				fiFieldList.add(fiField);
 			}
 		}
@@ -181,7 +181,7 @@ public class FiEntity {
 		List<FiField> fiFieldList = new ArrayList<>();
 
 		for (FiField fiField : listFiFieldsSummary) {
-			if (FiBoolean.isTrue(fiField.getBoDateSeperatorField())) {
+			if (FiBool.isTrue(fiField.getBoDateSeperatorField())) {
 				fiFieldList.add(fiField);
 			}
 		}
@@ -204,7 +204,7 @@ public class FiEntity {
 		List<FiField> fiFieldList = new ArrayList<>();
 
 		for (FiField fiField : listFiFieldsSummary) {
-			if (FiBoolean.isTrue(fiField.getBoCandidateId2())) {
+			if (FiBool.isTrue(fiField.getBoCandidateId2())) {
 				fiFieldList.add(fiField);
 			}
 		}
@@ -237,7 +237,7 @@ public class FiEntity {
 		for (Field field : fields) {
 
 			// transient dahil edilmemişse atlasın
-			if (!FiBoolean.isTrue(includeTransient)) {
+			if (!FiBool.isTrue(includeTransient)) {
 				if (field.isAnnotationPresent(Transient.class)) continue;
 				if (field.isAnnotationPresent(FiTransient.class)) continue;
 			}
@@ -248,7 +248,7 @@ public class FiEntity {
 			FiField fiField = new FiField();
 			setupFiFieldAll(field, fiField);
 
-			if (FiBoolean.isTrue(includeExtra)) {
+			if (FiBool.isTrue(includeExtra)) {
 				assignFiFieldExtraRelatedDb(field, fiField);
 			}
 
@@ -266,7 +266,7 @@ public class FiEntity {
 		for (Field field : fields) {
 
 			// transient dahil edilmemişse atlasın
-			if (!field.isAnnotationPresent(FiColManual.class) && !FiBoolean.isTrue(includeTransient)) {
+			if (!field.isAnnotationPresent(FiColManual.class) && !FiBool.isTrue(includeTransient)) {
 				if (field.isAnnotationPresent(Transient.class)) continue;
 				if (field.isAnnotationPresent(FiTransient.class)) continue;
 			}
@@ -277,7 +277,7 @@ public class FiEntity {
 			FiField fiField = new FiField();
 			setupFiFieldAll(field, fiField);
 
-			if (FiBoolean.isTrue(includeExtra)) {
+			if (FiBool.isTrue(includeExtra)) {
 				assignFiFieldExtraRelatedDb(field, fiField);
 			}
 
@@ -293,7 +293,7 @@ public class FiEntity {
 		List<FiField> listFields = getListFieldsWoutStatic(clazz, includeTransient);
 
 		return listFields.stream().filter(fiField -> {
-			if (FiBoolean.isFalse(fiField.getNullable())) return true;
+			if (FiBool.isFalse(fiField.getNullable())) return true;
 			return false;
 		}).collect(toList());
 
@@ -334,7 +334,7 @@ public class FiEntity {
 				fiField.setDbFieldName(anno.name());
 			}
 
-			if (FiBoolean.isTrue(anno.boFilterLike())) {
+			if (FiBool.isTrue(anno.boFilterLike())) {
 				fiField.setBoFilterLike(true);
 			}
 		}
@@ -651,7 +651,7 @@ public class FiEntity {
 		//listIdFields.forEach(fiField -> {
 		for (FiField field : listFiFieldsShort) {
 
-			if (FiBoolean.isTrue(field.getBoIdField())) {
+			if (FiBool.isTrue(field.getBoIdField())) {
 				//Loghelperr.staticLogDebug("Id Fiedl"+field.getName());
 				Object idValue = FiReflection.getPropertyNested(entity, field.getName());
 
@@ -673,7 +673,7 @@ public class FiEntity {
 		//listIdFields.forEach(fiField -> {
 		for (FiField field : listFiFieldsShort) {
 
-			if (FiBoolean.isTrue(field.getBoCusFieldDtCreate())) {
+			if (FiBool.isTrue(field.getBoCusFieldDtCreate())) {
 				//Loghelperr.staticLogDebug("Id Fiedl"+field.getName());
 				Object idValue = FiReflection.getPropertyNested(entity, field.getName());
 
@@ -697,7 +697,7 @@ public class FiEntity {
 		//listIdFields.forEach(fiField -> {
 		for (FiField field : listFiFieldsShort) {
 
-			if (FiBoolean.isTrue(field.getBoIdField())) {
+			if (FiBool.isTrue(field.getBoIdField())) {
 				Loghelper.get(FiEntity.class).debug("Id Field:" + field.getName());
 				Object idValue = FiReflection.getPropertyNested(fromEntity, field.getName());
 				boResult = FiReflection.setterNested(toEntity, field.getName(), idValue);
@@ -719,7 +719,7 @@ public class FiEntity {
 
 		for (FiField field : getListFieldsShortWithId(entityClazz)) {
 
-			if (FiBoolean.isTrue(field.getBoIdField())) {
+			if (FiBool.isTrue(field.getBoIdField())) {
 				//Loghelperr.staticLogDebug("Id Field:"+field.getName());
 				listIdFields.add(field.getName());
 			}
