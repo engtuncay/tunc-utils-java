@@ -77,6 +77,10 @@ public abstract class AbsFxSimpleBaseCont implements IFxSimpleCont {
         this.closeReason = closeReason;
     }
 
+    public void setCloseReasonDone() {
+        setCloseReason(getDoneText());
+    }
+
     public void closeStageWithDoneReason() {
         closeStage(getDoneText());
     }
