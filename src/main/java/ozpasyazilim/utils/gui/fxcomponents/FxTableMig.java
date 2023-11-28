@@ -39,7 +39,7 @@ public class FxTableMig<S> extends MigPane {
 	}
 
 	private void actBtnExcel() {
-		String appDir = FiWinUtils.getDesktopDirectory();  //+ "\\" + AppParametersGeneral.entegreDirectory;
+		String appDir = FiWinUtils.getUserDirOrDesktopDir();  //+ "\\" + AppParametersGeneral.entegreDirectory;
 		if(FiApp.appUserTempDir !=null) appDir = FiApp.appUserTempDir;
 		String fileName= "entegre_" + FiFile.getCurrentTimeStampForFile() + ".xlsx";
 		getFxTableView().excelOpen(appDir,fileName);

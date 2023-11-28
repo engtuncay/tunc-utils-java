@@ -2113,7 +2113,7 @@ public class FiExcel {
             IFiColHelper.autoComment(listExcelColums, clazzForAutoComment);
         }
 
-        String basepath = FiWinUtils.getDesktopDirectory();
+        String basepath = FiWinUtils.getUserDirOrDesktopDir();
 
         String excelfilename = "Sablon-" + iFxSimpleCont.getModuleLabel() + "-" + FiDate.datetoString_timestampt2(new Date()) + ".xlsx";
 

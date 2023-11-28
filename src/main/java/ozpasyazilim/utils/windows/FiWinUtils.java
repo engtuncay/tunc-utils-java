@@ -10,24 +10,17 @@ public class FiWinUtils {
 			+ "\"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\"
 			+ "Explorer\\Shell Folders\" /v DESKTOP";
 
-	private static String desktopDirectory;
+	private static String userDirectory;
 
-//	public static String getDesktopDirectory() {
-//		if(desktopDirectory==null){
-//			return findCurrenUserDesktopPath();
-//		}
-//		return desktopDirectory;
-//	}
-
-	private static void setDesktopDirectory(String desktopDirectory) {
-		FiWinUtils.desktopDirectory = desktopDirectory;
+	private static void setUserDirectory(String userDirectory) {
+		FiWinUtils.userDirectory = userDirectory;
 	}
 
 	private FiWinUtils() {
 	}
 
-	public static String getDesktopDirectory() {
-		if (desktopDirectory!= null) return desktopDirectory;
+	public static String getUserDirOrDesktopDir() {
+		if (userDirectory != null) return userDirectory;
 		return findCurrenUserDesktopPath();
 	}
 
@@ -46,7 +39,7 @@ public class FiWinUtils {
 
 			if (p == -1) return null;
 			String desktopDir = result.substring(p + REGSTR_TOKEN.length()).trim();
-			setDesktopDirectory(desktopDir);
+			setUserDirectory(desktopDir);
 			return desktopDir;
 
 		} catch (Exception e) {
@@ -59,7 +52,7 @@ public class FiWinUtils {
 	 */
 	public static void main(String[] args) {
 		System.out.println("Desktop directory : "
-				+ getDesktopDirectory());
+				+ getUserDirOrDesktopDir());
 	}
 
 	static class StreamReader extends Thread {

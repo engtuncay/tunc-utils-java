@@ -76,7 +76,7 @@ public class FxTableMig2<EntClazz> extends MigPane {
 
 	private void actBtnExcel() {
 
-		String appDir = FiWinUtils.getDesktopDirectory();  //+ "\\" + AppParametersGeneral.entegreDirectory;
+		String appDir = FiWinUtils.getUserDirOrDesktopDir();  //+ "\\" + AppParametersGeneral.entegreDirectory;
 
 		if(FiApp.appUserTempDir !=null) appDir = FiApp.appUserTempDir;
 

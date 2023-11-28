@@ -1391,7 +1391,7 @@ public class FiExcel2 {
 
     public <E> File writeSablonExcelFile(List<? extends IFiCol> listExcelColums, List<E> listData, String filename) {
 
-        String basepath = FiWinUtils.getDesktopDirectory();
+        String basepath = FiWinUtils.getUserDirOrDesktopDir();
 
         //String excelfilename = new SimpleDateFormat("'P"+ belgekod +"'-yyyyMMddhhmmss'.xlsx'").format(new Date());
         // üzerine yazıyor

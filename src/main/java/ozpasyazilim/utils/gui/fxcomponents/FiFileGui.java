@@ -20,7 +20,7 @@ public class FiFileGui {
 		final FileChooser chooser = new FileChooser();
 		chooser.setTitle(title);
 		chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(extDescription, extensions));
-		chooser.setInitialDirectory(new File(FiWinUtils.getDesktopDirectory()));
+		chooser.setInitialDirectory(new File(FiWinUtils.getUserDirOrDesktopDir()));
 
 		File file = chooser.showOpenDialog(null);
 
@@ -38,7 +38,7 @@ public class FiFileGui {
 
 		final DirectoryChooser chooser = new DirectoryChooser();
 		chooser.setTitle(title);
-		chooser.setInitialDirectory(new File(FiWinUtils.getDesktopDirectory()));
+		chooser.setInitialDirectory(new File(FiWinUtils.getUserDirOrDesktopDir()));
 		//chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(extDescription, extensions));
 
 		File file = chooser.showDialog(null);
