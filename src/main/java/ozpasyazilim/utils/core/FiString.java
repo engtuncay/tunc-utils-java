@@ -735,6 +735,29 @@ public class FiString {
         return txResult.toString();
     }
 
+    public static String combineListAsAText(List<?> listNew,String txSeperator) {
+        if (FiCollection.isEmpty(listNew)) {
+            return "";
+        }
+
+        StringBuilder txResult = new StringBuilder();
+        boolean boFirstItem = true;
+        for (int index = 0; index < listNew.size(); index++) {
+            if(listNew.get(index)==null)continue;
+            if(!boFirstItem){
+                txResult.append(txSeperator);
+            }
+            txResult.append(FiString.orEmpty(listNew.get(index)));
+            boFirstItem=false;
+        }
+
+        return txResult.toString();
+    }
+
+    public static String combineListWitComma(List<?> listNew) {
+        return combineListAsAText(listNew, ",");
+    }
+
     public static Boolean checkEqualNotNull(String vdaireno, String cari_vdaire_no) {
         if (vdaireno == null || cari_vdaire_no == null) return false;
 

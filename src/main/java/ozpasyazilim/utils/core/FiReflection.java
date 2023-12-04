@@ -409,6 +409,22 @@ public class FiReflection {
 		return mapFields;
 	}
 
+	public static FiKeyBean convertEntityToFiKeybean(Class clazz, Object entity) {
+
+		if (clazz == null) return null;
+
+		Field[] fields = clazz.getDeclaredFields();
+
+		FiKeyBean fiKeyBean = new FiKeyBean();
+
+		for (Field field : fields) {
+			Object property = FiReflection.getProperty(entity, field.getName());
+			fiKeyBean.add(field.getName(),property);
+		}
+
+		return fiKeyBean;
+	}
+
 	public static <T extends Object> String getSimpleClassName(T object) {
 		if (object instanceof Integer) return Integer.class.getSimpleName();
 

@@ -13,13 +13,14 @@ import java.io.*;
 import java.util.Properties;
 
 import com.github.underscore.lodash.U;
+import ozpasyazilim.utils.datatypes.FiKeyBean;
 import ozpasyazilim.utils.datatypes.FiKeyString;
 
 public class FiXml {
 	private FiDomDoc fiDomDoc;
 	private String txXmlRaw;
 	private String txXmlTemplate;
-	private FiKeyString fksParams;
+	private FiKeyBean fksParams;
 
 	public FiXml() {
 	}
@@ -184,14 +185,14 @@ public class FiXml {
 		this.txXmlTemplate = txXmlTemplate;
 	}
 
-	public FiKeyString getMapParamsInit() {
+	public FiKeyBean getMapParamsInit() {
 		if (fksParams == null) {
-			fksParams = new FiKeyString();
+			fksParams = new FiKeyBean();
 		}
 		return fksParams;
 	}
 
-	public void setFksParams(FiKeyString fksParams) {
+	public void setFksParams(FiKeyBean fksParams) {
 		this.fksParams = fksParams;
 	}
 

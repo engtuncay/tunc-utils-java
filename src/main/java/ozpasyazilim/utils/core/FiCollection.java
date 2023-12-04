@@ -272,7 +272,7 @@ public class FiCollection {
     }
 
     /**
-     * Verilen Listedeki elemanları belli bir key ye (fnGetId den dönen değer) göre toplar map<id,list<entity>> şeklinde oluşur
+     * Verilen Listedeki elemanları belli bir key ye (fnGetId den dönen değer) göre bir listede toplar, bunu map'a ekler. map, key:id value:listEntity şeklinde olur.
      * <p>
      * id null olursa atlar
      * <p>

@@ -1621,6 +1621,14 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
         return jdUpdateBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
     }
 
+    public Fdr jdDeleteBindMapMain(FiQuery fiQuery) {
+        return jdDeleteBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
+    }
+
+    public Fdr jdDeleteBindMapMain(String updateQuery, Map<String, Object> fiMapParams) {
+        return jdUpdateBindMapMain(updateQuery, fiMapParams);
+    }
+
     public Fdr jdUpdateBindMapMain(String updateQuery, Map<String, Object> fiMapParams) {
 
         Jdbi jdbi = getJdbi();
