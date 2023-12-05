@@ -6,7 +6,7 @@ package mark.utils.bean;
  */
 public class FormatterAdapter implements Formatter {
 
-	//FIXME : neden String - güncelleme yapıldı - object yapıldı
+
 	public String format(Object obj) {
 		return null;
 	};

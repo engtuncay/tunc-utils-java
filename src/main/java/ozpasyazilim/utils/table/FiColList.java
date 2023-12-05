@@ -58,7 +58,7 @@ public class FiColList extends ArrayList<FiCol>{
 		return super.add(fiTableCol);
 	}
 
-	// URFIX statik map, dinamik map'e çevrilmeli (alan kaldırılmalı)
+	// URFIX alan üzerinden degil, istenildiğinde oluşturulan bir map yapılmalı (alan kaldırılmalı)
 	public Map<String, FiCol> getMapColsInit() {
 		if (mapCols == null) {
 			mapCols = new HashMap<>();

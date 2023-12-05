@@ -107,7 +107,6 @@ public class AnnotationResolver {
 			try {
 				resolvable = TypeFactory.annotation( Resolvable.class, null);
 			} catch (AnnotationFormatException e) {
-				// TODO try catch
 				e.printStackTrace();
 			}
 			//resolvers[i] = resolve(resolvableDyn, field.getName(), clazz, colName);
@@ -119,7 +118,7 @@ public class AnnotationResolver {
 
 		//		else colName = colName;
 
-		//TODO önceki hali - güncellendi 20.06 by to
+		// önceki hali - güncellendi 20.06 by to
 		//fieldName.substring(0, fieldName.lastIndexOf(".")).concat(colName);
 
 		FieldDefResolver resolver = new FieldDefResolver(clazz, fieldName, colName, (FieldAccessHandler) resolvable
