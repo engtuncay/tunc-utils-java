@@ -162,6 +162,11 @@ public class FxFormc<EntClazz> extends FxMigPaneGenView<EntClazz> implements IFi
 
     }
 
+    /**
+     * !!! Form içinden kullanıcının girdiği değerler buradan alınmaz. getFormAsFiKeybean den alınmalı
+     *
+     * @return
+     */
     public FiColsUtil getFiColsUtil() {
         return FiColsUtil.bui(getListFormElementsInit());
     }

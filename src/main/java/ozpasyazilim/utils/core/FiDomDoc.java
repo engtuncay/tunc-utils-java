@@ -1,5 +1,6 @@
 package ozpasyazilim.utils.core;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.w3c.dom.Document;
 
 /**
@@ -28,6 +29,12 @@ public class FiDomDoc {
 			return null;
 		}
 	}
+
+	public boolean checkElementExistByTagName(String tagName) {
+        return getDoc().getElementsByTagName(tagName).getLength() > 0;
+	}
+
+
 }
 
 // Xmldeki belli bir alanı okumak için
