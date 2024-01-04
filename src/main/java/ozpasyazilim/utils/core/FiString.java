@@ -649,6 +649,8 @@ public class FiString {
     /**
      * txCheckValue, Deger dizisinden birine eşitse true döner
      *
+     * null eşitliğini kabul etmez
+     *
      * @param txCheckValue
      * @param txtValueArr
      * @return

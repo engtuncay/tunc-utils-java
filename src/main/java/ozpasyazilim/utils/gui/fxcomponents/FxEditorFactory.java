@@ -397,7 +397,6 @@ public class FxEditorFactory {
     // Component Node oluşturmak için
 
     /**
-     *
      * FiCol'dan extra özellikler alması için eklendi
      *
      * @param ozColType
@@ -900,92 +899,117 @@ public class FxEditorFactory {
      */
     public static Object getNodeObjValueByFilterNode(IFiCol iFiTableCol) {
         //return getEditorObjValueByFilterNode(IFiTableCol,iFiTableCol.getColFilterNodeClass());
-        return getValueFromNodeCompMain(iFiTableCol.getColType(), iFiTableCol.getFilterNodeClass(), iFiTableCol.getColFilterNode(), iFiTableCol.getFilterValue(), null);
+        return getValueFromNodeCompMain(iFiTableCol.getColType(), iFiTableCol.getFilterNodeClass(), iFiTableCol.getColFilterNode(), iFiTableCol.getFilterValue());
     }
 
 
     public static Object getNodeObjValueByFilterNode(IFiCol iFiTableCol, String prmEditorClass) {
-        return getValueFromNodeCompMain(iFiTableCol.getColType(), prmEditorClass, iFiTableCol.getColFilterNode(), iFiTableCol.getFilterValue(), null);
+        return getValueFromNodeCompMain(iFiTableCol.getColType(), prmEditorClass, iFiTableCol.getColFilterNode(), iFiTableCol.getFilterValue());
     }
 
     public static Object getNodeObjValueByEditorNode(IFiCol iFiCol, String txEditorClass) {
-        return getValueFromNodeCompMain(iFiCol.getColType(), txEditorClass, iFiCol.getColEditorNode(), iFiCol.getColEditorValue(), iFiCol.getIfxNodeEditor());
+        return getValueFromNodeCompMain(iFiCol.getColType(), txEditorClass, iFiCol.getColEditorNode(), iFiCol.getColEditorValue());
+    }
+
+    public static Object getNodeObjValueByEditorNode(FiCol fiCol) {
+        return getValueFromNodeCompMain(fiCol.getColType(), fiCol.getColEditorClass(), fiCol.getColEditorNode(), fiCol.getColEditorValue());
+    }
+
+    public static String getNodeObjValueAsString(FiCol fiCol) {
+        Object valueFromNodeCompMain = getValueFromNodeCompMain(fiCol.getColType(), fiCol.getColEditorClass(), fiCol.getColEditorNode(), fiCol.getColEditorValue());
+
+        if(valueFromNodeCompMain instanceof String){
+            return valueFromNodeCompMain.toString();
+        }
+
+        return null;
     }
 
     /**
      * Fx Node Component'inden değeri alır ve ozcoltype'a ilgili türe çevirir.
      * <p>
      * Not Önemli !!! : Editorden gelen boş string ler null olarak yorumlandı.
+     * <p>
+     * IFxNode interface kullanan bir component ise degeri kendi metodundan alınır. {@link IfxNode}
+     * <p>
+     * {@code ifxNode1.getCompValueByColType(ozColType) }
+     * <p>
+     * txNodeClassName : paketle beraber uzun sınıf ismi
+     * <p>
+     * text Componentlerden (TextField,ComboBox,ChoiceBox) değer alındıktan sonra
+     * <p>
+     * {@code convertStringValueToObjectByOzColType(ozColType, textValue);} ile tipine çevrilir.
      *
      * @param
      * @return
      */
-    public static Object getValueFromNodeCompMain(OzColType ozColType, String txNodeClass, Node nodeComp, Object nodeValue, IfxNode ifxNode) {
-        // Parametre olarak IFiTableCol iFiTableCol çıkarıldı
+    public static Object getValueFromNodeCompMain(OzColType ozColType, String txNodeClassName, Node nodeComp, Object nodeValueDefault) {
+        // Parametre olarak çıkarılanlar : IFiCol iFiCol , IFxNode ifxNode
 
-        // Loghelper.getInstance(FxEditorFactory.class).debug("Col Node Class:"+ txNodeClass);
+        // Loghelper.getInstance(FxEditorFactory.class).debug("Col Node Class:"+ txNodeClassName);
         // Loghelper.getInstance(FxEditorFactory.class).debug("Col Node Component Id:"+ FiType.orEmpty(nodeComp));
 
         Object cellvalue = null;
 
-        // String txNodeClass = txNodeClass; //infTableCol.getColFxNodeClass();
+        // String txNodeClassName = txNodeClassName; //infTableCol.getColFxNodeClass();
 
-        if (txNodeClass == null) txNodeClass = "";
+        if (txNodeClassName == null) txNodeClassName = "";
 
-        // editor tanımlanmamışsa nodeValue parametresi döndürülür
-        if (nodeComp == null || txNodeClass.equals("")) {
-            return nodeValue;
+        // editor tanımlanmamışsa nodeValueDefault parametresi döndürülür
+        if (nodeComp == null || txNodeClassName.isEmpty()) {
+            return nodeValueDefault;
         }
 
         // IFxNode interface kullanan bir component ise degeri kendi metodundan alınır.
-        if (nodeComp != null && nodeComp instanceof IfxNode) {
+        if (nodeComp instanceof IfxNode) {
             // Loghelper.get(FxEditorFactory.class).debug("value node component alındı");
             IfxNode ifxNode1 = (IfxNode) nodeComp;
             return ifxNode1.getCompValueByColType(ozColType);
         }
 
-        // Text Value (String) değer olan componentlerin değeri burada belirlenir.
-        if (txNodeClass.equals(FxTextField.class.getName())
-                || txNodeClass.equals(FxTextFieldBtn.class.getName())
-                || txNodeClass.equals(FxLabel.class.getName())
-                || txNodeClass.equals(FxLabelData.class.getName())
-                || txNodeClass.equals(FxTextFieldWitBtnLbl3.class.getName())) {
+        //*** Text Value (String) değer olan componentlerin değeri burada belirlenir.
+
+        if (txNodeClassName.equals(FxTextField.class.getName())
+                || txNodeClassName.equals(FxTextFieldBtn.class.getName())
+                || txNodeClassName.equals(FxLabel.class.getName())
+                || txNodeClassName.equals(FxLabelData.class.getName())
+                || txNodeClassName.equals(FxTextFieldWitBtnLbl3.class.getName())) {
 
             String textValue = null;
 
-            if (txNodeClass.equals(FxTextField.class.getName())) {
+            if (txNodeClassName.equals(FxTextField.class.getName())) {
                 FxTextField comp = (FxTextField) nodeComp;
                 textValue = comp.getText();
             }
 
-            if (txNodeClass.equals(FxTextFieldBtn.class.getName())) {
+            if (txNodeClassName.equals(FxTextFieldBtn.class.getName())) {
                 FxTextFieldBtn comp = (FxTextFieldBtn) nodeComp;
                 //textValue = comp.getFxTextField().getText();
                 textValue = comp.getTxValue();
                 //Loghelperr.debug(FxEditorFactory.class,"txVal:"+comp.getTxValue());
             }
 
-            if (txNodeClass.equals(FxTextFieldWitBtnLbl3.class.getName())) {
+            if (txNodeClassName.equals(FxTextFieldWitBtnLbl3.class.getName())) {
                 FxTextFieldWitBtnLbl3 comp = (FxTextFieldWitBtnLbl3) nodeComp;
                 //textValue = comp.getFxTextField().getText();
                 textValue = comp.getTxValue();
                 //Loghelperr.debug(FxEditorFactory.class,"txVal:"+comp.getTxValue());
             }
 
-            if (txNodeClass.equals(FxTextFieldBtnLabel2.class.getName())) {
+            if (txNodeClassName.equals(FxTextFieldBtnLabel2.class.getName())) {
                 FxTextFieldWithButtonLabelCustom comp = (FxTextFieldWithButtonLabelCustom) nodeComp;
                 //textValue = comp.getFxTextField().getText();
                 textValue = comp.getTxValue();
                 //Loghelperr.debug(FxEditorFactory.class,"txVal:"+comp.getTxValue());
             }
 
-            if (txNodeClass.equals(FxLabel.class.getName()) || txNodeClass.equals(FxLabelData.class.getName())) {
+            if (txNodeClassName.equals(FxLabel.class.getName()) || txNodeClassName.equals(FxLabelData.class.getName())) {
                 FxLabel comp = (FxLabel) nodeComp;
                 textValue = comp.getTxValue();
             }
 
             // textvalue null veya "" boş string ise null döndürülür !!!!
-            if (textValue == null || textValue.equals("")) {
+            if (textValue == null || textValue.isEmpty()) {
                 return null;
             }
 
@@ -994,16 +1018,16 @@ public class FxEditorFactory {
 
         }
 
-        // ***** Tarih Componentleri
+        //*** Tarih Componentleri
 
-        if (txNodeClass.equals(DatePicker.class.getName()) || txNodeClass.equals(FxDatePicker.class.getName())) {
+        if (FiString.equalsOne(txNodeClassName, DatePicker.class.getName(), FxDatePicker.class.getName())) {
 
             LocalDate localDate = null;
             String txDate = null;
 
             DatePicker comp = null;
 
-            if (txNodeClass.equals(DatePicker.class.getName())) {
+            if (txNodeClassName.equals(DatePicker.class.getName())) {
                 comp = (DatePicker) nodeComp;
                 txDate = comp.getEditor().getText();
                 //localDate = comp.getValue();
@@ -1011,7 +1035,7 @@ public class FxEditorFactory {
 
             }
 
-            if (txNodeClass.equals(FxDatePicker.class.getName())) {
+            if (txNodeClassName.equals(FxDatePicker.class.getName())) {
                 comp = (FxDatePicker) nodeComp;
                 //localDate = comp.getValue();
                 txDate = comp.getEditor().getText();
@@ -1037,10 +1061,12 @@ public class FxEditorFactory {
             return cellvalue;
         }
 
-        if (txNodeClass.equals(FxComboBox.class.getName())
-                || txNodeClass.equals(ComboBox.class.getName())) {
+        //*** Diger Componentler
 
-            if (txNodeClass.equals(FxComboBox.class.getName())) {
+        if (txNodeClassName.equals(FxComboBox.class.getName())
+                || txNodeClassName.equals(ComboBox.class.getName())) {
+
+            if (txNodeClassName.equals(FxComboBox.class.getName())) {
                 FxComboBox<ComboItemText> comp = (FxComboBox<ComboItemText>) nodeComp;
                 String textValue = comp.getSelectedItemFi().getValue();
                 return convertStringValueToObjectByOzColType(ozColType, textValue);
@@ -1048,7 +1074,7 @@ public class FxEditorFactory {
 
         }
 
-        if (txNodeClass.equals(FxComboBoxSimple.class.getName())) {
+        if (txNodeClassName.equals(FxComboBoxSimple.class.getName())) {
             FxComboBoxSimple comp = (FxComboBoxSimple) nodeComp;
             ComboItemText selectedItemFi = comp.getSelectedItemFi();
             String textValue = null;
@@ -1056,14 +1082,14 @@ public class FxEditorFactory {
             return convertStringValueToObjectByOzColType(ozColType, textValue);
         }
 
-        if (txNodeClass.equals(FxComboBoxObj.class.getName())) {
+        if (txNodeClassName.equals(FxComboBoxObj.class.getName())) {
             FxComboBoxObj comp = (FxComboBoxObj) nodeComp;
             ComboItemObj selectedItemFi = comp.getSelectedItemFi();
             // selectedItem yoksa null döner
             return (selectedItemFi != null ? selectedItemFi.getValue() : null);
         }
 
-        if (txNodeClass.equals(FxChoiceBoxSimple.class.getName())) {
+        if (txNodeClassName.equals(FxChoiceBoxSimple.class.getName())) {
             FxChoiceBoxSimple comp = (FxChoiceBoxSimple) nodeComp;
             if (comp.getFiSelectedItem() != null) {
                 String textValue = comp.getFiSelectedItem().getValue();
@@ -1072,24 +1098,24 @@ public class FxEditorFactory {
             return null;
         }
 
-        if (txNodeClass.equals(FxCheckBox.class.getName())) {
+        if (txNodeClassName.equals(FxCheckBox.class.getName())) {
             FxCheckBox comp = (FxCheckBox) nodeComp;
             return comp.isSelected();
         }
 
-
-        // *****
+        //*** Diger Durumlar
 
         //if (cellvalue != null) return cellvalue;
 
         // infTableCol.getColFxNodeClass() == null && //if (infTableCol.getFiValue() != null) {
 
-        return nodeValue; //getColFilterValueByColType(iFiTableCol);
+        return nodeValueDefault; //getColFilterValueByColType(iFiTableCol);
 
     }
 
     /**
-     * textValue , ozColType göre tipine çevirerek dönüş yapar. <br>
+     * textValue , ozColType göre tipine çevirerek dönüş yapar.
+     * <p>
      * mesala ozColType integer ise integer tipine çevirerek object olarak dönüş yapar.
      *
      * @param ozColType

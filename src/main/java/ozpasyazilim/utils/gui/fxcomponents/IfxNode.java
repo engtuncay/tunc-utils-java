@@ -4,29 +4,41 @@ import ozpasyazilim.utils.annotations.FiExpiremental;
 import ozpasyazilim.utils.table.OzColType;
 
 /**
- * Comp ler ilgili ortak metodları buraya yazılacak
- *
+ * Custom componentlerde kullanılacak ortak metodlar
+ * <p>
+ * Örnek Custom Componentler {@link FxTextFieldBtn}
+ * <p>
+ * IFxNode interface kullanan bir component ise degeri kendi metodundan alınır.
+ * <p>
+ * {@code ifxNode1.getCompValueByColType(ozColType) }
  */
 public interface IfxNode {
 
-	Object getCompValue();
-	void setCompValue(Object objValue);
+    Object getCompValue();
 
-	OzColType getCompValueType();
+    void setCompValue(Object objValue);
 
-	void setCompValueType(OzColType ozColType);
+    OzColType getCompValueType();
 
-	Boolean getBoInvalidData();
+    void setCompValueType(OzColType ozColType);
 
-	/**
-	 * OzColType göre çevrim yaparak döndürür
-	 *
-	 * @return
-	 */
-	Object getCompValueByColType();
+    Boolean getBoInvalidData();
 
-	@Deprecated
-	@FiExpiremental // sonradan kaldırılacak , coltype getCompValueType dan alıacak
-	Object getCompValueByColType(OzColType ozColType);
+    /**
+     * OzColType göre çevrim yaparak döndürür
+     *
+     * @return
+     */
+    Object getCompValueByColType();
+
+    /**
+     * sonradan kaldırılacak , coltype getCompValueType dan alıacak
+     *
+     * @param ozColType
+     * @return
+     */
+    @Deprecated
+    @FiExpiremental
+    Object getCompValueByColType(OzColType ozColType);
 
 }
