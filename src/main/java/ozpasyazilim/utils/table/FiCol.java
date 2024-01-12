@@ -426,6 +426,9 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
             if (FiBool.isTrue(fiField.getBoExcludeFromAutoColList())) continue;
             FiCol fiTableCol = new FiCol(fiField.getName(), fiField.getName());
             fiTableCol.setColType(convertOzColType(fiField.getClassNameSimple()));
+            if(fiTableCol.getColTypeNtn().equals(OzColType.Double) || fiTableCol.getColTypeNtn().equals(OzColType.Integer)){
+                fiTableCol.setSummaryType(OzColSummaryType.SUM);
+            }
             fiTableColList.add(fiTableCol);
         }
         return fiTableColList;
