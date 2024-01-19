@@ -22,7 +22,7 @@ import java.util.function.Predicate;
 public class FxChoiceBox<T> extends ChoiceBox<T> {
 
 	private StringProperty txValue = new SimpleStringProperty();
-	private StringProperty txFilter;
+	private StringProperty txFilterAutoComplete;
 	private FilteredList<T> filteredList;
 	private Tooltip filterTooltip;
 	private Predicate<T> predicateFilter1;
@@ -82,20 +82,22 @@ public class FxChoiceBox<T> extends ChoiceBox<T> {
 		focusedProperty().addListener((observable, oldValue, newValue) -> {
 			if(!newValue){
 				getFilterTooltip().hide();
-			}else{
-
 			}
+//			else{
+//				//
+//			}
 		});
 
 		//setTooltip(getSearchTooltip());
 //		setOnHidden(this::handleOnHiding);
 //		setOnShown(event -> Loghelper.get(getClass()).debug("setonshown"));
 
+		// changeListener : observable,oldValue,newValue (showingProperty'nin yeni değeri)
 		showingProperty().addListener((observable, wasShowing, isNowShowing) -> {
 			if (isNowShowing) {
 //				setTxFilter(getTxFilter().trim());
 				//getFilterTooltip().setText(getTxFilter());
-				showFilterToolTip();
+				showFiFilterToolTip();
 //				Loghelper.get(getClass()).debug("showing");
 			} else {
 //				Loghelper.get(getClass()).debug("hiding choice box");
@@ -107,7 +109,7 @@ public class FxChoiceBox<T> extends ChoiceBox<T> {
 			}
 		});
 
-		txFilterProperty().addListener((observable, oldValue, newValue) -> {
+		txFilterAutoCompleteProperty().addListener((observable, oldValue, newValue) -> {
 
 			if (newValue == null) {
 				getFilterTooltip().setText("");
@@ -122,14 +124,14 @@ public class FxChoiceBox<T> extends ChoiceBox<T> {
 
 			setPredicateFilterAutoComplete(t -> {
 				//Loghelper.get(getClass()).debug("T:"+t.toString());
-				if (FiString.isEmpty(getTxFilter())) return true;
-				if (t.toString().toLowerCase().contains(getTxFilter().toLowerCase())) {
+				if (FiString.isEmpty(getTxFilterAutoComplete())) return true;
+				if (t.toString().toLowerCase().contains(getTxFilterAutoComplete().toLowerCase())) {
 					return true;
 				}
 				return false;
 			});
 
-			executeFilterPredicates();
+			fiExecuteFilterPredicates();
 
 			//show();
 
@@ -137,22 +139,22 @@ public class FxChoiceBox<T> extends ChoiceBox<T> {
 			//Loghelper.get(getClass()).debug("F size:"+getFilteredList().size());
 
 			//showFilterToolTip();
-			// bazen açık görünüp kapalı oluyor - filtered list 0 olunca
-			if (getFilteredList().size() > 0) {
+			//bazen açık görünüp kapalı oluyor - filtered list 0 olunca
+			if (!getFilteredList().isEmpty()) {
 				// filteredlist size 0 olunca show yapılırsa problem oluyor
-				showFilterToolTip();
+				showFiFilterToolTip();
 				show(); //show olunca triggerdan showFilterTooltip yapacak
 			} else {
 				hide(); // hide trigger olunca filterTooltip ne hide eder.
 				// tekrar gösterilir (sonuç olmasa da)
-				showFilterToolTip();
+				showFiFilterToolTip();
 			}
 
 		});
 
 	}
 
-	public void executeFilterPredicates() {
+	public void fiExecuteFilterPredicates() {
 
 		Predicate<T> predicateAll = t -> true;
 
@@ -173,17 +175,17 @@ public class FxChoiceBox<T> extends ChoiceBox<T> {
 
 		if (code == KeyCode.ESCAPE) {
 //			Loghelper.get(getClass()).debug("esc pressed");
-			setTxFilter(""); //this.txFilter = ""; //filter = "";
+			setTxFilterAutoComplete(""); //this.txFilter = ""; //filter = "";
 			return;
 		}
 
-		if (code == KeyCode.BACK_SPACE && getTxFilter().length() > 0) {
+		if (code == KeyCode.BACK_SPACE && getTxFilterAutoComplete().length() > 0) {
 			//Loghelper.get(getClass()).debug("backspace");
-			setTxFilter(getTxFilter().substring(0, getTxFilter().length() - 1));
+			setTxFilterAutoComplete(getTxFilterAutoComplete().substring(0, getTxFilterAutoComplete().length() - 1));
 			return;
 		}
 
-		if (code == KeyCode.SPACE && getTxFilter().length() > 0) {
+		if (code == KeyCode.SPACE && getTxFilterAutoComplete().length() > 0) {
 			//Loghelper.get(getClass()).debug("");
 //			setTxFilter(getTxFilter() + " ");
 //			showFilterToolTip();
@@ -192,7 +194,7 @@ public class FxChoiceBox<T> extends ChoiceBox<T> {
 
 		//Pattern.compile(regex)
 		if (FiRegExp.checkAlpanumericAndSpaceAndTire(e.getText())) { //code.isLetterKey()
-			setTxFilter(getTxFilter() + e.getText()); //filter += e.getText();
+			setTxFilterAutoComplete(getTxFilterAutoComplete() + e.getText()); //filter += e.getText();
 			//Loghelper.get(getClass()).debug("txFilter:" + getTxFilter());
 			return;
 		}
@@ -200,10 +202,11 @@ public class FxChoiceBox<T> extends ChoiceBox<T> {
 	}
 
 
-	public void showFilterToolTip() {
+	// XNOTE tooltip penceresi oluşturma
+	public void showFiFilterToolTip() {
 		//Loghelper.get(getClass()).debug("show Filter Tooltip");
 
-		if (getTxFilter().length() == 0) {
+		if (getTxFilterAutoComplete().length() == 0) {
 			getFilterTooltip().hide();
 		} else {
 			Window stage = getScene().getWindow();
@@ -212,8 +215,6 @@ public class FxChoiceBox<T> extends ChoiceBox<T> {
 			Bounds bounds = localToScreen(getBoundsInLocal());
 			//cmb.getTooltip().show(stage, posX, posY);
 			getFilterTooltip().show(stage, bounds.getMinX() - 10, bounds.getMinY() - 50);
-
-
 
 			//show();
 		}
@@ -277,19 +278,19 @@ public class FxChoiceBox<T> extends ChoiceBox<T> {
 		return false;
 	}
 
-	public String getTxFilter() {
-		return txFilterProperty().get();
+	public String getTxFilterAutoComplete() {
+		return txFilterAutoCompleteProperty().get();
 	}
 
-	public StringProperty txFilterProperty() {
-		if (txFilter == null) {
-			txFilter = new SimpleStringProperty("");
+	public StringProperty txFilterAutoCompleteProperty() {
+		if (txFilterAutoComplete == null) {
+			txFilterAutoComplete = new SimpleStringProperty("");
 		}
-		return txFilter;
+		return txFilterAutoComplete;
 	}
 
-	public void setTxFilter(String txFilter) {
-		txFilterProperty().set(txFilter);
+	public void setTxFilterAutoComplete(String txFilterAutoComplete) {
+		txFilterAutoCompleteProperty().set(txFilterAutoComplete);
 	}
 
 	public Tooltip getFilterTooltip() {

@@ -11,6 +11,8 @@ public class ComboItemText {
 
 	private String label;
 	private String value;
+
+	// Extra fields
 	private Runnable onAction;
 	private String txCode;
 	private String txSpec1;

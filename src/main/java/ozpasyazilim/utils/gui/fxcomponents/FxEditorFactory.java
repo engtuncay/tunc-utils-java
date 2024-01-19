@@ -187,6 +187,32 @@ public class FxEditorFactory {
         return fiKeyBean;
     }
 
+    public static FxChoiceBox getNodeCompAsChoiceBox(FiCol fiCol) {
+
+        Node colEditorNode = fiCol.getColEditorNode();
+
+        if(colEditorNode==null)return null;
+
+        if(colEditorNode instanceof FxChoiceBox){
+            return (FxChoiceBox) colEditorNode;
+        }
+
+        return null;
+    }
+
+    public static FxChoiceBoxSimple getNodeCompAsChoiceBoxSimple(FiCol fiCol) {
+
+        Node colEditorNode = fiCol.getColEditorNode();
+
+        if(colEditorNode==null)return null;
+
+        if(colEditorNode instanceof FxChoiceBoxSimple){
+            return (FxChoiceBoxSimple) colEditorNode;
+        }
+
+        return null;
+    }
+
     public String convertSimpleTypeToCompClass(String typeSimpleName) {
         return getMapSimpleClassToEditorClass().getOrDefault(typeSimpleName, null);
     }
