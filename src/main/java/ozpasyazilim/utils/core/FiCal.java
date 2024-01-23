@@ -35,8 +35,8 @@ public class FiCal {
 		return ((FiCal.getMonthNumberBegin0()-1)%12)+1; // 0-1=-1%12=11 + 1 = 12
 	}
 
-	public static Integer getPrevMonthNumber(Date dtNow) {
-		return ((FiCal.getMonthNumberBegin0(dtNow)-1)%12)+1; // 0-1=-1%12=11 + 1 = 12
+	public static Integer getPrevMonthNumber(Date dtValue) {
+		return ((FiCal.getMonthNumberBegin0(dtValue)-1+12)%12)+1; // 0-1=(-1+12)%12=11 + 1 = 12
 	}
 
 	public static Date setDayofDate(Date dtSon, int dayNo) {
