@@ -76,12 +76,12 @@ public class FiThread {
 
     public static Thread startThread(Runnable runnable, FxButton[] btnListee, Runnable runnableEnd) {
 
-        FxButton btnListe = btnListee[0];
+        FxButton btnListeFirst = btnListee[0];
 
-        final String textOld = btnListe.getText();
+        final String textOld = btnListeFirst.getText();
 
         Platform.runLater(() -> {
-            btnListe.setText("İşlem Yapılıyor..");
+            btnListeFirst.setText("İşlem Yapılıyor..");
             for (FxButton fxButton : btnListee) {
                 fxButton.setDisable(true);
             }
@@ -90,7 +90,7 @@ public class FiThread {
         Runnable runnable2 = () -> {
             //fxToastPopup2.end();
             Platform.runLater(() -> {
-                btnListe.setText(textOld);
+                btnListeFirst.setText(textOld);
 
                 for (FxButton fxButton : btnListee) {
                     fxButton.setDisable(false);

@@ -2,7 +2,7 @@ package ozpasyazilim.utils.returntypes;
 
 import java.util.Optional;
 
-public class FnResult<T> implements IFnResult<T> {
+public class FnResult<T> implements IFdr<T> {
 
 	private Boolean boResult;
 	private T value;

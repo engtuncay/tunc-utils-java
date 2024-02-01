@@ -228,8 +228,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
      *
      * @param sqlQuery
      * @param mapBind
-     *
-     * @return Fdr<List<EntClazz>>
+     * @return Fdr<List < EntClazz>>
      */
     public Fdr<List<EntClazz>> jdSelectListBindMapMainNtn(String sqlQuery, Map<String, Object> mapBind) {
 
@@ -254,7 +253,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
         }
 
         // Ntn
-        if(fdrMain.getValue()==null) fdrMain.setValue(new ArrayList<>());
+        if (fdrMain.getValue() == null) fdrMain.setValue(new ArrayList<>());
 
         return fdrMain;
     }
@@ -1072,7 +1071,6 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
     }
 
     /**
-     *
      * Select  [Dto Alanlar] Where [FiWhere1 Alanlar]
      *
      * @param entClazz
@@ -1110,7 +1108,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
         Fdr<EntClazz> fdr = new Fdr<>();
         fdr.combineAnd(optionalFdr);
 
-        if(optionalFdr.getValue()!=null && optionalFdr.getValue().isPresent()) {
+        if (optionalFdr.getValue() != null && optionalFdr.getValue().isPresent()) {
             fdr.setValue(optionalFdr.getValue().get());
         }
 
@@ -1676,7 +1674,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
         Fdr fdr = new Fdr();
 
         try {
-            int rowsAffected = handle.createUpdate(FiQueryTools.stoj(updateQuery))
+            int rowsAffected = handle.createUpdate(FiQueryTools.stojExcludeSpecVar(updateQuery))
                     .bindBean(bindEntity)
                     .execute();
             fdr.setBoResultAndRowsAff(true, rowsAffected); // 16-01-20 added.
@@ -2582,8 +2580,8 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
     }
 
     private Fdr checkJdbi(Fdr<Optional<EntClazz>> fdr) {
-        if(getJdbi()==null){
-            Loghelper.get(getClass()).error("Null jdbi:"+getDatabaseName());
+        if (getJdbi() == null) {
+            Loghelper.get(getClass()).error("Null jdbi:" + getDatabaseName());
             fdr.setBoResult(false);
             fdr.setMessage("Jdbi Tanımlı Değil :" + getDatabaseName());
             return fdr;
@@ -2592,7 +2590,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
     }
 
     private Fdr checkJdbi() {
-        if(getJdbi()==null){
+        if (getJdbi() == null) {
             return Fdr.creBoResult(false).buiMessage("Jdbi Tanımlı Değil :" + getDatabaseName());
         }
         return Fdr.creBoResult(true);
@@ -3074,23 +3072,39 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
      */
     public Fdr jdhInsertEntityBindKey(Handle handle, EntClazz entity) {
 
+        String idField = FiEntity.getListIdFields(getEntityClass()).get(0);
+        Class idClazz = FiReflection.getFieldClassType(getEntityClass(), idField);
+
+        return jdhInsertEntityBindKey(handle, entity, idField, idClazz);
+    }
+
+    /**
+     * Tablodan sadece tek keyin dönüşünü alır. Bunu entity'nin id alanını kayıt eder.
+     * <p>
+     * Id Değerini ayrıca Fdr'ye kayıt eder.
+     *
+     * @param handle
+     * @param entity
+     * @return
+     */
+    public Fdr jdhInsertEntityBindKey(Handle handle, EntClazz entity, String idField, Class idClazz) {
+
         Fdr fdrMain = new Fdr();
 
         String insertQuery = FiQueryTools.stoj(FiQueryGenerator.insertQueryWoutId(getEntityClass()));
 
-        String idField = FiEntity.getListIdFields(getEntityClass()).get(0);
-        Class idClazz = FiReflection.getFieldClassType(getEntityClass(), idField);
+        //String idField = FiEntity.getListIdFields(getEntityClass()).get(0);
+        //Class idClazz = FiReflection.getFieldClassType(getEntityClass(), idField);
 
         try {
             ResultBearing resultBearing = handle.createUpdate(FiQueryTools.stoj(insertQuery)) //+ ";SET NOCOUNT ON;"
                     .bindBean(entity)
                     .executeAndReturnGeneratedKeys(idField);//
 
-            Optional opId = resultBearing.mapTo(idClazz)
-                    .findFirst(); // returns row count updated
+            Optional opId = resultBearing.mapTo(idClazz).findFirst();
 
             opId.ifPresent(insertedId -> {
-                Loghelper.get(getClass()).debug("insertedId:" + insertedId);
+                //Loghelper.get(getClass()).debug("insertedId:" + insertedId);
                 FiReflection.setterNested(entity, idField, insertedId);
                 fdrMain.setValue(insertedId);
             });

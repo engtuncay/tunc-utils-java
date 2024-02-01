@@ -71,7 +71,7 @@ public class FiException {
 	}
 
 	public static String exceptionIfToString(Exception exception) {
-		if (exception == null) return "Exception Tanımı yok";
+		if (exception == null) return "Tanımsız Exception";
 		return exception.toString();
 	}
 

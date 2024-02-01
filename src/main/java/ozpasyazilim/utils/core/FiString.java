@@ -562,6 +562,13 @@ public class FiString {
         return "";
     }
 
+    public static String getNewLineIfFull(String txValue) {
+        if (!FiString.isEmptyTrim(txValue)) {
+            return "\n";
+        }
+        return "";
+    }
+
     /**
      * Boş degilse başına yeni satır işareti ekler
      *
@@ -707,6 +714,13 @@ public class FiString {
         }
         if (txValue == null) return "";
         return txValue;
+    }
+
+    public static String addSpaceIfFull(String txValue) {
+        if (!isEmptyTrim(txValue)) {
+            return " ";
+        }
+        return "";
     }
 
     public static String combineWithSpace(String txValue1, String txValue2) {

@@ -25,7 +25,7 @@ import java.util.Optional;
  * <p>
  * EntClazz value alanının tipi
  */
-public class Fdr<EntClazz> implements IFnResult<EntClazz> {
+public class Fdr<EntClazz> implements IFdr<EntClazz> {
 
     /**
      * True ise sorgu başarıyla çalıştırıldığını ifade eder (exception'a düşmemiş)
@@ -40,6 +40,9 @@ public class Fdr<EntClazz> implements IFnResult<EntClazz> {
 
     private String message;
 
+    /**
+     * 1- Db'ye kayıt edilirken id atamasının değeri buraya yazılır
+     */
     private EntClazz value;
 
     /**

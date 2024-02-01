@@ -176,8 +176,7 @@ public class FxEditorFactory {
 
             Object nodeObjValue = getNodeObjValueByFilterNode(fiCol, fiCol.getFilterNodeClass());
 
-            //FIXME buraya alan string kontrolü eklenmeli
-            if (FiBool.isTrue(fiCol.getBoFilterLike()) && nodeObjValue != null && nodeObjValue instanceof String) {
+            if (FiBool.isTrue(fiCol.getBoFilterLike()) && nodeObjValue instanceof String) {
                 fiKeyBean.add(fiCol.getFieldName(), "%" + nodeObjValue + "%");
                 continue;
             }

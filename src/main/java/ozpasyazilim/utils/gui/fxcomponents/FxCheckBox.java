@@ -73,9 +73,9 @@ public class FxCheckBox extends CheckBox implements IFxEditorNode {
 		this.boOldValue = boOldValue;
 	}
 
-	public void setOnActions(Runnable selectedAction, Runnable unSelectedAction) {
+	public void setOnActionsForSelectionAndUnselection(Runnable selectedAction, Runnable unSelectedAction) {
 		selectedProperty().addListener((observable, oldValue, newValue) -> {
-		    if(newValue==true){
+		    if(newValue){
 		        selectedAction.run();
 		    }else{
 		    	unSelectedAction.run();

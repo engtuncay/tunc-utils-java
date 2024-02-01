@@ -25,407 +25,410 @@ import java.util.function.Function;
 
 /**
  * FxFormMigGen de FormConfig çıkarıldı. Ana Alanlar direk FxFormMigGen sınıfına eklendi.
+ * <p>
+ * initCont ile component'ler initialize edilir.
  *
  * @param <EntClazz> Form alanın değerlerinin aktarılacağı veya alınacağı sınıf
  */
-public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> implements IFxEntSimpleView {
-	private Class<EntClazz> entityClazz;
-	private String txGuid;
-	private Boolean boFormInitialized;
-	private ChangeListener<Boolean> fnFocusedChangeListener;
-	private List<FiCol> listFormElements;
-	private FormType formType;
-	private EntClazz formEntity; // 30-10-21 eklendi
-
-	/**
-	 * Form güncellemek amacıyla açıldığını belirtir
-	 */
-	private Boolean boUpdateForm; // 21-10-30 eklendi
-
-	private Boolean boReadOnlyForm;
-
-	private Function<FxFormMigGen, Fdr> fnValidateForm;
-
-	public FxFormMigGen() {
-		super("insets 0");
-	}
-
-	public FxFormMigGen(Class<EntClazz> entityClazz) {
-		super("insets 0");
-		this.entityClazz = entityClazz;
-	}
-
-	/**
-	 * @param listFormElements
-	 */
-	public FxFormMigGen(List<FiCol> listFormElements) {
-		super("insets 0");
-		this.listFormElements = listFormElements;
-	}
-
-	public FxFormMigGen(List<FiCol> colsForm, FormType formType) {
-		super("insets 0");
-		this.listFormElements = colsForm;
-		this.formType = formType;
-	}
-
-	// ********************* Main
-	public void initCont() {
-
-		setBoFormInitialized(true);
-
-		if (FiCollection.isEmpty(getListFormElements())) {
-			add(new FxLabel("Form Elemanları Tanımlanmamış !!!"), "span,pushx,growx");
-			Loghelper.get(getClass()).debug("Form Elemanları Tanımlanmamış");
-			return;
-		}
-
-		// Form Tiplerine Göre Form Oluşturma metodlarına Yönlendirme
-
-		if (getFormTypeSelectedInit() == FormType.PlainFormV1 ) {
-			initPlainFormV1();
-			// formEntity varsa, alanlara değerler set edilir
-			if (getFormEntity() != null) {
-				FxEditorFactory.bindEntityToFormByEditorValue(getListFormElements(), getFormEntity());
-			}
-			// Form değerleri eklendikten sonra trigger edilecek metodlar
-			trigEventsAfterFormLoaded();
-			return;
-		}
-
-		Loghelper.get(getClass()).error("Null Form Type");
-	}
-
-	public FiColsUtil getFiColsUtil() {
-		return FiColsUtil.bui(getListFormElementsInit());
-	}
-
-	public Node getCompByFieldName(String txFieldName) {
-		return getFiColsUtil().findColumnByFieldName(txFieldName).getColEditorNode();
-	}
-
-	public FiCol getFormElementByFieldName(String txFieldName) {
-		return getFiColsUtil().findColumnByFieldName(txFieldName);
-	}
-
-	public List<FiCol> getListFormElementsInit() {
-		if (listFormElements == null) {
-			listFormElements = new ArrayList<>();
-		}
-		return listFormElements;
-	}
-
-	public List<FiCol> getListFormElements() {
-		return listFormElements;
-	}
-
-	public FxDatePicker getEditorCompAsFxDatePicker(String fieldName) {
-		return getFiColsUtil().getEditorCompAsFxDatePicker(fieldName);
-	}
-
-	public Node getNode(Object fieldName) {
-		return FxEditorFactory.getEditorNodeByFieldName(getListFormElements(), fieldName.toString());
-	}
-
-	public <T> T getFormAsObject(Class<T> clazz) {
-		return FxEditorFactory.bindFormToEntityByEditorNode(getListFormElements(), clazz);
-	}
-
-	public void bindEntitytoForm(EntClazz formMikroKodDegistir) {
-		FxEditorFactory.bindEntityToFormByEditorValue(getListFormElements(), formMikroKodDegistir);
-	}
-
-	/**
-	 * get Form As FiKeyBean
-	 * @return
-	 */
-	public FiKeyBean getFormAsFkb() {
-		return FxEditorFactory.bindFormToFiKeyBeanByEditorNode(getListFormElements());
-	}
-
-	public List<FiCol> getFormAsFiColListWithFormValue() {
-		FxEditorFactory.bindFormValueToFiColListByEditor(getListFormElements());
-		return getListFormElements();
-	}
-
-	public EntClazz getFormAsEntity() {
-		if (getEntityClazz() == null) setAutoClass();
-		EntClazz formEntity = FxEditorFactory.bindFormToEntityByEditorNode(getListFormElements(), getEntityClazz());
-		return formEntity;
-	}
-
-	public <PrmEntClazz> PrmEntClazz getFormAsEntity(Class<PrmEntClazz> entClazz) {
-		if (entClazz == null) return null;
-		PrmEntClazz formEntity = FxEditorFactory.bindFormToEntityByEditorNode(getListFormElements(), entClazz);
-		return formEntity;
-	}
-
-	public void clearFormFields() {
-		FxEditorFactory.clearValuesOfFormFields(getListFormElements());
-	}
-
-	public void initFormHp1(List<FiCol> listFormElements, FormType formType, EntClazz formEntity) {
-		setListFormElements(listFormElements);
-		setFormTypeSelected(formType);
-		setFormEntity(formEntity);
-		initCont();
-	}
-
-	private Map<String, FiCol> getFormAsMapFieldNameToFiCol() {
-		return FiCollection.listToMapSingle(getListFormElements(), FiCol::getFieldName);
-	}
-
-	/**
-	 * trigger Events After Form Loaded
-	 */
-	private void trigEventsAfterFormLoaded() {
-
-		getListFormElements().forEach(fiTableCol -> {
-			if (fiTableCol.getFnEditorNodeRendererAfterFormLoad() != null) {
-				fiTableCol.getFnEditorNodeRendererAfterFormLoad().accept(getFormEntity(), fiTableCol.getColEditorNode());
-			}
-		});
-
-		getListFormElements().forEach(fiTableCol -> {
-			if (fiTableCol.getFnEditorNodeRendererAfterFormLoad2() != null) {
-				fiTableCol.getFnEditorNodeRendererAfterFormLoad2().accept(getFormEntity(), fiTableCol.getColEditorNode(), getListFormElements());
-			}
-		});
-
-	}
-
-	// Helper Setups
-	public void setupWitDefaultFormType(List<FiCol> listFormElements) {
-		setListFormElements(listFormElements);
-		setFormTypeSelected(getDefaultFormType());
-		initCont();
-	}
-
-	private static FormType getDefaultFormType() {
-		return FormType.PlainFormV1;
-	}
-
-	public void setup1(List<FiCol> listFormElements, FormType formType) {
-		setListFormElements(listFormElements);
-		setFormTypeSelected(formType);
-		initCont();
-	}
-
-	private void initPlainFormV1() {
-
-		List<FiCol> listFormElements = getListFormElements();
-
-		//Loghelperr.debug(getClass(), "Plain Form By Editor");
-
-		// fxform migpane daha önceden doldurulmuşsa, çıkarılıp temizlenir
-		if (getChildren().size() > 0) {
-			getChildren().remove(0, getChildren().size() - 1);
-		}
-
-		for (FiCol fiCol : listFormElements) {
-
-			//Loghelper.get(getClass()).debug("FiCol in Form" + fiCol.getFieldName());
-
-			if (FiBool.isTrue(fiCol.getBoHidden())) {
-				continue;
-			}
-
-			FxEditorFactory.setAutoColEditorClassByColType(fiCol);
-
-			if (FiString.isEmpty(fiCol.getColEditorClass())) {
-				fiCol.setColEditorClass(FxTextField.class.getName());
-			}
-
-			// Tek satır label göstermek için
-			if (fiCol.getColEditorClass().equals(EnumColNodeType.FxLabelRowComment.toString())) {
-				FxLabel fxLabelComment = new FxLabel(fiCol.getHeaderName());
-				add(fxLabelComment, "pushx,growx,span");
-				continue;
-			}
-
-			// Label oluşturulur
-			Label lblForm = new Label(fiCol.getHeaderName());
-			add(lblForm, "width 30%,wmax 150,wmin 120");
-
-			Object entityForNode = getFormEntity();
-
-			// Editor comp (node) oluşturulur, lifecycle metodları çalıştırılır
-			Node node = FxEditorFactory.generateEditorNodeFullLifeCycle(fiCol, entityForNode);
-
-			if (FiBool.isTrue(getBoReadOnlyFormNtn()) || FiBool.isFalse(fiCol.getBoEditable())
-			|| FiBool.isTrue(fiCol.getBoNonEditableForForm())) {
-				node.setDisable(true);
-			}
-
-			// formEntity yüklenirse eğer (update formu ise) nonupdatable alanlar disable yapılır
-			if (getFormEntity() != null && FiBool.isTrue(fiCol.getBoNonUpdatable())) {
-				node.setDisable(true);
-			}
-
-			if (getBoUpdateFormNtn() && FiBool.isTrue(fiCol.getBoNonUpdatable())) {
-				node.setDisable(true);
-			}
-
-			if (fiCol.getPrefSize() != null) {
-				add(node, String.format("width %s,wrap", fiCol.getPrefSize().toString()));
-			} else {
-				add(node, FxMigHp.bcc("growx,pushx,wrap").addCcCompMaxWidthSizeByColTypeForFxForm(fiCol).getCcInit());
-			}
-
-		} // tblCol for döngüsü sonu
-
-	}
-
-	public Object getEntityByFilterNode(Class clazz) {
-		return FxEditorFactory.bindFormToEntityByFilterNode(getListFormElements(), clazz);
-	}
-
-	public FormType getFormTypeSelectedInit() {
-		if (formType == null) {
-			formType = getDefaultFormType();
-		}
-		return formType;
-	}
-
-	public FormType getFormType() {
-		return formType;
-	}
-
-	public void setAutoClass() {
-		if (getEntityClazz() == null) {
-			this.entityClazz = (Class<EntClazz>) ((ParameterizedType) this.getClass().getGenericSuperclass())
-					.getActualTypeArguments()[0];
-		}
-	}
-
-	public void setFormTypeSelected(FormType formTypeSelected) {
-		this.formType = formTypeSelected;
-	}
-
-	public String getTxGuid() {
-		return txGuid;
-	}
-
-	public void setTxGuid(String txGuid) {
-		this.txGuid = txGuid;
-	}
-
-	public Class<EntClazz> getEntityClazz() {
-		return entityClazz;
-	}
-
-	public void setEntityClazz(Class<EntClazz> entityClazz) {
-		this.entityClazz = entityClazz;
-	}
-
-	public void setListFormElements(List<FiCol> listFormElements) {
-		this.listFormElements = listFormElements;
-	}
+public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
+    private Class<EntClazz> entityClazz;
+    private String txGuid;
+    private Boolean boFormInitialized;
+    private ChangeListener<Boolean> fnFocusedChangeListener;
+    private List<FiCol> listFormElements;
+    private FormType formType;
+    private EntClazz formEntity; // 30-10-21 eklendi
+
+    /**
+     * Form güncellemek amacıyla açıldığını belirtir
+     */
+    private Boolean boUpdateForm; // 21-10-30 eklendi
+
+    private Boolean boReadOnlyForm;
+
+    private Function<FxFormMigGen, Fdr> fnValidateForm;
+
+    public FxFormMigGen() {
+        super("insets 0");
+    }
+
+    public FxFormMigGen(Class<EntClazz> entityClazz) {
+        super("insets 0");
+        this.entityClazz = entityClazz;
+    }
+
+    /**
+     * @param listFormElements
+     */
+    public FxFormMigGen(List<FiCol> listFormElements) {
+        super("insets 0");
+        this.listFormElements = listFormElements;
+    }
+
+    public FxFormMigGen(List<FiCol> colsForm, FormType formType) {
+        super("insets 0");
+        this.listFormElements = colsForm;
+        this.formType = formType;
+    }
+
+    // ********************* Main
+    public void initCont() {
+
+        setBoFormInitialized(true);
+
+        if (FiCollection.isEmpty(getListFormElements())) {
+            add(new FxLabel("Form Elemanları Tanımlanmamış !!!"), "span,pushx,growx");
+            Loghelper.get(getClass()).debug("Form Elemanları Tanımlanmamış");
+            return;
+        }
+
+        // Form Tiplerine Göre Form Oluşturma metodlarına Yönlendirme
+
+        if (getFormTypeSelectedInit() == FormType.PlainFormV1) {
+            initPlainFormV1();
+            // formEntity varsa, alanlara değerler set edilir
+            if (getFormEntity() != null) {
+                FxEditorFactory.bindEntityToFormByEditorValue(getListFormElements(), getFormEntity());
+            }
+            // Form değerleri eklendikten sonra trigger edilecek metodlar
+            trigEventsAfterFormLoaded();
+            return;
+        }
+
+        Loghelper.get(getClass()).error("Null Form Type");
+    }
+
+    public FiColsUtil getFiColsUtil() {
+        return FiColsUtil.bui(getListFormElementsInit());
+    }
+
+    public Node getCompByFieldName(String txFieldName) {
+        return getFiColsUtil().findColumnByFieldName(txFieldName).getColEditorNode();
+    }
+
+    public FiCol getFormElementByFieldName(String txFieldName) {
+        return getFiColsUtil().findColumnByFieldName(txFieldName);
+    }
+
+    public List<FiCol> getListFormElementsInit() {
+        if (listFormElements == null) {
+            listFormElements = new ArrayList<>();
+        }
+        return listFormElements;
+    }
+
+    public List<FiCol> getListFormElements() {
+        return listFormElements;
+    }
+
+    public FxDatePicker getEditorCompAsFxDatePicker(String fieldName) {
+        return getFiColsUtil().getEditorCompAsFxDatePicker(fieldName);
+    }
+
+    public Node getNode(Object fieldName) {
+        return FxEditorFactory.getEditorNodeByFieldName(getListFormElements(), fieldName.toString());
+    }
+
+    public <T> T getFormAsObject(Class<T> clazz) {
+        return FxEditorFactory.bindFormToEntityByEditorNode(getListFormElements(), clazz);
+    }
+
+    public void bindEntitytoForm(EntClazz formMikroKodDegistir) {
+        FxEditorFactory.bindEntityToFormByEditorValue(getListFormElements(), formMikroKodDegistir);
+    }
+
+    /**
+     * get Form As FiKeyBean
+     *
+     * @return
+     */
+    public FiKeyBean getFormAsFkb() {
+        return FxEditorFactory.bindFormToFiKeyBeanByEditorNode(getListFormElements());
+    }
+
+    public List<FiCol> getFormAsFiColListWithFormValue() {
+        FxEditorFactory.bindFormValueToFiColListByEditor(getListFormElements());
+        return getListFormElements();
+    }
+
+    public EntClazz getFormAsEntity() {
+        if (getEntityClazz() == null) setAutoClass();
+        EntClazz formEntity = FxEditorFactory.bindFormToEntityByEditorNode(getListFormElements(), getEntityClazz());
+        return formEntity;
+    }
+
+    public <PrmEntClazz> PrmEntClazz getFormAsEntity(Class<PrmEntClazz> entClazz) {
+        if (entClazz == null) return null;
+        PrmEntClazz formEntity = FxEditorFactory.bindFormToEntityByEditorNode(getListFormElements(), entClazz);
+        return formEntity;
+    }
+
+    public void clearFormFields() {
+        FxEditorFactory.clearValuesOfFormFields(getListFormElements());
+    }
+
+    public void initFormHp1(List<FiCol> listFormElements, FormType formType, EntClazz formEntity) {
+        setListFormElements(listFormElements);
+        setFormTypeSelected(formType);
+        setFormEntity(formEntity);
+        initCont();
+    }
+
+    private Map<String, FiCol> getFormAsMapFieldNameToFiCol() {
+        return FiCollection.listToMapSingle(getListFormElements(), FiCol::getFieldName);
+    }
+
+    /**
+     * trigger Events After Form Loaded
+     */
+    private void trigEventsAfterFormLoaded() {
+
+        getListFormElements().forEach(fiTableCol -> {
+            if (fiTableCol.getFnEditorNodeRendererAfterFormLoad() != null) {
+                fiTableCol.getFnEditorNodeRendererAfterFormLoad().accept(getFormEntity(), fiTableCol.getColEditorNode());
+            }
+        });
+
+        getListFormElements().forEach(fiTableCol -> {
+            if (fiTableCol.getFnEditorNodeRendererAfterFormLoad2() != null) {
+                fiTableCol.getFnEditorNodeRendererAfterFormLoad2().accept(getFormEntity(), fiTableCol.getColEditorNode(), getListFormElements());
+            }
+        });
+
+    }
+
+    // Helper Setups
+    public void setupWitDefaultFormType(List<FiCol> listFormElements) {
+        setListFormElements(listFormElements);
+        setFormTypeSelected(getDefaultFormType());
+        initCont();
+    }
+
+    private static FormType getDefaultFormType() {
+        return FormType.PlainFormV1;
+    }
+
+    public void setup1(List<FiCol> listFormElements, FormType formType) {
+        setListFormElements(listFormElements);
+        setFormTypeSelected(formType);
+        initCont();
+    }
+
+    private void initPlainFormV1() {
+
+        List<FiCol> listFormElements = getListFormElements();
+
+        //Loghelperr.debug(getClass(), "Plain Form By Editor");
+
+        // fxform migpane daha önceden doldurulmuşsa, çıkarılıp temizlenir
+        if (getChildren().size() > 0) {
+            getChildren().remove(0, getChildren().size() - 1);
+        }
+
+        for (FiCol fiCol : listFormElements) {
+
+            //Loghelper.get(getClass()).debug("FiCol in Form" + fiCol.getFieldName());
+
+            if (FiBool.isTrue(fiCol.getBoHidden())) {
+                continue;
+            }
+
+            FxEditorFactory.setAutoColEditorClassByColType(fiCol);
+
+            if (FiString.isEmpty(fiCol.getColEditorClass())) {
+                fiCol.setColEditorClass(FxTextField.class.getName());
+            }
+
+            // Tek satır label göstermek için
+            if (fiCol.getColEditorClass().equals(EnumColNodeType.FxLabelRowComment.toString())) {
+                FxLabel fxLabelComment = new FxLabel(fiCol.getHeaderName());
+                add(fxLabelComment, "pushx,growx,span");
+                continue;
+            }
+
+            // Label oluşturulur
+            Label lblForm = new Label(fiCol.getHeaderName());
+            add(lblForm, "width 30%,wmax 150,wmin 120");
+
+            Object entityForNode = getFormEntity();
+
+            // Editor comp (node) oluşturulur, lifecycle metodları çalıştırılır
+            Node node = FxEditorFactory.generateEditorNodeFullLifeCycle(fiCol, entityForNode);
+
+            if (FiBool.isTrue(getBoReadOnlyFormNtn()) || FiBool.isFalse(fiCol.getBoEditable())
+                    || FiBool.isTrue(fiCol.getBoNonEditableForForm())) {
+                node.setDisable(true);
+            }
+
+            // formEntity yüklenirse eğer (update formu ise) nonupdatable alanlar disable yapılır
+            if (getFormEntity() != null && FiBool.isTrue(fiCol.getBoNonUpdatable())) {
+                node.setDisable(true);
+            }
+
+            if (getBoUpdateFormNtn() && FiBool.isTrue(fiCol.getBoNonUpdatable())) {
+                node.setDisable(true);
+            }
+
+            if (fiCol.getPrefSize() != null) {
+                add(node, String.format("width %s,wrap", fiCol.getPrefSize().toString()));
+            } else {
+                add(node, FxMigHp.bcc("growx,pushx,wrap").addCcCompMaxWidthSizeByColTypeForFxForm(fiCol).getCcInit());
+            }
+
+        } // tblCol for döngüsü sonu
+
+    }
+
+    public Object getEntityByFilterNode(Class clazz) {
+        return FxEditorFactory.bindFormToEntityByFilterNode(getListFormElements(), clazz);
+    }
+
+    public FormType getFormTypeSelectedInit() {
+        if (formType == null) {
+            formType = getDefaultFormType();
+        }
+        return formType;
+    }
+
+    public FormType getFormType() {
+        return formType;
+    }
+
+    public void setAutoClass() {
+        if (getEntityClazz() == null) {
+            this.entityClazz = (Class<EntClazz>) ((ParameterizedType) this.getClass().getGenericSuperclass())
+                    .getActualTypeArguments()[0];
+        }
+    }
+
+    public void setFormTypeSelected(FormType formTypeSelected) {
+        this.formType = formTypeSelected;
+    }
+
+    public String getTxGuid() {
+        return txGuid;
+    }
+
+    public void setTxGuid(String txGuid) {
+        this.txGuid = txGuid;
+    }
+
+    public Class<EntClazz> getEntityClazz() {
+        return entityClazz;
+    }
+
+    public void setEntityClazz(Class<EntClazz> entityClazz) {
+        this.entityClazz = entityClazz;
+    }
+
+    public void setListFormElements(List<FiCol> listFormElements) {
+        this.listFormElements = listFormElements;
+    }
 
 //	public void setFxFormSetup(FxFormConfig<EntClazz> fxFormConfig) {
 //		this.fxFormConfig = fxFormConfig;
 //	}
 
-	public Boolean getBoUpdateForm() {
-		return boUpdateForm;
-	}
+    public Boolean getBoUpdateForm() {
+        return boUpdateForm;
+    }
 
-	public Boolean getBoUpdateFormNtn() {
-		if (boUpdateForm == null) return false;
-		return boUpdateForm;
-	}
+    public Boolean getBoUpdateFormNtn() {
+        if (boUpdateForm == null) return false;
+        return boUpdateForm;
+    }
 
-	public void setBoUpdateForm(Boolean boUpdateForm) {
-		this.boUpdateForm = boUpdateForm;
-	}
+    public void setBoUpdateForm(Boolean boUpdateForm) {
+        this.boUpdateForm = boUpdateForm;
+    }
 
-	public Boolean getBoFormInitialized() {
-		return boFormInitialized;
-	}
+    public Boolean getBoFormInitialized() {
+        return boFormInitialized;
+    }
 
-	public void setBoFormInitialized(Boolean boFormInitialized) {
-		this.boFormInitialized = boFormInitialized;
-	}
+    public void setBoFormInitialized(Boolean boFormInitialized) {
+        this.boFormInitialized = boFormInitialized;
+    }
 
-	public void bindEntityToForm(EntClazz formEntity) {
-		setFormEntity(formEntity);
-		FxEditorFactory.bindEntityToFormByEditorValue(getListFormElements(), getFormEntity());
-		trigEventsAfterFormLoaded();
-	}
+    public void bindEntityToForm(EntClazz formEntity) {
+        setFormEntity(formEntity);
+        FxEditorFactory.bindEntityToFormByEditorValue(getListFormElements(), getFormEntity());
+        trigEventsAfterFormLoaded();
+    }
 
-	public EntClazz getFormEntity() {
-		return formEntity;
-	}
+    public EntClazz getFormEntity() {
+        return formEntity;
+    }
 
-	public void setFormEntity(EntClazz formEntity) {
-		this.formEntity = formEntity;
-	}
+    public void setFormEntity(EntClazz formEntity) {
+        this.formEntity = formEntity;
+    }
 
-	public void setFormEntityForEdit(EntClazz formEntity) {
-		setBoUpdateForm(true);
-		setFormEntity(formEntity);
-	}
+    public void setFormEntityForEdit(EntClazz formEntity) {
+        setBoUpdateForm(true);
+        setFormEntity(formEntity);
+    }
 
-	public void formFocusListener(ChangeListener<Boolean> fnFocusedChangeListener) {
-		if (getFnFocusedChangeListener() != null) {
-			for (FiCol listFormElement : getListFormElements()) {
-				listFormElement.getColEditorNode().focusedProperty().removeListener(getFnFocusedChangeListener());
-			}
-		}
+    public void formFocusListener(ChangeListener<Boolean> fnFocusedChangeListener) {
+        if (getFnFocusedChangeListener() != null) {
+            for (FiCol listFormElement : getListFormElements()) {
+                listFormElement.getColEditorNode().focusedProperty().removeListener(getFnFocusedChangeListener());
+            }
+        }
 
-		setFnFocusedChangeListener(fnFocusedChangeListener);
-		for (FiCol listFormElement : getListFormElements()) {
-			listFormElement.getColEditorNode().focusedProperty().addListener(getFnFocusedChangeListener());
-		}
-	}
+        setFnFocusedChangeListener(fnFocusedChangeListener);
+        for (FiCol listFormElement : getListFormElements()) {
+            listFormElement.getColEditorNode().focusedProperty().addListener(getFnFocusedChangeListener());
+        }
+    }
 
-	public ChangeListener<Boolean> getFnFocusedChangeListener() {
-		return fnFocusedChangeListener;
-	}
+    public ChangeListener<Boolean> getFnFocusedChangeListener() {
+        return fnFocusedChangeListener;
+    }
 
-	public void setFnFocusedChangeListener(ChangeListener<Boolean> fnFocusedChangeListener) {
-		this.fnFocusedChangeListener = fnFocusedChangeListener;
-	}
+    public void setFnFocusedChangeListener(ChangeListener<Boolean> fnFocusedChangeListener) {
+        this.fnFocusedChangeListener = fnFocusedChangeListener;
+    }
 
-	public void showAsDialog() {
-		FxSimpleDialog fxSimpleDialog = new FxSimpleDialog();
-	}
+    public void showAsDialog() {
+        FxSimpleDialog fxSimpleDialog = new FxSimpleDialog();
+    }
 
-	public Boolean getBoReadOnlyFormNtn() {
-		if (boReadOnlyForm == null) {
-			return false;
-		}
-		return boReadOnlyForm;
-	}
+    public Boolean getBoReadOnlyFormNtn() {
+        if (boReadOnlyForm == null) {
+            return false;
+        }
+        return boReadOnlyForm;
+    }
 
-	public Boolean getValueAsBoolean(FiCol entBoAnacariBirlestir) {
+    public Boolean getValueAsBoolean(FiCol entBoAnacariBirlestir) {
 
-		FiCol fiCol = getFiCol(entBoAnacariBirlestir);
+        FiCol fiCol = getFiCol(entBoAnacariBirlestir);
 
-		if(fiCol!=null){
-			if(fiCol.getColType().equals(OzColType.Boolean)){
-				Boolean value = (Boolean) fiCol.getColValue();
-				return value;
-			}
-		}
+        if (fiCol != null) {
+            if (fiCol.getColType().equals(OzColType.Boolean)) {
+                Boolean value = (Boolean) fiCol.getColValue();
+                return value;
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	private FiCol getFiCol(FiCol entBoAnacariBirlestir) {
-		FiCol fiColFound = null;
-		for (FiCol fiCol : getListFormElements()) {
-			if (fiCol.getFieldName().equals(entBoAnacariBirlestir.getFieldName())) {
-				fiColFound = fiCol;
-			}
-		}
-		return fiColFound;
-	}
+    private FiCol getFiCol(FiCol entBoAnacariBirlestir) {
+        FiCol fiColFound = null;
+        for (FiCol fiCol : getListFormElements()) {
+            if (fiCol.getFieldName().equals(entBoAnacariBirlestir.getFieldName())) {
+                fiColFound = fiCol;
+            }
+        }
+        return fiColFound;
+    }
 
-	public static void setFieldsAllToRequiredFi(List<? extends IFiCol> listColumn) {
-		listColumn.forEach(o -> {
-			o.setBoRequired(true);
-		});
-	}
+    public static void setFieldsAllToRequiredFi(List<? extends IFiCol> listColumn) {
+        listColumn.forEach(o -> {
+            o.setBoRequired(true);
+        });
+    }
 
 }

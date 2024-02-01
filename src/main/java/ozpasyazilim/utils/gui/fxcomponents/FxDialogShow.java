@@ -1030,7 +1030,7 @@ public class FxDialogShow {
 
     }
 
-    public Fdr showYesNoCancelDialog(DialogConfig dialogConfig) {
+    public static Fdr showYesNoCancelDialog(DialogConfig dialogConfig) {
 
         if (dialogConfig == null) return new Fdr(false);
 
@@ -1180,9 +1180,9 @@ public class FxDialogShow {
         showDbResult(dbResult, null);
     }
 
-    public static void showDbResult2(Fdr dbResult, Runnable runIfTrue) {
+    public static void showDbResult2(Fdr dbResult, Runnable fnSuccess) {
         showDbResult(dbResult, null);
-        if (dbResult.isTrueBoResult()) runIfTrue.run();
+        if (dbResult.isTrueBoResult()) fnSuccess.run();
     }
 
     public static void showDbResult(Fdr dbResult, String title) {
@@ -1197,6 +1197,7 @@ public class FxDialogShow {
             String messageDetail = dbResult.getMessageNotNull();
 
             if (dbResult.getRowsAffectedNotNull() > 0) {
+
                 String messageHeader = FiString.addNewLineToEndIfNotEmpty(title) + "İşlem Başarı ile Gerçekleşti :::\n";
 
                 if (FiNumber.orZero(dbResult.getLnInsertedRows()) > 0 || dbResult.getTxQueryType().equalsIgnoreCase(QueryType.bui().insert)) {
@@ -1211,7 +1212,8 @@ public class FxDialogShow {
                 //Loghelper.debug(FxDialogShow.class, "Message Det0ail:"+ messageDetail);
 
             } else {
-                String messageHeader = FiString.addNewLineToEndIfNotEmpty(title) + "İşlem Başarı ile Gerçekleşti.";
+
+                String messageHeader = FiString.orEmpty(title) + FiString.getNewLineIfFull(title) + "İşlem Başarı ile Gerçekleşti.";
                 if (FiNumber.orZero(dbResult.getLnInsertedRows()) > 0 || dbResult.getTxQueryType().equals(QueryType.bui().insert)) {
                     messageHeader += String.format("\nEklenen Yeni Kayıt Sayısı:%s", FiNumber.orZero(dbResult.getLnInsertedRows()));
                 }
@@ -1223,13 +1225,22 @@ public class FxDialogShow {
 
             if (dbResult.isFalseBoResult()) {
                 String messageHeader = FiString.addNewLineToEndIfNotEmpty(title) + "Hata Oluştu !!!\n";
-                String messageDetail = FiString.addNewLineToEndIfNotEmpty(dbResult.getMessage()) + "\n Exception:\n" + FiException.exceptionIfToString(dbResult.getException());
-                FxDialogShow.showModalErrorAsyn(messageHeader, messageDetail);
+                //String messageDetail = FiString.addNewLineToEndIfNotEmpty(dbResult.getMessage()) + "\n Exception : \n" + FiException.exceptionIfToString(dbResult.getException());
+
+//                if(!FiString.isEmpty(dbResult.getLogAsString())){
+//                    messageDetail = messageDetail + "\n" + dbResult.getLogAsString();
+//                }
+
+                //FxDialogShow.showModalErrorAsyn(messageHeader, messageDetail);
+                FxDialogShow.showModalErrorWitLogAndMessageAndExc(messageHeader, dbResult);
+
             }
 
             if (dbResult.isNullBoResult()) {
                 String messageDetail = dbResult.getMessage();
-                FxDialogShow.showModalInfoAsyn(FiString.addNewLineToEndIfNotEmpty(title) + "İşlem yapılacak kayıt bulunamadı.", messageDetail); //uygun kayıt bulunamadı.
+                FxDialogShow.showModalInfoAsyn(FiString.orEmpty(title) + FiString.getNewLineIfFull(title)
+                        + "İşlem yapılacak kayıt bulunamadı. Result : null", messageDetail); //uygun kayıt bulunamadı.
+
             }
 
 

@@ -358,15 +358,20 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         return listSelected;
     }
 
-    public <PrmEntClazz> PrmEntClazz getFilterEntity(Class<PrmEntClazz> clazz) {
+    public <PrmEntClazz> PrmEntClazz getFilterAsEntity(Class<PrmEntClazz> clazz) {
         return FxEditorFactory.bindFormToEntityByFilterNode(getFiColListOverListFxTableCol(), clazz);
     }
 
-    public FiKeyBean getFilterMap() {
+    /**
+     * FiCol'un BoFilterLike True ise , string değeri % arasına alır
+     *
+     * @return
+     */
+    public FiKeyBean getFilterAsFkb() {
         return FxEditorFactory.bindFiColToMapByFilterNode(getFiColListOverListFxTableCol());
     }
 
-    public EntClazz getFilterEntityGen() {
+    public EntClazz getFilterAsEntityGen() {
         return FxEditorFactory.bindFormToEntityByFilterNode(getFiColListOverListFxTableCol(), getEntityClassAuto());
     }
 
@@ -2450,6 +2455,8 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
      * İleri,Geri tuşlarının tooltiplerini günceller
      */
     public void updatePageToolbarComps() {
+
+        if(getBtnPageForward()==null) return;
 
         Platform.runLater(() -> {
 

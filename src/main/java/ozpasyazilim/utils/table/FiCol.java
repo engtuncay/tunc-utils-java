@@ -727,7 +727,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
         }
     }
 
-    public FiCol buildBoFilterLike(Boolean boFilterLike) {
+    public FiCol buiBoFilterLike(Boolean boFilterLike) {
         setBoFilterLike(boFilterLike);
         return this;
     }
