@@ -97,13 +97,13 @@ public class FxButton extends Button implements IFxSecureNode {
 
 	public FxButton(Icons525 icon525, String txTooltip) {
 		setFxIcon(icon525);
-		setSimpleTooltip(txTooltip);
+		setFiSimpleTooltip(txTooltip);
 	}
 
 	public FxButton(String text, Icons525 icons525, String tooltip) {
 		super(text);
 		setFxIcon(icons525);
-		setSimpleTooltip(tooltip);
+		setFiSimpleTooltip(tooltip);
 	}
 
 
@@ -174,7 +174,7 @@ public class FxButton extends Button implements IFxSecureNode {
 		return this;
 	}
 
-	public void setSimpleTooltip(String text) {
+	public void setFiSimpleTooltip(String text) {
 		setTooltip(new Tooltip(text));
 	}
 
