@@ -1,6 +1,8 @@
 package ozpasyazilim.utils.returntypes;
 
 import javafx.util.Pair;
+import ozpasyazilim.utils.annotations.FiExpiremental;
+import ozpasyazilim.utils.annotations.FiReview;
 import ozpasyazilim.utils.core.*;
 
 import ozpasyazilim.utils.log.EntLog;
@@ -117,9 +119,9 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
      * <p>
      * boResult farkı : boResult, sorgunun başarılı çalıştırıldığını gösterir
      * <p>
-     * örneğin checkExist yapılıyorsa varsa kayıt true, yoksa false olur.
+     * Örneğin checkExist yapılıyorsa, kayıt varsa opResutl true olur, yoksa false olur.
      */
-    @Deprecated
+    @FiReview
     Boolean boOpResult;
 
     // Sorgunun execute edildiğini göstermek için
