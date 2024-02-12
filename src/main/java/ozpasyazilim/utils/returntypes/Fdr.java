@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Ana Alanlar : boResult,message,value
+ * Ana Alanlar : boResult,message,value,
  * <p>
  * Sorgu başarılı bir şekilde çalıştırılmışsa boResult True olur
  * <p>
@@ -64,7 +64,13 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
      */
     String txName;
 
+    /**
+     * İşlemlerden alınan loglar
+     */
+    List<EntLog> logList;
+
     // *********************************** Ek Alanlar *****************************************
+
     private Integer rowsAffected;
 
     /**
@@ -114,7 +120,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
      * örneğin checkExist yapılıyorsa varsa kayıt true, yoksa false olur.
      */
     @Deprecated
-    Boolean boOprResult;
+    Boolean boOpResult;
 
     // Sorgunun execute edildiğini göstermek için
     Boolean boQueryExecuted;
@@ -128,11 +134,6 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
      * Birden fazla fdr birleştirilmiş ( combinedAnd veya or ile) fdr ler burada tutulabilir
      */
     List<Fdr> listFdr;
-
-    /**
-     *
-     */
-    List<EntLog> logList;
 
     /**
      * True olunca Log eklemeyi engeller. Birleştirmeden sonra yapılır, tekrar eski Fdr ye log eklenirse , ana Fdr de o loglar görünmez. Loglamayı durdurmaz fakat , loglarda hatalı log eklendiğini göstermek için kullanıldı.
@@ -678,8 +679,8 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
 
 
     @Deprecated
-    public void setBoOprResult(Boolean boOprResult) {
-        this.boOprResult = boOprResult;
+    public void setBoOpResult(Boolean boOpResult) {
+        this.boOpResult = boOpResult;
     }
 
     public void setResValue(EntClazz value) {
