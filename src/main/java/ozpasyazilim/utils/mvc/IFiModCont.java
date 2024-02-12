@@ -9,7 +9,7 @@ import javafx.stage.Stage;
  * <p>
  * Evalaution : Pane getRootPane(); eklenebilir
  */
-public interface IFxSimpleCont {
+public interface IFiModCont {
     void initCont();
 
     IFxSimpleView getModView();

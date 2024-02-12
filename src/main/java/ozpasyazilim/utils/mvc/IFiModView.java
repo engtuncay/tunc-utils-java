@@ -5,6 +5,6 @@ package ozpasyazilim.utils.mvc;
  * <p>
  * IFxSimpleView interface : Pane getRootPane(), void initGui()
  */
-public interface IFxEntSimpleView extends IFxSimpleView {
+public interface IFiModView extends IFxSimpleView {
 
 }

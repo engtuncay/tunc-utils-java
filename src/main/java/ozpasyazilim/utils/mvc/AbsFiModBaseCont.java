@@ -8,7 +8,7 @@ import ozpasyazilim.utils.gui.fxcomponents.FxStage;
 /**
  * Basitce Tüm Kontrollerde olması gereken alanlar ve metodlar
  */
-public abstract class AbsFxSimpleBaseCont implements IFxSimpleCont {
+public abstract class AbsFiModBaseCont implements IFiModCont {
 
     protected Stage fxStage;
     protected String moduleCode;

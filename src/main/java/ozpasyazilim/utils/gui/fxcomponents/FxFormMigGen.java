@@ -10,7 +10,6 @@ import ozpasyazilim.utils.datatypes.FiKeyBean;
 import ozpasyazilim.utils.gui.fxTableViewExtra.EnumColNodeType;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.mvc.IFiCol;
-import ozpasyazilim.utils.mvc.IFxEntSimpleView;
 import ozpasyazilim.utils.returntypes.Fdr;
 import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.FiColsUtil;

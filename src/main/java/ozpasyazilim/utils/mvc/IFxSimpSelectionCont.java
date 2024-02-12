@@ -5,7 +5,7 @@ package ozpasyazilim.utils.mvc;
  *
  * @param <EntClazz>
  */
-public interface IFxSimpSelectionCont<EntClazz> extends IFxSimpleCont {
+public interface IFxSimpSelectionCont<EntClazz> extends IFiModCont {
 
 	// entitySelected
 	EntClazz getEntitySelected();

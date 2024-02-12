@@ -5,10 +5,10 @@ import ozpasyazilim.utils.core.FiBool;
 import ozpasyazilim.utils.gui.fxcomponents.FxDialogShow;
 import ozpasyazilim.utils.gui.fxcomponents.FxMigHp;
 import ozpasyazilim.utils.gui.fxcomponents.FxMigPaneView;
-import ozpasyazilim.utils.mvc.AbsFxSimpleBaseCont;
+import ozpasyazilim.utils.mvc.AbsFiModBaseCont;
 import ozpasyazilim.utils.mvc.IFxSimpSelectionCont;
 
-public class FxSimpleContGen<E> extends AbsFxSimpleBaseCont implements IFxSimpSelectionCont<E> {
+public class FxSimpleContGen<E> extends AbsFiModBaseCont implements IFxSimpSelectionCont<E> {
 
 	FxMigPaneView modView;
 	// Entity neden gerek duyuldu ???

@@ -31,7 +31,7 @@ import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.log.LogListener;
 import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.log.Loghelper;
-import ozpasyazilim.utils.mvc.IFxSimpleCont;
+import ozpasyazilim.utils.mvc.IFiModCont;
 import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.IFiColHelper;
 import ozpasyazilim.utils.table.OzColType;
@@ -2096,7 +2096,7 @@ public class FiExcel {
 
     }
 
-    public static <PrmEntClazz> void saveSablonExcelByClass(IFxSimpleCont iFxModCont, List<PrmEntClazz> listSampleData
+    public static <PrmEntClazz> void saveSablonExcelByClass(IFiModCont iFxModCont, List<PrmEntClazz> listSampleData
             , Class<PrmEntClazz> clazzForAutoComment, String appDir) {
 
         List<FiField> listFiFieldsSummary = FiEntity.getListFieldsWoutStatic(clazzForAutoComment);
@@ -2107,7 +2107,7 @@ public class FiExcel {
 
     }
 
-    public static <PrmEntClazz> void saveAndOpenSablonExcel(IFxSimpleCont iFxSimpleCont, List<FiCol> listExcelColums, List<PrmEntClazz> listSampleData, Class<PrmEntClazz> clazzForAutoComment, String appDir) {
+    public static <PrmEntClazz> void saveAndOpenSablonExcel(IFiModCont iFiModCont, List<FiCol> listExcelColums, List<PrmEntClazz> listSampleData, Class<PrmEntClazz> clazzForAutoComment, String appDir) {
 
         if (clazzForAutoComment != null) {
             IFiColHelper.autoComment(listExcelColums, clazzForAutoComment);
@@ -2115,7 +2115,7 @@ public class FiExcel {
 
         String basepath = FiWinUtils.getUserDirOrDesktopDir();
 
-        String excelfilename = "Sablon-" + iFxSimpleCont.getModuleLabel() + "-" + FiDate.datetoString_timestampt2(new Date()) + ".xlsx";
+        String excelfilename = "Sablon-" + iFiModCont.getModuleLabel() + "-" + FiDate.datetoString_timestampt2(new Date()) + ".xlsx";
 
         Path path = Paths.get(String.format("%s\\%s\\", basepath, appDir));
 

@@ -5,10 +5,10 @@ import ozpasyazilim.utils.gui.fxcomponents.FxMigHp;
 import ozpasyazilim.utils.gui.fxcomponents.FxMigPane;
 import ozpasyazilim.utils.gui.fxcomponents.FxTableMig2;
 import ozpasyazilim.utils.gui.fxcomponents.FxTableView2;
-import ozpasyazilim.utils.mvc.IFxEntSimpleView;
+import ozpasyazilim.utils.mvc.IFiModView;
 import ozpasyazilim.utils.mvc.IFxSimpleView;
 
-public class FxSimpleTableWindowView<EntClazz> implements IFxEntSimpleView, IFxSimpleView {
+public class FxSimpleTableWindowView<EntClazz> implements IFiModView, IFxSimpleView {
 
 	// Containers
 	// rootMigPane super de

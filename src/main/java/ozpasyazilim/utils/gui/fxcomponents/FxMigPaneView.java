@@ -3,14 +3,14 @@ package ozpasyazilim.utils.gui.fxcomponents;
 import javafx.scene.layout.Pane;
 import net.miginfocom.layout.AC;
 import net.miginfocom.layout.LC;
-import ozpasyazilim.utils.mvc.IFxEntSimpleView;
+import ozpasyazilim.utils.mvc.IFiModView;
 
 /**
  * IFxEntSimpleView arayüzünü implemente eden FxMigPane sınıfı
  * <p>
  * Arayüzden getRootPane ve initGui metodlarını aldı
  */
-public class FxMigPaneView extends FxMigPane implements IFxEntSimpleView {
+public class FxMigPaneView extends FxMigPane implements IFiModView {
 
     public FxMigPaneView() {
         super();

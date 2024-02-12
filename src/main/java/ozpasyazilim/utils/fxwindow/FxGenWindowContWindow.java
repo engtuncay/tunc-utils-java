@@ -14,7 +14,7 @@ import java.util.List;
  * @param <FormClazz>
  * @param <EntClazz>
  */
-public abstract class FxGenWindowContWindow<FormClazz, EntClazz> extends AbsFxSimpleBaseCont implements IFxSimpleCont {
+public abstract class FxGenWindowContWindow<FormClazz, EntClazz> extends AbsFiModBaseCont implements IFiModCont {
 
 	FxGenWindowView modView;
 	FormClazz formEntity;

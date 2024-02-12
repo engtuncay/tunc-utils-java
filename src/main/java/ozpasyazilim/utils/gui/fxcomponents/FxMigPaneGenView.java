@@ -3,14 +3,14 @@ package ozpasyazilim.utils.gui.fxcomponents;
 import javafx.scene.layout.Pane;
 import net.miginfocom.layout.AC;
 import net.miginfocom.layout.LC;
-import ozpasyazilim.utils.mvc.IFxEntSimpleView;
+import ozpasyazilim.utils.mvc.IFiModView;
 
 /**
  * Bir alt sınıfta auto class kullanabilmek için EntClazz eklendi
  *
  * @param <EntClazz>
  */
-public class FxMigPaneGenView<EntClazz> extends FxMigPane implements IFxEntSimpleView {
+public class FxMigPaneGenView<EntClazz> extends FxMigPane implements IFiModView {
 
 	public FxMigPaneGenView() {
 		super();

@@ -4,7 +4,7 @@ import de.jensd.fx.glyphs.icons525.Icons525;
 import org.tbee.javafx.scene.layout.MigPane;
 import ozpasyazilim.utils.core.FiApp;
 import ozpasyazilim.utils.core.FiFile;
-import ozpasyazilim.utils.mvc.IFxSimpleCont;
+import ozpasyazilim.utils.mvc.IFiModCont;
 import ozpasyazilim.utils.windows.FiWinUtils;
 
 public class FxTableMig2<EntClazz> extends MigPane {
@@ -17,7 +17,7 @@ public class FxTableMig2<EntClazz> extends MigPane {
 	private FxLabel lblFooterMessage;
 	private FxLabel lblFooterMessageSelection;
 	private FxMigPane tableHeaderPane;
-	private IFxSimpleCont iFxSimpleCont;
+	private IFiModCont iFiModCont;
 	private FxLabel lblFooterVer;
 
 	public FxTableMig2() {
@@ -136,12 +136,12 @@ public class FxTableMig2<EntClazz> extends MigPane {
 		this.tableHeaderPane = tableHeaderPane;
 	}
 
-	public IFxSimpleCont getiFxSimpleCont() {
-		return iFxSimpleCont;
+	public IFiModCont getiFxSimpleCont() {
+		return iFiModCont;
 	}
 
-	public void setiFxSimpleCont(IFxSimpleCont iFxSimpleCont) {
-		this.iFxSimpleCont = iFxSimpleCont;
+	public void setiFxSimpleCont(IFiModCont iFiModCont) {
+		this.iFiModCont = iFiModCont;
 	}
 
 	public FxLabel getLblFooterVer() {

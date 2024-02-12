@@ -12,7 +12,7 @@ import ozpasyazilim.utils.core.FxPredicateString;
 import ozpasyazilim.utils.fidborm.FiEntity;
 import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.gui.fxcomponents.*;
-import ozpasyazilim.utils.mvc.AbsFxSimpleBaseCont;
+import ozpasyazilim.utils.mvc.AbsFiModBaseCont;
 import ozpasyazilim.utils.returntypes.Fdr;
 import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.OzColType;
@@ -22,7 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class FxSimpleDialog<EntClazz> extends AbsFxSimpleBaseCont {
+public class FxSimpleDialog<EntClazz> extends AbsFiModBaseCont {
 
 	FxMigPaneView modView;
 	FxSimpleDialogMetaType fxSimpleDialogMetaType;

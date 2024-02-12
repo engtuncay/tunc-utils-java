@@ -661,15 +661,15 @@ public class FxDialogShow {
 
     }
 
-    public static void nodeWindow(Node nodeRelative, IFxSimpleCont ifxSimpleCont) {
-        nodeWindow(nodeRelative, ifxSimpleCont, null, null, null);
+    public static void nodeWindow(Node nodeRelative, IFiModCont ifxSimpleModCont) {
+        nodeWindow(nodeRelative, ifxSimpleModCont, null, null, null);
     }
 
-    public static void nodeWindow(IFxSimpleCont iFxSimpleCont, DialogConf dialogConf) {
+    public static void nodeWindow(IFiModCont iFiModCont, DialogConf dialogConf) {
 
         if (dialogConf == null) dialogConf = new DialogConf();
 
-        Pane rootPane = iFxSimpleCont.getModView().getRootPane();
+        Pane rootPane = iFiModCont.getModView().getRootPane();
 
         FxWindowHelper.setMaxHeightAndWidthForWindows(rootPane);
 
@@ -677,11 +677,11 @@ public class FxDialogShow {
             rootPane.getStylesheets().add(dialogConf.getCssFileName());
         }
 
-        Stage stage = iFxSimpleCont.getFxStageInit();
+        Stage stage = iFiModCont.getFxStageInit();
 
         if (stage == null) {
             stage = new FxStage();
-            iFxSimpleCont.setFxStage(stage);
+            iFiModCont.setFxStage(stage);
         }
 
         if (!FiString.isEmpty(dialogConf.getTitle())) {
@@ -724,24 +724,24 @@ public class FxDialogShow {
 
     }
 
-    public static void nodeWindow(Node nodeRelative, IFxSimpleCont iFxSimpleCont, Integer width, Integer height, Boolean isNonModal) {
+    public static void nodeWindow(Node nodeRelative, IFiModCont iFiModCont, Integer width, Integer height, Boolean isNonModal) {
         //Loghelper.get(getClass()).debug("nodeModalByIFxSimpleCont Giriş");
 
-        Stage stage = iFxSimpleCont.getFxStageInit();
+        Stage stage = iFiModCont.getFxStageInit();
         //Loghelper.get(getClass()).debug("nodeModalByIFxSimpleCont");
 
         if (stage == null) {
             //Loghelper.get(getClass()).debug("nodeModalByIFxSimpleCont-A1-Yeni stage-");
             stage = new FxStage();
-            iFxSimpleCont.setFxStage(stage);
+            iFiModCont.setFxStage(stage);
         }
 
         FxScene scene = null;
 
         if (width != null && height != null) {
-            scene = new FxScene(iFxSimpleCont.getModView().getRootPane(), width, height);  //,width,height
+            scene = new FxScene(iFiModCont.getModView().getRootPane(), width, height);  //,width,height
         } else {
-            scene = new FxScene(iFxSimpleCont.getModView().getRootPane());  //,width,height
+            scene = new FxScene(iFiModCont.getModView().getRootPane());  //,width,height
         }
 
         if (nodeRelative != null) {

@@ -10,7 +10,7 @@ import ozpasyazilim.utils.core.FiString;
 import ozpasyazilim.utils.datatypes.FiKeyBean;
 import ozpasyazilim.utils.gui.fxTableViewExtra.EnumColNodeType;
 import ozpasyazilim.utils.log.Loghelper;
-import ozpasyazilim.utils.mvc.IFxEntSimpleView;
+import ozpasyazilim.utils.mvc.IFiModView;
 import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.IFiColHelper;
@@ -27,7 +27,7 @@ import java.util.Map;
  * @param <EntClazz>
  */
 @Deprecated
-public class FxFormMigDep<EntClazz> extends FxMigPaneGenView<EntClazz> implements IFxEntSimpleView {
+public class FxFormMigDep<EntClazz> extends FxMigPaneGenView<EntClazz> implements IFiModView {
 	private Class<EntClazz> entityClazz;
 	private Boolean boEditableForm;
 	private List<FiCol> listFormElements;
