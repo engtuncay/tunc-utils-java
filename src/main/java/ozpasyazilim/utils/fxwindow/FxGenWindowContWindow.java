@@ -62,7 +62,7 @@ public abstract class FxGenWindowContWindow<FormClazz, EntClazz> extends AbsFxSi
 
 	public void bindEntityToForm(FormClazz entity) {
 		if (entity == null) {
-			FxDialogShow.build().showPopInfo("Lütfen bir kayıt seçiniz.");
+			FxDialogShow.showPopInfo("Lütfen bir kayıt seçiniz.");
 			return;
 		}
 		if (getModView().getFxFormMig().getListFormElements().size() == 0) {

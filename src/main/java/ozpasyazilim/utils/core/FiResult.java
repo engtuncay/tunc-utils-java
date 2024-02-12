@@ -20,12 +20,12 @@ public class FiResult {
 	public void popFiDbResult(Fdr fdr) {
 
 		if(fdr.getBoResult()){
-			FxDialogShow.build().showPopWarn("*** İşlem Başarıyla Gerçekleşti ***");
+			FxDialogShow.showPopWarn("*** İşlem Başarıyla Gerçekleşti ***");
 		}else{
-			FxDialogShow.build().showPopWarn("!!! Hata Oluştu.!!!");
+			FxDialogShow.showPopWarn("!!! Hata Oluştu.!!!");
 
 			if(fdr.getException()!=null){
-				FxDialogShow.build().showModalWarningAlert("Hata Detayı:\n"+ fdr.getException().getMessage());
+				FxDialogShow.showModalWarningAlert("Hata Detayı:\n"+ fdr.getException().getMessage());
 			}
 
 		}

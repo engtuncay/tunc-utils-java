@@ -292,9 +292,9 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 									}
 
 									node.setOnAction(actionEvent -> {
-										Boolean result = new FiReflection().setter(getTableView().getItems().get(getIndex()), fxTableCol.getFieldName(), node.isSelected());
+										Boolean result = FiReflection.setter(getTableView().getItems().get(getIndex()), fxTableCol.getFieldName(), node.isSelected());
 										if (!result) {
-											FxDialogShow.build().showPopWarn("Yazılımsal Hata!!! Seçilemedi.");
+											FxDialogShow.showPopWarn("Yazılımsal Hata!!! Seçilemedi.");
 										} else {
 											if (fxTableCol.getFnColCellChanged() != null) {
 												fxTableCol.getFnColCellChanged().accept(getTableView().getItems().get(getIndex()));

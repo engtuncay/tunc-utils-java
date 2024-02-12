@@ -64,7 +64,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
      */
     String txName;
 
-    // *** Ek Alanlar
+    // *********************************** Ek Alanlar *****************************************
     private Integer rowsAffected;
 
     /**

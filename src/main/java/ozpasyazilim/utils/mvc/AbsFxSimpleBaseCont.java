@@ -1,7 +1,7 @@
 package ozpasyazilim.utils.mvc;
 
 import javafx.stage.Stage;
-import ozpasyazilim.utils.gui.fxcomponents.DialogConfig;
+import ozpasyazilim.utils.gui.fxcomponents.DialogConf;
 import ozpasyazilim.utils.gui.fxcomponents.FxDialogShow;
 import ozpasyazilim.utils.gui.fxcomponents.FxStage;
 
@@ -114,23 +114,23 @@ public abstract class AbsFxSimpleBaseCont implements IFxSimpleCont {
         openAsNonModalMain(null);
     }
 
-    public void openAsNonModalMain(DialogConfig dialogConfig) {
-        if (dialogConfig == null) {
-            dialogConfig = new DialogConfig();
+    public void openAsNonModalMain(DialogConf dialogConf) {
+        if (dialogConf == null) {
+            dialogConf = new DialogConf();
         }
-        dialogConfig.setBoNonModal(true);
-        openAsWindowMain(dialogConfig);
+        dialogConf.setBoNonModal(true);
+        openAsWindowMain(dialogConf);
     }
 
-    public void openAsModalMain(DialogConfig dialogConfig) {
-        if (dialogConfig == null) {
-            dialogConfig = new DialogConfig();
+    public void openAsModalMain(DialogConf dialogConf) {
+        if (dialogConf == null) {
+            dialogConf = new DialogConf();
         }
-        dialogConfig.setBoNonModal(false);
-        openAsWindowMain(dialogConfig);
+        dialogConf.setBoNonModal(false);
+        openAsWindowMain(dialogConf);
     }
 
-    public void openAsWindowMain(DialogConfig dialogConfig) {
+    public void openAsWindowMain(DialogConf dialogConf) {
 
         FxDialogShow fxDialogShow = new FxDialogShow();
 
@@ -139,8 +139,8 @@ public abstract class AbsFxSimpleBaseCont implements IFxSimpleCont {
             initCont();
         }
 
-        dialogConfig.setCssFileName("main.css");
-        FxDialogShow.nodeWindow(this, dialogConfig);
+        dialogConf.setCssFileName("main.css");
+        FxDialogShow.nodeWindow(this, dialogConf);
     }
 
     public String getConnProfile() {

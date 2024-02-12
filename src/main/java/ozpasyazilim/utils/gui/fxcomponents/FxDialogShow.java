@@ -36,10 +36,6 @@ public class FxDialogShow {
 
     public static String titleGeneral;
 
-    public static FxDialogShow build() {
-        return new FxDialogShow();
-    }
-
     /**
      * Yes,No,Cancel Dialogu açar <br>
      * <p>
@@ -630,11 +626,11 @@ public class FxDialogShow {
 
     }
 
-    public void nodeDialogViewContainer(Parent parentNode, IFxViewContainer viewContainer) {
+    public static void nodeDialogViewContainer(Parent parentNode, IFxViewContainer viewContainer) {
         nodeDialogViewContainer(parentNode, viewContainer, null, null);
     }
 
-    public void nodeDialogViewContainer(Parent parentNode, IFxViewContainer viewContainer, Integer width, Integer height) {
+    public static void nodeDialogViewContainer(Parent parentNode, IFxViewContainer viewContainer, Integer width, Integer height) {
 
         Platform.runLater(() -> {
 
@@ -669,16 +665,16 @@ public class FxDialogShow {
         nodeWindow(nodeRelative, ifxSimpleCont, null, null, null);
     }
 
-    public static void nodeWindow(IFxSimpleCont iFxSimpleCont, DialogConfig dialogConfig) {
+    public static void nodeWindow(IFxSimpleCont iFxSimpleCont, DialogConf dialogConf) {
 
-        if (dialogConfig == null) dialogConfig = new DialogConfig();
+        if (dialogConf == null) dialogConf = new DialogConf();
 
         Pane rootPane = iFxSimpleCont.getModView().getRootPane();
 
         FxWindowHelper.setMaxHeightAndWidthForWindows(rootPane);
 
-        if (!FiString.isEmpty(dialogConfig.getCssFileName())) {
-            rootPane.getStylesheets().add(dialogConfig.getCssFileName());
+        if (!FiString.isEmpty(dialogConf.getCssFileName())) {
+            rootPane.getStylesheets().add(dialogConf.getCssFileName());
         }
 
         Stage stage = iFxSimpleCont.getFxStageInit();
@@ -688,20 +684,20 @@ public class FxDialogShow {
             iFxSimpleCont.setFxStage(stage);
         }
 
-        if (!FiString.isEmpty(dialogConfig.getTitle())) {
-            stage.setTitle(dialogConfig.getTitle());
+        if (!FiString.isEmpty(dialogConf.getTitle())) {
+            stage.setTitle(dialogConf.getTitle());
         }
 
         FxScene scene = null;
 
-        if (dialogConfig.getWidth() != null && dialogConfig.getHeight() != null) {
-            scene = new FxScene(rootPane, dialogConfig.getWidth(), dialogConfig.getHeight());  //,width,height
+        if (dialogConf.getWidth() != null && dialogConf.getHeight() != null) {
+            scene = new FxScene(rootPane, dialogConf.getWidth(), dialogConf.getHeight());  //,width,height
         } else {
             scene = new FxScene(rootPane);  //,width,height
         }
 
-        if (dialogConfig.getNodeRelative() != null) {
-            Bounds bounds = dialogConfig.getNodeRelative().localToScreen(dialogConfig.getNodeRelative().getBoundsInLocal());
+        if (dialogConf.getNodeRelative() != null) {
+            Bounds bounds = dialogConf.getNodeRelative().localToScreen(dialogConf.getNodeRelative().getBoundsInLocal());
             stage.setX(bounds.getMaxX());
             stage.setY(bounds.getMinY());
         }
@@ -709,17 +705,17 @@ public class FxDialogShow {
         stage.setScene(scene);
         //stage.sizeToScene();
 
-        if (dialogConfig.getWidth() != null) {
+        if (dialogConf.getWidth() != null) {
             //Loghelper.debug(getClass(), "width ayarlanıyor" + dialogContext.getWidth());
             //stage.setWidth(dialogConfig.getWidth());
-            rootPane.setPrefWidth(dialogConfig.getWidth());
+            rootPane.setPrefWidth(dialogConf.getWidth());
         }
 
-        if (dialogConfig.getWidth() == null && dialogConfig.getHeight() == null) {
+        if (dialogConf.getWidth() == null && dialogConf.getHeight() == null) {
             stage.sizeToScene();
         }
 
-        if (FiBool.isTrue(dialogConfig.getBoNonModal())) {
+        if (FiBool.isTrue(dialogConf.getBoNonModal())) {
             stage.initModality(Modality.WINDOW_MODAL);
         } else {
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -963,7 +959,7 @@ public class FxDialogShow {
      * @return
      */
     @Deprecated
-    public FnResult showYesNoCancelDialog(String content) {
+    public static FnResult showYesNoCancelDialog(String content) {
         return showYesNoCancelDialog(content, null);
     }
 
@@ -975,7 +971,7 @@ public class FxDialogShow {
      * @return
      */
     @Deprecated
-    public FnResult showYesNoCancelDialog(String content, String title) {
+    public static FnResult showYesNoCancelDialog(String content, String title) {
 
         MigPane migPane = new MigPane();
         migPane.add(new Label(content), "span");
@@ -1030,12 +1026,12 @@ public class FxDialogShow {
 
     }
 
-    public static Fdr showYesNoCancelDialog(DialogConfig dialogConfig) {
+    public static Fdr showYesNoCancelDialog(DialogConf dialogConf) {
 
-        if (dialogConfig == null) return new Fdr(false);
+        if (dialogConf == null) return new Fdr(false);
 
         FxMigPane migPane = new FxMigPane();
-        migPane.add(new Label(dialogConfig.getTxContent()), "span,grow,push");
+        migPane.add(new Label(dialogConf.getTxContent()), "span,grow,push");
 
         FxMigPane migFooter = new FxMigPane();
 
@@ -1052,7 +1048,7 @@ public class FxDialogShow {
         FxStage stage = new FxStage();
         FxScene scene = new FxScene(migPane);
 
-        String title = dialogConfig.getTitle();
+        String title = dialogConf.getTitle();
 
         if (title == null && titleGeneral != null) stage.setTitle(titleGeneral);
         if (title != null) stage.setTitle(title);
@@ -1139,7 +1135,7 @@ public class FxDialogShow {
         }
     }
 
-    private static void showPopOrModalInfo(String messageHeader, String messageDetail) {
+    public static void showPopOrModalInfo(String messageHeader, String messageDetail) {
 
         if (messageDetail == null) messageDetail = "";
 

@@ -2,7 +2,10 @@ package ozpasyazilim.utils.gui.fxcomponents;
 
 import javafx.scene.Node;
 
-public class DialogConfig {
+/**
+ * Dialog (Modal) Window Config
+ */
+public class DialogConf {
 
     String txContent;
     String title;
@@ -20,15 +23,15 @@ public class DialogConfig {
 
     //Double nmPrefWidth;
 
-    public DialogConfig() {
+    public DialogConf() {
     }
 
-    public DialogConfig(String txContent) {
+    public DialogConf(String txContent) {
         this.txContent = txContent;
     }
 
-    public static DialogConfig factory() {
-        return new DialogConfig();
+    public static DialogConf factory() {
+        return new DialogConf();
     }
 
     public String getTitle() {
@@ -39,12 +42,12 @@ public class DialogConfig {
         this.title = title;
     }
 
-    public DialogConfig buildTitle(String title) {
+    public DialogConf buildTitle(String title) {
         setTitle(title);
         return this;
     }
 
-    public DialogConfig buiContent(String txContent) {
+    public DialogConf buiContent(String txContent) {
         setTxContent(txContent);
         return this;
     }
@@ -65,7 +68,7 @@ public class DialogConfig {
         this.height = height;
     }
 
-    public DialogConfig buildWidth(double v) {
+    public DialogConf buildWidth(double v) {
         setWidth(v);
         return this;
     }

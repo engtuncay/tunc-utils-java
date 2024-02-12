@@ -281,9 +281,9 @@ public class FxTableViewCellFactoryModal {
 								}
 
 								node.setOnAction(actionEvent -> {
-									Boolean result = new FiReflection().setter(entity, fxTableCol.getFiCol().getFieldName(), node.isSelected());
+									Boolean result = FiReflection.setter(entity, fxTableCol.getFiCol().getFieldName(), node.isSelected());
 									if (!result) {
-										FxDialogShow.build().showPopWarn("Yazılımsal Hata!!! Seçilemedi.");
+										FxDialogShow.showPopWarn("Yazılımsal Hata!!! Seçilemedi.");
 									} else {
 										if (fxTableCol.getFiCol().getFnColCellManualChanged() != null) {
 											fxTableCol.getFiCol().getFnColCellManualChanged().accept(entity);
