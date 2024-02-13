@@ -20,7 +20,7 @@ public abstract class AbsFiModBaseCont implements IFiModCont {
      * <p>
      * Modulun connProfil bilgisini içerir
      */
-    public String connProfile;
+    protected String connProfile;
 
     @Override
     public abstract void initCont();
