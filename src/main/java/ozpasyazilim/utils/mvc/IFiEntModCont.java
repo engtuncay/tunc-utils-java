@@ -9,7 +9,7 @@ package ozpasyazilim.utils.mvc;
  *
  * @param  //<Viewclazz> kaldırıldı
  */
-public interface IFiMikroModCont extends IFiModCont {
+public interface IFiEntModCont extends IFiModCont {
 
     /**
      * IFxEntSimpleCont ile IFxSimpleView aynı
