@@ -1,7 +1,6 @@
 package ozpasyazilim.utils.returntypes;
 
 import javafx.util.Pair;
-import ozpasyazilim.utils.annotations.FiExpiremental;
 import ozpasyazilim.utils.annotations.FiReview;
 import ozpasyazilim.utils.core.*;
 
@@ -32,9 +31,9 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     /**
      * True ise sorgu başarıyla çalıştırıldığını ifade eder (exception'a düşmemiş)
      * <p>
-     * False ise sorguda hata olup,exception olmuştur
+     * False ise sorguda hata olup,exception oluşmuştur
      * <p>
-     * Null ise işlem yapılmadığını ifade eder  (last update:29-12-2019)
+     * Null ise işlem yapılmadığını ifade eder (last update:29-12-2019)
      * <p>
      * boQueryExecuted alternatif adı
      */
@@ -54,10 +53,10 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
      * <p>
      * Error Kodu olarakda kullanılabilir
      */
-    private Integer lnResponseValue;
+    private Integer lnResponseCode;
 
     /**
-     * Başlık veya id verilmesi için
+     * İşleme ait id bilgisi (veya başlık olabilir)
      */
     private String txId;
 
@@ -844,19 +843,19 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
         this.listException = listException;
     }
 
-    public Integer getLnResponseValue() {
-        return lnResponseValue;
+    public Integer getLnResponseCode() {
+        return lnResponseCode;
     }
 
     public Integer getLnResponseCodeNtn() {
-        if (lnResponseValue == null) {
+        if (lnResponseCode == null) {
             return -1;
         }
-        return lnResponseValue;
+        return lnResponseCode;
     }
 
-    public void setLnResponseValue(Integer lnResponseValue) {
-        this.lnResponseValue = lnResponseValue;
+    public void setLnResponseCode(Integer lnResponseCode) {
+        this.lnResponseCode = lnResponseCode;
     }
 
     public List<Fdr> getListFdr() {
@@ -1044,32 +1043,6 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
         if (getBoResult() == null) setBoResult(boResult);
     }
 
-//	@Deprecated
-//	public Integer getLnResult() {
-//		return lnResult;
-//	}
-
-//	@Deprecated
-//	public Integer getLnResultNtn() {
-//		if (getLnResult() == null) return -1;
-//		return lnResult;
-//	}
-
-//	@Deprecated
-//	public void setLnResult(Integer lnResult) {
-//		this.lnResult = lnResult;
-//	}
-
-//	public boolean isTrueLnResult() {
-//		if (getLnResult() == 1) return true;
-//		return false;
-//	}
-
-//	public boolean isTrueOrPartialTrueLnResult() {
-//		if (getLnResult() == 1 || getLnResult() == 2) return true;
-//		return false;
-//	}
-
     public Boolean getBoFalseExist() {
         return boFalseExist;
     }
@@ -1102,5 +1075,31 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
             }
         }
     }
+
+    //	@Deprecated
+//	public Integer getLnResult() {
+//		return lnResult;
+//	}
+
+//	@Deprecated
+//	public Integer getLnResultNtn() {
+//		if (getLnResult() == null) return -1;
+//		return lnResult;
+//	}
+
+//	@Deprecated
+//	public void setLnResult(Integer lnResult) {
+//		this.lnResult = lnResult;
+//	}
+
+//	public boolean isTrueLnResult() {
+//		if (getLnResult() == 1) return true;
+//		return false;
+//	}
+
+//	public boolean isTrueOrPartialTrueLnResult() {
+//		if (getLnResult() == 1 || getLnResult() == 2) return true;
+//		return false;
+//	}
 
 }

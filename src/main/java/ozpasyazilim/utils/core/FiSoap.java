@@ -78,7 +78,7 @@ public class FiSoap {
 
 			//Read the response.
 			InputStreamReader isr = null;
-			fdrMain.setLnResponseValue(httpConn.getResponseCode());
+			fdrMain.setLnResponseCode(httpConn.getResponseCode());
 
 			if (httpConn.getResponseCode() == 200) {
 				isr = new InputStreamReader(httpConn.getInputStream(),StandardCharsets.UTF_8);
@@ -163,7 +163,7 @@ public class FiSoap {
 
 			//Read the response.
 			InputStreamReader isr = null;
-			fdr.setLnResponseValue(httpConn.getResponseCode());
+			fdr.setLnResponseCode(httpConn.getResponseCode());
 
 			if (httpConn.getResponseCode() == 200) {
 				isr = new InputStreamReader(httpConn.getInputStream(),StandardCharsets.UTF_8);
@@ -225,7 +225,7 @@ public class FiSoap {
 				fdrXmlDoc.setValue(fiXml);
 			}
 
-			fdrXmlDoc.setLnResponseValue(fdrRequest.getLnResponseValue());
+			fdrXmlDoc.setLnResponseCode(fdrRequest.getLnResponseCode());
 			//fdrXmlDoc.setLnErrorCode(fdrRequest.getLnErrorCode());
 			fdrXmlDoc.setMessage(fdrRequest.getMessage());
 			fdrXmlDoc.combineAnd(fdrRequest);
