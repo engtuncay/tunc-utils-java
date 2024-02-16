@@ -8,10 +8,7 @@ import ozpasyazilim.utils.log.EntLog;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.log.MetaLogType;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Ana Alanlar : boResult,message,value,
@@ -935,8 +932,13 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
         getLogListInit().add(new EntLog(txMessage, MetaLogType.LOG));
     }
 
-    public String getLogAsStringWitErrorInfo() {
-        StringBuilder sb = new StringBuilder("");
+    public String getLogAndMessageWitErrorInfo() {
+        return FiString.addNewLineToEndIfNotEmpty(getMessage()) + getLogPlain();
+    }
+
+    public String getLogPlainWitErrorInfo() {
+
+        StringBuilder sb = new StringBuilder();
         int index = 0;
         for (EntLog entLog : getLogListInit()) {
             if (index > 0) sb.append("\n");
@@ -947,10 +949,11 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
             index++;
         }
         return sb.toString();
+
     }
 
-    public String getLogErrorAsString() {
-        StringBuilder sb = new StringBuilder("");
+    public String getLogErrorPlain() {
+        StringBuilder sb = new StringBuilder();
         int index = 0;
         for (EntLog entLog : getLogListInit()) {
             if (index > 0) sb.append("\n");
@@ -962,7 +965,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
         return sb.toString();
     }
 
-    public String getLogAsString() {
+    public String getLogPlain() {
         StringBuilder sb = new StringBuilder();
         int index = 0;
         for (EntLog entLog : getLogListInit()) {
@@ -973,7 +976,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
         return sb.toString();
     }
 
-    public String getMessageAndLogAsString() {
+    public String getLogPlainWithMessage() {
         StringBuilder sb = new StringBuilder();
 
         int index = 0;
@@ -1074,6 +1077,10 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
                 getLogListInit().add(new EntLog(FiException.excToStrSummary(exception1), MetaLogType.ERROR));
             }
         }
+    }
+
+    public void addLogErrorException(Exception exception) {
+        addLogErrorException(Arrays.asList(exception));
     }
 
     //	@Deprecated

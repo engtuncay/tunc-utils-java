@@ -385,16 +385,16 @@ public class FxDialogShow {
     public static void showModalForLogIfNotTrue(Fdr fdr) {
 
         if (fdr.isTrueBoResult()) {
-            FxDialogShow.showModalInfoAsyn(fdr.getTxName(), fdr.getLogAsStringWitErrorInfo());
+            FxDialogShow.showModalInfoAsyn(fdr.getTxName(), fdr.getLogPlainWitErrorInfo());
         } else {
-            FxDialogShow.showModalErrorAsyn(fdr.getTxName(), fdr.getLogAsStringWitErrorInfo());
+            FxDialogShow.showModalErrorAsyn(fdr.getTxName(), fdr.getLogPlainWitErrorInfo());
         }
 
     }
 
     public static void showModalForLog(Fdr fdr) {
         Platform.runLater(() -> {
-            FxSimpleDialog2.creInitWithMessageContent(fdr.getLogAsString())
+            FxSimpleDialog2.creInitWithMessageContent(fdr.getLogPlain())
                     .initDialogError().openAsNonModal();
         });
         //FxDialogShow.showModalError2(fdr.getTxName(), fdr.getLogAsStringWitErrorInfo());
@@ -935,7 +935,7 @@ public class FxDialogShow {
         Platform.runLater(() -> {
             String message = "";
 
-            String logAsString = fdr.getLogAsStringWitErrorInfo();
+            String logAsString = fdr.getLogPlainWitErrorInfo();
             if (!FiString.isEmptyTrim(logAsString)) {
                 message += "\n" + logAsString;
             }
@@ -1118,20 +1118,20 @@ public class FxDialogShow {
 
             if (FiBool.isTrue(boPopInfo)) {
                 if (logAsStringAndErrorExist.getValue()) {
-                    showPopInfo(grup + "İşlem Başarılı, fakat bazı yerlerde hata oluştu.\n" + fdr.getLogAsStringWitErrorInfo());
+                    showPopInfo(grup + "İşlem Başarılı, fakat bazı yerlerde hata oluştu.\n" + fdr.getLogPlainWitErrorInfo());
                 } else {
-                    showPopInfo(grup + "İşlem Başarılı\n" + fdr.getLogAsStringWitErrorInfo());
+                    showPopInfo(grup + "İşlem Başarılı\n" + fdr.getLogPlainWitErrorInfo());
                 }
 
             } else {
                 if (logAsStringAndErrorExist.getValue()) {
-                    showModalInfoAsyn(grup + "İşlem Başarılı, fakat bazı yerlerde hata oluştu. Detayı inceleyiniz. !!\n", fdr.getLogAsStringWitErrorInfo());
+                    showModalInfoAsyn(grup + "İşlem Başarılı, fakat bazı yerlerde hata oluştu. Detayı inceleyiniz. !!\n", fdr.getLogPlainWitErrorInfo());
                 } else {
-                    showModalInfoAsyn(grup + "İşlem Başarılı\n", fdr.getLogAsStringWitErrorInfo());
+                    showModalInfoAsyn(grup + "İşlem Başarılı\n", fdr.getLogPlainWitErrorInfo());
                 }
             }
         } else {
-            showModalErrorAlert(grup + "Hata Oluştu.", fdr.getLogAsStringWitErrorInfo());
+            showModalErrorAlert(grup + "Hata Oluştu.", fdr.getLogPlainWitErrorInfo());
         }
     }
 
