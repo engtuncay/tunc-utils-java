@@ -137,7 +137,7 @@ public class FiQuery {
      * <p>
      * --! satırlar optional satırdır.
      * <p>
-     * Optional Format --!param .....
+     * Optional Format --!paramName .....
      *
      * @return
      */
