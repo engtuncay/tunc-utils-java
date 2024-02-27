@@ -1,5 +1,9 @@
 package ozpasyazilim.utils.returntypes;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.util.Pair;
 import ozpasyazilim.utils.annotations.FiReview;
 import ozpasyazilim.utils.core.*;
@@ -1083,30 +1087,6 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
         addLogErrorException(Arrays.asList(exception));
     }
 
-    //	@Deprecated
-//	public Integer getLnResult() {
-//		return lnResult;
-//	}
 
-//	@Deprecated
-//	public Integer getLnResultNtn() {
-//		if (getLnResult() == null) return -1;
-//		return lnResult;
-//	}
-
-//	@Deprecated
-//	public void setLnResult(Integer lnResult) {
-//		this.lnResult = lnResult;
-//	}
-
-//	public boolean isTrueLnResult() {
-//		if (getLnResult() == 1) return true;
-//		return false;
-//	}
-
-//	public boolean isTrueOrPartialTrueLnResult() {
-//		if (getLnResult() == 1 || getLnResult() == 2) return true;
-//		return false;
-//	}
 
 }
