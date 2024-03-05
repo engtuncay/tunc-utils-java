@@ -28,6 +28,10 @@ public class FiObsFdr {
         obsFdrProperty().set(fdr);
     }
 
+    public FiObsFdr buiSetObsFdr(Fdr fdr) {
+        obsFdrProperty().set(fdr); return this;
+    }
+
     public void addListenerFi(ChangeListener<Fdr> changeListener) {
         obsFdrProperty().addListener(changeListener);
         getListListenerInit().add(changeListener);
@@ -55,6 +59,10 @@ public class FiObsFdr {
     public void removeListenerFi(ChangeListener<Fdr> changeListener){
         obsFdrProperty().removeListener(changeListener);
         getListListenerInit().remove(changeListener);
+    }
+
+    public static FiObsFdr fiObsFdr(){
+        return new FiObsFdr();
     }
 
 }

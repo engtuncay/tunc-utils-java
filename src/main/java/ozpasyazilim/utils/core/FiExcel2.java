@@ -31,7 +31,7 @@ import ozpasyazilim.utils.windows.FiWinUtils;
 
 public class FiExcel2 {
 
-    private static Class getClass = FiExcel2.class;
+    //private static Class getClass = FiExcel2.class;
 
     public static void cellTasks1(Cell cella, Integer row, Integer col) {
 

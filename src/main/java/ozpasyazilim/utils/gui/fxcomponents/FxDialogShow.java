@@ -437,8 +437,8 @@ public class FxDialogShow {
      */
     public static void showFdr1PopOrFailModalWitLogAndMessageAndExc(Fdr fdr) {
 
-        if(fdr==null){
-            FxDialogShow.showModalErrorAsyn("","Fdr Tanımsız !!!. Sistem Yöneticinize Danışın.");
+        if (fdr == null) {
+            FxDialogShow.showModalErrorAsyn("", "Fdr Tanımsız !!!. Sistem Yöneticinize Danışın.");
         }
 
         if (fdr.getBoResult() == null) {
@@ -959,8 +959,8 @@ public class FxDialogShow {
      * @return
      */
     @Deprecated
-    public static FnResult showYesNoCancelDialog(String content) {
-        return showYesNoCancelDialog(content, null);
+    public static FnResult showYesNoCancelDialogGui(String content) {
+        return showYesNoCancelDialogGui(content, null);
     }
 
     /**
@@ -971,7 +971,7 @@ public class FxDialogShow {
      * @return
      */
     @Deprecated
-    public static FnResult showYesNoCancelDialog(String content, String title) {
+    public static FnResult showYesNoCancelDialogGui(String content, String title) {
 
         MigPane migPane = new MigPane();
         migPane.add(new Label(content), "span");
@@ -1026,7 +1026,7 @@ public class FxDialogShow {
 
     }
 
-    public static Fdr showYesNoCancelDialog(DialogConf dialogConf) {
+    public static Fdr showYesNoCancelDialogGui(DialogConf dialogConf) {
 
         if (dialogConf == null) return new Fdr(false);
 
@@ -1082,6 +1082,80 @@ public class FxDialogShow {
         stage.showAndWait();
         return fdrResult;
     }
+
+    /**
+     * Prl : Platform Run Later
+     *
+     * @param dialogConf
+     * @return
+     */
+    public static void showYesNoCancelDialogPrl(DialogConf dialogConf,FiObsFdr fiObsFdr) {
+
+        //FiObsFdr fiObsFdr = new FiObsFdr();
+
+        if (dialogConf == null) fiObsFdr.buiSetObsFdr(new Fdr(false));
+
+        Platform.runLater(() -> {
+
+            FxMigPane migPane = new FxMigPane();
+            migPane.add(new Label(dialogConf.getTxContent()), "span,grow,push");
+
+            FxMigPane migFooter = new FxMigPane();
+
+            FxButton btnYes = new FxButton("Evet");
+            FxButton btnNo = new FxButton("Hayır");
+            FxButton btnCancel = new FxButton("İptal");
+
+            migFooter.add(btnYes, "gapafter 10");
+            migFooter.add(btnNo, "gapafter 10");
+            migFooter.add(btnCancel, "gapafter 10");
+
+            migPane.add(migFooter, "span,growx");
+
+            FxStage stage = new FxStage();
+            FxScene scene = new FxScene(migPane);
+
+            String title = dialogConf.getTitle();
+
+            if (title == null && titleGeneral != null) stage.setTitle(titleGeneral);
+            if (title != null) stage.setTitle(title);
+
+            Fdr fdrResult = new Fdr();
+
+            btnYes.setOnAction(event -> {
+                fdrResult.setBoResult(true);
+                stage.close();
+            });
+
+            btnNo.setOnAction(event -> {
+                fdrResult.setBoResult(false);
+                stage.close();
+            });
+
+            btnCancel.setOnAction(event -> {
+                fdrResult.setBoResult(null);
+                stage.close();
+            });
+
+//			if(parentNode!=null){
+//				Bounds bounds = parentNode.localToScreen(parentNode.getBoundsInLocal());
+//				stage.setX(bounds.getMaxX());
+//				stage.setY(bounds.getMinY());
+//			}
+
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(scene);
+            stage.sizeToScene();
+            stage.showAndWait();
+
+            fiObsFdr.setObsFdr(fdrResult);
+            //return fdrResult;
+
+        });
+
+        //return fiObsFdr;
+    }
+
 
     public void showPopInfo(String title, String message) {
         Platform.runLater(() -> {
