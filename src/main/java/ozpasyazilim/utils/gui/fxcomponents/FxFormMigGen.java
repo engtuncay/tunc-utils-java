@@ -26,6 +26,8 @@ import java.util.function.Function;
  * FxFormMigGen de FormConfig çıkarıldı. Ana Alanlar direk FxFormMigGen sınıfına eklendi.
  * <p>
  * initCont ile component'ler initialize edilir.
+ * <p>
+ * ana kullanılacak form componenti !!!
  *
  * @param <EntClazz> Form alanın değerlerinin aktarılacağı veya alınacağı sınıf
  */
@@ -46,6 +48,8 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
     private Boolean boReadOnlyForm;
 
     private Function<FxFormMigGen, Fdr> fnValidateForm;
+
+    // Metods
 
     public FxFormMigGen() {
         super("insets 0");
@@ -71,6 +75,7 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
     }
 
     // ********************* Main
+
     public void initCont() {
 
         setBoFormInitialized(true);
@@ -179,18 +184,20 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
 
     /**
      * trigger Events After Form Loaded
+     * <p>
+     * getFnEditorNodeRendererAfterFormLoad(),getFnEditorNodeRendererAfterFormLoad2() metods
      */
     private void trigEventsAfterFormLoaded() {
 
-        getListFormElements().forEach(fiTableCol -> {
-            if (fiTableCol.getFnEditorNodeRendererAfterFormLoad() != null) {
-                fiTableCol.getFnEditorNodeRendererAfterFormLoad().accept(getFormEntity(), fiTableCol.getColEditorNode());
+        getListFormElements().forEach(fiCol -> {
+            if (fiCol.getFnEditorNodeRendererAfterFormLoad() != null) {
+                fiCol.getFnEditorNodeRendererAfterFormLoad().accept(getFormEntity(), fiCol.getColEditorNode());
             }
         });
 
-        getListFormElements().forEach(fiTableCol -> {
-            if (fiTableCol.getFnEditorNodeRendererAfterFormLoad2() != null) {
-                fiTableCol.getFnEditorNodeRendererAfterFormLoad2().accept(getFormEntity(), fiTableCol.getColEditorNode(), getListFormElements());
+        getListFormElements().forEach(fiCol -> {
+            if (fiCol.getFnEditorNodeRendererAfterFormLoad2() != null) {
+                fiCol.getFnEditorNodeRendererAfterFormLoad2().accept(getFormEntity(), fiCol.getColEditorNode(), getListFormElements());
             }
         });
 
@@ -220,7 +227,7 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
         //Loghelperr.debug(getClass(), "Plain Form By Editor");
 
         // fxform migpane daha önceden doldurulmuşsa, çıkarılıp temizlenir
-        if (getChildren().size() > 0) {
+        if (!getChildren().isEmpty()) {
             getChildren().remove(0, getChildren().size() - 1);
         }
 
@@ -323,10 +330,6 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
     public void setListFormElements(List<FiCol> listFormElements) {
         this.listFormElements = listFormElements;
     }
-
-//	public void setFxFormSetup(FxFormConfig<EntClazz> fxFormConfig) {
-//		this.fxFormConfig = fxFormConfig;
-//	}
 
     public Boolean getBoUpdateForm() {
         return boUpdateForm;

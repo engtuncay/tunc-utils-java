@@ -412,5 +412,3 @@ public class FxFormc<EntClazz> extends FxMigPaneGenView<EntClazz> implements IFi
 
 
 }
-
-

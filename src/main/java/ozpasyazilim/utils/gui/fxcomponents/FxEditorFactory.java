@@ -1513,7 +1513,7 @@ public class FxEditorFactory {
      * @param colsForm
      * @return
      */
-    public static Fdr validateCols(List<FiCol> colsForm) {
+    public static Fdr validateFiCols(List<FiCol> colsForm) {
 
         for (FiCol fiTableCol : colsForm) {
 

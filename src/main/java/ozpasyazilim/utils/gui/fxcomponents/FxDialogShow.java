@@ -435,15 +435,29 @@ public class FxDialogShow {
      *
      * @param fdr
      */
-    public static void showFdr1PopOrFailModalWitLogAndMessageAndExc(Fdr fdr) {
+    public static void showFdr1PopOrFailModalDetailed(Fdr fdr) {
+        showFdr1PopOrFailModalDetailed(fdr,null);
+    }
+
+    /**
+     * TextArea da Log , Mesaj ve Özet Exception bilgilerini verir
+     *
+     * @param fdr
+     */
+    public static void showFdr1PopOrFailModalDetailed(Fdr fdr, Boolean boOnlyShowWhenFail) {
 
         if (fdr == null) {
             FxDialogShow.showModalErrorAsyn("", "Fdr Tanımsız !!!. Sistem Yöneticinize Danışın.");
+            return;
         }
 
         if (fdr.getBoResult() == null) {
             //FxDialogShow.showPopInfo("İşlem sonucu alınamadı." + "\n" + FiString.orEmpty(fdr.getMessage()));
             FxDialogShow.showModalErrorWitLogAndMessageAndExc("İşlem Sonucu Alınamadı.", fdr);
+            return;
+        }
+
+        if(FiBool.isTrue(boOnlyShowWhenFail) && fdr.isTrueBoResult()){
             return;
         }
 

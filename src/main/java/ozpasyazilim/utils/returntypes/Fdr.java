@@ -1,9 +1,5 @@
 package ozpasyazilim.utils.returntypes;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.util.Pair;
 import ozpasyazilim.utils.annotations.FiReview;
 import ozpasyazilim.utils.core.*;
@@ -527,6 +523,22 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
         }
 
         appendRowsAffected(fdrAppend.getRowsAffectedOrEmpty());
+        // Tüm işlemlerde mesaj birleştirilir.
+        appendMessageLn(fdrAppend.getMessage());
+        if (!FiCollection.isEmpty(fdrAppend.getLogList())) getLogListInit().addAll(fdrAppend.getLogList());
+        fdrAppend.setBoLockAddLog(true);
+    }
+
+    /**
+     * Sonuçla ilgili değişiklik yapmaz, Log,Exception,Message ları alır.
+     *
+     * @param fdrAppend
+     */
+    public void combineLogs(Fdr fdrAppend) {
+
+        //setException(fdrAppend.getException());
+        if(fdrAppend.getException()!=null) getListExceptionInit().add(fdrAppend.getException());
+
         // Tüm işlemlerde mesaj birleştirilir.
         appendMessageLn(fdrAppend.getMessage());
         if (!FiCollection.isEmpty(fdrAppend.getLogList())) getLogListInit().addAll(fdrAppend.getLogList());
