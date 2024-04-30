@@ -1,10 +1,14 @@
 package ozpasyazilim.utils.mvc;
 
+import javafx.scene.layout.Pane;
+
 /**
- * IFxEntSimpleView, IFxSimpleView interface extend eden ve entegre'ye özel arayüz
- * <p>
- * IFxSimpleView interface : Pane getRootPane(), void initGui()
+ * Interface : Pane getRootPane(), void initGui()
  */
-public interface IFiModView extends IFxSimpleView {
+public interface IFiModView {
+	Pane getRootPane();
+
+	// Layout and Comp initilization vs...
+	void initGui();
 
 }

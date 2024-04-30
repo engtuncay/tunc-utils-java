@@ -638,9 +638,9 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     public void refreshTableFiAsyn() {
         Platform.runLater(() -> {
             refresh();
-            executeFiltersLocalAndExtra();
-            updateStatusBar();
-            updateSummary();
+//            executeFiltersLocalAndExtra();
+//            updateStatusBar();
+//            updateSummary();
         });
     }
 

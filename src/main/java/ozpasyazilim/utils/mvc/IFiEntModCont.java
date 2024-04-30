@@ -1,7 +1,7 @@
 package ozpasyazilim.utils.mvc;
 
 /**
- * IFxSimpleCont'a ek olarak eklenecek (Mikro Projesindeki Metodlar için)
+ * IFxSimpleCont'a ek olarak eklenecek (Mikro Paketi- Ama Utils Paketi içinde)
  * <p>
  * IFxSimpleCont Interface : void initCont(),IFxSimpleView getModView(),Stage getFxStage(),void setFxStage(...)
  * <p>
@@ -15,6 +15,6 @@ public interface IFiEntModCont extends IFiModCont {
      * IFxEntSimpleCont ile IFxSimpleView aynı
      * @return
      */
-    IFiModView getModView();
+    IFiModView2 getModView();
     // Digerler IFxSimpleCont dan geliyor
 }

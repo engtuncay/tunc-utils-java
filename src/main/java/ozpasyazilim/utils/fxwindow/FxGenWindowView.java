@@ -5,9 +5,9 @@ import ozpasyazilim.utils.gui.fxcomponents.FxFormMigDep;
 import ozpasyazilim.utils.gui.fxcomponents.FxMigHp;
 import ozpasyazilim.utils.gui.fxcomponents.FxMigPane;
 import ozpasyazilim.utils.gui.fxcomponents.FxTableMig2;
-import ozpasyazilim.utils.mvc.IFxSimpleView;
+import ozpasyazilim.utils.mvc.IFiModView;
 
-public class FxGenWindowView implements IFxSimpleView {
+public class FxGenWindowView implements IFiModView {
 
 	// Containers
 	private FxMigPane fxRootMigPane;

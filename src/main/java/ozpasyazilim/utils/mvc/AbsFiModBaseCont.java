@@ -26,7 +26,7 @@ public abstract class AbsFiModBaseCont implements IFiModCont {
     public abstract void initCont();
 
     @Override
-    public abstract IFxSimpleView getModView();
+    public abstract IFiModView getModView();
 
     public Stage getFxStageInit() {
         if (fxStage == null) {

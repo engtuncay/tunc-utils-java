@@ -83,10 +83,10 @@ public class FiExcel {
 
         String extension = FilenameUtils.getExtension(excelfile.getName());
 
-        if (extension.toLowerCase().equals("xlsx"))
+        if (extension.equalsIgnoreCase("xlsx"))
             return readExcelXLSX(excelfile, listColumns, entityclass, txSheetName);
 
-        if (extension.toLowerCase().equals("xls"))
+        if (extension.equalsIgnoreCase("xls"))
             return readExcelXlsV3(excelfile, listColumns, entityclass);
 
         return null;
@@ -733,13 +733,17 @@ public class FiExcel {
 
             for (int colIndex = 0; colIndex < lastColNumber; colIndex++) {
                 XSSFCell cell = rowItemExcel.getCell(colIndex);
+
                 if (cell == null) {
                     //Loghelperr.getInstance(getClass()).debug(String.format("(%s,%s)=%s",rowIndexExcel,colIndex,"null"));
                     continue;
                 }
+
                 String cellValue = getCellStringValueXLSX(cell);
                 //Loghelperr.debugLog(getClass(),String.format("(%s,%s)=%s",rowIndexExcel,colIndex,cellValue),intRef,10);
                 rowHeader[colIndex] = cellValue.trim();
+
+                // Loghelper.get(getClass()).debug("Header Value:" + cellValue.trim());
 
                 if (mapHeaderToFiCol.containsKey(cellValue.trim())) {
                     IFiCol fiCol = mapHeaderToFiCol.get(cellValue.trim());

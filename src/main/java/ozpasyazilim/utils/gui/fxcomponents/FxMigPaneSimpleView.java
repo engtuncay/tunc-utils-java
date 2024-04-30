@@ -3,14 +3,14 @@ package ozpasyazilim.utils.gui.fxcomponents;
 import javafx.scene.layout.Pane;
 import net.miginfocom.layout.AC;
 import net.miginfocom.layout.LC;
-import ozpasyazilim.utils.mvc.IFxSimpleView;
+import ozpasyazilim.utils.mvc.IFiModView;
 
 /**
  * View görevini üstlenen component
  * <p>
  * IFxSimpleView arayüzü tanımlandı sadece
  */
-public class FxMigPaneSimpleView extends FxMigPane implements IFxSimpleView {
+public class FxMigPaneSimpleView extends FxMigPane implements IFiModView {
 
 	public FxMigPaneSimpleView() {
 		super();
