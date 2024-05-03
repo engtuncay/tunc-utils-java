@@ -3,10 +3,10 @@ package ozpasyazilim.utils.fxwindow;
 import javafx.scene.layout.Pane;
 import ozpasyazilim.utils.gui.fxcomponents.FxMigHp;
 import ozpasyazilim.utils.gui.fxcomponents.FxMigPane;
-import ozpasyazilim.utils.mvc.IFiModView2;
+import ozpasyazilim.utils.mvc.IFiModViewEnt;
 import ozpasyazilim.utils.mvc.IFiModView;
 
-public class FxSimpleWindowView implements IFiModView2, IFiModView {
+public class FxSimpleWindowView implements IFiModViewEnt, IFiModView {
 
 	// Containers
 	// rootMigPane super de
