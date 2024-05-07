@@ -4,7 +4,7 @@ import javafx.beans.property.StringProperty;
 import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.fidborm.FiEntity;
 import ozpasyazilim.utils.fidborm.FiField;
-import ozpasyazilim.utils.fidborm.FiQueryTools;
+import ozpasyazilim.utils.fidborm.Fiqt;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.table.FiCol;
 
@@ -122,7 +122,7 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
     public void bindAndActivateIfNotEmpty(Object objKey, Object value, AtomicReference<String> sql) {
         if (value != null) {
             this.put(objKey.toString(), value);
-            sql.set(FiQueryTools.activateOptParamMain(sql.get(), objKey.toString()));
+            sql.set(Fiqt.activateOptParamMain(sql.get(), objKey.toString()));
         }
     }
 
@@ -157,7 +157,7 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
 
 //			Loghelper.get(getClass()).debug("Aktive edildi Param:" + objKey.toString());
             this.put(objKey.toString(), value);
-            FiQueryTools.activateAndUpdateOptParam(sqlProp, objKey.toString());
+            Fiqt.activateAndUpdateOptParam(sqlProp, objKey.toString());
 
         } else {
 //			Loghelper.get(getClass()).debug("Aktive edilmedi Param:" + objKey.toString());
