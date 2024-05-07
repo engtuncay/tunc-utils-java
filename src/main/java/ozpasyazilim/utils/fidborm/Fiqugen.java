@@ -27,8 +27,10 @@ import static java.util.stream.Collectors.toList;
 
 /**
  * Not : Normal şartlarda transient alanlar eklenmez, özel olarak belirtmek lazım
+ *
+ * Fiqugen -> FiQueryGenerator kısaltması
  */
-public class FiQueryGenerator {
+public class Fiqugen {
 
     public static String deleteById(Class clazz) {
 
@@ -766,7 +768,7 @@ public class FiQueryGenerator {
             query.append("\n WHERE " + queryWhere);
         }
 
-        Loghelper.get(FiQueryGenerator.class).debug(" Query:" + query.toString());
+        Loghelper.get(Fiqugen.class).debug(" Query:" + query.toString());
 
         return query.toString();
     }
@@ -2338,7 +2340,7 @@ public class FiQueryGenerator {
             });
         } catch (Exception ex) {
             //ex.printStackTrace();
-            Loghelper.get(FiQueryGenerator.class).error(FiException.exToLog(ex));
+            Loghelper.get(Fiqugen.class).error(FiException.exToLog(ex));
         }
         return result;
     }
@@ -2590,8 +2592,8 @@ public class FiQueryGenerator {
 
     }
 
-    private static Class<FiQueryGenerator> getClassi() {
-        return FiQueryGenerator.class;
+    private static Class<Fiqugen> getClassi() {
+        return Fiqugen.class;
     }
 
     public static Boolean runCreateQuery(Class clazz, Jdbi jdbi, Boolean onlyPrintConsole) {
@@ -3137,7 +3139,7 @@ public class FiQueryGenerator {
         for (FiField fiField : listFiFieldsSummary) {
 
             if (!mapDbFields.containsKey(fiField.getDbFieldName())) { // veritabanında ilgili alan yok
-                Loghelper.debugLog(FiQueryGenerator.class, "Veritabanında ilgili alan yok:" + fiField.getDbFieldName());
+                Loghelper.debugLog(Fiqugen.class, "Veritabanında ilgili alan yok:" + fiField.getDbFieldName());
                 // ALTER TABLE [dbo].[EntAktarimFirma] ADD [afrTxFirmaHavaleBanka] varchar(25) COLLATE Turkish_CI_AS NULL
                 String addQuery = String.format("ALTER TABLE %s ADD %s %s", getTableName(clazz), fiField.getDbFieldName(), fiField.getSqlFieldDefinition());
                 listAlterQueries.add(addQuery);

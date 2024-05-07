@@ -6,7 +6,7 @@ import ozpasyazilim.utils.core.FiCollection;
 
 import java.util.List;
 
-class FiQueryGeneratorTest {
+class FiqugenTest {
 
 	@Test
 	void getQueryFields() {
@@ -17,7 +17,7 @@ class FiQueryGeneratorTest {
 				+ "IN ( select distinct ch2.cari_vdaire_no FROM CARI_HESAPLAR ch2 WHERE ch2.cari_kod <> ch2.cari_Ana_cari_kodu )\n"
 				+ "ORDER BY cari_Ana_cari_kodu";
 
-		List<FiField> queryFields = FiQueryGenerator.getQueryFields(string);
+		List<FiField> queryFields = Fiqugen.getQueryFields(string);
 
 //		for (FiField queryField : queryFields) {
 //			System.out.println(queryField.getName());

@@ -5,7 +5,7 @@ import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.fidbanno.FiTable;
 import ozpasyazilim.utils.fidborm.FiEntity;
 import ozpasyazilim.utils.fidborm.FiField;
-import ozpasyazilim.utils.fidborm.FiQueryGenerator;
+import ozpasyazilim.utils.fidborm.Fiqugen;
 
 import javax.persistence.Table;
 import java.util.List;
@@ -430,7 +430,7 @@ public class FiCodeHelper {
 
 	private static void createTable(Jdbi jdbi, Class clazz) {
 
-		String sqlCreate = FiQueryGenerator.createQuery20(clazz);
+		String sqlCreate = Fiqugen.createQuery20(clazz);
 
 		//System.out.println("db:"+jdbi.toString());
 
