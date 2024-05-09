@@ -5,7 +5,7 @@ package ozpasyazilim.utils.mvc;
  * Standard Controller
  *
  */
-public interface IFxStCont {
+public interface IFxController {
 
 	void setupTable();
 
