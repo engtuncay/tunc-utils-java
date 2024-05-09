@@ -1635,7 +1635,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
 
         try {
             Integer rowCountUpdate = jdbi.withHandle(handle -> {
-                return handle.createUpdate(Fiqt.stojExcludeSpecVar(updateQuery))
+                return handle.createUpdate(Fiqt.stojExcludable1(updateQuery))
                         .bindMap(fiMapParams)
                         .execute(); // returns row count updated
             });
@@ -1674,7 +1674,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoJdbi implements IR
         Fdr fdr = new Fdr();
 
         try {
-            int rowsAffected = handle.createUpdate(Fiqt.stojExcludeSpecVar(updateQuery))
+            int rowsAffected = handle.createUpdate(Fiqt.stojExcludable1(updateQuery))
                     .bindBean(bindEntity)
                     .execute();
             fdr.setBoResultAndRowsAff(true, rowsAffected); // 16-01-20 added.

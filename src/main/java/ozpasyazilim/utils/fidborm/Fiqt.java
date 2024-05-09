@@ -173,7 +173,7 @@ public class Fiqt {
         return sql.replaceAll("@", ":");
     }
 
-    public static String convertSqlParamToJdbiParamMainExcludeSpec(String sql) {
+    public static String convertSqlParamToJdbiParamMainExcludable1(String sql) {
         return sql.replaceAll("@(?!__)", ":");
     }
 
@@ -203,10 +203,10 @@ public class Fiqt {
         return sqlQuery;
     }
 
-    public static String stojExcludeSpecVar(String sqlQuery) {
+    public static String stojExcludable1(String sqlQuery) {
         if (sqlQuery == null) return null;
         sqlQuery = fixSqlProblems(sqlQuery);
-        sqlQuery = convertSqlParamToJdbiParamMainExcludeSpec(sqlQuery);
+        sqlQuery = convertSqlParamToJdbiParamMainExcludable1(sqlQuery);
         //Loghelper.get(FiQueryTools.class).debug("Sql:" + sqlQuery);
         return sqlQuery;
     }
