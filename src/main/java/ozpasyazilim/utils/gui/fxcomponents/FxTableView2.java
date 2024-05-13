@@ -1012,25 +1012,35 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     }
 
-    public void setItemsAsFilteredListAsync(List listTable) {
+    public void setItemsAsFilteredListAsync(List listData) {
 
         Platform.runLater(() -> {
-            setItemsAsFilteredList(listTable);
+            setItemsAsFilteredList(listData);
         });
 
     }
 
-    public void setItemsAsFilteredListAsync2(List listTable) {
+    public void setItemsAsFilteredListAsync(List listTable, Integer lnTotalSize) {
 
-        if (listTable == null) {
-            listTable = new ArrayList();
+        if (lnTotalSize != null) {
+            setLnTotalSize(lnTotalSize);
         }
 
-        if (listTable.size() == 0) {
+        setItemsAsFilteredListAsync(listTable);
+
+    }
+
+    public void setItemsAsFilteredListAsync2(List listData) {
+
+        if (listData == null) {
+            listData = new ArrayList();
+        }
+
+        if (listData.isEmpty()) {
             FxDialogShow.showPopInfo("Tabloya Eklenecek Veri Yok.");
         }
 
-        List finalListTable = listTable;
+        List finalListTable = listData;
         Platform.runLater(() -> {
             setItemsAsFilteredList(finalListTable);
         });
@@ -1764,12 +1774,12 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
         ObservableList<EntClazz> tableData = getItemsAllFi();
         List<EntClazz> listEklenecek = new ArrayList<>();
-        if (tableData.size() > 0) {
+        if (!tableData.isEmpty()) {
             Map<KeyClazz, EntClazz> mapKeyToEntity = FiCollection.listToMapSingle(tableData, fnKeySelection);
 
             for (EntClazz newItem : listData) {
                 EntClazz entityFromTable = mapKeyToEntity.getOrDefault(fnKeySelection.apply(newItem), null);
-                Boolean found = false;
+                boolean found = false;
 
                 if (entityFromTable != null) {
                     fnWorksForAppendingOfEqualObjects.accept(entityFromTable, newItem);
@@ -1780,7 +1790,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
                     listEklenecek.add(newItem);
                 }
             }
-            if (listEklenecek.size() > 0) {
+            if (!listEklenecek.isEmpty()) {
                 Platform.runLater(() -> {
                     //Loghelper.debug(getClass(), "Yeni Itemlar Veriler Ekleniyor");
                     addAllItemsFi(listEklenecek);

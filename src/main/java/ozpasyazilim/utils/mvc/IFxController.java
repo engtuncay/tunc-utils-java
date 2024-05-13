@@ -1,15 +1,15 @@
 package ozpasyazilim.utils.mvc;
 
 /**
- *
- * Standard Controller
- *
+ * Standard Controller Method Arayüzü
+ * <p>
+ * setupTable - setupEvents
  */
 public interface IFxController {
 
-	void setupTable();
+    void setupTable();
 
-	// review:kaldırılabilir mi
-	void setupEvents();
+    // review:kaldırılabilir mi
+    void setupEvents();
 
 }

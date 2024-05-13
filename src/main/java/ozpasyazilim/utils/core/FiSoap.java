@@ -27,6 +27,8 @@ public class FiSoap {
 	 */
 	public static Fdr<String> requestRawHttp(String endPoint, String soapRequest, FiKeyString mapHeaders) {
 
+		//System.setProperty("java.net.useSystemProxies", "true");
+
 		//MalformedURLException, IOException daha geniş olduğu için çıkarıldı //throws IOException
 		Fdr<String> fdrMain = new Fdr<>();
 
@@ -112,6 +114,8 @@ public class FiSoap {
 	}
 
 	public static Fdr<String> requestRawHttps(String endPoint, String soapRequest, FiKeyString fksHeaders) {
+
+		//System.setProperty("java.net.useSystemProxies", "true");
 
 		Fdr<String> fdr = new Fdr<>();
 
