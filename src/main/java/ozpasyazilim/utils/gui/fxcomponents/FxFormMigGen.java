@@ -32,6 +32,7 @@ import java.util.function.Function;
  * @param <EntClazz> Form alanın değerlerinin aktarılacağı veya alınacağı sınıf
  */
 public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
+
     private Class<EntClazz> entityClazz;
     private String txGuid;
     private Boolean boFormInitialized;

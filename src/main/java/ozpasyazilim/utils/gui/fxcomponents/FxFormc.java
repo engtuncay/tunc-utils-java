@@ -26,6 +26,7 @@ import java.util.Map;
  * @param <EntClazz>
  */
 public class FxFormc<EntClazz> extends FxMigPaneGenView<EntClazz> implements IFiComp {
+
     private Class<EntClazz> entityClazz;
     private String uid;
     private FxFormConfig<EntClazz> fxFormConfig; // added 27-01-21
