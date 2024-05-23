@@ -11,7 +11,7 @@ import ozpasyazilim.utils.returntypes.Fdr;
 
 import java.util.*;
 
-public abstract class AbsRepoFkbJdbi extends AbsRepoJdbi { //implements IRepoJdbi
+public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRepoJdbi
 
     protected Handle handleRepo;
 

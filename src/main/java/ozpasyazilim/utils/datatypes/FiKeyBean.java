@@ -338,6 +338,7 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
     }
 
     public void logParams() {
+        Loghelper.get(getClass()).debug("FiKeyBean.logParams called");
         Loghelper.get(getClass()).debug(FiConsole.textFiKeyBean(this));
     }
 }

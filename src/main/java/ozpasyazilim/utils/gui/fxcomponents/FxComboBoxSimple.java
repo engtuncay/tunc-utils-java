@@ -74,9 +74,9 @@ public class FxComboBoxSimple extends FxComboBox<ComboItemText> {
 		}
 	}
 
-	public void addComboItem(ComboItemText comboItem) {
-		getItems().add(comboItem);
-	}
+	public void addComboItem(ComboItemText item) {
+        super.addComboItem(item);
+    }
 
 	public void addSecureComboItem(ComboItemText comboItem, Predicate<String> predSecureCheck) {
 		if(predSecureCheck.apply(comboItem.getTxCode())){
@@ -123,5 +123,14 @@ public class FxComboBoxSimple extends FxComboBox<ComboItemText> {
 			ComboItemText selectedItem = getSelectionModel().getSelectedItem();
 			Loghelper.get(getClass()).debug("Mouse entered:"+selectedItem.getValue());
 		});
+	}
+
+
+	public ComboItemText getSelectedItemFiNtn() {
+		if (getSelectedItemFi()==null) {
+			return new ComboItemText("","");
+		}
+
+		return super.getSelectedItemFi();
 	}
 }

@@ -30,7 +30,7 @@ import static java.util.stream.Collectors.toList;
  *
  * Fiqugen -> FiQueryGenerator kısaltması
  */
-public class Fiqugen {
+public class FiQugen {
 
     public static String deleteById(Class clazz) {
 
@@ -768,7 +768,7 @@ public class Fiqugen {
             query.append("\n WHERE " + queryWhere);
         }
 
-        Loghelper.get(Fiqugen.class).debug(" Query:" + query.toString());
+        Loghelper.get(FiQugen.class).debug(" Query:" + query.toString());
 
         return query.toString();
     }
@@ -986,7 +986,14 @@ public class Fiqugen {
         return query.toString();
     }
 
-    public static String selectDtoFieldsByTxFirmCode(Class clazz) {
+    /**
+     *
+     * select {dto_fields} where {firm_fields}
+     *
+     * @param clazz
+     * @return
+     */
+    public static String selectDtoFieldsByFirmFields(Class clazz) {
 
         List<FiField> fieldList = FiEntity.getListFieldsShortWithId(clazz);
 
@@ -2340,7 +2347,7 @@ public class Fiqugen {
             });
         } catch (Exception ex) {
             //ex.printStackTrace();
-            Loghelper.get(Fiqugen.class).error(FiException.exToLog(ex));
+            Loghelper.get(FiQugen.class).error(FiException.exToLog(ex));
         }
         return result;
     }
@@ -2592,8 +2599,8 @@ public class Fiqugen {
 
     }
 
-    private static Class<Fiqugen> getClassi() {
-        return Fiqugen.class;
+    private static Class<FiQugen> getClassi() {
+        return FiQugen.class;
     }
 
     public static Boolean runCreateQuery(Class clazz, Jdbi jdbi, Boolean onlyPrintConsole) {
@@ -3139,7 +3146,7 @@ public class Fiqugen {
         for (FiField fiField : listFiFieldsSummary) {
 
             if (!mapDbFields.containsKey(fiField.getDbFieldName())) { // veritabanında ilgili alan yok
-                Loghelper.debugLog(Fiqugen.class, "Veritabanında ilgili alan yok:" + fiField.getDbFieldName());
+                Loghelper.debugLog(FiQugen.class, "Veritabanında ilgili alan yok:" + fiField.getDbFieldName());
                 // ALTER TABLE [dbo].[EntAktarimFirma] ADD [afrTxFirmaHavaleBanka] varchar(25) COLLATE Turkish_CI_AS NULL
                 String addQuery = String.format("ALTER TABLE %s ADD %s %s", getTableName(clazz), fiField.getDbFieldName(), fiField.getSqlFieldDefinition());
                 listAlterQueries.add(addQuery);

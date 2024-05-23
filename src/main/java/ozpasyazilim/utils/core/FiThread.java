@@ -5,6 +5,9 @@ import javafx.scene.paint.Color;
 import ozpasyazilim.utils.gui.fxcomponents.*;
 import ozpasyazilim.utils.listener.CompoundRunnable;
 
+import java.util.function.Predicate;
+import java.util.function.Supplier;
+
 public class FiThread {
 
 
@@ -20,8 +23,10 @@ public class FiThread {
         return startThread(runnable, btnArray, null);
     }
 
+
     /**
      * With Tc -> With Try Catch for Runnable
+     *
      * @param runnable
      * @param btnArray
      * @return
@@ -47,7 +52,7 @@ public class FiThread {
             try {
                 runnable.run();
             } catch (Exception ex) {
-                FxDialogShow.showModalErrorAsyn("Hata oluştu",FiException.excToStrSummary(ex));
+                FxDialogShow.showModalErrorAsyn("Hata oluştu", FiException.excToStrSummary(ex));
             }
         };
 
@@ -74,27 +79,43 @@ public class FiThread {
         return thread;
     }
 
-    public static Thread startThread(Runnable runnable, FxButton[] btnListee, Runnable runnableEnd) {
+    public static Thread startThread(Runnable runnable, FxButton[] arrButtons, Runnable runnableEnd) {
 
-        FxButton btnListeFirst = btnListee[0];
+        StringBuilder sbTxOld = new StringBuilder();
 
-        final String textOld = btnListeFirst.getText();
+        if (arrButtons.length !=0  && arrButtons[0]!=null ) {
+            sbTxOld.append(arrButtons[0].getText());
+        }
+
+        Supplier<Boolean> supTest = () -> arrButtons.length !=0 && arrButtons[0]!=null;
+
+        //FxButton btnListeFirst = arrButtons[0];
+        //final String textOld = btnListeFirst.getText();
 
         Platform.runLater(() -> {
-            btnListeFirst.setText("İşlem Yapılıyor..");
-            for (FxButton fxButton : btnListee) {
-                fxButton.setDisable(true);
+
+            if (supTest.get()) {
+                arrButtons[0].setText("İşlem Yapılıyor..");
+
+                for (FxButton fxButton : arrButtons) {
+                    fxButton.setDisable(true);
+                }
             }
+
         });
 
         Runnable runnable2 = () -> {
             //fxToastPopup2.end();
             Platform.runLater(() -> {
-                btnListeFirst.setText(textOld);
 
-                for (FxButton fxButton : btnListee) {
-                    fxButton.setDisable(false);
+                if (supTest.get()) {
+                    arrButtons[0].setText(sbTxOld.toString());
+
+                    for (FxButton fxButton : arrButtons) {
+                        fxButton.setDisable(false);
+                    }
                 }
+
             });
 
         };

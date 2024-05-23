@@ -7,7 +7,7 @@ import org.jdbi.v3.core.Jdbi;
  * <p>
  * Kullanan Sınıflar : AbsRepoGenJdbi, AbsRepoJdbiNog (not generic), AbsFkbRepoJdbi
  */
-public class AbsRepoJdbi {
+public class AbsRepoJdbiCore {
 
 	protected String connProfile;
 	protected Jdbi jdbi;

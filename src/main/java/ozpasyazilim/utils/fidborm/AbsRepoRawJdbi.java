@@ -14,7 +14,7 @@ import static ozpasyazilim.utils.core.FiStFormat.*;
 /**
  * Raw means - Raw usage , Not Generic (önceden pure ve nog (not generic) kullanılmıştı)
  */
-public abstract class AbsRepoRawJdbi extends AbsRepoJdbi { //implements IRepoJdbi
+public abstract class AbsRepoRawJdbi extends AbsRepoJdbiCore { //implements IRepoJdbi
 
 	private Handle handleRepo;
 
