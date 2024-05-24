@@ -9,6 +9,8 @@ import java.util.List;
 
 class FiQueryTest {
 
+
+
 	@Test
 	void convertListParamToMultiParams() {
 

@@ -434,4 +434,11 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
         });
     }
 
+    public Function<FxFormMigGen, Fdr> getFnValidateForm() {
+        return fnValidateForm;
+    }
+
+    public void setFnValidateForm(Function<FxFormMigGen, Fdr> fnValidateForm) {
+        this.fnValidateForm = fnValidateForm;
+    }
 }

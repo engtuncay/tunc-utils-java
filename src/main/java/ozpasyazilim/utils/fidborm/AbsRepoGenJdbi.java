@@ -489,10 +489,11 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
     }
 
     public Fdr<List<EntClazz>> jdSelectAllDtoByFirmFieldsBindMap(FiKeyBean fiKeyBean) {
-
-        String sqlQuery = FiQugen.selectDtoFieldsByFirmFields(getEntityClass());
-
-        return jdSelectListBindMapMainNtn(sqlQuery, fiKeyBean);
+        //String sqlQuery = FiQugen.selectDtoFieldsByFirmFields(getEntityClass());
+        FiQuery fiQuery = new FiQuery(FiQugen.selectDtoFieldsByFirmFields(getEntityClass()), fiKeyBean);
+        fiQuery.logQuery();
+        fiQuery.logParams();
+        return jdSelectListBindMapMainNtn(fiQuery.getTxQuery(), fiQuery.getMapParams());
     }
 
     public List<EntClazz> jdSelectLike(Integer rowCount, EntClazz entity) {
@@ -2295,7 +2296,12 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
      * @return
      */
     public Fdr<Integer> jdSelectSingleIntOrMinus1(String sql, FiKeyBean fiMapParams) {
-        Fdr<Integer> fdrSql = jdSelectSingleCustomEntityBindMap(sql, fiMapParams, Integer.class);
+        FiQuery fiQuery = new FiQuery(sql, fiMapParams);
+        return jdSelectSingleIntOrMinus1(fiQuery);
+    }
+
+    public Fdr<Integer> jdSelectSingleIntOrMinus1(FiQuery fiQuery) {
+        Fdr<Integer> fdrSql = jdSelectSingleCustomEntityBindMap(fiQuery.getTxQuery(), fiQuery.getMapParams(), Integer.class);
         if (fdrSql.getValue() == null) {
             fdrSql.setValue(-1);
         }
@@ -3475,6 +3481,12 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
         fiQuery.convertListParamsToMultiParams();
         //Loghelper.get(getClass()).debug("sql:" + fiQuery.getTxQuery());
         return jdSelectListBindMapMainNtn(fiQuery.getTxQuery(), fiQuery.getMapParams());
+    }
+
+    public Fdr updateByFiColUpdateFieldsWhereId(FiKeyBean formAsKeyBean, List<FiCol> listFormElements) {
+        String sql = FiQugen.updateQueryWithFiColsByUpdateAndKeyField(getEntityClass(), listFormElements);
+        Loghelper.get(getClass()).debug("sql:"+sql);
+        return jdUpdateBindMapMain(sql, formAsKeyBean);
     }
 
 }

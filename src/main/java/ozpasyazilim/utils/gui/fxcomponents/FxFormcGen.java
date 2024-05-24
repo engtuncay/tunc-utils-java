@@ -25,7 +25,7 @@ import java.util.Map;
  *
  * @param <EntClazz>
  */
-public class FxFormc<EntClazz> extends FxMigPaneGenView<EntClazz> implements IFiComp {
+public class FxFormcGen<EntClazz> extends FxMigPaneGenView<EntClazz> implements IFiComp {
 
     private Class<EntClazz> entityClazz;
     private String uid;
@@ -39,11 +39,11 @@ public class FxFormc<EntClazz> extends FxMigPaneGenView<EntClazz> implements IFi
 
     //private Map<String, FiCol> formElementsMap;
 
-    public FxFormc() {
+    public FxFormcGen() {
         super("insets 0");
     }
 
-    public FxFormc(Class<EntClazz> entityClazz) {
+    public FxFormcGen(Class<EntClazz> entityClazz) {
         super("insets 0");
         this.entityClazz = entityClazz;
     }
@@ -53,19 +53,19 @@ public class FxFormc<EntClazz> extends FxMigPaneGenView<EntClazz> implements IFi
      *
      * @param listFormElements
      */
-    public FxFormc(List<FiCol> listFormElements) {
+    public FxFormcGen(List<FiCol> listFormElements) {
         super("insets 0");
         getFxFormConfigInit().setListFormElements(listFormElements);
     }
 
-    public FxFormc(List<FiCol> listFormElements, Boolean boInit) {
+    public FxFormcGen(List<FiCol> listFormElements, Boolean boInit) {
         super("insets 0");
         if (FiBool.isTrue(boInit)) {
             initContWitDefaultForm(listFormElements);
         }
     }
 
-    public FxFormc(FxFormConfig<EntClazz> fxFormConfig) {
+    public FxFormcGen(FxFormConfig<EntClazz> fxFormConfig) {
         initContWitConfig(fxFormConfig);
     }
 

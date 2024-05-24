@@ -27,7 +27,7 @@ import static java.util.stream.Collectors.toList;
 
 /**
  * Not : Normal şartlarda transient alanlar eklenmez, özel olarak belirtmek lazım
- *
+ * <p>
  * Fiqugen -> FiQueryGenerator kısaltması
  */
 public class FiQugen {
@@ -987,7 +987,6 @@ public class FiQugen {
     }
 
     /**
-     *
      * select {dto_fields} where {firm_fields}
      *
      * @param clazz
@@ -1632,7 +1631,7 @@ public class FiQugen {
      */
     public static String selectQueryCountIdByFiColListWhereIdList(Class clazz, List<FiCol> listFields) {
 
-        Map<String, FiField> listClassFields = FiEntity.getMapFieldsShort(clazz);
+        //Map<String, FiField> listClassFields = FiEntity.getMapFieldsShort(clazz);
 
         StringBuilder query = new StringBuilder();
         StringBuilder queryWhere = new StringBuilder();
@@ -1682,6 +1681,72 @@ public class FiQugen {
         return query.toString();
     }
 
+    /**
+     * Örnek Sorgu
+     * <p>
+     * SELECT count( arcId ) fiLnCount
+     * <p>
+     * FROM EntAppRoleConfig
+     * <p>
+     * WHERE arcTxFirmaKod = @arcTxFirmaKod AND arcTxFirmaKod = @arcTxFirmaKod
+     *
+     * @param clazz
+     * @param fiColId
+     * @param listWhereFields
+     * @return
+     */
+    public static String selectQueryFiColCount(Class clazz, FiCol fiColId, List<FiCol> listWhereFields) {
+
+        //Map<String, FiField> listClassFields = FiEntity.getMapFieldsShort(clazz);
+
+        StringBuilder query = new StringBuilder();
+        StringBuilder queryWhere = new StringBuilder();
+        //StringBuilder queryGroupBy = new StringBuilder();
+
+        query.append("SELECT ");
+
+        // FiCol fiColId = null;
+
+        // id field bulmak için
+        // int index = 0;
+        //        for (FiCol fiCol : listWhereFields) {
+        //  index++;
+        //  if (index != 1) query.append(", ");
+        //  query.append(fiCol.getFieldName());
+        //  // idCol kayıt edilir
+        //  if (FiBool.isTrue(fiCol.getBoKeyField())) fiColId = fiCol;
+        //  }
+
+        if (fiColId != null) {
+//            index++;
+//            if (index != 1) query.append(", ");
+            query.append(String.format("count( %s ) lnCount", fiColId.getFieldName()));
+            //queryGroupBy.append(fiColId.getFieldName());
+        }
+
+        query.append("\nFROM ").append(getTableName(clazz));
+
+        int indexWhere = 0;
+        for (FiCol fiCol : listWhereFields) {
+
+            //if (FiBool.isTrue(fiCol.getBoKeyField())) {
+            indexWhere++;
+            if (indexWhere != 1) queryWhere.append(" AND ");
+            queryWhere.append(fiCol.getFieldName())
+                    .append(" = @")
+                    .append(fiCol.getFieldName());
+        }
+
+        query.append("\nWHERE ").append(queryWhere);
+        //query.append("\nGROUP BY " + queryGroupBy);
+
+        // where cümleciği yoksa sorguyu iptal edelim
+        if (queryWhere.length() < 1) {
+            query = new StringBuilder();
+        }
+
+        return query.toString();
+    }
 
     /**
      * Key alanlarını class alanlarındaki Id annotasyonuna göre alır
@@ -3318,8 +3383,6 @@ public class FiQugen {
         if (FiString.isEmptyTrim(txTableName)) return "";
         return String.format("SELECT * FROM %s", txTableName);
     }
-
-
 
 
 }

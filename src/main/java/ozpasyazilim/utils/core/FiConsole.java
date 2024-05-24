@@ -377,6 +377,8 @@ public class FiConsole {
 
     public static void debug(Object obj) {
 
+        Loghelper.get(FiConsole.class).debug("FiConsole.debug method");
+
         if (obj == null) {
             Loghelper.debugLog(FiConsole.class, "Null Değişken");
             return;

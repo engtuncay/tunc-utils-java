@@ -24,6 +24,11 @@ public class FiQuery {
     String txCandIdFieldName;
     String txPrimaryKeyFieldName;
 
+    /**
+     * class of return object
+     */
+    Class retClass;
+
     //List<FiField> queryFieldList;
     //List<FiField> queryWhereList;
 
@@ -166,6 +171,7 @@ public class FiQuery {
 
 
     public void logQuery() {
+        Loghelper.get(getClass()).debug("Fiquery log");
         Loghelper.get(getClass()).debug(getTxQuery());
     }
 
@@ -415,7 +421,16 @@ public class FiQuery {
     }
 
     public void logParams() {
+        Loghelper.get(getClass()).debug("Fiquery log");
         Loghelper.get(getClass()).debug(FiConsole.textFiKeyBean(getMapParamsInit()));
+    }
+
+    public Class getRetClass() {
+        return retClass;
+    }
+
+    public void setRetClass(Class retClass) {
+        this.retClass = retClass;
     }
 }
 

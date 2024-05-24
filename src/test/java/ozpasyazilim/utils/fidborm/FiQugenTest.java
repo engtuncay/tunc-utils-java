@@ -3,10 +3,18 @@ package ozpasyazilim.utils.fidborm;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import ozpasyazilim.utils.core.FiCollection;
+import ozpasyazilim.utils.table.FiCol;
+import ozpasyazilim.utils.table.FiColsUtil;
 
 import java.util.List;
 
 class FiQugenTest {
+
+	public static void main(String[] args) {
+
+	}
+
+
 
 	@Test
 	void getQueryFields() {
