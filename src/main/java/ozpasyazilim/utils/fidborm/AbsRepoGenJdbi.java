@@ -491,6 +491,13 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
     public Fdr<List<EntClazz>> jdSelectAllDtoByFirmFieldsBindMap(FiKeyBean fiKeyBean) {
         //String sqlQuery = FiQugen.selectDtoFieldsByFirmFields(getEntityClass());
         FiQuery fiQuery = new FiQuery(FiQugen.selectDtoFieldsByFirmFields(getEntityClass()), fiKeyBean);
+        //fiQuery.logQuery();
+        //fiQuery.logParams();
+        return jdSelectListBindMapMainNtn(fiQuery.getTxQuery(), fiQuery.getMapParams());
+    }
+
+    public Fdr<List<EntClazz>> jdSelectAllDtoWhereFicols(FiKeyBean fkbSorgu, List<FiCol> fiColsWhere) {
+        FiQuery fiQuery = new FiQuery(FiQugen.selectAllDtoWherFiCols(getEntityClass(),fiColsWhere), fkbSorgu);
         fiQuery.logQuery();
         fiQuery.logParams();
         return jdSelectListBindMapMainNtn(fiQuery.getTxQuery(), fiQuery.getMapParams());
@@ -1661,6 +1668,35 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
         FiKeyBean fkbParams = new FiKeyBean();
         for (IFiCol fiCol : fiColList) {
+            fkbParams.put(fiCol.getFieldName(), fiCol.getColValue());
+        }
+
+        FiQuery fiQuery = new FiQuery(sqlQuery, fkbParams);
+        fiQuery.convertListParamsToMultiParamsWithKeep();
+
+        Loghelper.get(getClass()).debug(sqlQuery);
+        return jdSelectListBindMap(fiQuery);
+    }
+
+    /**
+     *
+     *
+     * @param fiColsSelect
+     * @param fiColsOrder
+     * @return
+     */
+    public Fdr<List<EntClazz>> jdSelectFiColsWitOrder(List<FiCol> fiColsSelect,List<FiCol> fiColsOrder) {
+        String sql = FiQugen.selectFiColsWitOrderBy(getEntityClass(), fiColsSelect,fiColsOrder);
+        //Loghelper.get(getClass()).debug(sql);
+        return jdSelectListBindMapMainNtn(sql,null);
+    }
+
+    public Fdr<List<EntClazz>> jdSelectFiColListAndOrder(List<FiCol> fiColsSelect, List<FiCol> fiColsOrder) {
+
+        String sqlQuery = FiQugen.selectFiColsWitOrderBy(getEntityClass(), fiColsSelect,null);
+
+        FiKeyBean fkbParams = new FiKeyBean();
+        for (IFiCol fiCol : fiColsSelect) {
             fkbParams.put(fiCol.getFieldName(), fiCol.getColValue());
         }
 

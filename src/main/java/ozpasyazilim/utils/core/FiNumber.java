@@ -525,6 +525,15 @@ public class FiNumber {
 
 	}
 
+	public static Integer convertStringToInteger(String txValue) {
+
+		if (FiString.isEmptyTrim(txValue)) return null;
+		Integer numValue = (Integer.parseInt(txValue));
+		//System.out.println(numValue);
+		return numValue;
+
+	}
+
 	public static Optional<Integer> parseToIntOpt(String txValue) {
 
 		if (txValue == null) return Optional.empty();

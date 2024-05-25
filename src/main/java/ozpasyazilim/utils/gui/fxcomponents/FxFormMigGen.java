@@ -23,7 +23,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 /**
- * FxFormMigGen de FormConfig çıkarıldı. Ana Alanlar direk FxFormMigGen sınıfına eklendi.
+ * FxFormMigGen Ayar Alanları direk FxFormMigGen sınıfında.
  * <p>
  * initCont ile component'ler initialize edilir.
  * <p>
@@ -178,6 +178,20 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
         setFormEntity(formEntity);
         initCont();
     }
+
+    public void initWitFormConfig(FxFormConfig<EntClazz> fxFormConfig) {
+        setFxFormConfig(fxFormConfig);
+        initCont();
+    }
+
+    private void setFxFormConfig(FxFormConfig<EntClazz> fxFormConfig) {
+        setListFormElements(fxFormConfig.getListFormElementsInit());
+        setFormTypeSelected(fxFormConfig.getFormType());
+        setFormEntity(fxFormConfig.getFormEntity());
+        setBoUpdateForm(fxFormConfig.getBoUpdateForm());
+        setFnValidateForm(fxFormConfig.getFnValidateFormForFormMigGen());
+    }
+
 
     private Map<String, FiCol> getFormAsMapFieldNameToFiCol() {
         return FiCollection.listToMapSingle(getListFormElements(), FiCol::getFieldName);

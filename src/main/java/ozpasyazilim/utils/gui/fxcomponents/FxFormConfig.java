@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.function.Function;
 
 public class FxFormConfig<EntClazz> {
+
     private List<FiCol> listFormElements;
     private FormType formType;
     private EntClazz formEntity; // 21-10-30 eklendi
@@ -19,7 +20,9 @@ public class FxFormConfig<EntClazz> {
 
     private Boolean boReadOnlyForm;
 
-    private Function<FxFormcGen, Fdr> fnValidateForm;
+    private Function<FxFormcGen, Fdr> fnValidateFormForFormc;
+
+    private Function<FxFormMigGen, Fdr> fnValidateFormForFormMigGen;
 
     public FxFormConfig() {
     }
@@ -87,12 +90,20 @@ public class FxFormConfig<EntClazz> {
         this.boReadOnlyForm = boReadOnlyForm;
     }
 
-    public Function<FxFormcGen, Fdr> getFnValidateForm() {
-        return fnValidateForm;
+    public Function<FxFormcGen, Fdr> getFnValidateFormForFormc() {
+        return fnValidateFormForFormc;
     }
 
-    public void setFnValidateForm(Function<FxFormcGen, Fdr> fnValidateForm) {
-        this.fnValidateForm = fnValidateForm;
+    public void setFnValidateFormForFormc(Function<FxFormcGen, Fdr> fnValidateFormForFormc) {
+        this.fnValidateFormForFormc = fnValidateFormForFormc;
+    }
+
+    public Function<FxFormMigGen, Fdr> getFnValidateFormForFormMigGen() {
+        return fnValidateFormForFormMigGen;
+    }
+
+    public void setFnValidateFormForFormMigGen(Function<FxFormMigGen, Fdr> fnValidateFormForFormMigGen) {
+        this.fnValidateFormForFormMigGen = fnValidateFormForFormMigGen;
     }
 
 }

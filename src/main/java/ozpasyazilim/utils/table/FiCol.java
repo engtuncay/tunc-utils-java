@@ -1467,6 +1467,11 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
         return txDbFieldName;
     }
 
+    public String getTxDbFieldNameOrFieldName() {
+        if (txDbFieldName != null) return txDbFieldName;
+        return fieldName;
+    }
+
     public void setTxDbFieldName(String txDbFieldName) {
         this.txDbFieldName = txDbFieldName;
     }

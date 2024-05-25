@@ -15,7 +15,7 @@ public class FiColList extends ArrayList<FiCol>{
 		super(c);
 	}
 
-	public static FiColList build() {
+	public static FiColList bui() {
 		FiColList fiColList = new FiColList();
 		return fiColList;
 	}
@@ -40,12 +40,19 @@ public class FiColList extends ArrayList<FiCol>{
 		return this;
 	}
 
-	public FiColList buildAdd(FiCol fiTableCol) {
-		add(fiTableCol);
+//	public FiColList buiAdd(FiCol fiTableCol) {
+//		add(fiTableCol);
+//		return this;
+//	}
+
+	public FiColList buiAdd(FiCol ...fiCols) {
+		for (FiCol fiCol : fiCols) {
+			add(fiCol);
+		}
 		return this;
 	}
 
-	public FiColList buildAdd(Object fieldName, String headerName) {
+	public FiColList buiAdd(Object fieldName, String headerName) {
 		if(fieldName==null) return this;
 		FiCol fiTableCol = new FiCol(fieldName.toString(), headerName);
 		add(fiTableCol);

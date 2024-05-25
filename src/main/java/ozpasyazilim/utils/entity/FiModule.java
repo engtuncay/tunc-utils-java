@@ -4,6 +4,8 @@ import ozpasyazilim.utils.core.FiString;
 
 import javax.persistence.Column;
 import javax.persistence.Transient;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FiModule {
 	String txModuleCode;
@@ -16,6 +18,7 @@ public class FiModule {
 	String txModuleDesc;
 	Class clazz;
 	Boolean boDisabled;
+	List<Class> listModules;
 
 	/**
 	 * IsNonValidate , Dogrulama (Erişim hakkı) gerekmeyen moduller.
@@ -207,5 +210,20 @@ public class FiModule {
 
 	public void setTxUid(String txUid) {
 		this.txUid = txUid;
+	}
+
+	public List<Class> getListModules() {
+		return listModules;
+	}
+
+	public List<Class> getListModulesInit() {
+		if (listModules == null) {
+			listModules = new ArrayList<>();
+		}
+		return listModules;
+	}
+
+	public void setListModules(List<Class> listModules) {
+		this.listModules = listModules;
 	}
 }

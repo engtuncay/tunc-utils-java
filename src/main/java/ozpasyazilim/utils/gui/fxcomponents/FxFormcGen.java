@@ -188,7 +188,7 @@ public class FxFormcGen<EntClazz> extends FxMigPaneGenView<EntClazz> implements 
         FxEditorFactory.bindEntityToFormByEditorValue(getListFormElementsInit(), formMikroKodDegistir);
     }
 
-    public FiKeyBean getFormAsFiKeyBean() {
+    public FiKeyBean getFormAsFkb() {
         return FxEditorFactory.bindFormToFiKeyBeanByEditorNode(getListFormElementsInit());
     }
 

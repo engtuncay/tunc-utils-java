@@ -1028,6 +1028,44 @@ public class FiQugen {
         return query.toString();
     }
 
+    public static String selectAllDtoWherFiCols(Class clazz, List<FiCol> fiColsWhere) {
+
+        List<FiField> fieldList = FiEntity.getListFieldsShortWithId(clazz);
+
+        String tableName = getTableName(clazz);
+
+        StringBuilder query = new StringBuilder();
+        StringBuilder queryWhere = new StringBuilder();
+
+        query.append("SELECT ");
+
+        int indexSelect = 0;
+        for (FiField fiField : fieldList) {
+
+            if (FiBool.isTrue(fiField.getBoDtoField()) || FiBool.isTrue(fiField.getBoIdField())
+                    || FiBool.isTrue(fiField.getBoCandidateId1())) {
+                indexSelect++;
+                if (indexSelect != 1) query.append(", ");
+                query.append(fiField.getName());
+            }
+        }
+
+        query.append("\nFROM ").append(tableName);
+
+        int indexWhere = 0;
+        for (FiCol fiCol : fiColsWhere) {
+            indexWhere++;
+            if (indexWhere != 1) queryWhere.append(" AND ");
+            queryWhere.append(fiCol.getTxDbFieldNameOrFieldName())
+                    .append(" = @")
+                    .append(fiCol.getFieldName());
+        }
+
+        query.append("\nWHERE ").append(queryWhere);
+
+        return query.toString();
+    }
+
     public static String selectComboFieldsBySeperatedField(Class clazz) {
 
         List<FiField> fieldList = FiEntity.getListFieldsShortWithId(clazz);
@@ -1695,7 +1733,7 @@ public class FiQugen {
      * @param listWhereFields
      * @return
      */
-    public static String selectQueryFiColCount(Class clazz, FiCol fiColId, List<FiCol> listWhereFields) {
+    public static String selectQueryCountByFicols(Class clazz, FiCol fiColId, List<FiCol> listWhereFields) {
 
         //Map<String, FiField> listClassFields = FiEntity.getMapFieldsShort(clazz);
 
@@ -1718,8 +1756,8 @@ public class FiQugen {
         //  }
 
         if (fiColId != null) {
-//            index++;
-//            if (index != 1) query.append(", ");
+            //  index++;
+            //  if (index != 1) query.append(", ");
             query.append(String.format("count( %s ) lnCount", fiColId.getFieldName()));
             //queryGroupBy.append(fiColId.getFieldName());
         }
@@ -1744,6 +1782,57 @@ public class FiQugen {
         if (queryWhere.length() < 1) {
             query = new StringBuilder();
         }
+
+        return query.toString();
+    }
+
+
+    public static String selectFiColsWitOrderBy(Class clazz, List<FiCol> ficolsSelect, List<FiCol> ficolsOrderBy) {
+
+        //Map<String, FiField> listClassFields = FiEntity.getMapFieldsShort(clazz);
+
+        StringBuilder query = new StringBuilder();
+        //StringBuilder queryWhere = new StringBuilder();
+        StringBuilder queryOrderBy = new StringBuilder();
+
+        query.append("SELECT ");
+
+        int indexSelect = 0;
+        for (FiCol fiCol : ficolsSelect) {
+            indexSelect++;
+            if (indexSelect != 1) query.append(", ");
+            query.append(fiCol.getTxDbFieldNameOrFieldName());
+        }
+
+        query.append("\nFROM ").append(getTableName(clazz));
+
+//        int indexWhere = 0;
+//        for (FiCol fiCol : ficolsSelect) {
+//
+//            //if (FiBool.isTrue(fiCol.getBoKeyField())) {
+//            indexWhere++;
+//            if (indexWhere != 1) queryWhere.append(" AND ");
+//            queryWhere.append(fiCol.getFieldName())
+//                    .append(" = @")
+//                    .append(fiCol.getFieldName());
+//        }
+//
+        //query.append("\nWHERE ").append(queryWhere);
+
+        if(!FiCollection.isEmpty(ficolsOrderBy)){
+            int indexOrder = 0;
+            for (FiCol fiCol : ficolsOrderBy) {
+                indexOrder++;
+                if (indexOrder != 1) queryOrderBy.append(", ");
+                queryOrderBy.append(fiCol.getTxDbFieldNameOrFieldName());
+            }
+            query.append("\nORDER BY ").append(queryOrderBy);
+        }
+
+        // where cümleciği yoksa sorguyu iptal edelim
+//        if (queryWhere.length() < 1) {
+//            query = new StringBuilder();
+//        }
 
         return query.toString();
     }

@@ -37,9 +37,10 @@ public class FxSimpleDialog<EntClazz> extends AbsFiModBaseCont {
 	private Boolean boInitExecuted;
 	private FxLabel lblHeader;
 	private Class entityClass;
-	private FxFormcGen fxFormMig;
 
+	private FxFormcGen fxFormcMig;
 	private FxFormMigGen fxFormMigGen;
+
 	private List<FiCol> fiColList;
 	private Predicate<String> predValidateString;
 	private String validateErrorMessage;
@@ -328,39 +329,47 @@ public class FxSimpleDialog<EntClazz> extends AbsFiModBaseCont {
 
 		FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().getLcg());
 
-		fxFormMig = new FxFormcGen();
+		fxFormcMig = new FxFormcGen();
 
 		List<FiField> listFiFieldsCandId = FiEntity.getListFieldsCandId(getEntityClass());
 
 		List<FiCol> fiTableColList = FiCol.convertListFiField(listFiFieldsCandId);
 		setFiColList(fiTableColList);
 
-		fxFormMig.setupForm(fiTableColList, FormType.PlainFormV1);
+		fxFormcMig.setupForm(fiTableColList, FormType.PlainFormV1);
 
-		fxContent.add(fxFormMig, "wrap");
+		fxContent.add(fxFormcMig, "wrap");
 		getModView().add(fxContent, "wrap");
 
 	}
 
 	private void setupFormDialog() {
 		FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().getLcg());
-		fxContent.add(getFxFormMig(), "wrap");
+
+		if(getFxFormcMig()!=null){
+			fxContent.add(getFxFormcMig(), "wrap");
+		}
+
+		if(getFxFormMigGen()!=null){
+			fxContent.add(getFxFormMigGen(), "wrap");
+		}
+
 		getModView().add(fxContent, "wrap");
 	}
 
 	public void setupFormDialog(List<FiCol> fiCols, FormType formType) {
-		getFxFormInit().setup1(fiCols,FormType.PlainFormV1);
+		getFxFormMigGenInit().setup1(fiCols,FormType.PlainFormV1);
 		setFxSimpleDialogType(FxSimpleDialogMetaType.Undefined);
 		initCont();
 		FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().getLcg());
-		fxContent.addGrowPushSpan(getFxFormInit());
+		fxContent.addGrowPushSpan(getFxFormMigGenInit());
 		getModView().add(fxContent, "wrap");
 		setupFooterWithValidateForm();
 	}
 
 	public void initFormDialogForUpdate(List<FiCol> fiCols, FormType formType, Object entity) {
-		getFxFormInit().setFormEntity(entity);
-		getFxFormInit().setBoUpdateForm(true);
+		getFxFormMigGenInit().setFormEntity(entity);
+		getFxFormMigGenInit().setBoUpdateForm(true);
 		setupFormDialog(fiCols,formType);
 	}
 
@@ -394,9 +403,25 @@ public class FxSimpleDialog<EntClazz> extends AbsFiModBaseCont {
 //
 //			}
 
-			if (getFxFormMig().getFxFormConfigInit().getFnValidateForm() != null) {
+			if (getFxFormcMig()!=null && getFxFormcMig().getFxFormConfigInit().getFnValidateFormForFormc() != null) {
 
-				Fdr fdr = (Fdr) getFxFormMig().getFxFormConfig().getFnValidateForm().apply(getFxFormMig());
+				Fdr fdr = (Fdr) getFxFormcMig().getFxFormConfig().getFnValidateFormForFormc().apply(getFxFormcMig());
+
+				if (fdr == null) {
+					FxDialogShow.showPopWarn("İşlem yapılamadı. Sistem Yöneticinize Başvurun. Hata Tanımı:Fdr-Null");
+					return;
+				}
+
+				if (!fdr.isTrueBoResult()) {
+					FxDialogShow.showPopWarn("Hata \n" + fdr.getMessage());
+					return;
+				}
+
+			}
+
+			if (getFxFormMigGen()!=null && getFxFormMigGen().getFnValidateForm() != null) {
+
+				Fdr fdr = (Fdr) getFxFormMigGen().getFnValidateForm().apply(getFxFormMigGen());
 
 				if (fdr == null) {
 					FxDialogShow.showPopWarn("İşlem yapılamadı. Sistem Yöneticinize Başvurun. Hata Tanımı:Fdr-Null");
@@ -433,7 +458,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFiModBaseCont {
 
 	private void actBtnOKWithValidateForm() {
 		if (getPredValidateForm() != null) {
-			if (!getPredValidateForm().test(getFxFormInit())) {
+			if (!getPredValidateForm().test(getFxFormMigGenInit())) {
 //				String message = getValidateErrorMessage();
 //				if (message == null) message = "ForLütfen Geçerli bir değer giriniz.";
 //				FxDialogShow.showPopWarn(message);
@@ -693,12 +718,12 @@ public class FxSimpleDialog<EntClazz> extends AbsFiModBaseCont {
 		this.entityClass = entityClass;
 	}
 
-	public FxFormcGen getFxFormMig() {
-		return fxFormMig;
+	public FxFormcGen getFxFormcMig() {
+		return fxFormcMig;
 	}
 
-	public void setFxFormMig(FxFormcGen fxFormMig) {
-		this.fxFormMig = fxFormMig;
+	public void setFxFormcMig(FxFormcGen fxFormcMig) {
+		this.fxFormcMig = fxFormcMig;
 	}
 
 	public List<FiCol> getFiColList() {
@@ -784,11 +809,11 @@ public class FxSimpleDialog<EntClazz> extends AbsFiModBaseCont {
 		this.txInitialValue = txInitialValue;
 	}
 
-	public FxFormMigGen getFxFormMig3() {
-		return fxFormMigGen;
-	}
+//	public FxFormMigGen getFxFormMig3() {
+//		return fxFormMigGen;
+//	}
 
-	public FxFormMigGen getFxFormInit() {
+	public FxFormMigGen getFxFormMigGenInit() {
 		if (fxFormMigGen == null) {
 			fxFormMigGen = new FxFormMigGen<>();
 		}
@@ -809,5 +834,13 @@ public class FxSimpleDialog<EntClazz> extends AbsFiModBaseCont {
 
 	public void setRunAfterOkEvent(Runnable runAfterOkEvent) {
 		this.runAfterOkEvent = runAfterOkEvent;
+	}
+
+	public FxFormMigGen getFxFormMigGen() {
+		return fxFormMigGen;
+	}
+
+	public void setFxFormMigGen(FxFormMigGen fxFormMigGen) {
+		this.fxFormMigGen = fxFormMigGen;
 	}
 }
