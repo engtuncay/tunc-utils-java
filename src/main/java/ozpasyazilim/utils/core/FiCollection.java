@@ -1429,4 +1429,42 @@ public class FiCollection {
         }
         return false;
     }
+
+    /**
+     *
+     * @param listDbEntAppConfig
+     * @param allMapByGuid
+     * @param fnKey
+     * @param fnAddingExtraInfoDbAndMeta param1 : DbObject, param2 : MetaObject
+     * @param <EntAppUserConfig>
+     */
+    public static <EntAppUserConfig> void completeListByMetaList(List<EntAppUserConfig> listDbEntAppConfig, Map<String, EntAppUserConfig> allMapByGuid, Function<EntAppUserConfig,String> fnKey
+            , BiConsumer<EntAppUserConfig,EntAppUserConfig> fnAddingExtraInfoDbAndMeta
+            , Consumer<EntAppUserConfig> fnAddingExtraInfoForMeta) {
+        // ek bilgilerin eklenmesi (ayar adı vs)
+        for (EntAppUserConfig entAppUserConfig : listDbEntAppConfig) {
+            if (allMapByGuid.containsKey(fnKey.apply(entAppUserConfig))) {
+                EntAppUserConfig metaEntAppUserConfig = allMapByGuid.get(fnKey.apply(entAppUserConfig));
+
+                if(fnAddingExtraInfoDbAndMeta!=null){
+                    fnAddingExtraInfoDbAndMeta.accept(entAppUserConfig,metaEntAppUserConfig);
+                }
+
+            }
+        }
+
+        // vt'de olmayan ayarların eklenmesi
+        Set<String> setDb = FiCollection.listToSetByKeyValue(listDbEntAppConfig, fnKey);
+
+        for (EntAppUserConfig entAppUserConfig : allMapByGuid.values()) {
+            if (!setDb.contains(fnKey.apply(entAppUserConfig))) {
+
+                if(fnAddingExtraInfoForMeta!=null){
+                    fnAddingExtraInfoForMeta.accept(entAppUserConfig);
+                }
+
+                listDbEntAppConfig.add(entAppUserConfig);
+            }
+        }
+    }
 }
