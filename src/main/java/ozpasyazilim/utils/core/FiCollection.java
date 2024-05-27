@@ -3,6 +3,9 @@ package ozpasyazilim.utils.core;
 import javafx.util.Pair;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import ozpasyazilim.utils.datatypes.FiMeta;
+import ozpasyazilim.utils.datatypes.FiMetaKey;
+import ozpasyazilim.utils.fidbanno.FiCombo;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.datatypes.PersonEntityTest;
@@ -1116,6 +1119,24 @@ public class FiCollection {
 
     }
 
+    public static List<FiMeta> commaSeperatedParseToStrListMeta(String txCommaSeperated) {
+
+        if (txCommaSeperated == null) return new ArrayList<>();
+
+        List<FiMeta> listData = new ArrayList<>();
+
+        String[] splitData = txCommaSeperated.split(",");
+
+        for (String item : splitData) {
+            if (!FiString.isEmpty(item)) {
+                listData.add(FiMeta.bui(item));
+            }
+        }
+
+        return listData;
+
+    }
+
     public static List<Integer> commaSeperatedParseToIntList(String txCommaSeperated) {
 
         if (txCommaSeperated == null) return new ArrayList<>();
@@ -1431,23 +1452,23 @@ public class FiCollection {
     }
 
     /**
-     *
      * @param listDbEntAppConfig
      * @param allMapByGuid
      * @param fnKey
      * @param fnAddingExtraInfoDbAndMeta param1 : DbObject, param2 : MetaObject
-     * @param <EntAppUserConfig>
+     * @param <PrmEntity>
      */
-    public static <EntAppUserConfig> void completeListByMetaList(List<EntAppUserConfig> listDbEntAppConfig, Map<String, EntAppUserConfig> allMapByGuid, Function<EntAppUserConfig,String> fnKey
-            , BiConsumer<EntAppUserConfig,EntAppUserConfig> fnAddingExtraInfoDbAndMeta
-            , Consumer<EntAppUserConfig> fnAddingExtraInfoForMeta) {
-        // ek bilgilerin eklenmesi (ayar adı vs)
-        for (EntAppUserConfig entAppUserConfig : listDbEntAppConfig) {
-            if (allMapByGuid.containsKey(fnKey.apply(entAppUserConfig))) {
-                EntAppUserConfig metaEntAppUserConfig = allMapByGuid.get(fnKey.apply(entAppUserConfig));
+    public static <PrmEntity> void completeListByMetaList(List<PrmEntity> listDbEntAppConfig, Map<String, PrmEntity> allMapByGuid, Function<PrmEntity, String> fnKey
+            , BiConsumer<PrmEntity, PrmEntity> fnAddingExtraInfoDbAndMeta
+            , Consumer<PrmEntity> fnAddingExtraInfoForMeta) {
 
-                if(fnAddingExtraInfoDbAndMeta!=null){
-                    fnAddingExtraInfoDbAndMeta.accept(entAppUserConfig,metaEntAppUserConfig);
+        // Db config objesine, ek bilgilerin eklenmesi (ayar adı vs)
+        for (PrmEntity prmEntity : listDbEntAppConfig) {
+            if (allMapByGuid.containsKey(fnKey.apply(prmEntity))) {
+                PrmEntity metaPrmEntity = allMapByGuid.get(fnKey.apply(prmEntity));
+
+                if (fnAddingExtraInfoDbAndMeta != null) {
+                    fnAddingExtraInfoDbAndMeta.accept(prmEntity, metaPrmEntity);
                 }
 
             }
@@ -1456,14 +1477,14 @@ public class FiCollection {
         // vt'de olmayan ayarların eklenmesi
         Set<String> setDb = FiCollection.listToSetByKeyValue(listDbEntAppConfig, fnKey);
 
-        for (EntAppUserConfig entAppUserConfig : allMapByGuid.values()) {
-            if (!setDb.contains(fnKey.apply(entAppUserConfig))) {
-
-                if(fnAddingExtraInfoForMeta!=null){
-                    fnAddingExtraInfoForMeta.accept(entAppUserConfig);
+        for (PrmEntity prmEntity : allMapByGuid.values()) {
+            if (!setDb.contains(fnKey.apply(prmEntity))) {
+                // MetaObjesine eklenecek bilgiler
+                if (fnAddingExtraInfoForMeta != null) {
+                    fnAddingExtraInfoForMeta.accept(prmEntity);
                 }
 
-                listDbEntAppConfig.add(entAppUserConfig);
+                listDbEntAppConfig.add(prmEntity);
             }
         }
     }

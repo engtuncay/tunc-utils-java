@@ -3,6 +3,10 @@ package ozpasyazilim.utils.fxwindow;
 import ozpasyazilim.utils.gui.fxcomponents.FxMigHp;
 import ozpasyazilim.utils.gui.fxcomponents.FxMigPaneView;
 
+/**
+ * initCont metodu yenilemesi - initCont'da otomatik dialogInit yapmaz, rootView oluşturur.
+ * @param <EntClazz>
+ */
 public class FxSimpleDialog2<EntClazz> extends FxSimpleDialog<EntClazz> {
 
 	public FxSimpleDialog2() {

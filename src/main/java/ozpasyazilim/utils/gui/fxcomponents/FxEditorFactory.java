@@ -436,6 +436,7 @@ public class FxEditorFactory {
 
         if (fiCol == null) fiCol = new FiCol();
 
+        // txClassName verilmemişse, OzColType'a göre comp class belirlenir
         if (txClassName == null) {
             //iFiCol.setColFxNodeClass(FxTextField.class.getName());
             txClassName = FxTextField.class.getName();
@@ -443,6 +444,10 @@ public class FxEditorFactory {
             // 14-12 eklendi
             if (ozColType == OzColType.Boolean) {
                 txClassName = FxCheckBox.class.getName();
+            }
+
+            if (ozColType == OzColType.CommaSeperatedStr) {
+                txClassName = FxTextFieldBtnCsv.class.getName();
             }
 
         }
@@ -478,6 +483,18 @@ public class FxEditorFactory {
         if (txClassName.equals(FxTextFieldBtn.class.getName())) {
 
             FxTextFieldBtn comp = new FxTextFieldBtn();
+
+            if (ozColType == OzColType.Double) {
+                comp.getFxTextField().convertNumberDoubleTextField1();
+                comp.getFxTextField().setAlignment(Pos.BASELINE_RIGHT);
+            }
+            //iFiCol.setColFxNode(comp);
+            return comp;
+        }
+
+        if (txClassName.equals(FxTextFieldBtnCsv.class.getName())) {
+
+            FxTextFieldBtnCsv comp = new FxTextFieldBtnCsv();
 
             if (ozColType == OzColType.Double) {
                 comp.getFxTextField().convertNumberDoubleTextField1();
@@ -563,53 +580,63 @@ public class FxEditorFactory {
         return null;
     }
 
-    public void registerEnterFnForFilterNode(IFiCol ozTableCol, EventHandler<KeyEvent> customKeyEvent) {
+    public void registerEnterFnForFilterNode(IFiCol iFiCol, EventHandler<KeyEvent> customKeyEvent) {
 
-        if (ozTableCol.getFilterNodeClass().equals(FxTextField.class.getName())) {
-            FxTextField comp = (FxTextField) ozTableCol.getColFilterNode();
+        if (iFiCol.getFilterNodeClass().equals(FxTextField.class.getName())) {
+            FxTextField comp = (FxTextField) iFiCol.getColFilterNode();
             if (customKeyEvent != null) {
                 comp.setOnKeyReleased(customKeyEvent);
             } else {
-                comp.setOnKeyReleased(ozTableCol.getColFilterKeyEvent());
+                comp.setOnKeyReleased(iFiCol.getColFilterKeyEvent());
             }
 
         }
 
-        if (ozTableCol.getFilterNodeClass().equals(FxTextFieldBtn.class.getName())) {
-            FxTextFieldBtn comp = (FxTextFieldBtn) ozTableCol.getColFilterNode();
+        if (iFiCol.getFilterNodeClass().equals(FxTextFieldBtn.class.getName())) {
+            FxTextFieldBtn comp = (FxTextFieldBtn) iFiCol.getColFilterNode();
             if (customKeyEvent != null) {
                 comp.setOnKeyReleased(customKeyEvent);
             } else {
-                comp.setOnKeyReleased(ozTableCol.getColFilterKeyEvent());
+                comp.setOnKeyReleased(iFiCol.getColFilterKeyEvent());
             }
 
         }
 
-        if (ozTableCol.getFilterNodeClass().equals(FxDatePicker.class.getName())) {
-            FxDatePicker comp = (FxDatePicker) ozTableCol.getColFilterNode();
-            comp.setOnKeyReleased(ozTableCol.getColFilterKeyEvent());
+        if (iFiCol.getFilterNodeClass().equals(FxTextFieldBtnCsv.class.getName())) {
+            FxTextFieldBtnCsv comp = (FxTextFieldBtnCsv) iFiCol.getColFilterNode();
             if (customKeyEvent != null) {
                 comp.setOnKeyReleased(customKeyEvent);
             } else {
-                comp.setOnKeyReleased(ozTableCol.getColFilterKeyEvent());
+                comp.setOnKeyReleased(iFiCol.getColFilterKeyEvent());
+            }
+
+        }
+
+        if (iFiCol.getFilterNodeClass().equals(FxDatePicker.class.getName())) {
+            FxDatePicker comp = (FxDatePicker) iFiCol.getColFilterNode();
+            comp.setOnKeyReleased(iFiCol.getColFilterKeyEvent());
+            if (customKeyEvent != null) {
+                comp.setOnKeyReleased(customKeyEvent);
+            } else {
+                comp.setOnKeyReleased(iFiCol.getColFilterKeyEvent());
             }
         }
 
-        if (ozTableCol.getFilterNodeClass().equals(DatePicker.class.getName())) {
-            DatePicker comp = (DatePicker) ozTableCol.getColFilterNode();
+        if (iFiCol.getFilterNodeClass().equals(DatePicker.class.getName())) {
+            DatePicker comp = (DatePicker) iFiCol.getColFilterNode();
             if (customKeyEvent != null) {
                 comp.setOnKeyReleased(customKeyEvent);
             } else {
-                comp.setOnKeyReleased(ozTableCol.getColFilterKeyEvent());
+                comp.setOnKeyReleased(iFiCol.getColFilterKeyEvent());
             }
         }
 
-        if (ozTableCol.getFilterNodeClass().equals(TextField.class.getName())) {
-            TextField comp = (TextField) ozTableCol.getColFilterNode();
+        if (iFiCol.getFilterNodeClass().equals(TextField.class.getName())) {
+            TextField comp = (TextField) iFiCol.getColFilterNode();
             if (customKeyEvent != null) {
                 comp.setOnKeyReleased(customKeyEvent);
             } else {
-                comp.setOnKeyReleased(ozTableCol.getColFilterKeyEvent());
+                comp.setOnKeyReleased(iFiCol.getColFilterKeyEvent());
             }
         }
 

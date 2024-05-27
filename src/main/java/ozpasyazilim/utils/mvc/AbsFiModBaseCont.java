@@ -6,7 +6,7 @@ import ozpasyazilim.utils.gui.fxcomponents.FxDialogShow;
 import ozpasyazilim.utils.gui.fxcomponents.FxStage;
 
 /**
- * Basitce Tüm Kontrollerde olması gereken alanlar ve metodlar
+ * Tüm Module Kontrollerde olması gereken alanlar ve metodlar
  */
 public abstract class AbsFiModBaseCont implements IFiModCont {
 
@@ -16,9 +16,9 @@ public abstract class AbsFiModBaseCont implements IFiModCont {
     protected String closeReason;
 
     /**
-     * 8-12-2022 eklendi
-     * <p>
      * Modulun connProfil bilgisini içerir
+     * <p>
+     * 8-12-2022 eklendi
      */
     protected String connProfile;
 
