@@ -1892,25 +1892,29 @@ public class FiQugen {
         StringBuilder query = new StringBuilder();
         StringBuilder queryWhere = new StringBuilder();
 
-        query.append("UPDATE " + getTableName(clazz) + " SET ");
+        query.append("UPDATE ").append(getTableName(clazz)).append(" SET ");
 
-        Integer index = 0;
-        Integer indexWhere = 0;
+        int index = 0;
+        int indexWhere = 0;
+
         for (FiCol fiCol : fiCols) {
+
             if (FiBool.isTrue(fiCol.getBoUpdateField())) {
                 index++;
                 if (index != 1) query.append(", ");
-                query.append(fiCol.getFieldName() + " = @" + fiCol.getFieldName());
+                query.append(fiCol.getFieldName()).append(" = @").append(fiCol.getFieldName());
             }
 
             if (FiBool.isTrue(fiCol.getBoKeyField())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
-                queryWhere.append(fiCol.getFieldName() + " = @" + fiCol.getFieldName()); // dbFieldName kullanımı ile geliştirilebilir
+                queryWhere.append(fiCol.getFieldName()).append(" = @").append(fiCol.getFieldName()); // dbFieldName kullanımı ile geliştirilebilir
                 continue;
             }
+
         }
-        query.append(" WHERE " + queryWhere);
+
+        query.append(" WHERE ").append(queryWhere);
 
         if (queryWhere.length() < 1) {
             query = new StringBuilder();

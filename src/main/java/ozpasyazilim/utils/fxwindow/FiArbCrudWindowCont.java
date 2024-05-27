@@ -3,22 +3,13 @@ package ozpasyazilim.utils.fxwindow;
 import de.jensd.fx.glyphs.icons525.Icons525;
 import javafx.scene.input.KeyCode;
 import ozpasyazilim.utils.gui.fxcomponents.FxButton;
-import ozpasyazilim.utils.mvc.AbsFiModBaseCont;
+import ozpasyazilim.utils.metadata.MetaCrudConstant;
 import ozpasyazilim.utils.mvc.IFiModCont;
 
 /**
  *
  */
 public abstract class FiArbCrudWindowCont extends FiArbWindowCont implements IFiModCont {
-
-	public FiArbCrudWindowCont() {
-	}
-
-	@Override
-	public void initCont() {
-		super.initCont();
-
-	}
 
 	protected FxButton btnCrudAdd;
 	protected FxButton btnCrudEdit;
@@ -35,6 +26,17 @@ public abstract class FiArbCrudWindowCont extends FiArbWindowCont implements IFi
 	 */
 	protected FxButton btnCrudReport;
 	protected FxButton btnCrudRefresh;
+
+	public FiArbCrudWindowCont() {
+	}
+
+	@Override
+	public void initCont() {
+		super.initCont();
+
+	}
+
+
 
 	protected void addCrudSaveButtonByCw() {
 		btnCrudSaveAndClose = new FxButton("Kaydet", Icons525.MAIL_SEND);
@@ -204,8 +206,7 @@ public abstract class FiArbCrudWindowCont extends FiArbWindowCont implements IFi
 	protected void addEditButtonWithActionTextArg() {
 		btnCrudEdit = new FxButton("Düzenle", Icons525.PENCIL);
 		getModView().getMigToolbar().add(btnCrudEdit);
-		// URFIXME metaent taşınacak
-		//btnCrudEdit.setOnAction(event -> actBtnCrudAddEdit(MetaEntConstant.editAction()));
+		btnCrudEdit.setOnAction(event -> actBtnCrudAddEdit(MetaCrudConstant.editAction()));
 	}
 
 	protected void addEditButtonWithActionBoolArg() {
