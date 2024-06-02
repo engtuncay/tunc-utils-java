@@ -271,34 +271,23 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
         this.boResult = boResult;
     }
 
-//	public void setBoResultAndLnResult(Boolean boResult) {
-//		this.boResult = boResult;
-//		if (boResult != null) {
-//			if (boResult) {
-//				setLnResult(1); // true
-//			} else {
-//				setLnResult(0); // false
-//			}
-//		}
-//	}
-
     // Tek tek kullanılmalı
     @Deprecated
-    public void setBoResultWithCheckUpWithRowsAff(Boolean boResult) {
+    public void setBoResultWithCheckRowsAffected(Boolean boResult) {
         this.boResult = boResult;
         // rows affected 0 dan büyük olmalı true olması için
-        checkAndRefreshResult(boResult);
+        checkRowsAffectedAndBoResult(boResult);
     }
 
     // Tek tek kullanılmalı
     @Deprecated
-    public void setBoResultWithCheckUpWithRowsAff(Boolean boResult, Integer rowsAffected) {
+    public void setBoResultWithCheckRowsAffected(Boolean boResult, Integer rowsAffected) {
         appendRowsAffected(rowsAffected);
         this.boResult = boResult;
-        checkAndRefreshResult(boResult);
+        checkRowsAffectedAndBoResult(boResult);
     }
 
-    public void checkAndRefreshResult(Boolean boResult) {
+    public void checkRowsAffectedAndBoResult(Boolean boResult) {
         // rows affected 0 dan büyük olmalı true olması için
         if (FiBool.isTrue(boResult) && getRowsAffectedNotNull() < 1) {
             this.boResult = false;

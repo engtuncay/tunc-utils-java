@@ -7,7 +7,6 @@ import org.reactfx.util.TriConsumer;
 import ozpasyazilim.utils.core.FiException;
 import ozpasyazilim.utils.core.FiString;
 import ozpasyazilim.utils.datatypes.FiKeyBean;
-import ozpasyazilim.utils.jdbi.FiKeyBeanMapper;
 import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.annotations.FiDraft;
 import ozpasyazilim.utils.core.FiBool;
@@ -20,7 +19,6 @@ import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import static ozpasyazilim.utils.core.FiStFormat.*;
 
@@ -72,150 +70,6 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
         return jdSelectListBindObjectMain(sqlQuery, entClazz);
     }
 
-    public Fdr<List<EntClazz>> jdSelectListBindObjectMain(String sqlQuery, Object entClazz) {
-
-        if (entityClass == null) setAutoClass();
-
-        //String sqlNew = convertMapAndSqlMultiParam(sqlQuery, mapBind);
-
-        Fdr<List<EntClazz>> fdr = new Fdr<>();
-        fdr.setValue(new ArrayList<>());
-
-        try {
-            List<EntClazz> result = getJdbi().withHandle(handle -> {
-                return handle.createQuery(Fiqt.stoj(sqlQuery))
-                        .bindBean(entClazz)
-                        .mapToBean(getEntityClass())
-                        .list();
-            });
-            fdr.setBoResult(true);
-            fdr.setValue(result);
-        } catch (Exception ex) {
-            Loghelper.errorLog(getClass(), "Query Problem");
-            Loghelper.errorException(getClass(), ex);
-            fdr.setBoResult(false, ex);
-        }
-        return fdr;
-
-    }
-
-    public Fdr<List<EntClazz>> jdSelectListBindObjectMain(String sqlQuery, Object entClazz, FiKeyBean mapParams) {
-
-        if (entityClass == null) setAutoClass();
-
-        //String sqlNew = convertMapAndSqlMultiParam(sqlQuery, mapBind);
-
-        Fdr<List<EntClazz>> fdr = new Fdr<>();
-        fdr.setValue(new ArrayList<>());
-
-        try {
-            List<EntClazz> result = getJdbi().withHandle(handle -> {
-                return handle.createQuery(Fiqt.stoj(sqlQuery))
-                        .bindMap(mapParams)
-                        .bindBean(entClazz)
-                        .mapToBean(getEntityClass())
-                        .list();
-            });
-            fdr.setBoResult(true);
-            fdr.setValue(result);
-        } catch (Exception ex) {
-            Loghelper.errorLog(getClass(), "Query Problem");
-            Loghelper.errorException(getClass(), ex);
-            fdr.setBoResult(false, ex);
-        }
-        return fdr;
-
-    }
-
-    public List<EntClazz> jdSelectListBindMapRawWithDeAct(String sqlQuery, Map<String, Object> mapBind) {
-
-        Jdbi jdbi = getJdbi();
-        //Loghelperr.getInstance(getClass()).debug(fimSqlAt3WithDeActivation(sqlQuery));
-
-        List<EntClazz> result = null;
-        try {
-            result = jdbi.withHandle(handle -> {
-                return handle.createQuery(Fiqt.fimSqlQueryWithDeActType1(sqlQuery))
-                        .bindMap(mapBind)
-                        .mapToBean(getEntityClass())
-                        .list();
-            });
-        } catch (Exception ex) {
-            Loghelper.errorLog(getClass(), "Query Problem");
-            Loghelper.errorException(getClass(), ex);
-        }
-
-        return result;
-    }
-
-    public Fdr<List<EntClazz>> jdSelectListBindMapMainWithDeAct(String sqlQuery, Map<String, Object> mapBind) {
-
-        //Loghelper.getInstance(getClass()).debug(sqlQuery);
-
-        Fdr<List<EntClazz>> fdr = new Fdr<>();
-        fdr.setValue(new ArrayList<>());
-
-        try {
-            List<EntClazz> result = getJdbi().withHandle(handle -> {
-                return handle.createQuery(Fiqt.fimSqlQueryWithDeActType1(sqlQuery))
-                        .bindMap(mapBind)
-                        .mapToBean(getEntityClass())
-                        .list();
-            });
-            fdr.setBoResultAndValue(true, result);
-        } catch (Exception ex) {
-            Loghelper.errorLog(getClass(), "Query Problem");
-            Loghelper.errorException(getClass(), ex);
-            fdr.setBoResult(false, ex);
-        }
-
-        return fdr;
-    }
-
-     public Fdr<List<FiKeyBean>> jdSelectFkbListBindMapMain(String sqlQuery, Map<String, Object> mapBind) {
-
-        Fdr<List<FiKeyBean>> fdr = new Fdr<>();
-        fdr.setValue(new ArrayList<>());
-
-        try {
-            List<FiKeyBean> result = getJdbi().withHandle(handle -> {
-                return handle.createQuery(Fiqt.stoj(sqlQuery))
-                        .bindMap(mapBind)
-                        .map(new FiKeyBeanMapper())
-                        .list();
-            });
-            fdr.setBoResultAndValue(true, result, 1);
-
-        } catch (Exception ex) {
-            Loghelper.get(getClass()).error("Query Problem");
-            Loghelper.get(getClass()).error("Hata (Exception):\n" + FiException.exTosMain(ex));
-            fdr.setBoResult(false, ex);
-        }
-
-        return fdr;
-    }
-
-    public Fdr<List<String>> jdSelectListStringMain(String sql, FiKeyBean fiKeyBean) {
-        Fdr<List<String>> fdr = new Fdr<>();
-        fdr.setValue(new ArrayList<>());
-
-        try {
-            List<String> result = getJdbi().withHandle(handle -> {
-                return handle.select(Fiqt.stoj(sql))
-                        .bindMap(fiKeyBean)
-                        .mapTo(String.class)
-                        .collect(Collectors.toList());
-            });
-            fdr.setBoResult(true);
-            fdr.setValue(result);
-        } catch (Exception ex) {
-            Loghelper.get(getClass()).error(FiException.exToLog(ex));
-            fdr.setBoResult(false);
-        }
-        return fdr;
-    }
-
-
     /**
      * FiDbResult içi default olarak new Arraylist ile doldurulmadığı için kullanan metodlar kontrol edilecek
      * <p>
@@ -257,7 +111,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
     public List<EntClazz> jdSelectListMultiRaw(String sqlQuery, Map<String, Object> mapBind) {
 
-        if (entityClass == null) setAutoClass();
+//        if (entityClass == null) setAutoClass();
 
         sqlQuery = Fiqt.fhrFixAndDeActivateOptParams(sqlQuery);
 
@@ -496,6 +350,20 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
         return jdSelectListBindMapMainNtn(fiQuery.getTxQuery(), fiQuery.getMapParams());
     }
 
+    public Fdr<List<FiKeyBean>> jdfSelectAllDtoByFirmFieldsBindMap(FiKeyBean fiKeyBean) {
+        //String sqlQuery = FiQugen.selectDtoFieldsByFirmFields(getEntityClass());
+        FiQuery fiQuery = new FiQuery(FiQugen.selectDtoFieldsByFirmFields(getEntityClass()), fiKeyBean);
+        //fiQuery.logQuery();
+        //fiQuery.logParams();
+        return jdSelectFkbListBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
+    }
+
+    public Fdr<List<FiKeyBean>> jdfSelectAllDtoOrderByIdField() {
+        FiQuery fiQuery = new FiQuery(FiQugen.selectDtoFieldsOrderByIdField(getEntityClass()));
+        fiQuery.logQuery();
+        return jdSelectFkbListBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
+    }
+
     public Fdr<List<EntClazz>> jdSelectAllDtoWhereFicols(FiKeyBean fkbSorgu, List<FiCol> fiColsWhere) {
         FiQuery fiQuery = new FiQuery(FiQugen.selectAllDtoWherFiCols(getEntityClass(),fiColsWhere), fkbSorgu);
         fiQuery.logQuery();
@@ -659,7 +527,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
         List<EntClazz> result = null;
         try {
             result = jdbi.withHandle(handle -> {
-                return handle.select(new FiQugen().selectQueryFiSelect(getEntityClass(), 100))
+                return handle.select(FiQugen.selectQueryFiSelect(getEntityClass(), 100))
                         .mapToBean(getEntityClass())
                         .list();
             });
@@ -813,7 +681,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
                 }
                 //Loghelperr.getInstance(getClass()).debug("Affected:"+ rowAffectedLast);
             });
-            fdr.setBoResultWithCheckUpWithRowsAff(true);
+            fdr.setBoResultWithCheckRowsAffected(true);
         } catch (Exception ex) {
             Loghelper.errorException(getClass(), ex);
             fdr.setBoResult(false, ex);

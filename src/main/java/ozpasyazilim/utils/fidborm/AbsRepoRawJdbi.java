@@ -12,7 +12,7 @@ import java.util.*;
 import static ozpasyazilim.utils.core.FiStFormat.*;
 
 /**
- * Raw means - Raw usage , Not Generic (önceden pure ve nog (not generic) kullanılmıştı)
+ * Raw means - Raw usage , Not Generic
  */
 public abstract class AbsRepoRawJdbi extends AbsRepoJdbiCore { //implements IRepoJdbi
 
@@ -154,7 +154,7 @@ public abstract class AbsRepoRawJdbi extends AbsRepoJdbiCore { //implements IRep
 				}
 				//Loghelperr.getInstance(getClass()).debug("Affected:"+ rowAffectedLast);
 			});
-			fdr.setBoResultWithCheckUpWithRowsAff(true);
+			fdr.setBoResultWithCheckRowsAffected(true);
 		} catch (Exception ex) {
 			Loghelper.errorException(getClass(), ex);
 			fdr.setBoResult(false, ex);

@@ -913,6 +913,43 @@ public class FiQugen {
         return query.toString();
     }
 
+    public static String selectDtoFieldsOrderByIdField(Class clazz) {
+
+        List<FiField> fieldList = FiEntity.getListFieldsShortWithId(clazz);
+
+        String tableName = getTableName(clazz);
+
+        StringBuilder query = new StringBuilder();
+        //StringBuilder queryWhere = new StringBuilder();
+
+        query.append("SELECT ");
+
+        String idField = "";
+        int index = 0;
+        for (FiField fiField : fieldList) {
+
+            if (FiBool.isTrue(fiField.getBoDtoField()) || FiBool.isTrue(fiField.getBoIdField())
+                    || FiBool.isTrue(fiField.getBoCandidateId1())) {
+                index++;
+                if (index != 1) query.append(", ");
+                query.append(fiField.getName());
+            }
+
+            if (FiBool.isTrue(fiField.getBoIdField())) {
+                idField = fiField.getDbFieldNameOrName();
+            }
+
+        }
+
+        query.append("\nFROM ").append(tableName);
+
+        if (!FiString.isEmptyTrim(idField)) {
+            query.append("\nORDER BY ").append(idField);
+        }
+
+        return query.toString();
+    }
+
     public static String selectDtoFieldsWoutWhereOrderByCandIdField(Class clazz) {
 
         List<FiField> fieldList = FiEntity.getListFieldsShortWithId(clazz);
@@ -920,12 +957,12 @@ public class FiQugen {
         String tableName = getTableName(clazz);
 
         StringBuilder query = new StringBuilder();
-        StringBuilder queryWhere = new StringBuilder();
+        //StringBuilder queryWhere = new StringBuilder();
 
         query.append("SELECT ");
 
         String idField = "";
-        Integer index = 0;
+        int index = 0;
         for (FiField fiField : fieldList) {
 
             if (FiBool.isTrue(fiField.getBoDtoField()) || FiBool.isTrue(fiField.getBoIdField())
@@ -941,10 +978,10 @@ public class FiQugen {
 
         }
 
-        query.append("\nFROM " + tableName);
+        query.append("\nFROM ").append(tableName);
 
         if (!FiString.isEmptyTrim(idField)) {
-            query.append("\nORDER BY " + idField);
+            query.append("\nORDER BY ").append(idField);
         }
 
         return query.toString();
