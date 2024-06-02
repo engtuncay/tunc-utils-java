@@ -226,4 +226,8 @@ public class FiModule {
 	public void setListModules(List<Class> listModules) {
 		this.listModules = listModules;
 	}
+
+	public void addRelatedModules(Class modClazz) {
+		getListModulesInit().add(modClazz);
+	}
 }

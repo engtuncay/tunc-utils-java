@@ -175,6 +175,10 @@ public class FiQuery {
         Loghelper.get(getClass()).debug(getTxQuery());
     }
 
+    public void logQueryAndParams() {
+        logQuery();logParams();
+    }
+
     // Getter and Setter
 
     public String getTxQuery() {

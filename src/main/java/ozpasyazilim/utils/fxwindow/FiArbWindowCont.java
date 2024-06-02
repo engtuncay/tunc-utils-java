@@ -12,7 +12,7 @@ import ozpasyazilim.utils.mvc.IFiModCont;
 import java.util.List;
 
 /**
- *
+ * Common Window
  */
 public class FiArbWindowCont extends AbsFiModBaseCont implements IFiModCont {
 

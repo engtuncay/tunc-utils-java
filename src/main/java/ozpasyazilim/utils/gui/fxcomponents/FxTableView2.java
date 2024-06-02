@@ -44,6 +44,7 @@ import java.util.stream.Collectors;
 // CellFactory : hücre üretim fabrikası TableColumn input alır, output olarak TableCell verir.
 // (Callback lambda bir fonksiyondur.) Callback<TableColumn<S, T>, TableCell<S, T>>
 public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxComp {
+
     private Class<EntClazz> entityClass;
     private String fxId;
     private Map<String, Object> styleMap;
@@ -112,11 +113,6 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     private EventHandler<KeyEvent> colFilterNodeKeyDownEvent;
 
     //private String headerSummaryClass = "tblHeaderSummary";
-
-//    public String headerSummaryClass() {
-//
-//    }
-
 
     public void removeItemsAllFi() {
         setItemsAsFilteredList(new ArrayList());
@@ -238,7 +234,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     }
 
-    public List<EntClazz> getItemsFiCheckedByBoolFieldAsList(String fieldForSelection) {
+    public List<EntClazz> getItemsCurrentFiCheckedByBoolField(String fieldForSelection) {
 
         List<EntClazz> list = new ArrayList<>();
 
@@ -279,7 +275,18 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     }
 
     public List<EntClazz> getItemsFiCheckedBySelectColAsList() {
-        return getItemsFiCheckedByBoolFieldAsList(getSelectionColName());
+        return getItemsCurrentFiCheckedByBoolField(getSelectionColName());
+    }
+
+    /**
+     * ItemsChecked By BoSelect (field) As List In Current Elements
+     * <p>
+     * Liste üzerinde çıkarmalar eklemeler tablo listesini eklememesi için yeni bir list için oluşturuldu
+     *
+     * @return
+     */
+    public List<EntClazz> getItemsCurrentFiChecked() {
+        return new ArrayList<>(getItemsCurrentFiCheckedAsSourceList());
     }
 
     /**
@@ -289,60 +296,20 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
      *
      * @return
      */
-    public FilteredList<EntClazz> getItemsCheckedByBoSelect() {
+    public FilteredList<EntClazz> getItemsCurrentFiCheckedAsSourceList() {
 
-        FilteredList<EntClazz> itemsCurrentFi = getItemsCurrentFi(ent -> {
+        return getItemsCurrentFi(ent -> {
             try {
                 return FiBool.convertBooleanElseFalse(PropertyUtils.getNestedProperty(ent, getFiColSelection().getFieldName()));
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (Exception e) { // çevirmede hata olursa false döner
+                Loghelper.get(getClass()).debug("bool çevirmede hata" + FiException.exToLog(e));
                 return false;
             }
         });
 
-        return itemsCurrentFi;
     }
 
-    /**
-     * ItemsChecked By BoSelect (field) As List In Current Elements
-     *
-     * @return
-     */
-    public List<EntClazz> getItemsCheckedInCurrentAsNewList() {
-
-        String fieldForSelection = getFiColSelection().getFieldName();
-
-        FilteredList<EntClazz> itemsCurrentFi = getItemsCurrentFi(ent -> {
-            try {
-                return FiBool.convertBooleanElseFalse(PropertyUtils.getNestedProperty(ent, fieldForSelection));
-            } catch (Exception e) {
-                e.printStackTrace();
-                return false;
-            }
-        });
-
-        List<EntClazz> listSelected = new ArrayList<>(itemsCurrentFi);
-
-        return listSelected;
-    }
-
-    public List<EntClazz> getItemsCheckedInCurrent() {
-
-        String fieldForSelection = getFiColSelection().getFieldName();
-
-        FilteredList<EntClazz> itemsCurrentFi = getItemsCurrentFi(ent -> {
-            try {
-                return FiBool.convertBooleanElseFalse(PropertyUtils.getNestedProperty(ent, fieldForSelection));
-            } catch (Exception e) {
-                e.printStackTrace();
-                return false;
-            }
-        });
-
-        return itemsCurrentFi;
-    }
-
-    public List<EntClazz> getItemsCheckedByBoSelectAsListInAllElements() {
+    public List<EntClazz> getItemsFiCheckedAsNewListInAllElements() {
 
         FilteredList<EntClazz> itemsCurrentFi = getItemsAllFi(ent -> {
             try {
@@ -435,7 +402,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         return this;
     }
 
-    public FxTableView2 addFiColsAllAutoAsFiKeyBean(List<FiCol> listFiCol) {
+    public FxTableView2 addAllFiColsAutoAsFkb(List<FiCol> listFiCol) {
         for (FiCol fiCol : listFiCol) {
             addFiColAutoAsFiKeyBean(fiCol);
         }
@@ -449,10 +416,10 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     }
 
     private FiCol getFiColSelection() {
-        FiCol fiTableCol = new FiCol(getSelectionColName(), getSelectionHeaderName());
-        fiTableCol.setPrefSize(40d);
-        fiTableCol.buiColType(OzColType.Boolean).buiBoEditable(true).buiSumType(OzColSummaryType.CheckBox);
-        return fiTableCol;
+        FiCol fiCol = new FiCol(getSelectionColName(), getSelectionHeaderName());
+        fiCol.setPrefSize(40d);
+        fiCol.buiColType(OzColType.Boolean).buiBoEditable(true).buiSumType(OzColSummaryType.CheckBox);
+        return fiCol;
     }
 
     private String getSelectionHeaderName() {
@@ -1290,8 +1257,8 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
                         if (objFilterValue == null) continue;
 
                         if (objCellValue == null) {
-                        //	filterCheckResult = false;
-                        //	return filterCheckResult;
+                            //	filterCheckResult = false;
+                            //	return filterCheckResult;
                             predAllCols = predAllCols.and(entTmp -> false);
                             break;
                             //continue;
@@ -2188,6 +2155,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     /**
      * Enter veya Double Click ile Seç ve Kapat
+     *
      * @param iFxSimpSelectionCont
      */
     public void activateExtensionFxTableSelectAndClose(IFxSimpSelectionCont iFxSimpSelectionCont) {
@@ -2466,7 +2434,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
      */
     public void updatePageToolbarComps() {
 
-        if(getBtnPageForward()==null) return;
+        if (getBtnPageForward() == null) return;
 
         Platform.runLater(() -> {
 
@@ -2670,7 +2638,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     }
 
     public EntClazz getItemsCheckedOneItem() {
-        FilteredList<EntClazz> checkedByBoSelect = getItemsCheckedByBoSelect();
+        FilteredList<EntClazz> checkedByBoSelect = getItemsCurrentFiCheckedAsSourceList();
 
         if (checkedByBoSelect.size() == 0) {
             FxDialogShow.showPopWarn("Lütfen tablo bir kayıdı seçiniz.");

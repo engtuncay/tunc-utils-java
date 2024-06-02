@@ -1222,6 +1222,19 @@ public class FxEditorFactory {
             return null;
         }
 
+        if (ozColType == OzColType.Boolean) {
+            if (FiString.isEmpty(textValue)) return null;
+
+            if (textValue.equalsIgnoreCase("+")) {
+                return true;
+            }
+            if (textValue.equalsIgnoreCase("-")) {
+                return false;
+            }
+
+            return null;
+        }
+
         return textValue;
     }
 

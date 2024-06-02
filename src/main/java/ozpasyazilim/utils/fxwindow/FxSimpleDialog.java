@@ -122,7 +122,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFiModBaseCont {
 			initCont();
 		}
 		//getiFxModCont().getModView().getRootPane().getStylesheets().add("main.css");
-		FxDialogShow.nodeWindow(null, this);
+		FxWindow.nodeWindow(null, this);
 	}
 
 	public static FxSimpleDialog bui(FxSimpleDialogMetaType fxSimpleDialogMetaType, String message) {

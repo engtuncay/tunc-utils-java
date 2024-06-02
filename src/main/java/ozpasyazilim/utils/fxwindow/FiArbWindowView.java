@@ -11,6 +11,8 @@ public class FiArbWindowView implements IFiModView {
 	private FxMigPane migRoot;
 	private FxMigPane migToolbar;
 	private FxMigPane migContent;
+	private FxMigPane migFooter;
+	//private FxMigPane migFooter;
 
 	public FiArbWindowView() {
 
@@ -29,13 +31,19 @@ public class FiArbWindowView implements IFiModView {
 	public void initGui() {
 
 		// Container Initial.
-		migRoot = new FxMigPane(FxMigHp.bui().lcgInset3Gap33().getLcgPrep2());
-		migToolbar = new FxMigPane(FxMigHp.bui().lcgInset3Gap33().getLcgPrep2());
-		migContent = new FxMigPane(FxMigHp.bui().lcgInset0Gap50().getLcgPrep2());
+		migRoot = new FxMigPane(FxMigHp.bui().lcgInset5Gap05().getLcg()); //migRoot = new FxMigPane(FxMigHp.bui().lcgInset3Gap33().getLcgPrep2());
+		migToolbar = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().lcgNoGrid().getLcg());
+		migContent = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().getLcg());
+		migFooter = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().lcgNoGrid().getLcg());
+		//migFooter = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().lcgNoGrid().getLcg());
+
+		//	migToolbar = new FxMigPane(FxMigHp.bui().lcgInset3Gap33().getLcgPrep2());
+		//	migContent = new FxMigPane(FxMigHp.bui().lcgInset0Gap50().getLcgPrep2());
 
 		// Container Setup
-		getMigRoot().add(migToolbar, "span,growx,pushx");
-		getMigRoot().add(migContent, "span,grow,push");
+		getMigRoot().addGrowXPushXSpan(migToolbar);
+		getMigRoot().addGrowPushSpan(migContent);
+		getMigRoot().addGrowXPushXSpan(migFooter);
 
 	}
 
@@ -49,5 +57,9 @@ public class FiArbWindowView implements IFiModView {
 
 	public FxMigPane getMigContent() {
 		return migContent;
+	}
+
+	public FxMigPane getMigFooter() {
+		return migFooter;
 	}
 }

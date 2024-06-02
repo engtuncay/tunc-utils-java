@@ -4,6 +4,7 @@ import javafx.stage.Stage;
 import ozpasyazilim.utils.gui.fxcomponents.DialogConf;
 import ozpasyazilim.utils.gui.fxcomponents.FxDialogShow;
 import ozpasyazilim.utils.gui.fxcomponents.FxStage;
+import ozpasyazilim.utils.gui.fxcomponents.FxWindow;
 
 /**
  * Tüm Module Kontrollerde olması gereken alanlar ve metodlar
@@ -132,7 +133,7 @@ public abstract class AbsFiModBaseCont implements IFiModCont {
 
     public void openAsWindowMain(DialogConf dialogConf) {
 
-        FxDialogShow fxDialogShow = new FxDialogShow();
+        //FxDialogShow fxDialogShow = new FxDialogShow();
 
         if (getModView() == null || getModView().getRootPane() == null) {
             //Loghelper.debug(getClass(), "init çalıştırıldı openas den");
@@ -140,7 +141,7 @@ public abstract class AbsFiModBaseCont implements IFiModCont {
         }
 
         dialogConf.setCssFileName("main.css");
-        FxDialogShow.nodeWindow(this, dialogConf);
+        FxWindow.nodeWindow(this, dialogConf);
     }
 
     public String getConnProfile() {

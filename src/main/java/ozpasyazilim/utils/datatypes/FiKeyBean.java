@@ -24,6 +24,11 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public class FiKeyBean extends LinkedHashMap<String, Object> {
 
+    /**
+     * FiCol olarak eklenenleri saklamak için
+     */
+    List<FiCol> listFiCol;
+
     public FiKeyBean() {
     }
 
@@ -87,6 +92,12 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
 
     public FiKeyBean putKeyTos(Object field, Object value) {
         this.put(field.toString(), value);
+        return this;
+    }
+
+    public FiKeyBean putFiCol(FiCol fiCol, Object value) {
+        this.put(fiCol.toString(), value);
+        getListFiColInit().add(fiCol);
         return this;
     }
 
@@ -340,5 +351,28 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
     public void logParams() {
         Loghelper.get(getClass()).debug("FiKeyBean.logParams called");
         Loghelper.get(getClass()).debug(FiConsole.textFiKeyBean(this));
+    }
+
+    public List<FiCol> getListFiCol() {
+        return listFiCol;
+    }
+
+    public List<FiCol> getListFiColInit() {
+        if (listFiCol == null) {
+            listFiCol = new ArrayList<>();
+        }
+        return listFiCol;
+    }
+
+    public void setListFiCol(List<FiCol> listFiCol) {
+        this.listFiCol = listFiCol;
+    }
+
+    public String getCombineTireByFiCol(FiCol fiCol, FiCol fiCol2) {
+        return FiString.orEmpty(get(fiCol.getFieldName()))+"-"+FiString.orEmpty(get(fiCol2.getFieldName()));
+    }
+
+    public Object getByFiCol(FiCol fiCol) {
+        return get(fiCol.getFieldName());
     }
 }

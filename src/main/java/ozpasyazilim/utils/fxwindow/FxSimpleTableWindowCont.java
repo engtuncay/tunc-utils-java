@@ -346,7 +346,7 @@ public class FxSimpleTableWindowCont<EntClazz> extends AbsFiModBaseCont implemen
 	public void activateSelectButtonForMulti() {
 		btnCrudSelect = new FxButton("Seç");
 		btnCrudSelect.setOnAction(event -> {
-			List<EntClazz> listSelectedItem = getFxTableView().getItemsCheckedByBoSelectAsListInAllElements();
+			List<EntClazz> listSelectedItem = getFxTableView().getItemsFiCheckedAsNewListInAllElements();
 			if (FiCollection.isEmpty(listSelectedItem)) {
 				FxDialogShow.showPopWarn("Lütfen seçim yapınız.");
 			} else {

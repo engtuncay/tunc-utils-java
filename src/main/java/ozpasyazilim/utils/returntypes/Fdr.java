@@ -456,6 +456,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
      */
     public void combineAnd(Fdr fdrSub) {
 
+        // And işlemi olduğu false sonuç, boResult false yapar
         if (FiBool.isFalse(fdrSub.getBoResult())) {
             setBoResult(false);
             setLnFailureOpCount(getLnFailureOpCountInit() + 1);
@@ -809,6 +810,11 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
         this.txQueryType = txQueryType;
     }
 
+    /**
+     * bir tane başarılı işlem varsa partial success olur
+     *
+     * @return boolean
+     */
     public boolean isPartialSuccess() {
         if (getLnSuccessOpCount() > 0) {
             return true;

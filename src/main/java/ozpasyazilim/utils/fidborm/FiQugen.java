@@ -1600,24 +1600,24 @@ public class FiQugen {
     }
 
     /**
-     * FiTableCol a göre update sorgusu
+     * FiCol a göre update sorgusu
      * <p>
-     * Id field ı update sorgusu içine yazmaz, where içine yazar (in operatörü kullanır)
+     * FiCol.Id Field olanları update sorgusu içine yazmaz, where içine yazar (IN operatörü kullanır !!!)
      * <p>
-     * Default update alanlarını sorgu içerisine ekler
+     * Diger ficol'ları update alanları olarak ekler (BoNonUpdatable true olmayacak)
      *
      * @param clazz
      * @param listFields
      * @return
      */
-    public static String updateQueryWithFiColListWhereInIdFields(Class clazz, List<FiCol> listFields) {
+    public static String updateQueryFiColsWhereInIdFiCols(Class clazz, List<FiCol> listFields) {
 
         //Map<String, FiField> listClassFields = FiEntity.getMapFieldsShort(clazz);
 
         StringBuilder query = new StringBuilder();
         StringBuilder queryWhere = new StringBuilder();
 
-        query.append("UPDATE " + getTableName(clazz) + " SET ");
+        query.append("UPDATE ").append(getTableName(clazz)).append(" SET ");
 
         Integer index = 0;
         Integer indexWhere = 0;
@@ -1654,6 +1654,60 @@ public class FiQugen {
         return query.toString();
     }
 
+    /**
+     * FiCol a göre update sorgusu
+     * <p>
+     * FiCol.Id Field olanları update sorgusu içine yazmaz, where içine yazar ( = operatörü kullanılır )
+     * <p>
+     * Diger ficol'ları update alanları olarak ekler (BoUpdatable false olmayacak)
+     *
+     * @param clazz
+     * @param listFields
+     * @return
+     */
+    public static String updateQueryFiColsWhereIdFiCols(Class clazz, List<FiCol> listFields) {
+
+        //Map<String, FiField> listClassFields = FiEntity.getMapFieldsShort(clazz);
+
+        StringBuilder query = new StringBuilder();
+        StringBuilder queryWhere = new StringBuilder();
+
+        query.append("UPDATE ").append(getTableName(clazz)).append(" SET ");
+
+        Integer index = 0;
+        Integer indexWhere = 0;
+        for (FiCol fiCol : listFields) {
+
+            // id field dahil edilmez
+            if (FiBool.isTrue(fiCol.getBoKeyField())) {
+                indexWhere++;
+                if (indexWhere != 1) queryWhere.append(" AND ");
+                queryWhere.append(fiCol.getFieldName()).append(" = @").append(fiCol.getFieldName());
+                continue;
+            }
+            //if (FiBoolean.isTrue(listClassFields.getOrDefault(fiCol.getFieldName(), new FiField()).getBoIdField())) {
+            //				continue;
+            //			}
+
+            // non updatable alanlar dahil edilmez
+            if (FiBool.isTrue(fiCol.getBoNonUpdatable())) {
+                continue;
+            }
+
+            index++;
+            if (index != 1) query.append(", ");
+            query.append(fiCol.getFieldName() + " = @" + fiCol.getFieldName());
+        }
+
+        query.append(" WHERE " + queryWhere);
+
+        // where cümleciği yoksa sorguyu iptal edelim
+        if (queryWhere.length() < 1) {
+            query = new StringBuilder();
+        }
+
+        return query.toString();
+    }
     /**
      * Örnek Sorgu çıktısı
      * <p>
@@ -1819,7 +1873,7 @@ public class FiQugen {
 //
         //query.append("\nWHERE ").append(queryWhere);
 
-        if(!FiCollection.isEmpty(ficolsOrderBy)){
+        if (!FiCollection.isEmpty(ficolsOrderBy)) {
             int indexOrder = 0;
             for (FiCol fiCol : ficolsOrderBy) {
                 indexOrder++;

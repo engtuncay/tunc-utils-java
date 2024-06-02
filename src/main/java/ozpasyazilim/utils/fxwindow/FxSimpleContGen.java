@@ -5,6 +5,7 @@ import ozpasyazilim.utils.core.FiBool;
 import ozpasyazilim.utils.gui.fxcomponents.FxDialogShow;
 import ozpasyazilim.utils.gui.fxcomponents.FxMigHp;
 import ozpasyazilim.utils.gui.fxcomponents.FxMigPaneView;
+import ozpasyazilim.utils.gui.fxcomponents.FxWindow;
 import ozpasyazilim.utils.mvc.AbsFiModBaseCont;
 import ozpasyazilim.utils.mvc.IFxSimpSelectionCont;
 
@@ -50,7 +51,7 @@ public class FxSimpleContGen<E> extends AbsFiModBaseCont implements IFxSimpSelec
 		}
 
 		getModView().getRootPane().getStylesheets().add("app.css");
-		fxDialogShow.nodeWindow(nodeRelative, this, width, height, boNonModal);
+		FxWindow.nodeWindow(nodeRelative, this, width, height, boNonModal);
 	}
 
 	@Override
