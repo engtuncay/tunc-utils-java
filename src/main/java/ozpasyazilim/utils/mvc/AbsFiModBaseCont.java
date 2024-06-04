@@ -133,8 +133,6 @@ public abstract class AbsFiModBaseCont implements IFiModCont {
 
     public void openAsWindowMain(DialogConf dialogConf) {
 
-        //FxDialogShow fxDialogShow = new FxDialogShow();
-
         if (getModView() == null || getModView().getRootPane() == null) {
             //Loghelper.debug(getClass(), "init çalıştırıldı openas den");
             initCont();

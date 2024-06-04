@@ -217,7 +217,7 @@ public class AbsRepoGenMainJdbi<EntClazz> extends AbsRepoJdbiCore {
             List<FiKeyBean> result = getJdbi().withHandle(handle -> {
                 return handle.createQuery(Fiqt.stoj(sqlQuery))
                         .bindMap(mapBind)
-                        .map(new FiKeyBeanMapper())
+                        .map(new FiKeyBeanMapper(false))
                         .list();
             });
             fdr.setBoResultAndValue(true, result, 1);

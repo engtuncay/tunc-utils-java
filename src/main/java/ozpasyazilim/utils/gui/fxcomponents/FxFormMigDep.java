@@ -28,6 +28,7 @@ import java.util.Map;
  */
 @Deprecated
 public class FxFormMigDep<EntClazz> extends FxMigPaneGenView<EntClazz> implements IFiModViewEnt {
+
 	private Class<EntClazz> entityClazz;
 	private Boolean boEditableForm;
 	private List<FiCol> listFormElements;
@@ -518,6 +519,7 @@ public class FxFormMigDep<EntClazz> extends FxMigPaneGenView<EntClazz> implement
 	public void showAsDialog() {
 		FxSimpleDialog fxSimpleDialog = new FxSimpleDialog();
 	}
+
 }
 
 

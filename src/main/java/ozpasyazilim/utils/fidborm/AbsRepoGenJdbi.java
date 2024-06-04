@@ -1003,7 +1003,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
             fdr.setBoResult(true);
             fdr.setRowsAffected(rowCountUpdate);
             fdr.setLnInsertedRows(rowCountUpdate);
-            fdr.setTxQueryType(QueryType.bui().insert);
+            fdr.setTxQueryType(MetaQueryTypes.bui().insert);
 
         } catch (Exception ex) {
             Loghelper.debugException(getClass(), ex);
@@ -1045,7 +1045,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
             fdrMain.setBoResult(true);
             fdrMain.setRowsAffected(rowCountUpdate);
         } catch (Exception ex) {
-            Loghelper.errorException(getClass(), ex);
+            Loghelper.get(getClass()).error(FiException.exTosMain(ex));
             fdrMain.setBoResult(false, ex);
         }
 
@@ -1277,7 +1277,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
             });
             //fiDbResult.setRowsAffectedWithUpBoResult(rowCountUpdate);
             fdrMain.setBoResultAndRowsAff(true, rowCountUpdate); // 16-01-20 çevrildi.
-            //fdrMain.setTxQueryType(QueryType.bui().update);
+            //fdrMain.setTxQueryType(MetaQueryTypes.bui().update);
             if (rowCountUpdate > 0) {
                 fdrMain.setLnUpdatedRows(rowCountUpdate);
             }
@@ -1314,7 +1314,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
             });
             //fiDbResult.setRowsAffectedWithUpBoResult(rowCountUpdate);
             fdr.setBoResultAndRowsAff(true, rowCountUpdate); // 16-01-20 çevrildi.
-            //fdr.setTxQueryType(QueryType.bui().update);
+            //fdr.setTxQueryType(MetaQueryTypes.bui().update);
             if (rowCountUpdate > 0) {
                 fdr.setLnUpdatedRows(rowCountUpdate);
             }
@@ -1351,7 +1351,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
             });
             //fiDbResult.setRowsAffectedWithUpBoResult(rowsAffected);
             fdr.setBoResultAndRowsAff(true, rowsAffected); // 16-01-20 çevrildi.
-            //fdr.setTxQueryType(QueryType.bui().update);
+            //fdr.setTxQueryType(MetaQueryTypes.bui().update);
             if (rowsAffected > 0) {
                 fdr.setLnDeletedRows(rowsAffected);
             }
@@ -1474,9 +1474,18 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
         return jdUpdateBindEntityMain(sqlQuery, entity);
     }
 
-    public Fdr jdhUpdateFiColsBindEntityByIdFieldInFiCols(Handle handle, List<? extends IFiCol> listFields, EntClazz entity) {
+    /**
+     *
+     * FiCols içerisinde id fieldlara göre güncelleme yapar
+     *
+     * @param handle
+     * @param listFiCols
+     * @param entity
+     * @return
+     */
+    public Fdr jdhUpdateFiColsBindEntityByIdFiCols(Handle handle, List<? extends IFiCol> listFiCols, EntClazz entity) {
 
-        String sqlQuery = FiQugen.updateQueryWithFiColListByIdFiCol(getEntityClass(), listFields);
+        String sqlQuery = FiQugen.updateQueryWithFiColListByIdFiCol(getEntityClass(), listFiCols);
 //		Loghelper.get(getClass()).debug(sqlQuery);
 
         return jdhUpdateBindEntityMain(handle, sqlQuery, entity);
@@ -3259,7 +3268,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
                 Fdr fdr = fnTransactions.apply(handle);
                 fdrMain.combineAnd(fdr);
 
-                if (fdr.getListExceptionNtn().size() > 0) {
+                if (!fdr.getListExceptionNtn().isEmpty()) {
                     List<Exception> listException = fdr.getListException();
                     //handle.rollback();
                     throw listException.get(0);
@@ -3271,6 +3280,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
                 }
 
                 handle.commit();
+                //boResult yukarıdaki transactiondan alır
                 //fdrMain.setBoResult(true);
                 //handle.close(); // close edilirse : failed to commit transaction hatası veriyor
             });

@@ -15,7 +15,7 @@ import javafx.util.Pair;
 import org.controlsfx.control.Notifications;
 import org.tbee.javafx.scene.layout.MigPane;
 import ozpasyazilim.utils.core.*;
-import ozpasyazilim.utils.fidborm.QueryType;
+import ozpasyazilim.utils.fidborm.MetaQueryTypes;
 import ozpasyazilim.utils.gui.fxgui.FxFdrWindow;
 import ozpasyazilim.utils.mvc.*;
 import ozpasyazilim.utils.returntypes.Fdr;
@@ -1211,11 +1211,11 @@ public class FxDialogShow {
 
                 String messageHeader = FiString.addNewLineToEndIfNotEmpty(title) + "İşlem Başarı ile Gerçekleşti :::\n";
 
-                if (FiNumber.orZero(dbResult.getLnInsertedRows()) > 0 || dbResult.getTxQueryType().equalsIgnoreCase(QueryType.bui().insert)) {
+                if (FiNumber.orZero(dbResult.getLnInsertedRows()) > 0 || dbResult.getTxQueryType().equalsIgnoreCase(MetaQueryTypes.bui().insert)) {
                     messageHeader += String.format("\nEklenen Yeni Kayıt Sayısı:%s", FiNumber.orZero(dbResult.getLnInsertedRows()));
                 }
 
-                if (dbResult.getTxQueryType().equalsIgnoreCase(QueryType.bui().updatePop)) {
+                if (dbResult.getTxQueryType().equalsIgnoreCase(MetaQueryTypes.bui().updatePop)) {
                     messageHeader += String.format("\nGüncellenen Kayıt Sayısı:%s", FiNumber.orZero(dbResult.getLnUpdatedRows()));
                 }
 
@@ -1225,7 +1225,7 @@ public class FxDialogShow {
             } else {
 
                 String messageHeader = FiString.orEmpty(title) + FiString.getNewLineIfFull(title) + "İşlem Başarı ile Gerçekleşti.";
-                if (FiNumber.orZero(dbResult.getLnInsertedRows()) > 0 || dbResult.getTxQueryType().equals(QueryType.bui().insert)) {
+                if (FiNumber.orZero(dbResult.getLnInsertedRows()) > 0 || dbResult.getTxQueryType().equals(MetaQueryTypes.bui().insert)) {
                     messageHeader += String.format("\nEklenen Yeni Kayıt Sayısı:%s", FiNumber.orZero(dbResult.getLnInsertedRows()));
                 }
                 FxDialogShow.showPopOrModalInfo(messageHeader, messageDetail);

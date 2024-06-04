@@ -805,4 +805,31 @@ public class FiConsole {
         }
         return sbOutput.toString();
     }
+
+    public static void debugListFkb(List<FiKeyBean> listFkb) {
+        if(listFkb==null){
+            Loghelper.get(FiConsole.class).debug("List Fkb null");
+            return;
+
+        }
+
+        for (FiKeyBean fiKeyBean : listFkb) {
+            debugFkb(fiKeyBean);
+        }
+    }
+
+    public static void debugFkb(FiKeyBean fiKeyBean) {
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("\n");
+        fiKeyBean.forEach((s, o) -> {
+            sb.append(s).append(" : ").append(FiString.orEmpty(o));
+            sb.append("\n");
+        });
+
+        Loghelper.get(FiConsole.class).debug("FiKeybean Content \n");
+        Loghelper.get(FiConsole.class).debug(sb.toString());
+
+    }
 }

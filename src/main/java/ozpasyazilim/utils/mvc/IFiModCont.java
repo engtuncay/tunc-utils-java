@@ -5,11 +5,11 @@ import javafx.stage.Stage;
 /**
  * IFiModCont - Module Pencerelerinin interface
  * <p>
- * IFiModCont (eski adı IFxSimpleCont) Interface : void initCont(),IFxSimpleView getModView(),Stage getFxStage(),void setFxStage(...)
+ * IFiModCont (eski adı IFxSimpleCont) Interface : void initCont(),IFiModView getModView(),Stage getFxStage(),void setFxStage(..)
  * <p>
- * String getModuleCode(),String getModuleLabel(),String getCloseReason(),void setCloseReason(...);
+ * String getModuleCode(),String getModuleLabel(),String getCloseReason(),void setCloseReason(..);
  * <p>
- * Evalaution : Pane getRootPane(); eklenebilir
+ * Review : Pane getRootPane(); eklenebilir
  */
 public interface IFiModCont {
 

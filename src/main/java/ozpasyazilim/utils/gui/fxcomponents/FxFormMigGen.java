@@ -229,6 +229,12 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
         return FormType.PlainFormV1;
     }
 
+    /**
+     * setupFormElementsHp2 eski adı
+     *
+     * @param listFormElements
+     * @param formType
+     */
     public void setup1(List<FiCol> listFormElements, FormType formType) {
         setListFormElements(listFormElements);
         setFormTypeSelected(formType);
