@@ -369,6 +369,11 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
      */
     // private Boolean boUndefinedCol;
 
+    /**
+     * Sorgu oluşturulurken where alanına yazılacak alanlar (update sorgusu için kullanılır)
+     */
+    private Boolean boWhereField;
+
     // ***** Constructors
     public FiCol() {
         // FiCol için standard ön ayarlar
@@ -1515,5 +1520,12 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
         this.boEditorOnlyNumber = boEditorOnlyNumber;
     }
 
+    public Boolean getBoWhereField() {
+        return boWhereField;
+    }
+
+    public void setBoWhereField(Boolean boWhereField) {
+        this.boWhereField = boWhereField;
+    }
 }
 

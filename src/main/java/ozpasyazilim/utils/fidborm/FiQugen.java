@@ -1637,6 +1637,66 @@ public class FiQugen {
     }
 
     /**
+     * FiColList a göre update sorgusu
+     * <p>
+     * Id field ı update sorgusu içine yazmaz, where içine yazar
+     *
+     * @param clazz
+     * @param listFields
+     * @return
+     */
+    public static String updateQueryWithFiColListWhereIdFiCols(Class clazz, List<FiCol> listFields) {
+
+        //Map<String, FiField> listClassFields = FiEntity.getMapFieldsShort(clazz);
+
+        StringBuilder query = new StringBuilder();
+        StringBuilder queryWhere = new StringBuilder();
+
+        query.append("UPDATE ").append(getTableName(clazz)).append(" SET ");
+
+        int index = 0;
+
+        for (FiCol fiTableCol : listFields) {
+
+            // non updatable alanlar dahil edilmez
+            if (FiBool.isTrue(fiTableCol.getBoNonUpdatable())) {
+                continue;
+            }
+
+            if (FiBool.isTrue(fiTableCol.getBoKeyField())) {
+                continue;
+            }
+
+            index++;
+            if (index != 1) query.append(", ");
+            query.append(fiTableCol.getFieldName()).append(" = @").append(fiTableCol.getFieldName());
+
+        }
+
+        int indexWhere = 0;
+        for (FiCol fiTableCol : listFields) {
+
+            if (FiBool.isTrue(fiTableCol.getBoKeyField())) {
+                indexWhere++;
+                if (indexWhere != 1) queryWhere.append(" AND ");
+                queryWhere.append(fiTableCol.getTxDbFieldNameOrFieldName()).append(" = @").append(fiTableCol.getFieldName());
+                continue;
+            }
+
+        }
+
+
+        query.append(" WHERE ").append(queryWhere);
+
+        // where cümleciği yoksa sorguyu iptal edelim
+        if (queryWhere.length() < 1) {
+            query = new StringBuilder();
+        }
+
+        return query.toString();
+    }
+
+    /**
      * FiCol a göre update sorgusu
      * <p>
      * FiCol.Id Field olanları update sorgusu içine yazmaz, where içine yazar (IN operatörü kullanır !!!)
@@ -1692,7 +1752,7 @@ public class FiQugen {
     }
 
     /**
-     * FiCol a göre update sorgusu
+     * FiColList a göre update sorgusu
      * <p>
      * FiCol.Id Field olanları update sorgusu içine yazmaz, where içine yazar ( = operatörü kullanılır )
      * <p>
@@ -1702,7 +1762,7 @@ public class FiQugen {
      * @param listFields
      * @return
      */
-    public static String updateQueryFiColsWhereIdFiCols(Class clazz, List<FiCol> listFields) {
+    public static String updateFiColsWhereIdFiCols(Class clazz, List<FiCol> listFields) {
 
         //Map<String, FiField> listClassFields = FiEntity.getMapFieldsShort(clazz);
 
@@ -1711,8 +1771,8 @@ public class FiQugen {
 
         query.append("UPDATE ").append(getTableName(clazz)).append(" SET ");
 
-        Integer index = 0;
-        Integer indexWhere = 0;
+        int index = 0;
+        int indexWhere = 0;
         for (FiCol fiCol : listFields) {
 
             // id field dahil edilmez
@@ -1722,9 +1782,6 @@ public class FiQugen {
                 queryWhere.append(fiCol.getFieldName()).append(" = @").append(fiCol.getFieldName());
                 continue;
             }
-            //if (FiBoolean.isTrue(listClassFields.getOrDefault(fiCol.getFieldName(), new FiField()).getBoIdField())) {
-            //				continue;
-            //			}
 
             // non updatable alanlar dahil edilmez
             if (FiBool.isTrue(fiCol.getBoNonUpdatable())) {
@@ -1733,10 +1790,10 @@ public class FiQugen {
 
             index++;
             if (index != 1) query.append(", ");
-            query.append(fiCol.getFieldName() + " = @" + fiCol.getFieldName());
+            query.append(fiCol.getFieldName()).append(" = @").append(fiCol.getFieldName());
         }
 
-        query.append(" WHERE " + queryWhere);
+        query.append(" WHERE ").append(queryWhere);
 
         // where cümleciği yoksa sorguyu iptal edelim
         if (queryWhere.length() < 1) {
@@ -1745,6 +1802,7 @@ public class FiQugen {
 
         return query.toString();
     }
+
     /**
      * Örnek Sorgu çıktısı
      * <p>
