@@ -22,7 +22,7 @@ import ozpasyazilim.utils.gui.components.TableValueFactoryForFiKeyBean;
 import ozpasyazilim.utils.gui.fxTableViewExtra.NestedPropertyValueFactory;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.mvc.IFiCol;
-import ozpasyazilim.utils.mvc.IFxSimpSelectionCont;
+import ozpasyazilim.utils.mvc.IFxTableSelectionCont;
 import ozpasyazilim.utils.core.FiReflection;
 import ozpasyazilim.utils.returntypes.FnResult;
 import ozpasyazilim.utils.table.OzColSummaryType;
@@ -2156,13 +2156,13 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     /**
      * Enter veya Double Click ile Seç ve Kapat
      *
-     * @param iFxSimpSelectionCont
+     * @param iFxTableSelectionCont
      */
-    public void activateExtensionFxTableSelectAndClose(IFxSimpSelectionCont iFxSimpSelectionCont) {
+    public void activateExtensionFxTableSelectAndClose(IFxTableSelectionCont iFxTableSelectionCont) {
 
         setOnKeyReleased(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                extensionSelectAndClose(iFxSimpSelectionCont);
+                extensionSelectAndClose(iFxTableSelectionCont);
             }
 
             //default olarak eklendi
@@ -2175,17 +2175,17 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         });
 
         onRowDoubleClickEventFi(tableRow -> {
-            extensionSelectAndClose(iFxSimpSelectionCont);
+            extensionSelectAndClose(iFxTableSelectionCont);
         });
     }
 
-    public void extensionSelectAndClose(IFxSimpSelectionCont iFxSimpSelectionCont) {
+    public void extensionSelectAndClose(IFxTableSelectionCont iFxTableSelectionCont) {
         EntClazz selectedItem = getSelectionModel().getSelectedItem();
         if (selectedItem == null) return;
 
-        iFxSimpSelectionCont.setEntitySelected(selectedItem);
-        iFxSimpSelectionCont.setCloseReason("done");
-        iFxSimpSelectionCont.getFxStageInit().close();
+        iFxTableSelectionCont.setEntitySelected(selectedItem);
+        iFxTableSelectionCont.setCloseReason("done");
+        iFxTableSelectionCont.getFxStageInit().close();
     }
 
 //    public void extensionSelectAndClose(IFxSimpleEntityModule iFxMosCont) {

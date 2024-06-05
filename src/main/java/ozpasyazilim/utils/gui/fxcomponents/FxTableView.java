@@ -26,7 +26,7 @@ import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.core.FiReflection;
-import ozpasyazilim.utils.mvc.IFxSimpSelectionCont;
+import ozpasyazilim.utils.mvc.IFxTableSelectionCont;
 import ozpasyazilim.utils.returntypes.FnResult;
 import ozpasyazilim.utils.table.OzColSummaryType;
 import ozpasyazilim.utils.table.OzColType;
@@ -2144,7 +2144,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 	}
 
 
-	public void activateFxTableSelectAndClose(IFxSimpSelectionCont iFxMosCont) {
+	public void activateFxTableSelectAndClose(IFxTableSelectionCont iFxMosCont) {
 
 		setOnKeyReleased(event -> {
 			if (event.getCode() == KeyCode.ENTER) {

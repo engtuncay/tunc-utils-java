@@ -1468,10 +1468,10 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
      */
     public Fdr jdUpdateFiColsBindEntityByIdFieldInFiCols(List<? extends IFiCol> listFields, EntClazz entity) {
 
-        String sqlQuery = FiQugen.updateQueryWithFiColListByIdFiCol(getEntityClass(), listFields);
-//		Loghelper.get(getClass()).debug(sqlQuery);
-
+        String sqlQuery = FiQugen.updateFiColListAndExtraWhereIdFiCols(getEntityClass(), listFields);
+        //Loghelper.get(getClass()).debug(sqlQuery);
         return jdUpdateBindEntityMain(sqlQuery, entity);
+
     }
 
     /**
@@ -1484,7 +1484,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
      */
     public Fdr jdhUpdateFiColsBindEntityByIdFiCols(Handle handle, List<? extends IFiCol> listFiCols, EntClazz entity) {
 
-        String sqlQuery = FiQugen.updateQueryWithFiColListByIdFiCol(getEntityClass(), listFiCols);
+        String sqlQuery = FiQugen.updateFiColListAndExtraWhereIdFiCols(getEntityClass(), listFiCols);
 //		Loghelper.get(getClass()).debug(sqlQuery);
 
         return jdhUpdateBindEntityMain(handle, sqlQuery, entity);
@@ -1492,16 +1492,17 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
     public Fdr jdUpdateFiColsBindMapByIdFieldInFiCols(List<? extends IFiCol> listFields, FiKeyBean fiKeyBean) {
 
-        String sqlQuery = FiQugen.updateQueryWithFiColListByIdFiCol(getEntityClass(), listFields);
+        String sqlQuery = FiQugen.updateFiColListAndExtraWhereIdFiCols(getEntityClass(), listFields);
         //Loghelper.get(getClass()).debug(sqlQuery);
         return jdUpdateBindMapMain(sqlQuery, fiKeyBean);
     }
 
-    public Fdr jdhUpdateFiColsWhereIdFiColsBindFkb(Handle handle, FiKeyBean fkbParams) {
+    public Fdr jdhUpdateFiColsWhereKeyFiColsBindFkb(Handle handle, FiKeyBean fkbParams) {
 
-        String sqlQuery = FiQugen.updateFiColsWhereIdFiCols(getEntityClass(), fkbParams.getListFiColInit());
-        Loghelper.get(getClass()).debug("jdhUpdateFiColsWhereIdFiColsBindFkb : " + sqlQuery);
+        String sqlQuery = FiQugen.updateFiColsWhereKeyFiCols(getEntityClass(), fkbParams.getListFiColInit());
+        //Loghelper.get(getClass()).debug("jdhUpdateFiColsWhereIdFiColsBindFkb : " + sqlQuery);
         return jdhUpdateBindMap(sqlQuery, fkbParams, handle);
+
     }
 
     /**
@@ -1512,7 +1513,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
      */
     public Fdr jdUpdateFiColsBindColValueByIdField(List<FiCol> fiColList) {
 
-        String sqlQuery = FiQugen.updateQueryWithFiColListByIdFiCol(getEntityClass(), fiColList);
+        String sqlQuery = FiQugen.updateFiColListAndExtraWhereIdFiCols(getEntityClass(), fiColList);
 
         FiKeyBean fkbParams = new FiKeyBean();
         for (IFiCol fiCol : fiColList) {
@@ -1525,7 +1526,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
     public Fdr jdUpdateFiColsBindColValueByIdFieldList(List<FiCol> fiColList) {
 
-        String sqlQuery = FiQugen.updateQueryFiColsWhereInIdFiCols(getEntityClass(), fiColList);
+        String sqlQuery = FiQugen.updateFiColsWhereINKeyFiCols(getEntityClass(), fiColList);
 
         FiKeyBean fkbParams = new FiKeyBean();
         for (IFiCol fiCol : fiColList) {
