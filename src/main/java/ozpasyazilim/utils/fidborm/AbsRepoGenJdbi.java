@@ -426,7 +426,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
         String sqlQuery = FiQugen.selectQueryCountByCandIdFirst(getEntityClass());
         FiKeyBean map = FiKeyBean.bui().buiPut(candId1First, candId1Value);
 
-        return jdSelectSingleOpCustomEntityBindMap(sqlQuery, map, Integer.class);
+        return jdSelectSingleOpCustomEntityBindMapNtn(sqlQuery, map, Integer.class);
     }
 
     public Fdr<Optional<Integer>> jdSelectCountByCandId1(EntClazz entity) {
@@ -1485,7 +1485,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
     public Fdr jdhUpdateFiColsBindEntityByIdFiCols(Handle handle, List<? extends IFiCol> listFiCols, EntClazz entity) {
 
         String sqlQuery = FiQugen.updateFiColListAndExtraWhereIdFiCols(getEntityClass(), listFiCols);
-//		Loghelper.get(getClass()).debug(sqlQuery);
+		Loghelper.get(getClass()).debug("Update Query: " + sqlQuery);
 
         return jdhUpdateBindEntityMain(handle, sqlQuery, entity);
     }
@@ -2119,13 +2119,10 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
      * @param <PrmEnt>
      * @return
      */
-    public <PrmEnt> Fdr<Optional<PrmEnt>> jdSelectSingleOpCustomEntityBindMap(String sql, Map<String, Object> mapParam, Class<PrmEnt> resultClazz) {
+    public <PrmEnt> Fdr<Optional<PrmEnt>> jdSelectSingleOpCustomEntityBindMapNtn(String sql, Map<String, Object> mapParam, Class<PrmEnt> resultClazz) {
 
         Fdr<Optional<PrmEnt>> fdr = new Fdr<>();
-        fdr.setValue(Optional.empty());
-
-        Loghelper.get(getClass()).debug("Jdbi isnull:" + getJdbi() == null);
-
+        //Loghelper.get(getClass()).debug("Jdbi isnull:" + getJdbi() == null);
 
         try {
             Optional<PrmEnt> result = getJdbi().withHandle(handle -> {
@@ -2142,6 +2139,8 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
             Loghelper.errorException(getClass(), ex);
             fdr.setBoResult(false);
         }
+
+        if(fdr.getValue()==null) fdr.setValue(Optional.empty());
 
         return fdr;
     }
@@ -2190,7 +2189,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
      * @return
      */
     public Fdr<Optional<Integer>> jdSelectSingleOpInt(String sql, FiKeyBean fiKeyBean) {
-        return jdSelectSingleOpCustomEntityBindMap(sql, fiKeyBean, Integer.class);
+        return jdSelectSingleOpCustomEntityBindMapNtn(sql, fiKeyBean, Integer.class);
     }
 
     /**

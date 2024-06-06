@@ -80,11 +80,11 @@ public class FxComboBox<T> extends ComboBox<T> {
 
         if (FiString.isEmpty(getTxValue()) || isEmptyComboBox()) return;
 
-        ObservableList<ComboItemText> items = (ObservableList<ComboItemText>) getItems();
+        ObservableList<ComboItemText> itemsCombo = (ObservableList<ComboItemText>) getItems();
 
-        for (int index = 0; index < items.size(); index++) {
+        for (int index = 0; index < itemsCombo.size(); index++) {
 
-            ComboItemText item = items.get(index);
+            ComboItemText item = itemsCombo.get(index);
             if (item.getValue() == null) continue;
 
             if (item.getValue().equals(getTxValue())) {

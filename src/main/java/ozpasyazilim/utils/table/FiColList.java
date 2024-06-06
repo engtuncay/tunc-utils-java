@@ -83,6 +83,15 @@ public class FiColList extends ArrayList<FiCol>{
 		this.mapCols = mapCols;
 	}
 
+	public FiCol getFiColByID(String colID) {
+
+		for (FiCol fiCol : this) {
+			if (fiCol.getFieldName().equalsIgnoreCase(colID)) return fiCol;
+		}
+
+		return null;
+	}
+
 //	public void equalsKey(String txKey, Object value) {
 //
 //		Map<String, FiCol> fiColMap = formMapCols();

@@ -2045,7 +2045,7 @@ public class FiQugen {
 
         for (FiCol fiCol : fiCols) {
 
-            if (FiBool.isTrue(fiCol.getBoUpdateField())) {
+            if (FiBool.isTrue(fiCol.getBoUpdateFieldForQuery())) {
                 index++;
                 if (index != 1) query.append(", ");
                 query.append(fiCol.getFieldName()).append(" = @").append(fiCol.getFieldName());

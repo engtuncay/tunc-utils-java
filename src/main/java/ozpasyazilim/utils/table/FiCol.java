@@ -266,7 +266,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
     /**
      * Sorgu hazırlanırken update olacak alan olduğunu gösterir
      */
-    private Boolean boUpdateField;
+    private Boolean boUpdateFieldForQuery;
 
     /**
      * True olur Sorguda Aktif Edilmesini
@@ -700,8 +700,8 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
         return this;
     }
 
-    public FiCol buiColFilterable(Boolean boColFilterable) {
-        setBoFilterable(boColFilterable);
+    public FiCol buiBoFilterable(Boolean boFilterable) {
+        setBoFilterable(boFilterable);
         return this;
     }
 
@@ -1082,7 +1082,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
     }
 
     public FiCol<EntClazz> buiBoUpdateField(Boolean boUpdateField) {
-        this.boUpdateField = boUpdateField;
+        this.boUpdateFieldForQuery = boUpdateField;
         return this;
     }
 
@@ -1436,12 +1436,12 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
         this.colValue = colValue;
     }
 
-    public Boolean getBoUpdateField() {
-        return boUpdateField;
+    public Boolean getBoUpdateFieldForQuery() {
+        return boUpdateFieldForQuery;
     }
 
-    public void setBoUpdateField(Boolean boUpdateField) {
-        this.boUpdateField = boUpdateField;
+    public void setBoUpdateFieldForQuery(Boolean boUpdateFieldForQuery) {
+        this.boUpdateFieldForQuery = boUpdateFieldForQuery;
     }
 
     public String getTxLabel() {
