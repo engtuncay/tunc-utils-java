@@ -1485,7 +1485,8 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
     public Fdr jdhUpdateFiColsBindEntityByIdFiCols(Handle handle, List<? extends IFiCol> listFiCols, EntClazz entity) {
 
         String sqlQuery = FiQugen.updateFiColListAndExtraWhereIdFiCols(getEntityClass(), listFiCols);
-		Loghelper.get(getClass()).debug("Update Query: " + sqlQuery);
+
+        Loghelper.get(getClass()).debug("Update Query: " + sqlQuery);
 
         return jdhUpdateBindEntityMain(handle, sqlQuery, entity);
     }
