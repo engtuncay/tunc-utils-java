@@ -20,10 +20,16 @@ public class FiModule {
 	Boolean boDisabled;
 	List<Class> listModules;
 
+
 	/**
 	 * IsNonValidate , Dogrulama (Erişim hakkı) gerekmeyen moduller.
 	 */
 	Boolean boIsNonValidate;
+
+	/**
+	 * Feature olduğunu gösterir, module (pencere) olmadığını
+	 */
+	Boolean boFeat;
 
 	@Transient
 	FiModule upperModule;
@@ -75,6 +81,14 @@ public class FiModule {
 		this.setTxModuleCode(txModuleCode);
 		this.setTxModuleLabel(txModuleLabel);
 		this.setTxModuleName(classModule.getSimpleName());
+		//this.clazz = classModule;
+	}
+
+	public FiModule(String txModuleCode, String txModuleLabel, Class classModule, Boolean boFeat) {
+		this.setTxModuleCode(txModuleCode);
+		this.setTxModuleLabel(txModuleLabel);
+		this.setTxModuleName(classModule.getSimpleName());
+
 		//this.clazz = classModule;
 	}
 
@@ -229,5 +243,13 @@ public class FiModule {
 
 	public void addRelatedModules(Class modClazz) {
 		getListModulesInit().add(modClazz);
+	}
+
+	public Boolean getBoFeat() {
+		return boFeat;
+	}
+
+	public void setBoFeat(Boolean boFeat) {
+		this.boFeat = boFeat;
 	}
 }

@@ -303,6 +303,17 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
         return value;
     }
 
+    public EntClazz getValueInit() {
+        if (value == null) {
+            if (value instanceof List) {
+                value = (EntClazz) new ArrayList<>();
+            } else {
+                Loghelper.get(getClass()).debug("getValueInit List Türü Degil");
+            }
+        }
+        return value;
+    }
+
     public String getValueAsString() {
         if (value == null) return null;
         return (String) value;
@@ -527,7 +538,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     public void combineLogs(Fdr fdrAppend) {
 
         //setException(fdrAppend.getException());
-        if(fdrAppend.getException()!=null) getListExceptionInit().add(fdrAppend.getException());
+        if (fdrAppend.getException() != null) getListExceptionInit().add(fdrAppend.getException());
 
         // Tüm işlemlerde mesaj birleştirilir.
         appendMessageLn(fdrAppend.getMessage());
@@ -1083,7 +1094,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
 
     public void addLogErrorException(List<Exception> listExceptionInit) {
         if (getBoLockAddLogNtn()) Loghelper.get(getClass()).debug("Error: Added Log to Blocked Fdr !!!!!!!!");
-        if(!listExceptionInit.isEmpty()){
+        if (!listExceptionInit.isEmpty()) {
             for (Exception exception1 : listExceptionInit) {
                 getLogListInit().add(new EntLog(FiException.excToStrSummary(exception1), MetaLogType.ERROR));
             }
@@ -1093,7 +1104,6 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     public void addLogErrorException(Exception exception) {
         addLogErrorException(Arrays.asList(exception));
     }
-
 
 
 }
