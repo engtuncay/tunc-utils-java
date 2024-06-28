@@ -39,7 +39,7 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
     private ChangeListener<Boolean> fnFocusedChangeListener;
     private List<FiCol> listFormElements;
     private FormType formType;
-    private EntClazz formEntity; // 30-10-21 eklendi
+    private EntClazz refFormEntity; // 30-10-21 eklendi
 
     /**
      * Form güncellemek amacıyla açıldığını belirtir
@@ -92,8 +92,8 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
         if (getFormTypeSelectedInit() == FormType.PlainFormV1) {
             initPlainFormV1();
             // formEntity varsa, alanlara değerler set edilir
-            if (getFormEntity() != null) {
-                FxEditorFactory.bindEntityToFormByEditorValue(getListFormElements(), getFormEntity());
+            if (getRefFormEntity() != null) {
+                FxEditorFactory.bindEntityToFormByEditorValue(getListFormElements(), getRefFormEntity());
             }
             // Form değerleri eklendikten sonra trigger edilecek metodlar
             trigEventsAfterFormLoaded();
@@ -134,9 +134,6 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
         return FxEditorFactory.getEditorNodeByFieldName(getListFormElements(), fieldName.toString());
     }
 
-    public <T> T getFormAsObject(Class<T> clazz) {
-        return FxEditorFactory.bindFormToEntityByEditorNode(getListFormElements(), clazz);
-    }
 
     public void bindEntitytoForm(EntClazz formMikroKodDegistir) {
         FxEditorFactory.bindEntityToFormByEditorValue(getListFormElements(), formMikroKodDegistir);
@@ -156,17 +153,22 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
         return getListFormElements();
     }
 
-    public EntClazz getFormAsEntity() {
+    public EntClazz bindFormToEntity() {
         if (getEntityClazz() == null) setAutoClass();
         EntClazz formEntity = FxEditorFactory.bindFormToEntityByEditorNode(getListFormElements(), getEntityClazz());
         return formEntity;
     }
 
-    public <PrmEntClazz> PrmEntClazz getFormAsEntity(Class<PrmEntClazz> entClazz) {
+    public <PrmEntClazz> PrmEntClazz bindFormToEntity(Class<PrmEntClazz> entClazz) {
         if (entClazz == null) return null;
         PrmEntClazz formEntity = FxEditorFactory.bindFormToEntityByEditorNode(getListFormElements(), entClazz);
         return formEntity;
     }
+
+    //    public <T> T bindFormToEntity(Class<T> clazz) {
+//        return FxEditorFactory.bindFormToEntityByEditorNode(getListFormElements(), clazz);
+//    }
+
 
     public void clearFormFields() {
         FxEditorFactory.clearValuesOfFormFields(getListFormElements());
@@ -175,7 +177,7 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
     public void initFormHp1(List<FiCol> listFormElements, FormType formType, EntClazz formEntity) {
         setListFormElements(listFormElements);
         setFormTypeSelected(formType);
-        setFormEntity(formEntity);
+        setRefFormEntity(formEntity);
         initCont();
     }
 
@@ -187,7 +189,7 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
     private void setFxFormConfig(FxFormConfig<EntClazz> fxFormConfig) {
         setListFormElements(fxFormConfig.getListFormElementsInit());
         setFormTypeSelected(fxFormConfig.getFormType());
-        setFormEntity(fxFormConfig.getFormEntity());
+        setRefFormEntity(fxFormConfig.getFormEntity());
         setBoUpdateForm(fxFormConfig.getBoUpdateForm());
         setFnValidateForm(fxFormConfig.getFnValidateFormForFormMigGen());
     }
@@ -206,13 +208,13 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
 
         getListFormElements().forEach(fiCol -> {
             if (fiCol.getFnEditorNodeRendererAfterFormLoad() != null) {
-                fiCol.getFnEditorNodeRendererAfterFormLoad().accept(getFormEntity(), fiCol.getColEditorNode());
+                fiCol.getFnEditorNodeRendererAfterFormLoad().accept(getRefFormEntity(), fiCol.getColEditorNode());
             }
         });
 
         getListFormElements().forEach(fiCol -> {
             if (fiCol.getFnEditorNodeRendererAfterFormLoad2() != null) {
-                fiCol.getFnEditorNodeRendererAfterFormLoad2().accept(getFormEntity(), fiCol.getColEditorNode(), getListFormElements());
+                fiCol.getFnEditorNodeRendererAfterFormLoad2().accept(getRefFormEntity(), fiCol.getColEditorNode(), getListFormElements());
             }
         });
 
@@ -277,7 +279,7 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
             Label lblForm = new Label(fiCol.getHeaderName());
             add(lblForm, "width 30%,wmax 150,wmin 120");
 
-            Object entityForNode = getFormEntity();
+            Object entityForNode = getRefFormEntity();
 
             // Editor comp (node) oluşturulur, lifecycle metodları çalıştırılır
             Node node = FxEditorFactory.generateEditorNodeFullLifeCycle(fiCol, entityForNode);
@@ -288,7 +290,7 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
             }
 
             // formEntity yüklenirse eğer (update formu ise) nonupdatable alanlar disable yapılır
-            if (getFormEntity() != null && FiBool.isTrue(fiCol.getBoNonUpdatable())) {
+            if (getRefFormEntity() != null && FiBool.isTrue(fiCol.getBoNonUpdatable())) {
                 node.setDisable(true);
             }
 
@@ -374,22 +376,22 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
     }
 
     public void bindEntityToForm(EntClazz formEntity) {
-        setFormEntity(formEntity);
-        FxEditorFactory.bindEntityToFormByEditorValue(getListFormElements(), getFormEntity());
+        setRefFormEntity(formEntity);
+        FxEditorFactory.bindEntityToFormByEditorValue(getListFormElements(), getRefFormEntity());
         trigEventsAfterFormLoaded();
     }
 
-    public EntClazz getFormEntity() {
-        return formEntity;
+    public EntClazz getRefFormEntity() {
+        return refFormEntity;
     }
 
-    public void setFormEntity(EntClazz formEntity) {
-        this.formEntity = formEntity;
+    public void setRefFormEntity(EntClazz refFormEntity) {
+        this.refFormEntity = refFormEntity;
     }
 
     public void setFormEntityForEdit(EntClazz formEntity) {
         setBoUpdateForm(true);
-        setFormEntity(formEntity);
+        setRefFormEntity(formEntity);
     }
 
     public void formFocusListener(ChangeListener<Boolean> fnFocusedChangeListener) {

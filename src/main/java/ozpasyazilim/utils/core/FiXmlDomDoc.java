@@ -1,16 +1,32 @@
 package ozpasyazilim.utils.core;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
+import java.io.StringReader;
 
 /**
  * Wrapper class for w3c.dom.Document
  */
-public class FiDomDoc {
+public class FiXmlDomDoc {
 
 	Document doc;
 
-	public FiDomDoc(Document docXml) {
+	String txXmlRaw;
+
+	public static FiXmlDomDoc buiWitRaw(String txXmlContent){
+		Document document = convertXmlContentToDoc(txXmlContent);
+		FiXmlDomDoc fiXmlDomDoc = new FiXmlDomDoc(document);
+		fiXmlDomDoc.setTxXmlRaw(txXmlContent);
+		return fiXmlDomDoc;
+	}
+
+	public FiXmlDomDoc(Document docXml) {
 		setDoc(docXml);
 	}
 
@@ -34,7 +50,24 @@ public class FiDomDoc {
         return getDoc().getElementsByTagName(tagName).getLength() > 0;
 	}
 
+	public String getTxXmlRaw() {
+		return txXmlRaw;
+	}
 
+	public void setTxXmlRaw(String txXmlRaw) {
+		this.txXmlRaw = txXmlRaw;
+	}
+
+	public static Document convertXmlContentToDoc(String txXmlContent) {
+		try {
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			InputSource is = new InputSource(new StringReader(txXmlContent));
+			return db.parse(is);
+		} catch (ParserConfigurationException | IOException | SAXException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }
 
 // Xmldeki belli bir alanı okumak için

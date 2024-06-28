@@ -368,7 +368,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFiModBaseCont {
 	}
 
 	public void initFormDialogForUpdate(List<FiCol> fiCols, FormType formType, Object entity) {
-		getFxFormMigGenInit().setFormEntity(entity);
+		getFxFormMigGenInit().setRefFormEntity(entity);
 		getFxFormMigGenInit().setBoUpdateForm(true);
 		setupFormDialog(fiCols,formType);
 	}

@@ -10,7 +10,7 @@ import java.util.Properties;
  * FiKeyString yerine FiKeyBean konuldu.
  */
 public class FiXml2 {
-	private FiDomDoc fiDomDoc;
+	private FiXmlDomDoc fiXmlDomDoc;
 	private String txXmlValue;
 
 	/**
@@ -51,12 +51,12 @@ public class FiXml2 {
 
 		//fiXml.getDocXml()
 		Document doc = fiXml.getDoc();
-		FiDomDoc fiDomDoc = fiXml.getFiDoc();
+		FiXmlDomDoc fiXmlDomDoc = fiXml.getFiDoc();
 
 		System.out.println("Root Element :" + doc.getDocumentElement().getNodeName());
 		System.out.println("------");
 
-		String txKullaniciKod = fiDomDoc.getElementValueByTagName("DisKullaniciKimlikDogrula2Result");
+		String txKullaniciKod = fiXmlDomDoc.getElementValueByTagName("DisKullaniciKimlikDogrula2Result");
 		System.out.println("Token:"+txKullaniciKod);
 
 	}
@@ -95,7 +95,7 @@ public class FiXml2 {
 
 
 	public Document getDoc() {
-		if(fiDomDoc ==null) return null;
+		if(fiXmlDomDoc ==null) return null;
 		return getFiDomDocInit().getDoc();
 	}
 
@@ -104,15 +104,15 @@ public class FiXml2 {
 	}
 
 	public void setDoc(Document docXml) {
-		this.fiDomDoc = new FiDomDoc(docXml);
+		this.fiXmlDomDoc = new FiXmlDomDoc(docXml);
 	}
 
-	public FiDomDoc getFiDoc() {
-		return fiDomDoc;
+	public FiXmlDomDoc getFiDoc() {
+		return fiXmlDomDoc;
 	}
 
-	public FiDomDoc getFiDomDocInit() {
-		if (fiDomDoc == null) {
+	public FiXmlDomDoc getFiDomDocInit() {
+		if (fiXmlDomDoc == null) {
 			// Xml Value Boş degilse, Xml Value Document oluşturur
 			if(!FiString.isEmpty(getTxXmlValue())){
 			   makeDocument(getTxXmlValue());
@@ -120,19 +120,19 @@ public class FiXml2 {
 				makeDocument(getTxXmlTemplate());
 			}
 		}
-		return fiDomDoc;
+		return fiXmlDomDoc;
 	}
 
-	public FiDomDoc getFiDomDoc() {
-		return fiDomDoc;
+	public FiXmlDomDoc getFiDomDoc() {
+		return fiXmlDomDoc;
 	}
 
-	public void setFiDomDoc(FiDomDoc fiDomDoc) {
-		this.fiDomDoc = fiDomDoc;
+	public void setFiDomDoc(FiXmlDomDoc fiXmlDomDoc) {
+		this.fiXmlDomDoc = fiXmlDomDoc;
 	}
 
-	public void setFiDoc(FiDomDoc fiDomDoc) {
-		this.fiDomDoc = fiDomDoc;
+	public void setFiDoc(FiXmlDomDoc fiXmlDomDoc) {
+		this.fiXmlDomDoc = fiXmlDomDoc;
 	}
 
 	public String getTxXmlValue() {
