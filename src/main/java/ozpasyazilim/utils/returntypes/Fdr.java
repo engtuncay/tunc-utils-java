@@ -451,6 +451,8 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
      * null için birleştirme yapılmamış, mesaj birleştirilebilir.
      * <p>
      * Loglar aktarılır
+     * <p>
+     * Value ile birleştirme vs yapmaz.
      *
      * @param fdrSub
      */
