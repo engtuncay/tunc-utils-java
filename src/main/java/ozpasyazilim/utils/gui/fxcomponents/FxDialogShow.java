@@ -21,7 +21,7 @@ import ozpasyazilim.utils.mvc.*;
 import ozpasyazilim.utils.returntypes.Fdr;
 import ozpasyazilim.utils.returntypes.FnResult;
 import ozpasyazilim.utils.fxwindow.FxSimpleDialog;
-import ozpasyazilim.utils.fxwindow.FxSimpleDialog2;
+import ozpasyazilim.utils.fxwindow.FxSimpleDialogExt1;
 import ozpasyazilim.utils.fxwindow.FxSimpleDialogMetaType;
 
 import java.util.Optional;
@@ -394,7 +394,7 @@ public class FxDialogShow {
 
     public static void showModalForLog(Fdr fdr) {
         Platform.runLater(() -> {
-            FxSimpleDialog2.creInitWithMessageContent(fdr.getLogPlain())
+            FxSimpleDialogExt1.creInitWithMessageContent(fdr.getLogPlain())
                     .initDialogError().openAsNonModal();
         });
         //FxDialogShow.showModalError2(fdr.getTxName(), fdr.getLogAsStringWitErrorInfo());

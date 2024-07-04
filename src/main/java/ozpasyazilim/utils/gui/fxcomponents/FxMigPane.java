@@ -131,7 +131,7 @@ public class FxMigPane extends MigPane {
 	}
 
 	public void addGrowXPushXSpan(Node node) {
-		addGrowXPushXSpan(node, null);
+		addGrowXPushXSpan(node, "growx,pushx,span");
 	}
 
 	/**
@@ -150,9 +150,12 @@ public class FxMigPane extends MigPane {
 		return this;
 	}
 
+	/**
+	 * root mig'e eklenirse align right yapıyor, mig'içinde
+	 * @param node
+	 */
 	public void addAlignxRight(Node node) {
-		add(node, "alignx right,span");
+		add(node, "alignx right,span"); //alignx right,span
 	}
-
 
 }

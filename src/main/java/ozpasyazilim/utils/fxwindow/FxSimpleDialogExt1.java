@@ -7,13 +7,13 @@ import ozpasyazilim.utils.gui.fxcomponents.FxMigPaneView;
  * initCont metodu yenilemesi - initCont'da otomatik dialogInit yapmaz, rootView oluşturur.
  * @param <EntClazz>
  */
-public class FxSimpleDialog2<EntClazz> extends FxSimpleDialog<EntClazz> {
+public class FxSimpleDialogExt1<EntClazz> extends FxSimpleDialog<EntClazz> {
 
-	public FxSimpleDialog2() {
+	public FxSimpleDialogExt1() {
 	}
 
-	public static FxSimpleDialog2 creInitWithMessageContent(String messageContent) {
-		FxSimpleDialog2 fxSimpleDialog = new FxSimpleDialog2();
+	public static FxSimpleDialogExt1 creInitWithMessageContent(String messageContent) {
+		FxSimpleDialogExt1 fxSimpleDialog = new FxSimpleDialogExt1();
 		fxSimpleDialog.setMessageContent(messageContent);
 		fxSimpleDialog.initCont();
 		return fxSimpleDialog;

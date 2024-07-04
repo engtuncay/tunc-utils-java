@@ -38,6 +38,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFiModBaseCont {
 	private FxLabel lblHeader;
 	private Class entityClass;
 
+	@Deprecated
 	private FxFormcGen fxFormcMig;
 	private FxFormMigGen fxFormMigGen;
 
@@ -165,6 +166,13 @@ public class FxSimpleDialog<EntClazz> extends AbsFiModBaseCont {
 		}
 
 		if (fxSimpleDialogMetaType == FxSimpleDialogMetaType.TextAreaString) {
+			setupTextHeaderLabel();
+			setupTextAreaString();
+			setupFooterOkCancel(null);
+			return;
+		}
+
+		if (fxSimpleDialogMetaType == FxSimpleDialogMetaType.TextAreaString2) {
 			setupTextHeaderLabel();
 			setupTextAreaString();
 			setupFooterOkCancel(null);
@@ -567,6 +575,21 @@ public class FxSimpleDialog<EntClazz> extends AbsFiModBaseCont {
 
 	}
 
+	private void setupTextAreaString2() {
+
+		getModView().add(lblHeader, "growx,pushx,wrap");
+
+		FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().getLcg());
+		FxTextArea fxTextField = new FxTextArea();
+		//fxTextField.convertNumberDoubleTextField1();
+		//setOzColType(OzColType.String);
+		fxTextField.setText(getMessageContent());
+		fxContent.add(fxTextField, "wrap");
+
+		getModView().add(fxContent, "wrap");
+
+	}
+
 	private void setupInfoDialog() {
 		if (getListText().size() == 0) {
 			getListText().add(new Text(""));
@@ -843,4 +866,5 @@ public class FxSimpleDialog<EntClazz> extends AbsFiModBaseCont {
 	public void setFxFormMigGen(FxFormMigGen fxFormMigGen) {
 		this.fxFormMigGen = fxFormMigGen;
 	}
+
 }

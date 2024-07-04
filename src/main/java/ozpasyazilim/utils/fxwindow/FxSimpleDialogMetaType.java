@@ -14,9 +14,23 @@ public enum FxSimpleDialogMetaType {
 	 * FxForm üzerinden dialog oluşturur
 	 */
 	FormDialog,
+	/**
+	 * SimpleDialog value olarak içeriği kullanmış
+	 * Deprecated
+	 */
 	TextAreaString,
+	/**
+	 * Textarea içeriğini messegaContent olarak kullanılır
+	 */
+	TextAreaString2,
 
 	LogTable,
 
+	/**
+	 * Content alanı dinamil doldurulur
+	 */
+	CustomContent1,
+
 	Undefined
+
 }
