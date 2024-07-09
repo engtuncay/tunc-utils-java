@@ -270,13 +270,13 @@ public class FxSimpleDialog<EntClazz> extends AbsFiModBaseCont {
 
 		btnOk = new FxButton("Ok", Icons525.OK);
 		btnOk.setOnAction(event -> actBtnOK());
+		migFooter.add(btnOk);
 
 		if(!FiBool.isTrue(boDontAddCancel)){
 			btnCancel = new FxButton("İptal", Icons525.CANCEL);
 			btnCancel.setOnAction(event -> actBtnCancel());
 			migFooter.add(btnCancel);
 		}
-		migFooter.add(btnOk);
 
 		getModView().addAlignxRight(migFooter);
 	}

@@ -3308,6 +3308,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
      */
     public Fdr jdExecuteTransByUse(Function<Handle, Fdr> fnTransaction) {
         // BiFunction<AbsRepoJdbi<EntClazz>, Handle, Fdr>
+
         Fdr fdrMain = new Fdr();
 
         try {
@@ -3322,8 +3323,9 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
                 if (fdr.getException() != null) {
                     throw fdr.getException();
                 }
-                Loghelper.get(getClass()).debug("handle commit edilecek");
+
                 handle.commit();
+                Loghelper.get(getClass()).debug("handle commit edildi");
             });
 
         } catch (Exception ex) {
@@ -3336,7 +3338,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
     }
 
     /**
-     * inTransaction ile kullanımı
+     * inTransaction ile kullanımı (fdr callback function içerisinden return edilir)
      * <p>
      * Using start 13-07-22
      *
@@ -3366,6 +3368,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
                 return fdrMain;
             }
         });
+
         return fdrJdbi;
     }
 

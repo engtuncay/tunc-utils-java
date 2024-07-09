@@ -1,6 +1,7 @@
 package ozpasyazilim.utils.fxwindow;
 
 import de.jensd.fx.glyphs.icons525.Icons525;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.ScrollPane;
@@ -149,6 +150,18 @@ public class FxSimDialog<EntClazz> extends AbsFiModBaseCont {
         }
         //getiFxModCont().getModView().getRootPane().getStylesheets().add("main.css");
         FxWindow.nodeWindow(null, this);
+    }
+
+    public void openAsDialogASync() {
+        if (!getBoInitExecutedNtn()) {
+            initCont();
+        }
+
+        Platform.runLater(()->{
+            FxWindow.nodeWindow(null, this);
+        });
+        //getiFxModCont().getModView().getRootPane().getStylesheets().add("main.css");
+
     }
 
     public static FxSimDialog bui(FxSimpleDialogMetaType fxSimpleDialogMetaType, String message) {
@@ -312,13 +325,13 @@ public class FxSimDialog<EntClazz> extends AbsFiModBaseCont {
         btnOk = new FxButton("Ok", Icons525.OK);
         btnOk.setOnAction(event -> actBtnOK());
 
+        migFooter.add(btnOk);
+
         if (!FiBool.isTrue(boDontAddCancel)) {
             btnCancel = new FxButton("İptal", Icons525.CANCEL);
             btnCancel.setOnAction(event -> actBtnCancel());
             migFooter.add(btnCancel);
         }
-
-        migFooter.add(btnOk);
 
         getModView().getMigRoot().addAlignxRight(migFooter);
     }
@@ -899,7 +912,7 @@ public class FxSimDialog<EntClazz> extends AbsFiModBaseCont {
         return predValidateComp;
     }
 
-    public void setPredValidateComp(Predicate predValidateComp) {
+    public void setPredValidateComp(Predicate<FxSimDialog> predValidateComp) {
         this.predValidateComp = predValidateComp;
     }
 }

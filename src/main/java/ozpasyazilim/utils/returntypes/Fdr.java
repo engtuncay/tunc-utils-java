@@ -1,5 +1,9 @@
 package ozpasyazilim.utils.returntypes;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.util.Pair;
 import ozpasyazilim.utils.annotations.FiReview;
 import ozpasyazilim.utils.core.*;
@@ -13,13 +17,11 @@ import java.util.*;
 /**
  * Ana Alanlar : boResult,message,value,
  * <p>
- * Sorgu başarılı bir şekilde çalıştırılmışsa boResult True olur
+ * Sorgu başarılı bir şekilde çalıştırılmışsa boResult True olur, hata alırsa false olur.
  * <p>
- * Hata alırsa da false olur
+ * İşlem yapılmamışsa boResult null olur !!!
  * <p>
- * İşlem yapılmamışsa null olur !!!
- * <p>
- * Cre : 22-02-2019 Torak
+ * Cre : 22-02-2019 torak
  * <p>
  * EntClazz value alanının tipi
  */
@@ -91,6 +93,13 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
      */
     List<Exception> listException;
 
+    /**
+     * Sonuç Durumu : ilgili işlem hangi durum ile sonuçlandığı gösterir,
+     * <p>
+     * her metoda göre manası değişiklik gösterir
+     */
+    private Integer lnStatus;
+
 
     // Advanced Configurations
 
@@ -98,12 +107,16 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
      * Başarılı operasyon (sorgu vs..) toplamı (true dönenler)
      * <p>
      * Op : Operation
+     * <p>
+     * Sorgular ayrı ayrı çalıştırıldığı kaç tane başarılı işlem var, onu gösterir.
      */
     private Integer lnSuccessOpCount;
+
     private Integer lnFailureOpCount;
 
     private String txQueryType;
-    // Detaylı log tutmak için eklenmiştir
+
+    // Sorgu sonuçları ile ilgili detay alanlar (bir nevi log)
     private Integer lnInsertedRows;
     private Integer lnUpdatedRows;
     private Integer lnDeletedRows;
@@ -138,7 +151,9 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
      */
     private Boolean boLockAddLog;
 
-    // --------------- Methods
+    List<Runnable> obsMethodFinished;
+
+// --------------- Methods
 
     public Fdr() {
     }
@@ -246,6 +261,11 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
         fdr.setBoResult(boResult);
         fdr.addLogError(txErrorLog);
         return fdr;
+    }
+
+    public static Fdr bui() {
+        Fdr fdrMethod = new Fdr();
+        return fdrMethod;
     }
 
     public Optional<Boolean> getOpResult() {
@@ -1107,5 +1127,58 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
         addLogErrorException(Arrays.asList(exception));
     }
 
+    public Integer getLnStatus() {
+        return lnStatus;
+    }
 
+    public Integer getLnStatusNtn() {
+        if (lnStatus == null) {
+            return -1;
+        }
+        return lnStatus;
+    }
+
+    public void setLnStatus(Integer lnStatus) {
+        this.lnStatus = lnStatus;
+    }
+
+    public Integer getLnFailureOpCount() {
+        return lnFailureOpCount;
+    }
+
+    public Boolean getBoOpResult() {
+        return boOpResult;
+    }
+
+//    public Fdr getRefFdrMethod() {
+//        return refFdrMethod.get();
+//    }
+//
+//    public ObjectProperty<Fdr<EntClazz>> refFdrMethodProperty() {
+//        if (refFdrMethod == null) {
+//            refFdrMethod = new SimpleObjectProperty<>();
+//        }
+//        return refFdrMethod;
+//    }
+//
+//    public void setRefFdrMethod(Fdr refFdrMethod) {
+//        this.refFdrMethod.set(refFdrMethod);
+//    }
+
+    public List<Runnable> getObsMethodFinished() {
+        if (obsMethodFinished == null) {
+            obsMethodFinished = new ArrayList<>();
+        }
+        return obsMethodFinished;
+    }
+
+    public void setObsMethodFinished(List<Runnable> obsMethodFinished) {
+        this.obsMethodFinished = obsMethodFinished;
+    }
+
+    public void trigBoMethodFinished() {
+        for (Runnable runnable : getObsMethodFinished()) {
+            runnable.run();
+        }
+    }
 }

@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.scene.paint.Color;
 import ozpasyazilim.utils.gui.fxcomponents.*;
 import ozpasyazilim.utils.listener.CompoundRunnable;
+import ozpasyazilim.utils.log.Loghelper;
 
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -21,6 +22,10 @@ public class FiThread {
 
     public static Thread startThread(Runnable runnable, FxButton... btnArray) {
         return startThread(runnable, btnArray, null);
+    }
+
+    public static Thread startThread(Runnable runnable,FiModObserver fiModObserver,  FxButton... btnArray) {
+        return startThread(runnable, btnArray, null,fiModObserver);
     }
 
 
@@ -130,6 +135,63 @@ public class FiThread {
 
         return thread;
     }
+
+    public static Thread startThread(Runnable custRunnableMain, FxButton[] arrButtons, Runnable custRunnableEnd,FiModObserver fiModObserver) {
+
+        StringBuilder sbTxOld = new StringBuilder();
+
+        if (arrButtons.length !=0  && arrButtons[0]!=null ) {
+            sbTxOld.append(arrButtons[0].getText());
+        }
+
+        Supplier<Boolean> supTest = () -> arrButtons.length !=0 && arrButtons[0]!=null;
+
+        //FxButton btnListeFirst = arrButtons[0];
+        //final String textOld = btnListeFirst.getText();
+
+        Platform.runLater(() -> {
+
+            if (supTest.get()) {
+                arrButtons[0].setText("İşlem Yapılıyor..");
+
+                for (FxButton fxButton : arrButtons) {
+                    fxButton.setDisable(true);
+                }
+            }
+
+        });
+
+        Runnable runnable2 = () -> {
+            //fxToastPopup2.end();
+            Loghelper.get(FiThread.class).debug("Runnable2-Text düzeltme çalıştı");
+
+            Platform.runLater(() -> {
+
+                if (supTest.get()) {
+                    arrButtons[0].setText(sbTxOld.toString());
+
+                    for (FxButton fxButton : arrButtons) {
+                        fxButton.setDisable(false);
+                    }
+                }
+
+            });
+
+        };
+
+        fiModObserver.getObsMethodFinished().add(runnable2);
+
+        if (custRunnableEnd == null) custRunnableEnd = () -> { };
+
+        CompoundRunnable compoundRunnable = new CompoundRunnable(custRunnableMain, custRunnableEnd);
+
+        Thread thread = new Thread(compoundRunnable);
+        thread.start();
+
+        return thread;
+    }
+
+
 
     public static Thread startThreadMb(Runnable runnable, FxMenuButton mbComp, Runnable runnableEnd) {
 
