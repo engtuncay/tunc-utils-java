@@ -574,7 +574,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
         String sql = FiQugen.deleteByCandId2ByInFormat(getEntityClass());
 
-        String dbFieldName = FiEntity.getListFieldsCandId2(getEntityClass()).get(0).getDbFieldName();
+        String dbFieldName = FiFieldUtil.getListFieldsCandId2(getEntityClass()).get(0).getDbFieldName();
 
         FiKeyBean fiKeyBean = FiKeyBean.bui().buiPut(dbFieldName, listData);
 
@@ -590,7 +590,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
 //		Loghelper.get(getClass()).debug("Delete query:" + sql);
 
-        String dbFieldName = FiEntity.getListFieldsCandId2(getEntityClass()).get(0).getDbFieldName();
+        String dbFieldName = FiFieldUtil.getListFieldsCandId2(getEntityClass()).get(0).getDbFieldName();
 
         FiKeyBean fiKeyBean = FiKeyBean.bui().buiPut(dbFieldName, listData);
 
@@ -607,7 +607,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
         String sql = FiQugen.deleteByCandId2ByInFormat(getEntityClass());
 
-        String dbFieldName = FiEntity.getListFieldsCandId2(getEntityClass()).get(0).getDbFieldName();
+        String dbFieldName = FiFieldUtil.getListFieldsCandId2(getEntityClass()).get(0).getDbFieldName();
 
         FiKeyBean fiKeyBean = FiKeyBean.bui().buiPut(dbFieldName, listData);
 
@@ -1704,7 +1704,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
      */
     public Fdr jdInsertEntityOrUpdateFiTableColsBindEntityByIds(EntClazz entity, List<FiCol> fiTableColList) {
 
-        Boolean boIdNull = FiEntity.checkIdFieldsAnyNull(entity, getEntityClass());
+        Boolean boIdNull = FiFieldUtil.checkIdFieldsAnyNull(entity, getEntityClass());
 
         if (FiBool.isTrue(boIdNull)) { // insert
             return jdInsertEntity(entity);
@@ -1723,7 +1723,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
      */
     public Fdr jdInsertEntityOrUpdateFiTableColsBindEntityByDtCreated(EntClazz entity, List<FiCol> fiTableColList) {
 
-        Boolean boIdNull = FiEntity.checkDtCreatedFieldsNull(entity, getEntityClass());
+        Boolean boIdNull = FiFieldUtil.checkDtCreatedFieldsNull(entity, getEntityClass());
 
         if (FiBool.isTrue(boIdNull)) { // insert
             return jdInsertEntity(entity);
@@ -1762,7 +1762,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
                     listEntity.forEach(ent -> {
 
                         // check id field is null or not
-                        Boolean boIdNull = FiEntity.checkIdFieldsAnyNull(ent, getEntityClass());
+                        Boolean boIdNull = FiFieldUtil.checkIdFieldsAnyNull(ent, getEntityClass());
                         //Loghelperr.getInstance(getClass()).debug("Is Null:"+boIdNull.toString());
 
                         // id null ise insert yap
@@ -1772,7 +1772,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
                             if (FiBool.isTrue(boBindGeneratedKey)) {
 
-                                String idField = FiEntity.getListIdFields(getEntityClass()).get(0);
+                                String idField = FiFieldUtil.getListIdFields(getEntityClass()).get(0);
                                 Class idClazz = FiReflection.getFieldClassType(getEntityClass(), idField);
 
                                 Optional opId = handle.createUpdate(Fiqt.stoj(FiQugen.insertQueryJParamWoutId(getEntityClass())))
@@ -1990,7 +1990,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
                     listEntity.forEach(ent -> {
 
                         // check id field is null or not
-                        Boolean boIdNull = FiEntity.checkIdFieldsAnyNull(ent, getEntityClass());
+                        Boolean boIdNull = FiFieldUtil.checkIdFieldsAnyNull(ent, getEntityClass());
                         //Loghelperr.getInstance(getClass()).debug("Is Null:"+boIdNull.toString());
 
                         // id null ise insert yap
@@ -2783,7 +2783,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
         if (FiBool.isTrue(boBindGeneratedKey)) { // generated key'de alınacak
 
-            String idField = FiEntity.getListIdFields(getEntityClass()).get(0);
+            String idField = FiFieldUtil.getListIdFields(getEntityClass()).get(0);
             Class idClazz = FiReflection.getFieldClassType(getEntityClass(), idField);
 
             Optional opId = handle.createUpdate(Fiqt.stoj(sql1 + ";SET NOCOUNT ON;" + sql2))
@@ -2823,7 +2823,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
         if (FiBool.isTrue(boBindGeneratedKey)) { // generated key'de alınacak
 
-            String idField = FiEntity.getListIdFields(getEntityClass()).get(0);
+            String idField = FiFieldUtil.getListIdFields(getEntityClass()).get(0);
             Class idClazz = FiReflection.getFieldClassType(getEntityClass(), idField);
 
             try {
@@ -2870,7 +2870,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
      */
     public Fdr jdhInsertEntityBindKey(Handle handle, EntClazz entity) {
 
-        String idField = FiEntity.getListIdFields(getEntityClass()).get(0);
+        String idField = FiFieldUtil.getListIdFields(getEntityClass()).get(0);
         Class idClazz = FiReflection.getFieldClassType(getEntityClass(), idField);
 
         return jdhInsertEntityBindKey(handle, entity, idField, idClazz);
@@ -2932,7 +2932,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
         String insertQuery = Fiqt.stoj(FiQugen.insertQueryWoutId(getEntityClass()));
 
-        String idField = FiEntity.getListIdFields(getEntityClass()).get(0);
+        String idField = FiFieldUtil.getListIdFields(getEntityClass()).get(0);
 
         try {
             Optional<Map<String, Object>> opId = handle.createUpdate(Fiqt.stoj(insertQuery + ";SET NOCOUNT ON;"))
@@ -3010,7 +3010,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
                     //String sql2 = FiQueryHelper.updateScopeIdFieldWithSIdById(getEntityClass(), fieldForScopeEntity);
                     String sql2 = FiQugen.updateScopeIdFieldWithScopeIdFnById(getEntityClass(), fieldForScopeEntity);
 
-                    String idField = FiEntity.getListIdFields(getEntityClass()).get(0);
+                    String idField = FiFieldUtil.getListIdFields(getEntityClass()).get(0);
                     Class idClazz = FiReflection.getFieldClassType(getEntityClass(), idField);
 
                     //Loghelper.debug(getClass(), "idField:" + idField);
@@ -3097,7 +3097,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
             //String sql2 = FiQueryGenerator.updateScopeIdFieldWithSIdById(getEntityClass(), fieldForScopeEntity);
             String sql2 = FiQugen.updateScopeIdFieldWithScopeIdFnById(getEntityClass(), fieldForScopeEntity);
 
-            String idField = FiEntity.getListIdFields(getEntityClass()).get(0);
+            String idField = FiFieldUtil.getListIdFields(getEntityClass()).get(0);
             Class idClazz = FiReflection.getFieldClassType(getEntityClass(), idField);
 
             //Loghelper.debug(getClass(), "idField:" + idField);
@@ -3171,7 +3171,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
             // transactions
             if (FiBool.isTrue(boBindGeneratedKey)) {
 
-                String idField = FiEntity.getListIdFields(getEntityClass()).get(0);
+                String idField = FiFieldUtil.getListIdFields(getEntityClass()).get(0);
                 Class idClazz = FiReflection.getFieldClassType(getEntityClass(), idField);
 
                 Optional opId = handle.createUpdate(Fiqt.stoj(sql1 + ";SET NOCOUNT ON;" + sql2))
@@ -3212,7 +3212,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
         try {
             if (FiBool.isTrue(boBindGeneratedKey)) {
 
-                String idField = FiEntity.getListIdFields(getEntityClass()).get(0);
+                String idField = FiFieldUtil.getListIdFields(getEntityClass()).get(0);
                 Class idClazz = FiReflection.getFieldClassType(getEntityClass(), idField);
 
                 Optional opId = handle.createUpdate(Fiqt.stoj(sql1))

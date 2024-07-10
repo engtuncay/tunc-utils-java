@@ -9,7 +9,7 @@ import javafx.scene.web.WebView;
 import ozpasyazilim.utils.core.FiBool;
 import ozpasyazilim.utils.core.FiString;
 import ozpasyazilim.utils.core.FxPredicateString;
-import ozpasyazilim.utils.fidborm.FiEntity;
+import ozpasyazilim.utils.fidborm.FiFieldUtil;
 import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.gui.fxcomponents.*;
 import ozpasyazilim.utils.mvc.AbsFiModBaseCont;
@@ -339,7 +339,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFiModBaseCont {
 
 		fxFormcMig = new FxFormcGen();
 
-		List<FiField> listFiFieldsCandId = FiEntity.getListFieldsCandId(getEntityClass());
+		List<FiField> listFiFieldsCandId = FiFieldUtil.getListFieldsCandId(getEntityClass());
 
 		List<FiCol> fiTableColList = FiCol.convertListFiField(listFiFieldsCandId);
 		setFiColList(fiTableColList);

@@ -1,6 +1,6 @@
 package ozpasyazilim.utils.ficodegen;
 
-import ozpasyazilim.utils.fidborm.FiEntity;
+import ozpasyazilim.utils.fidborm.FiFieldUtil;
 import ozpasyazilim.utils.fidborm.FiField;
 
 import java.util.HashMap;
@@ -14,7 +14,7 @@ public class FiTypescriptHelper {
 
 		StringBuilder result = new StringBuilder("");
 
-		List<FiField> listFiFieldsSummary = FiEntity.getListFieldsWoutStatic(clazz, true);
+		List<FiField> listFiFieldsSummary = FiFieldUtil.getListFieldsWoutStatic(clazz, true);
 
 		result.append(String.format("export class %s {\n", clazz.getSimpleName()));
 

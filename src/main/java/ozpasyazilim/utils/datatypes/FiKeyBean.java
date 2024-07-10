@@ -2,7 +2,7 @@ package ozpasyazilim.utils.datatypes;
 
 import javafx.beans.property.StringProperty;
 import ozpasyazilim.utils.core.*;
-import ozpasyazilim.utils.fidborm.FiEntity;
+import ozpasyazilim.utils.fidborm.FiFieldUtil;
 import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.fidborm.Fiqt;
 import ozpasyazilim.utils.log.Loghelper;
@@ -200,7 +200,7 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
             Object fieldValue = FiReflection.getProperty(entity, field.getName());
 
             if (fieldValue != null) {
-                FiField fiField = FiEntity.setupFiFieldBasic(field, null);
+                FiField fiField = FiFieldUtil.setupFiFieldBasic(field, null);
 
                 if (FiBool.isTrue(fiField.getBoFilterLike())) {
                     String txValue = (String) fieldValue;

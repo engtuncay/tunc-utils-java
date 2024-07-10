@@ -3,7 +3,7 @@ package ozpasyazilim.utils.core;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.util.ReflectionUtils;
 import ozpasyazilim.utils.datatypes.FiKeyBean;
-import ozpasyazilim.utils.fidborm.FiEntity;
+import ozpasyazilim.utils.fidborm.FiFieldUtil;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.fidborm.FiField;
@@ -685,7 +685,7 @@ public class FiReflection {
 
 	public static <EntClazz> Object getCandId(EntClazz next, Class<EntClazz> clazz) {
 
-		List<FiField> listFiFieldsCandId = FiEntity.getListFieldsCandId(clazz);
+		List<FiField> listFiFieldsCandId = FiFieldUtil.getListFieldsCandId(clazz);
 
 		if (listFiFieldsCandId.size() == 1) {
 			Object property = getProperty(next, listFiFieldsCandId.get(0).getName());
@@ -696,7 +696,7 @@ public class FiReflection {
 
 	public static <EntClazz> Object getIdValue(EntClazz next, Class<EntClazz> clazz) {
 
-		List<FiField> listFieldsId = FiEntity.getListFieldsId(clazz);
+		List<FiField> listFieldsId = FiFieldUtil.getListFieldsId(clazz);
 
 		if (listFieldsId.size() == 1) {
 			Object property = getProperty(next, listFieldsId.get(0).getName());

@@ -26,7 +26,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import org.javatuples.Pair;
 import ozpasyazilim.utils.datatypes.*;
-import ozpasyazilim.utils.fidborm.FiEntity;
+import ozpasyazilim.utils.fidborm.FiFieldUtil;
 import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.log.LogListener;
 import ozpasyazilim.utils.mvc.IFiCol;
@@ -2103,7 +2103,7 @@ public class FiExcel {
     public static <PrmEntClazz> void saveSablonExcelByClass(IFiModCont iFxModCont, List<PrmEntClazz> listSampleData
             , Class<PrmEntClazz> clazzForAutoComment, String appDir) {
 
-        List<FiField> listFiFieldsSummary = FiEntity.getListFieldsWoutStatic(clazzForAutoComment);
+        List<FiField> listFiFieldsSummary = FiFieldUtil.getListFieldsWoutStatic(clazzForAutoComment);
 
         List<FiCol> fiTableColList = FiCol.convertListFiField(listFiFieldsSummary);
 
