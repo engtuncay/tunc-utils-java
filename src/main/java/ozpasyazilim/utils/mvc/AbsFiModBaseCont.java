@@ -23,6 +23,13 @@ public abstract class AbsFiModBaseCont implements IFiModCont {
      */
     protected String connProfile;
 
+    public AbsFiModBaseCont() {
+    }
+
+    public AbsFiModBaseCont(String connProfile) {
+        this.connProfile = connProfile;
+    }
+
     @Override
     public abstract void initCont();
 

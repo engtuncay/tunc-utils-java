@@ -23,6 +23,10 @@ public class FiArbWindowCont extends AbsFiModBaseCont implements IFiModCont {
 		//super.moduleCode = EntegreModules.ModContGen.getModuleCode();
 	}
 
+	public FiArbWindowCont(String connProfile) {
+		super(connProfile);
+	}
+
 	@Override
 	public void initCont() {
 		modView = new FiArbWindowView();
