@@ -18,6 +18,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Window;
 import ozpasyazilim.utils.core.FiBool;
 import ozpasyazilim.utils.core.FiString;
+import ozpasyazilim.utils.gui.components.ComboItemObj;
 import ozpasyazilim.utils.gui.components.ComboItemText;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ import java.util.function.Predicate;
 public class FxComboBox<T> extends ComboBox<T> {
 
     // Componentin Ekrandan görünen değerden(txLabel) farklı olarak arka planda tutulan değeri
-    private StringProperty txValue = new SimpleStringProperty();
+    private StringProperty txValue; // = new SimpleStringProperty();
     private ObjectProperty objValue;
     private FilteredList<T> filteredList;
     private StringProperty txFilter;
@@ -65,15 +66,18 @@ public class FxComboBox<T> extends ComboBox<T> {
     }
 
     public String getTxValue() {
-        return txValue.get();
+        return txValueProperty().get();
     }
 
     public StringProperty txValueProperty() {
+        if (txValue == null) {
+            txValue = new SimpleStringProperty();
+        }
         return txValue;
     }
 
     public void setTxValue(String txValue) {
-        this.txValue.set(txValue);
+        this.txValueProperty().set(txValue);
     }
 
     public void setSelectedComboItemByTxValue() {
@@ -88,6 +92,24 @@ public class FxComboBox<T> extends ComboBox<T> {
             if (item.getValue() == null) continue;
 
             if (item.getValue().equals(getTxValue())) {
+                setSelectedItemFiAsync(index);
+            }
+
+        }
+    }
+
+    public void setSelectedComboItemByObjValue() {
+
+        if (getObjValue()==null || isEmptyComboBox()) return;
+
+        ObservableList<ComboItemObj> itemsCombo = (ObservableList<ComboItemObj>) getItems();
+
+        for (int index = 0; index < itemsCombo.size(); index++) {
+
+            ComboItemObj item = itemsCombo.get(index);
+            if (item.getValue() == null) continue;
+
+            if (item.getValue().equals(getObjValue())) {
                 setSelectedItemFiAsync(index);
             }
 
@@ -399,4 +421,5 @@ public class FxComboBox<T> extends ComboBox<T> {
     public void setObjValue(Object objValue) {
         this.objValueProperty().set(objValue);
     }
+
 }

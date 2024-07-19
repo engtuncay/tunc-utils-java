@@ -180,6 +180,11 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
     private TriConsumer<Object, Node, FxTableCol2> fnEditorNodeRendererWithCol;
     private TriConsumer<Object, Node, Object> fnEditorNodeRendererWitValue;
 
+    /**
+     * bütün form elemanları oluşturulduktan sonra çalıştırılır {@link FxFormMigGen}
+     */
+    private Consumer<FiCol> fnEditorNodeLfcAfterAllFormLoad;
+
 
     /**
      * Editör comp, mesela tabloda bu pred e göre disable olmasını sağlar ( ifc ye eklenmedi)
@@ -431,7 +436,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
             if (FiBool.isTrue(fiField.getBoExcludeFromAutoColList())) continue;
             FiCol fiTableCol = new FiCol(fiField.getName(), fiField.getName());
             fiTableCol.setColType(convertOzColType(fiField.getClassNameSimple()));
-            if(fiTableCol.getColTypeNtn().equals(OzColType.Double) || fiTableCol.getColTypeNtn().equals(OzColType.Integer)){
+            if (fiTableCol.getColTypeNtn().equals(OzColType.Double) || fiTableCol.getColTypeNtn().equals(OzColType.Integer)) {
                 fiTableCol.setSummaryType(OzColSummaryType.SUM);
             }
             fiTableColList.add(fiTableCol);
@@ -453,6 +458,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 
     /**
      * Eksik ihtiyaçlara göre doldurulması lazım
+     *
      * @param iFiCol
      * @return
      */
@@ -675,7 +681,13 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
         return this;
     }
 
-    public FiCol buildColEditorClass(String name) {
+    /**
+     * Class getName kullanılır (uzun sınıf ismi)
+     *
+     * @param name
+     * @return
+     */
+    public FiCol buiColEditorClass(String name) {
         setColEditorClass(name);
         return this;
     }
@@ -716,13 +728,14 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
      * @param entity
      * @param comp
      */
-    public void doNodeOperationsBeforeSettingValue(Object entity, Node comp) {
+    public void lifeCycleNodeOperationsBeforeSettingValue(Object entity, Node comp) {
         if (getFnEditorNodeRendererBeforeSettingValue() != null) {
             getFnEditorNodeRendererBeforeSettingValue().accept(entity, comp);
         }
     }
 
-    public void doNodeOperationsAfterInitialValue(Object entity, Node comp) {
+    public void lifeCycleNodeOperationsAfterInitialValue(Object entity, Node comp) {
+
         if (getFnEditorNodeRendererAfterInitialValue1() != null) {
             getFnEditorNodeRendererAfterInitialValue1().accept(entity, comp);
         }
@@ -730,6 +743,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
         if (getFnEditorNodeRendererAfterInitialValue2() != null) {
             getFnEditorNodeRendererAfterInitialValue2().accept(entity, comp);
         }
+
     }
 
     public FiCol buiBoFilterLike(Boolean boFilterLike) {
@@ -1120,15 +1134,15 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
         this.fnEditorNodeRendererBeforeSettingValue = fnEditorNodeRendererOnLoad;
     }
 
-    @Override
-    public Object getColEditorValue() {
-        return colValue;
-    }
-
-    @Override
-    public void setColEditorValue(Object colEditorValue) {
-        this.colValue = colEditorValue;
-    }
+//    @Override
+//    public Object getColEditorValue() {
+//        return colValue;
+//    }
+//
+//    @Override
+//    public void setColEditorValue(Object colEditorValue) {
+//        this.colValue = colEditorValue;
+//    }
 
     @Override
     public Boolean getBoRequired() {
@@ -1526,6 +1540,19 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
 
     public void setBoWhereField(Boolean boWhereField) {
         this.boWhereField = boWhereField;
+    }
+
+    public Consumer<FiCol> getFnEditorNodeLfcAfterAllFormLoad() {
+        return fnEditorNodeLfcAfterAllFormLoad;
+    }
+
+    public void setFnEditorNodeLfcAfterAllFormLoad(Consumer<FiCol> fnEditorNodeLfcAfterAllFormLoad) {
+        this.fnEditorNodeLfcAfterAllFormLoad = fnEditorNodeLfcAfterAllFormLoad;
+    }
+
+    public FiCol buiFnEditorNodeLfcAfterAllFormLoad(Consumer<FiCol> fnEditorNodeRendererAfterAllFormLoad) {
+        this.fnEditorNodeLfcAfterAllFormLoad = fnEditorNodeRendererAfterAllFormLoad;
+        return this;
     }
 }
 

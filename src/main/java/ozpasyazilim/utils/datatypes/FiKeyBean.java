@@ -29,6 +29,11 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
      */
     List<FiCol> listFiCol;
 
+    /**
+     * sorgular için alanların ilgili olduğu tabloyu gösterir
+     */
+    String txTableName;
+
     public FiKeyBean() {
     }
 
@@ -374,5 +379,13 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
 
     public Object getByFiCol(FiCol fiCol) {
         return get(fiCol.getFieldName());
+    }
+
+    public String getTxTableName() {
+        return txTableName;
+    }
+
+    public void setTxTableName(String txTableName) {
+        this.txTableName = txTableName;
     }
 }

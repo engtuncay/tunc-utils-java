@@ -14,6 +14,8 @@ import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.repoSql.RepoSqlColumn;
 import ozpasyazilim.utils.returntypes.Fdr;
 import ozpasyazilim.utils.table.FiCol;
+import ozpasyazilim.utils.table.FiColList;
+import ozpasyazilim.utils.table.FiColsUtil;
 
 import javax.persistence.*;
 import java.lang.annotation.Annotation;
@@ -1798,6 +1800,37 @@ public class FiQugen {
         }
 
         return query.toString();
+    }
+
+    public static String insertFiCols(Class clazz, List<FiCol> listFields) {
+
+        String template = "INSERT INTO {{tableName}} ( {{csvFields}} ) \n"
+                + " VALUES ( {{paramFields}} )";
+
+        StringBuilder queryFields = new StringBuilder();
+        StringBuilder queryParams = new StringBuilder();
+
+        int indexFields = 1;
+        int indexParams = 1;
+
+        for (FiCol fiCol : listFields) {
+
+            if (indexFields != 1) queryFields.append(", ");
+            queryFields.append(fiCol.getFieldName());
+
+            if (indexParams != 1) queryParams.append(", ");
+            queryParams.append("@").append(fiCol.getFieldName());
+
+            indexFields++;
+            indexParams++;
+        }
+
+        FiKeyBean fkbTemplate = new FiKeyBean();
+        fkbTemplate.add("tableName", getTableName(clazz));
+        fkbTemplate.add("csvFields", queryFields.toString());
+        fkbTemplate.add("paramFields", queryParams.toString());
+
+        return FiString.substitutor(template,fkbTemplate);
     }
 
     /**

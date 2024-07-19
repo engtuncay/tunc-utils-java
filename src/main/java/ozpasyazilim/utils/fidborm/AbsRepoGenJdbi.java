@@ -1401,6 +1401,30 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
         return fdr;
     }
 
+    public Fdr jdInsertBindMapMain(String insertQuery, Map<String, Object> mapParams) {
+
+        Jdbi jdbi = getJdbi();
+
+        Fdr fdr = new Fdr();
+
+        try {
+            Integer rowCountUpdate = jdbi.withHandle(handle -> {
+                return handle.createUpdate(Fiqt.stojExcludable1(insertQuery))
+                        .bindMap(mapParams)
+                        .execute(); // returns row count updated
+            });
+            //Loghelperr.getInstance(getClass()).debug("Row Count Update:"+rowCountUpdate);
+            //fiDbResult.setLnSuccessWithUpBoResult(1, rowCountUpdate);
+            fdr.setBoResultAndRowsAff(true, rowCountUpdate);
+            //fdr.setLnResult(1);
+        } catch (Exception ex) {
+            Loghelper.get(getClass()).error(FiException.exTosMain(ex));
+            fdr.setBoResult(false, ex);
+            //fdr.setLnResult(0);
+        }
+        return fdr;
+    }
+
     public Fdr jdhUpdateBindMap(String updateQuery, Map<String, Object> fiMapParams, Handle handle) {
 
         Fdr fdr = new Fdr();
@@ -1503,6 +1527,25 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
         String sqlQuery = FiQugen.updateFiColsWhereKeyFiCols(getEntityClass(), fkbParams.getListFiColInit());
         //Loghelper.get(getClass()).debug("jdhUpdateFiColsWhereIdFiColsBindFkb : " + sqlQuery);
         return jdhUpdateBindMap(sqlQuery, fkbParams, handle);
+
+    }
+
+    /**
+     * Table ismini generic entity'den alır
+     *
+     * @param fkbParams
+     * @return
+     */
+    public Fdr jdInsertFkb(FiKeyBean fkbParams) {
+        return jdInsertFiColsBindFkb(fkbParams.getListFiColInit(), fkbParams);
+    }
+
+    public Fdr jdInsertFiColsBindFkb(List<FiCol> fiColList, FiKeyBean fkbParams) {
+
+        String sql = FiQugen.insertFiCols(getEntityClass(), fiColList);
+        Loghelper.get(getClass()).debug("jdInsertFiColsBindFkb " + sql);
+
+        return jdUpdateBindMapMain(sql, fkbParams);
 
     }
 

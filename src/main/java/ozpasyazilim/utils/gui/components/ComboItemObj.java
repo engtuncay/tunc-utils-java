@@ -16,7 +16,7 @@ public class ComboItemObj {
 	public ComboItemObj() {
 	}
 
-	public ComboItemObj(Object value, String label) {
+	public ComboItemObj(String label, Object value) {
 		this.label = label;
 		this.value = value;
 	}

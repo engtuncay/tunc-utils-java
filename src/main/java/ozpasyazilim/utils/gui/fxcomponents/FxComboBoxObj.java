@@ -40,7 +40,7 @@ public class FxComboBoxObj extends FxComboBox<ComboItemObj> {
 	}
 
 	public void addComboItem(Object objValue, String txLabel) {
-		addFiItem(new ComboItemObj(objValue, txLabel));
+		addFiItem(new ComboItemObj(txLabel, objValue));
 	}
 
 //	public void addFiList(List<EntClazz> list, Function<EntClazz, String> fnLabel) {

@@ -34,7 +34,7 @@ public class FxLabel extends Label implements IFxComp {
 		return this;
 	}
 
-	public void fiSetImage(File file, Double height) {
+	public void setImageFi(File file, Double height) {
 
 		if (file.exists()) {
 			Image image = new Image(file.toURI().toString(), 0, height, true, true);

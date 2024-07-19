@@ -355,7 +355,7 @@ public class FxTableCol<Clazz> extends TableColumn implements IFiCol<Clazz> {
 		return this;
 	}
 	public FxTableCol buildColEditorValue(Object fiValue) {
-		setColEditorValue(fiValue);
+		setColValue(fiValue);
 		return this;
 	}
 
@@ -936,13 +936,13 @@ public class FxTableCol<Clazz> extends TableColumn implements IFiCol<Clazz> {
 		this.colEditorFactoryNode = colEditorNode;
 	}
 
-	public Object getColEditorValue() {
-		return colEditorValue;
-	}
-
-	public void setColEditorValue(Object colEditorValue) {
-		this.colEditorValue = colEditorValue;
-	}
+//	public Object getColEditorValue() {
+//		return colEditorValue;
+//	}
+//
+//	public void setColEditorValue(Object colEditorValue) {
+//		this.colEditorValue = colEditorValue;
+//	}
 
 	public String getColFxEditorNodeText() {
 		return colFxEditorNodeText;

@@ -4,21 +4,23 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import ozpasyazilim.utils.annotations.FiDraft;
 import ozpasyazilim.utils.core.FiBool;
 import ozpasyazilim.utils.javafx.FiNodeFx;
 import ozpasyazilim.utils.table.OzColType;
 
 import java.util.function.Consumer;
 
-public class FxTextFieldBtn<EntClazz> extends FxMigPane implements IfxNode {
+@FiDraft
+public class FxTextFieldBtns extends FxMigPane implements IfxNode {
 
-	private final FxTextField<EntClazz> fxTextField;
+	private final FxTextField fxTextField;
 	private final FxButton btnSearch;
 	protected FxLabel lblAciklama;
 	private Consumer<String> fnTxfDataChanged;
-	Boolean boFirstLoaded;
+	//Boolean boFirstLoaded;
 
-	public FxTextFieldBtn() {
+	public FxTextFieldBtns() {
 		super(FxMigHp.bui().lcgInset0Gap00().getLcgPrep2());
 		btnSearch = new FxButton("*");
 		fxTextField = new FxTextField<>();
@@ -38,10 +40,7 @@ public class FxTextFieldBtn<EntClazz> extends FxMigPane implements IfxNode {
 		});
 	}
 
-	public FxTextField<EntClazz> getFxTextField() {
-//		if (fxTextField == null) {
-//			fxTextField = new FxTextField<>();
-//		}
+	public FxTextField getFxTextField() {
 		return fxTextField;
 	}
 
@@ -77,17 +76,17 @@ public class FxTextFieldBtn<EntClazz> extends FxMigPane implements IfxNode {
 		txValueProperty().bindBidirectional(getFxTextField().textProperty());
 	}
 
-	public EntClazz getObjValue() {
-		return getFxTextField().getObjValue();
-	}
-
-	public ObjectProperty<EntClazz> objValueProperty() {
-		return getFxTextField().objValueProperty();
-	}
-
-	public void setEntValue(EntClazz objValue) {
-		getFxTextField().setObjValue(objValue);
-	}
+//	public EntClazz getEntValue() {
+//		return getFxTextField().getObjValue();
+//	}
+//
+//	public ObjectProperty<EntClazz> entValueProperty() {
+//		return getFxTextField().objValueProperty();
+//	}
+//
+//	public void setEntValue(EntClazz prmPropObjValue) {
+//		getFxTextField().setObjValue(prmPropObjValue);
+//	}
 
 	public void activateLabelTrigger(FxLabel fxLabel) {
 		getFxTextField().txAltValueProperty().addListener((observable, oldValue, newValue) -> {
@@ -201,16 +200,16 @@ public class FxTextFieldBtn<EntClazz> extends FxMigPane implements IfxNode {
 		this.fnTxfDataChanged = fnTxfDataChanged;
 	}
 
-	public Boolean getBoFirstLoaded() {
-		if (boFirstLoaded == null) {
-			return false;
-		}
-		return boFirstLoaded;
-	}
-
-	public void setBoFirstLoaded(Boolean boFirstLoaded) {
-		this.boFirstLoaded = boFirstLoaded;
-	}
+//	public Boolean getBoFirstLoaded() {
+//		if (boFirstLoaded == null) {
+//			return false;
+//		}
+//		return boFirstLoaded;
+//	}
+//
+//	public void setBoFirstLoaded(Boolean boFirstLoaded) {
+//		this.boFirstLoaded = boFirstLoaded;
+//	}
 
 
 }

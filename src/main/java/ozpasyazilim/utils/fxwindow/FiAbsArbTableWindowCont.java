@@ -57,9 +57,9 @@ public abstract class FiAbsArbTableWindowCont<EntClazz> extends FiArbWindowCont 
 
     public <EntClazz, B> void assignBoSecim(FxTextFieldBtn fxTextFieldBtn, Function<EntClazz, B> fnKeyValue) {
 
-        if (fxTextFieldBtn.getEntValue() == null) return;
+        if (fxTextFieldBtn.getObjValue() == null) return;
 
-        List<EntClazz> listData = (List<EntClazz>) fxTextFieldBtn.getEntValue();
+        List<EntClazz> listData = (List<EntClazz>) fxTextFieldBtn.getObjValue();
 
         FilteredList<EntClazz> itemsCurrent = (FilteredList<EntClazz>) getFxTableView().getItemsCurrentFi();
         Map<B, EntClazz> mapKeyToObject = FiCollection.listToMapSingle(listData, fnKeyValue);

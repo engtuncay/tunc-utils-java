@@ -204,16 +204,16 @@ public interface IFiCol<N> {
 
 	public void setFnEditorNodeRendererOnLoad(BiConsumer<Object, Node> fnEditorNodeRendererOnLoad);
 
-	/**
-	 * use colValue
-	 *
-	 * @return
-	 */
-	@Deprecated
-	public Object getColEditorValue();
-
-	@Deprecated
-	public void setColEditorValue(Object colEditorValue);
+//	/**
+//	 * use colValue
+//	 *
+//	 * @return
+//	 */
+//	@Deprecated
+//	public Object getColEditorValue();
+//
+//	@Deprecated
+//	public void setColEditorValue(Object colEditorValue);
 
 	public Boolean getBoRequired();
 

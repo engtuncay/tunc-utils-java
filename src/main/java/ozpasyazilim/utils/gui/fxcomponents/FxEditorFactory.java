@@ -280,27 +280,28 @@ public class FxEditorFactory {
      * <p>
      * Kullanan Components : FxFormMig
      *
-     * @param fiTableCol
+     * @param ifiCol
      * @return
      */
-    public static Node generateAndRenderNodeBeforeLoadByEditorClassEntry(IFiCol fiTableCol, Object entity) {
+    public static Node generateAndRenderNodeBeforeLoadByEditorClassEntry(IFiCol ifiCol, Object entity) {
 
-        Node comp = generateNodeByClassNameMain(fiTableCol.getColType(), fiTableCol.getColEditorClass(), null);
+        Node comp = generateNodeByClassNameMain(ifiCol.getColType(), ifiCol.getColEditorClass(), null);
 
-        if (fiTableCol.getFnEditorNodeRendererBeforeSettingValue() != null) {
-            fiTableCol.getFnEditorNodeRendererBeforeSettingValue().accept(entity, comp);
+        if (ifiCol.getFnEditorNodeRendererBeforeSettingValue() != null) {
+            ifiCol.getFnEditorNodeRendererBeforeSettingValue().accept(entity, comp);
         }
 
-        if (fiTableCol.getColEditorClass() == null) fiTableCol.setColEditorClass(comp.getClass().getName());
-        if (comp != null) fiTableCol.setColEditorNode(comp);
+        if (ifiCol.getColEditorClass() == null) ifiCol.setColEditorClass(comp.getClass().getName());
+
+        if (comp != null) ifiCol.setColEditorNode(comp);
 
         if (comp instanceof IfxNode) {
-            fiTableCol.setIfxNodeEditor((IfxNode) comp);
+            ifiCol.setIfxNodeEditor((IfxNode) comp);
             //logger.getLogger().debug("ifxnode ayarlandı");
         }
 
         // generator içinden çıkarılıp buraya eklendi, esas amaç anlaşılmadı
-        setNodeValueByCompClass(fiTableCol.getColEditorNode(), fiTableCol.getColEditorClass(), fiTableCol.getColValue());
+        setNodeValueByCompClass(ifiCol.getColEditorNode(), ifiCol.getColEditorClass(), ifiCol.getColValue());
 
         return comp;
     }
@@ -337,12 +338,12 @@ public class FxEditorFactory {
         }
 
         // getFnEditorNodeRendererBeforeSettingValue çalıştırır
-        fiCol.doNodeOperationsBeforeSettingValue(entity, comp);
+        fiCol.lifeCycleNodeOperationsBeforeSettingValue(entity, comp);
 
         // comp'a değer atanır
         setNodeValueByCompClass(fiCol.getColEditorNode(), fiCol.getColEditorClass(), fiCol.getColValue());
 
-        fiCol.doNodeOperationsAfterInitialValue(entity, comp);
+        fiCol.lifeCycleNodeOperationsAfterInitialValue(entity, comp);
 
         return comp;
     }
@@ -504,9 +505,9 @@ public class FxEditorFactory {
             return comp;
         }
 
-        if (txClassName.equals(FxTextFieldWitBtnLbl3.class.getName())) {
+        if (txClassName.equals(FxTextFieldBtnWitLbl3.class.getName())) {
 
-            FxTextFieldWitBtnLbl3 comp = new FxTextFieldWitBtnLbl3();
+            FxTextFieldBtnWitLbl3 comp = new FxTextFieldBtnWitLbl3();
 
             if (ozColType == OzColType.Double) {
                 comp.getFxTextField().convertNumberDoubleTextField1();
@@ -516,9 +517,9 @@ public class FxEditorFactory {
             return comp;
         }
 
-        if (txClassName.equals(FxTextFieldBtnLabel2.class.getName())) {
+        if (txClassName.equals(FxTextFieldBtnWitLbl2.class.getName())) {
 
-            FxTextFieldBtnLabel2 comp = new FxTextFieldBtnLabel2();
+            FxTextFieldBtnWitLbl2 comp = new FxTextFieldBtnWitLbl2();
 
             if (ozColType == OzColType.Double) {
                 comp.getFxTextField().convertNumberDoubleTextField1();
@@ -773,7 +774,7 @@ public class FxEditorFactory {
             if (cellvalue == null) continue;
 
             // Bütün alanlar için de atanabilir , eski değer tutulmuş olur.
-            fiCol.setColEditorValue(cellvalue);
+            fiCol.setColValue(cellvalue);
 
             // Hidden ise, node comp üretilmediği için değer ataması yapılmaz.
             if (FiBool.isTrue(fiCol.getBoHidden())) {
@@ -822,12 +823,24 @@ public class FxEditorFactory {
         return fiKeyBean;
     }
 
+    public static FiKeyBean bindFormToFiKeyBeanByEditorNodeForFiCol(List<FiCol> listColumns) {
+        FiKeyBean fiKeyBean = new FiKeyBean();
+        for (int i = 0; i < listColumns.size(); i++) {
+            FiCol fiCol = listColumns.get(i);
+            Object cellvalue = getNodeObjValueByEditorNode(fiCol, fiCol.getColEditorClass());    // map.get(fiCol.getHeader());
+            //Loghelperr.getInstance(getClass()).debug(" map param cell value :" + cellvalue.toString() + " class:" + cellvalue.getClass().getSimpleName());
+            //fiKeyBean.put(fiCol.getFieldName().trim(), cellvalue);
+            fiKeyBean.putFiCol(fiCol, cellvalue);
+        }
+        return fiKeyBean;
+    }
+
     public static void bindFormValueToFiColListByEditor(List<FiCol> listColumns) {
 
         for (int i = 0; i < listColumns.size(); i++) {
             FiCol fiCol = listColumns.get(i);
             Object cellvalue = getNodeObjValueByEditorNode(fiCol, fiCol.getColEditorClass());
-            fiCol.setColEditorValue(cellvalue);
+            fiCol.setColValue(cellvalue);
         }
 
     }
@@ -877,9 +890,9 @@ public class FxEditorFactory {
 
         }
 
-        if (colNodeClass.equals(FxTextFieldWitBtnLbl3.class.getName())) {
+        if (colNodeClass.equals(FxTextFieldBtnWitLbl3.class.getName())) {
 
-            FxTextFieldWitBtnLbl3 comp = (FxTextFieldWitBtnLbl3) colNode;
+            FxTextFieldBtnWitLbl3 comp = (FxTextFieldBtnWitLbl3) colNode;
             // Gerçek değeri txvalue da tutulur.
             comp.setTxValue(cellvalue.toString());
             if (iFiCol.getFnEditorNodeValueFormmatter() != null) {
@@ -960,15 +973,15 @@ public class FxEditorFactory {
     }
 
     public static Object getNodeObjValueByEditorNode(IFiCol iFiCol, String txEditorClass) {
-        return getValueFromNodeCompMain(iFiCol.getColType(), txEditorClass, iFiCol.getColEditorNode(), iFiCol.getColEditorValue());
+        return getValueFromNodeCompMain(iFiCol.getColType(), txEditorClass, iFiCol.getColEditorNode(), iFiCol.getColValue());
     }
 
     public static Object getNodeObjValueByEditorNode(FiCol fiCol) {
-        return getValueFromNodeCompMain(fiCol.getColType(), fiCol.getColEditorClass(), fiCol.getColEditorNode(), fiCol.getColEditorValue());
+        return getValueFromNodeCompMain(fiCol.getColType(), fiCol.getColEditorClass(), fiCol.getColEditorNode(), fiCol.getColValue());
     }
 
     public static String getNodeObjValueAsString(FiCol fiCol) {
-        Object valueFromNodeCompMain = getValueFromNodeCompMain(fiCol.getColType(), fiCol.getColEditorClass(), fiCol.getColEditorNode(), fiCol.getColEditorValue());
+        Object valueFromNodeCompMain = getValueFromNodeCompMain(fiCol.getColType(), fiCol.getColEditorClass(), fiCol.getColEditorNode(), fiCol.getColValue());
 
         if(valueFromNodeCompMain instanceof String){
             return valueFromNodeCompMain.toString();
@@ -1025,7 +1038,7 @@ public class FxEditorFactory {
                 || txNodeClassName.equals(FxTextFieldBtn.class.getName())
                 || txNodeClassName.equals(FxLabel.class.getName())
                 || txNodeClassName.equals(FxLabelData.class.getName())
-                || txNodeClassName.equals(FxTextFieldWitBtnLbl3.class.getName())) {
+                || txNodeClassName.equals(FxTextFieldBtnWitLbl3.class.getName())) {
 
             String textValue = null;
 
@@ -1041,14 +1054,14 @@ public class FxEditorFactory {
                 //Loghelperr.debug(FxEditorFactory.class,"txVal:"+comp.getTxValue());
             }
 
-            if (txNodeClassName.equals(FxTextFieldWitBtnLbl3.class.getName())) {
-                FxTextFieldWitBtnLbl3 comp = (FxTextFieldWitBtnLbl3) nodeComp;
+            if (txNodeClassName.equals(FxTextFieldBtnWitLbl3.class.getName())) {
+                FxTextFieldBtnWitLbl3 comp = (FxTextFieldBtnWitLbl3) nodeComp;
                 //textValue = comp.getFxTextField().getText();
                 textValue = comp.getTxValue();
                 //Loghelperr.debug(FxEditorFactory.class,"txVal:"+comp.getTxValue());
             }
 
-            if (txNodeClassName.equals(FxTextFieldBtnLabel2.class.getName())) {
+            if (txNodeClassName.equals(FxTextFieldBtnWitLbl2.class.getName())) {
                 FxTextFieldWithButtonLabelCustom comp = (FxTextFieldWithButtonLabelCustom) nodeComp;
                 //textValue = comp.getFxTextField().getText();
                 textValue = comp.getTxValue();
@@ -1560,7 +1573,7 @@ public class FxEditorFactory {
             // boRequired True, BoNullable False yapılmışsa boş geçilemez.
             if (FiBool.isTrue(fiTableCol.getBoRequired()) || FiBool.isFalse(fiTableCol.getBoNullable())) {
 
-                Object cellValue = fiTableCol.getColEditorValue();
+                Object cellValue = fiTableCol.getColValue();
 
                 // Null ve Boş Alan Kontrolü
                 if (cellValue == null ||
@@ -1641,9 +1654,9 @@ public class FxEditorFactory {
 
         }
 
-        if (colNodeClass.equals(FxTextFieldWitBtnLbl3.class.getName())) {
+        if (colNodeClass.equals(FxTextFieldBtnWitLbl3.class.getName())) {
 
-            FxTextFieldWitBtnLbl3 comp = (FxTextFieldWitBtnLbl3) colNode;
+            FxTextFieldBtnWitLbl3 comp = (FxTextFieldBtnWitLbl3) colNode;
             // Gerçek değeri txvalue da tutulur.
             comp.setTxValue("");
             comp.getFxTextField().setText("");

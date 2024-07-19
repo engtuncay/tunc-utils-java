@@ -145,7 +145,7 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
      * @return
      */
     public FiKeyBean getFormAsFkb() {
-        return FxEditorFactory.bindFormToFiKeyBeanByEditorNode(getListFormElements());
+        return FxEditorFactory.bindFormToFiKeyBeanByEditorNodeForFiCol(getListFormElements());
     }
 
     public List<FiCol> getFormAsFiColListWithFormValue() {
@@ -306,6 +306,19 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
 
         } // tblCol for döngüsü sonu
 
+
+        // bütün form elemanları oluşturulduktan sonra çalıştırılacak eventlar
+        lifeCycleAfterAllFormLoad();
+
+    }
+
+    private void lifeCycleAfterAllFormLoad() {
+
+        for (FiCol fiCol : getListFormElementsInit()) {
+            if (fiCol.getFnEditorNodeLfcAfterAllFormLoad()!=null) {
+                fiCol.getFnEditorNodeLfcAfterAllFormLoad().accept(fiCol);
+            }
+        }
     }
 
     public Object getEntityByFilterNode(Class clazz) {
