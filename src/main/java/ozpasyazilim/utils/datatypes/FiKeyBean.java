@@ -270,12 +270,39 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
         return null;
     }
 
+    public Integer getAsInt(FiCol fiCol) {
+
+        if (fiCol == null || FiString.isEmpty(fiCol.getFieldName())) return null;
+
+        if (containsKey(fiCol.getFieldName())) {
+            Object objValue = get(fiCol.getFieldName());
+
+            if (objValue == null) return null;
+
+            if( objValue instanceof Integer){
+                return (Integer) objValue;
+            }
+
+        }
+
+        return null;
+    }
+
     public Date getAsDate(FiCol fiCol) {
         if (fiCol == null || FiString.isEmpty(fiCol.getFieldName())) return null;
 
         if (containsKey(fiCol.getFieldName())) {
-            return (Date) get(fiCol.getFieldName());
+            //return (Date) get(fiCol.getFieldName());
+            Object objValue = get(fiCol.getFieldName());
+
+            if (objValue == null) return null;
+
+            if( objValue instanceof Date){
+                return (Date) objValue;
+            }
+
         }
+
         return null;
     }
 
