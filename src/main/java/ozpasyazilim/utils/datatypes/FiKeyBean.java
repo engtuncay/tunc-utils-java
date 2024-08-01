@@ -318,6 +318,18 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
         return null;
     }
 
+    public Boolean getAsBoolean(String key) {
+        if (FiString.isEmpty(key)) return null;
+
+        if (containsKey(key)) {
+            if (get(key) instanceof Boolean) {
+                return (Boolean) get(key);
+            }
+        }
+
+        return null;
+    }
+
 
     public void copyParamByFiColOrEmptyStr(FiCol fiColFrom, FiCol fiColTo) {
         putKeyTos(fiColTo, getOrDefault(fiColFrom.toString(), ""));

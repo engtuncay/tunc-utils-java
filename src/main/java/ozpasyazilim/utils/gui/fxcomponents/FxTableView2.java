@@ -224,6 +224,12 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     public FilteredList<EntClazz> getItemsFiCheckedByBoolField(String fieldnameForSelection) {
 
         return getItemsCurrentFi(ent -> {
+
+            if(ent instanceof FiKeyBean){
+                FiKeyBean fkbRow = (FiKeyBean) ent;
+                return FiBool.or(fkbRow.getAsBoolean(fieldnameForSelection), false);
+            }
+
             try {
                 return FiBool.convertBooleanElseFalse(PropertyUtils.getNestedProperty(ent, fieldnameForSelection));
             } catch (Exception e) {
@@ -239,6 +245,12 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         List<EntClazz> list = new ArrayList<>();
 
         FilteredList<EntClazz> itemsCurrentFi = getItemsCurrentFi(ent -> {
+
+            if(ent instanceof FiKeyBean){
+                FiKeyBean fkbRow = (FiKeyBean) ent;
+                return FiBool.or(fkbRow.getAsBoolean(fieldForSelection), false);
+            }
+
             try {
                 return FiBool.convertBooleanElseFalse(PropertyUtils.getNestedProperty(ent, fieldForSelection));
             } catch (Exception e) {
@@ -261,6 +273,12 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         List<EntClazz> list = new ArrayList<>();
 
         FilteredList<EntClazz> itemsCurrentFi = getItemsCurrentFi(ent -> {
+
+            if(ent instanceof FiKeyBean){
+                FiKeyBean fkbRow = (FiKeyBean) ent;
+                return FiBool.or(fkbRow.getAsBoolean(fieldForSelection), false);
+            }
+
             try {
                 return FiBool.isFalseOrNull(FiBool.convertBoolean(PropertyUtils.getNestedProperty(ent, fieldForSelection)));
             } catch (Exception e) {
@@ -299,6 +317,12 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     public FilteredList<EntClazz> getItemsCurrentFiCheckedAsSourceList() {
 
         return getItemsCurrentFi(ent -> {
+
+            if(ent instanceof FiKeyBean){
+                FiKeyBean fkbRow = (FiKeyBean) ent;
+                return FiBool.or(fkbRow.getAsBoolean(getFiColSelection().getFieldName()), false);
+            }
+
             try {
                 return FiBool.convertBooleanElseFalse(PropertyUtils.getNestedProperty(ent, getFiColSelection().getFieldName()));
             } catch (Exception e) { // çevirmede hata olursa false döner
@@ -309,9 +333,29 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     }
 
+    public FilteredList<EntClazz> getItemsFkbCurrentFiCheckedAsSourceList() {
+
+        return getItemsCurrentFi(ent -> {
+
+            if(ent instanceof FiKeyBean){
+                FiKeyBean fkbRow = (FiKeyBean) ent;
+                return FiBool.or(fkbRow.getAsBoolean(getFiColSelection().getFieldName()), false);
+            }
+
+            return false;
+        });
+
+    }
+
     public List<EntClazz> getItemsFiCheckedAsNewListInAllElements() {
 
         FilteredList<EntClazz> itemsCurrentFi = getItemsAllFi(ent -> {
+
+            if(ent instanceof FiKeyBean){
+                FiKeyBean fkbRow = (FiKeyBean) ent;
+                return FiBool.or(fkbRow.getAsBoolean(getFiColSelection().getFieldName()), false);
+            }
+
             try {
                 return FiBool.convertBooleanElseFalse(PropertyUtils.getNestedProperty(ent, getFiColSelection().getFieldName()));
             } catch (Exception e) {
