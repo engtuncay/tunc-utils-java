@@ -5,11 +5,13 @@ import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.fidborm.FiFieldUtil;
 import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.fidborm.Fiqt;
+import ozpasyazilim.utils.fidborm.IFiTableMeta;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.table.FiCol;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -33,6 +35,11 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
      * sorgular için alanların ilgili olduğu tabloyu gösterir
      */
     String txTableName;
+
+    IFiTableMeta iFiTableMeta;
+
+    HashMap<String,FiCol> mapFiCol;
+
 
     public FiKeyBean() {
     }
@@ -103,6 +110,7 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
     public FiKeyBean putFiCol(FiCol fiCol, Object value) {
         this.put(fiCol.toString(), value);
         getListFiColInit().add(fiCol);
+        getMapFiColInit().put(fiCol.getFieldName(),fiCol);
         return this;
     }
 
@@ -288,6 +296,30 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
         return null;
     }
 
+    public Double getAsDouble(FiCol fiCol) {
+
+        if (fiCol == null || FiString.isEmpty(fiCol.getFieldName())) return null;
+
+        if (containsKey(fiCol.getFieldName())) {
+            Object objValue = get(fiCol.getFieldName());
+
+            if (objValue == null) return null;
+
+            //Loghelper.get(getClass()).debug("Class:"+objValue.getClass().getSimpleName());
+
+            if( objValue instanceof Double){
+                return (Double) objValue;
+            }
+
+            if( objValue instanceof BigDecimal){
+                return ((BigDecimal) objValue).doubleValue();
+            }
+
+        }
+
+        return null;
+    }
+
     public Date getAsDate(FiCol fiCol) {
         if (fiCol == null || FiString.isEmpty(fiCol.getFieldName())) return null;
 
@@ -427,4 +459,38 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
     public void setTxTableName(String txTableName) {
         this.txTableName = txTableName;
     }
+
+    public IFiTableMeta getiFiTableMeta() {
+        return iFiTableMeta;
+    }
+
+    public void setiFiTableMeta(IFiTableMeta iFiTableMeta) {
+        this.iFiTableMeta = iFiTableMeta;
+    }
+
+    public void appendFiCol(FiCol fiCol){
+        getListFiColInit().add(fiCol);
+        getMapFiColInit().put(fiCol.getFieldName(),fiCol);
+    }
+
+    @Override
+    public Object get(Object key) {
+        return super.get(key);
+    }
+
+    public HashMap<String, FiCol> getMapFiCol() {
+        return mapFiCol;
+    }
+
+    public HashMap<String, FiCol> getMapFiColInit() {
+        if (mapFiCol == null) {
+            mapFiCol = new LinkedHashMap<>();
+        }
+        return mapFiCol;
+    }
+
+    public void setMapFiCol(LinkedHashMap<String, FiCol> mapFiCol) {
+        this.mapFiCol = mapFiCol;
+    }
+
 }

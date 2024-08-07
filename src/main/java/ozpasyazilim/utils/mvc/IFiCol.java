@@ -188,9 +188,9 @@ public interface IFiCol<N> {
 
 	public void setBoNonUpdatable(Boolean boNonUpdatable);
 
-	public Boolean getBoKeyField();
+	public Boolean getBoKeyIdField();
 
-	public void setBoKeyField(Boolean boKeyField);
+	public void setBoKeyIdField(Boolean boKeyIdField);
 
 	public Boolean getBoNonEditableForForm();
 
@@ -231,7 +231,7 @@ public interface IFiCol<N> {
 	 */
 	Function<Object, Object> getFnEditorNodeValueFormmatter();
 
-	void setFnEditorNodeValueFormmatter(Function<Object, Object> fnEditorNodeValueFormmatter);
+//	void setFnEditorNodeValueFormmatter(Function<Object, Object> fnEditorNodeValueFormmatter);
 
 	BiConsumer<Object, Node> getFnEditorNodeRendererAfterFormLoad();
 

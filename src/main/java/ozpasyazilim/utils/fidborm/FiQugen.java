@@ -14,8 +14,6 @@ import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.repoSql.RepoSqlColumn;
 import ozpasyazilim.utils.returntypes.Fdr;
 import ozpasyazilim.utils.table.FiCol;
-import ozpasyazilim.utils.table.FiColList;
-import ozpasyazilim.utils.table.FiColsUtil;
 
 import javax.persistence.*;
 import java.lang.annotation.Annotation;
@@ -1665,7 +1663,7 @@ public class FiQugen {
                 continue;
             }
 
-            if (FiBool.isTrue(fiTableCol.getBoKeyField())) {
+            if (FiBool.isTrue(fiTableCol.getBoKeyIdField())) {
                 continue;
             }
 
@@ -1678,7 +1676,7 @@ public class FiQugen {
         int indexWhere = 0;
         for (FiCol fiTableCol : listFields) {
 
-            if (FiBool.isTrue(fiTableCol.getBoKeyField())) {
+            if (FiBool.isTrue(fiTableCol.getBoKeyIdField())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
                 queryWhere.append(fiTableCol.getTxDbFieldNameOrFieldName()).append(" = @").append(fiTableCol.getFieldName());
@@ -1723,7 +1721,7 @@ public class FiQugen {
         for (FiCol fiCol : listFields) {
 
             // id field dahil edilmez
-            if (FiBool.isTrue(fiCol.getBoKeyField())) {
+            if (FiBool.isTrue(fiCol.getBoKeyIdField())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
                 queryWhere.append(fiCol.getFieldName()).append(" IN ( @").append(fiCol.getFieldName()).append(" )");
@@ -1750,6 +1748,82 @@ public class FiQugen {
         return query.toString();
     }
 
+    public static String updateFiColsArb(IFiTableMeta iFiTableMeta, List<FiCol> listFields, Boolean boUpdateFieldsOnly) {
+
+        String template = "UPDATE {{tableName}} SET {{setBlock}} \n"
+                + " WHERE {{whereBlock}} ";
+
+        StringBuilder txSetBlock = new StringBuilder();
+        StringBuilder txWhereBlock = new StringBuilder();
+
+        int indexSetBlock = 1;
+        int indexWhereBlock = 1;
+
+        for (FiCol fiCol : listFields) {
+
+            if (FiBool.isTrue(fiCol.getBoKeyIdField())) {
+                if (indexWhereBlock != 1) txWhereBlock.append(" AND ");
+                txWhereBlock.append(fiCol.getFieldName()).append(" = @").append(fiCol.getFieldName());
+                indexWhereBlock++;
+            } else {
+                if(FiBool.isTrue(boUpdateFieldsOnly)){
+
+                    if(FiBool.isTrue(fiCol.getBoUpdateFieldForQuery())){
+                        if (indexSetBlock != 1) txSetBlock.append(", ");
+                        txSetBlock.append(fiCol.getFieldName()).append(" = @").append(fiCol.getFieldName());
+                        indexSetBlock++;
+                    }else{
+                        continue;
+                    }
+
+                }else{
+                    if (indexSetBlock != 1) txSetBlock.append(", ");
+                    txSetBlock.append(fiCol.getFieldName()).append(" = @").append(fiCol.getFieldName());
+                    indexSetBlock++;
+                }
+
+            }
+
+        }
+
+        FiKeyBean fkbTemplate = new FiKeyBean();
+        fkbTemplate.add("tableName", iFiTableMeta.getTxTableName());
+        fkbTemplate.add("setBlock", txSetBlock.toString());
+        fkbTemplate.add("whereBlock", txWhereBlock.toString());
+
+        return FiString.substitutor(template, fkbTemplate);
+    }
+
+    public static String deleteWhereIdFiColsArb(IFiTableMeta iFiTableMeta, List<FiCol> listFields) {
+
+        String template = "DELETE {{tableName}} \n"
+                + " WHERE {{whereBlock}} ";
+
+        //StringBuilder txSetBlock = new StringBuilder();
+        StringBuilder txWhereBlock = new StringBuilder();
+
+        //int indexSetBlock = 1;
+        int indexWhereBlock = 1;
+
+        for (FiCol fiCol : listFields) {
+
+            if (FiBool.isTrue(fiCol.getBoKeyIdField())) {
+                if (indexWhereBlock != 1) txWhereBlock.append(" AND ");
+                txWhereBlock.append(fiCol.getFieldName()).append(" = @").append(fiCol.getFieldName());
+                indexWhereBlock++;
+            }
+
+        }
+
+        FiKeyBean fkbTemplate = new FiKeyBean();
+        fkbTemplate.add("tableName", iFiTableMeta.getTxTableName());
+        //fkbTemplate.add("setBlock", txSetBlock.toString());
+        fkbTemplate.add("whereBlock", txWhereBlock.toString());
+
+        return FiString.substitutor(template, fkbTemplate);
+    }
+
+
     /**
      * FiColList a göre update sorgusu
      * <p>
@@ -1775,7 +1849,7 @@ public class FiQugen {
         for (FiCol fiCol : listFields) {
 
             // id field dahil edilmez
-            if (FiBool.isTrue(fiCol.getBoKeyField())) {
+            if (FiBool.isTrue(fiCol.getBoKeyIdField())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
                 queryWhere.append(fiCol.getFieldName()).append(" = @").append(fiCol.getFieldName());
@@ -1830,8 +1904,62 @@ public class FiQugen {
         fkbTemplate.add("csvFields", queryFields.toString());
         fkbTemplate.add("paramFields", queryParams.toString());
 
-        return FiString.substitutor(template,fkbTemplate);
+        return FiString.substitutor(template, fkbTemplate);
     }
+
+    public static String insertFiCols2(IFiTableMeta iFiTableMeta, List<FiCol> listFields , Boolean boInserFieldsOnly) {
+
+        String template = "INSERT INTO {{tableName}} ( {{csvFields}} ) \n"
+                + " VALUES ( {{paramFields}} )";
+
+        StringBuilder queryFields = new StringBuilder();
+        StringBuilder queryParams = new StringBuilder();
+
+        int indexFields = 1;
+        int indexParams = 1;
+
+        for (FiCol fiCol : listFields) {
+
+            if (FiBool.isTrue(fiCol.getBoKeyIdField())) continue;
+
+            if(FiBool.isTrue(boInserFieldsOnly)){
+
+                if(FiBool.isTrue(fiCol.getBoInsertFieldForQuery())){
+
+                    if (indexFields != 1) queryFields.append(", ");
+                    queryFields.append(fiCol.getFieldName());
+
+                    if (indexParams != 1) queryParams.append(", ");
+                    queryParams.append("@").append(fiCol.getFieldName());
+
+                    indexFields++;
+                    indexParams++;
+                }
+
+            }else{
+
+                if (indexFields != 1) queryFields.append(", ");
+                queryFields.append(fiCol.getFieldName());
+
+                if (indexParams != 1) queryParams.append(", ");
+                queryParams.append("@").append(fiCol.getFieldName());
+
+                indexFields++;
+                indexParams++;
+
+            }
+
+
+        }
+
+        FiKeyBean fkbTemplate = new FiKeyBean();
+        fkbTemplate.add("tableName", iFiTableMeta.getTxTableName());
+        fkbTemplate.add("csvFields", queryFields.toString());
+        fkbTemplate.add("paramFields", queryParams.toString());
+
+        return FiString.substitutor(template, fkbTemplate);
+    }
+
 
     /**
      * Örnek Sorgu çıktısı
@@ -1863,7 +1991,7 @@ public class FiQugen {
             if (index != 1) query.append(", ");
             query.append(fiCol.getFieldName());
             // idCol kayıt edilir
-            if (FiBool.isTrue(fiCol.getBoKeyField())) fiColId = fiCol;
+            if (FiBool.isTrue(fiCol.getBoKeyIdField())) fiColId = fiCol;
         }
 
         if (fiColId != null) {
@@ -1878,7 +2006,7 @@ public class FiQugen {
         Integer indexWhere = 0;
         for (FiCol fiCol : listFields) {
 
-            if (FiBool.isTrue(fiCol.getBoKeyField())) {
+            if (FiBool.isTrue(fiCol.getBoKeyIdField())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
                 queryWhere.append(fiCol.getFieldName() + " IN ( @" + fiCol.getFieldName() + " )");
@@ -2084,7 +2212,7 @@ public class FiQugen {
                 query.append(fiCol.getFieldName()).append(" = @").append(fiCol.getFieldName());
             }
 
-            if (FiBool.isTrue(fiCol.getBoKeyField())) {
+            if (FiBool.isTrue(fiCol.getBoKeyIdField())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
                 queryWhere.append(fiCol.getFieldName()).append(" = @").append(fiCol.getFieldName()); // dbFieldName kullanımı ile geliştirilebilir
@@ -2121,13 +2249,13 @@ public class FiQugen {
                 String fieldName = FiString.getIfNotEmptytOr(fiCol.getTxDbFieldName(), fiCol.getFieldName());
                 String paramName = FiString.getIfNotEmptytOr(fiCol.getTxParamName(), fiCol.getFieldName());
 
-                if (!FiBool.isTrue(fiCol.getBoKeyField()) && !FiBool.isTrue(fiCol.getBoNonUpdatable())) {
+                if (!FiBool.isTrue(fiCol.getBoKeyIdField()) && !FiBool.isTrue(fiCol.getBoNonUpdatable())) {
                     index++;
                     if (index != 1) query.append(", ");
                     query.append(fieldName + " = @" + paramName);
                 }
 
-                if (FiBool.isTrue(fiCol.getBoKeyField())) {
+                if (FiBool.isTrue(fiCol.getBoKeyIdField())) {
                     indexWhere++;
                     if (indexWhere != 1) queryWhere.append(" AND ");
                     queryWhere.append(fieldName + " = @" + paramName); // dbFieldName kullanımı ile geliştirilebilir

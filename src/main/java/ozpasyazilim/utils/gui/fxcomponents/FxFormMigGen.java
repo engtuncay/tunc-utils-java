@@ -42,6 +42,11 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
     private EntClazz refFormEntity; // 30-10-21 eklendi
 
     /**
+     * form objesi fikeybean türünde ise, fikeybean den alınır veriler
+     */
+    private FiKeyBean refFormFkb;
+
+    /**
      * Form güncellemek amacıyla açıldığını belirtir
      */
     private Boolean boUpdateForm; // 21-10-30 eklendi
@@ -95,6 +100,10 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
             if (getRefFormEntity() != null) {
                 FxEditorFactory.bindEntityToFormByEditorValue(getListFormElements(), getRefFormEntity());
             }
+
+            if (getRefFormFkb() != null) {
+                FxEditorFactory.bindFiKeybeanToFormByEditorValue(getListFormElements(), getRefFormFkb());
+            }
             // Form değerleri eklendikten sonra trigger edilecek metodlar
             trigEventsAfterFormLoaded();
             return;
@@ -140,7 +149,7 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
     }
 
     /**
-     * get Form As FiKeyBean
+     * get Form As FiKeyBean (FiCol ile beraber)
      *
      * @return
      */
@@ -475,5 +484,13 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
 
     public void setFnValidateForm(Function<FxFormMigGen, Fdr> fnValidateForm) {
         this.fnValidateForm = fnValidateForm;
+    }
+
+    public FiKeyBean getRefFormFkb() {
+        return refFormFkb;
+    }
+
+    public void setRefFormFkb(FiKeyBean refFormFkb) {
+        this.refFormFkb = refFormFkb;
     }
 }

@@ -852,13 +852,13 @@ public class FxTableCol<Clazz> extends TableColumn implements IFiCol<Clazz> {
 	}
 
 	@Override
-	public Boolean getBoKeyField() {
+	public Boolean getBoKeyIdField() {
 		return boKeyField;
 	}
 
 	@Override
-	public void setBoKeyField(Boolean boKeyField) {
-		this.boKeyField = boKeyField;
+	public void setBoKeyIdField(Boolean boKeyIdField) {
+		this.boKeyField = boKeyIdField;
 	}
 
 	@Override
@@ -998,8 +998,8 @@ public class FxTableCol<Clazz> extends TableColumn implements IFiCol<Clazz> {
 	@Override
 	public Function<Object, Object> getFnEditorNodeValueFormmatter() {return fnEditorNodeValueFormmatter;}
 
-	@Override
-	public void setFnEditorNodeValueFormmatter(Function<Object, Object> fnEditorNodeValueFormmatter) {this.fnEditorNodeValueFormmatter = fnEditorNodeValueFormmatter;}
+
+//	public void setFnEditorNodeValueFormmatter(Function<Object, Object> fnEditorNodeValueFormmatter) {this.fnEditorNodeValueFormmatter = fnEditorNodeValueFormmatter;}
 
 	@Override
 	public BiConsumer<Object, Node> getFnEditorNodeRendererAfterFormLoad() {return fnEditorNodeRendererAfterLoad;}

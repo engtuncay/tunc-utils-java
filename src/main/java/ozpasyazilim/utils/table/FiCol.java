@@ -266,12 +266,19 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
     /**
      * Sorgular için, alanın primary key alanı olduğunu belirtir
      */
-    private Boolean boKeyField;
+    private Boolean boKeyIdField;
+
+    private Boolean boKeyIdentityField;
 
     /**
      * Sorgu hazırlanırken update olacak alan olduğunu gösterir
      */
     private Boolean boUpdateFieldForQuery;
+
+    /**
+     * Sorgu hazırlanırken insert sorgusuna dahil edilecek alanları gösterir
+     */
+    private Boolean boInsertFieldForQuery;
 
     /**
      * True olur Sorguda Aktif Edilmesini
@@ -378,6 +385,11 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
      * Sorgu oluşturulurken where alanına yazılacak alanlar (update sorgusu için kullanılır)
      */
     private Boolean boWhereField;
+
+    /**
+     * alanın veritabanında olmadığını belirtir
+     */
+    private Boolean boTransientField;
 
     // ***** Constructors
     public FiCol() {
@@ -518,8 +530,14 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
         return this;
     }
 
+    /**
+     * vt de key alanını işaret eder
+     *
+     * @param boKeyField
+     * @return
+     */
     public FiCol buildKeyField(boolean boKeyField) {
-        this.setBoKeyField(boKeyField);
+        this.setBoKeyIdField(boKeyField);
         return this;
     }
 
@@ -538,17 +556,6 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
      */
     public FiCol buildFnEditorRenderer(BiConsumer<Object, Node> fnCellFactoryEdiNodeRenderer) {
         setFnEditorNodeRendererOnLoad(fnCellFactoryEdiNodeRenderer);
-        return this;
-    }
-
-    /**
-     * Formlarda componenta değeri basılmazdan önce,
-     * bu fonksiyona  entity gönderilir, string bir değer alınır ve componenta basılır.
-     *
-     * @return
-     */
-    public FiCol buildFnEditorNodeValueFormmatter(Function<Object, Object> fnEditorNodeValueFormmatter) {
-        setFnEditorNodeValueFormmatter(fnEditorNodeValueFormmatter);
         return this;
     }
 
@@ -677,7 +684,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
     }
 
     public FiCol buiBoKeyField(Boolean boKeyField) {
-        setBoKeyField(boKeyField);
+        setBoKeyIdField(boKeyField);
         return this;
     }
 
@@ -1095,17 +1102,17 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
         return this;
     }
 
-    public FiCol<EntClazz> buiBoUpdateField(Boolean boUpdateField) {
+    public FiCol<EntClazz> buiBoUpdateFieldForQuery(Boolean boUpdateField) {
         this.boUpdateFieldForQuery = boUpdateField;
         return this;
     }
 
-    public Boolean getBoKeyField() {
-        return boKeyField;
+    public Boolean getBoKeyIdField() {
+        return boKeyIdField;
     }
 
-    public void setBoKeyField(Boolean boKeyField) {
-        this.boKeyField = boKeyField;
+    public void setBoKeyIdField(Boolean boKeyIdField) {
+        this.boKeyIdField = boKeyIdField;
     }
 
     public Boolean getBoNonEditableForForm() {
@@ -1133,16 +1140,6 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
     public void setFnEditorNodeRendererOnLoad(BiConsumer<Object, Node> fnEditorNodeRendererOnLoad) {
         this.fnEditorNodeRendererBeforeSettingValue = fnEditorNodeRendererOnLoad;
     }
-
-//    @Override
-//    public Object getColEditorValue() {
-//        return colValue;
-//    }
-//
-//    @Override
-//    public void setColEditorValue(Object colEditorValue) {
-//        this.colValue = colEditorValue;
-//    }
 
     @Override
     public Boolean getBoRequired() {
@@ -1554,5 +1551,54 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz> {
         this.fnEditorNodeLfcAfterAllFormLoad = fnEditorNodeRendererAfterAllFormLoad;
         return this;
     }
+
+    public Boolean getBoKeyIdentityField() {
+        return boKeyIdentityField;
+    }
+
+    public void setBoKeyIdentityField(Boolean boKeyIdentityField) {
+        if (FiBool.isTrue(boKeyIdentityField)) setBoKeyIdField(true);
+        this.boKeyIdentityField = boKeyIdentityField;
+    }
+
+    public Boolean getBoTransientField() {
+        return boTransientField;
+    }
+
+    public void setBoTransientField(Boolean boTransientField) {
+        this.boTransientField = boTransientField;
+    }
+
+    public Boolean getBoInsertFieldForQuery() {
+        return boInsertFieldForQuery;
+    }
+
+    public FiCol setBoInsertFieldForQuery(Boolean boInsertFieldForQuery) {
+        this.boInsertFieldForQuery = boInsertFieldForQuery;
+        return this;
+    }
+
+
 }
 
+
+//    /**
+//     * Formlarda componenta değeri basılmazdan önce,
+//     * bu fonksiyona  entity gönderilir, string bir değer alınır ve componenta basılır.
+//     *
+//     * @return
+//     */
+//    public FiCol buildFnEditorNodeValueFormmatter(Function<Object, Object> fnEditorNodeValueFormmatter) {
+//        setFnEditorNodeValueFormmatter(fnEditorNodeValueFormmatter);
+//        return this;
+//    }
+
+//    @Override
+//    public Object getColEditorValue() {
+//        return colValue;
+//    }
+//
+//    @Override
+//    public void setColEditorValue(Object colEditorValue) {
+//        this.colValue = colEditorValue;
+//    }

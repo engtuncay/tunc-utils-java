@@ -15,6 +15,8 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
 
     protected Handle handleRepo;
 
+    public IFiTableMeta iFiTableMeta;
+
     // connProfile veya jdbi ile constructor kullanılmalı
     //    public AbsRepoFkbJdbi() {
     //
@@ -118,7 +120,8 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
                         .findOne();
             });
 
-            if (result.isPresent()) fdr.setValue(result.get());
+            result.ifPresent(fdr::setValue); //if (result.isPresent()) fdr.setValue(result.get());
+
             fdr.setBoResultAndRowsAff(true, 1);
 
         } catch (Exception ex) {
@@ -188,6 +191,60 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
         return fdrMain;
     }
 
+    public Fdr jdInsertFiQuery(FiQuery fiQuery) {
+        return jdInsertBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
+    }
+
+    /**
+     * Update ile aynı metoddan kopyalandı
+     *
+     * @param insertQuery
+     * @param fiMapParams
+     * @return
+     */
+    public Fdr jdInsertBindMapMain(String insertQuery, Map<String, Object> fiMapParams) {
+
+        Fdr fdrMain = new Fdr();
+        try {
+            Integer rowCountUpdate = getJdbi().withHandle(handle -> {
+                return handle.createUpdate(Fiqt.stoj(insertQuery))
+                        .bindMap(fiMapParams)
+                        .execute(); // returns row count updated
+            });
+            //Loghelperr.getInstance(getClass()).debug("Row Count Update:"+rowCountUpdate);
+            //fiDbResult.setLnSuccessWithUpBoResult(1, rowCountUpdate);
+            fdrMain.setBoResultAndRowsAff(true, rowCountUpdate);
+        } catch (Exception ex) {
+            fdrMain.setBoResult(false, ex);
+            Loghelper.get(getClass()).error(FiException.exToLog(ex));
+        }
+        return fdrMain;
+    }
+
+    public Fdr jdDeleteFiQuery(FiQuery fiQuery) {
+        return jdDeleteBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
+    }
+
+    public Fdr jdDeleteBindMapMain(String insertQuery, Map<String, Object> fiMapParams) {
+
+        Fdr fdrMain = new Fdr();
+        try {
+            Integer rowCountUpdate = getJdbi().withHandle(handle -> {
+                return handle.createUpdate(Fiqt.stoj(insertQuery))
+                        .bindMap(fiMapParams)
+                        .execute(); // returns row count updated
+            });
+            //Loghelperr.getInstance(getClass()).debug("Row Count Update:"+rowCountUpdate);
+            //fiDbResult.setLnSuccessWithUpBoResult(1, rowCountUpdate);
+            fdrMain.setBoResultAndRowsAff(true, rowCountUpdate);
+        } catch (Exception ex) {
+            fdrMain.setBoResult(false, ex);
+            Loghelper.get(getClass()).error(FiException.exToLog(ex));
+        }
+        return fdrMain;
+    }
+
+
     public <EntMethodClazz> Fdr<List<EntMethodClazz>> jdSelectListBindMapMain(String sqlQuery, Map<String, Object> mapBind, Class<EntMethodClazz> clazz) {
 
         Fdr<List<EntMethodClazz>> fdr = new Fdr<>();
@@ -209,5 +266,49 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
         return fdr;
     }
 
+    public IFiTableMeta getiFiTableMeta() {
+        return iFiTableMeta;
+    }
 
+    public void setiFiTableMeta(IFiTableMeta iFiTableMeta) {
+        this.iFiTableMeta = iFiTableMeta;
+    }
+
+    public Fdr jdInsFkb(FiKeyBean formAsFkb, Boolean boInserFieldsOnly, IFiTableMeta iFiTableMeta) {
+
+        if(iFiTableMeta==null) iFiTableMeta = getiFiTableMeta();
+
+        String sql = FiQugen.insertFiCols2(iFiTableMeta, formAsFkb.getListFiColInit(),boInserFieldsOnly);
+
+        FiQuery fiQuery = new FiQuery(sql, formAsFkb);
+        fiQuery.logQueryAndParams();
+
+        return jdInsertFiQuery(fiQuery);
+    }
+
+
+    /**
+     *
+     * @param formAsFkb
+     * @param boUpdateFieldsOnly : updateField true olanlar sorguda güncellenir
+     * @return
+     */
+    public Fdr jdUpFkbByIdFields(FiKeyBean formAsFkb, Boolean boUpdateFieldsOnly) {
+        String sql = FiQugen.updateFiColsArb(getiFiTableMeta(), formAsFkb.getListFiColInit(),boUpdateFieldsOnly);
+
+        FiQuery fiQuery = new FiQuery(sql, formAsFkb);
+        fiQuery.logQueryAndParams();
+
+        return jdInsertFiQuery(fiQuery);
+    }
+
+    public Fdr jdDeleteFkbByIdCols(FiKeyBean fiKeyBean, IFiTableMeta iFiTableMeta) {
+
+        String sql = FiQugen.deleteWhereIdFiColsArb(iFiTableMeta, fiKeyBean.getListFiColInit());
+
+        FiQuery fiQuery = new FiQuery(sql, fiKeyBean);
+        fiQuery.logQueryAndParams();
+
+        return jdDeleteFiQuery(fiQuery);
+    }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-public abstract class FiAbsArbTableWindowCont<EntClazz> extends FiArbWindowCont {
+public abstract class FiArbAbsTableWindowCont<EntClazz> extends FiArbWindowCont {
 
     String txSelected;
     List<EntClazz> listEntitySelected;
@@ -32,7 +32,7 @@ public abstract class FiAbsArbTableWindowCont<EntClazz> extends FiArbWindowCont 
 
     private FxTableMig2<EntClazz> fxTableMig;
 
-    public FiAbsArbTableWindowCont() {
+    public FiArbAbsTableWindowCont() {
         super();
         super.moduleLabel = "FiArbTableWindow";
         //super.moduleCode =
@@ -117,13 +117,13 @@ public abstract class FiAbsArbTableWindowCont<EntClazz> extends FiArbWindowCont 
     }
 
     protected FxButton addBtnMotReport() {
-        btnCrudReport = FiArbButtonsIcons.genBtnReport();
+        btnCrudReport = FiMinaButtonIcons.genBtnReport();
         getModView().getMigToolbar().add(btnCrudReport);
         return btnCrudReport;
     }
 
     protected FxButton addBtnReportWithActionThread() {
-        btnCrudReport = FiArbButtonsIcons.genBtnReport();
+        btnCrudReport = FiMinaButtonIcons.genBtnReport();
         getModView().getMigToolbar().add(btnCrudReport);
         btnCrudReport.setOnActionWithThread(this::pullTableData);
         return btnCrudReport;
@@ -166,15 +166,15 @@ public abstract class FiAbsArbTableWindowCont<EntClazz> extends FiArbWindowCont 
     }
 
     protected void addSelectAndRefreshButton() {
-        btnCrudSelect = FiArbButtonsIcons.genBtnSecim();
-        btnCrudRefresh = FiArbButtonsIcons.genBtnRefresh();
+        btnCrudSelect = FiMinaButtonIcons.genBtnSecim();
+        btnCrudRefresh = FiMinaButtonIcons.genBtnRefresh();
         // Add Layout
         getModView().getMigToolbar().add(btnCrudSelect);
         getModView().getMigToolbar().add(btnCrudRefresh);
     }
 
     protected void addRefreshButton() {
-        btnCrudRefresh = FiArbButtonsIcons.genBtnRefresh();
+        btnCrudRefresh = FiMinaButtonIcons.genBtnRefresh();
         getModView().getMigToolbar().add(btnCrudRefresh);
     }
 

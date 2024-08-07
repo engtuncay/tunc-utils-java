@@ -180,7 +180,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
         List<EntClazz> listSilinecek = new ArrayList<>();
 
-        for (EntClazz entity : getItemsAllFi()) {
+        for (EntClazz entity : getItemsAllFromSourceFi()) {
             if (predicateToRemove.test(entity)) {
                 listSilinecek.add(entity);
             }
@@ -225,7 +225,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
         return getItemsCurrentFi(ent -> {
 
-            if(ent instanceof FiKeyBean){
+            if (ent instanceof FiKeyBean) {
                 FiKeyBean fkbRow = (FiKeyBean) ent;
                 return FiBool.or(fkbRow.getAsBoolean(fieldnameForSelection), false);
             }
@@ -246,7 +246,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
         FilteredList<EntClazz> itemsCurrentFi = getItemsCurrentFi(ent -> {
 
-            if(ent instanceof FiKeyBean){
+            if (ent instanceof FiKeyBean) {
                 FiKeyBean fkbRow = (FiKeyBean) ent;
                 return FiBool.or(fkbRow.getAsBoolean(fieldForSelection), false);
             }
@@ -274,7 +274,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
         FilteredList<EntClazz> itemsCurrentFi = getItemsCurrentFi(ent -> {
 
-            if(ent instanceof FiKeyBean){
+            if (ent instanceof FiKeyBean) {
                 FiKeyBean fkbRow = (FiKeyBean) ent;
                 return FiBool.or(fkbRow.getAsBoolean(fieldForSelection), false);
             }
@@ -292,7 +292,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         return list;
     }
 
-    public List<EntClazz> getItemsFiCheckedBySelectColAsList() {
+    public List<EntClazz> getItemsChecked() {
         return getItemsCurrentFiCheckedByBoolField(getSelectionColName());
     }
 
@@ -318,7 +318,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
         return getItemsCurrentFi(ent -> {
 
-            if(ent instanceof FiKeyBean){
+            if (ent instanceof FiKeyBean) {
                 FiKeyBean fkbRow = (FiKeyBean) ent;
                 return FiBool.or(fkbRow.getAsBoolean(getFiColSelection().getFieldName()), false);
             }
@@ -337,7 +337,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
         return getItemsCurrentFi(ent -> {
 
-            if(ent instanceof FiKeyBean){
+            if (ent instanceof FiKeyBean) {
                 FiKeyBean fkbRow = (FiKeyBean) ent;
                 return FiBool.or(fkbRow.getAsBoolean(getFiColSelection().getFieldName()), false);
             }
@@ -349,9 +349,9 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     public List<EntClazz> getItemsFiCheckedAsNewListInAllElements() {
 
-        FilteredList<EntClazz> itemsCurrentFi = getItemsAllFi(ent -> {
+        FilteredList<EntClazz> itemsCurrentFi = getItemsAllFromSourceFi(ent -> {
 
-            if(ent instanceof FiKeyBean){
+            if (ent instanceof FiKeyBean) {
                 FiKeyBean fkbRow = (FiKeyBean) ent;
                 return FiBool.or(fkbRow.getAsBoolean(getFiColSelection().getFieldName()), false);
             }
@@ -387,6 +387,8 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     }
 
     /**
+     * FxTableCol2 objesindeki FiCol alanlarından alır.
+     *
      * @return
      */
     public List<FiCol> getFiColListOverListFxTableCol() {
@@ -606,7 +608,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
      *
      * @return
      */
-    public ObservableList<EntClazz> getItemsAllFi() {
+    public ObservableList<EntClazz> getItemsAllFromSourceFi() {
         // currentList
         return getFilteredList().getSource();
     }
@@ -631,7 +633,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
      * @param predFilter
      * @return
      */
-    public FilteredList<EntClazz> getItemsAllFi(Predicate<EntClazz> predFilter) {
+    public FilteredList<EntClazz> getItemsAllFromSourceFi(Predicate<EntClazz> predFilter) {
 
         FilteredList<EntClazz> filtered = getFilteredList().getSource().filtered(predFilter);
 
@@ -898,7 +900,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
                 Boolean boStatus = fxCheckBox.isSelected();
 
 
-                getItemsAllFi().forEach(ent -> {
+                getItemsAllFromSourceFi().forEach(ent -> {
 
 
                     Boolean disabledSelection = false;
@@ -1715,7 +1717,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
             , BiFunction<List<EntClazz>, EntClazz, Boolean> fnFindEqualItemFromList
             , Consumer<List<EntClazz>> updateCalculationColumns) {
 
-        ObservableList<EntClazz> tableData = getItemsAllFi();
+        ObservableList<EntClazz> tableData = getItemsAllFromSourceFi();
         List<EntClazz> listEklenecek = new ArrayList<>();
 
         if (tableData.size() > 0) {
@@ -1747,7 +1749,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
             }
 
             Platform.runLater(() -> {
-                updateCalculationColumns.accept(getItemsAllFi());
+                updateCalculationColumns.accept(getItemsAllFromSourceFi());
                 refreshTableFiAsyn();
             });
 
@@ -1778,7 +1780,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
             , BiConsumer<EntClazz, EntClazz> fnWorksForAppendingOfEqualObjects
             , Consumer<Collection<EntClazz>> fnWorksAfterAllAppending) {
 
-        ObservableList<EntClazz> tableData = getItemsAllFi();
+        ObservableList<EntClazz> tableData = getItemsAllFromSourceFi();
         List<EntClazz> listEklenecek = new ArrayList<>();
         if (!tableData.isEmpty()) {
             Map<KeyClazz, EntClazz> mapKeyToEntity = FiCollection.listToMapSingle(tableData, fnKeySelection);
@@ -1806,7 +1808,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
             Platform.runLater(() -> {
                 if (fnWorksAfterAllAppending != null) {
-                    fnWorksAfterAllAppending.accept(getItemsAllFi());
+                    fnWorksAfterAllAppending.accept(getItemsAllFromSourceFi());
                     refreshTableFiAsyn();
                 }
             });
@@ -2679,8 +2681,8 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     public EntClazz getItemsCheckedOneItem() {
         FilteredList<EntClazz> checkedByBoSelect = getItemsCurrentFiCheckedAsSourceList();
 
-        if (checkedByBoSelect.size() == 0) {
-            FxDialogShow.showPopWarn("Lütfen tablo bir kayıdı seçiniz.");
+        if (checkedByBoSelect.isEmpty()) {
+            FxDialogShow.showPopWarn("Lütfen tablodan bir kayıdı seçiniz.");
             return null;
         } else if (checkedByBoSelect.size() > 1) {
             FxDialogShow.showPopWarn("Lütfen tablodan sadece bir kayıt seçiniz.");

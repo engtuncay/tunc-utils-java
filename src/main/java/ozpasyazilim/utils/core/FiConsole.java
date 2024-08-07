@@ -7,6 +7,7 @@ import ozpasyazilim.utils.datatypes.FiListFkb;
 import ozpasyazilim.utils.datatypes.FiListKeyString;
 import ozpasyazilim.utils.datatypes.FiKeyString;
 import ozpasyazilim.utils.log.Loghelper;
+import ozpasyazilim.utils.table.FiCol;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -789,8 +790,19 @@ public class FiConsole {
         StringBuilder log = new StringBuilder("FiKeyBean İçeriği:");
         log.append("\n");
         for (Map.Entry<String, Object> entry : fiKeyBean.entrySet()) {
-            log.append(entry.getKey() + " : " + FiString.ToStrOrEmpty(entry.getValue()) + "\n");
+            log.append(entry.getKey()).append(" : ").append(FiString.ToStrOrEmpty(entry.getValue())).append("\n");
         }
+        return log.toString();
+    }
+
+    public static String textFiCols(List<FiCol> listFiColInit) {
+        StringBuilder log = new StringBuilder("FiCol List İçeriği:");
+        log.append("\n");
+
+        for (FiCol entry : listFiColInit) {
+            log.append(entry.getFieldName()).append(" : ").append(FiString.ToStrOrEmpty(entry.getColValue())).append("\n");
+        }
+
         return log.toString();
     }
 
@@ -832,4 +844,14 @@ public class FiConsole {
         Loghelper.get(FiConsole.class).debug(sb.toString());
 
     }
+
+    public static void logTextFiKeyBean(FiKeyBean fkb) {
+        Loghelper.get(FiConsole.class).debug(FiConsole.textFiKeyBean(fkb));
+    }
+
+    public static void logFiCols(List<FiCol> listFiColInit) {
+        Loghelper.get(FiConsole.class).debug(FiConsole.textFiCols(listFiColInit));
+    }
+
+
 }

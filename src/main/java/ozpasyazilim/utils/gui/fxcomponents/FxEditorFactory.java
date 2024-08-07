@@ -796,7 +796,45 @@ public class FxEditorFactory {
 
     }
 
-    public FiKeyBean bindFormEditorToMapByFilterNode(List<? extends IFiCol> listColumns) {
+    public static void bindFiKeybeanToFormByEditorValue(List<FiCol> listColumns, FiKeyBean fkbEntity) {
+
+        if (fkbEntity == null) return;
+
+        for (int i = 0; i < listColumns.size(); i++) {
+
+            FiCol fiCol = listColumns.get(i);
+
+            if (fiCol.getFieldName() == null) continue;
+
+            Object cellvalue = fkbEntity.get(fiCol.getFieldName()); //FiReflection.getProperty(entity, fiCol.getFieldName());
+            //Loghelperr.getInstance(getClass()).debug("Entity to Editor: Col:"+ fiCol.getFieldName());
+
+            if (cellvalue == null) continue;
+
+            // Bütün alanlar için de atanabilir , eski değer tutulmuş olur.
+            fiCol.setColValue(cellvalue);
+
+            // Hidden ise, node comp üretilmediği için değer ataması yapılmaz.
+            if (FiBool.isTrue(fiCol.getBoHidden())) {
+                continue;
+            }
+
+            //FiConsole.printFieldsNotNull(fiCol);
+            setNodeValueForCompsMain(fiCol, cellvalue, fiCol.getColEditorClass(), fiCol.getColEditorNode(), null);
+
+            // Form Node özellikleri buradan atanır
+            if (fiCol.getColEditorNode() != null) {
+                if (FiBool.isTrue(fiCol.getBoNonEditableForForm())) {
+                    fiCol.getColEditorNode().setDisable(true);
+                }
+            }
+
+
+        }
+
+    }
+
+    public FiKeyBean bindFormToFiKeybeanByFilterNode(List<? extends IFiCol> listColumns) {
 
         FiKeyBean fiKeyBean = new FiKeyBean();
 
@@ -823,6 +861,12 @@ public class FxEditorFactory {
         return fiKeyBean;
     }
 
+    /**
+     * putFiCol metodu kullanıldı, FiCol eklendi FiKeybean'e
+     *
+     * @param listColumns
+     * @return
+     */
     public static FiKeyBean bindFormToFiKeyBeanByEditorNodeForFiCol(List<FiCol> listColumns) {
         FiKeyBean fiKeyBean = new FiKeyBean();
         for (int i = 0; i < listColumns.size(); i++) {

@@ -3,7 +3,7 @@ package ozpasyazilim.utils.fxwindow;
 import de.jensd.fx.glyphs.icons525.Icons525;
 import ozpasyazilim.utils.gui.fxcomponents.*;
 
-public class FiArbButtonsIcons {
+public class FiMinaButtonIcons {
 
     public static FxButton genBtnRefresh() {
         FxButton btn = new FxButton("Yenile", Icons525.REFRESH);
@@ -147,4 +147,11 @@ public class FiArbButtonsIcons {
         return Icons525.MOON;
     }
 
+    public static Icons525 getTickIcon() {
+        return Icons525.TOGGLE_OFF; // düğme basılmış
+    }
+
+    public static Icons525 getUnTickIcon() {
+        return Icons525.TOGGLE_ON; // düğme basılmamış hali
+    }
 }
