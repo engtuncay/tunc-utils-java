@@ -14,7 +14,7 @@ public class FxFormFactory {
 		listFormElements.forEach( ozTableCol -> {
 
 			if(!FiBool.isTrue(ozTableCol.getBoHidden())){
-				Label lblForm = new Label(ozTableCol.getHeaderName());
+				Label lblForm = new Label(ozTableCol.getOfcTxHeader());
 				migForm1.add(lblForm,"width 100");
 				migForm1.add(new FxEditorFactory().generateAndSetFilterNode(ozTableCol),"wrap");
 

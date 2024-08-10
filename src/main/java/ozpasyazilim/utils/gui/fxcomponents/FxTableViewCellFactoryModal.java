@@ -40,9 +40,9 @@ public class FxTableViewCellFactoryModal {
 		 *
 		 *
 		 */
-		if (!FiString.isEmpty(fxTableCol.getFiCol().getColEditorClass())) {
+		if (!FiString.isEmpty(fxTableCol.getRefFiCol().getColEditorClass())) {
 
-			if (fxTableCol.getFiCol().getColEditorClass().equals(CheckBox.class.getSimpleName())) {
+			if (fxTableCol.getRefFiCol().getColEditorClass().equals(CheckBox.class.getSimpleName())) {
 
 				//			fxTableCol.setCellFactory(new Callback<TableColumn<S, Boolean>, TableCell<S, Boolean>>() {
 				//
@@ -59,60 +59,60 @@ public class FxTableViewCellFactoryModal {
 				return;
 			}
 
-			if (fxTableCol.getFiCol().getColEditorClass().equals(Button.class.getSimpleName())
-					|| fxTableCol.getFiCol().getColEditorClass().equals(Button.class.getName())) {
+			if (fxTableCol.getRefFiCol().getColEditorClass().equals(Button.class.getSimpleName())
+					|| fxTableCol.getRefFiCol().getColEditorClass().equals(Button.class.getName())) {
 				Callback<TableColumn<EntClazz, String>, TableCell<EntClazz, String>> cellFactory = getCellFactoryForButtonSimple(fxTableCol);
 				fxTableCol.setCellFactory(cellFactory);
 				return;
 			}
 
 			// 26-09-2019 Genel İşlevli Factory Class, istenilen comp üretilip ona göre render edilir
-			if (fxTableCol.getFiCol().getColEditorClass().equals(Node.class.getName())) {
+			if (fxTableCol.getRefFiCol().getColEditorClass().equals(Node.class.getName())) {
 				Callback<TableColumn<EntClazz, Object>, TableCell<EntClazz, Object>> cellFactory = getCellFactoryForNodeGeneral(fxTableCol);
 				fxTableCol.setCellFactory(cellFactory);
 				return;
 			}
 
 			// 26-09-2019 FxButtonV2
-			if (fxTableCol.getFiCol().getColEditorClass().equals(EnumColNodeType.FxButtonV2.toString())) {
+			if (fxTableCol.getRefFiCol().getColEditorClass().equals(EnumColNodeType.FxButtonV2.toString())) {
 				Callback<TableColumn<EntClazz, Object>, TableCell<EntClazz, Object>> cellFactory = getCellFactoryForFxButtonV2(fxTableCol);
 				fxTableCol.setCellFactory(cellFactory);
 				return;
 			}
 
-			if (fxTableCol.getFiCol().getColEditorClass().equals(FxButton.class.getName())
-					|| fxTableCol.getFiCol().getColEditorClass().equals(FxButton.class.getSimpleName())) {
+			if (fxTableCol.getRefFiCol().getColEditorClass().equals(FxButton.class.getName())
+					|| fxTableCol.getRefFiCol().getColEditorClass().equals(FxButton.class.getSimpleName())) {
 				Callback<TableColumn<EntClazz, String>, TableCell<EntClazz, String>> cellFactory = getCellFactoryForFxButton(fxTableCol);
 				fxTableCol.setCellFactory(cellFactory);
 				return;
 			}
 
-			if (fxTableCol.getFiCol().getColEditorClass().equals(ToggleButton.class.getSimpleName())) {
+			if (fxTableCol.getRefFiCol().getColEditorClass().equals(ToggleButton.class.getSimpleName())) {
 				Callback<TableColumn<EntClazz, Boolean>, TableCell<EntClazz, Boolean>> cellFactory = getCellFactoryForToggleButton(fxTableCol);
 				fxTableCol.setCellFactory(cellFactory);
 				return;
 			}
 
-			if (fxTableCol.getFiCol().getColEditorClass().equals(FxStateButton.class.getSimpleName())) {
+			if (fxTableCol.getRefFiCol().getColEditorClass().equals(FxStateButton.class.getSimpleName())) {
 				Callback<TableColumn<EntClazz, Integer>, TableCell<EntClazz, Integer>> cellFactory = getCellFactoryForFxStateButton(fxTableCol);
 				fxTableCol.setCellFactory(cellFactory);
 				return;
 			}
 
-			if (fxTableCol.getFiCol().getColEditorClass().equals(FxStateButtonThree.class.getSimpleName())) {
+			if (fxTableCol.getRefFiCol().getColEditorClass().equals(FxStateButtonThree.class.getSimpleName())) {
 				Callback<TableColumn<EntClazz, Integer>, TableCell<EntClazz, Integer>> cellFactory = getCellFactoryForFxStateButtonThree(fxTableCol);
 				fxTableCol.setCellFactory(cellFactory);
 				return;
 			}
 
-			if (fxTableCol.getFiCol().getColEditorClass().equals(EnumColNodeType.FxButtonCustom.toString())) {
+			if (fxTableCol.getRefFiCol().getColEditorClass().equals(EnumColNodeType.FxButtonCustom.toString())) {
 				fxTableCol.styleAlignCenterFi();
 				Callback<TableColumn<EntClazz, Object>, TableCell<EntClazz, Object>> cellFactory = getCellFactoryForFxButtonCustom(fxTableCol);
 				fxTableCol.setCellFactory(cellFactory);
 				return;
 			}
 
-			if (fxTableCol.getFiCol().getColEditorClass().equals(EnumColNodeType.FxLabelStatus.toString())) {
+			if (fxTableCol.getRefFiCol().getColEditorClass().equals(EnumColNodeType.FxLabelStatus.toString())) {
 				fxTableCol.styleAlignCenterFi();
 				Callback<TableColumn<EntClazz, Object>, TableCell<EntClazz, Object>> cellFactory = getCellFactoryForFxLabelStatus(fxTableCol);
 				fxTableCol.setCellFactory(cellFactory);
@@ -127,7 +127,7 @@ public class FxTableViewCellFactoryModal {
 		/**
 		 * OzColType göre Cell Factory Oluşturma
 		 */
-		OzColType ozColType = fxTableCol.getFiCol().getColType();
+		OzColType ozColType = fxTableCol.getRefFiCol().getColType();
 
 		if (ozColType != null) {
 
@@ -169,7 +169,7 @@ public class FxTableViewCellFactoryModal {
 		if (entitClazz != null) {
 
 			Map<String, FiField> fieldsAsMap = FiReflection.getFieldsAsMap(entitClazz);
-			String classNameSimple = fieldsAsMap.getOrDefault(fxTableCol.getFiCol().getFieldName(), new FiField()).getClassNameSimple();
+			String classNameSimple = fieldsAsMap.getOrDefault(fxTableCol.getRefFiCol().getOfcTxFieldName(), new FiField()).getClassNameSimple();
 			//Loghelper.getInstance(getClass()).debug("Class Name Simple:"+classNameSimple + " Field:"+fxTableCol.getFiTableCol().getFieldName());
 			if (classNameSimple == null) return;
 
@@ -270,30 +270,30 @@ public class FxTableViewCellFactoryModal {
 								node.setSelected(false);
 							}
 
-							if (FiBool.isTrue(fxTableCol.getFiCol().getBoEditable())) {
+							if (FiBool.isTrue(fxTableCol.getRefFiCol().getBoEditable())) {
 
 								Object entity = getTableView().getItems().get(getIndex());
 
-								if (fxTableCol.getFiCol().getPredEditorDisable() != null) {
-									node.setDisable(fxTableCol.getFiCol().getPredEditorDisable().test(entity));
+								if (fxTableCol.getRefFiCol().getPredEditorDisable() != null) {
+									node.setDisable(fxTableCol.getRefFiCol().getPredEditorDisable().test(entity));
 								} else {
 									node.setDisable(false);
 								}
 
 								node.setOnAction(actionEvent -> {
-									Boolean result = FiReflection.setter(entity, fxTableCol.getFiCol().getFieldName(), node.isSelected());
+									Boolean result = FiReflection.setter(entity, fxTableCol.getRefFiCol().getOfcTxFieldName(), node.isSelected());
 									if (!result) {
 										FxDialogShow.showPopWarn("Yazılımsal Hata!!! Seçilemedi.");
 									} else {
-										if (fxTableCol.getFiCol().getFnColCellManualChanged() != null) {
-											fxTableCol.getFiCol().getFnColCellManualChanged().accept(entity);
+										if (fxTableCol.getRefFiCol().getFnColCellManualChanged() != null) {
+											fxTableCol.getRefFiCol().getFnColCellManualChanged().accept(entity);
 										}
 										//updateFiltersLocalAndOut();
 									}
 								});
 
-								if (fxTableCol.getFiCol().getFnEditorNodeRendererBeforeSettingValue() != null) {
-									fxTableCol.getFiCol().getFnEditorNodeRendererBeforeSettingValue().accept(entity, node);
+								if (fxTableCol.getRefFiCol().getFnEditorNodeRendererBeforeSettingValue() != null) {
+									fxTableCol.getRefFiCol().getFnEditorNodeRendererBeforeSettingValue().accept(entity, node);
 								}
 
 							} else {
@@ -324,7 +324,7 @@ public class FxTableViewCellFactoryModal {
 
 							// table cell objesi
 
-							final FxStateButton btn = new FxStateButton(fxTableCol.getFiCol().getColEditorNodeText());
+							final FxStateButton btn = new FxStateButton(fxTableCol.getRefFiCol().getColEditorNodeText());
 
 							@Override
 							public void updateItem(Object item, boolean empty) {
@@ -339,8 +339,8 @@ public class FxTableViewCellFactoryModal {
 
 									EntClazz entity = getTableView().getItems().get(getIndex());
 
-									if (fxTableCol.getFiCol().getFnEditorNodeRendererBeforeSettingValue() != null) {
-										fxTableCol.getFiCol().getFnEditorNodeRendererBeforeSettingValue().accept(entity, btn);
+									if (fxTableCol.getRefFiCol().getFnEditorNodeRendererBeforeSettingValue() != null) {
+										fxTableCol.getRefFiCol().getFnEditorNodeRendererBeforeSettingValue().accept(entity, btn);
 									}
 
 									btn.setOnAction(event -> {
@@ -348,11 +348,11 @@ public class FxTableViewCellFactoryModal {
 										//S entity = getTableView().getItems().get(getIndex()); // table cell objesinin gettableview methodu
 
 										// Action gerçekleştirilir, daha sonra renderer işlemleri yapılır
-										if (fxTableCol.getFiCol().getFnEditorSetOnAction() != null)
-											fxTableCol.getFiCol().getFnEditorSetOnAction().accept(entity, btn);
+										if (fxTableCol.getRefFiCol().getFnEditorSetOnAction() != null)
+											fxTableCol.getRefFiCol().getFnEditorSetOnAction().accept(entity, btn);
 
-										if (fxTableCol.getFiCol().getFnEditorNodeRendererBeforeSettingValue() != null)
-											fxTableCol.getFiCol().getFnEditorNodeRendererBeforeSettingValue().accept(entity, btn);
+										if (fxTableCol.getRefFiCol().getFnEditorNodeRendererBeforeSettingValue() != null)
+											fxTableCol.getRefFiCol().getFnEditorNodeRendererBeforeSettingValue().accept(entity, btn);
 
 										//new FiProperty().setter(entity,fxTableCol.getFieldName(),true);
 
@@ -396,8 +396,8 @@ public class FxTableViewCellFactoryModal {
 
 									EntClazz entity = getTableView().getItems().get(getIndex());
 
-									if (fxTableCol.getFiCol().getFnEditorNodeRendererBeforeSettingValue() != null) {
-										fxTableCol.getFiCol().getFnEditorNodeRendererBeforeSettingValue().accept(entity, nodeComp);
+									if (fxTableCol.getRefFiCol().getFnEditorNodeRendererBeforeSettingValue() != null) {
+										fxTableCol.getRefFiCol().getFnEditorNodeRendererBeforeSettingValue().accept(entity, nodeComp);
 									}
 
 									//ikonların ayarlanması
@@ -436,7 +436,7 @@ public class FxTableViewCellFactoryModal {
 
 							// table cell objesi
 
-							final FxStateButtonThree btn = new FxStateButtonThree(fxTableCol.getFiCol().getColEditorNodeText());
+							final FxStateButtonThree btn = new FxStateButtonThree(fxTableCol.getRefFiCol().getColEditorNodeText());
 
 							@Override
 							public void updateItem(Integer item, boolean empty) {
@@ -451,8 +451,8 @@ public class FxTableViewCellFactoryModal {
 
 									EntClazz entity = getTableView().getItems().get(getIndex());
 
-									if (fxTableCol.getFiCol().getFnEditorNodeRendererBeforeSettingValue() != null) {
-										fxTableCol.getFiCol().getFnEditorNodeRendererBeforeSettingValue().accept(entity, btn);
+									if (fxTableCol.getRefFiCol().getFnEditorNodeRendererBeforeSettingValue() != null) {
+										fxTableCol.getRefFiCol().getFnEditorNodeRendererBeforeSettingValue().accept(entity, btn);
 									}
 
 									btn.setOnAction(event -> {
@@ -461,7 +461,7 @@ public class FxTableViewCellFactoryModal {
 
 										//if(fxTableCol.getCellFactoryNodeBiAction()==null)return;
 
-										fxTableCol.getFiCol().getFnEditorSetOnAction().accept(entity, btn);
+										fxTableCol.getRefFiCol().getFnEditorSetOnAction().accept(entity, btn);
 
 										//new FiProperty().setter(entity,fxTableCol.getFieldName(),true);
 										//fxTableCol.getCellFactoryNodeBiAction().accept(entity,btn);
@@ -490,7 +490,7 @@ public class FxTableViewCellFactoryModal {
 
 							// table cell objesi
 
-							final FxStateButton btn = new FxStateButton(fxTableCol.getFiCol().getColEditorNodeText());
+							final FxStateButton btn = new FxStateButton(fxTableCol.getRefFiCol().getColEditorNodeText());
 
 							@Override
 							public void updateItem(Integer item, boolean empty) {
@@ -505,8 +505,8 @@ public class FxTableViewCellFactoryModal {
 
 									EntClazz entity = getTableView().getItems().get(getIndex());
 
-									if (fxTableCol.getFiCol().getFnEditorNodeRendererBeforeSettingValue() != null) {
-										fxTableCol.getFiCol().getFnEditorNodeRendererBeforeSettingValue().accept(entity, btn);
+									if (fxTableCol.getRefFiCol().getFnEditorNodeRendererBeforeSettingValue() != null) {
+										fxTableCol.getRefFiCol().getFnEditorNodeRendererBeforeSettingValue().accept(entity, btn);
 									}
 
 									btn.setOnAction(event -> {
@@ -516,10 +516,10 @@ public class FxTableViewCellFactoryModal {
 										//if(fxTableCol.getCellFactoryNodeBiAction()==null)return;
 
 										// Action gerçekleştirilir, daha sonra renderer işlemleri yapılır
-										fxTableCol.getFiCol().getFnEditorSetOnAction().accept(entity, btn);
+										fxTableCol.getRefFiCol().getFnEditorSetOnAction().accept(entity, btn);
 
-										if (fxTableCol.getFiCol().getFnEditorNodeRendererBeforeSettingValue() != null)
-											fxTableCol.getFiCol().getFnEditorNodeRendererBeforeSettingValue().accept(entity, btn);
+										if (fxTableCol.getRefFiCol().getFnEditorNodeRendererBeforeSettingValue() != null)
+											fxTableCol.getRefFiCol().getFnEditorNodeRendererBeforeSettingValue().accept(entity, btn);
 
 										//new FiProperty().setter(entity,fxTableCol.getFieldName(),true);
 										//fxTableCol.getCellFactoryNodeBiAction().accept(entity,btn);
@@ -548,7 +548,7 @@ public class FxTableViewCellFactoryModal {
 
 							// table cell objesi
 
-							final ToggleButton btn = new ToggleButton(fxTableCol.getFiCol().getColEditorNodeText());
+							final ToggleButton btn = new ToggleButton(fxTableCol.getRefFiCol().getColEditorNodeText());
 
 							@Override
 							public void updateItem(Boolean item, boolean empty) {
@@ -570,7 +570,7 @@ public class FxTableViewCellFactoryModal {
 
 										//if(fxTableCol.getCellFactoryNodeBiAction()==null)return;
 
-										fxTableCol.getFiCol().getFnEditorSetOnAction().accept(entity, btn);
+										fxTableCol.getRefFiCol().getFnEditorSetOnAction().accept(entity, btn);
 
 										if (btn.isSelected()) {
 											//new FiProperty().setter(entity,fxTableCol.getFieldName(),true);
@@ -610,7 +610,7 @@ public class FxTableViewCellFactoryModal {
 
 							// table cell objesi
 
-							final FxButton btn = new FxButton(fxTableCol.getFiCol().getColEditorNodeText());
+							final FxButton btn = new FxButton(fxTableCol.getRefFiCol().getColEditorNodeText());
 
 							@Override
 							public void updateItem(String item, boolean empty) {
@@ -621,8 +621,8 @@ public class FxTableViewCellFactoryModal {
 								} else { // empty false ise
 									btn.setOnAction(event -> {
 										EntClazz entity = getTableView().getItems().get(getIndex()); // table cell objesinin gettableview methodu
-										if (fxTableCol.getFiCol().getFnEditorSetOnActionWithEntity() != null) {
-											fxTableCol.getFiCol().getFnEditorSetOnActionWithEntity().accept(entity);
+										if (fxTableCol.getRefFiCol().getFnEditorSetOnActionWithEntity() != null) {
+											fxTableCol.getRefFiCol().getFnEditorSetOnActionWithEntity().accept(entity);
 										}
 										//System.out.println(person.getFirstName()+ "   " + person.getLastName());
 									});
@@ -650,7 +650,7 @@ public class FxTableViewCellFactoryModal {
 						// table cell objesi
 						final TableCell<EntClazz, Object> cell = new TableCell<EntClazz, Object>() {
 
-							final FxButton nodeComp = new FxButton(FiString.orEmpty(fxTableCol.getFiCol().getColEditorNodeText()));
+							final FxButton nodeComp = new FxButton(FiString.orEmpty(fxTableCol.getRefFiCol().getColEditorNodeText()));
 
 							// Item hücrenin içine gelen değer (string,boolean,double vs)
 							@Override
@@ -661,70 +661,70 @@ public class FxTableViewCellFactoryModal {
 									setText(null);
 								} else { // empty false ise
 
-									if (fxTableCol.getFiCol().getFnEditorNodeRendererBeforeSettingValue() != null) {
+									if (fxTableCol.getRefFiCol().getFnEditorNodeRendererBeforeSettingValue() != null) {
 										EntClazz entity = getTableView().getItems().get(getIndex());
-										fxTableCol.getFiCol().getFnEditorNodeRendererBeforeSettingValue().accept(entity, nodeComp);
+										fxTableCol.getRefFiCol().getFnEditorNodeRendererBeforeSettingValue().accept(entity, nodeComp);
 									}
 
-									if (fxTableCol.getFiCol().getFnEditorNodeRendererWithCol() != null) {
+									if (fxTableCol.getRefFiCol().getFnEditorNodeRendererWithCol() != null) {
 										EntClazz entity = getTableView().getItems().get(getIndex());
-										fxTableCol.getFiCol().getFnEditorNodeRendererWithCol().accept(entity, nodeComp, fxTableCol);
+										fxTableCol.getRefFiCol().getFnEditorNodeRendererWithCol().accept(entity, nodeComp, fxTableCol);
 									}
 
-									if (fxTableCol.getFiCol().getFnEditorNodeRendererWitValue() != null) {
+									if (fxTableCol.getRefFiCol().getFnEditorNodeRendererWitValue() != null) {
 										EntClazz entity = getTableView().getItems().get(getIndex());
-										Object propertyNested = FiReflection.getPropertyNested(entity, fxTableCol.getFiCol().getFieldName());
-										fxTableCol.getFiCol().getFnEditorNodeRendererWitValue().accept(entity, nodeComp, propertyNested);
+										Object propertyNested = FiReflection.getPropertyNested(entity, fxTableCol.getRefFiCol().getOfcTxFieldName());
+										fxTableCol.getRefFiCol().getFnEditorNodeRendererWitValue().accept(entity, nodeComp, propertyNested);
 									}
 
 
-									if (fxTableCol.getFiCol().getFnEditorSetOnAction() != null) {
+									if (fxTableCol.getRefFiCol().getFnEditorSetOnAction() != null) {
 
 										nodeComp.setOnAction(event -> {
 											EntClazz entity = getTableView().getItems().get(getIndex());
 
 											// Önce action yürütülür , daha sonra renderer işlemi yapılır
-											fxTableCol.getFiCol().getFnEditorSetOnAction().accept(entity, nodeComp);
+											fxTableCol.getRefFiCol().getFnEditorSetOnAction().accept(entity, nodeComp);
 
 
-											if (fxTableCol.getFiCol().getFnEditorNodeRendererBeforeSettingValue() != null) {
-												fxTableCol.getFiCol().getFnEditorNodeRendererBeforeSettingValue().accept(entity, nodeComp);
+											if (fxTableCol.getRefFiCol().getFnEditorNodeRendererBeforeSettingValue() != null) {
+												fxTableCol.getRefFiCol().getFnEditorNodeRendererBeforeSettingValue().accept(entity, nodeComp);
 											}
 
 
 										});
 									}
 
-									if (fxTableCol.getFiCol().getFnEditorNodeRendererWithCol() != null) {
+									if (fxTableCol.getRefFiCol().getFnEditorNodeRendererWithCol() != null) {
 
 										nodeComp.setOnAction(event -> {
 											EntClazz entity = getTableView().getItems().get(getIndex());
 
 											// Önce action yürütülür , daha sonra renderer işlemi yapılır
-											fxTableCol.getFiCol().getFnEditorSetOnActionWitCol().accept(entity, nodeComp, fxTableCol);
+											fxTableCol.getRefFiCol().getFnEditorSetOnActionWitCol().accept(entity, nodeComp, fxTableCol);
 
 
-											if (fxTableCol.getFiCol().getFnEditorNodeRendererWithCol() != null) {
-												fxTableCol.getFiCol().getFnEditorNodeRendererWithCol().accept(entity, nodeComp, fxTableCol);
+											if (fxTableCol.getRefFiCol().getFnEditorNodeRendererWithCol() != null) {
+												fxTableCol.getRefFiCol().getFnEditorNodeRendererWithCol().accept(entity, nodeComp, fxTableCol);
 											}
 
 										});
 									}
 
-									if (fxTableCol.getFiCol().getFnEditorSetOnActionWitValue() != null) {
+									if (fxTableCol.getRefFiCol().getFnEditorSetOnActionWitValue() != null) {
 
 										nodeComp.setOnAction(event -> {
 											EntClazz entity = getTableView().getItems().get(getIndex());
 
 											// Önce action yürütülür , daha sonra renderer işlemi yapılır
 											if (true) {
-												Object propertyNested = FiReflection.getPropertyNested(entity, fxTableCol.getFiCol().getFieldName());
-												fxTableCol.getFiCol().getFnEditorSetOnActionWitValue().accept(entity, nodeComp, propertyNested);
+												Object propertyNested = FiReflection.getPropertyNested(entity, fxTableCol.getRefFiCol().getOfcTxFieldName());
+												fxTableCol.getRefFiCol().getFnEditorSetOnActionWitValue().accept(entity, nodeComp, propertyNested);
 											}
 
-											if (fxTableCol.getFiCol().getFnEditorNodeRendererWitValue() != null) {
-												Object propertyNested = FiReflection.getPropertyNested(entity, fxTableCol.getFiCol().getFieldName());
-												fxTableCol.getFiCol().getFnEditorNodeRendererWitValue().accept(entity, nodeComp, propertyNested);
+											if (fxTableCol.getRefFiCol().getFnEditorNodeRendererWitValue() != null) {
+												Object propertyNested = FiReflection.getPropertyNested(entity, fxTableCol.getRefFiCol().getOfcTxFieldName());
+												fxTableCol.getRefFiCol().getFnEditorNodeRendererWitValue().accept(entity, nodeComp, propertyNested);
 											}
 
 										});
@@ -766,8 +766,8 @@ public class FxTableViewCellFactoryModal {
 								} else { // empty false ise
 
 									EntClazz entity = getTableView().getItems().get(getIndex());
-									if (fxTableCol.getFiCol().getFnEditorNodeRendererBeforeSettingValue() != null) {
-										fxTableCol.getFiCol().getFnEditorNodeRendererBeforeSettingValue().accept(entity, nodeComp);
+									if (fxTableCol.getRefFiCol().getFnEditorNodeRendererBeforeSettingValue() != null) {
+										fxTableCol.getRefFiCol().getFnEditorNodeRendererBeforeSettingValue().accept(entity, nodeComp);
 									}
 
 									setGraphic(nodeComp);
@@ -805,7 +805,7 @@ public class FxTableViewCellFactoryModal {
 
 							// table cell objesi
 
-							final Button btn = new Button(fxTableCol.getFiCol().getColEditorNodeText());
+							final Button btn = new Button(fxTableCol.getRefFiCol().getColEditorNodeText());
 
 							@Override
 							public void updateItem(String item, boolean empty) {
@@ -816,8 +816,8 @@ public class FxTableViewCellFactoryModal {
 								} else { // empty false ise
 									btn.setOnAction(event -> {
 										EntClazz entity = getTableView().getItems().get(getIndex()); // table cell objesinin gettableview methodu
-										if (fxTableCol.getFiCol().getFnEditorSetOnActionWithEntity() != null) {
-											fxTableCol.getFiCol().getFnEditorSetOnActionWithEntity().accept(entity);
+										if (fxTableCol.getRefFiCol().getFnEditorSetOnActionWithEntity() != null) {
+											fxTableCol.getRefFiCol().getFnEditorSetOnActionWithEntity().accept(entity);
 										}
 										//System.out.println(person.getFirstName()+ "   " + person.getLastName());
 									});
@@ -841,11 +841,11 @@ public class FxTableViewCellFactoryModal {
 	public static <EntityClass> void setupCellFactoryByDefault(FxTableCol2 fxTableCol, Class<EntityClass> entitClazz) {
 
 // Loghelper.get(FxTableViewCellEditorFactoryConfig.class).debug("Cell Editor Setup Col Name:" + fxTableCol.getFiCol().getFieldName());
-		OzColType dataType = fxTableCol.getFiCol().getColType();
+		OzColType dataType = fxTableCol.getRefFiCol().getColType();
 
 		Map<String, FiField> fieldsAsMap = FiReflection.getFieldsAsMap(entitClazz);
 
-		String classNameSimple = fieldsAsMap.getOrDefault(fxTableCol.getFiCol().getFieldName(), new FiField()).getClassNameSimple();
+		String classNameSimple = fieldsAsMap.getOrDefault(fxTableCol.getRefFiCol().getOfcTxFieldName(), new FiField()).getClassNameSimple();
 
 		if (classNameSimple == null) classNameSimple = "";
 
@@ -867,9 +867,9 @@ public class FxTableViewCellFactoryModal {
 
 
 		// Editor Class belirlenmişse , auto Editor Tanımlanmaz
-		if (!FiString.isEmpty(fxTableCol.getFiCol().getColEditorClass())) return; // if içinde başında ! vardı
+		if (!FiString.isEmpty(fxTableCol.getRefFiCol().getColEditorClass())) return; // if içinde başında ! vardı
 
-		if (fxTableCol.getFiCol().getColType() == OzColType.Boolean) {
+		if (fxTableCol.getRefFiCol().getColType() == OzColType.Boolean) {
 
 			assignCellFactoryBooleanType(fxTableCol);
 
@@ -894,9 +894,9 @@ public class FxTableViewCellFactoryModal {
 	 */
 	public static <EntClazz> void setupCellFactoryByEditorClass(FxTableView2<EntClazz> fxTableView2, FxTableCol2 fxTableCol) {
 
-		if (fxTableCol.getFiCol().getColEditorClass() == null) return;
+		if (fxTableCol.getRefFiCol().getColEditorClass() == null) return;
 
-		if (fxTableCol.getFiCol().getColEditorClass().equals(CheckBox.class.getSimpleName())) {
+		if (fxTableCol.getRefFiCol().getColEditorClass().equals(CheckBox.class.getSimpleName())) {
 
 //			fxTableCol.setCellFactory(new Callback<TableColumn<S, Boolean>, TableCell<S, Boolean>>() {
 //
@@ -914,56 +914,56 @@ public class FxTableViewCellFactoryModal {
 			return;
 		}
 
-		if (fxTableCol.getFiCol().getColEditorClass().equals(Button.class.getSimpleName())
-				|| fxTableCol.getFiCol().getColEditorClass().equals(Button.class.getName())) {
+		if (fxTableCol.getRefFiCol().getColEditorClass().equals(Button.class.getSimpleName())
+				|| fxTableCol.getRefFiCol().getColEditorClass().equals(Button.class.getName())) {
 			Callback<TableColumn<EntClazz, String>, TableCell<EntClazz, String>> cellFactory = getCellFactoryForButtonSimple(fxTableCol);
 			fxTableCol.setCellFactory(cellFactory);
 			return;
 		}
 
 		// 26-09-2019 Genel İşlevli Factory Class , istenilen comp üretilip ona göre render edilir
-		if (fxTableCol.getFiCol().getColEditorClass().equals(Node.class.getName())) {
+		if (fxTableCol.getRefFiCol().getColEditorClass().equals(Node.class.getName())) {
 			Callback<TableColumn<EntClazz, Object>, TableCell<EntClazz, Object>> cellFactory = getCellFactoryForNodeGeneral(fxTableCol);
 			fxTableCol.setCellFactory(cellFactory);
 			return;
 		}
 
 		// 26-09-2019 FxButtonV2
-		if (fxTableCol.getFiCol().getColEditorClass().equals(EnumColNodeType.FxButtonV2.toString())) {
+		if (fxTableCol.getRefFiCol().getColEditorClass().equals(EnumColNodeType.FxButtonV2.toString())) {
 			Callback<TableColumn<EntClazz, Object>, TableCell<EntClazz, Object>> cellFactory = getCellFactoryForFxButtonV2(fxTableCol);
 			fxTableCol.setCellFactory(cellFactory);
 		}
 
-		if (fxTableCol.getFiCol().getColEditorClass().equals(FxButton.class.getName())
-				|| fxTableCol.getFiCol().getColEditorClass().equals(FxButton.class.getSimpleName())) {
+		if (fxTableCol.getRefFiCol().getColEditorClass().equals(FxButton.class.getName())
+				|| fxTableCol.getRefFiCol().getColEditorClass().equals(FxButton.class.getSimpleName())) {
 			Callback<TableColumn<EntClazz, String>, TableCell<EntClazz, String>> cellFactory = getCellFactoryForFxButton(fxTableCol);
 			fxTableCol.setCellFactory(cellFactory);
 		}
 
-		if (fxTableCol.getFiCol().getColEditorClass().equals(ToggleButton.class.getSimpleName())) {
+		if (fxTableCol.getRefFiCol().getColEditorClass().equals(ToggleButton.class.getSimpleName())) {
 			Callback<TableColumn<EntClazz, Boolean>, TableCell<EntClazz, Boolean>> cellFactory = getCellFactoryForToggleButton(fxTableCol);
 			fxTableCol.setCellFactory(cellFactory);
 		}
 
-		if (fxTableCol.getFiCol().getColEditorClass().equals(FxStateButton.class.getSimpleName())) {
+		if (fxTableCol.getRefFiCol().getColEditorClass().equals(FxStateButton.class.getSimpleName())) {
 			Callback<TableColumn<EntClazz, Integer>, TableCell<EntClazz, Integer>> cellFactory = getCellFactoryForFxStateButton(fxTableCol);
 			fxTableCol.setCellFactory(cellFactory);
 		}
 
-		if (fxTableCol.getFiCol().getColEditorClass().equals(FxStateButtonThree.class.getSimpleName())) {
+		if (fxTableCol.getRefFiCol().getColEditorClass().equals(FxStateButtonThree.class.getSimpleName())) {
 			Callback<TableColumn<EntClazz, Integer>, TableCell<EntClazz, Integer>> cellFactory = getCellFactoryForFxStateButtonThree(fxTableCol);
 			fxTableCol.setCellFactory(cellFactory);
 			return;
 		}
 
-		if (fxTableCol.getFiCol().getColEditorClass().equals(EnumColNodeType.FxButtonCustom.toString())) {
+		if (fxTableCol.getRefFiCol().getColEditorClass().equals(EnumColNodeType.FxButtonCustom.toString())) {
 			fxTableCol.styleAlignCenterFi();
 			Callback<TableColumn<EntClazz, Object>, TableCell<EntClazz, Object>> cellFactory = getCellFactoryForFxButtonCustom(fxTableCol);
 			fxTableCol.setCellFactory(cellFactory);
 			return;
 		}
 
-		if (fxTableCol.getFiCol().getColEditorClass().equals(EnumColNodeType.FxLabelStatus.toString())) {
+		if (fxTableCol.getRefFiCol().getColEditorClass().equals(EnumColNodeType.FxLabelStatus.toString())) {
 			fxTableCol.styleAlignCenterFi();
 			Callback<TableColumn<EntClazz, Object>, TableCell<EntClazz, Object>> cellFactory = getCellFactoryForFxLabelStatus(fxTableCol);
 			fxTableCol.setCellFactory(cellFactory);

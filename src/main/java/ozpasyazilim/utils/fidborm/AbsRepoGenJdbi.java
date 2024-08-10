@@ -574,7 +574,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
         String sql = FiQugen.deleteByCandId2ByInFormat(getEntityClass());
 
-        String dbFieldName = FiFieldUtil.getListFieldsCandId2(getEntityClass()).get(0).getDbFieldName();
+        String dbFieldName = FiFieldUtil.getListFieldsCandId2(getEntityClass()).get(0).getOfcTxDbFieldName();
 
         FiKeyBean fiKeyBean = FiKeyBean.bui().buiPut(dbFieldName, listData);
 
@@ -590,7 +590,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
 //		Loghelper.get(getClass()).debug("Delete query:" + sql);
 
-        String dbFieldName = FiFieldUtil.getListFieldsCandId2(getEntityClass()).get(0).getDbFieldName();
+        String dbFieldName = FiFieldUtil.getListFieldsCandId2(getEntityClass()).get(0).getOfcTxDbFieldName();
 
         FiKeyBean fiKeyBean = FiKeyBean.bui().buiPut(dbFieldName, listData);
 
@@ -607,7 +607,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
         String sql = FiQugen.deleteByCandId2ByInFormat(getEntityClass());
 
-        String dbFieldName = FiFieldUtil.getListFieldsCandId2(getEntityClass()).get(0).getDbFieldName();
+        String dbFieldName = FiFieldUtil.getListFieldsCandId2(getEntityClass()).get(0).getOfcTxDbFieldName();
 
         FiKeyBean fiKeyBean = FiKeyBean.bui().buiPut(dbFieldName, listData);
 
@@ -1561,7 +1561,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
         FiKeyBean fkbParams = new FiKeyBean();
         for (IFiCol fiCol : fiColList) {
-            fkbParams.put(fiCol.getFieldName(), fiCol.getColValue());
+            fkbParams.put(fiCol.getOfcTxFieldName(), fiCol.getColValue());
         }
 
         Loghelper.get(getClass()).debug(sqlQuery);
@@ -1574,7 +1574,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
         FiKeyBean fkbParams = new FiKeyBean();
         for (IFiCol fiCol : fiColList) {
-            fkbParams.put(fiCol.getFieldName(), fiCol.getColValue());
+            fkbParams.put(fiCol.getOfcTxFieldName(), fiCol.getColValue());
         }
 
         FiQuery fiQuery = new FiQuery(sqlQuery, fkbParams);
@@ -1596,7 +1596,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
         FiKeyBean fkbParams = new FiKeyBean();
         for (IFiCol fiCol : fiColList) {
-            fkbParams.put(fiCol.getFieldName(), fiCol.getColValue());
+            fkbParams.put(fiCol.getOfcTxFieldName(), fiCol.getColValue());
         }
 
         FiQuery fiQuery = new FiQuery(sqlQuery, fkbParams);
@@ -1623,7 +1623,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
         FiKeyBean fkbParams = new FiKeyBean();
         for (IFiCol fiCol : fiColsSelect) {
-            fkbParams.put(fiCol.getFieldName(), fiCol.getColValue());
+            fkbParams.put(fiCol.getOfcTxFieldName(), fiCol.getColValue());
         }
 
         FiQuery fiQuery = new FiQuery(sqlQuery, fkbParams);

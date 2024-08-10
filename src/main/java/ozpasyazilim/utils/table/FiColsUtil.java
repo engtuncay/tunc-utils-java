@@ -1,7 +1,6 @@
 package ozpasyazilim.utils.table;
 
 import ozpasyazilim.utils.gui.fxcomponents.FxDatePicker;
-import ozpasyazilim.utils.mvc.IFiCol;
 
 import java.util.Date;
 import java.util.List;
@@ -39,7 +38,7 @@ public class FiColsUtil {
         if (!getFiColList().isEmpty()) {
 
             for (FiCol fiCol : getFiColList()) {
-                if (fiCol.getFieldName().equals(fieldName)) {
+                if (fiCol.getOfcTxFieldName().equals(fieldName)) {
                     return fiCol;
                 }
             }
@@ -84,7 +83,7 @@ public class FiColsUtil {
     }
 
     public static FiCol changeFieldNameWithNew(FiCol fiCol){
-        fiCol.setFieldName(fiCol.getFieldName()+ "_new");
+        fiCol.setOfcTxFieldName(fiCol.getOfcTxFieldName()+ "_new");
         return fiCol;
     }
 

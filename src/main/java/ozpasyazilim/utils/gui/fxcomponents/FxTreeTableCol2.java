@@ -39,27 +39,27 @@ public class FxTreeTableCol2<EntClazz> extends TreeTableColumn implements IFxTab
 
 	public FxTreeTableCol2(String header, String fieldName) {
 		super(header);
-		getFiCol().setHeaderName(header);
-		getFiCol().setFieldName(fieldName);
+		getRefFiCol().setOfcTxHeader(header);
+		getRefFiCol().setOfcTxFieldName(fieldName);
 		setId(fieldName);
-		getFiCol().setId(fieldName);
+		getRefFiCol().setId(fieldName);
 		setCellValueFactory(new TreeItemPropertyValueFactory<>(fieldName));
 	}
 
 	public FxTreeTableCol2(String header, String fieldName, OzColType dataType) {
 		super(header);
-		getFiCol().setFieldName(fieldName);
+		getRefFiCol().setOfcTxFieldName(fieldName);
 		setId(fieldName);
-		getFiCol().setId(fieldName);
+		getRefFiCol().setId(fieldName);
 		setCellValueFactory(new TreeItemPropertyValueFactory<>(fieldName));
-		getFiCol().setColType(dataType);
+		getRefFiCol().setColType(dataType);
 		setAutoFormatter(dataType);
 
 	}
 
 	private <S> void setAutoFormatter(OzColType dataType) {
 
-		if ( getFiCol().getColType() == OzColType.Double) {
+		if ( getRefFiCol().getColType() == OzColType.Double) {
 
 			Locale locale = new Locale("tr", "TR");
 			DecimalFormatSymbols dcmEuropeSymbolStyle = new DecimalFormatSymbols(locale);
@@ -75,7 +75,7 @@ public class FxTreeTableCol2<EntClazz> extends TreeTableColumn implements IFxTab
 
 		}
 
-		if (getFiCol().getColType() == OzColType.Integer) {
+		if (getRefFiCol().getColType() == OzColType.Integer) {
 
 			/*
 			DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(locale);
@@ -91,7 +91,7 @@ public class FxTreeTableCol2<EntClazz> extends TreeTableColumn implements IFxTab
 
 		}
 
-		if ( getFiCol().getColType() == OzColType.Date) {
+		if ( getRefFiCol().getColType() == OzColType.Date) {
 			SimpleDateFormat f = new SimpleDateFormat("dd.MM.yy");
 			setCellFactory(new CellFactoryFormatter<S, Date>(f));
 		}
@@ -99,15 +99,15 @@ public class FxTreeTableCol2<EntClazz> extends TreeTableColumn implements IFxTab
 
 	}
 
-	public FiCol<EntClazz> getFiCol() {
+	public FiCol<EntClazz> getRefFiCol() {
 		if (fiTableCol == null) {
 			fiTableCol = new FiCol<EntClazz>();
-			getFiCol().setFxTreeTableCol(this);
+			getRefFiCol().setFxTreeTableCol(this);
 		}
 		return fiTableCol;
 	}
 
-	public void setFiCol(FiCol<EntClazz> fiTableCol) {this.fiTableCol = fiTableCol;}
+	public void setRefFiCol(FiCol<EntClazz> fiTableCol) {this.fiTableCol = fiTableCol;}
 
 	// Getter and Setter
 

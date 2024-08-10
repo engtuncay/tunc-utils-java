@@ -47,10 +47,10 @@ public class FiQugen {
         Integer indexWhere = 0;
         for (FiField fiField : fieldListFilterAnno) {
 
-            if (FiBool.isTrue(fiField.getBoIdField())) {
+            if (FiBool.isTrue(fiField.getBoKeyIdField())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
-                queryWhere.append(fiField.getName() + " = @" + fiField.getName());
+                queryWhere.append(fiField.getOfcTxFieldName() + " = @" + fiField.getOfcTxFieldName());
                 continue;
             }
 
@@ -83,7 +83,7 @@ public class FiQugen {
             if (FiBool.isTrue(fiField.getBoCandidateId1())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
-                queryWhere.append(fiField.getName() + " = @" + fiField.getName());
+                queryWhere.append(fiField.getOfcTxFieldName() + " = @" + fiField.getOfcTxFieldName());
                 continue;
             }
 
@@ -116,7 +116,7 @@ public class FiQugen {
             if (FiBool.isTrue(fiField.getBoCandidateId2())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
-                queryWhere.append(fiField.getName() + " = @" + fiField.getName());
+                queryWhere.append(fiField.getOfcTxFieldName() + " = @" + fiField.getOfcTxFieldName());
                 continue;
             }
 
@@ -149,7 +149,7 @@ public class FiQugen {
             if (FiBool.isTrue(fiField.getBoCandidateId2())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
-                queryWhere.append(fiField.getName() + " IN ( @" + fiField.getName() + " )");
+                queryWhere.append(fiField.getOfcTxFieldName() + " IN ( @" + fiField.getOfcTxFieldName() + " )");
                 continue;
             }
 
@@ -183,15 +183,15 @@ public class FiQugen {
         Integer indexWhere = 0;
         for (FiField fiField : fieldListFilterAnno) {
 
-            if (FiBool.isTrue(fiField.getBoIdField())) {
+            if (FiBool.isTrue(fiField.getBoKeyIdField())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
-                queryWhere.append(fiField.getName() + " = :" + fiField.getName());
+                queryWhere.append(fiField.getOfcTxFieldName() + " = :" + fiField.getOfcTxFieldName());
             }
 
             index++;
             if (index != 1) query.append(", ");
-            query.append(fiField.getName());  // + " = :" + fiField.getName());
+            query.append(fiField.getOfcTxFieldName());  // + " = :" + fiField.getName());
 
         }
         query.append("\nFROM " + tableName);
@@ -225,15 +225,15 @@ public class FiQugen {
         Integer indexWhere = 0;
         for (FiField fiField : fieldListFilterAnno) {
 
-            if (FiBool.isTrue(fiField.getBoIdField())) {
+            if (FiBool.isTrue(fiField.getBoKeyIdField())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
-                queryWhere.append(fiField.getName() + " = @" + fiField.getName());
+                queryWhere.append(fiField.getOfcTxFieldName() + " = @" + fiField.getOfcTxFieldName());
             }
 
             index++;
             if (index != 1) query.append(", ");
-            query.append(fiField.getName());  // + " = :" + fiField.getName());
+            query.append(fiField.getOfcTxFieldName());  // + " = :" + fiField.getName());
 
         }
         query.append("\nFROM " + tableName);
@@ -271,8 +271,8 @@ public class FiQugen {
             if (FiBool.isTrue(fiField.getBoCandidateId1())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
-                queryWhere.append(fiField.getName() + " = @" + fiField.getName());
-                fiQuery.setTxCandIdFieldName(fiField.getDbFieldName());
+                queryWhere.append(fiField.getOfcTxFieldName() + " = @" + fiField.getOfcTxFieldName());
+                fiQuery.setTxCandIdFieldName(fiField.getOfcTxDbFieldName());
             }
 
             index++;
@@ -356,7 +356,7 @@ public class FiQugen {
         for (FiField fiField : fieldsWhere) {
             indexWhere++;
             if (indexWhere != 1) queryWhere.append(" AND ");
-            queryWhere.append(fiField.getName() + " = @" + fiField.getName());
+            queryWhere.append(fiField.getOfcTxFieldName() + " = @" + fiField.getOfcTxFieldName());
         }
 
         query.append("\nFROM " + tableName);
@@ -387,13 +387,13 @@ public class FiQugen {
             if (FiBool.isTrue(fiField.getBoFiSelect())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
-                queryWhere.append(fiField.getName() + " = @" + fiField.getName());
+                queryWhere.append(fiField.getOfcTxFieldName() + " = @" + fiField.getOfcTxFieldName());
             }
 
             if (FiBool.isTrue(fiField.getBoDtoField())) {
                 index++;
                 if (index != 1) query.append(", ");
-                query.append(fiField.getName());  // + " = :" + fiField.getName());
+                query.append(fiField.getOfcTxFieldName());  // + " = :" + fiField.getName());
             }
 
         }
@@ -425,7 +425,7 @@ public class FiQugen {
             if (FiBool.isTrue(fiField.getBoFiWhere1())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
-                queryWhere.append(fiField.getName()).append(" = @").append(fiField.getName());
+                queryWhere.append(fiField.getOfcTxFieldName()).append(" = @").append(fiField.getOfcTxFieldName());
             }
         }
 
@@ -453,7 +453,7 @@ public class FiQugen {
             if (FiBool.isTrue(fiField.getBoDtoField())) {
                 index++;
                 if (index != 1) query.append(", ");
-                query.append(fiField.getName());  // + " = :" + fiField.getName());
+                query.append(fiField.getOfcTxFieldName());  // + " = :" + fiField.getName());
             }
         }
 
@@ -483,11 +483,11 @@ public class FiQugen {
             if (FiBool.isTrue(fiField.getBoFiSelect())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
-                queryWhere.append(fiField.getName() + " = @" + fiField.getName());
+                queryWhere.append(fiField.getOfcTxFieldName() + " = @" + fiField.getOfcTxFieldName());
             }
             index++;
             if (index != 1) query.append(", ");
-            query.append(fiField.getName());  // + " = :" + fiField.getName());
+            query.append(fiField.getOfcTxFieldName());  // + " = :" + fiField.getName());
         }
         query.append("\nFROM " + tableName);
         query.append("\nWHERE " + queryWhere);
@@ -519,14 +519,14 @@ public class FiQugen {
             if (FiBool.isTrue(fiField.getBoCandidateId1())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
-                queryWhere.append(fiField.getName() + " = :" + fiField.getName());
+                queryWhere.append(fiField.getOfcTxFieldName() + " = :" + fiField.getOfcTxFieldName());
             }
 
             if (FiBool.isNotTrue(fiField.getBoFiSelect1())) continue;
 
             index++;
             if (index != 1) query.append(", ");
-            query.append(fiField.getName());  // + " = :" + fiField.getName());
+            query.append(fiField.getOfcTxFieldName());  // + " = :" + fiField.getName());
 
         }
 
@@ -554,13 +554,13 @@ public class FiQugen {
             if (FiBool.isTrue(fiField.getBoCandidateId1())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
-                queryWhere.append(fiField.getName() + " = :" + fiField.getName());
+                queryWhere.append(fiField.getOfcTxFieldName() + " = :" + fiField.getOfcTxFieldName());
                 continue;
             }
 
             index++;
             if (index != 1) query.append(", ");
-            query.append(fiField.getName());  // + " = :" + fiField.getName());
+            query.append(fiField.getOfcTxFieldName());  // + " = :" + fiField.getName());
 
         }
         query.append("\nFROM " + tableName);
@@ -596,7 +596,7 @@ public class FiQugen {
 
             index++;
             if (index != 1) query.append(", ");
-            query.append(fiField.getName());  // + " = :" + fiField.getName());
+            query.append(fiField.getOfcTxFieldName());  // + " = :" + fiField.getName());
 
         }
 
@@ -636,7 +636,7 @@ public class FiQugen {
 
             index++;
             if (index != 1) query.append(", ");
-            query.append(fiField.getName());  // + " = :" + fiField.getName());
+            query.append(fiField.getOfcTxFieldName());  // + " = :" + fiField.getName());
 
         }
 
@@ -663,7 +663,7 @@ public class FiQugen {
         for (FiField fiField : fieldList) {
             index++;
             if (index != 1) query.append(", ");
-            query.append(fiField.getName());
+            query.append(fiField.getOfcTxFieldName());
         }
         query.append("\nFROM " + tableName);
         return query.toString();
@@ -690,11 +690,11 @@ public class FiQugen {
 
         for (FiField fiField : fieldList) {
 
-            if (FiBool.isTrue(fiField.getTransient())) continue;
+            if (FiBool.isTrue(fiField.getOftBoTransient())) continue;
 
             index++;
             if (index != 1) query.append(", ");
-            query.append(fiField.getName());
+            query.append(fiField.getOfcTxFieldName());
 
         }
 
@@ -705,14 +705,14 @@ public class FiQugen {
 
             for (FiField fiField : fieldList) {
 
-                if (FiBool.isTrue(fiField.getTransient())) continue;
+                if (FiBool.isTrue(fiField.getOftBoTransient())) continue;
 
-                Object fieldValue = FiReflection.getProperty(objectt, fiField.getName());
+                Object fieldValue = FiReflection.getProperty(objectt, fiField.getOfcTxFieldName());
 
                 if (fieldValue != null) {
                     indexWhere++;
                     if (indexWhere != 1) queryWhere.append("AND ");
-                    queryWhere.append(String.format("%s = @%s", fiField.getName(), fiField.getName()));
+                    queryWhere.append(String.format("%s = @%s", fiField.getOfcTxFieldName(), fiField.getOfcTxFieldName()));
                 }
 
             }
@@ -739,8 +739,8 @@ public class FiQugen {
         //Integer index = 0;
         for (FiField fiField : fieldList) {
 
-            if (FiBool.isTrue(fiField.getBoIdField())) {
-                query.append(String.format(" count(%s) ", fiField.getName()));
+            if (FiBool.isTrue(fiField.getBoKeyIdField())) {
+                query.append(String.format(" count(%s) ", fiField.getOfcTxFieldName()));
                 break;
             }
 
@@ -753,12 +753,12 @@ public class FiQugen {
 
             for (FiField fiField : fieldList) {
 
-                Object fieldValue = FiReflection.getProperty(objectt, fiField.getName());
+                Object fieldValue = FiReflection.getProperty(objectt, fiField.getOfcTxFieldName());
 
                 if (fieldValue != null) {
                     indexWhere++;
                     if (indexWhere != 1) queryWhere.append(" AND ");
-                    queryWhere.append(String.format("%s = @%s", fiField.getName(), fiField.getName()));
+                    queryWhere.append(String.format("%s = @%s", fiField.getOfcTxFieldName(), fiField.getOfcTxFieldName()));
                 }
 
             }
@@ -805,15 +805,15 @@ public class FiQugen {
             if (FiBool.isTrue(fiField.getBoCandidateId1())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" and ");
-                queryWhere.append(String.format("%s = @%s", fiField.getName(), fiField.getName()));
-                fiQuery.setTxCandIdFieldName(fiField.getDbFieldName());
+                queryWhere.append(String.format("%s = @%s", fiField.getOfcTxFieldName(), fiField.getOfcTxFieldName()));
+                fiQuery.setTxCandIdFieldName(fiField.getOfcTxDbFieldName());
             }
 
-            if (FiBool.isTrue(fiField.getBoDtoField()) || FiBool.isTrue(fiField.getBoIdField())
+            if (FiBool.isTrue(fiField.getBoDtoField()) || FiBool.isTrue(fiField.getBoKeyIdField())
                     || FiBool.isTrue(fiField.getBoCandidateId1())) {
                 index++;
                 if (index != 1) query.append(", ");
-                query.append(fiField.getName());
+                query.append(fiField.getOfcTxFieldName());
             }
 
         }
@@ -845,13 +845,13 @@ public class FiQugen {
             if (FiBool.isTrue(fiField.getBoGuidField())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" and ");
-                queryWhere.append(String.format("%s = @%s", fiField.getName(), fiField.getName()));
+                queryWhere.append(String.format("%s = @%s", fiField.getOfcTxFieldName(), fiField.getOfcTxFieldName()));
             }
 
-            if (FiBool.isTrue(fiField.getBoIdField())) {
+            if (FiBool.isTrue(fiField.getBoKeyIdField())) {
                 index++;
                 if (index != 1) query.append(", ");
-                query.append(fiField.getName());
+                query.append(fiField.getOfcTxFieldName());
             }
 
         }
@@ -892,14 +892,14 @@ public class FiQugen {
             if (FiBool.isTrue(fiField.getBoFirmField())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" and ");
-                queryWhere.append(String.format("%s = @%s", fiField.getName(), fiField.getName()));
+                queryWhere.append(String.format("%s = @%s", fiField.getOfcTxFieldName(), fiField.getOfcTxFieldName()));
             }
 
-            if (FiBool.isTrue(fiField.getBoDtoField()) || FiBool.isTrue(fiField.getBoIdField())
+            if (FiBool.isTrue(fiField.getBoDtoField()) || FiBool.isTrue(fiField.getBoKeyIdField())
                     || FiBool.isTrue(fiField.getBoCandidateId1())) {
                 index++;
                 if (index != 1) query.append(", ");
-                query.append(fiField.getName());
+                query.append(fiField.getOfcTxFieldName());
             }
 
         }
@@ -928,14 +928,14 @@ public class FiQugen {
         int index = 0;
         for (FiField fiField : fieldList) {
 
-            if (FiBool.isTrue(fiField.getBoDtoField()) || FiBool.isTrue(fiField.getBoIdField())
+            if (FiBool.isTrue(fiField.getBoDtoField()) || FiBool.isTrue(fiField.getBoKeyIdField())
                     || FiBool.isTrue(fiField.getBoCandidateId1())) {
                 index++;
                 if (index != 1) query.append(", ");
-                query.append(fiField.getName());
+                query.append(fiField.getOfcTxFieldName());
             }
 
-            if (FiBool.isTrue(fiField.getBoIdField())) {
+            if (FiBool.isTrue(fiField.getBoKeyIdField())) {
                 idField = fiField.getDbFieldNameOrName();
             }
 
@@ -965,11 +965,11 @@ public class FiQugen {
         int index = 0;
         for (FiField fiField : fieldList) {
 
-            if (FiBool.isTrue(fiField.getBoDtoField()) || FiBool.isTrue(fiField.getBoIdField())
+            if (FiBool.isTrue(fiField.getBoDtoField()) || FiBool.isTrue(fiField.getBoKeyIdField())
                     || FiBool.isTrue(fiField.getBoCandidateId1())) {
                 index++;
                 if (index != 1) query.append(", ");
-                query.append(fiField.getName());
+                query.append(fiField.getOfcTxFieldName());
             }
 
             if (FiBool.isTrue(fiField.getBoCandidateId1())) {
@@ -1005,14 +1005,14 @@ public class FiQugen {
             if (FiBool.isTrue(fiField.getBoWhere1())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" and ");
-                queryWhere.append(String.format("%s = @%s", fiField.getName(), fiField.getName()));
+                queryWhere.append(String.format("%s = @%s", fiField.getOfcTxFieldName(), fiField.getOfcTxFieldName()));
             }
 
-            if (FiBool.isTrue(fiField.getBoDtoField()) || FiBool.isTrue(fiField.getBoIdField())
+            if (FiBool.isTrue(fiField.getBoDtoField()) || FiBool.isTrue(fiField.getBoKeyIdField())
                     || FiBool.isTrue(fiField.getBoCandidateId1())) {
                 index++;
                 if (index != 1) query.append(", ");
-                query.append(fiField.getName());
+                query.append(fiField.getOfcTxFieldName());
             }
 
         }
@@ -1044,17 +1044,17 @@ public class FiQugen {
         Integer indexWhere = 0;
         for (FiField fiField : fieldList) {
 
-            if (FiBool.isTrue(fiField.getBoDtoField()) || FiBool.isTrue(fiField.getBoIdField())
+            if (FiBool.isTrue(fiField.getBoDtoField()) || FiBool.isTrue(fiField.getBoKeyIdField())
                     || FiBool.isTrue(fiField.getBoCandidateId1())) {
                 indexSelect++;
                 if (indexSelect != 1) query.append(", ");
-                query.append(fiField.getName());
+                query.append(fiField.getOfcTxFieldName());
             }
 
             if (FiBool.isTrue(fiField.getBoFirmField())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" and ");
-                queryWhere.append(String.format("%s = @%s", fiField.getName(), fiField.getName()));
+                queryWhere.append(String.format("%s = @%s", fiField.getOfcTxFieldName(), fiField.getOfcTxFieldName()));
             }
 
         }
@@ -1079,11 +1079,11 @@ public class FiQugen {
         int indexSelect = 0;
         for (FiField fiField : fieldList) {
 
-            if (FiBool.isTrue(fiField.getBoDtoField()) || FiBool.isTrue(fiField.getBoIdField())
+            if (FiBool.isTrue(fiField.getBoDtoField()) || FiBool.isTrue(fiField.getBoKeyIdField())
                     || FiBool.isTrue(fiField.getBoCandidateId1())) {
                 indexSelect++;
                 if (indexSelect != 1) query.append(", ");
-                query.append(fiField.getName());
+                query.append(fiField.getOfcTxFieldName());
             }
         }
 
@@ -1095,7 +1095,7 @@ public class FiQugen {
             if (indexWhere != 1) queryWhere.append(" AND ");
             queryWhere.append(fiCol.getTxDbFieldNameOrFieldName())
                     .append(" = @")
-                    .append(fiCol.getFieldName());
+                    .append(fiCol.getOfcTxFieldName());
         }
 
         query.append("\nWHERE ").append(queryWhere);
@@ -1121,13 +1121,13 @@ public class FiQugen {
             if (FiBool.isTrue(fiField.getBoFirmField())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" and ");
-                queryWhere.append(String.format("%s = @%s", fiField.getName(), fiField.getName()));
+                queryWhere.append(String.format("%s = @%s", fiField.getOfcTxFieldName(), fiField.getOfcTxFieldName()));
             }
 
             if (FiBool.isTrue(fiField.getBoComboField())) {
                 index++;
                 if (index != 1) query.append(", ");
-                query.append(fiField.getName());
+                query.append(fiField.getOfcTxFieldName());
             }
 
         }
@@ -1190,7 +1190,7 @@ public class FiQugen {
                 if (index > 0) {
                     queryWhere.append(" AND ");
                 }
-                queryWhere.append(fiField.getDbFieldName() + " = @" + fiField.getDbParamName());
+                queryWhere.append(fiField.getOfcTxDbFieldName() + " = @" + fiField.getDbParamName());
                 index++;
             }
 
@@ -1327,7 +1327,7 @@ public class FiQugen {
 
         for (FiField fiField : fieldListFilterAnno) {
 
-            if (FiBool.isTrue(fiField.getBoIdField())) {
+            if (FiBool.isTrue(fiField.getBoKeyIdField())) {
                 continue;
             }
 
@@ -1336,11 +1336,11 @@ public class FiQugen {
 
             if (FiBool.isTrue(fiField.getBoInsertMaxPlus())) {
                 //(SELECT MAX(no)+1  FROM PERSON)
-                query.append(String.format("(SELECT MAX(%s)+1 FROM %s)", fiField.getName(), tableName));
+                query.append(String.format("(SELECT MAX(%s)+1 FROM %s)", fiField.getOfcTxFieldName(), tableName));
                 continue;
             }
 
-            query.append("@" + fiField.getName());
+            query.append("@" + fiField.getOfcTxFieldName());
 
         }
 
@@ -1418,17 +1418,17 @@ public class FiQugen {
             if (FiBool.isTrue(fiField.getBoCandidateId1())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
-                queryWhere.append(fiField.getName() + " = :" + fiField.getName());
+                queryWhere.append(fiField.getOfcTxFieldName() + " = :" + fiField.getOfcTxFieldName());
                 continue;
             }
 
-            if (FiBool.isTrue(fiField.getBoIdField())) {
+            if (FiBool.isTrue(fiField.getBoKeyIdField())) {
                 continue;
             }
 
             index++;
             if (index != 1) query.append(", ");
-            query.append(fiField.getName() + " = :" + fiField.getName());
+            query.append(fiField.getOfcTxFieldName() + " = :" + fiField.getOfcTxFieldName());
 
         }
 
@@ -1463,7 +1463,7 @@ public class FiQugen {
             if (FiBool.isTrue(fiField.getBoCandidateId1())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
-                queryWhere.append(fiField.getDbFieldName() + " = :" + fiField.getDbParamName());
+                queryWhere.append(fiField.getOfcTxDbFieldName() + " = :" + fiField.getDbParamName());
                 continue;
             }
 
@@ -1475,7 +1475,7 @@ public class FiQugen {
 
             index++;
             if (index != 1) query.append(", ");
-            query.append(fiField.getName() + " = :" + fiField.getName());
+            query.append(fiField.getOfcTxFieldName() + " = :" + fiField.getOfcTxFieldName());
 
         }
 
@@ -1502,18 +1502,18 @@ public class FiQugen {
         Integer indexWhere = 0;
         for (FiField fiField : fieldListFilterAnno) {
 
-            if (FiBool.isTrue(fiField.getBoIdField())) {
+            if (FiBool.isTrue(fiField.getBoKeyIdField())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
-                queryWhere.append(fiField.getName() + " = @" + fiField.getDbFieldName());
+                queryWhere.append(fiField.getOfcTxFieldName() + " = @" + fiField.getOfcTxDbFieldName());
                 continue;
             }
 
-            if (FiBool.isTrue(fiField.getBoIdField())) continue;
+            if (FiBool.isTrue(fiField.getBoKeyIdField())) continue;
 
             index++;
             if (index != 1) query.append(", ");
-            query.append(fiField.getName() + " = @" + fiField.getDbParamName());
+            query.append(fiField.getOfcTxFieldName() + " = @" + fiField.getDbParamName());
 
         }
 
@@ -1549,14 +1549,14 @@ public class FiQugen {
         for (IFiCol fiTableCol : listFields) {
             index++;
             if (index != 1) query.append(", ");
-            query.append(fiTableCol.getFieldName() + " = @" + fiTableCol.getFieldName());
+            query.append(fiTableCol.getOfcTxFieldName() + " = @" + fiTableCol.getOfcTxFieldName());
         }
 
         for (FiField fiField : listClassFields) {
-            if (FiBool.isTrue(fiField.getBoIdField())) {
+            if (FiBool.isTrue(fiField.getBoKeyIdField())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
-                queryWhere.append(fiField.getName() + " = @" + fiField.getName());
+                queryWhere.append(fiField.getOfcTxFieldName() + " = @" + fiField.getOfcTxFieldName());
                 continue;
             }
         }
@@ -1594,7 +1594,7 @@ public class FiQugen {
         for (IFiCol fiTableCol : listFields) {
 
             // id field dahil edilmez
-            if (FiBool.isTrue(listClassFields.getOrDefault(fiTableCol.getFieldName(), new FiField()).getBoIdField())) {
+            if (FiBool.isTrue(listClassFields.getOrDefault(fiTableCol.getOfcTxFieldName(), new FiField()).getBoKeyIdField())) {
                 continue;
             }
 
@@ -1605,22 +1605,22 @@ public class FiQugen {
 
             index++;
             if (index != 1) query.append(", ");
-            query.append(fiTableCol.getFieldName() + " = @" + fiTableCol.getFieldName());
+            query.append(fiTableCol.getOfcTxFieldName() + " = @" + fiTableCol.getOfcTxFieldName());
         }
 
         for (FiField fiField : listClassFields.values()) {
 
-            if (FiBool.isTrue(fiField.getBoIdField())) {
+            if (FiBool.isTrue(fiField.getBoKeyIdField())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
-                queryWhere.append(fiField.getName() + " = @" + fiField.getName());
+                queryWhere.append(fiField.getOfcTxFieldName() + " = @" + fiField.getOfcTxFieldName());
                 continue;
             }
 
             if (FiBool.isTrue(fiField.getBoDefaultUpdateField())) {
                 index++;
                 if (index != 1) query.append(", ");
-                query.append(fiField.getName() + " = @" + fiField.getName());
+                query.append(fiField.getOfcTxFieldName() + " = @" + fiField.getOfcTxFieldName());
             }
 
         }
@@ -1669,7 +1669,7 @@ public class FiQugen {
 
             index++;
             if (index != 1) query.append(", ");
-            query.append(fiTableCol.getFieldName()).append(" = @").append(fiTableCol.getFieldName());
+            query.append(fiTableCol.getOfcTxFieldName()).append(" = @").append(fiTableCol.getOfcTxFieldName());
 
         }
 
@@ -1679,7 +1679,7 @@ public class FiQugen {
             if (FiBool.isTrue(fiTableCol.getBoKeyIdField())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
-                queryWhere.append(fiTableCol.getTxDbFieldNameOrFieldName()).append(" = @").append(fiTableCol.getFieldName());
+                queryWhere.append(fiTableCol.getTxDbFieldNameOrFieldName()).append(" = @").append(fiTableCol.getOfcTxFieldName());
                 continue;
             }
 
@@ -1724,7 +1724,7 @@ public class FiQugen {
             if (FiBool.isTrue(fiCol.getBoKeyIdField())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
-                queryWhere.append(fiCol.getFieldName()).append(" IN ( @").append(fiCol.getFieldName()).append(" )");
+                queryWhere.append(fiCol.getOfcTxFieldName()).append(" IN ( @").append(fiCol.getOfcTxFieldName()).append(" )");
                 continue;
             }
 
@@ -1735,7 +1735,7 @@ public class FiQugen {
 
             index++;
             if (index != 1) query.append(", ");
-            query.append(fiCol.getFieldName()).append(" = @").append(fiCol.getFieldName());
+            query.append(fiCol.getOfcTxFieldName()).append(" = @").append(fiCol.getOfcTxFieldName());
         }
 
         query.append(" WHERE ").append(queryWhere);
@@ -1763,14 +1763,14 @@ public class FiQugen {
 
             if (FiBool.isTrue(fiCol.getBoKeyIdField())) {
                 if (indexWhereBlock != 1) txWhereBlock.append(" AND ");
-                txWhereBlock.append(fiCol.getFieldName()).append(" = @").append(fiCol.getFieldName());
+                txWhereBlock.append(fiCol.getOfcTxFieldName()).append(" = @").append(fiCol.getOfcTxFieldName());
                 indexWhereBlock++;
             } else {
                 if(FiBool.isTrue(boUpdateFieldsOnly)){
 
                     if(FiBool.isTrue(fiCol.getBoUpdateFieldForQuery())){
                         if (indexSetBlock != 1) txSetBlock.append(", ");
-                        txSetBlock.append(fiCol.getFieldName()).append(" = @").append(fiCol.getFieldName());
+                        txSetBlock.append(fiCol.getOfcTxFieldName()).append(" = @").append(fiCol.getOfcTxFieldName());
                         indexSetBlock++;
                     }else{
                         continue;
@@ -1778,7 +1778,7 @@ public class FiQugen {
 
                 }else{
                     if (indexSetBlock != 1) txSetBlock.append(", ");
-                    txSetBlock.append(fiCol.getFieldName()).append(" = @").append(fiCol.getFieldName());
+                    txSetBlock.append(fiCol.getOfcTxFieldName()).append(" = @").append(fiCol.getOfcTxFieldName());
                     indexSetBlock++;
                 }
 
@@ -1787,7 +1787,7 @@ public class FiQugen {
         }
 
         FiKeyBean fkbTemplate = new FiKeyBean();
-        fkbTemplate.add("tableName", iFiTableMeta.getTxTableName());
+        fkbTemplate.add("tableName", iFiTableMeta.getITxTableName());
         fkbTemplate.add("setBlock", txSetBlock.toString());
         fkbTemplate.add("whereBlock", txWhereBlock.toString());
 
@@ -1809,14 +1809,14 @@ public class FiQugen {
 
             if (FiBool.isTrue(fiCol.getBoKeyIdField())) {
                 if (indexWhereBlock != 1) txWhereBlock.append(" AND ");
-                txWhereBlock.append(fiCol.getFieldName()).append(" = @").append(fiCol.getFieldName());
+                txWhereBlock.append(fiCol.getOfcTxFieldName()).append(" = @").append(fiCol.getOfcTxFieldName());
                 indexWhereBlock++;
             }
 
         }
 
         FiKeyBean fkbTemplate = new FiKeyBean();
-        fkbTemplate.add("tableName", iFiTableMeta.getTxTableName());
+        fkbTemplate.add("tableName", iFiTableMeta.getITxTableName());
         //fkbTemplate.add("setBlock", txSetBlock.toString());
         fkbTemplate.add("whereBlock", txWhereBlock.toString());
 
@@ -1852,7 +1852,7 @@ public class FiQugen {
             if (FiBool.isTrue(fiCol.getBoKeyIdField())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
-                queryWhere.append(fiCol.getFieldName()).append(" = @").append(fiCol.getFieldName());
+                queryWhere.append(fiCol.getOfcTxFieldName()).append(" = @").append(fiCol.getOfcTxFieldName());
                 continue;
             }
 
@@ -1863,7 +1863,7 @@ public class FiQugen {
 
             index++;
             if (index != 1) query.append(", ");
-            query.append(fiCol.getFieldName()).append(" = @").append(fiCol.getFieldName());
+            query.append(fiCol.getOfcTxFieldName()).append(" = @").append(fiCol.getOfcTxFieldName());
         }
 
         query.append(" WHERE ").append(queryWhere);
@@ -1890,10 +1890,10 @@ public class FiQugen {
         for (FiCol fiCol : listFields) {
 
             if (indexFields != 1) queryFields.append(", ");
-            queryFields.append(fiCol.getFieldName());
+            queryFields.append(fiCol.getOfcTxFieldName());
 
             if (indexParams != 1) queryParams.append(", ");
-            queryParams.append("@").append(fiCol.getFieldName());
+            queryParams.append("@").append(fiCol.getOfcTxFieldName());
 
             indexFields++;
             indexParams++;
@@ -1927,10 +1927,10 @@ public class FiQugen {
                 if(FiBool.isTrue(fiCol.getBoInsertFieldForQuery())){
 
                     if (indexFields != 1) queryFields.append(", ");
-                    queryFields.append(fiCol.getFieldName());
+                    queryFields.append(fiCol.getOfcTxFieldName());
 
                     if (indexParams != 1) queryParams.append(", ");
-                    queryParams.append("@").append(fiCol.getFieldName());
+                    queryParams.append("@").append(fiCol.getOfcTxFieldName());
 
                     indexFields++;
                     indexParams++;
@@ -1939,10 +1939,10 @@ public class FiQugen {
             }else{
 
                 if (indexFields != 1) queryFields.append(", ");
-                queryFields.append(fiCol.getFieldName());
+                queryFields.append(fiCol.getOfcTxFieldName());
 
                 if (indexParams != 1) queryParams.append(", ");
-                queryParams.append("@").append(fiCol.getFieldName());
+                queryParams.append("@").append(fiCol.getOfcTxFieldName());
 
                 indexFields++;
                 indexParams++;
@@ -1953,7 +1953,7 @@ public class FiQugen {
         }
 
         FiKeyBean fkbTemplate = new FiKeyBean();
-        fkbTemplate.add("tableName", iFiTableMeta.getTxTableName());
+        fkbTemplate.add("tableName", iFiTableMeta.getITxTableName());
         fkbTemplate.add("csvFields", queryFields.toString());
         fkbTemplate.add("paramFields", queryParams.toString());
 
@@ -1989,7 +1989,7 @@ public class FiQugen {
         for (FiCol fiCol : listFields) {
             index++;
             if (index != 1) query.append(", ");
-            query.append(fiCol.getFieldName());
+            query.append(fiCol.getOfcTxFieldName());
             // idCol kayıt edilir
             if (FiBool.isTrue(fiCol.getBoKeyIdField())) fiColId = fiCol;
         }
@@ -1997,8 +1997,8 @@ public class FiQugen {
         if (fiColId != null) {
             index++;
             if (index != 1) query.append(", ");
-            query.append(String.format("count( %s ) lnCount", fiColId.getFieldName()));
-            queryGroupBy.append(fiColId.getFieldName());
+            query.append(String.format("count( %s ) lnCount", fiColId.getOfcTxFieldName()));
+            queryGroupBy.append(fiColId.getOfcTxFieldName());
         }
 
         query.append("\nFROM " + getTableName(clazz));
@@ -2009,7 +2009,7 @@ public class FiQugen {
             if (FiBool.isTrue(fiCol.getBoKeyIdField())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
-                queryWhere.append(fiCol.getFieldName() + " IN ( @" + fiCol.getFieldName() + " )");
+                queryWhere.append(fiCol.getOfcTxFieldName() + " IN ( @" + fiCol.getOfcTxFieldName() + " )");
                 continue;
             }
         }
@@ -2065,7 +2065,7 @@ public class FiQugen {
         if (fiColId != null) {
             //  index++;
             //  if (index != 1) query.append(", ");
-            query.append(String.format("count( %s ) lnCount", fiColId.getFieldName()));
+            query.append(String.format("count( %s ) lnCount", fiColId.getOfcTxFieldName()));
             //queryGroupBy.append(fiColId.getFieldName());
         }
 
@@ -2077,9 +2077,9 @@ public class FiQugen {
             //if (FiBool.isTrue(fiCol.getBoKeyField())) {
             indexWhere++;
             if (indexWhere != 1) queryWhere.append(" AND ");
-            queryWhere.append(fiCol.getFieldName())
+            queryWhere.append(fiCol.getOfcTxFieldName())
                     .append(" = @")
-                    .append(fiCol.getFieldName());
+                    .append(fiCol.getOfcTxFieldName());
         }
 
         query.append("\nWHERE ").append(queryWhere);
@@ -2165,14 +2165,14 @@ public class FiQugen {
         for (IFiCol fiTableCol : listFields) {
             index++;
             if (index != 1) query.append(", ");
-            query.append(fiTableCol.getFieldName() + " = @" + fiTableCol.getFieldName());
+            query.append(fiTableCol.getOfcTxFieldName() + " = @" + fiTableCol.getOfcTxFieldName());
         }
 
         for (FiField fiField : listClassFields) {
             if (FiBool.isTrue(fiField.getBoCandidateId1())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
-                queryWhere.append(fiField.getName() + " = @" + fiField.getDbParamName());
+                queryWhere.append(fiField.getOfcTxFieldName() + " = @" + fiField.getDbParamName());
                 continue;
             }
         }
@@ -2209,13 +2209,13 @@ public class FiQugen {
             if (FiBool.isTrue(fiCol.getBoUpdateFieldForQuery())) {
                 index++;
                 if (index != 1) query.append(", ");
-                query.append(fiCol.getFieldName()).append(" = @").append(fiCol.getFieldName());
+                query.append(fiCol.getOfcTxFieldName()).append(" = @").append(fiCol.getOfcTxFieldName());
             }
 
             if (FiBool.isTrue(fiCol.getBoKeyIdField())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
-                queryWhere.append(fiCol.getFieldName()).append(" = @").append(fiCol.getFieldName()); // dbFieldName kullanımı ile geliştirilebilir
+                queryWhere.append(fiCol.getOfcTxFieldName()).append(" = @").append(fiCol.getOfcTxFieldName()); // dbFieldName kullanımı ile geliştirilebilir
                 continue;
             }
 
@@ -2246,8 +2246,8 @@ public class FiQugen {
             Integer indexWhere = 0;
             for (FiCol fiCol : fiCols1) {
 
-                String fieldName = FiString.getIfNotEmptytOr(fiCol.getTxDbFieldName(), fiCol.getFieldName());
-                String paramName = FiString.getIfNotEmptytOr(fiCol.getTxParamName(), fiCol.getFieldName());
+                String fieldName = FiString.getIfNotEmptytOr(fiCol.getOfcTxDbFieldName(), fiCol.getOfcTxFieldName());
+                String paramName = FiString.getIfNotEmptytOr(fiCol.getTxParamName(), fiCol.getOfcTxFieldName());
 
                 if (!FiBool.isTrue(fiCol.getBoKeyIdField()) && !FiBool.isTrue(fiCol.getBoNonUpdatable())) {
                     index++;
@@ -2305,7 +2305,7 @@ public class FiQugen {
             if (FiBool.isTrue(fiField.getBoCandidateId1())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
-                queryWhere.append(fiField.getName() + " = @" + fiField.getDbParamName());
+                queryWhere.append(fiField.getOfcTxFieldName() + " = @" + fiField.getDbParamName());
                 continue;
             }
         }
@@ -2320,7 +2320,7 @@ public class FiQugen {
     }
 
     private static List<String> getListSqlParam(List<FiField> fieldListFilterAnno) {
-        return fieldListFilterAnno.stream().map(fiField -> ":" + fiField.getName()).collect(toList());
+        return fieldListFilterAnno.stream().map(fiField -> ":" + fiField.getOfcTxFieldName()).collect(toList());
     }
 
     private static List<String> getListDbSqlParamWithAt(List<FiField> fieldListFilterAnno) {
@@ -2328,7 +2328,7 @@ public class FiQugen {
     }
 
     private static List<String> getListDbSqlParamWithAtAndFieldName(List<FiField> fieldListFilterAnno) {
-        return fieldListFilterAnno.stream().map(fiField -> "@" + fiField.getName()).collect(toList());
+        return fieldListFilterAnno.stream().map(fiField -> "@" + fiField.getOfcTxFieldName()).collect(toList());
     }
 
     /**
@@ -2424,10 +2424,10 @@ public class FiQugen {
 
             String editorClass = new FxEditorFactory().convertSimpleTypeToCompClass(field.getClassNameSimple());
 
-            String label = FiString.ifEmptyElseValue(field.getLabel(), field.getName());
+            String label = FiString.ifEmptyElseValue(field.getOfcTxHeader(), field.getOfcTxFieldName());
 
             query.append(String.format("listFormElements.add(OzTableCol.build(\"%s\",\"%s\").buildEditorClass(%s.class.getName()));\n"
-                    , label, field.getName(), editorClass));
+                    , label, field.getOfcTxFieldName(), editorClass));
 
             //if (index != 1) query.append("\n, ");
             //query.append(field.getName() + " " + field.assignSqlFieldType());
@@ -2462,10 +2462,10 @@ public class FiQugen {
 
             //String ozColType = new OzTableColHelper().convertSimpleTypeToOzColType(field.getTypeSimpleName());
 
-            String label = FiString.ifEmptyElseValue(field.getLabel(), field.getName());
+            String label = FiString.ifEmptyElseValue(field.getOfcTxHeader(), field.getOfcTxFieldName());
 
             query.append(String.format("\tlistTableCols.add(FxTableCol.build(\"%s\",\"%s\").buildColType(OzColType.%s));\n"
-                    , label, field.getName(), field.getClassNameSimple()));
+                    , label, field.getOfcTxFieldName(), field.getClassNameSimple()));
 
             //if (index != 1) query.append("\n, ");
             //query.append(field.getName() + " " + field.assignSqlFieldType());
@@ -2497,7 +2497,7 @@ public class FiQugen {
             //String label = FiString.ifEmptyElseValue(field.getLabel(), field.getName());
             //FxTableColBuildHelper.build(EntegreField.id)
             query.append(String.format("\tlistTableCols.add(FiTableColBuildHelper.build(%s.%s).buildColType(OzColType.%s));\n"
-                    , fieldEnumClass, field.getName(), field.getClassNameSimple()));
+                    , fieldEnumClass, field.getOfcTxFieldName(), field.getClassNameSimple()));
 
             // enum çıkarıldı
             // // enum %s("%s")
@@ -2532,8 +2532,8 @@ public class FiQugen {
 
             //String label = FiString.ifEmptyElseValue(field.getLabel(), field.getName());
             //FxTableColBuildHelper.build(EntegreField.id)
-            String fieldHeader = "\"" + field.getName() + "\"";
-            String fieldName = "\"" + field.getName() + "\"";
+            String fieldHeader = "\"" + field.getOfcTxFieldName() + "\"";
+            String fieldName = "\"" + field.getOfcTxFieldName() + "\"";
             query.append(String.format("\tlistTableCols.add(FiTableColBuildHelper.buildfh(%s,%s).buildColType(OzColType.%s));\n"
                     , fieldName, fieldHeader, field.getClassNameSimple()));
 
@@ -2570,7 +2570,7 @@ public class FiQugen {
             //String fieldHeader = "\""+ field.getName() +"\"";
             //String fieldName = "\""+ field.getName() +"\"";
             query.append(String.format("\t, %s(\"%s\")\n"
-                    , field.getName(), field.getName())); // ,field.getClassNameSimple()
+                    , field.getOfcTxFieldName(), field.getOfcTxFieldName())); // ,field.getClassNameSimple()
 
             // enum çıkarıldı
             // // enum %s("%s")
@@ -2725,7 +2725,7 @@ public class FiQugen {
     }
 
 
-    public static List<FiField> getFieldsAndDefinitionFromDb(String tableName, Jdbi jdbi) {
+    public static List<FiField> getDbFieldsAndDefinitionSql(String tableName, Jdbi jdbi) {
 
         List<TableScheme> result = getDbTableScheme(tableName, jdbi);
 
@@ -2740,7 +2740,7 @@ public class FiQugen {
 
             FiField fiField = new FiField();
 
-            fiField.setDbFieldName(tableScheme.getCOLUMN_NAME());
+            fiField.setOfcTxDbFieldName(tableScheme.getCOLUMN_NAME());
 
             StringBuilder fieldDefinition = new StringBuilder();
 
@@ -2757,10 +2757,10 @@ public class FiQugen {
             // descriptions related to a field
             if (tableScheme.getIS_NULLABLE().equals("NO")) fieldDefinition.append(" IsNullable : NO");
             if (tableScheme.getCHARACTER_MAXIMUM_LENGTH() != null && !tableScheme.getCHARACTER_MAXIMUM_LENGTH().equals("0"))
-                fieldDefinition.append(" Max:" + tableScheme.getCHARACTER_MAXIMUM_LENGTH());
+                fieldDefinition.append(" Max:").append(tableScheme.getCHARACTER_MAXIMUM_LENGTH());
             if (tableScheme.getNUMERIC_SCALE() != null) {
-                fieldDefinition.append(" Scale:" + tableScheme.getNUMERIC_SCALE());
-                fieldDefinition.append(" Precision:" + tableScheme.getNUMERIC_PRECISION());
+                fieldDefinition.append(" Scale:").append(tableScheme.getNUMERIC_SCALE());
+                fieldDefinition.append(" Precision:").append(tableScheme.getNUMERIC_PRECISION());
             }
             if (tableScheme.getIsPartOfPrimaryKey().equals("1")) fieldDefinition.append(" Key Field");
 
@@ -2773,11 +2773,20 @@ public class FiQugen {
 
     }
 
-    public static Map<String, FiField> getMapDbFields(Class clazz, Jdbi jdbi) {
+    public static Map<String, FiField> getMapDbFieldsSql(Class clazz, Jdbi jdbi) {
 
-        List<FiField> dbFields = getFieldsAndDefinitionFromDb(getTableName(clazz), jdbi);
+        List<FiField> dbFields = getDbFieldsAndDefinitionSql(getTableName(clazz), jdbi);
 
-        return FiCollection.listToMapSingle(dbFields, FiField::getDbFieldName);
+        return FiCollection.listToMapSingle(dbFields, FiField::getOfcTxDbFieldName);
+    }
+
+    public static Map<String, FiField> getMapDbFieldsSql(String txTableName, Jdbi jdbi) {
+
+        if(FiString.isEmpty(txTableName)) return new HashMap<>();
+
+        List<FiField> dbFields = getDbFieldsAndDefinitionSql(txTableName, jdbi);
+
+        return FiCollection.listToMapSingle(dbFields, FiField::getOfcTxDbFieldName);
     }
 
 
@@ -3106,16 +3115,16 @@ public class FiQugen {
 
             // Sql Tipi Belirlenmeyenler için
             if (field.getSqlFieldDefinition() == null) {
-                query.append("\n-- " + field.getName() + " " + field.getClassNameSimple()
-                        + (field.getLength() != null ? " -- Length:" + field.getLength() : "")
-                        + (field.getPrecision() != null ? " -- Prec.:" + field.getPrecision() : "")
-                        + (field.getScale() != null ? "Scale :" + field.getScale() : ""));
+                query.append("\n-- " + field.getOfcTxFieldName() + " " + field.getClassNameSimple()
+                        + (field.getOfcLnLength() != null ? " -- Length:" + field.getOfcLnLength() : "")
+                        + (field.getOfcLnPrecision() != null ? " -- Prec.:" + field.getOfcLnPrecision() : "")
+                        + (field.getOfcLnScale() != null ? "Scale :" + field.getOfcLnScale() : ""));
                 continue;
             }
 
             index++;
             if (index != 1) query.append("\n, ");
-            query.append(field.getName() + " " + field.getSqlFieldDefinition());
+            query.append(field.getOfcTxFieldName() + " " + field.getSqlFieldDefinition());
 
         }
 
@@ -3136,12 +3145,12 @@ public class FiQugen {
         int index = 0;
         for (FiField field : listFields) {
 
-            if (FiBool.isTrue(field.getBoUnique1())) {
+            if (FiBool.isTrue(field.getOfcBoUniqGro1())) {
                 if (index != 0) sbFields.append("\n,");
                 if (index != 0) sbFieldsForName.append("_");
 
-                sbFields.append(field.getDbFieldName() + " ASC");
-                sbFieldsForName.append(field.getDbFieldName());
+                sbFields.append(field.getOfcTxDbFieldName() + " ASC");
+                sbFieldsForName.append(field.getOfcTxDbFieldName());
                 index++;
 
                 if (!FiString.isEmpty(field.getTxUnique1Name())) {
@@ -3186,10 +3195,10 @@ public class FiQugen {
             if (field.getSqlFieldDefinition() == null) {
 
                 StringBuilder fieldDefinition = new StringBuilder();
-                fieldDefinition.append("\n-- " + field.getName() + " " + field.getClassNameSimple()
-                        + (field.getLength() != null ? " -- Length:" + field.getLength() : "")
-                        + (field.getPrecision() != null ? " -- Prec.:" + field.getPrecision() : "")
-                        + (field.getScale() != null ? "Scale :" + field.getScale() : ""));
+                fieldDefinition.append("\n-- " + field.getOfcTxFieldName() + " " + field.getClassNameSimple()
+                        + (field.getOfcLnLength() != null ? " -- Length:" + field.getOfcLnLength() : "")
+                        + (field.getOfcLnPrecision() != null ? " -- Prec.:" + field.getOfcLnPrecision() : "")
+                        + (field.getOfcLnScale() != null ? "Scale :" + field.getOfcLnScale() : ""));
 
                 field.setSqlFieldDefinition(fieldDefinition.toString());
             }
@@ -3208,9 +3217,9 @@ public class FiQugen {
 
             //System.out.println(" Field:" + field.getName() + " - Simple Name:" + field.getClassNameSimple());
 
-            if (field.getPrecision() == null) field.setPrecision(0);
-            if (field.getScale() == null) field.setScale(0);
-            if (field.getLength() == null) field.setLength(0);
+            if (field.getOfcLnPrecision() == null) field.setOfcLnPrecision(0);
+            if (field.getOfcLnScale() == null) field.setOfcLnScale(0);
+            if (field.getOfcLnLength() == null) field.setOfcLnLength(0);
             if (field.getClassNameSimple() == null) field.setClassNameSimple("");
 
             // Sql Field Type Belirlenir
@@ -3223,27 +3232,27 @@ public class FiQugen {
             String typeLength = "";
 
             if (sqlFieldType.equals("nvarchar") || sqlFieldType.equals("varchar")) {
-                if (field.getLength().equals(255)) field.setLength(50); //length = 50; // default 50 ye çekildi.
-                if (field.getLength().equals(0)) field.setLength(50); // length = 50; // default 50 yapıldı.
-                typeLength = "(" + field.getLength() + ")";
+                if (field.getOfcLnLength().equals(255)) field.setOfcLnLength(50); //length = 50; // default 50 ye çekildi.
+                if (field.getOfcLnLength().equals(0)) field.setOfcLnLength(50); // length = 50; // default 50 yapıldı.
+                typeLength = "(" + field.getOfcLnLength() + ")";
             }
 
 
             if (sqlFieldType.equals("decimal")) {
                 // default precision 18 ,scale 2
-                if (field.getPrecision().equals(0)) field.setPrecision(18); //precision = 18;
-                if (field.getScale().equals(0)) {
+                if (field.getOfcLnPrecision().equals(0)) field.setOfcLnPrecision(18); //precision = 18;
+                if (field.getOfcLnScale().equals(0)) {
 
                     if (field.getClassNameSimple().equalsIgnoreCase("double")) {
-                        field.setScale(5);
+                        field.setOfcLnScale(5);
                     } else if (field.getClassNameSimple().equalsIgnoreCase("float")) {
-                        field.setScale(4);
+                        field.setOfcLnScale(4);
                     } else {
-                        field.setScale(6);  // scale = 2;
+                        field.setOfcLnScale(6);  // scale = 2;
                     }
 
                 }
-                typeLength = "(" + field.getPrecision() + "," + field.getScale() + ")";
+                typeLength = "(" + field.getOfcLnPrecision() + "," + field.getOfcLnScale() + ")";
             }
 
             if (!FiString.isEmpty(field.getColCustomType())) {
@@ -3260,21 +3269,21 @@ public class FiQugen {
 
             // Field Alanın özellikleri eklenir
 
-            if (FiBool.isTrue(field.getBoIdField())) {
-                if (field.getIdGenerationType() == FiIdGenerationType.Identity) {
+            if (FiBool.isTrue(field.getBoKeyIdField())) {
+                if (field.getIdGenerationType() == FiIdGenerationType.identity) {
                     fieldAttributes += " IDENTITY(1,1)";
                 }
                 fieldAttributes += "  NOT NULL PRIMARY KEY ";
             }
 
-            if (FiBool.isTrue(field.getUnique()) && !FiBool.isTrue(field.getBoIdField()))
+            if (FiBool.isTrue(field.getOfcBoUnique()) && !FiBool.isTrue(field.getBoKeyIdField()))
                 fieldAttributes += " UNIQUE";
 
-            if (FiBool.isFalse(field.getNullable()) && !FiBool.isTrue(field.getBoIdField()))
+            if (FiBool.isFalse(field.getOfcBoNullable()) && !FiBool.isTrue(field.getBoKeyIdField()))
                 fieldAttributes += " NOT NULL";
 
-            if (!FiString.isEmpty(field.getDefaultValue())) {
-                fieldAttributes += " DEFAULT " + field.getDefaultValue();
+            if (!FiString.isEmpty(field.getOfcTxDefValue())) {
+                fieldAttributes += " DEFAULT " + field.getOfcTxDefValue();
             }
 
 
@@ -3297,12 +3306,12 @@ public class FiQugen {
 
         String suffix = "";
 
-        if (FiBool.isTrue(field.getBoUtfSupport())) suffix += "Utf";
+        if (FiBool.isTrue(field.getOfcBoUtfSupport())) suffix += "Utf";
 
         if (javaSimpleType.equals("Integer")) {
-            if (field.getPrecision() != null && field.getPrecision() == 1) suffix = "P1";
+            if (field.getOfcLnPrecision() != null && field.getOfcLnPrecision() == 1) suffix = "P1";
 
-            if (field.getPrecision() != null && field.getPrecision() >= 20) suffix = "P20";
+            if (field.getOfcLnPrecision() != null && field.getOfcLnPrecision() >= 20) suffix = "P20";
         }
 
         String sqlFieldType = getMapTypeConvertorJavaToSqlServer().getOrDefault(javaSimpleType + suffix, null);
@@ -3318,15 +3327,15 @@ public class FiQugen {
         }
 
         if (sqlFieldType.equalsIgnoreCase("int")) {
-            if (field.getPrecision().equals(1)) {
+            if (field.getOfcLnPrecision().equals(1)) {
                 sqlFieldType = "tinyint";
             }
 
-            if (field.getPrecision() > 20) sqlFieldType = "bigint";
+            if (field.getOfcLnPrecision() > 20) sqlFieldType = "bigint";
         }
 
         if (sqlFieldType.equalsIgnoreCase("double")) {
-            if (field.getScale() > 5) sqlFieldType = "decimal";
+            if (field.getOfcLnScale() > 5) sqlFieldType = "decimal";
         }
 
         if (sqlFieldType.equals("datetime") && field.getTemporalType() != null) {
@@ -3339,7 +3348,7 @@ public class FiQugen {
 
         if (sqlFieldType.equals("float")) {
 
-            if (field.getPrecision() > 0 && field.getScale() > 0) {
+            if (field.getOfcLnPrecision() > 0 && field.getOfcLnScale() > 0) {
                 sqlFieldType = "decimal"; // default precision 18 ,scale 2
             }
         }
@@ -3473,10 +3482,10 @@ public class FiQugen {
         Integer indexWhere = 0;
         for (FiField fiField : fieldListFilterAnno) {
 
-            if (FiBool.isTrue(fiField.getBoIdField())) {
+            if (FiBool.isTrue(fiField.getBoKeyIdField())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
-                queryWhere.append(fiField.getName() + " = SCOPE_IDENTITY()");
+                queryWhere.append(fiField.getOfcTxFieldName() + " = SCOPE_IDENTITY()");
                 continue;
             }
 
@@ -3511,10 +3520,10 @@ public class FiQugen {
         Integer indexWhere = 0;
         for (FiField fiField : fieldListFilterAnno) {
 
-            if (FiBool.isTrue(fiField.getBoIdField())) {
+            if (FiBool.isTrue(fiField.getBoKeyIdField())) {
                 indexWhere++;
                 if (indexWhere != 1) queryWhere.append(" AND ");
-                queryWhere.append(fiField.getName() + " = @scopeId");
+                queryWhere.append(fiField.getOfcTxFieldName() + " = @scopeId");
                 continue;
             }
 
@@ -3541,8 +3550,8 @@ public class FiQugen {
         List<FiField> fieldList = FiFieldUtil.getListFieldsShortWithId(clazz);
 
         for (FiField fiField : fieldList) {
-            if (FiBool.isTrue(fiField.getBoIdField())) {
-                return fiField.getName();
+            if (FiBool.isTrue(fiField.getBoKeyIdField())) {
+                return fiField.getOfcTxFieldName();
             }
         }
 
@@ -3555,7 +3564,7 @@ public class FiQugen {
 
         for (FiField fiField : fieldList) {
             if (FiBool.isTrue(fiField.getBoCandidateId1())) {
-                return fiField.getName();
+                return fiField.getOfcTxFieldName();
             }
         }
 
@@ -3573,7 +3582,7 @@ public class FiQugen {
 
         for (FiField fiField : fiFields) {
             if (FiBool.isTrue(fiField.getBoCandidateId1())) {
-                return fiField.getName();
+                return fiField.getOfcTxFieldName();
             }
         }
 
@@ -3586,7 +3595,7 @@ public class FiQugen {
 
         for (FiField fiField : fieldList) {
             if (FiBool.isTrue(fiField.getBoScopeIdField())) {
-                return fiField.getName();
+                return fiField.getOfcTxFieldName();
             }
         }
 
@@ -3602,7 +3611,7 @@ public class FiQugen {
             return fdrAlter.buiMessage("Veritabanı bağlantısı ayarlanmamış.");
         }
 
-        Map<String, FiField> mapDbFields = getMapDbFields(clazz, jdbi);
+        Map<String, FiField> mapDbFields = getMapDbFieldsSql(clazz, jdbi);
 
         List<FiField> listFiFieldsSummary = getFieldsWithDbDefinitionFromCode(clazz);
 
@@ -3610,10 +3619,10 @@ public class FiQugen {
 
         for (FiField fiField : listFiFieldsSummary) {
 
-            if (!mapDbFields.containsKey(fiField.getDbFieldName())) { // veritabanında ilgili alan yok
-                Loghelper.debugLog(FiQugen.class, "Veritabanında ilgili alan yok:" + fiField.getDbFieldName());
+            if (!mapDbFields.containsKey(fiField.getOfcTxDbFieldName())) { // veritabanında ilgili alan yok
+                Loghelper.debugLog(FiQugen.class, "Veritabanında ilgili alan yok:" + fiField.getOfcTxDbFieldName());
                 // ALTER TABLE [dbo].[EntAktarimFirma] ADD [afrTxFirmaHavaleBanka] varchar(25) COLLATE Turkish_CI_AS NULL
-                String addQuery = String.format("ALTER TABLE %s ADD %s %s", getTableName(clazz), fiField.getDbFieldName(), fiField.getSqlFieldDefinition());
+                String addQuery = String.format("ALTER TABLE %s ADD %s %s", getTableName(clazz), fiField.getOfcTxDbFieldName(), fiField.getSqlFieldDefinition());
                 listAlterQueries.add(addQuery);
             }
 
@@ -3623,6 +3632,36 @@ public class FiQugen {
         fdrAlter.setBoResult(true);
         return fdrAlter;
     }
+
+//    public static Fdr<List<String>> getAlterAddFieldQueries(FiColList fiColList, Jdbi jdbi) {
+//
+//        Fdr<List<String>> fdrAlter = new Fdr<>();
+//
+//        if (jdbi == null) {
+//            return fdrAlter.buiMessage("Veritabanı bağlantısı ayarlanmamış.");
+//        }
+//
+//        Map<String, FiField> mapDbFields = getMapDbFieldsSql(clazz, jdbi);
+//
+//        List<FiField> listFiFieldsSummary = getFieldsWithDbDefinitionFromCode(clazz);
+//
+//        List<String> listAlterQueries = new ArrayList<>();
+//
+//        for (FiField fiField : listFiFieldsSummary) {
+//
+//            if (!mapDbFields.containsKey(fiField.getOfcTxDbFieldName())) { // veritabanında ilgili alan yok
+//                Loghelper.debugLog(FiQugen.class, "Veritabanında ilgili alan yok:" + fiField.getOfcTxDbFieldName());
+//                // ALTER TABLE [dbo].[EntAktarimFirma] ADD [afrTxFirmaHavaleBanka] varchar(25) COLLATE Turkish_CI_AS NULL
+//                String addQuery = String.format("ALTER TABLE %s ADD %s %s", getTableName(clazz), fiField.getOfcTxDbFieldName(), fiField.getSqlFieldDefinition());
+//                listAlterQueries.add(addQuery);
+//            }
+//
+//        }
+//
+//        fdrAlter.setValue(listAlterQueries);
+//        fdrAlter.setBoResult(true);
+//        return fdrAlter;
+//    }
 
     public static List<FiField> getQueryFields(String sqlQuery) {
 
@@ -3649,8 +3688,8 @@ public class FiQugen {
 
                 FiField fiField = new FiField();
                 String queryColumn = colName.trim();
-                fiField.setDbFieldName(queryColumn);
-                fiField.setName(queryColumn);
+                fiField.setOfcTxDbFieldName(queryColumn);
+                fiField.setOfcTxFieldName(queryColumn);
                 fieldList.add(fiField);
             }
 
@@ -3756,7 +3795,7 @@ public class FiQugen {
         for (FiField fiField : fieldListFilterAnno) {
             index++;
             if (index != 1) query.append(", ");
-            query.append(fiField.getName());
+            query.append(fiField.getOfcTxFieldName());
         }
         return query.toString();
     }

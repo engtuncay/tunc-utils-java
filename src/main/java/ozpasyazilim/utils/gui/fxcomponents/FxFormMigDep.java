@@ -219,7 +219,7 @@ public class FxFormMigDep<EntClazz> extends FxMigPaneGenView<EntClazz> implement
 			FiColList fiTableCols = (FiColList) listFormElements;
 			setFormElementsMap(fiTableCols.getMapColsInit());
 		} else {
-			Map<String, FiCol> formMap = FiCollection.listToMapSingle(listFormElements,FiCol::getFieldName);
+			Map<String, FiCol> formMap = FiCollection.listToMapSingle(listFormElements,FiCol::getOfcTxFieldName);
 			setFormElementsMap(formMap);
 		}
 
@@ -298,13 +298,13 @@ public class FxFormMigDep<EntClazz> extends FxMigPaneGenView<EntClazz> implement
 			}
 
 			if (infTableCol.getFilterNodeClass().equals(EnumColNodeType.FxLabelRowComment.toString())) {
-				FxLabel fxLabelComment = new FxLabel(infTableCol.getHeaderName());
+				FxLabel fxLabelComment = new FxLabel(infTableCol.getOfcTxHeader());
 				add(fxLabelComment, "span,pushx,growx");
 				return;
 			}
 
 			//if(!FiBoolean.isTrue(infTableCol.getHidden())){
-			Label lblForm = new Label(infTableCol.getHeaderName());
+			Label lblForm = new Label(infTableCol.getOfcTxHeader());
 			add(lblForm, "width 100");
 			Node node = FxEditorFactory.generateAndSetFilterNode(infTableCol);
 			node.setDisable(FiBool.isFalse(boEditableForm));
@@ -339,12 +339,12 @@ public class FxFormMigDep<EntClazz> extends FxMigPaneGenView<EntClazz> implement
 
 			// Tek satır label göstermek için
 			if (fiCol.getColEditorClass().equals(EnumColNodeType.FxLabelRowComment.toString())) {
-				FxLabel fxLabelComment = new FxLabel(fiCol.getHeaderName());
+				FxLabel fxLabelComment = new FxLabel(fiCol.getOfcTxHeader());
 				add(fxLabelComment, "span,pushx,growx");
 				continue;
 			}
 
-			Label lblForm = new Label(fiCol.getHeaderName());
+			Label lblForm = new Label(fiCol.getOfcTxHeader());
 			add(lblForm, "width 30%,wmax 150,wmin 120");
 
 			Object entityForNode = getFormEntity();

@@ -40,11 +40,6 @@ public class FiColList extends ArrayList<FiCol>{
 		return this;
 	}
 
-//	public FiColList buiAdd(FiCol fiTableCol) {
-//		add(fiTableCol);
-//		return this;
-//	}
-
 	public FiColList buiAdd(FiCol ...fiCols) {
 		for (FiCol fiCol : fiCols) {
 			add(fiCol);
@@ -61,7 +56,7 @@ public class FiColList extends ArrayList<FiCol>{
 
 	@Override
 	public boolean add(FiCol fiTableCol) {
-		getMapColsInit().put(fiTableCol.getFieldName(), fiTableCol);
+		getMapColsInit().put(fiTableCol.getOfcTxFieldName(), fiTableCol);
 		return super.add(fiTableCol);
 	}
 
@@ -75,7 +70,7 @@ public class FiColList extends ArrayList<FiCol>{
 
 	public Map<String, FiCol> formMapCols() {
 		Map<String, FiCol> mapCols = new HashMap<>();
-		this.forEach(fiCol -> mapCols.put(fiCol.getFieldName(),fiCol));
+		this.forEach(fiCol -> mapCols.put(fiCol.getOfcTxFieldName(),fiCol));
 		return mapCols;
 	}
 
@@ -86,7 +81,7 @@ public class FiColList extends ArrayList<FiCol>{
 	public FiCol getFiColByID(String colID) {
 
 		for (FiCol fiCol : this) {
-			if (fiCol.getFieldName().equalsIgnoreCase(colID)) return fiCol;
+			if (fiCol.getOfcTxFieldName().equalsIgnoreCase(colID)) return fiCol;
 		}
 
 		return null;

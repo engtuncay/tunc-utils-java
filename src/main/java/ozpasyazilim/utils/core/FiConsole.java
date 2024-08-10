@@ -800,7 +800,7 @@ public class FiConsole {
         log.append("\n");
 
         for (FiCol entry : listFiColInit) {
-            log.append(entry.getFieldName()).append(" : ").append(FiString.ToStrOrEmpty(entry.getColValue())).append("\n");
+            log.append(entry.getOfcTxFieldName()).append(" : ").append(FiString.ToStrOrEmpty(entry.getColValue())).append("\n");
         }
 
         return log.toString();
@@ -854,4 +854,15 @@ public class FiConsole {
     }
 
 
+    public static void logFiListKeyString(FiListKeyString fiListKeyString) {
+        StringBuilder sbLog = new StringBuilder();
+
+        sbLog.append("FiListKeyString Content\n\n");
+
+        for (FiKeyString fiKeyString : fiListKeyString) {
+            sbLog.append(FiConsole.textFiKeyString(fiKeyString)).append("\n");
+        }
+
+        Loghelper.get(FiConsole.class).debug(sbLog.toString());
+    }
 }

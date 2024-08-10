@@ -165,4 +165,17 @@ public class FiBool {
         if (boValue == null) return orValue;
         return boValue;
     }
+
+    public static Boolean convertExcelTxBool(String oftBoTransient) {
+
+        if (FiString.isEmpty(oftBoTransient)) return null;
+        if(oftBoTransient.equalsIgnoreCase("ok")) return true;
+        if(oftBoTransient.equalsIgnoreCase("x")) return false;
+        // other options
+        if(oftBoTransient.equalsIgnoreCase("o")) return true;
+        if(oftBoTransient.equalsIgnoreCase("true")) return true;
+        if(oftBoTransient.equalsIgnoreCase("false")) return false;
+
+        return null;
+    }
 }

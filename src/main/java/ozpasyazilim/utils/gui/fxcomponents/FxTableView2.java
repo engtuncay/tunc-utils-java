@@ -124,7 +124,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         getBtnPageForward().setDisable(boDisabled);
     }
 
-    public void setSelectionToCell() {
+    public void actiSelectionToSingleCell() {
         // set selection mode to only 1 row
         //getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         getSelectionModel().setCellSelectionEnabled(true);
@@ -132,7 +132,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     public Boolean existColumn(String fieldName) {
         for (FiCol fiTableCol : getFiColListOverListFxTableCol()) {
-            if (fiTableCol.getFieldName().equals(fieldName)) {
+            if (fiTableCol.getOfcTxFieldName().equals(fieldName)) {
                 return true;
             }
         }
@@ -210,8 +210,8 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     public static void setFiColFilterableToTrueIfNull(List<FxTableCol2> colTblMain) {
         colTblMain.forEach(fxTableCol -> {
-            if (fxTableCol.getFiCol().getBoFilterable() == null)
-                fxTableCol.getFiCol().setBoFilterable(true);
+            if (fxTableCol.getRefFiCol().getBoFilterable() == null)
+                fxTableCol.getRefFiCol().setBoFilterable(true);
         });
     }
 
@@ -320,11 +320,11 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
             if (ent instanceof FiKeyBean) {
                 FiKeyBean fkbRow = (FiKeyBean) ent;
-                return FiBool.or(fkbRow.getAsBoolean(getFiColSelection().getFieldName()), false);
+                return FiBool.or(fkbRow.getAsBoolean(getFiColSelection().getOfcTxFieldName()), false);
             }
 
             try {
-                return FiBool.convertBooleanElseFalse(PropertyUtils.getNestedProperty(ent, getFiColSelection().getFieldName()));
+                return FiBool.convertBooleanElseFalse(PropertyUtils.getNestedProperty(ent, getFiColSelection().getOfcTxFieldName()));
             } catch (Exception e) { // çevirmede hata olursa false döner
                 Loghelper.get(getClass()).debug("bool çevirmede hata" + FiException.exToLog(e));
                 return false;
@@ -339,7 +339,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
             if (ent instanceof FiKeyBean) {
                 FiKeyBean fkbRow = (FiKeyBean) ent;
-                return FiBool.or(fkbRow.getAsBoolean(getFiColSelection().getFieldName()), false);
+                return FiBool.or(fkbRow.getAsBoolean(getFiColSelection().getOfcTxFieldName()), false);
             }
 
             return false;
@@ -353,11 +353,11 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
             if (ent instanceof FiKeyBean) {
                 FiKeyBean fkbRow = (FiKeyBean) ent;
-                return FiBool.or(fkbRow.getAsBoolean(getFiColSelection().getFieldName()), false);
+                return FiBool.or(fkbRow.getAsBoolean(getFiColSelection().getOfcTxFieldName()), false);
             }
 
             try {
-                return FiBool.convertBooleanElseFalse(PropertyUtils.getNestedProperty(ent, getFiColSelection().getFieldName()));
+                return FiBool.convertBooleanElseFalse(PropertyUtils.getNestedProperty(ent, getFiColSelection().getOfcTxFieldName()));
             } catch (Exception e) {
                 Loghelper.get(getClass()).debug(FiException.exceptiontostring1(e));
                 return false;
@@ -392,7 +392,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
      * @return
      */
     public List<FiCol> getFiColListOverListFxTableCol() {
-        return getListFxTableCol().stream().map(FxTableCol2::getFiCol).collect(Collectors.toList());
+        return getListFxTableCol().stream().map(FxTableCol2::getRefFiCol).collect(Collectors.toList());
     }
 
     public static Node defAutoEditorClass(List<IFiCol> listColumn) {
@@ -536,31 +536,31 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
      */
     private void setupCellValueAndEditorFactory(FxTableCol2 fxTableCol) {
         //Loghelperr.getInstance(getClass()).debug("added "+ fxTableCol.getFieldName());
-        fxTableCol.setText(fxTableCol.getFiCol().getHeaderName());
+        fxTableCol.setText(fxTableCol.getRefFiCol().getOfcTxHeader());
 
         // iki nokta (aa..bb) şeklinde de olabilir , tek nokta karışabilir
-        if (fxTableCol.getFiCol().getFieldName().contains(".")) {
+        if (fxTableCol.getRefFiCol().getOfcTxFieldName().contains(".")) {
             //Loghelperr.getInstance(getClass()).debug("Nested:" + fxTableCol.getFiTableCol().getFieldName());
-            fxTableCol.setCellValueFactory(new NestedPropertyValueFactory(fxTableCol.getFiCol().getFieldName()));
+            fxTableCol.setCellValueFactory(new NestedPropertyValueFactory(fxTableCol.getRefFiCol().getOfcTxFieldName()));
         } else {
-            fxTableCol.setCellValueFactory(new PropertyValueFactory<>(fxTableCol.getFiCol().getFieldName()));
+            fxTableCol.setCellValueFactory(new PropertyValueFactory<>(fxTableCol.getRefFiCol().getOfcTxFieldName()));
         }
 
         //bydefault idi
         FxTableViewCellFactoryModal.setupCellFactoryGeneral(fxTableCol, getEntityClass());
-        fxTableCol.setId(fxTableCol.getFiCol().getFieldName());
+        fxTableCol.setId(fxTableCol.getRefFiCol().getOfcTxFieldName());
 
     }
 
     private void setupCellValueAndEditorFactoryAsFiKeyBean(FxTableCol2 fxTableCol) {
         //Loghelperr.getInstance(getClass()).debug("added "+ fxTableCol.getFieldName());
-        fxTableCol.setText(fxTableCol.getFiCol().getHeaderName());
+        fxTableCol.setText(fxTableCol.getRefFiCol().getOfcTxHeader());
 
-        fxTableCol.setCellValueFactory(new TableValueFactoryForFiKeyBean<>(fxTableCol.getFiCol().getFieldName()));
+        fxTableCol.setCellValueFactory(new TableValueFactoryForFiKeyBean<>(fxTableCol.getRefFiCol().getOfcTxFieldName()));
 
         //bydefault idi
         FxTableViewCellFactoryModal.setupCellFactoryGeneral(fxTableCol, getEntityClass());
-        fxTableCol.setId(fxTableCol.getFiCol().getFieldName());
+        fxTableCol.setId(fxTableCol.getRefFiCol().getOfcTxFieldName());
         //fxTableCol.setAutoFormatter(fxTableCol.getFiTableCol().getColType());
     }
 
@@ -580,8 +580,8 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     public FxTableView2 setActivateFxColsFilterableNullToTrue() {
         getListFxTableCol().forEach(fxTableCol -> {
-            if (fxTableCol.getFiCol().getBoFilterable() == null)
-                fxTableCol.getFiCol().setBoFilterable(true);
+            if (fxTableCol.getRefFiCol().getBoFilterable() == null)
+                fxTableCol.getRefFiCol().setBoFilterable(true);
         });
         setEnableLocalFilterEditor(true);
         activateFilters();
@@ -591,7 +591,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     public void setFxColsFilterable(Boolean boFilterable) {
         getListFxTableCol().forEach(fxTableCol -> {
-            fxTableCol.getFiCol().setBoFilterable(boFilterable);
+            fxTableCol.getRefFiCol().setBoFilterable(boFilterable);
         });
     }
 
@@ -745,15 +745,15 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     private void activateFilterSearch(FxTableCol2 fxTableCol) {
 
         // Col Filterable değilse, hiçbir işlem yapılmaz
-        if (FiBool.isFalse(fxTableCol.getFiCol().getBoFilterable())) {
+        if (FiBool.isFalse(fxTableCol.getRefFiCol().getBoFilterable())) {
             return;
         }
 
         // Aşağıda şartlar olursa Filtreleme etkin oluyor, Header Eklenmemişse eklenir.
         if (getEnableLocalFilterEditorNtn() || getEnableRemoteFilterEditorNtn()
-                || FiType.isTrue(fxTableCol.getFiCol().getBoFilterable())) {
+                || FiType.isTrue(fxTableCol.getRefFiCol().getBoFilterable())) {
             // filter Node eklenmemişse Header Setup edilir.
-            if (fxTableCol.getFiCol().getColFilterNode() == null) {
+            if (fxTableCol.getRefFiCol().getColFilterNode() == null) {
                 setupHeader1ForTableCol(fxTableCol);
             }
 
@@ -766,7 +766,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
             Consumer<String> fncFilterLocal2 = textProp -> filterLocal(textProp);
 
             // Filter node değişimi tetikleme
-            FxEditorFactory.registerTextPropertyWithDurationForFilterNode(fxTableCol.getFiCol(), fncFilterLocal2, 250);
+            FxEditorFactory.registerTextPropertyWithDurationForFilterNode(fxTableCol.getRefFiCol(), fncFilterLocal2, 250);
         }
 
         if (checkColFilterableRemote(fxTableCol)) {
@@ -786,7 +786,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     private void setupHeader1ForTableCol(FxTableCol2 fxcol) {
 
         //if (fxcol.getOzTableCol().getFiPaneHeader() != null) return;
-        FxLabel label = new FxLabel(fxcol.getFiCol().getHeaderName());
+        FxLabel label = new FxLabel(fxcol.getRefFiCol().getOfcTxHeader());
         label.setStyle("-fx-padding: 2px;");
         label.setWrapText(false); // true idi
         label.setAlignment(Pos.CENTER);
@@ -803,17 +803,17 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         label.prefWidthProperty().bind(migColHeader.prefWidthProperty());
 
         //fxcol.setFiHeaderAsVbox(migColHeader, fxcol);
-        fxcol.getFiCol().setPaneHeader(migColHeader);
-        fxcol.setText(fxcol.getFiCol().getHeaderName());
+        fxcol.getRefFiCol().setPaneHeader(migColHeader);
+        fxcol.setText(fxcol.getRefFiCol().getOfcTxHeader());
 
         if (checkColFilterableLocal(fxcol) || checkColFilterableRemote(fxcol)) {
-            fxcol.getFiCol().setBoFilterable(true);
+            fxcol.getRefFiCol().setBoFilterable(true);
             setupHeader2ForFilterNode(fxcol);
         }
 
         Boolean isExistSummaryNode = false;
         for (FxTableCol2 fxTableCol2 : getListFxTableCol()) {
-            if (fxTableCol2.getFiCol().getSummaryType() != null) {
+            if (fxTableCol2.getRefFiCol().getSummaryType() != null) {
                 isExistSummaryNode = true;
             }
         }
@@ -823,7 +823,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
             setupHeaderSummaryNode(fxcol);
         }
 
-        fxcol.setGraphic(fxcol.getFiCol().getPaneHeader());
+        fxcol.setGraphic(fxcol.getRefFiCol().getPaneHeader());
 
         //fxcol.setStyle("-fx-table-header-alignment: top-left;");
         setPropHeaderChange(true);
@@ -838,12 +838,12 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         //Loghelperr.getInstance(getClass()).debug(" Fi Header Setup:" + fxTableCol.getFiHeader());
 
         //if (fxTableCol.getColFxNode() == null) {
-        FxMigPane migHeader = fxTableCol.getFiCol().getPaneHeader();
+        FxMigPane migHeader = fxTableCol.getRefFiCol().getPaneHeader();
         Node node = null;
-        node = defAutoEditorClass(Arrays.asList(fxTableCol.getFiCol()));
+        node = defAutoEditorClass(Arrays.asList(fxTableCol.getRefFiCol()));
         node.setId("filterNode");
 
-        if (FiBool.isFalse(fxTableCol.getFiCol().getBoFilterable())) {
+        if (FiBool.isFalse(fxTableCol.getRefFiCol().getBoFilterable())) {
             //Loghelperr.getInstance(getClass()).debug("Node Filter Pasif");
             node.setDisable(true);
         }
@@ -851,7 +851,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         node.getStyleClass().add(getHeaderFilterNodeStyleClass());
 
         migHeader.addGrowXSpan(node);
-        fxTableCol.getFiCol().setColFilterNode(node);
+        fxTableCol.getRefFiCol().setColFilterNode(node);
         //FxEditorFactory.registerKeyEventForNode(node,fxTableCol.getFiTableCol().getColFilterNodeClass(),getColFilterKeyDownEvent());
         node.addEventHandler(KeyEvent.KEY_PRESSED, getColFilterNodeKeyDownEvent());
         node.addEventHandler(KeyEvent.KEY_PRESSED, getColFilterNodeEnterEventWrapper());
@@ -862,7 +862,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     private void setupHeaderSummaryNode(FxTableCol2 fxcol) {
 
-        if (fxcol.getFiCol().getSummaryType() == null) {
+        if (fxcol.getRefFiCol().getSummaryType() == null) {
 
             //Loghelper.get(getClass()).debug("Summary Node belirlenmemiş.Genel Boş Label Eklenir." + fxcol.getFiCol().getFieldName());
 
@@ -873,27 +873,27 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
             lblSummary.setWrapText(false);
             //lblSummary.setAlignment(Pos.CENTER_LEFT);
             //lblSummary.setTextAlignment(TextAlignment.RIGHT);
-            lblSummary.prefWidthProperty().bind(fxcol.getFiCol().getPaneHeader().prefWidthProperty());
-            fxcol.getFiCol().setSummaryLabelNode(lblSummary);
-            fxcol.getFiCol().setSummaryNode(lblSummary);
+            lblSummary.prefWidthProperty().bind(fxcol.getRefFiCol().getPaneHeader().prefWidthProperty());
+            fxcol.getRefFiCol().setSummaryLabelNode(lblSummary);
+            fxcol.getRefFiCol().setSummaryNode(lblSummary);
 
             //fxcol.getFiPaneHeader().getChildren().add(lblSummary);
-            fxcol.getFiCol().getPaneHeader().add(lblSummary, "span");
+            fxcol.getRefFiCol().getPaneHeader().add(lblSummary, "span");
 
             return;
         }
 
         // Filtre editor eklenmemiş eklensin
-        if (fxcol.getFiCol().getColFilterNode() == null) setupHeader2ForFilterNode(fxcol);
+        if (fxcol.getRefFiCol().getColFilterNode() == null) setupHeader2ForFilterNode(fxcol);
 
-        if (fxcol.getFiCol().getSummaryType() == OzColSummaryType.CheckBox) {
+        if (fxcol.getRefFiCol().getSummaryType() == OzColSummaryType.CheckBox) {
 
             FxMigPane pane = new FxMigPane("insets 0");
 
             FxCheckBox fxCheckBox = new FxCheckBox();
 
-            fxcol.getFiCol().setSummaryNode(fxCheckBox);
-            fxcol.getFiCol().setSummaryCheckBox(fxCheckBox);
+            fxcol.getRefFiCol().setSummaryNode(fxCheckBox);
+            fxcol.getRefFiCol().setSummaryCheckBox(fxCheckBox);
 
             fxCheckBox.setOnAction(event -> {
 
@@ -905,13 +905,13 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
                     Boolean disabledSelection = false;
 
-                    if (fxcol.getFiCol().getPredEditorDisable() != null
-                            && fxcol.getFiCol().getPredEditorDisable().test(ent)) {
+                    if (fxcol.getRefFiCol().getPredEditorDisable() != null
+                            && fxcol.getRefFiCol().getPredEditorDisable().test(ent)) {
                         disabledSelection = true;
                     }
 
                     if (!disabledSelection) {
-                        String fieldName = fxcol.getFiCol().getFieldName();
+                        String fieldName = fxcol.getRefFiCol().getOfcTxFieldName();
                         try {
                             PropertyUtils.setNestedProperty(ent, fieldName, false);
                         } catch (IllegalAccessException | InvocationTargetException e) {
@@ -930,12 +930,12 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
                     Boolean disabledSelection = false;
 
-                    if (fxcol.getFiCol().getPredEditorDisable() != null && fxcol.getFiCol().getPredEditorDisable().test(ent)) {
+                    if (fxcol.getRefFiCol().getPredEditorDisable() != null && fxcol.getRefFiCol().getPredEditorDisable().test(ent)) {
                         disabledSelection = true;
                     }
 
                     if (!disabledSelection) {
-                        String fieldName = fxcol.getFiCol().getFieldName();
+                        String fieldName = fxcol.getRefFiCol().getOfcTxFieldName();
                         try {
                             PropertyUtils.setNestedProperty(ent, fieldName, boStatus);
                         } catch (IllegalAccessException | InvocationTargetException e) {
@@ -958,7 +958,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
             pane.add(fxCheckBox, "span,push,align 50%");
 
             //fxcol.getFiPaneHeader().getChildren().add(pane);
-            fxcol.getFiCol().getPaneHeader().add(pane, "span,grow");
+            fxcol.getRefFiCol().getPaneHeader().add(pane, "span,grow");
             return;
         }
 
@@ -970,12 +970,12 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         lblSummary.setWrapText(false);
         lblSummary.setAlignment(Pos.CENTER_LEFT);
         //lblSummary.setTextAlignment(TextAlignment.RIGHT);
-        lblSummary.prefWidthProperty().bind(fxcol.getFiCol().getPaneHeader().prefWidthProperty());
-        fxcol.getFiCol().setSummaryLabelNode(lblSummary);
-        fxcol.getFiCol().setSummaryNode(lblSummary);
+        lblSummary.prefWidthProperty().bind(fxcol.getRefFiCol().getPaneHeader().prefWidthProperty());
+        fxcol.getRefFiCol().setSummaryLabelNode(lblSummary);
+        fxcol.getRefFiCol().setSummaryNode(lblSummary);
 
         //fxcol.getFiPaneHeader().getChildren().add(lblSummary);
-        fxcol.getFiCol().getPaneHeader().add(lblSummary, "span");
+        fxcol.getRefFiCol().getPaneHeader().add(lblSummary, "span");
 
     }
 
@@ -1087,7 +1087,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
                     // false yakalarsa return yapılacak , sonuca dahil edilmeyecek
 
                     // Filter editor boşluk olunca onu integer çevirdiğinde null olarak dönüş yapar
-                    String txFilterValue = FxEditorFactory.getValueOfFilterNodeAsString(fxTableColumn.getFiCol());
+                    String txFilterValue = FxEditorFactory.getValueOfFilterNodeAsString(fxTableColumn.getRefFiCol());
 
                     // Filtre değeri boş ise filtreleme yapılmaz
                     if (FiString.isEmpty(txFilterValue)) {
@@ -1095,19 +1095,19 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
                     }
 
                     //Loghelperr.getInstance(getClass()).debug(" field"+ fxTableCol.getFieldName());
-                    Object objFilterValue = FxEditorFactory.getNodeObjValueByFilterNode(fxTableColumn.getFiCol());
+                    Object objFilterValue = FxEditorFactory.getNodeObjValueByFilterNode(fxTableColumn.getRefFiCol());
                     // fxTableCol.getTxfFilter().getText();
                     //Loghelper.get(getClass()).debug(String.format("Filter Lokal %s : %s ", fxTableColumn.getFiTableCol().getFieldName(), objFilterValue));
 
                     // Tablonun içinde hücre değeri
-                    Object objCellValue = FiReflection.getProperty(ent, fxTableColumn.getFiCol().getFieldName());
+                    Object objCellValue = FiReflection.getProperty(ent, fxTableColumn.getRefFiCol().getOfcTxFieldName());
 
                     // !!!!! CellValue Null gelmişse, cellValue yu override edebiliriz türüne göre
                     if (objCellValue == null) {
 
                         // FIXME dogruluğu tekrar incelenmeli
                         // Boolean için null değer false olarak yorumlandı
-                        if (fxTableColumn.getFiCol().getColType() == OzColType.Boolean) {
+                        if (fxTableColumn.getRefFiCol().getColType() == OzColType.Boolean) {
                             objCellValue = false;
                         }
 
@@ -1409,12 +1409,12 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     private boolean checkColFilterableLocal(FxTableCol2 fxTableColumn) {
 
-        if (FiBool.isFalse(fxTableColumn.getFiCol().getBoFilterable())) {
+        if (FiBool.isFalse(fxTableColumn.getRefFiCol().getBoFilterable())) {
             return false;
         }
 
         // fiCol.colFilterable true ise ve enableLocalFilterEditor false edilmemişse
-        if (FiBool.isTrue(fxTableColumn.getFiCol().getBoFilterable())
+        if (FiBool.isTrue(fxTableColumn.getRefFiCol().getBoFilterable())
                 && !FiBool.isFalse(getEnableLocalFilterEditorNtn())) {
             //Loghelperr.getInstance(getClass()).debug("FiTableCol ColFilterable is True");
             return true;
@@ -1433,7 +1433,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
         //if (FiBoolean.isTrue(fxTableColumn.getFiTableCol().getColFilterable()) && !FiBoolean.isFalse(getEnableRemoteFilterEditor())) return true;
 
-        if (getEnableRemoteFilterEditorNtn() && !FiBool.isFalse(fxTableColumn.getFiCol().getBoFilterable())) {
+        if (getEnableRemoteFilterEditorNtn() && !FiBool.isFalse(fxTableColumn.getRefFiCol().getBoFilterable())) {
             return true;
         }
 
@@ -1498,10 +1498,10 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         if (getFilteredList() == null || getFilteredList().size() == 0) {
             if (getEnableSummaryHeaderNtn()) {
                 getListFxTableCol().forEach(fxTableCol -> {
-                    if (fxTableCol.getFiCol().getSummaryLabelNode() != null && fxTableCol.getFiCol().getSummaryType() != null) {
+                    if (fxTableCol.getRefFiCol().getSummaryLabelNode() != null && fxTableCol.getRefFiCol().getSummaryType() != null) {
                         Platform.runLater(() -> {
-                            fxTableCol.getFiCol().getSummaryLabelNode().setText("");
-                            new FxTableModal().styleSummaryLabel(fxTableCol.getFiCol().getSummaryLabelNode(), fxTableCol);
+                            fxTableCol.getRefFiCol().getSummaryLabelNode().setText("");
+                            new FxTableModal().styleSummaryLabel(fxTableCol.getRefFiCol().getSummaryLabelNode(), fxTableCol);
                         });
                     }
                 });
@@ -1516,11 +1516,11 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
             FiReportConfig fiReportConfig = new FiReportConfig();
             for (FxTableCol2 fxTableCol : getListFxTableCol()) {
-                if (fxTableCol.getFiCol().getSummaryLabelNode() != null && fxTableCol.getFiCol().getSummaryType() != null) {
+                if (fxTableCol.getRefFiCol().getSummaryLabelNode() != null && fxTableCol.getRefFiCol().getSummaryType() != null) {
                     Platform.runLater(() -> {
-                        String sumValue = FiNumber.formatNumber(FxTableModal.calcSummaryValue(getFilteredList(), fxTableCol.getFiCol(), fiReportConfig));
-                        fxTableCol.getFiCol().getSummaryLabelNode().setText(sumValue);
-                        new FxTableModal().styleSummaryLabel(fxTableCol.getFiCol().getSummaryLabelNode(), fxTableCol);
+                        String sumValue = FiNumber.formatNumber(FxTableModal.calcSummaryValue(getFilteredList(), fxTableCol.getRefFiCol(), fiReportConfig));
+                        fxTableCol.getRefFiCol().getSummaryLabelNode().setText(sumValue);
+                        new FxTableModal().styleSummaryLabel(fxTableCol.getRefFiCol().getSummaryLabelNode(), fxTableCol);
                     });
                 }
             }
@@ -1544,7 +1544,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     public FxTableCol2 getColumnByFieldName(String fieldName) {
 
         for (FxTableCol2 fxTableCol : getListFxTableCol()) {
-            if (fxTableCol.getFiCol().getFieldName().equals(fieldName)) {
+            if (fxTableCol.getRefFiCol().getOfcTxFieldName().equals(fieldName)) {
                 return fxTableCol;
             }
         }
@@ -1958,8 +1958,8 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         if (getBtnPagePrev() != null) updatePageToolbarComps();
 
         for (FxTableCol2 fxTableCol2 : getListFxTableCol()) {
-            if (fxTableCol2.getFiCol() != null && fxTableCol2.getFiCol().getFnColCellManualChanged() != null) {
-                fxTableCol2.getFiCol().getFnColCellManualChanged().accept(null);
+            if (fxTableCol2.getRefFiCol() != null && fxTableCol2.getRefFiCol().getFnColCellManualChanged() != null) {
+                fxTableCol2.getRefFiCol().getFnColCellManualChanged().accept(null);
             }
         }
 
@@ -1986,7 +1986,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     public void removeFiColById(FiCol fiCol) {
 
-        TableColumn tableColumn = getColumnByFieldName1(fiCol.getFieldName());
+        TableColumn tableColumn = getColumnByFieldName1(fiCol.getOfcTxFieldName());
 
         if (tableColumn != null) {
             getColumns().remove(tableColumn);

@@ -170,17 +170,17 @@ public class FxTableCol<Clazz> extends TableColumn implements IFiCol<Clazz> {
 
 	public FxTableCol(String fieldName, String fiHeader) {
 		super(fiHeader);
-		this.setFieldName(fieldName);
+		this.setOfcTxFieldName(fieldName);
 		//this.setId(fieldName);
-		this.setHeaderName(fiHeader);
+		this.setOfcTxHeader(fiHeader);
 		setCellValueFactory(new PropertyValueFactory<>(fieldName));
 	}
 
 	public FxTableCol(String fiHeader, String fieldName, OzColType fiDataType) {
 		super(fiHeader);
-		this.setFieldName(fieldName);
+		this.setOfcTxFieldName(fieldName);
 		this.setId(fieldName);
-		this.setHeaderName(fiHeader);
+		this.setOfcTxHeader(fiHeader);
 		setCellValueFactory(new PropertyValueFactory<>(fieldName));
 		setColType(fiDataType);  //setFiDataType
 		setAutoFormatter(fiDataType);
@@ -222,9 +222,9 @@ public class FxTableCol<Clazz> extends TableColumn implements IFiCol<Clazz> {
 
 	private void setValuesFromInfTableCol(IFiCol iFiCol) {
 
-		setId(iFiCol.getFieldName());
-		setFieldName(iFiCol.getFieldName());
-		setHeaderName(iFiCol.getHeaderName());
+		setId(iFiCol.getOfcTxFieldName());
+		setOfcTxFieldName(iFiCol.getOfcTxFieldName());
+		setOfcTxHeader(iFiCol.getOfcTxHeader());
 		if (iFiCol.getPrefSize() != null) setPrefSize(iFiCol.getPrefSize());
 		setPrintSize(iFiCol.getPrintSize());
 		setColType(iFiCol.getColType());
@@ -267,16 +267,16 @@ public class FxTableCol<Clazz> extends TableColumn implements IFiCol<Clazz> {
 	}
 
 	public void setAutoColumnDefault() {
-		setText(getHeaderName());
-		setCellValueFactory(new PropertyValueFactory<>(getFieldName()));
-		setId(getFieldName());
+		setText(getOfcTxHeader());
+		setCellValueFactory(new PropertyValueFactory<>(getOfcTxFieldName()));
+		setId(getOfcTxFieldName());
 		setAutoFormatter(getColType());
 	}
 
 	public void setAutoColumnNoFormatter() {
-		setText(getHeaderName());
-		setCellValueFactory(new PropertyValueFactory<>(getFieldName()));
-		setId(getFieldName());
+		setText(getOfcTxHeader());
+		setCellValueFactory(new PropertyValueFactory<>(getOfcTxFieldName()));
+		setId(getOfcTxFieldName());
 		//setAutoFormatter(dataType);
 	}
 
@@ -375,7 +375,7 @@ public class FxTableCol<Clazz> extends TableColumn implements IFiCol<Clazz> {
 		if (listFxCols.size() > 0) {
 
 			for (FxTableCol fxTableCol : listFxCols) {
-				if (fxTableCol.getFieldName().equals(fieldName)) {
+				if (fxTableCol.getOfcTxFieldName().equals(fieldName)) {
 					return fxTableCol;
 				}
 			}
@@ -388,7 +388,7 @@ public class FxTableCol<Clazz> extends TableColumn implements IFiCol<Clazz> {
 		if (listFxCols.size() > 0) {
 
 			for (FxTableCol2 fxTableCol : listFxCols) {
-				if (fxTableCol.getFiCol().getFieldName().equals(fieldName)) {
+				if (fxTableCol.getRefFiCol().getOfcTxFieldName().equals(fieldName)) {
 					return fxTableCol;
 				}
 			}
@@ -401,7 +401,7 @@ public class FxTableCol<Clazz> extends TableColumn implements IFiCol<Clazz> {
 		if (listFxCols.size() > 0) {
 
 			for (FxTableCol fxTableCol : listFxCols) {
-				if (fxTableCol.getHeaderName().equals(headerText)) {
+				if (fxTableCol.getOfcTxHeader().equals(headerText)) {
 					return fxTableCol;
 				}
 			}
@@ -487,25 +487,25 @@ public class FxTableCol<Clazz> extends TableColumn implements IFiCol<Clazz> {
 	}
 
 	@Override
-	public String getFieldName() {
+	public String getOfcTxFieldName() {
 		return fieldName;
 	}
 
 	@Override
-	public void setFieldName(String fieldName) {
-		fieldName = fieldName.replaceFirst("__", ".");
-		this.fieldName = fieldName;
-		setId(fieldName);
+	public void setOfcTxFieldName(String ofcTxFieldName) {
+		ofcTxFieldName = ofcTxFieldName.replaceFirst("__", ".");
+		this.fieldName = ofcTxFieldName;
+		setId(ofcTxFieldName);
 	}
 
 	@Override
-	public String getHeaderName() {
+	public String getOfcTxHeader() {
 		return fiHeader;
 	}
 
 	@Override
-	public void setHeaderName(String headerName) {
-		this.fiHeader = headerName;
+	public void setOfcTxHeader(String ofcTxHeader) {
+		this.fiHeader = ofcTxHeader;
 	}
 
 //	@Override
@@ -803,7 +803,7 @@ public class FxTableCol<Clazz> extends TableColumn implements IFiCol<Clazz> {
 
 	public void setFiHeaderAsVbox(FxMigPane vboxHeader, FxTableCol fxTableCol) {
 		setPaneHeader(vboxHeader);
-		setText(fxTableCol.getHeaderName());
+		setText(fxTableCol.getOfcTxHeader());
 		setGraphic(vboxHeader);
 	}
 

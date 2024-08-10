@@ -1,7 +1,10 @@
 package ozpasyazilim.utils.fidborm;
 
+import ozpasyazilim.utils.table.FiColList;
+
 public interface IFiTableMeta {
 
-    String getTxTableName();
+    String getITxTableName();
 
+    FiColList genITableCols();
 }

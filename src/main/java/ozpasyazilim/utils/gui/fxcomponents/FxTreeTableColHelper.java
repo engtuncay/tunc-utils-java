@@ -20,10 +20,10 @@ public class FxTreeTableColHelper {
 			if (fiCol.getBoEnabled()!=null && !fiCol.getBoEnabled()) continue;
 
 			FxTreeTableCol fxTableColumn = new FxTreeTableCol();
-			fxTableColumn.setFiCol(fiCol);
+			fxTableColumn.setRefFiCol(fiCol);
 			//fxTableColumn.setHeader(fiCol.getHeaderName());
 			//fxTableColumn.setFieldName(fiCol.getFieldName());
-			fxTableColumn.setId(fiCol.getFieldName());
+			fxTableColumn.setId(fiCol.getOfcTxFieldName());
 			if(fiCol.getColType()==null) fiCol.setColType(OzColType.String);
 			//fxTableColumn.setColType(fiCol.getColType().toString());
 			if(fiCol.getPrefSize()!=null){

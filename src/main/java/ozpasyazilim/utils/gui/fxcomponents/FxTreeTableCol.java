@@ -1,6 +1,5 @@
 package ozpasyazilim.utils.gui.fxcomponents;
 
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTreeTableCell;
@@ -35,7 +34,7 @@ public class FxTreeTableCol<E> extends TreeTableColumn implements IFxTableCol<E>
 
 	public FxTreeTableCol(String header, String fieldName) {
 		super(header);
-		getFiCol().setFieldName(fieldName);
+		getRefFiCol().setOfcTxFieldName(fieldName);
 		this.setId(fieldName);
 		setCellValueFactory(new TreeItemPropertyValueFactory<>(fieldName));
 	}
@@ -43,23 +42,23 @@ public class FxTreeTableCol<E> extends TreeTableColumn implements IFxTableCol<E>
 	public FxTreeTableCol(String header, String fieldName, OzColType dataType) {
 		super(header);
 		setId(fieldName);
-		getFiCol().setFieldName(fieldName);
-		getFiCol().setHeaderName(header);
-		getFiCol().setColType(dataType);
+		getRefFiCol().setOfcTxFieldName(fieldName);
+		getRefFiCol().setOfcTxHeader(header);
+		getRefFiCol().setColType(dataType);
 		setCellValueFactory(new TreeItemPropertyValueFactory<>(fieldName));
 		setAutoFormatter(dataType);
 	}
 
 	public void setAutoColumnDefaultByFiCol() {
-		setText(getFiCol().getHeaderName());
-		setCellValueFactory(new TreeItemPropertyValueFactory<>(getFiCol().getFieldName()));
-		setId(getFiCol().getFieldName());
-		setAutoFormatter(getFiCol().getColType());
+		setText(getRefFiCol().getOfcTxHeader());
+		setCellValueFactory(new TreeItemPropertyValueFactory<>(getRefFiCol().getOfcTxFieldName()));
+		setId(getRefFiCol().getOfcTxFieldName());
+		setAutoFormatter(getRefFiCol().getColType());
 	}
 
 	private <S> void setAutoFormatter(OzColType dataType) {
 
-		OzColType colType = getFiCol().getColType();
+		OzColType colType = getRefFiCol().getColType();
 
 		if (colType == OzColType.Double) {
 
@@ -103,7 +102,7 @@ public class FxTreeTableCol<E> extends TreeTableColumn implements IFxTableCol<E>
 //	@Override
 	public void setPrefSize(Double prefSize) {
 		afterSetPrefSize(prefSize);
-		getFiCol().setPrefSize(prefSize);
+		getRefFiCol().setPrefSize(prefSize);
 	}
 
 	private void afterSetPrefSize(Double prefSize) {
@@ -119,7 +118,7 @@ public class FxTreeTableCol<E> extends TreeTableColumn implements IFxTableCol<E>
 
 //	@Override
 	public Boolean getBoEditable() {
-		return getFiCol().getBoEditable();
+		return getRefFiCol().getBoEditable();
 	}
 
 //	@Override
@@ -128,14 +127,14 @@ public class FxTreeTableCol<E> extends TreeTableColumn implements IFxTableCol<E>
 //		afterSetFiEditable(boEditable);
 //	}
 
-	public FiCol<E> getFiCol() {
+	public FiCol<E> getRefFiCol() {
 		if (fiCol == null) {
 			fiCol = new FiCol<E>();
 		}
 		return fiCol;
 	}
 
-	public void setFiCol(FiCol<E> fiCol) {
+	public void setRefFiCol(FiCol<E> fiCol) {
 		this.fiCol = fiCol;
 		afterSetPrefSize(fiCol.getPrefSize());
 	}

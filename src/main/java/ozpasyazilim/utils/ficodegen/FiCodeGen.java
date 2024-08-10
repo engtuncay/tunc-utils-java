@@ -2,15 +2,17 @@ package ozpasyazilim.utils.ficodegen;
 
 import org.jdbi.v3.core.Jdbi;
 import ozpasyazilim.utils.core.*;
+import ozpasyazilim.utils.fidbanno.FiIdGenerationType;
 import ozpasyazilim.utils.fidbanno.FiTable;
 import ozpasyazilim.utils.fidborm.FiFieldUtil;
 import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.fidborm.FiQugen;
+import ozpasyazilim.utils.table.OzColType;
 
 import javax.persistence.Table;
 import java.util.List;
 
-public class FiCodeHelper {
+public class FiCodeGen {
 
 	/**
 	 * header ı listheaders dan
@@ -254,10 +256,11 @@ public class FiCodeHelper {
 
 		//--* FiCol Metodları
 		for (int ind = 0; ind < listFields.size(); ind++) {
+
 			String fieldName = listFields.get(ind);
 			String label = listHeaders.get(ind);
 
-			String fieldGen = String.format("\npublic FiCol %s() {" +
+			String fieldGen = String.format("\npublic static FiCol %s() {" +
 					"\n\t\tFiCol fiCol = new FiCol(\"%s\", \"%s\");", fieldName, fieldName, FiString.orEmpty(label));
 
 			fieldGen = fieldGen + String.format("\n\t\t//fiCol.buildColType(OzColType.%s);", "");
@@ -286,7 +289,7 @@ public class FiCodeHelper {
 //				fieldName = fieldPrefix + FiString.firstLetterUpperOnly(fieldName);
 //			}
 
-			txFiColListDetail.append(String.format("\t\t%s.add(FiColsMikro.%s());\n", txListVarName,  fieldName));
+			txFiColListDetail.append(String.format("\t\t%s.add(%s());\n", txListVarName,  fieldName));
 
 		}
 
@@ -300,7 +303,7 @@ public class FiCodeHelper {
 				"\t\n" +
 				"\t}";// , "", txColListMethod.toString()
 
-		String fiColListDetail = FiStringNum.bui(txMetodFiColListTemplate).addParams(2, txListVarName)
+		String fiColListDetail = FiTemplateNum.bui(txMetodFiColListTemplate).addParams(2, txListVarName)
 				.addParams(3, txFiColListDetail.toString()).tos();
 
 		txMethods.append("\n\n");
@@ -353,7 +356,7 @@ public class FiCodeHelper {
 				"\n" +
 				"}";// , "", txColListMethod.toString()
 
-		String txFiColList = FiStringNum.bui(txTemplate).addParams(2, txVarNameOfList)
+		String txFiColList = FiTemplateNum.bui(txTemplate).addParams(2, txVarNameOfList)
 				.addParams(3, txFiColListDetail.toString()).tos();
 
 		return txFiColList.toString();
@@ -367,7 +370,7 @@ public class FiCodeHelper {
 
 		StringBuilder txFieldList = new StringBuilder();
 		for (FiField fiField : fieldListFilterAnno) {
-			txFieldList.append(fiField.getName() + "\n");
+			txFieldList.append(fiField.getOfcTxFieldName() + "\n");
 		}
 
 		return txFieldList.toString();
@@ -379,7 +382,7 @@ public class FiCodeHelper {
 
 		StringBuilder txFieldList = new StringBuilder();
 		for (FiField fiField : fieldListFilterAnno) {
-			txFieldList.append(fiField.getName() + "\n");
+			txFieldList.append(fiField.getOfcTxFieldName() + "\n");
 		}
 
 		return txFieldList.toString();
@@ -466,5 +469,33 @@ public class FiCodeHelper {
 
 	}
 
+		// OzColtype içeriği
+		//Number, String, Money, Integer, Double, Date, Boolean,BigDecimal,Float,Object,List, BoolEvetHayir,DateTimeIso
+		//	,XmlChildList,XmlChild,Undefined, CommaSeperatedStr,XmlAttribute;
 
+	public static String convertExcelTypeToOzColType(String txExcelShortFiColType) {
+		if(FiString.isEmpty(txExcelShortFiColType)) return "";
+
+		if (txExcelShortFiColType.equals("int")) return OzColType.Integer.toString();
+
+		if (txExcelShortFiColType.equals("string")) return OzColType.String.toString();
+
+		if (txExcelShortFiColType.equals("bool")) return OzColType.Boolean.toString();
+
+		if (txExcelShortFiColType.equals("tint")) return OzColType.Integer.toString();
+
+		if (txExcelShortFiColType.equals("double")) return OzColType.Double.toString();
+
+		return "unknown-type-"+txExcelShortFiColType;
+	}
+
+	public static String convertExcelIdentityTypeToFiColAttribute(String txIdType) {
+		if(FiString.isEmpty(txIdType)) return "";
+
+		if (txIdType.equals("identity")) return FiIdGenerationType.identity.toString();
+
+		if (txIdType.equals("user-assign")) return FiIdGenerationType.userAssign.toString();
+
+		return "unknown-id-type-"+txIdType;
+	}
 }

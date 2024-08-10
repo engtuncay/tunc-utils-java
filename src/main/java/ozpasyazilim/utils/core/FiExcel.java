@@ -210,7 +210,7 @@ public class FiExcel {
 
             //Loghelper.getInstance(getClass()).debug(" headar1 : " + rowHeader[0]);
 
-            if (headers.contains(listColumns.get(0).getHeaderName().trim())) {
+            if (headers.contains(listColumns.get(0).getOfcTxHeader().trim())) {
                 //Loghelper.getInstance(getClass()).debug(" Başlık bulundu:" + rowIndexExcel);
                 colFound = true;
                 break;
@@ -227,120 +227,10 @@ public class FiExcel {
         List<String> finalHeaders = headers;
 
         listColumns.forEach(entity -> {
-            if (finalHeaders.contains(entity.getHeaderName().trim())) {
+            if (finalHeaders.contains(entity.getOfcTxHeader().trim())) {
                 entity.setBoEnabled(true);
             }
         });
-
-
-//		// ilk satır başlık olacak
-//		if (rows.hasNext()) {
-//
-//			row = (HSSFRow) rows.next();
-//			Iterator cells = row.cellIterator();
-//
-//			rowHeader = new Object[row.getLastCellNum()];
-//
-//			//while (cells.hasNext())
-//			for (int cn = 0; cn < row.getLastCellNum(); cn++) {
-//				cell = (HSSFCell) cells.next();
-//
-//				rowHeader[cn] = cell.getStringCellValue();
-//
-//				/*switch (cell.getCellType()) {
-//					case HSSFCell.CELL_TYPE_BOOLEAN:
-//						rowHeader[cn] = String.valueOf(cell.getBooleanCellValue());
-//						break;
-//					case XSSFCell.CELL_TYPE_NUMERIC:
-//						rowHeader[cn] = String.valueOf(cell.getNumericCellValue());
-//						break;
-//					case XSSFCell.CELL_TYPE_STRING:
-//						rowHeader[cn] = cell.getStringCellValue();
-//						break;
-//					case XSSFCell.CELL_TYPE_BLANK:
-//						rowHeader[cn] = "";
-//					case XSSFCell.CELL_TYPE_FORMULA:
-//					case XSSFCell.CELL_TYPE_ERROR:
-//						rowHeader[cn] = cell.getRichStringCellValue();
-//						break;
-//					default:
-//						rowHeader[cn] = cell.getRichStringCellValue();
-//				}*/
-//
-//			}
-//		}
-
-
-        // alternatif yol
-        // for (Row row : sheet) {
-//		while (rows.hasNext()) {
-//
-//			//Object[] rowobject = new Object[row.getLastCellNum()];
-
-//			row = (HSSFRow) rows.next();
-//
-//			Iterator cells = row.cellIterator();
-//
-//			Map<String, String> maprow = new HashMap<>();
-//
-//			Boolean empty = true;
-//
-//			//while (cells.hasNext())
-//			for (int cn = 0; cn < row.getLastCellNum(); cn++) {
-//				cell = (HSSFCell) cells.next();
-//
-//				String header = "";
-//				if (rowHeader.length > cn) {
-//					header = rowHeader[cn].toString();
-//				} else {
-//					continue;
-//				}
-//
-//				switch (cell.getCellType()) {
-//					case XSSFCell.CELL_TYPE_BOOLEAN:
-//						maprow.put(header, String.valueOf(cell.getBooleanCellValue()));
-//						empty = false;
-//						break;
-//					case XSSFCell.CELL_TYPE_NUMERIC:
-//						/*int i = (int)cell.getNumericCellValue();
-//						strCellValue = String.valueOf(i);*/
-//						// XIM araştır format
-//						double num = cell.getNumericCellValue();
-//						DecimalFormat pattern = new DecimalFormat("#,#,#,#,#,#,#,#,#,#");
-//						NumberFormat testNumberFormat = NumberFormat.getNumberInstance();
-//						String mob = testNumberFormat.format(num);
-//						Number n = null;
-//						try {
-//							n = pattern.parse(mob);
-//							maprow.put(header, String.valueOf(n));
-//						} catch (ParseException e) {
-//							maprow.put(header, String.valueOf(cell.getNumericCellValue()));
-//							e.printStackTrace();
-//						}
-//						//maprow.put(header, String.valueOf(cell.getNumericCellValue()));
-//						empty = false;
-//						break;
-//					case XSSFCell.CELL_TYPE_STRING:
-//						maprow.put(header, cell.getStringCellValue());
-//						empty = false;
-//						break;
-//
-//					case XSSFCell.CELL_TYPE_FORMULA:
-//						maprow.put(header, cell.getRichStringCellValue().getString());
-//						empty = false;
-//
-//					case XSSFCell.CELL_TYPE_BLANK:
-//					case XSSFCell.CELL_TYPE_ERROR:
-//					default:
-//						maprow.put(header, "");
-//
-//				}
-//
-//			}
-//
-//			if (!empty) listrows.add(maprow);
-//
-//		}
 
         //Loghelper.getInstance(getClass()).debug(" Row Headers Length:"+rowHeader.length));
         // not : alternatif yol : for (Row row : sheet)
@@ -458,9 +348,9 @@ public class FiExcel {
         }
 
         listColumns.forEach(fiTableCol -> {
-            if (fiTableCol.getHeaderName() == null) return;
+            if (fiTableCol.getOfcTxHeader() == null) return;
 
-            if (finalHeaders.contains(fiTableCol.getHeaderName().trim())) {
+            if (finalHeaders.contains(fiTableCol.getOfcTxHeader().trim())) {
                 fiTableCol.setBoEnabled(true);
             }
         });
@@ -558,9 +448,9 @@ public class FiExcel {
         }
 
         listColumns.forEach(fiTableCol -> {
-            if (fiTableCol.getHeaderName() == null) return;
+            if (fiTableCol.getOfcTxHeader() == null) return;
 
-            if (finalHeaders.contains(fiTableCol.getHeaderName().trim())) {
+            if (finalHeaders.contains(fiTableCol.getOfcTxHeader().trim())) {
                 fiTableCol.setBoEnabled(true);
             }
         });
@@ -715,7 +605,7 @@ public class FiExcel {
         //Loghelper.getInstance(getClass()).debug(" aranan col:" + listColumns.get(0).getHeader());
         List<String> headers = null;
 
-        Map<String, ? extends IFiCol> mapHeaderToFiCol = FiCollection.listToMapSingle(listColumns, ozTableCol -> ozTableCol.getHeaderName().trim());
+        Map<String, ? extends IFiCol> mapHeaderToFiCol = FiCollection.listToMapSingle(listColumns, ozTableCol -> ozTableCol.getOfcTxHeader().trim());
 
         // ** rowIndexExcel start header row okunur
         Integer rowIndexExcel = 0;
@@ -794,7 +684,7 @@ public class FiExcel {
 
         // ??????? bulunan satırları colEnabled prop si true yapılmış , nedeni anlaşıldı , bunun yerine boIsExist var olduğu belirtilmişti
         listColumns.forEach(entity -> {
-            if (finalHeaders.contains(entity.getHeaderName().trim())) {
+            if (finalHeaders.contains(entity.getOfcTxHeader().trim())) {
                 entity.setBoEnabled(true);
             }
         });
@@ -845,7 +735,7 @@ public class FiExcel {
         //Loghelper.getInstance(getClass()).debug(" aranan col:" + listColumns.get(0).getHeader());
         List<String> headers = null;
 
-        Map<String, ? extends IFiCol> mapOztableCol = FiCollection.listToMapSingle(listColumns, ozTableCol -> ozTableCol.getHeaderName().trim());
+        Map<String, ? extends IFiCol> mapOztableCol = FiCollection.listToMapSingle(listColumns, ozTableCol -> ozTableCol.getOfcTxHeader().trim());
 
         // Öncelikle Başlıkların olduğu satır aranıyor
         for (; rowIndexExcel <= lastRowNumber; rowIndexExcel++) {
@@ -936,7 +826,7 @@ public class FiExcel {
         List<String> finalHeaders = headers;
 
         listColumns.forEach(entity -> {
-            if (finalHeaders.contains(entity.getHeaderName().trim())) {
+            if (finalHeaders.contains(entity.getOfcTxHeader().trim())) {
                 entity.setBoEnabled(true);
             }
         });
@@ -1059,18 +949,18 @@ public class FiExcel {
                 IFiCol fiTableCol = listColumns.get(i);
 
                 // Excelden gelen veride bu sütun yoksa atlanır
-                if (!map.containsKey(fiTableCol.getHeaderName())) {
+                if (!map.containsKey(fiTableCol.getOfcTxHeader())) {
                     // FIXME bir defa gösterilmeli
                     //Loghelper.getInstance(getClass()).debug(" Sütun bulunamadı:" + fiTableCol.getHeader());
                     continue;
                 }
 
                 try {
-                    Object cellvalue = map.get(fiTableCol.getHeaderName());
+                    Object cellvalue = map.get(fiTableCol.getOfcTxHeader());
 
                     if (cellvalue != null && ((String) cellvalue).isEmpty()) cellvalue = null;
 
-                    String colTypeName = fieldsAsMap.getOrDefault(fiTableCol.getFieldName(), new FiField()).getClassNameSimple();
+                    String colTypeName = fieldsAsMap.getOrDefault(fiTableCol.getOfcTxFieldName(), new FiField()).getClassNameSimple();
                     String colTypeName2 = colTypeName == null ? "" : colTypeName;
 
                     if (fiTableCol.equalsColType(OzColType.Date) || (fiTableCol.getColType() == null && colTypeName2.equals("Date"))) {
@@ -1088,7 +978,7 @@ public class FiExcel {
                         cellvalue = FiNumber.strToDouble(cellvalue);
                     }
 
-                    PropertyUtils.setProperty(entity, fiTableCol.getFieldName().trim(), cellvalue);
+                    PropertyUtils.setProperty(entity, fiTableCol.getOfcTxFieldName().trim(), cellvalue);
 
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
@@ -1119,12 +1009,12 @@ public class FiExcel {
             for (int i = 0; i < listColumns.size(); i++) {
                 IFiCol fiTableCol = listColumns.get(i);
                 // Excelden gelen veride bu sütun yoksa atlanır
-                if (!mapExcelRow.containsKey(fiTableCol.getHeaderName())) continue;
+                if (!mapExcelRow.containsKey(fiTableCol.getOfcTxHeader())) continue;
 
-                String cellvalue = mapExcelRow.get(fiTableCol.getHeaderName());
+                String cellvalue = mapExcelRow.get(fiTableCol.getOfcTxHeader());
                 if (FiString.isEmpty(cellvalue)) cellvalue = null;
                 // Tip Çevrilmesi yapılmadan String olarak Eklendi
-                fiMapEntity.put(fiTableCol.getFieldName().trim(), cellvalue);
+                fiMapEntity.put(fiTableCol.getOfcTxFieldName().trim(), cellvalue);
             }
             if (fiMapEntity.size() > 0) fiListMapEntity.add(fiMapEntity);
         }
@@ -1139,7 +1029,7 @@ public class FiExcel {
         //listmapexcel.get(0).keySet().forEach(s -> System.out.print(s + " : "));
         columnList.forEach(entity -> {
             if (entity.getBoEnabled() != null && entity.getBoEnabled())
-                System.out.print(entity.getHeaderName() + " :: ");
+                System.out.print(entity.getOfcTxHeader() + " :: ");
         });
         System.out.println("");
         System.out.println("Satır Sayısı : " + listdata.size() + "\n");
@@ -1154,7 +1044,7 @@ public class FiExcel {
 
             for (int cols = 0; cols < columnList.size(); cols++) { // For each table column
 
-                String fieldname = columnList.get(cols).getFieldName();
+                String fieldname = columnList.get(cols).getOfcTxFieldName();
 
                 String value = "";
                 Object obj = null;
@@ -1373,8 +1263,6 @@ public class FiExcel {
             // Get the workbook instance for XLS file
             workbook = new XSSFWorkbook(file);
 
-        } catch (FileNotFoundException e1) {
-            e1.printStackTrace();
         } catch (IOException e2) {
             e2.printStackTrace();
         }
@@ -1460,7 +1348,7 @@ public class FiExcel {
         List<String> finalHeaders = excelHeadersXLSX.getValue1();
 
         listColumns.forEach(entity -> {
-            if (finalHeaders.contains(entity.getHeaderName().trim())) {
+            if (finalHeaders.contains(entity.getOfcTxHeader().trim())) {
                 entity.setBoEnabled(true);
             }
         });
@@ -1962,19 +1850,19 @@ public class FiExcel {
             // Loghelper.getInstance(getClass()).debug(" headar1 : " + rowHeader[0]);
 
             // FIXME bütün zorunlu sütunlar aratılabilir
-            if (headers.contains(listColumns.get(0).getHeaderName().trim())) {
+            if (headers.contains(listColumns.get(0).getOfcTxHeader().trim())) {
                 //Loghelper.getInstance(getClass()).debug(" Başlık bulundu:" + rowIndexExcel);
                 colFound = true;
                 break;
             }
 
-            if (listColumns.size() > 1 && headers.contains(listColumns.get(1).getHeaderName().trim())) {
+            if (listColumns.size() > 1 && headers.contains(listColumns.get(1).getOfcTxHeader().trim())) {
                 //Loghelper.getInstance(getClass()).debug(" Başlık bulundu:" + rowIndexExcel);
                 colFound = true;
                 break;
             }
 
-            if (listColumns.size() > 2 && headers.contains(listColumns.get(2).getHeaderName().trim())) {
+            if (listColumns.size() > 2 && headers.contains(listColumns.get(2).getOfcTxHeader().trim())) {
                 //Loghelper.getInstance(getClass()).debug(" Başlık bulundu:" + rowIndexExcel);
                 colFound = true;
                 break;
@@ -1991,7 +1879,7 @@ public class FiExcel {
         List<String> finalHeaders = headers;
 
         listColumns.forEach(entity -> {
-            if (finalHeaders.contains(entity.getHeaderName().trim())) {
+            if (finalHeaders.contains(entity.getOfcTxHeader().trim())) {
                 entity.setBoEnabled(true);
             }
         });
@@ -2149,3 +2037,113 @@ public class FiExcel {
 
 
 }
+
+
+//		// ilk satır başlık olacak
+//		if (rows.hasNext()) {
+//
+//			row = (HSSFRow) rows.next();
+//			Iterator cells = row.cellIterator();
+//
+//			rowHeader = new Object[row.getLastCellNum()];
+//
+//			//while (cells.hasNext())
+//			for (int cn = 0; cn < row.getLastCellNum(); cn++) {
+//				cell = (HSSFCell) cells.next();
+//
+//				rowHeader[cn] = cell.getStringCellValue();
+//
+//				/*switch (cell.getCellType()) {
+//					case HSSFCell.CELL_TYPE_BOOLEAN:
+//						rowHeader[cn] = String.valueOf(cell.getBooleanCellValue());
+//						break;
+//					case XSSFCell.CELL_TYPE_NUMERIC:
+//						rowHeader[cn] = String.valueOf(cell.getNumericCellValue());
+//						break;
+//					case XSSFCell.CELL_TYPE_STRING:
+//						rowHeader[cn] = cell.getStringCellValue();
+//						break;
+//					case XSSFCell.CELL_TYPE_BLANK:
+//						rowHeader[cn] = "";
+//					case XSSFCell.CELL_TYPE_FORMULA:
+//					case XSSFCell.CELL_TYPE_ERROR:
+//						rowHeader[cn] = cell.getRichStringCellValue();
+//						break;
+//					default:
+//						rowHeader[cn] = cell.getRichStringCellValue();
+//				}*/
+//
+//			}
+//		}
+
+
+// alternatif yol
+// for (Row row : sheet) {
+//		while (rows.hasNext()) {
+//
+//			//Object[] rowobject = new Object[row.getLastCellNum()];
+
+//			row = (HSSFRow) rows.next();
+//
+//			Iterator cells = row.cellIterator();
+//
+//			Map<String, String> maprow = new HashMap<>();
+//
+//			Boolean empty = true;
+//
+//			//while (cells.hasNext())
+//			for (int cn = 0; cn < row.getLastCellNum(); cn++) {
+//				cell = (HSSFCell) cells.next();
+//
+//				String header = "";
+//				if (rowHeader.length > cn) {
+//					header = rowHeader[cn].toString();
+//				} else {
+//					continue;
+//				}
+//
+//				switch (cell.getCellType()) {
+//					case XSSFCell.CELL_TYPE_BOOLEAN:
+//						maprow.put(header, String.valueOf(cell.getBooleanCellValue()));
+//						empty = false;
+//						break;
+//					case XSSFCell.CELL_TYPE_NUMERIC:
+//						/*int i = (int)cell.getNumericCellValue();
+//						strCellValue = String.valueOf(i);*/
+//						// XIM araştır format
+//						double num = cell.getNumericCellValue();
+//						DecimalFormat pattern = new DecimalFormat("#,#,#,#,#,#,#,#,#,#");
+//						NumberFormat testNumberFormat = NumberFormat.getNumberInstance();
+//						String mob = testNumberFormat.format(num);
+//						Number n = null;
+//						try {
+//							n = pattern.parse(mob);
+//							maprow.put(header, String.valueOf(n));
+//						} catch (ParseException e) {
+//							maprow.put(header, String.valueOf(cell.getNumericCellValue()));
+//							e.printStackTrace();
+//						}
+//						//maprow.put(header, String.valueOf(cell.getNumericCellValue()));
+//						empty = false;
+//						break;
+//					case XSSFCell.CELL_TYPE_STRING:
+//						maprow.put(header, cell.getStringCellValue());
+//						empty = false;
+//						break;
+//
+//					case XSSFCell.CELL_TYPE_FORMULA:
+//						maprow.put(header, cell.getRichStringCellValue().getString());
+//						empty = false;
+//
+//					case XSSFCell.CELL_TYPE_BLANK:
+//					case XSSFCell.CELL_TYPE_ERROR:
+//					default:
+//						maprow.put(header, "");
+//
+//				}
+//
+//			}
+//
+//			if (!empty) listrows.add(maprow);
+//
+//		}

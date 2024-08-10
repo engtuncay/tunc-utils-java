@@ -105,7 +105,7 @@ public class FiFieldUtil {
 				assignFiFieldExtraRelatedDb(field, fiField);
 			}
 
-			mapFiFields.put(fiField.getName(), fiField);
+			mapFiFields.put(fiField.getOfcTxFieldName(), fiField);
 
 		}
 
@@ -167,7 +167,7 @@ public class FiFieldUtil {
 		List<FiField> fiFieldList = new ArrayList<>();
 
 		for (FiField fiField : listFiFieldsSummary) {
-			if (FiBool.isTrue(fiField.getBoIdField())) {
+			if (FiBool.isTrue(fiField.getBoKeyIdField())) {
 				fiFieldList.add(fiField);
 			}
 		}
@@ -293,7 +293,7 @@ public class FiFieldUtil {
 		List<FiField> listFields = getListFieldsWoutStatic(clazz, includeTransient);
 
 		return listFields.stream().filter(fiField -> {
-			if (FiBool.isFalse(fiField.getNullable())) return true;
+			if (FiBool.isFalse(fiField.getOfcBoNullable())) return true;
 			return false;
 		}).collect(toList());
 
@@ -324,18 +324,18 @@ public class FiFieldUtil {
 	 * @param fiField
 	 */
 	public static void assignFiFieldBasic(Field field, FiField fiField) {
-		fiField.setName(field.getName());
-		if (fiField.getDbFieldName() == null) fiField.setDbFieldName(field.getName());
+		fiField.setOfcTxFieldName(field.getName());
+		if (fiField.getOfcTxDbFieldName() == null) fiField.setOfcTxDbFieldName(field.getName());
 		fiField.setClassNameSimple(field.getType().getSimpleName());
 
 		if (field.isAnnotationPresent(FiColumn.class)) {
 			FiColumn anno = field.getAnnotation(FiColumn.class);
 			if (!FiString.isEmptyTrim(anno.name())) {
-				fiField.setDbFieldName(anno.name());
+				fiField.setOfcTxDbFieldName(anno.name());
 			}
 
 			if (FiBool.isTrue(anno.boFilterLike())) {
-				fiField.setBoFilterLike(true);
+				fiField.setOfcBoFilterLike(true);
 			}
 		}
 
@@ -357,17 +357,17 @@ public class FiFieldUtil {
 
 		if (field.isAnnotationPresent(Column.class)) {
 			Column column = field.getAnnotation(Column.class);
-			fiField.setPrecision(column.precision());
-			fiField.setScale(column.scale());
-			fiField.setLength(column.length());
-			fiField.setUnique(column.unique());
-			fiField.setNullable(column.nullable()); // def:true (in interface)
+			fiField.setOfcLnPrecision(column.precision());
+			fiField.setOfcLnScale(column.scale());
+			fiField.setOfcLnLength(column.length());
+			fiField.setOfcBoUnique(column.unique());
+			fiField.setOfcBoNullable(column.nullable()); // def:true (in interface)
 			fiField.setColCustomType(column.columnDefinition());
 
 			if (!FiString.isEmptyTrim(column.name())) {
-				fiField.setDbFieldName(column.name());
+				fiField.setOfcTxDbFieldName(column.name());
 			} else {
-				fiField.setDbFieldName(field.getName());
+				fiField.setOfcTxDbFieldName(field.getName());
 			}
 
 		}
@@ -376,33 +376,33 @@ public class FiFieldUtil {
 
 			FiColumn anno = field.getAnnotation(FiColumn.class);
 
-			fiField.setPrecision(anno.precision());
-			fiField.setScale(anno.scale());
-			fiField.setLength(anno.length());
-			fiField.setUnique(anno.isUnique());
-			fiField.setNullable(anno.isNullable());
+			fiField.setOfcLnPrecision(anno.precision());
+			fiField.setOfcLnScale(anno.scale());
+			fiField.setOfcLnLength(anno.length());
+			fiField.setOfcBoUnique(anno.isUnique());
+			fiField.setOfcBoNullable(anno.isNullable());
 			//if (FiBoolean.isFalse(anno.isNullable())) fiField.setNullable(false);
 			fiField.setColCustomType(anno.colCustomTypeDefinition());
-			fiField.setDefaultValue(anno.defaultValue());
+			fiField.setOfcTxDefValue(anno.defaultValue());
 			fiField.setColDefinitionExtra(anno.colDefinitionExtra());
-			fiField.setBoUtfSupport(anno.isUnicodeSupport());
+			fiField.setOfcBoUtfSupport(anno.isUnicodeSupport());
 			fiField.setBoExcludeFromAutoColList(anno.boExcludeFromAutoColList());
 
-			if (!FiString.isEmpty(anno.label())) fiField.setLabel(anno.label());
+			if (!FiString.isEmpty(anno.label())) fiField.setOfcTxHeader(anno.label());
 			if (anno.collation() != FiCollation.Default) fiField.setFiCollation(anno.collation());
-			if (!FiString.isEmpty(anno.typeName())) fiField.setTypeName(anno.typeName());
+			if (!FiString.isEmpty(anno.typeName())) fiField.setOfcTxTypeName(anno.typeName());
 			if (anno.defaultUpdateField()) fiField.setBoDefaultUpdateField(true);
 
 			if (!FiString.isEmptyTrim(anno.name())) {
-				fiField.setDbFieldName(anno.name());
+				fiField.setOfcTxDbFieldName(anno.name());
 			} else {
-				fiField.setDbFieldName(field.getName());
+				fiField.setOfcTxDbFieldName(field.getName());
 			}
 
 		}
 
 		if (field.isAnnotationPresent(FiNotNull.class)) {
-			fiField.setNullable(false);
+			fiField.setOfcBoNullable(false);
 		}
 
 		if (field.isAnnotationPresent(FiWhere1.class)) {
@@ -420,12 +420,12 @@ public class FiFieldUtil {
 		// other related db
 
 		if (field.isAnnotationPresent(Transient.class) || field.isAnnotationPresent(FiTransient.class)) {
-			fiField.setTransient(true);
+			fiField.setOftBoTransient(true);
 		}
 
 		// Id alanlar için ortak tanımlamalar
 		if (field.isAnnotationPresent(Id.class) || field.isAnnotationPresent(FiId.class)) {
-			fiField.setBoIdField(true);
+			fiField.setBoKeyIdField(true);
 			fiField.setBoDtoField(true);
 		}
 
@@ -439,7 +439,7 @@ public class FiFieldUtil {
 		if (field.isAnnotationPresent(FiCandId1.class)) {
 			fiField.setBoCandidateId1(true);
 			//FIXME nullable false olmayabilir , çoklu candid ise
-			fiField.setNullable(false);
+			fiField.setOfcBoNullable(false);
 			fiField.setBoDtoField(true);
 		}
 
@@ -522,7 +522,7 @@ public class FiFieldUtil {
 		}
 
 		if (field.isAnnotationPresent(FiUniqGroup1.class)) {
-			fiField.setBoUnique1(true);
+			fiField.setOfcBoUniqGro1(true);
 
 			FiUniqGroup1 anno = field.getAnnotation(FiUniqGroup1.class);
 
@@ -651,9 +651,9 @@ public class FiFieldUtil {
 		//listIdFields.forEach(fiField -> {
 		for (FiField field : listFiFieldsShort) {
 
-			if (FiBool.isTrue(field.getBoIdField())) {
+			if (FiBool.isTrue(field.getBoKeyIdField())) {
 				//Loghelperr.staticLogDebug("Id Fiedl"+field.getName());
-				Object idValue = FiReflection.getPropertyNested(entity, field.getName());
+				Object idValue = FiReflection.getPropertyNested(entity, field.getOfcTxFieldName());
 
 				if (isNull == null && idValue != null) isNull = false;
 				if (idValue == null) isNull = true;
@@ -675,7 +675,7 @@ public class FiFieldUtil {
 
 			if (FiBool.isTrue(field.getBoCusFieldDtCreate())) {
 				//Loghelperr.staticLogDebug("Id Fiedl"+field.getName());
-				Object idValue = FiReflection.getPropertyNested(entity, field.getName());
+				Object idValue = FiReflection.getPropertyNested(entity, field.getOfcTxFieldName());
 
 				if (isNull == null && idValue != null) isNull = false;
 				if (idValue == null) isNull = true;
@@ -697,10 +697,10 @@ public class FiFieldUtil {
 		//listIdFields.forEach(fiField -> {
 		for (FiField field : listFiFieldsShort) {
 
-			if (FiBool.isTrue(field.getBoIdField())) {
-				Loghelper.get(FiFieldUtil.class).debug("Id Field:" + field.getName());
-				Object idValue = FiReflection.getPropertyNested(fromEntity, field.getName());
-				boResult = FiReflection.setterNested(toEntity, field.getName(), idValue);
+			if (FiBool.isTrue(field.getBoKeyIdField())) {
+				Loghelper.get(FiFieldUtil.class).debug("Id Field:" + field.getOfcTxFieldName());
+				Object idValue = FiReflection.getPropertyNested(fromEntity, field.getOfcTxFieldName());
+				boResult = FiReflection.setterNested(toEntity, field.getOfcTxFieldName(), idValue);
 			}
 		}
 
@@ -719,9 +719,9 @@ public class FiFieldUtil {
 
 		for (FiField field : getListFieldsShortWithId(entityClazz)) {
 
-			if (FiBool.isTrue(field.getBoIdField())) {
+			if (FiBool.isTrue(field.getBoKeyIdField())) {
 				//Loghelperr.staticLogDebug("Id Field:"+field.getName());
-				listIdFields.add(field.getName());
+				listIdFields.add(field.getOfcTxFieldName());
 			}
 		}
 
@@ -729,11 +729,11 @@ public class FiFieldUtil {
 	}
 
 	public static List<String> getListDbFieldName(List<FiField> fieldListFilterAnno) {
-		return fieldListFilterAnno.stream().map(fiField -> fiField.getDbFieldName()).collect(toList());
+		return fieldListFilterAnno.stream().map(fiField -> fiField.getOfcTxDbFieldName()).collect(toList());
 	}
 
 	public static List<String> getListFieldName(List<FiField> fieldListFilterAnno) {
-		return fieldListFilterAnno.stream().map(fiField -> fiField.getName()).collect(toList());
+		return fieldListFilterAnno.stream().map(fiField -> fiField.getOfcTxFieldName()).collect(toList());
 	}
 
 	public static String getIdFieldSingle(List<Field> fieldListFilterAnno) {
@@ -752,7 +752,7 @@ public class FiFieldUtil {
 
 		for (FiField fiField : listNotNullFields) {
 
-			if (FiReflection.getProperty(entity, fiField.getName()) == null) {
+			if (FiReflection.getProperty(entity, fiField.getOfcTxFieldName()) == null) {
 				fiField.setNullCheck(true);
 				found = true;
 			}

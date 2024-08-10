@@ -221,17 +221,17 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 	private void autoFiColumnCellValueAndEditorFactoryConfig(FxTableCol fxTableCol) {
 		//Loghelperr.getInstance(getClass()).debug("added "+ fxTableCol.getFieldName());
-		fxTableCol.setText(fxTableCol.getHeaderName());
+		fxTableCol.setText(fxTableCol.getOfcTxHeader());
 
-		if (fxTableCol.getFieldName().contains(".")) {
-			Loghelper.get(getClass()).debug("Nested:" + fxTableCol.getFieldName());
-			fxTableCol.setCellValueFactory(new NestedPropertyValueFactory(fxTableCol.getFieldName()));
+		if (fxTableCol.getOfcTxFieldName().contains(".")) {
+			Loghelper.get(getClass()).debug("Nested:" + fxTableCol.getOfcTxFieldName());
+			fxTableCol.setCellValueFactory(new NestedPropertyValueFactory(fxTableCol.getOfcTxFieldName()));
 		} else {
-			fxTableCol.setCellValueFactory(new PropertyValueFactory<>(fxTableCol.getFieldName()));
+			fxTableCol.setCellValueFactory(new PropertyValueFactory<>(fxTableCol.getOfcTxFieldName()));
 		}
 
 		autoFiCellEditorFactoryDefaultConfig(fxTableCol);
-		fxTableCol.setId(fxTableCol.getFieldName());
+		fxTableCol.setId(fxTableCol.getOfcTxFieldName());
 		fxTableCol.setAutoFormatter(fxTableCol.getColType());
 	}
 
@@ -292,7 +292,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 									}
 
 									node.setOnAction(actionEvent -> {
-										Boolean result = FiReflection.setter(getTableView().getItems().get(getIndex()), fxTableCol.getFieldName(), node.isSelected());
+										Boolean result = FiReflection.setter(getTableView().getItems().get(getIndex()), fxTableCol.getOfcTxFieldName(), node.isSelected());
 										if (!result) {
 											FxDialogShow.showPopWarn("Yazılımsal Hata!!! Seçilemedi.");
 										} else {
@@ -478,7 +478,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 										if (fxTableCol.getFnEditorNodeRendererWitValue() != null) {
 											EntClazz entity = getTableView().getItems().get(getIndex());
-											Object propertyNested = FiReflection.getPropertyNested(entity, fxTableCol.getFieldName());
+											Object propertyNested = FiReflection.getPropertyNested(entity, fxTableCol.getOfcTxFieldName());
 											fxTableCol.getFnEditorNodeRendererWitValue().accept(entity, nodeComp,propertyNested);
 										}
 
@@ -523,12 +523,12 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 												// Önce action yürütülür , daha sonra renderer işlemi yapılır
 												if(true){
-													Object propertyNested = FiReflection.getPropertyNested(entity, fxTableCol.getFieldName());
+													Object propertyNested = FiReflection.getPropertyNested(entity, fxTableCol.getOfcTxFieldName());
 													fxTableCol.getFnEditorSetOnActionWitValue().accept(entity, nodeComp,propertyNested);
 												}
 
 												if (fxTableCol.getFnEditorNodeRendererWitValue() != null) {
-													Object propertyNested = FiReflection.getPropertyNested(entity, fxTableCol.getFieldName());
+													Object propertyNested = FiReflection.getPropertyNested(entity, fxTableCol.getOfcTxFieldName());
 													fxTableCol.getFnEditorNodeRendererWitValue().accept(entity, nodeComp,propertyNested);
 												}
 
@@ -1106,7 +1106,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 		if (fxcol.getPaneHeader() != null) return;
 
-		FxLabel label = new FxLabel(fxcol.getHeaderName());
+		FxLabel label = new FxLabel(fxcol.getOfcTxHeader());
 		label.setStyle("-fx-padding: 2px;");
 		label.setWrapText(true);
 		label.setAlignment(Pos.CENTER);
@@ -1127,7 +1127,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 		//fxcol.setFiHeaderAsVbox(vbox, fxcol);
 		fxcol.setPaneHeader(vbox);
-		fxcol.setText(fxcol.getHeaderName());
+		fxcol.setText(fxcol.getOfcTxHeader());
 
 
 	}
@@ -1220,7 +1220,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 					if (!disabledSelection) {
 						try {
-							PropertyUtils.setNestedProperty(ent, fxcol.getFieldName(), false);
+							PropertyUtils.setNestedProperty(ent, fxcol.getOfcTxFieldName(), false);
 						} catch (IllegalAccessException e) {
 							e.printStackTrace();
 						} catch (InvocationTargetException e) {
@@ -1243,7 +1243,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 					if (!disabledSelection) {
 						try {
-							PropertyUtils.setNestedProperty(ent, fxcol.getFieldName(), boStatus);
+							PropertyUtils.setNestedProperty(ent, fxcol.getOfcTxFieldName(), boStatus);
 						} catch (IllegalAccessException e) {
 							e.printStackTrace();
 						} catch (InvocationTargetException e) {
@@ -1387,7 +1387,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 						continue;
 					}
 
-					Object objCellValue = FiReflection.getProperty(ent, fxTableColumn.getFieldName());
+					Object objCellValue = FiReflection.getProperty(ent, fxTableColumn.getOfcTxFieldName());
 
 					// !!!!! CellValue için Null değerleri çevrim yapabiliriz
 					if (objCellValue == null) {
@@ -1703,7 +1703,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 	public FxTableCol getColumnByFieldName(String fieldName) {
 
 		for (FxTableCol fxTableCol : getFxTableColList()) {
-			if (fxTableCol.getFieldName().equals(fieldName)) {
+			if (fxTableCol.getOfcTxFieldName().equals(fieldName)) {
 				return fxTableCol;
 			}
 		}

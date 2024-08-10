@@ -1,5 +1,5 @@
 package ozpasyazilim.utils.fidbanno;
 
 public enum FiIdGenerationType {
-	Undefined, Identity,UserAssign
+	undefined, identity, userAssign
 }

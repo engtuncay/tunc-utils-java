@@ -2,8 +2,8 @@ package ozpasyazilim.utils.table;
 
 public interface IFxTableCol<EntClazz> {
 
-	FiCol<EntClazz> getFiCol();
+	FiCol<EntClazz> getRefFiCol();
 
-	void setFiCol(FiCol<EntClazz> fiTableCol);
+	void setRefFiCol(FiCol<EntClazz> fiTableCol);
 
 }

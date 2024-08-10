@@ -4,8 +4,6 @@ import javafx.util.Pair;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import ozpasyazilim.utils.datatypes.FiMeta;
-import ozpasyazilim.utils.datatypes.FiMetaKey;
-import ozpasyazilim.utils.fidbanno.FiCombo;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.datatypes.PersonEntityTest;
@@ -827,7 +825,7 @@ public class FiCollection {
 
                 T exampleObj = listDataByKey.get(0);
 
-                Object objectColValue = FiReflection.getProperty(exampleObj, oztablecol.getFieldName());
+                Object objectColValue = FiReflection.getProperty(exampleObj, oztablecol.getOfcTxFieldName());
 
                 if (oztablecol.getColType() == null || oztablecol.getColType() == OzColType.String) {
                     new FiReflection().setter(filteredEntity, oztablecol, objectColValue);
@@ -836,7 +834,7 @@ public class FiCollection {
                 if (objectColValue instanceof Double) {
 
                     Double sumDouble = FiNumberToText.sumValuesDouble(listDataByKey, ent -> {
-                        Object objectByField = FiReflection.getProperty(ent, oztablecol.getFieldName());
+                        Object objectByField = FiReflection.getProperty(ent, oztablecol.getOfcTxFieldName());
                         if (objectByField == null) return 0d;
                         return (Double) objectByField;
                     });
@@ -891,10 +889,10 @@ public class FiCollection {
 
             for (IFiCol oztablecol : listCol) {
 
-                Object objectColValue = FiReflection.getProperty(exampleObj, oztablecol.getFieldName());
+                Object objectColValue = FiReflection.getProperty(exampleObj, oztablecol.getOfcTxFieldName());
 
                 // yukarıda yapıldığı için atlanır
-                if (listGroupbyfields.contains(oztablecol.getFieldName())) {
+                if (listGroupbyfields.contains(oztablecol.getOfcTxFieldName())) {
                     continue;
                     //new FiProperty().setter(filteredEntity, oztablecol, objectColValue);
                 }
@@ -902,7 +900,7 @@ public class FiCollection {
                 if (objectColValue instanceof Double) {
 
                     Double sumDouble = FiNumberToText.sumValuesDouble(listDataByKey, ent -> {
-                        Object objectByField = FiReflection.getProperty(ent, oztablecol.getFieldName());
+                        Object objectByField = FiReflection.getProperty(ent, oztablecol.getOfcTxFieldName());
                         if (objectByField == null) return 0d;
                         return (Double) objectByField;
                     });

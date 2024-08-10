@@ -19,7 +19,7 @@ import java.util.Locale;
  */
 public class FxTableCol2<EntClazz> extends TableColumn implements IFxTableCol<EntClazz> {
 
-	private ObjectProperty<FiCol<EntClazz>> fiCol = new SimpleObjectProperty<>();
+	private ObjectProperty<FiCol<EntClazz>> refFiCol = new SimpleObjectProperty<>();
 
 	public FxTableCol2() {
 		super();
@@ -29,52 +29,52 @@ public class FxTableCol2<EntClazz> extends TableColumn implements IFxTableCol<En
 	public FxTableCol2(String fiHeader) {
 		super(fiHeader);
 		setupFiTableListener();
-		getFiCol().setHeaderName(fiHeader);
+		getRefFiCol().setOfcTxHeader(fiHeader);
 	}
 
 	public FxTableCol2(String fiHeader, String fieldName) {
 		super(fiHeader);
 		setupFiTableListener();
-		getFiCol().setFieldName(fieldName);
+		getRefFiCol().setOfcTxFieldName(fieldName);
 		//this.setId(fieldName);
-		getFiCol().setHeaderName(fiHeader);
+		getRefFiCol().setOfcTxHeader(fiHeader);
 		setCellValueFactory(new PropertyValueFactory<>(fieldName));
 	}
 
 	/**
 	 * FiCol'dan FxTableCol üretimi
 	 *
-	 * @param fiCol
+	 * @param refFiCol
 	 */
-	public FxTableCol2(FiCol fiCol) {
+	public FxTableCol2(FiCol refFiCol) {
 		super();
 		setupFiTableListener();
-		setFiCol(fiCol);
+		setRefFiCol(refFiCol);
 		// added 29-04-2023 tor (setId)
-		setId(fiCol.getFieldName());
-		fiCol.setFxTableCol2(this);
-		fiCol.setTableColumnFx(this);
+		setId(refFiCol.getOfcTxFieldName());
+		refFiCol.setFxTableCol2(this);
+		refFiCol.setTableColumnFx(this);
 	}
 
 
 	private void setupFiTableListener() {
-		fiColProperty().addListener((observable, oldValue, newValue) -> {
+		refFiColProperty().addListener((observable, oldValue, newValue) -> {
 			setupFiTableParamListeners();
 		});
 	}
 
 	private void setupFiTableParamListeners() {
 
-		getFiCol().prefSizeProperty().addListener((observable, oldValue, newValue) -> {
+		getRefFiCol().prefSizeProperty().addListener((observable, oldValue, newValue) -> {
 			if(newValue!=null){
 				setPrefWidth((Double) newValue);
 			}
 		});
 
 		// initial setup
-		if(getFiCol().getPrefSize()!=null ){ //&& getFiTableCol().getPrefSize()!=0d
+		if(getRefFiCol().getPrefSize()!=null ){ //&& getFiTableCol().getPrefSize()!=0d
 			//Loghelperr.getInstance(getClass()).debug(" Col:"+getFiTableCol().getFiHeader() + " Size:"+getFiTableCol().getPrefSize().toString());
-			setPrefWidth(getFiCol().getPrefSize());
+			setPrefWidth(getRefFiCol().getPrefSize());
 		}
 
 	}
@@ -85,33 +85,33 @@ public class FxTableCol2<EntClazz> extends TableColumn implements IFxTableCol<En
 	}
 
 	//@Override
-	public FiCol getFiCol() {
-		if (fiCol.get() == null) {
+	public FiCol getRefFiCol() {
+		if (refFiCol.get() == null) {
 			//fiTableCol = new SimpleObjectProperty<>();
-			fiCol.set(new FiCol<>());
-			fiCol.get().setTableColumnFx(this);
+			refFiCol.set(new FiCol<>());
+			refFiCol.get().setTableColumnFx(this);
 		}
-		return fiCol.get();
+		return refFiCol.get();
 	}
 
-	public ObjectProperty<FiCol<EntClazz>> fiColProperty() {
+	public ObjectProperty<FiCol<EntClazz>> refFiColProperty() {
 //		if (fiTableCol == null) {
 //			fiTableCol = new SimpleObjectProperty<>();
 //		}
-		return fiCol;
+		return refFiCol;
 	}
 
-	public void setFiCol(FiCol prmfiCol) {
+	public void setRefFiCol(FiCol prmfiCol) {
 //		if (fiTableCol == null) {
 //			fiTableCol = new SimpleObjectProperty<FiTableCol<EntClazz>>();
 //		}
-		this.fiCol.set(prmfiCol);
+		this.refFiCol.set(prmfiCol);
 		prmfiCol.setTableColumnFx(this);
 	}
 
 	public <S> void setAutoFormatter(OzColType dataType) {
 
-		if (getFiCol().getColType() == OzColType.Double) {
+		if (getRefFiCol().getColType() == OzColType.Double) {
 
 			Locale locale = new Locale("tr", "TR");
 			DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(locale);
@@ -125,7 +125,7 @@ public class FxTableCol2<EntClazz> extends TableColumn implements IFxTableCol<En
 
 		}
 
-		if (getFiCol().getColType() == OzColType.Integer) {
+		if (getRefFiCol().getColType() == OzColType.Integer) {
 
 			/*
 			DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(locale);
@@ -141,7 +141,7 @@ public class FxTableCol2<EntClazz> extends TableColumn implements IFxTableCol<En
 
 		}
 
-		if (getFiCol().getColType() == OzColType.Date) {
+		if (getRefFiCol().getColType() == OzColType.Date) {
 			SimpleDateFormat f = new SimpleDateFormat("dd.MM.yy");
 			setCellFactory(new CellFactoryFormatter<S, Date>(f));
 		}

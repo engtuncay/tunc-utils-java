@@ -164,7 +164,7 @@ public class FiXmlParser {
 
 			IFiCol ozTableCol = listColumn.get(colidx);
 
-			String text = $(xmlElement).find(ozTableCol.getHeaderName()).text();
+			String text = $(xmlElement).find(ozTableCol.getOfcTxHeader()).text();
 			//println(" CellValue:"+text);
 			new FiReflection().setter(ozTableCol, objectt, text);
 
@@ -193,28 +193,28 @@ public class FiXmlParser {
 
 			if (fiColParent.getColTypeNtn() == OzColType.XmlChildList) {
 
-				List listChildren = parseMatchElementToList(xmlMatch, fiColParent.getHeaderName(), fiColParent.getListChildCol(), fiColParent.getChildClazz(), false);
-				FiReflection.setProperty(entity, fiColParent.getFieldName(), listChildren);
+				List listChildren = parseMatchElementToList(xmlMatch, fiColParent.getOfcTxHeader(), fiColParent.getListChildCol(), fiColParent.getChildClazz(), false);
+				FiReflection.setProperty(entity, fiColParent.getOfcTxFieldName(), listChildren);
 				continue;
 			}
 
 			if (fiColParent.getColTypeNtn() == OzColType.XmlChild) {
 
-				Match elementChild = xmlMatch.find(fiColParent.getHeaderName());
+				Match elementChild = xmlMatch.find(fiColParent.getOfcTxHeader());
 
 				if (FiBool.isTrue(boChildSameClassCheck) && fiColParent.getChildClazz().equals(clazz)) {
 					parseMatchToEntityWithOneChild(elementChild, fiColParent.getListChildCol(), fiColParent.getChildClazz(), boChildSameClassCheck, entity);
 
 				} else {
 					Object objChild = parseMatchToEntityWithOneChild(elementChild, fiColParent.getListChildCol(), fiColParent.getChildClazz(), boChildSameClassCheck, null);
-					FiReflection.setProperty(entity, fiColParent.getFieldName(), objChild);
+					FiReflection.setProperty(entity, fiColParent.getOfcTxFieldName(), objChild);
 				}
 
 				continue;
 			}
 
 			if (fiColParent.getColGenTypeNtn().equals(OzColType.XmlAttribute)) {
-				String text = xmlMatch.attr(fiColParent.getHeaderName());
+				String text = xmlMatch.attr(fiColParent.getOfcTxHeader());
 				FiReflection.setter(fiColParent, entity, text);
 //			Loghelper.get(FiXmlParser.class).debug("Attr HeaderName:"+ fiColParent.getHeaderName());
 //			Loghelper.get(FiXmlParser.class).debug("Attr Value:" + text);
@@ -223,7 +223,7 @@ public class FiXmlParser {
 
 			//Loghelper.get(FiXmlParser.class).debug("HeaderName:"+ fiColParent.getHeaderName());
 
-			Match elementChild = xmlMatch.find(fiColParent.getHeaderName());
+			Match elementChild = xmlMatch.find(fiColParent.getOfcTxHeader());
 			String text = elementChild.text();
 			FiReflection.setter(fiColParent, entity, text);
 		}

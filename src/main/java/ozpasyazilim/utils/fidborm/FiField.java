@@ -8,16 +8,18 @@ import ozpasyazilim.utils.fidbanno.FiIdGenerationType;
 import javax.persistence.TemporalType;
 import java.util.List;
 
-public class FiField {
+public class FiField implements IFiField{
 
 	// Code ve Db Field Name , farklı ise dbFieldName e alanı yazılır
-	String name;
-	String dbFieldName;
-	String label;
+	String ofcTxFieldName;
+	String ofcTxDbFieldName;
+	String ofcTxHeader;
 
 	Integer size;
 	Boolean boCandidateId1;
 	Boolean boCandidateId2;
+
+	private String ofiTxIdType;
 
 	Boolean boFiSelect;
 
@@ -26,31 +28,38 @@ public class FiField {
 	 */
 	Boolean boFiSelect1;
 
-	Boolean isTransient;
-	Integer precision;
-	Integer scale;
-	Integer length;
-	Boolean unique;
-	Boolean nullable;
+	Boolean oftBoTransient;
+
+	Integer ofcLnLength;
+	Integer ofcLnPrecision;
+	Integer ofcLnScale;
+
+	Boolean ofcBoUnique;
+	Boolean ofcBoNullable;
+	Boolean ofcBoUtfSupport;
+	String ofcTxCollation;
+
+
 	String colCustomType;
 	String colDefinitionExtra;
 
 	TemporalType temporalType;
 	FiSqlDateTypes dateType;
 	String classNameSimple;
+
 	String sqlFieldDefinition;
-	Boolean boIdField;
-	String defaultValue;
+	Boolean boKeyIdField;
+	String ofcTxDefValue;
 	//String typeSimpleName;
-	String colFieldType;
+	String ofcTxFieldType;
 	Boolean boOnlyFirstInsert;
-	Boolean boUtfSupport;
+
 	Boolean boScopeIdField;
 	FiCollation fiCollation;
 	Boolean boSeperatedField;
 	Boolean boDtoField;
 	Boolean boDefaultUpdateField;
-	String typeName;
+	String ofcTxTypeName;
 	Boolean boCusFieldUserId;
 	Boolean boCusFieldDtChange;
 	Boolean boCusFieldDtCreate;
@@ -76,12 +85,12 @@ public class FiField {
 	Boolean boExcludeFromAutoColList;
 
 	// true olur FiMapParam a alan eklenirken % işareti ekler
-	Boolean boFilterLike;
+	Boolean ofcBoFilterLike;
 
 	// Insert Select sorguların where alanında kullanıcak alan (tarih genelde)
 	Boolean boDateSeperatorField;
 
-	Boolean boUnique1;
+	Boolean ofcBoUniqGro1;
 
 	String txUnique1Name;
 
@@ -90,24 +99,24 @@ public class FiField {
 	public FiField() {
 	}
 
-	public FiField(String name, String label) {
-		this.name = name;
-		this.label = label;
+	public FiField(String ofcTxFieldName, String ofcTxHeader) {
+		this.ofcTxFieldName = ofcTxFieldName;
+		this.ofcTxHeader = ofcTxHeader;
 	}
 
 	public String getDbParamName(){
-		if(FiString.isAllUpperCase(getDbFieldName())){
-			return getDbFieldName();
+		if(FiString.isAllUpperCase(getOfcTxDbFieldName())){
+			return getOfcTxDbFieldName();
 		}
-		return FiString.firstLetterLowerOnly(getDbFieldName());
+		return FiString.firstLetterLowerOnly(getOfcTxDbFieldName());
 	}
 
-	public Boolean getBoIdField() {
-		return boIdField;
+	public Boolean getBoKeyIdField() {
+		return boKeyIdField;
 	}
 
-	public void setBoIdField(Boolean boIdField) {
-		this.boIdField = boIdField;
+	public void setBoKeyIdField(Boolean boKeyIdField) {
+		this.boKeyIdField = boKeyIdField;
 	}
 
 	public String getSqlFieldDefinition() {
@@ -150,41 +159,41 @@ public class FiField {
 		this.colCustomType = colCustomType;
 	}
 
-	public Boolean getNullable() {
-		return nullable;
+	public Boolean getOfcBoNullable() {
+		return ofcBoNullable;
 	}
 
-	public void setNullable(Boolean nullable) {
-		this.nullable = nullable;
+	public void setOfcBoNullable(Boolean ofcBoNullable) {
+		this.ofcBoNullable = ofcBoNullable;
 	}
 
-	public Boolean getUnique() {
-		return unique;
+	public Boolean getOfcBoUnique() {
+		return ofcBoUnique;
 	}
 
-	public void setUnique(Boolean unique) {
-		this.unique = unique;
+	public void setOfcBoUnique(Boolean ofcBoUnique) {
+		this.ofcBoUnique = ofcBoUnique;
 	}
 
-	public Integer getLength() {
-		return length;
+	public Integer getOfcLnLength() {
+		return ofcLnLength;
 	}
 
-	public void setLength(Integer length) {
-		this.length = length;
+	public void setOfcLnLength(Integer ofcLnLength) {
+		this.ofcLnLength = ofcLnLength;
 	}
 
-	public Integer getScale() {
-		return scale;
+	public Integer getOfcLnScale() {
+		return ofcLnScale;
 	}
 
-	public void setScale(Integer scale) {
-		this.scale = scale;
+	public void setOfcLnScale(Integer ofcLnScale) {
+		this.ofcLnScale = ofcLnScale;
 	}
 
-	public String getName() {return name;}
+	public String getOfcTxFieldName() {return ofcTxFieldName;}
 
-	public void setName(String name) {this.name = name;}
+	public void setOfcTxFieldName(String ofcTxFieldName) {this.ofcTxFieldName = ofcTxFieldName;}
 
 	public Integer getSize() {
 		return size;
@@ -199,33 +208,33 @@ public class FiField {
 	public void setBoCandidateId1(Boolean idSelected) {
 		boCandidateId1 = idSelected;}
 
-	public Boolean getTransient() {
-		return isTransient;
+	public Boolean getOftBoTransient() {
+		return oftBoTransient;
 	}
 
-	public void setTransient(Boolean aTransient) {
-		isTransient = aTransient;
+	public void setOftBoTransient(Boolean oftBoTransient) {
+		this.oftBoTransient = oftBoTransient;
 	}
 
-	public Integer getPrecision() {
-		return precision;
+	public Integer getOfcLnPrecision() {
+		return ofcLnPrecision;
 	}
 
-	public void setPrecision(Integer precision) {
-		this.precision = precision;
+	public void setOfcLnPrecision(Integer ofcLnPrecision) {
+		this.ofcLnPrecision = ofcLnPrecision;
 	}
 
 	public Boolean getBoFiSelect() {return boFiSelect;}
 
 	public void setBoFiSelect(Boolean boFiSelect) {this.boFiSelect = boFiSelect;}
 
-	public String getDefaultValue() {return defaultValue;}
+	public String getOfcTxDefValue() {return ofcTxDefValue;}
 
-	public void setDefaultValue(String defaultValue) {this.defaultValue = defaultValue;}
+	public void setOfcTxDefValue(String ofcTxDefValue) {this.ofcTxDefValue = ofcTxDefValue;}
 
-	public String getLabel() {return label;}
+	public String getOfcTxHeader() {return ofcTxHeader;}
 
-	public void setLabel(String label) {this.label = label;}
+	public void setOfcTxHeader(String ofcTxHeader) {this.ofcTxHeader = ofcTxHeader;}
 
 	public Boolean getNullCheck() {return nullCheck;}
 
@@ -235,21 +244,21 @@ public class FiField {
 
 	public void setDateType(FiSqlDateTypes dateType) {this.dateType = dateType;}
 
-	public String getDbFieldName() {return dbFieldName;}
+	public String getOfcTxDbFieldName() {return ofcTxDbFieldName;}
 
-	public void setDbFieldName(String dbFieldName) {this.dbFieldName = dbFieldName;}
+	public void setOfcTxDbFieldName(String ofcTxDbFieldName) {this.ofcTxDbFieldName = ofcTxDbFieldName;}
 
-	public String getColFieldType() {return colFieldType;}
+	public String getOfcTxFieldType() {return ofcTxFieldType;}
 
-	public void setColFieldType(String colFieldType) {this.colFieldType = colFieldType;}
+	public void setOfcTxFieldType(String ofcTxFieldType) {this.ofcTxFieldType = ofcTxFieldType;}
 
 	public Boolean getBoOnlyFirstInsert() {return boOnlyFirstInsert;}
 
 	public void setBoOnlyFirstInsert(Boolean boOnlyFirstInsert) {this.boOnlyFirstInsert = boOnlyFirstInsert;}
 
-	public Boolean getBoUtfSupport() {return boUtfSupport;}
+	public Boolean getOfcBoUtfSupport() {return ofcBoUtfSupport;}
 
-	public void setBoUtfSupport(Boolean boUtfSupport) {this.boUtfSupport = boUtfSupport;}
+	public void setOfcBoUtfSupport(Boolean ofcBoUtfSupport) {this.ofcBoUtfSupport = ofcBoUtfSupport;}
 
 	public Boolean getBoScopeIdField() {return boScopeIdField;}
 
@@ -283,9 +292,9 @@ public class FiField {
 
 	public void setBoDefaultUpdateField(Boolean boDefaultUpdateField) {this.boDefaultUpdateField = boDefaultUpdateField;}
 
-	public String getTypeName() {return typeName;}
+	public String getOfcTxTypeName() {return ofcTxTypeName;}
 
-	public void setTypeName(String typeName) {this.typeName = typeName;}
+	public void setOfcTxTypeName(String ofcTxTypeName) {this.ofcTxTypeName = ofcTxTypeName;}
 
 	public Boolean getBoCusFieldUserId() {return boCusFieldUserId;}
 
@@ -329,7 +338,7 @@ public class FiField {
 
 	public FiIdGenerationType getIdGenerationType() {
 		if (idGenerationType == null) {
-			return FiIdGenerationType.Undefined;
+			return FiIdGenerationType.undefined;
 		}
 		return idGenerationType;
 	}
@@ -339,10 +348,10 @@ public class FiField {
 	}
 
 	public String getDbFieldNameOrName() {
-		if(!FiString.isEmpty(getDbFieldName())){
-			return getDbFieldName();
+		if(!FiString.isEmpty(getOfcTxDbFieldName())){
+			return getOfcTxDbFieldName();
 		}else{
-			return getName();
+			return getOfcTxFieldName();
 		}
 	}
 
@@ -368,21 +377,21 @@ public class FiField {
 		this.boFirmField = boFirmField;
 	}
 
-	public Boolean getBoFilterLike() {return boFilterLike;}
+	public Boolean getOfcBoFilterLike() {return ofcBoFilterLike;}
 
-	public void setBoFilterLike(Boolean boFilterLike) {this.boFilterLike = boFilterLike;}
+	public void setOfcBoFilterLike(Boolean ofcBoFilterLike) {this.ofcBoFilterLike = ofcBoFilterLike;}
 
 	public Boolean getBoDateSeperatorField() {return boDateSeperatorField;}
 
 	public void setBoDateSeperatorField(Boolean boDateSeperatorField) {this.boDateSeperatorField = boDateSeperatorField;
 	}
 
-	public Boolean getBoUnique1() {
-		return boUnique1;
+	public Boolean getOfcBoUniqGro1() {
+		return ofcBoUniqGro1;
 	}
 
-	public void setBoUnique1(Boolean boUnique1) {
-		this.boUnique1 = boUnique1;
+	public void setOfcBoUniqGro1(Boolean ofcBoUniqGro1) {
+		this.ofcBoUniqGro1 = ofcBoUniqGro1;
 	}
 
 	public Boolean getBoSeperatedField() {
@@ -407,5 +416,25 @@ public class FiField {
 
 	public void setBoFiWhere1(Boolean boFiWhere1) {
 		this.boFiWhere1 = boFiWhere1;
+	}
+
+	@Override
+	public String getOfiTxIdType() {
+		return ofiTxIdType;
+	}
+
+	@Override
+	public void setOfiTxIdType(String ofiTxIdType) {
+		this.ofiTxIdType = ofiTxIdType;
+	}
+
+	@Override
+	public String getOfcTxCollation() {
+		return ofcTxCollation;
+	}
+
+	@Override
+	public void setOfcTxCollation(String ofcTxCollation) {
+		this.ofcTxCollation = ofcTxCollation;
 	}
 }

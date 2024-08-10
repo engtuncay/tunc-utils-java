@@ -520,7 +520,7 @@ public class FiExcel2 {
 
             FxTableCol2 tblcol = (FxTableCol2) table.getColumns().get(indexColExcel);
 
-            if (FiBool.isTrue(tblcol.getFiCol().getBoDontExportExcel())) continue;
+            if (FiBool.isTrue(tblcol.getRefFiCol().getBoDontExportExcel())) continue;
             indexCol++;
 
             Object nodeHeader = tblcol.getGraphic();
@@ -572,7 +572,7 @@ public class FiExcel2 {
 
             FxTableCol2 tableColumn = (FxTableCol2) table.getColumns().get(indexColExcel);
 
-            if (FiBool.isTrue(tableColumn.getFiCol().getBoDontExportExcel())) continue;
+            if (FiBool.isTrue(tableColumn.getRefFiCol().getBoDontExportExcel())) continue;
             indexCol++;
 
             String columnId = tableColumn.getId();
@@ -580,10 +580,10 @@ public class FiExcel2 {
             //Loghelperr.getInstance(OzExcel.class).debug(" col id"+ columnId);
 
             // colsizes.put("musteriunvani", 20*256+5); //  20 karakter için size
-            if (tableColumn.getFiCol().getPrintSize() != null) {
+            if (tableColumn.getRefFiCol().getPrintSize() != null) {
                 //Loghelperr.getInstance(getClass).debug(" Col Width set edilir:" + (indexCol + 1));
                 //Double widthpixelToExcelWidth = tableColumn.getPrintSize()*256+5;
-                sheet.setColumnWidth(indexCol, tableColumn.getFiCol().getPrintSize() * 236 + 15); //12 punto için
+                sheet.setColumnWidth(indexCol, tableColumn.getRefFiCol().getPrintSize() * 236 + 15); //12 punto için
             } else {
 
                 //sheet.autoSizeColumn(indexCol, false);
@@ -953,7 +953,7 @@ public class FiExcel2 {
             FxTableCol2 tblcol = (FxTableCol2) table.getColumns().get(colIndexExcel);
             //ObservableValue obsval = (ObservableValue) tblcol.getCellObservableValue(row).getValue();
             //Object obj = obsval.getValue();
-            if (FiBool.isTrue(tblcol.getFiCol().getBoDontExportExcel())) continue;
+            if (FiBool.isTrue(tblcol.getRefFiCol().getBoDontExportExcel())) continue;
             colIndexContent++;
 
             String value = "";
@@ -1152,7 +1152,7 @@ public class FiExcel2 {
         Row headerRow = sheet.createRow(0); // Create row at line 0
 
         for (int indexColHeader = 0; indexColHeader < columnList.size(); indexColHeader++) { // For each column
-            headerRow.createCell(indexColHeader).setCellValue(columnList.get(indexColHeader).getHeaderName()); // Write column name
+            headerRow.createCell(indexColHeader).setCellValue(columnList.get(indexColHeader).getOfcTxHeader()); // Write column name
         }
 
 
@@ -1162,7 +1162,7 @@ public class FiExcel2 {
 
             for (int cols = 0; cols < columnList.size(); cols++) { // For each table column
 
-                String fieldname = columnList.get(cols).getFieldName();
+                String fieldname = columnList.get(cols).getOfcTxFieldName();
 
                 String value = "";
                 Object obj = null;
@@ -1221,7 +1221,7 @@ public class FiExcel2 {
             }
 
             Cell cell = headerRow.createCell(colIndex);
-            cell.setCellValue(FiString.orEmpty(fiCol.getHeaderName())); // Write column name
+            cell.setCellValue(FiString.orEmpty(fiCol.getOfcTxHeader())); // Write column name
             String comment = fiCol.getColComment();
 
             if (comment != null) {
@@ -1246,7 +1246,7 @@ public class FiExcel2 {
                     continue;
                 }
 
-                String fieldname = columnList.get(colCounterIndex).getFieldName();
+                String fieldname = columnList.get(colCounterIndex).getOfcTxFieldName();
                 Object cellValue = null;
 
                 if (fieldname != null) {

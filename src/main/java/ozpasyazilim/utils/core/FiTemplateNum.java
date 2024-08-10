@@ -8,22 +8,22 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class FiStringNum {
+public class FiTemplateNum {
 
     FiKeyBean fkbParams;
 
     String txTemplate;
 
-    public FiStringNum(String txTemplate) {
+    public FiTemplateNum(String txTemplate) {
         this.txTemplate = txTemplate;
     }
 
-    public static FiStringNum bui(String txTemplate) {
-        FiStringNum fiStringNum = new FiStringNum(txTemplate);
-        return fiStringNum;
+    public static FiTemplateNum bui(String txTemplate) {
+        FiTemplateNum fiTemplateNum = new FiTemplateNum(txTemplate);
+        return fiTemplateNum;
     }
 
-    public FiStringNum addParams(Integer lnValue, Object value) {
+    public FiTemplateNum addParams(Integer lnValue, Object value) {
         getFkbParams().add(lnValue.toString(), FiString.orEmpty(value));
         return this;
     }

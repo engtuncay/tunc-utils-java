@@ -133,12 +133,12 @@ public class FxFormcGen<EntClazz> extends FxMigPaneGenView<EntClazz> implements 
 
             // Tek satır label göstermek için
             if (fiCol.getColEditorClass().equals(EnumColNodeType.FxLabelRowComment.toString())) {
-                FxLabel fxLabelComment = new FxLabel(fiCol.getHeaderName());
+                FxLabel fxLabelComment = new FxLabel(fiCol.getOfcTxHeader());
                 add(fxLabelComment, "span,pushx,growx");
                 continue;
             }
 
-            Label lblForm = new Label(fiCol.getHeaderName());
+            Label lblForm = new Label(fiCol.getOfcTxHeader());
             add(lblForm, "width 30%,wmax 150,wmin 120");
 
             // Editor comp (node) oluşturulur
@@ -239,7 +239,7 @@ public class FxFormcGen<EntClazz> extends FxMigPaneGenView<EntClazz> implements 
 
 
     private Map<String, FiCol> getFormMap() {
-        return FiCollection.listToMapSingle(getListFormElementsInit(), FiCol::getFieldName);
+        return FiCollection.listToMapSingle(getListFormElementsInit(), FiCol::getOfcTxFieldName);
     }
 
     private void trigEventsAfterLoadFormValue() {

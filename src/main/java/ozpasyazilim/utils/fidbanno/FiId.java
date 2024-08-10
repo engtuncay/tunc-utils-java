@@ -11,6 +11,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 public @interface FiId {
 
-	FiIdGenerationType idGenerationType() default FiIdGenerationType.Undefined;
+	FiIdGenerationType idGenerationType() default FiIdGenerationType.undefined;
 
 }

@@ -50,7 +50,7 @@ public class ReportHtml2 {
 		// sütunlar bastırılır
 
 		for (int i = 0; i < listColumns.size(); i++) {
-			htmlreport += tagTh + listColumns.get(i).getHeaderName() + "</th>";
+			htmlreport += tagTh + listColumns.get(i).getOfcTxHeader() + "</th>";
 		}
 
 		// satırlar bastırılır
@@ -130,7 +130,7 @@ public class ReportHtml2 {
 		// sütunlar bastırılır
 
 		for (int i = 0; i < listColumns.size(); i++) {
-			htmlreport += htmlthtag + listColumns.get(i).getHeaderName() + "</th>";
+			htmlreport += htmlthtag + listColumns.get(i).getOfcTxHeader() + "</th>";
 		}
 
 		// satırlar bastırılır
@@ -195,7 +195,7 @@ public class ReportHtml2 {
 
 			if(ozTableCol!=null && ozTableCol.getColType()== OzColType.Double){
 
-				Class clazzType = new FiReflection().getPropertyType(footer,ozTableCol.getFieldName());
+				Class clazzType = new FiReflection().getPropertyType(footer,ozTableCol.getOfcTxFieldName());
 
 				//Loghelperr.getInstance(getClass()).debug(" Type"+ clazzType.getSimpleName());
 
@@ -206,7 +206,7 @@ public class ReportHtml2 {
 					//Loghelperr.getInstance(getClass()).debug(" Double type Field: "+ ozTableCol.getFieldName());
 
 					Double sumDouble = FiNumberToText.sumValuesDouble(listdata, ent -> {
-						Object objectByField = new FiReflection().getPropertyy(ent, ozTableCol.getFieldName());
+						Object objectByField = new FiReflection().getPropertyy(ent, ozTableCol.getOfcTxFieldName());
 						if (objectByField == null) return 0d;
 						return (Double) objectByField;
 					});
@@ -222,7 +222,7 @@ public class ReportHtml2 {
 					//Loghelperr.getInstance(getClass()).debug(" Double type Field: "+ ozTableCol.getFieldName());
 
 					Double sumDouble = FiNumberToText.avgDoubleValues(listdata, ent -> {
-						Object objectByField = new FiReflection().getPropertyy(ent, ozTableCol.getFieldName());
+						Object objectByField = new FiReflection().getPropertyy(ent, ozTableCol.getOfcTxFieldName());
 						if (objectByField == null) return 0d;
 						return (Double) objectByField;
 					});
@@ -262,14 +262,14 @@ public class ReportHtml2 {
 
 	private <T> String generateColumnTags(List<? extends IFiCol> listColumns, String tag_td_string, String tag_td_num, String tag_td_end, T rowdata, int colindex) {
 
-		if (listColumns.get(colindex).getFieldName() == null) return null;
+		if (listColumns.get(colindex).getOfcTxFieldName() == null) return null;
 
 		String htmlreport = "";
 
 		Object cellvalue = null;
 
 		try {
-			cellvalue = PropertyUtils.getProperty(rowdata, listColumns.get(colindex).getFieldName());
+			cellvalue = PropertyUtils.getProperty(rowdata, listColumns.get(colindex).getOfcTxFieldName());
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		} catch (InvocationTargetException e) {

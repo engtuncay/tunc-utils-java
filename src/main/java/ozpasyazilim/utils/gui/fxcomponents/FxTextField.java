@@ -1,5 +1,6 @@
 package ozpasyazilim.utils.gui.fxcomponents;
 
+import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -10,6 +11,7 @@ import javafx.scene.control.TextFormatter;
 import javafx.util.converter.DateTimeStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import ozpasyazilim.utils.core.FiNumber;
+import ozpasyazilim.utils.table.FiCol;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -82,6 +84,33 @@ public class FxTextField<EntClazz> extends TextField {
 		TextFormatter<String> textFormatter = new TextFormatter<>(filter);
 		setTextFormatter(textFormatter);
 		setAlignment(Pos.BASELINE_RIGHT);
+		return this;
+	}
+
+	public FxTextField setupTextFieldAsLimitLength(FiCol fiCol) {
+
+		UnaryOperator<TextFormatter.Change> filter = change -> {
+
+			//String enteredText = change.getText();
+			String wholeText = change.getControlNewText();
+
+			//System.out.println("Text:"+ change.getText());
+			//System.out.println("Control New Text:"+ change.getControlNewText());
+			//System.out.println("Control text:"+ change.getControlText());
+
+			if(fiCol.getOfcLnLength()!=null){
+				if(wholeText.length()>fiCol.getOfcLnLength()){
+					Platform.runLater(() -> FxDialogShow.showPopWarn(String.format("Yazı uzunluğu %s karakteri geçemez.",fiCol.getOfcLnLength())));
+					return null;
+				}
+			}
+
+			return change;
+		};
+
+		TextFormatter<String> textFormatter = new TextFormatter<>(filter);
+		setTextFormatter(textFormatter);
+		//setAlignment(Pos.BASELINE_RIGHT);
 		return this;
 	}
 

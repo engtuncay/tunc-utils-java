@@ -18,27 +18,32 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+/**
+ * Use FiCol in all places
+ * @param <N>
+ */
+@Deprecated
 public interface IFiCol<N> {
 
-	static void setAutoFieldName(List<IFiCol> listCol) {
-		listCol.forEach(ent -> {
-			if (ent.getFieldName() == null) {
-				ent.setFieldName(FiString.trimFieldNameWithEngAccent(ent.getHeaderName()));
-			}
-		});
-	}
+//	static void setAutoFieldName(List<IFiCol> listCol) {
+//		listCol.forEach(ent -> {
+//			if (ent.getFieldName() == null) {
+//				ent.setFieldName(FiString.trimFieldNameWithEngAccent(ent.getHeaderName()));
+//			}
+//		});
+//	}
 
-	static Map<String, String> getMapColHeaderToFieldName(List<IFiCol> listCol) {
-		Map<String, String> mapHeaderToField = new HashMap<>();
-		listCol.forEach(ozTableCol -> mapHeaderToField.put(ozTableCol.getHeaderName(), ozTableCol.getFieldName()));
-		return mapHeaderToField;
-	}
-
-	static Map<String, String> getMapColFieldToHeaderName(List<IFiCol> listCol) {
-		Map<String, String> mapFieldtoHeader = new HashMap<>();
-		listCol.forEach(ozTableCol -> mapFieldtoHeader.put(ozTableCol.getFieldName(), ozTableCol.getHeaderName()));
-		return mapFieldtoHeader;
-	}
+//	static Map<String, String> getMapColHeaderToFieldName(List<IFiCol> listCol) {
+//		Map<String, String> mapHeaderToField = new HashMap<>();
+//		listCol.forEach(ozTableCol -> mapHeaderToField.put(ozTableCol.getHeaderName(), ozTableCol.getFieldName()));
+//		return mapHeaderToField;
+//	}
+//
+//	static Map<String, String> getMapColFieldToHeaderName(List<IFiCol> listCol) {
+//		Map<String, String> mapFieldtoHeader = new HashMap<>();
+//		listCol.forEach(ozTableCol -> mapFieldtoHeader.put(ozTableCol.getFieldName(), ozTableCol.getHeaderName()));
+//		return mapFieldtoHeader;
+//	}
 
 	// <-- Build Methods
 
@@ -58,13 +63,13 @@ public interface IFiCol<N> {
 
 	public void setId(String id);
 
-	public String getFieldName();
+	public String getOfcTxFieldName();
 
-	public void setFieldName(String fieldName);
+	public void setOfcTxFieldName(String ofcTxFieldName);
 
-	public String getHeaderName();
+	public String getOfcTxHeader();
 
-	public void setHeaderName(String headerName);
+	public void setOfcTxHeader(String ofcTxHeader);
 
 	public Double getPrefSize();
 
