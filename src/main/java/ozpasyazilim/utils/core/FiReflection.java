@@ -162,14 +162,15 @@ public class FiReflection {
 		R objectt = null;
 		try {
 			objectt = clazz.newInstance();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+		} catch (InstantiationException | IllegalAccessException e) {
+			Loghelper.get(getClassi()).error(FiException.exTosMain(e));
 		}
 
-		return objectt;
+        return objectt;
+	}
 
+	private static Class<FiReflection> getClassi() {
+		return FiReflection.class;
 	}
 
 	public static <T> Boolean setterByString(FiCol fiTableCol, T objectt, String value) {

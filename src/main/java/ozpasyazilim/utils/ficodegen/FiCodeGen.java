@@ -474,6 +474,7 @@ public class FiCodeGen {
 		//	,XmlChildList,XmlChild,Undefined, CommaSeperatedStr,XmlAttribute;
 
 	public static String convertExcelTypeToOzColType(String txExcelShortFiColType) {
+
 		if(FiString.isEmpty(txExcelShortFiColType)) return "";
 
 		if (txExcelShortFiColType.equals("int")) return OzColType.Integer.toString();

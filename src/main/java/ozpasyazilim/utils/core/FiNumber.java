@@ -528,7 +528,7 @@ public class FiNumber {
 	public static Integer convertStringToInteger(String txValue) {
 
 		if (FiString.isEmptyTrim(txValue)) return null;
-		Integer numValue = (Integer.parseInt(txValue));
+		Integer numValue = Integer.parseInt(txValue);
 		//System.out.println(numValue);
 		return numValue;
 

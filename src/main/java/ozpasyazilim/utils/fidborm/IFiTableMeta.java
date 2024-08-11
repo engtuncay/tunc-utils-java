@@ -7,4 +7,6 @@ public interface IFiTableMeta {
     String getITxTableName();
 
     FiColList genITableCols();
+
+    FiColList genITableColsTrans();
 }

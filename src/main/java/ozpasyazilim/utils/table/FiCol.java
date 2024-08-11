@@ -415,6 +415,8 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
      */
     private Boolean oftBoTransient;
 
+    private String ficTxSqlFieldDefinition;
+
 
     // ***** Constructors
     public FiCol() {
@@ -1711,6 +1713,14 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     public void setOfcTxFieldType(String ofcTxFieldType) {
         this.ofcTxFieldType = ofcTxFieldType;
     }
+
+    public String getFicTxSqlFieldDefinition() {return ficTxSqlFieldDefinition;}
+
+    public void setFicTxSqlFieldDefinition(String ficTxSqlFieldDefinition) {
+        this.ficTxSqlFieldDefinition = ficTxSqlFieldDefinition;
+    }
+
+
 }
 
 

@@ -14,6 +14,7 @@ import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.repoSql.RepoSqlColumn;
 import ozpasyazilim.utils.returntypes.Fdr;
 import ozpasyazilim.utils.table.FiCol;
+import ozpasyazilim.utils.table.FiColList;
 
 import javax.persistence.*;
 import java.lang.annotation.Annotation;
@@ -3134,6 +3135,40 @@ public class FiQugen {
 
     }
 
+    public static String createQuery20(IFiTableMeta iFiTableMeta) {
+
+        //List<FiField> listFields = FiFieldUtil.getListFieldsAll(clazz);
+
+        StringBuilder query = new StringBuilder();
+
+        query.append("CREATE TABLE " + iFiTableMeta.getITxTableName() + " ( \n");
+
+        assignSqlTypeAndDef(iFiTableMeta);
+
+        int index = 0;
+        for (FiCol field : iFiTableMeta.genITableCols()) {
+
+            // Sql Tipi Belirlenmeyenler için
+            if (field.getFicTxSqlFieldDefinition() == null) {
+                query.append("\n-- " + field.getOfcTxFieldName() + " " + field.getColType().toString()
+                        + (field.getOfcLnLength() != null ? " -- Length:" + field.getOfcLnLength() : "")
+                        + (field.getOfcLnPrecision() != null ? " -- Prec.:" + field.getOfcLnPrecision() : "")
+                        + (field.getOfcLnScale() != null ? "Scale :" + field.getOfcLnScale() : ""));
+                continue;
+            }
+
+            index++;
+            if (index != 1) query.append("\n, ");
+            query.append(field.getOfcTxFieldName()).append(" ").append(field.getFicTxSqlFieldDefinition());
+
+        }
+
+        query.append("\n)");
+
+        return query.toString();
+
+    }
+
     public static String uniqueQuery(Class clazz) {
 
         List<FiField> listFields = FiFieldUtil.getListFieldsAll(clazz);
@@ -3298,6 +3333,101 @@ public class FiQugen {
 
     }
 
+    public static void assignSqlTypeAndDef(IFiTableMeta listFields) {
+
+        //System.out.println("List Field Size:" + listFields.size());
+
+        for (FiCol field : listFields.genITableCols()) {
+
+            //System.out.println(" Field:" + field.getName() + " - Simple Name:" + field.getClassNameSimple());
+
+            if (field.getOfcLnPrecision() == null) field.setOfcLnPrecision(0);
+            if (field.getOfcLnScale() == null) field.setOfcLnScale(0);
+            if (field.getOfcLnLength() == null) field.setOfcLnLength(0);
+            //if (field.getClassNameSimple() == null) field.setClassNameSimple("");
+
+            // Sql Field Type Belirlenir
+            String sqlFieldType = assignSqlFieldType(field);
+
+            String classNameSimple = field.getColType().toString();
+
+            if (sqlFieldType == null) {
+                continue;
+            }
+
+            String typeLength = "";
+
+            if (sqlFieldType.equals("nvarchar") || sqlFieldType.equals("varchar")) {
+                if (field.getOfcLnLength().equals(255)) field.setOfcLnLength(50); //length = 50; // default 50 ye çekildi.
+                if (field.getOfcLnLength().equals(0)) field.setOfcLnLength(50); // length = 50; // default 50 yapıldı.
+                typeLength = "(" + field.getOfcLnLength() + ")";
+            }
+
+
+            if (sqlFieldType.equals("decimal")) {
+                // default precision 18 ,scale 2
+                if (field.getOfcLnPrecision().equals(0)) field.setOfcLnPrecision(18); //precision = 18;
+                if (field.getOfcLnScale().equals(0)) {
+
+                    if (classNameSimple.equalsIgnoreCase("double")) {
+                        field.setOfcLnScale(5);
+                    } else if (classNameSimple.equalsIgnoreCase("float")) {
+                        field.setOfcLnScale(4);
+                    } else {
+                        field.setOfcLnScale(6);  // scale = 2;
+                    }
+
+                }
+                typeLength = "(" + field.getOfcLnPrecision() + "," + field.getOfcLnScale() + ")";
+            }
+
+//            if (!FiString.isEmpty(field.getColCustomType())) {
+//                sqlFieldType = field.getColCustomType();
+//                typeLength = "";
+//                //fieldAttributes = "";
+//            }
+
+            String fieldAttributes = "";
+
+            if (field.getOfcTxCollation() != null && !field.getOfcTxCollation().equals(FiCollation.Default.toString())) {
+                fieldAttributes += " COLLATE " + field.getOfcTxCollation();
+            }
+
+            // Field Alanın özellikleri eklenir
+
+            if (FiBool.isTrue(field.getBoKeyIdField())) {
+
+                if(field.getOfiTxIdType()==null)field.setOfiTxIdType("");
+
+                if (field.getOfiTxIdType().equals(FiIdGenerationType.identity.toString())) {
+                    fieldAttributes += " IDENTITY(1,1)";
+                }
+                fieldAttributes += "  NOT NULL PRIMARY KEY ";
+
+            }
+
+            if (FiBool.isTrue(field.getOfcBoUnique()) && !FiBool.isTrue(field.getBoKeyIdField()))
+                fieldAttributes += " UNIQUE";
+
+            if (FiBool.isFalse(field.getOfcBoNullable()) && !FiBool.isTrue(field.getBoKeyIdField()))
+                fieldAttributes += " NOT NULL";
+
+            if (!FiString.isEmpty(field.getOfcTxDefValue())) {
+                fieldAttributes += " DEFAULT " + field.getOfcTxDefValue();
+            }
+
+
+//            if (!FiString.isEmpty(field.getColDefinitionExtra())) {
+//                fieldAttributes += " " + field.getColDefinitionExtra();
+//            }
+
+            field.setFicTxSqlFieldDefinition(sqlFieldType + typeLength + fieldAttributes);
+
+        }
+
+
+    }
+
     private static String assignSqlFieldType(FiField field) {
 
         //if (getMapTypeConvertorJavaToSqlServer().containsKey(field.getClassNameSimple())) {
@@ -3345,6 +3475,66 @@ public class FiQugen {
             }
 
         }
+
+        if (sqlFieldType.equals("float")) {
+
+            if (field.getOfcLnPrecision() > 0 && field.getOfcLnScale() > 0) {
+                sqlFieldType = "decimal"; // default precision 18 ,scale 2
+            }
+        }
+        return sqlFieldType;
+        //}
+
+        //return null;
+    }
+
+    private static String assignSqlFieldType(FiCol field) {
+
+        //if (getMapTypeConvertorJavaToSqlServer().containsKey(field.getClassNameSimple())) {
+
+        String javaSimpleType = field.getColType().toString();
+
+        String suffix = "";
+
+        if (FiBool.isTrue(field.getOfcBoUtfSupport())) suffix += "Utf";
+
+        if (javaSimpleType.equals("Integer")) {
+            if (field.getOfcLnPrecision() != null && field.getOfcLnPrecision() == 1) suffix = "P1";
+
+            if (field.getOfcLnPrecision() != null && field.getOfcLnPrecision() >= 20) suffix = "P20";
+        }
+
+        String sqlFieldType = getMapTypeConvertorJavaToSqlServer().getOrDefault(javaSimpleType + suffix, null);
+
+        if (sqlFieldType == null) {
+            //Loghelperr.getInstance(getClass()).debug("sql field type null");
+            sqlFieldType = getMapTypeConvertorJavaToSqlServer().getOrDefault(javaSimpleType, null);
+        }
+
+        if (sqlFieldType == null) {
+            //Loghelperr.getInstance(getClass()).debug("sql field type null 2");
+            return null;
+        }
+
+        if (sqlFieldType.equalsIgnoreCase("int")) {
+            if (field.getOfcLnPrecision().equals(1)) {
+                sqlFieldType = "tinyint";
+            }
+
+            if (field.getOfcLnPrecision() > 20) sqlFieldType = "bigint";
+        }
+
+        if (sqlFieldType.equalsIgnoreCase("double")) {
+            if (field.getOfcLnScale() > 5) sqlFieldType = "decimal";
+        }
+
+//        if (sqlFieldType.equals("datetime") && field.getTemporalType() != null) {
+//
+//            if (field.getTemporalType() == TemporalType.DATE) {
+//                sqlFieldType = "date";
+//            }
+//
+//        }
 
         if (sqlFieldType.equals("float")) {
 

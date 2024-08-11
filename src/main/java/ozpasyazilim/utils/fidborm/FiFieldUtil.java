@@ -389,7 +389,7 @@ public class FiFieldUtil {
 			fiField.setBoExcludeFromAutoColList(anno.boExcludeFromAutoColList());
 
 			if (!FiString.isEmpty(anno.label())) fiField.setOfcTxHeader(anno.label());
-			if (anno.collation() != FiCollation.Default) fiField.setFiCollation(anno.collation());
+			if ( anno.collation() != FiCollation.Default) fiField.setFiCollation(anno.collation());
 			if (!FiString.isEmpty(anno.typeName())) fiField.setOfcTxTypeName(anno.typeName());
 			if (anno.defaultUpdateField()) fiField.setBoDefaultUpdateField(true);
 
