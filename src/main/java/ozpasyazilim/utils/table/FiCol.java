@@ -410,6 +410,9 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
 
     //FiTransient
 
+    private String ofcTxEntityName;
+
+
     /**
      * alanın veritabanında olmadığını belirtir
      */
@@ -1720,7 +1723,13 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
         this.ficTxSqlFieldDefinition = ficTxSqlFieldDefinition;
     }
 
+    public String getOfcTxEntityName() {
+        return ofcTxEntityName;
+    }
 
+    public void setOfcTxEntityName(String ofcTxEntityName) {
+        this.ofcTxEntityName = ofcTxEntityName;
+    }
 }
 
 
