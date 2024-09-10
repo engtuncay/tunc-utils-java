@@ -184,14 +184,13 @@ public class FiSoap {
 				}
 				fdr.setValue(outputString.toString());
 			} else {
-				fdr.setMessage("!!! Error Code:" + httpConn.getResponseCode());
+				fdr.setMessage("!!! Error Code: " + httpConn.getResponseCode());
 			}
 			// Exception fırlatmadığı için boResult True verildi.
 			fdr.setBoResult(true);
 
 		} catch (Exception exception) { //	//throws MalformedURLException, IOException
-			Loghelper.get(FiSoap.class).debug(FiException.exceptionIfToString(exception));
-			Loghelper.get(FiSoap.class).debug(FiException.exceptiontostring1(exception));
+			Loghelper.get(FiSoap.class).debug(FiException.exToLog(exception));
 			fdr.setBoResult(false);
 			fdr.setMessage("Soap isteği gerçekleşirken hata oluştu. Detay için Exception inceleyiniz.");
 			fdr.setException(exception);

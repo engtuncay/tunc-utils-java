@@ -102,8 +102,15 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
         return this;
     }
 
-    public FiKeyBean putKeyTos(Object field, Object value) {
-        this.put(field.toString(), value);
+    /**
+     * Key alanının Tos metodu ile ekleme yapar
+     *
+     * @param key
+     * @param value
+     * @return
+     */
+    public FiKeyBean putKeyTos(Object key, Object value) {
+        this.put(key.toString(), value);
         return this;
     }
 
@@ -493,4 +500,9 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
         this.mapFiCol = mapFiCol;
     }
 
+    public Object getTos(Object fiCol) {
+        if(fiCol==null) return null;
+
+        return get(fiCol.toString());
+    }
 }

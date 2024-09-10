@@ -1,6 +1,7 @@
 package ozpasyazilim.utils.mvc;
 
 import javafx.stage.Stage;
+import ozpasyazilim.utils.entity.FiModule;
 import ozpasyazilim.utils.gui.fxcomponents.DialogConf;
 import ozpasyazilim.utils.gui.fxcomponents.FxDialogShow;
 import ozpasyazilim.utils.gui.fxcomponents.FxStage;
@@ -157,4 +158,8 @@ public abstract class AbsFiModBaseCont implements IFiModCont {
         this.connProfile = connProfile;
     }
 
+    protected void setModule(FiModule fiModule) {
+        setModuleLabel(fiModule.getTxModuleLabel());
+        setModuleCode(fiModule.getTxModuleCode());
+    }
 }

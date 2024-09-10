@@ -151,6 +151,9 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
      */
     private Boolean boLockAddLog;
 
+    /**
+     * Fdr ile tetiklemek istediğimiz işlemleri buraya kaydedilebilir
+     */
     List<Runnable> obsMethodFinished;
 
 // --------------- Methods
