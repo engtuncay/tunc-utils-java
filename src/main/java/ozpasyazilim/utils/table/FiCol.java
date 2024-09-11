@@ -95,6 +95,8 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     // For Excel Reading, the field shows whether or not column exists in the excel
     private Boolean boEnabled;
 
+    // phpde buraya kadar kopyalanadı
+
     // For Forms, entity is edit value for the field
     private EntClazz entity;
 

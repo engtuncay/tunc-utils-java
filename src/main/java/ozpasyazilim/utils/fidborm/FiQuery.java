@@ -74,13 +74,20 @@ public class FiQuery {
     }
 
 
-
+    /**
+     * listParametresini parametre listesinde tutar, listeden çıkarmaz.
+     */
     public void convertListParamsToMultiParamsWithKeep() {
         if (getMapParams() == null) return;
 
         setTxQuery(Fiqt.convertListParamsToMultiParams(getTxQuery(), getMapParams(), true));
     }
 
+    /**
+     * Not : list parametresini listeden çıkarır.
+     *
+     * @param mapBind
+     */
     public void convertListParamsToMultiParams(FiKeyBean mapBind) {
         setMapParams(mapBind);
         convertListParamsToMultiParams();
