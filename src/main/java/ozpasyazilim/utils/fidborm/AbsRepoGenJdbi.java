@@ -1390,9 +1390,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
                         .execute(); // returns row count updated
             });
             //Loghelperr.getInstance(getClass()).debug("Row Count Update:"+rowCountUpdate);
-            //fiDbResult.setLnSuccessWithUpBoResult(1, rowCountUpdate);
             fdr.setBoResultAndRowsAff(true, rowCountUpdate);
-            //fdr.setLnResult(1);
         } catch (Exception ex) {
             Loghelper.get(getClass()).error(FiException.exTosMain(ex));
             fdr.setBoResult(false, ex);
