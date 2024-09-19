@@ -44,4 +44,5 @@ public class FxMenuItem extends MenuItem implements IFxSecureNode {
 	public void setOnActionWithThread(Runnable runnable, FxMenuButton mbEslesme) {
 		setOnAction(event -> FiThread.startThreadMb(runnable, mbEslesme,null));
 	}
+
 }

@@ -37,6 +37,9 @@ import ozpasyazilim.utils.table.IFiColHelper;
 import ozpasyazilim.utils.table.OzColType;
 import ozpasyazilim.utils.windows.FiWinUtils;
 
+/**
+ * URREV metodları statik yapalım 17-09-2024
+ */
 public class FiExcel {
 
     // Başlık sütunlarını, kaçıncı satıra kadar arayacak

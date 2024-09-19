@@ -477,45 +477,45 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
      * <p>
      * Value ile birleştirme vs yapmaz.
      *
-     * @param fdrSub
+     * @param fdrAppend Birleştirilecek Fdr
      */
-    public void combineAnd(Fdr fdrSub) {
+    public void combineAnd(Fdr fdrAppend) {
 
         // And işlemi olduğu false sonuç, boResult false yapar
-        if (FiBool.isFalse(fdrSub.getBoResult())) {
+        if (FiBool.isFalse(fdrAppend.getBoResult())) {
             setBoResult(false);
             setLnFailureOpCount(getLnFailureOpCountInit() + 1);
-            if (fdrSub.getException() != null) {
-                setException(fdrSub.getException()); // exception listesine eklenebilir - birden fazla olma ihtimali var.
-                getListExceptionInit().add(fdrSub.getException());
+            if (fdrAppend.getException() != null) {
+                setException(fdrAppend.getException());
+                // exception birden fazla olma ihtimali var.
+                getListExceptionInit().add(fdrAppend.getException());
             }
         }
 
-        if (FiBool.isTrue(fdrSub.getBoResult())) {
+        if (FiBool.isTrue(fdrAppend.getBoResult())) {
             setLnSuccessOpCount(getLnSuccessOpCount() + 1);
             if (getBoResult() == null) setBoResult(true);
-            //calcLnResult(1);
         }
 
         // null sonuçlar için combine işlemi
-        if (fdrSub.getBoResult() == null) {
+        if (fdrAppend.getBoResult() == null) {
 
         }
 
         // Tümü için yapılacaklar
-        appendRowsAffected(fdrSub.getRowsAffectedOrEmpty());
-        appendLnUpdated(fdrSub.getLnUpdatedRows());
-        appendLnInserted(fdrSub.getLnInsertedRows());
-        appendLnDeleted(fdrSub.getLnDeletedRows());
+        appendRowsAffected(fdrAppend.getRowsAffectedOrEmpty());
+        appendLnUpdated(fdrAppend.getLnUpdatedRows());
+        appendLnInserted(fdrAppend.getLnInsertedRows());
+        appendLnDeleted(fdrAppend.getLnDeletedRows());
 
         // Tüm işlemlerde mesaj birleştirilir.
-        if (!FiString.isEmptyTrim(fdrSub.getMessage())) appendMessageLn(fdrSub.getMessage());
+        if (!FiString.isEmptyTrim(fdrAppend.getMessage())) appendMessageLn(fdrAppend.getMessage());
 
         // Loglar birleştirilir.
-        if (!FiCollection.isEmpty(fdrSub.getLogList())) getLogListInit().addAll(fdrSub.getLogList());
+        if (!FiCollection.isEmpty(fdrAppend.getLogList())) getLogListInit().addAll(fdrAppend.getLogList());
 
         // Birleştirme yapıldığı için eski Fdr'ye log eklenmesi engellenir
-        fdrSub.setBoLockAddLog(true);
+        fdrAppend.setBoLockAddLog(true);
     }
 
     public void appendMessageLn(String message) {
@@ -551,7 +551,9 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
         appendRowsAffected(fdrAppend.getRowsAffectedOrEmpty());
         // Tüm işlemlerde mesaj birleştirilir.
         appendMessageLn(fdrAppend.getMessage());
+        // Loglar birleştirilir
         if (!FiCollection.isEmpty(fdrAppend.getLogList())) getLogListInit().addAll(fdrAppend.getLogList());
+        // Parametre Fdr'nin logları aktarıldığı tekrar üstüne log eklenmemeli
         fdrAppend.setBoLockAddLog(true);
     }
 
