@@ -39,16 +39,25 @@ public class FiQuery {
         this.txQuery = sql;
     }
 
-    public FiQuery(String sql, FiKeyBean fiKeyBean) {
+    public FiQuery(String sql, FiKeyBean fkbParams) {
         this.txQuery = sql;
-        this.mapParams = new FiKeyBean(fiKeyBean);
+        this.mapParams = new FiKeyBean(fkbParams);
     }
 
     public static FiQuery bui() {
         return new FiQuery();
     }
 
-    public void deActivateOptParam(String txOptParamName) {
+    public static FiQuery bui(String sql) {
+        return new FiQuery(sql);
+    }
+
+    public static FiQuery bui(String sql, FiKeyBean fkbParams) {
+        return new FiQuery(sql,fkbParams);
+    }
+
+
+        public void deActivateOptParam(String txOptParamName) {
         setTxQuery(Fiqt.deActivateOptParamMain(getTxQuery(), txOptParamName));
     }
 

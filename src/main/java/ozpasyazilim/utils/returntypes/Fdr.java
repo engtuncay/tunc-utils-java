@@ -423,14 +423,17 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     }
 
     public void appendLnInserted(Integer lnInsertedRows) {
+        if(FiNumber.orZero(lnInsertedRows)==0)return;
         setLnInsertedRows(FiNumber.orZero(getLnInsertedRows()) + FiNumber.orZero(lnInsertedRows));
     }
 
     public void appendLnDeleted(Integer lnDeletedRows) {
+        if(FiNumber.orZero(lnDeletedRows)==0)return;
         setLnDeletedRows(FiNumber.orZero(getLnDeletedRows()) + FiNumber.orZero(lnDeletedRows));
     }
 
     public void appendLnUpdated(Integer lnUpdatedRows) {
+        if(FiNumber.orZero(lnUpdatedRows)==0)return;
         setLnUpdatedRows(FiNumber.orZero(getLnUpdatedRows()) + FiNumber.orZero(lnUpdatedRows));
     }
 
@@ -963,6 +966,13 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
         if (getBoLockAddLogNtn()) Loghelper.get(getClass()).debug("Error: Added Log to Blocked Fdr !!!!!!!!");
         //if(getBoLockAddLogNtn()) throw new RuntimeException("Error: Added Log to Blocked Fdr !!!!!!!!");
         getLogListInit().add(new EntLog(txMessage, MetaLogType.INFO));
+        return this;
+    }
+
+    public Fdr addLogStep(String txMessage) {
+        if (getBoLockAddLogNtn()) Loghelper.get(getClass()).debug("Error: Added Log to Blocked Fdr !!!!!!!!");
+        //if(getBoLockAddLogNtn()) throw new RuntimeException("Error: Added Log to Blocked Fdr !!!!!!!!");
+        getLogListInit().add(new EntLog(txMessage, MetaLogType.STEP));
         return this;
     }
 

@@ -92,7 +92,7 @@ public class FiConsole {
     }
 
     public static <E> void debugListObjectsNotNull(List<E> list, Class clazz) {
-        Loghelper.get(FiConsole.class).debug(String.format("List Detail (Not Null) - Debug Class: %s\n\n%s", clazz.getSimpleName(),textListObjectsNotNullFields(list)));
+        Loghelper.get(FiConsole.class).debug(String.format("List Detail (Not Null) - Debug Class: %s\n\n%s", clazz.getSimpleName(), textListObjectsNotNullFields(list)));
         //Loghelper.debugLog(clazz, String.format("List Detail (Not Null)\n\n%s", textListObjectsNotNullFields(list)));
     }
 
@@ -105,7 +105,7 @@ public class FiConsole {
     }
 
     public static void debugMapNotNull(Map map, Class clazz) {
-        Loghelper.get(FiConsole.class).debug(String.format("Map Detail (Not Null) - Debug Class: %s\n\n%s", clazz.getSimpleName() ,textMapNotNull(map)));
+        Loghelper.get(FiConsole.class).debug(String.format("Map Detail (Not Null) - Debug Class: %s\n\n%s", clazz.getSimpleName(), textMapNotNull(map)));
     }
 
     public static void debugListMap(FiListKeyString listMap, Class clazz, Boolean boShowNulls) {
@@ -178,14 +178,15 @@ public class FiConsole {
 
         StringBuilder result = new StringBuilder("");
 
-        if (collection == null || collection.size() == 0) {
+        if (FiCollection.isEmpty(collection)) {
             result.append("Boş Liste");
             return result.toString();
         }
 
-        result.append("Print Collection Objects(Not full Fields) Col.Size:" + collection.size() + "\n");
+        result.append("Print Collection Objects(Not full Fields) Col.Size:").append(collection.size()).append("\n");
+
         for (E e : collection) {
-            result.append(textObjectFieldsPlain(e, boShowNullFields) + "\n");
+            result.append(textObjectFieldsPlain(e, boShowNullFields)).append("\n");
         }
 
         return result.toString();
@@ -374,6 +375,10 @@ public class FiConsole {
     public static void debug(String message, Object obj) {
         Loghelper.get(getClassi()).debug(message);
         debug(obj);
+    }
+
+    private static Class<FiConsole> getClassi() {
+        return FiConsole.class;
     }
 
     public static void debug(Object obj) {
@@ -679,10 +684,6 @@ public class FiConsole {
         return 5;
     }
 
-    private static Class<FiConsole> getClassi() {
-        return FiConsole.class;
-    }
-
     public static void printBounds(Bounds bound) {
 
         if (bound == null) {
@@ -819,7 +820,7 @@ public class FiConsole {
     }
 
     public static void debugListFkb(List<FiKeyBean> listFkb) {
-        if(listFkb==null){
+        if (listFkb == null) {
             Loghelper.get(FiConsole.class).debug("List Fkb null");
             return;
 

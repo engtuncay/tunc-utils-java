@@ -13,6 +13,8 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static ozpasyazilim.utils.core.FiConsole.getClassi;
+
 public class FiNumber {
 
 	Number value;
@@ -554,10 +556,14 @@ public class FiNumber {
 		try {
 			return Integer.parseInt(txValue.toString());
 		} catch (NumberFormatException e) {
-			Loghelper.debugLog(FiNumber.class,"Integer Parse Edilirken Hata oluştu. Deger:"+FiString.ifNullThenEmpty(txValue));
+			Loghelper.get(getClassi()).debug("Integer Parse Edilirken Hata oluştu. Deger:"+FiString.ifNullThenEmpty(txValue));
 			return null;
 		}
 
+	}
+
+	private static Class<FiNumber> getClassi() {
+		return FiNumber.class;
 	}
 
 	public static Double convertToDouble(Object sNumberold) {
