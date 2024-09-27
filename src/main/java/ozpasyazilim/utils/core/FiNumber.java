@@ -13,8 +13,6 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static ozpasyazilim.utils.core.FiConsole.getClassi;
-
 public class FiNumber {
 
 	Number value;

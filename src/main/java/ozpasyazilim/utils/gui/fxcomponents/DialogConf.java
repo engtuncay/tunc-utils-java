@@ -1,10 +1,12 @@
 package ozpasyazilim.utils.gui.fxcomponents;
 
 import javafx.scene.Node;
+import ozpasyazilim.utils.fidbanno.FiTable;
 
 /**
  * Dialog (Modal) Window Config
  */
+@FiTable
 public class DialogConf {
 
     String txContent;
@@ -20,6 +22,11 @@ public class DialogConf {
     Boolean boNonModal;
     Node nodeRelative;
     String cssFileName;
+
+    /**
+     * Başarılı işlemlerde sadece pop mesaj görüntüler
+     */
+    Boolean boShowPopOnlyIfSuccess;
 
     //Double nmPrefWidth;
 
@@ -105,5 +112,11 @@ public class DialogConf {
         this.cssFileName = cssFileName;
     }
 
+    public Boolean getBoShowPopOnlyIfSuccess() {
+        return boShowPopOnlyIfSuccess;
+    }
 
+    public void setBoShowPopOnlyIfSuccess(Boolean boShowPopOnlyIfSuccess) {
+        this.boShowPopOnlyIfSuccess = boShowPopOnlyIfSuccess;
+    }
 }

@@ -101,7 +101,7 @@ public class FiConsole {
     }
 
     public static <E> void debugCollectionObjectsNotNull(Collection<E> collection, Class clazz) {
-        Loghelper.debugLog(clazz, String.format("List Detail (Not Null)\n\n%s", textCollectionOfObjectsNtn(collection)));
+        Loghelper.debugLog(clazz, String.format("List Detail (Not Null)\n\n%s", textCollection(collection)));
     }
 
     public static void debugMapNotNull(Map map, Class clazz) {
@@ -170,7 +170,14 @@ public class FiConsole {
     }
 
 
-    public static <E> String textCollectionOfObjectsNtn(Collection<E> collection) {
+    /**
+     * Objelerin not null olan alanlarını gösterir
+     *
+     * @param collection
+     * @return
+     * @param <E>
+     */
+    public static <E> String textCollection(Collection<E> collection) {
         return textCollectionOfObject(collection, false);
     }
 
@@ -445,7 +452,7 @@ public class FiConsole {
 
         if (obj instanceof Collection) {
             Collection collection = (Collection) obj;
-            return String.format("Collection Detail (Not Null Fields)\n\n%s", textCollectionOfObjectsNtn(collection));
+            return String.format("Collection Detail (Not Null Fields)\n\n%s", textCollection(collection));
         }
 
         if (obj instanceof String[]) {

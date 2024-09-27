@@ -203,7 +203,6 @@ public class FiCollection {
         for (Iterator iterator = listData.iterator(); iterator.hasNext(); ) {
 
             EntClazz entClazz = (EntClazz) iterator.next();
-
             KeyVal keyVal = fnKey.apply(entClazz);
 
             // null değerli keyler map e dahil edilmez
@@ -214,7 +213,6 @@ public class FiCollection {
             } else {
                 mapList.put(keyVal, entClazz);
             }
-
 
         }
 
@@ -254,6 +252,15 @@ public class FiCollection {
 
     }
 
+    /**
+     * null keyler dahil edilmez
+     *
+     * @param listData
+     * @param fnKey
+     * @param <KeyType>
+     * @param <PrmEntClass>
+     * @return
+     */
     public static <KeyType, PrmEntClass> Set<KeyType> listToSetByKeyValue(List<PrmEntClass> listData, Function<PrmEntClass, KeyType> fnKey) {
 
         Set<KeyType> setNew = new HashSet<>();
@@ -261,9 +268,9 @@ public class FiCollection {
         for (Iterator iterator = listData.iterator(); iterator.hasNext(); ) {
 
             PrmEntClass prmEntClass = (PrmEntClass) iterator.next();
-
             KeyType key = fnKey.apply(prmEntClass);
 
+            // null key dahil edilmez
             if (key == null) continue;
 
             setNew.add(key);
