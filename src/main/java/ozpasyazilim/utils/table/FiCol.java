@@ -390,7 +390,6 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     private Boolean boWhereField;
 
 
-
     // Reflection Field Alanlar
 
     // FiId
@@ -403,6 +402,11 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     private String ofcTxDefValue;
     private String ofcTxCollation;
     private String ofcTxTypeName;
+    /**
+     * Text alanın max uzunluğu
+     * <p>
+     * FxEditorFactory'de textfield oluştururken text limiti olarak belirlenir
+     */
     private Integer ofcLnLength;
     private Integer ofcLnPrecision;
     private Integer ofcLnScale;
@@ -420,6 +424,11 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
      */
     private Boolean oftBoTransient;
 
+    /**
+     * Code Generate ederken oluşturulan alan tanımı
+     * <p>
+     * Code Generator tarafından kullanılır.
+     */
     private String ficTxSqlFieldDefinition;
 
 
@@ -1719,7 +1728,9 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
         this.ofcTxFieldType = ofcTxFieldType;
     }
 
-    public String getFicTxSqlFieldDefinition() {return ficTxSqlFieldDefinition;}
+    public String getFicTxSqlFieldDefinition() {
+        return ficTxSqlFieldDefinition;
+    }
 
     public void setFicTxSqlFieldDefinition(String ficTxSqlFieldDefinition) {
         this.ficTxSqlFieldDefinition = ficTxSqlFieldDefinition;

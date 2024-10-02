@@ -1049,8 +1049,8 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 			//ChangeListener changeListener = (observable, oldValue, newValue) -> filterLocal(newValue); // fxtablecol da eklenebilir
 			Consumer<String> changeConsumer = textProp -> filterLocal(textProp);
-			new FxEditorFactory().registerTextPropertyWithDurationForFilterNode(fxTableCol, changeConsumer, 250);
-			new FxEditorFactory().registerEnterFnForFilterNode(fxTableCol, getColFilterNodeEnterFnGlobal());
+			FxEditorFactory.registerTextPropertyWithDurationForFilterNode(fxTableCol, changeConsumer, 250);
+			FxEditorFactory.registerEnterFnForFilterNode(fxTableCol, getColFilterNodeEnterFnGlobal());
 			//fxTableCol.getTxfFilter().textProperty().addListener(changeListener);
 		}
 
@@ -1062,7 +1062,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 				headerAdded = true;
 			}
 
-			new FxEditorFactory().registerEnterFnForFilterNode(fxTableCol, getColFilterNodeEnterFnGlobal());
+			FxEditorFactory.registerEnterFnForFilterNode(fxTableCol, getColFilterNodeEnterFnGlobal());
 		}
 
 	}

@@ -1528,6 +1528,15 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
     }
 
+    public Fdr jdUpdateFiColsWhereKeyFiColsBindFkb(FiKeyBean fkbParams) {
+
+        String sqlQuery = FiQugen.updateFiColsWhereKeyFiCols(getEntityClass(), fkbParams.getListFiColInit());
+        FiQuery fiQuery = new FiQuery(sqlQuery, fkbParams);
+//        fiQuery.logQueryAndParams();
+
+        return jdUpdateBindMapMain(fiQuery);
+    }
+
     /**
      * Table ismini generic entity'den alır
      *

@@ -88,6 +88,11 @@ public class FiCal {
         return convertToCal(dateGiven).get(Calendar.YEAR);
     }
 
+    /**
+     * Ocak 1'den başlayarak, anın ay nosu
+     *
+     * @return
+     */
     public static Integer getMonthNumber() {
         return Calendar.getInstance().get(Calendar.MONTH) + 1;
     }
@@ -112,6 +117,12 @@ public class FiCal {
         return calendar.get(Calendar.MONTH);
     }
 
+    /**
+     * Ocak 1'den başlayarak olan Ay no
+     *
+     * @param dateGiven
+     * @return
+     */
     public static Integer getMonthNumber(Date dateGiven) {
         return convertToCal(dateGiven).get(Calendar.MONTH) + 1;
     }

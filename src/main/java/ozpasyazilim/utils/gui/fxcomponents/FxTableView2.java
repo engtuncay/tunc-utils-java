@@ -2678,7 +2678,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         addAllFiColsAuto(fiCols);
     }
 
-    public EntClazz getItemsCheckedOneItem() {
+    public EntClazz getItemsCheckedOneItemWitWarn() {
         FilteredList<EntClazz> checkedByBoSelect = getItemsCurrentFiCheckedAsSourceList();
 
         if (checkedByBoSelect.isEmpty()) {
@@ -2686,6 +2686,20 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
             return null;
         } else if (checkedByBoSelect.size() > 1) {
             FxDialogShow.showPopWarn("Lütfen tablodan sadece bir kayıt seçiniz.");
+            return null;
+        }
+
+        return checkedByBoSelect.get(0);
+    }
+
+    public EntClazz getItemsCheckedOneItem() {
+        FilteredList<EntClazz> checkedByBoSelect = getItemsCurrentFiCheckedAsSourceList();
+
+        if (checkedByBoSelect.isEmpty()) {
+            //FxDialogShow.showPopWarn("Lütfen tablodan bir kayıdı seçiniz.");
+            return null;
+        } else if (checkedByBoSelect.size() > 1) {
+            //FxDialogShow.showPopWarn("Lütfen tablodan sadece bir kayıt seçiniz.");
             return null;
         }
 

@@ -7,6 +7,8 @@ import ozpasyazilim.utils.core.FiBool;
 import ozpasyazilim.utils.core.FiCollection;
 import ozpasyazilim.utils.core.FiString;
 import ozpasyazilim.utils.datatypes.FiKeyBean;
+import ozpasyazilim.utils.fxwindow.FiArbWindowCont;
+import ozpasyazilim.utils.fxwindow.FiDialogMetaType;
 import ozpasyazilim.utils.gui.fxTableViewExtra.EnumColNodeType;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.mvc.IFiCol;
@@ -439,6 +441,14 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
 
     public void showAsDialog() {
         FxSimpleDialog fxSimpleDialog = new FxSimpleDialog();
+    }
+
+    public FxSimpleDialog creDialog(String connProfile) {
+        FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FiDialogMetaType.FormDialog);
+        fxSimpleDialog.setFxFormMigGen(this);
+        fxSimpleDialog.initCont();
+
+        return fxSimpleDialog;
     }
 
     public Boolean getBoReadOnlyFormNtn() {

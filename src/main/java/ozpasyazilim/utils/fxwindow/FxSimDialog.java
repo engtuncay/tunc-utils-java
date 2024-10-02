@@ -34,7 +34,7 @@ public class FxSimDialog<EntClazz> extends AbsFiModBaseCont {
 
     FxSimDialogView modView;
 
-    FxSimpleDialogMetaType fxSimpleDialogMetaType;
+    FiDialogMetaType fiDialogMetaType;
 
     // Comps
     private FxButton btnOk;
@@ -89,12 +89,12 @@ public class FxSimDialog<EntClazz> extends AbsFiModBaseCont {
     // Methods
 
     public static void creInfoDialog(String message) {
-        FxSimDialog modDialogCont = FxSimDialog.bui(FxSimpleDialogMetaType.InfoLabelDialog).buiMessageContent(message);
+        FxSimDialog modDialogCont = FxSimDialog.bui(FiDialogMetaType.InfoLabelDialog).buiMessageContent(message);
         modDialogCont.openAsDialogSync();
     }
 
     public static FxSimDialog buiTextFieldDialog(String message) {
-        FxSimDialog modDialogCont = FxSimDialog.bui(FxSimpleDialogMetaType.TextField).buiMessageContent(message);
+        FxSimDialog modDialogCont = FxSimDialog.bui(FiDialogMetaType.TextField).buiMessageContent(message);
         modDialogCont.openAsDialogSync();
         return modDialogCont;
     }
@@ -108,9 +108,9 @@ public class FxSimDialog<EntClazz> extends AbsFiModBaseCont {
 
     }
 
-    public static FxSimDialog bui(FxSimpleDialogMetaType fxSimpleDialogMetaType) {
+    public static FxSimDialog bui(FiDialogMetaType fiDialogMetaType) {
         FxSimDialog fxSimpleDialog = new FxSimDialog();
-        fxSimpleDialog.setFxSimpleDialogType(fxSimpleDialogMetaType);
+        fxSimpleDialog.setFxSimpleDialogType(fiDialogMetaType);
         return fxSimpleDialog;
     }
 
@@ -122,26 +122,26 @@ public class FxSimDialog<EntClazz> extends AbsFiModBaseCont {
     /**
      * With start of initCont
      *
-     * @param fxSimpleDialogMetaType
+     * @param fiDialogMetaType
      * @param messageContent
      */
-    public FxSimDialog(FxSimpleDialogMetaType fxSimpleDialogMetaType, String messageContent) {
-        setFxSimpleDialogType(fxSimpleDialogMetaType);
+    public FxSimDialog(FiDialogMetaType fiDialogMetaType, String messageContent) {
+        setFxSimpleDialogType(fiDialogMetaType);
         setMessageContent(messageContent);
         //setiFxModCont(this);
         initCont();
     }
 
 
-    public FxSimDialog(FxSimpleDialogMetaType fxSimpleDialogMetaType, String messageContent, String messageHeader) {
-        setFxSimpleDialogType(fxSimpleDialogMetaType);
+    public FxSimDialog(FiDialogMetaType fiDialogMetaType, String messageContent, String messageHeader) {
+        setFxSimpleDialogType(fiDialogMetaType);
         setMessageContent(messageContent);
         setMessageHeader(messageHeader);
         initCont();
     }
 
-    public FxSimDialog(FxSimpleDialogMetaType fxSimpleDialogMetaType) {
-        setFxSimpleDialogType(fxSimpleDialogMetaType);
+    public FxSimDialog(FiDialogMetaType fiDialogMetaType) {
+        setFxSimpleDialogType(fiDialogMetaType);
     }
 
     public void openAsDialogSync() {
@@ -164,8 +164,8 @@ public class FxSimDialog<EntClazz> extends AbsFiModBaseCont {
 
     }
 
-    public static FxSimDialog bui(FxSimpleDialogMetaType fxSimpleDialogMetaType, String message) {
-        FxSimDialog fxSimDialog = new FxSimDialog(fxSimpleDialogMetaType, message);
+    public static FxSimDialog bui(FiDialogMetaType fiDialogMetaType, String message) {
+        FxSimDialog fxSimDialog = new FxSimDialog(fiDialogMetaType, message);
         return fxSimDialog;
     }
 
@@ -191,51 +191,51 @@ public class FxSimDialog<EntClazz> extends AbsFiModBaseCont {
             return;
         }
 
-        if (getFxSimpleDialogType() == FxSimpleDialogMetaType.CustomContent1) {
+        if (getFxSimpleDialogType() == FiDialogMetaType.CustomContent1) {
             setupCustomContent1();
             return;
         }
 
-        if (getFxSimpleDialogType() == FxSimpleDialogMetaType.TextFieldDouble) {
+        if (getFxSimpleDialogType() == FiDialogMetaType.TextFieldDouble) {
             setupTextHeaderLabel();
             setupTextFieldDoubleDialog();
             setupFooterOkCancel(null);
             return;
         }
 
-        if (getFxSimpleDialogType() == FxSimpleDialogMetaType.TextFieldWithValidation) {
+        if (getFxSimpleDialogType() == FiDialogMetaType.TextFieldWithValidation) {
             setupTextFieldWithValidation();
             setupFooterWithValidateString();
             return;
         }
 
-        if (getFxSimpleDialogType() == FxSimpleDialogMetaType.TextField) {
+        if (getFxSimpleDialogType() == FiDialogMetaType.TextField) {
             setupTextField();
             return;
         }
 
-        if (fxSimpleDialogMetaType == FxSimpleDialogMetaType.TextAreaString) {
+        if (fiDialogMetaType == FiDialogMetaType.TextAreaString) {
             setupTextHeaderLabel();
             setupTextAreaString();
             setupFooterOkCancel(null);
             return;
         }
 
-        if (fxSimpleDialogMetaType == FxSimpleDialogMetaType.TextAreaString2) {
+        if (fiDialogMetaType == FiDialogMetaType.TextAreaString2) {
             setupTextHeaderLabel();
             setupTextAreaString();
             setupFooterOkCancel(null);
             return;
         }
 
-        if (fxSimpleDialogMetaType == FxSimpleDialogMetaType.TextFieldInteger) {
+        if (fiDialogMetaType == FiDialogMetaType.TextFieldInteger) {
             setupTextHeaderLabel();
             setupTextFieldIntegerDialog();
             setupFooterOkCancel(null);
             return;
         }
 
-        if (fxSimpleDialogMetaType == FxSimpleDialogMetaType.InfoTextFlowDialog) {
+        if (fiDialogMetaType == FiDialogMetaType.InfoTextFlowDialog) {
             setupTextHeaderLabel();
             setupInfoDialog();
             setupFooterOkCancel(null);
@@ -247,27 +247,27 @@ public class FxSimDialog<EntClazz> extends AbsFiModBaseCont {
 //			return;
 //		}
 
-        if (fxSimpleDialogMetaType == FxSimpleDialogMetaType.InfoLabelDialog) {
+        if (fiDialogMetaType == FiDialogMetaType.InfoLabelDialog) {
             setupInfoLabelDialog2();
             return;
         }
 
-        if (fxSimpleDialogMetaType == FxSimpleDialogMetaType.DialogError) {
+        if (fiDialogMetaType == FiDialogMetaType.DialogError) {
             setupDialogError();
             return;
         }
 
-        if (fxSimpleDialogMetaType == FxSimpleDialogMetaType.DialogInfo) {
+        if (fiDialogMetaType == FiDialogMetaType.DialogInfo) {
             setupDialogInfo();
             return;
         }
 
-        if (fxSimpleDialogMetaType == FxSimpleDialogMetaType.FormDialog) {
+        if (fiDialogMetaType == FiDialogMetaType.FormDialog) {
             setupFormDialog2();
             return;
         }
 
-        if (fxSimpleDialogMetaType == FxSimpleDialogMetaType.LogTable) {
+        if (fiDialogMetaType == FiDialogMetaType.LogTable) {
             setupLogTable();
             return;
         }
@@ -442,7 +442,7 @@ public class FxSimDialog<EntClazz> extends AbsFiModBaseCont {
 
     public void setupFormDialog(List<FiCol> fiCols, FormType formType) {
         getFxFormMigGenInit().setup1(fiCols, FormType.PlainFormV1);
-        setFxSimpleDialogType(FxSimpleDialogMetaType.Undefined);
+        setFxSimpleDialogType(FiDialogMetaType.Undefined);
         initCont();
         FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().getLcg());
         fxContent.addGrowPushSpan(getFxFormMigGenInit());
@@ -477,7 +477,7 @@ public class FxSimDialog<EntClazz> extends AbsFiModBaseCont {
         }
 
         // Form Alanlarına validasyon eklenmişse onlar kontrol edilir.
-        if (getFxSimpleDialogType() == FxSimpleDialogMetaType.FormDialog) {
+        if (getFxSimpleDialogType() == FiDialogMetaType.FormDialog) {
 
             if (getFxForm() != null && getFxForm().getFnValidateForm() != null) {
 
@@ -688,11 +688,11 @@ public class FxSimDialog<EntClazz> extends AbsFiModBaseCont {
         FxButton fxButton = new FxButton();
         fxButton.setDisable(true);
 
-        if (getFxSimpleDialogType() == FxSimpleDialogMetaType.DialogInfo) {
+        if (getFxSimpleDialogType() == FiDialogMetaType.DialogInfo) {
             fxButton.setFxIcon(Icons525.INFO);
         }
 
-        if (getFxSimpleDialogType() == FxSimpleDialogMetaType.DialogError) {
+        if (getFxSimpleDialogType() == FiDialogMetaType.DialogError) {
             fxButton.setFxIcon(Icons525.WARNING_SIGN);
         }
 
@@ -715,12 +715,12 @@ public class FxSimDialog<EntClazz> extends AbsFiModBaseCont {
 
     // Getter and Setter
 
-    public FxSimpleDialogMetaType getFxSimpleDialogType() {
-        return fxSimpleDialogMetaType;
+    public FiDialogMetaType getFxSimpleDialogType() {
+        return fiDialogMetaType;
     }
 
-    public void setFxSimpleDialogType(FxSimpleDialogMetaType fxSimpleDialogMetaType) {
-        this.fxSimpleDialogMetaType = fxSimpleDialogMetaType;
+    public void setFxSimpleDialogType(FiDialogMetaType fiDialogMetaType) {
+        this.fiDialogMetaType = fiDialogMetaType;
     }
 
     public FxButton getBtnOk() {

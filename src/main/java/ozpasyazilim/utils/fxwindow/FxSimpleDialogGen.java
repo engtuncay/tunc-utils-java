@@ -6,12 +6,12 @@ public class FxSimpleDialogGen extends FxSimpleDialog<Object> {
 		super();
 	}
 
-	public FxSimpleDialogGen(FxSimpleDialogMetaType fxSimpleDialogMetaType, String messageContent) {
-		super(fxSimpleDialogMetaType, messageContent);
+	public FxSimpleDialogGen(FiDialogMetaType fiDialogMetaType, String messageContent) {
+		super(fiDialogMetaType, messageContent);
 	}
 
-	public FxSimpleDialogGen(FxSimpleDialogMetaType fxSimpleDialogMetaType) {
-		super(fxSimpleDialogMetaType);
+	public FxSimpleDialogGen(FiDialogMetaType fiDialogMetaType) {
+		super(fiDialogMetaType);
 	}
 
 }

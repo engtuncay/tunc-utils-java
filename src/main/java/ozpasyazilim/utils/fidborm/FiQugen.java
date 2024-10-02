@@ -1767,17 +1767,17 @@ public class FiQugen {
                 txWhereBlock.append(fiCol.getOfcTxFieldName()).append(" = @").append(fiCol.getOfcTxFieldName());
                 indexWhereBlock++;
             } else {
-                if(FiBool.isTrue(boUpdateFieldsOnly)){
+                if (FiBool.isTrue(boUpdateFieldsOnly)) {
 
-                    if(FiBool.isTrue(fiCol.getBoUpdateFieldForQuery())){
+                    if (FiBool.isTrue(fiCol.getBoUpdateFieldForQuery())) {
                         if (indexSetBlock != 1) txSetBlock.append(", ");
                         txSetBlock.append(fiCol.getOfcTxFieldName()).append(" = @").append(fiCol.getOfcTxFieldName());
                         indexSetBlock++;
-                    }else{
+                    } else {
                         continue;
                     }
 
-                }else{
+                } else {
                     if (indexSetBlock != 1) txSetBlock.append(", ");
                     txSetBlock.append(fiCol.getOfcTxFieldName()).append(" = @").append(fiCol.getOfcTxFieldName());
                     indexSetBlock++;
@@ -1908,7 +1908,7 @@ public class FiQugen {
         return FiString.substitutor(template, fkbTemplate);
     }
 
-    public static String insertFiCols2(IFiTableMeta iFiTableMeta, List<FiCol> listFields , Boolean boInserFieldsOnly) {
+    public static String insertFiCols2(IFiTableMeta iFiTableMeta, List<FiCol> listFields, Boolean boInserFieldsOnly) {
 
         String template = "INSERT INTO {{tableName}} ( {{csvFields}} ) \n"
                 + " VALUES ( {{paramFields}} )";
@@ -1923,9 +1923,9 @@ public class FiQugen {
 
             if (FiBool.isTrue(fiCol.getBoKeyIdField())) continue;
 
-            if(FiBool.isTrue(boInserFieldsOnly)){
+            if (FiBool.isTrue(boInserFieldsOnly)) {
 
-                if(FiBool.isTrue(fiCol.getBoInsertFieldForQuery())){
+                if (FiBool.isTrue(fiCol.getBoInsertFieldForQuery())) {
 
                     if (indexFields != 1) queryFields.append(", ");
                     queryFields.append(fiCol.getOfcTxFieldName());
@@ -1937,7 +1937,7 @@ public class FiQugen {
                     indexParams++;
                 }
 
-            }else{
+            } else {
 
                 if (indexFields != 1) queryFields.append(", ");
                 queryFields.append(fiCol.getOfcTxFieldName());
@@ -2783,7 +2783,7 @@ public class FiQugen {
 
     public static Map<String, FiField> getMapDbFieldsSql(String txTableName, Jdbi jdbi) {
 
-        if(FiString.isEmpty(txTableName)) return new HashMap<>();
+        if (FiString.isEmpty(txTableName)) return new HashMap<>();
 
         List<FiField> dbFields = getDbFieldsAndDefinitionSql(txTableName, jdbi);
 
@@ -3135,31 +3135,42 @@ public class FiQugen {
 
     }
 
-    public static String createQuery20(IFiTableMeta iFiTableMeta) {
+    public static String createQueryByIFiTableMeta(IFiTableMeta iFiTableMeta) {
+        return createQuery30(iFiTableMeta.getITxTableName(),iFiTableMeta.genITableCols());
+    }
+
+    public static String createQuery30(String txTableName, FiColList prmfiColList) {
 
         //List<FiField> listFields = FiFieldUtil.getListFieldsAll(clazz);
 
         StringBuilder query = new StringBuilder();
 
-        query.append("CREATE TABLE " + iFiTableMeta.getITxTableName() + " ( \n");
+        query.append("CREATE TABLE ")
+                .append(txTableName)
+                .append(" ( \n");
 
-        assignSqlTypeAndDef(iFiTableMeta);
+        FiColList fiColList = prmfiColList;
+
+        assignSqlTypeAndDef(fiColList);
 
         int index = 0;
-        for (FiCol field : iFiTableMeta.genITableCols()) {
+        for (FiCol fiCol : fiColList) {
 
             // Sql Tipi Belirlenmeyenler için
-            if (field.getFicTxSqlFieldDefinition() == null) {
-                query.append("\n-- " + field.getOfcTxFieldName() + " " + field.getColType().toString()
-                        + (field.getOfcLnLength() != null ? " -- Length:" + field.getOfcLnLength() : "")
-                        + (field.getOfcLnPrecision() != null ? " -- Prec.:" + field.getOfcLnPrecision() : "")
-                        + (field.getOfcLnScale() != null ? "Scale :" + field.getOfcLnScale() : ""));
+            if (fiCol.getFicTxSqlFieldDefinition() == null) {
+                query.append("\n-- ")
+                        .append(fiCol.getOfcTxFieldName())
+                        .append(" ")
+                        .append(fiCol.getColType().toString())
+                        .append(fiCol.getOfcLnLength() != null ? " -- Length:" + fiCol.getOfcLnLength() : "")
+                        .append(fiCol.getOfcLnPrecision() != null ? " -- Prec.:" + fiCol.getOfcLnPrecision() : "")
+                        .append(fiCol.getOfcLnScale() != null ? "Scale :" + fiCol.getOfcLnScale() : "");
                 continue;
             }
 
             index++;
             if (index != 1) query.append("\n, ");
-            query.append(field.getOfcTxFieldName()).append(" ").append(field.getFicTxSqlFieldDefinition());
+            query.append(fiCol.getOfcTxFieldName()).append(" ").append(fiCol.getFicTxSqlFieldDefinition());
 
         }
 
@@ -3258,7 +3269,7 @@ public class FiQugen {
             if (field.getClassNameSimple() == null) field.setClassNameSimple("");
 
             // Sql Field Type Belirlenir
-            String sqlFieldType = assignSqlFieldType(field);
+            String sqlFieldType = calcSqlFieldType(field);
 
             if (sqlFieldType == null) {
                 continue;
@@ -3267,7 +3278,8 @@ public class FiQugen {
             String typeLength = "";
 
             if (sqlFieldType.equals("nvarchar") || sqlFieldType.equals("varchar")) {
-                if (field.getOfcLnLength().equals(255)) field.setOfcLnLength(50); //length = 50; // default 50 ye çekildi.
+                if (field.getOfcLnLength().equals(255))
+                    field.setOfcLnLength(50); //length = 50; // default 50 ye çekildi.
                 if (field.getOfcLnLength().equals(0)) field.setOfcLnLength(50); // length = 50; // default 50 yapıldı.
                 typeLength = "(" + field.getOfcLnLength() + ")";
             }
@@ -3333,102 +3345,104 @@ public class FiQugen {
 
     }
 
-    public static void assignSqlTypeAndDef(IFiTableMeta listFields) {
+    public static void assignSqlTypeAndDef(FiColList fiColList) {
 
-        //System.out.println("List Field Size:" + listFields.size());
+        //System.out.println("List Field Size:" + iFiTableMeta.size());
+        Loghelper.get(FiQugen.class).debug(FiConsole.textCollection(fiColList));
 
-        for (FiCol field : listFields.genITableCols()) {
+        for (FiCol ficol : fiColList) {
 
-            //System.out.println(" Field:" + field.getName() + " - Simple Name:" + field.getClassNameSimple());
+            //System.out.println(" Field:" + ficol.getName() + " - Simple Name:" + ficol.getClassNameSimple());
 
-            if (field.getOfcLnPrecision() == null) field.setOfcLnPrecision(0);
-            if (field.getOfcLnScale() == null) field.setOfcLnScale(0);
-            if (field.getOfcLnLength() == null) field.setOfcLnLength(0);
-            //if (field.getClassNameSimple() == null) field.setClassNameSimple("");
+            if (ficol.getOfcLnPrecision() == null) ficol.setOfcLnPrecision(0);
+            if (ficol.getOfcLnScale() == null) ficol.setOfcLnScale(0);
+            if (ficol.getOfcLnLength() == null) ficol.setOfcLnLength(0);
+            //if (ficol.getClassNameSimple() == null) ficol.setClassNameSimple("");
 
             // Sql Field Type Belirlenir
-            String sqlFieldType = assignSqlFieldType(field);
+            String sqlFieldType = calcSqlFieldType(ficol);
 
-            String classNameSimple = field.getColType().toString();
+            String classNameSimple = ficol.getColType().toString();
 
             if (sqlFieldType == null) {
                 continue;
             }
 
-            String typeLength = "";
+            String txTypeLength = "";
 
             if (sqlFieldType.equals("nvarchar") || sqlFieldType.equals("varchar")) {
-                if (field.getOfcLnLength().equals(255)) field.setOfcLnLength(50); //length = 50; // default 50 ye çekildi.
-                if (field.getOfcLnLength().equals(0)) field.setOfcLnLength(50); // length = 50; // default 50 yapıldı.
-                typeLength = "(" + field.getOfcLnLength() + ")";
+                if (ficol.getOfcLnLength().equals(255))
+                    ficol.setOfcLnLength(50); //length = 50; // default 50 ye çekildi.
+                if (ficol.getOfcLnLength().equals(0)) ficol.setOfcLnLength(50); // length = 50; // default 50 yapıldı.
+                txTypeLength = "(" + ficol.getOfcLnLength() + ")";
             }
 
 
             if (sqlFieldType.equals("decimal")) {
                 // default precision 18 ,scale 2
-                if (field.getOfcLnPrecision().equals(0)) field.setOfcLnPrecision(18); //precision = 18;
-                if (field.getOfcLnScale().equals(0)) {
+                if (ficol.getOfcLnPrecision().equals(0)) ficol.setOfcLnPrecision(18); //precision = 18;
+                if (ficol.getOfcLnScale().equals(0)) {
 
                     if (classNameSimple.equalsIgnoreCase("double")) {
-                        field.setOfcLnScale(5);
+                        ficol.setOfcLnScale(5);
                     } else if (classNameSimple.equalsIgnoreCase("float")) {
-                        field.setOfcLnScale(4);
+                        ficol.setOfcLnScale(4);
                     } else {
-                        field.setOfcLnScale(6);  // scale = 2;
+                        ficol.setOfcLnScale(6);  // scale = 2;
                     }
 
                 }
-                typeLength = "(" + field.getOfcLnPrecision() + "," + field.getOfcLnScale() + ")";
+                txTypeLength = "(" + ficol.getOfcLnPrecision() + "," + ficol.getOfcLnScale() + ")";
             }
 
-//            if (!FiString.isEmpty(field.getColCustomType())) {
-//                sqlFieldType = field.getColCustomType();
-//                typeLength = "";
+//            if (!FiString.isEmpty(ficol.getColCustomType())) {
+//                sqlFieldType = ficol.getColCustomType();
+//                txTypeLength = "";
 //                //fieldAttributes = "";
 //            }
 
             String fieldAttributes = "";
 
-            if (field.getOfcTxCollation() != null && !field.getOfcTxCollation().equals(FiCollation.Default.toString())) {
-                fieldAttributes += " COLLATE " + field.getOfcTxCollation();
+            if (ficol.getOfcTxCollation() != null && !ficol.getOfcTxCollation().equals(FiCollation.Default.toString())) {
+                fieldAttributes += " COLLATE " + ficol.getOfcTxCollation();
             }
 
             // Field Alanın özellikleri eklenir
 
-            if (FiBool.isTrue(field.getBoKeyIdField())) {
+            if (FiBool.isTrue(ficol.getBoKeyIdField())) {
 
-                if(field.getOfiTxIdType()==null)field.setOfiTxIdType("");
+                if (ficol.getOfiTxIdType() == null) ficol.setOfiTxIdType("");
 
-                if (field.getOfiTxIdType().equals(FiIdGenerationType.identity.toString())) {
+                if (ficol.getOfiTxIdType().equals(FiIdGenerationType.identity.toString())) {
                     fieldAttributes += " IDENTITY(1,1)";
                 }
                 fieldAttributes += "  NOT NULL PRIMARY KEY ";
 
             }
 
-            if (FiBool.isTrue(field.getOfcBoUnique()) && !FiBool.isTrue(field.getBoKeyIdField()))
+            if (FiBool.isTrue(ficol.getOfcBoUnique()) && !FiBool.isTrue(ficol.getBoKeyIdField()))
                 fieldAttributes += " UNIQUE";
 
-            if (FiBool.isFalse(field.getOfcBoNullable()) && !FiBool.isTrue(field.getBoKeyIdField()))
+            if (FiBool.isFalse(ficol.getOfcBoNullable()) && !FiBool.isTrue(ficol.getBoKeyIdField()))
                 fieldAttributes += " NOT NULL";
 
-            if (!FiString.isEmpty(field.getOfcTxDefValue())) {
-                fieldAttributes += " DEFAULT " + field.getOfcTxDefValue();
+            if (!FiString.isEmpty(ficol.getOfcTxDefValue())) {
+                fieldAttributes += " DEFAULT " + ficol.getOfcTxDefValue();
             }
 
 
-//            if (!FiString.isEmpty(field.getColDefinitionExtra())) {
-//                fieldAttributes += " " + field.getColDefinitionExtra();
+//            if (!FiString.isEmpty(ficol.getColDefinitionExtra())) {
+//                fieldAttributes += " " + ficol.getColDefinitionExtra();
 //            }
 
-            field.setFicTxSqlFieldDefinition(sqlFieldType + typeLength + fieldAttributes);
+            ficol.setFicTxSqlFieldDefinition(sqlFieldType + txTypeLength + fieldAttributes);
 
         }
 
 
     }
 
-    private static String assignSqlFieldType(FiField field) {
+    private static String calcSqlFieldType(FiField field) {
 
         //if (getMapTypeConvertorJavaToSqlServer().containsKey(field.getClassNameSimple())) {
 
@@ -3488,64 +3502,66 @@ public class FiQugen {
         //return null;
     }
 
-    private static String assignSqlFieldType(FiCol field) {
+    private static String calcSqlFieldType(FiCol field) {
 
         //if (getMapTypeConvertorJavaToSqlServer().containsKey(field.getClassNameSimple())) {
 
-        String javaSimpleType = field.getColType().toString();
+        String txOzColType = field.getColType().toString();
 
         String suffix = "";
 
         if (FiBool.isTrue(field.getOfcBoUtfSupport())) suffix += "Utf";
 
-        if (javaSimpleType.equals("Integer")) {
+        if (txOzColType.equals("Integer")) {
             if (field.getOfcLnPrecision() != null && field.getOfcLnPrecision() == 1) suffix = "P1";
 
             if (field.getOfcLnPrecision() != null && field.getOfcLnPrecision() >= 20) suffix = "P20";
         }
 
-        String sqlFieldType = getMapTypeConvertorJavaToSqlServer().getOrDefault(javaSimpleType + suffix, null);
+        String txSqlFieldType = getMapTypeConvertorJavaToSqlServer().getOrDefault(txOzColType + suffix, null);
 
-        if (sqlFieldType == null) {
+        Loghelper.get(FiQugen.class).debug(txSqlFieldType);
+
+        // suffix li dönüş olmamışsa, suffix siz tür dönüşü almaya çalışır
+        if (txSqlFieldType == null) {
             //Loghelperr.getInstance(getClass()).debug("sql field type null");
-            sqlFieldType = getMapTypeConvertorJavaToSqlServer().getOrDefault(javaSimpleType, null);
+            txSqlFieldType = getMapTypeConvertorJavaToSqlServer().getOrDefault(txOzColType, null);
         }
 
-        if (sqlFieldType == null) {
-            //Loghelperr.getInstance(getClass()).debug("sql field type null 2");
+        // suffix li veya suffix siz txSqlFieldType tanımlanmamışsa null döner
+        if (txSqlFieldType == null) {
+            Loghelper.get(FiQugen.class).debug("Sql field type null 2 field:" + field.getOfcTxFieldName()+ " " + field.getColTypeNtn().toString());
             return null;
         }
 
-        if (sqlFieldType.equalsIgnoreCase("int")) {
+        if (txSqlFieldType.equalsIgnoreCase("int")) {
             if (field.getOfcLnPrecision().equals(1)) {
-                sqlFieldType = "tinyint";
+                txSqlFieldType = "tinyint";
             }
 
-            if (field.getOfcLnPrecision() > 20) sqlFieldType = "bigint";
+            if (field.getOfcLnPrecision() > 20) txSqlFieldType = "bigint";
         }
 
-        if (sqlFieldType.equalsIgnoreCase("double")) {
-            if (field.getOfcLnScale() > 5) sqlFieldType = "decimal";
+        if (txSqlFieldType.equalsIgnoreCase("double")) {
+            if (field.getOfcLnScale() > 5) txSqlFieldType = "decimal";
         }
 
-//        if (sqlFieldType.equals("datetime") && field.getTemporalType() != null) {
+//        if (txSqlFieldType.equals("datetime") && field.getTemporalType() != null) {
 //
 //            if (field.getTemporalType() == TemporalType.DATE) {
-//                sqlFieldType = "date";
+//                txSqlFieldType = "date";
 //            }
 //
 //        }
 
-        if (sqlFieldType.equals("float")) {
+        if (txSqlFieldType.equals("float")) {
 
             if (field.getOfcLnPrecision() > 0 && field.getOfcLnScale() > 0) {
-                sqlFieldType = "decimal"; // default precision 18 ,scale 2
+                txSqlFieldType = "decimal"; // default precision 18 ,scale 2
             }
         }
-        return sqlFieldType;
-        //}
 
-        //return null;
+        return txSqlFieldType;
     }
 
     // https://docs.microsoft.com/en-us/sql/connect/jdbc/using-basic-data-types?view=sql-server-2017
@@ -3601,6 +3617,7 @@ public class FiQugen {
 
         // Integer
         mapTypeConvertorJavaToSqlServer.put("Integer", "int");
+        mapTypeConvertorJavaToSqlServer.put("int", "int");
         // Integer Precision=20
         mapTypeConvertorJavaToSqlServer.put("IntegerP20", "bigint");
         // Integer Precision=1
@@ -3617,16 +3634,21 @@ public class FiQugen {
 
         // String ( utf support olursa nvarchar a çevrilir)
         mapTypeConvertorJavaToSqlServer.put("String", "varchar");
+        mapTypeConvertorJavaToSqlServer.put("string", "varchar");
         // string utf support lu ise , türü string utf olarak yapılır
         mapTypeConvertorJavaToSqlServer.put("StringUtf", "nvarchar");
+        mapTypeConvertorJavaToSqlServer.put("stringutf", "nvarchar");
         // Date Time
         mapTypeConvertorJavaToSqlServer.put("Date", "datetime");
+        mapTypeConvertorJavaToSqlServer.put("date", "datetime");
         mapTypeConvertorJavaToSqlServer.put("LocalDate", "datetime");
+        mapTypeConvertorJavaToSqlServer.put("localdate", "datetime");
 
         // Binary
         mapTypeConvertorJavaToSqlServer.put("ByteImage", "image");
 
         mapTypeConvertorJavaToSqlServer.put("Boolean", "bit");
+        mapTypeConvertorJavaToSqlServer.put("bool", "bit");
 
         //mapTypeConvertorJavaToSqlServer.put("varbinary","Byte[]");
         //mapTypeConvertorJavaToSqlServer.put("smallint","Integer"); // tinyint kullanılabilir

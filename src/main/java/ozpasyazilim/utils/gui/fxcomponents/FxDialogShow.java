@@ -22,7 +22,7 @@ import ozpasyazilim.utils.returntypes.Fdr;
 import ozpasyazilim.utils.returntypes.FnResult;
 import ozpasyazilim.utils.fxwindow.FxSimpleDialog;
 import ozpasyazilim.utils.fxwindow.FxSimpleDialogExt1;
-import ozpasyazilim.utils.fxwindow.FxSimpleDialogMetaType;
+import ozpasyazilim.utils.fxwindow.FiDialogMetaType;
 
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -793,7 +793,7 @@ public class FxDialogShow {
      */
     public static void showModalInfoAsyn(String messageHeader, String message) {
         Platform.runLater(() -> {
-            FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogMetaType.DialogInfo, message);
+            FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FiDialogMetaType.DialogInfo, message);
             fxSimpleDialog.setMessageHeader(messageHeader);
             fxSimpleDialog.openAsDialogSync();
         });
@@ -801,7 +801,7 @@ public class FxDialogShow {
 
     public static void showModalInfoAsyn(String messageHeader, String message, Runnable runAfterOkButton) {
         Platform.runLater(() -> {
-            FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogMetaType.DialogInfo, message);
+            FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FiDialogMetaType.DialogInfo, message);
             fxSimpleDialog.setRunAfterOkEvent(runAfterOkButton);
             fxSimpleDialog.setMessageHeader(messageHeader);
             fxSimpleDialog.openAsDialogSync();
@@ -809,14 +809,14 @@ public class FxDialogShow {
     }
 
     public static FxSimpleDialog showModalInfoNgt(String messageHeader, String message) {
-        FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogMetaType.DialogInfo, message);
+        FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FiDialogMetaType.DialogInfo, message);
         fxSimpleDialog.setMessageHeader(messageHeader);
         fxSimpleDialog.openAsDialogSync();
         return fxSimpleDialog;
     }
 
     public static FxSimpleDialog showModalInfoNgt(String messageHeader, String message, Runnable runAfterOkEvent) {
-        FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogMetaType.DialogInfo, message);
+        FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FiDialogMetaType.DialogInfo, message);
         fxSimpleDialog.setRunAfterOkEvent(runAfterOkEvent);
         fxSimpleDialog.setMessageHeader(messageHeader);
         fxSimpleDialog.openAsDialogSync();
@@ -830,14 +830,14 @@ public class FxDialogShow {
      * @param message
      */
     public static void showModalInfoNgtNmd(String messageHeader, String message) {
-        FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogMetaType.DialogInfo, message);
+        FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FiDialogMetaType.DialogInfo, message);
         fxSimpleDialog.setMessageHeader(messageHeader);
         fxSimpleDialog.openAsNonModal();
     }
 
     public static void showModalErrorAsyn(String messageHeader, String message) {
         Platform.runLater(() -> {
-            FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogMetaType.DialogError, message);
+            FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FiDialogMetaType.DialogError, message);
             fxSimpleDialog.setMessageHeader(messageHeader);
             fxSimpleDialog.openAsDialogSync();
         });
@@ -845,7 +845,7 @@ public class FxDialogShow {
 
     public static void showModalErrorAsyn(String messageHeader, String message, Runnable runAfterOkEvent) {
         Platform.runLater(() -> {
-            FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogMetaType.DialogError, message);
+            FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FiDialogMetaType.DialogError, message);
             fxSimpleDialog.setRunAfterOkEvent(runAfterOkEvent);
             fxSimpleDialog.setMessageHeader(messageHeader);
             fxSimpleDialog.openAsDialogSync();
@@ -853,7 +853,7 @@ public class FxDialogShow {
     }
 
     public static void showModalError2Ngt(String messageHeader, String message) {
-        FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogMetaType.DialogError, message);
+        FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FiDialogMetaType.DialogError, message);
         fxSimpleDialog.setMessageHeader(messageHeader);
         fxSimpleDialog.openAsDialogSync();
     }
@@ -867,7 +867,7 @@ public class FxDialogShow {
                 message += "\n Exception Tanımı \n\n" + FiException.exceptionIfToString(fdr.getException());
             }
 
-            FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogMetaType.DialogError, message, messageHeader);
+            FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FiDialogMetaType.DialogError, message, messageHeader);
             fxSimpleDialog.openAsDialogSync();
         });
     }
@@ -888,7 +888,7 @@ public class FxDialogShow {
                 message += "\nException Tanımı : " + FiException.excToStrSummary(fdr.getException());
             }
 
-            FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FxSimpleDialogMetaType.DialogError, message, messageHeader);
+            FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FiDialogMetaType.DialogError, message, messageHeader);
             fxSimpleDialog.openAsDialogSync();
         });
     }

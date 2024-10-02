@@ -1,6 +1,6 @@
 package ozpasyazilim.utils.fxwindow;
 
-public enum FxSimpleDialogMetaType {
+public enum FiDialogMetaType {
 	TextFieldDouble, TextFieldInteger, InfoTextFlowDialog, TextField, InfoLabelDialog,
 
 	/**
