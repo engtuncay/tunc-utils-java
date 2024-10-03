@@ -402,16 +402,25 @@ public class FxSimpleDialog<EntClazz> extends AbsFiModBaseCont {
 
 
     private void actBtnOK() {
-//		if(getPredValidate()!=null){
-//			if(!getPredValidate().test(getValue())){
-//				return;
-//			}
-//		}
 
         // Form Alanlarına validasyon eklenmişse onlar kontrol edilir.
         if (getFiDialogMetaType() == FiDialogMetaType.FormDialog) {
 
-            // Obje ile validasyon yapmak istersek
+            if (actBtnOkForFormDialogs()) return;
+
+        }
+
+        if (getRunAfterOkEvent() != null) {
+            getRunAfterOkEvent().run();
+        }
+
+
+        super.closeStageWithDoneReason();
+    }
+
+    private boolean actBtnOkForFormDialogs() {
+
+        // Obje ile validasyon yapmak istersek
 //			if (getFxFormMig().getFxFormConfigInit().getFnValidateForm() != null) {
 //
 //				if (getEntityClass() != null) {
@@ -425,45 +434,39 @@ public class FxSimpleDialog<EntClazz> extends AbsFiModBaseCont {
 //
 //			}
 
-            if (getFxFormcMig() != null && getFxFormcMig().getFxFormConfigInit().getFnValidateFormForFormc() != null) {
+        if (getFxFormcMig() != null && getFxFormcMig().getFxFormConfigInit().getFnValidateFormForFormc() != null) {
 
-                Fdr fdr = (Fdr) getFxFormcMig().getFxFormConfig().getFnValidateFormForFormc().apply(getFxFormcMig());
+            Fdr fdr = (Fdr) getFxFormcMig().getFxFormConfig().getFnValidateFormForFormc().apply(getFxFormcMig());
 
-                if (fdr == null) {
-                    FxDialogShow.showPopWarn("İşlem yapılamadı. Sistem Yöneticinize Başvurun. Hata Tanımı:Fdr-Null");
-                    return;
-                }
-
-                if (!fdr.isTrueBoResult()) {
-                    FxDialogShow.showPopWarn("Hata \n" + fdr.getMessage());
-                    return;
-                }
-
+            if (fdr == null) {
+                FxDialogShow.showPopWarn("İşlem yapılamadı. Sistem Yöneticinize Başvurun. Hata Tanımı:Fdr-Null");
+                return true;
             }
 
-            if (getFxFormMigGen() != null && getFxFormMigGen().getFnValidateForm() != null) {
-
-                Fdr fdr = (Fdr) getFxFormMigGen().getFnValidateForm().apply(getFxFormMigGen());
-
-                if (fdr == null) {
-                    FxDialogShow.showPopWarn("İşlem yapılamadı. Sistem Yöneticinize Başvurun. Hata Tanımı:Fdr-Null");
-                    return;
-                }
-
-                if (!fdr.isTrueBoResult()) {
-                    FxDialogShow.showPopWarn("Hata \n" + fdr.getMessage());
-                    return;
-                }
-
+            if (!fdr.isTrueBoResult()) {
+                FxDialogShow.showPopWarn("Hata \n" + fdr.getMessage());
+                return true;
             }
 
         }
 
-        if (getRunAfterOkEvent() != null) {
-            getRunAfterOkEvent().run();
+        if (getFxFormMigGen() != null && getFxFormMigGen().getFnValidateForm() != null) {
+
+            Fdr fdr = (Fdr) getFxFormMigGen().getFnValidateForm().apply(getFxFormMigGen());
+
+            if (fdr == null) {
+                FxDialogShow.showPopWarn("İşlem yapılamadı. Sistem Yöneticinize Başvurun. Hata Tanımı:Fdr-Null");
+                return true;
+            }
+
+            if (!fdr.isTrueBoResult()) {
+                FxDialogShow.showPopWarn("Hata \n" + fdr.getMessage());
+                return true;
+            }
+
         }
 
-        super.closeStageWithDoneReason();
+        return false;
     }
 
     private void actBtnOKWithValidate() {
