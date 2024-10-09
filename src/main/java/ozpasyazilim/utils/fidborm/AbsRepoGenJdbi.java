@@ -1532,7 +1532,9 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
         String sqlQuery = FiQugen.updateFiColsWhereKeyFiCols(getEntityClass(), fkbParams.getListFiColInit());
         FiQuery fiQuery = new FiQuery(sqlQuery, fkbParams);
-//        fiQuery.logQueryAndParams();
+
+        //fkbParams.logFiCols();
+        fiQuery.logQueryAndParams();
 
         return jdUpdateBindMapMain(fiQuery);
     }

@@ -1833,10 +1833,10 @@ public class FiQugen {
      * Diger ficol'ları update alanları olarak ekler (BoUpdatable false olmayacak)
      *
      * @param clazz
-     * @param listFields
+     * @param listFiCol
      * @return
      */
-    public static String updateFiColsWhereKeyFiCols(Class clazz, List<FiCol> listFields) {
+    public static String updateFiColsWhereKeyFiCols(Class clazz, List<FiCol> listFiCol) {
 
         //Map<String, FiField> listClassFields = FiEntity.getMapFieldsShort(clazz);
 
@@ -1847,7 +1847,7 @@ public class FiQugen {
 
         int index = 0;
         int indexWhere = 0;
-        for (FiCol fiCol : listFields) {
+        for (FiCol fiCol : listFiCol) {
 
             // id field dahil edilmez
             if (FiBool.isTrue(fiCol.getBoKeyIdField())) {
@@ -1872,6 +1872,7 @@ public class FiQugen {
         // where cümleciği yoksa sorguyu iptal edelim
         if (queryWhere.length() < 1) {
             query = new StringBuilder();
+            query.append("no where criteria");
         }
 
         return query.toString();

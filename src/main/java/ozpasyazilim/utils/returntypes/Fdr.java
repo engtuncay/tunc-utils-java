@@ -1,9 +1,5 @@
 package ozpasyazilim.utils.returntypes;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.util.Pair;
 import ozpasyazilim.utils.annotations.FiReview;
 import ozpasyazilim.utils.core.*;
@@ -236,7 +232,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
 //		fdrNew.setBoPartialSuccces(fdrOld.getBoPartialSuccces());
 //		fdrNew.setRowsAffectedExtraWorks(fdrOld.getRowsAffectedExtraWorks());
 //		fdrNew.setRowsAffectedExtraByEntity(fdrOld.getRowsAffectedExtraByEntity());
-        fdrNew.setLnSuccessOpCount(fdrOld.getLnSuccessOpCount());
+        fdrNew.setLnSuccessOpCount(fdrOld.getLnSuccessOpCountInit());
         fdrNew.setLnFailureOpCount(fdrOld.getLnFailureOpCountInit());
     }
 
@@ -414,7 +410,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
 
     public void appendLnTrueResult(Integer lnSuccessCount) {
         if (lnSuccessCount == null) return;
-        setLnSuccessOpCount(getLnSuccessOpCount() + lnSuccessCount);
+        setLnSuccessOpCount(getLnSuccessOpCountInit() + lnSuccessCount);
     }
 
     public void appendLnFalseResult(Integer lnFailureCount) {
@@ -496,7 +492,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
         }
 
         if (FiBool.isTrue(fdrAppend.getBoResult())) {
-            setLnSuccessOpCount(getLnSuccessOpCount() + 1);
+            setLnSuccessOpCount(getLnSuccessOpCountInit() + 1);
             if (getBoResult() == null) setBoResult(true);
         }
 
@@ -592,10 +588,14 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
         }
     }
 
-    public Integer getLnSuccessOpCount() {
+    public Integer getLnSuccessOpCountInit() {
         if (lnSuccessOpCount == null) {
             lnSuccessOpCount = 0;
         }
+        return lnSuccessOpCount;
+    }
+
+    public Integer getLnSuccessOpCount() {
         return lnSuccessOpCount;
     }
 
@@ -645,7 +645,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     }
 
     public Boolean getBoPartialSuccces2() {
-        if (getLnSuccessOpCount() > 0 && getLnFailureOpCountInit() > 0) {
+        if (getLnSuccessOpCountInit() > 0 && getLnFailureOpCountInit() > 0) {
             return true;
         }
         return false;
@@ -846,7 +846,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
      * @return boolean
      */
     public boolean isPartialSuccess() {
-        if (getLnSuccessOpCount() > 0) {
+        if (getLnSuccessOpCountInit() > 0) {
             return true;
         }
         return false;

@@ -729,7 +729,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
         return this;
     }
 
-    public FiCol buiBoKeyField(Boolean boKeyField) {
+    public FiCol buiBoKeyIdField(Boolean boKeyField) {
         setBoKeyIdField(boKeyField);
         return this;
     }

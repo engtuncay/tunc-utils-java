@@ -402,6 +402,21 @@ public class FiString {
     }
 
     /**
+     * sondan başlayarak cropAmount kadar olan text'i alır. Mesela son 50 karekter gibi.
+     *
+     * @param text
+     * @param cropAmount
+     * @return
+     */
+    public static String cropStringFromEnd(String text, int cropAmount) {
+        if (text == null) return null;
+        if(text.length()>cropAmount){
+            return text.substring(text.length()-cropAmount);
+        }
+        return text;
+    }
+
+    /**
      * null ise boş string döner <br>
      * null değilse değerin kendisini döner
      *

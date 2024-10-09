@@ -1,5 +1,5 @@
-package ozpasyazilim.utils.datatypes;
 
+package ozpasyazilim.utils.datatypes;
 import javafx.beans.property.StringProperty;
 import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.fidborm.FiFieldUtil;
@@ -434,6 +434,15 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
     public void logParams() {
         Loghelper.get(getClass()).debug("FiKeyBean.logParams called");
         Loghelper.get(getClass()).debug(FiConsole.textFiKeyBean(this));
+    }
+
+    public void logFiCols() {
+
+        Loghelper.get(getClass()).debug("FiKeyBean listFiCol elemanları");
+        for (FiCol fiCol : getListFiColInit()) {
+            Loghelper.get(getClass()).debug(fiCol.toString());
+        }
+
     }
 
     public List<FiCol> getListFiCol() {
