@@ -40,7 +40,7 @@ public class FxEditorFactory {
     Map<String, String> mapSimpleClassToEditorClass;
 
     /**
-     * ## Component Node'u oluşturmak için kullanılır (Örneğin FxFormMig)
+     * ## Component Node'u oluşturmak için kullanılır (Örneğin FxFormMig'de kullanılır)
      * <p>
      * FiCol'dan extra özellikler alması için eklendi (length vs)
      * <p>

@@ -159,6 +159,25 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
         return FxEditorFactory.bindFormToFiKeyBeanByEditorNodeForFiCol(getListFormElements());
     }
 
+    public FiKeyBean getFormAsFkbNotNullKeys() {
+
+        FiKeyBean formAsFkb = FxEditorFactory.bindFormToFiKeyBeanByEditorNodeForFiCol(getListFormElements());
+
+        List<Object> listDeletedKey = new ArrayList<>();
+
+        formAsFkb.forEach((key, value) -> {
+            if (value == null) {
+                listDeletedKey.add(key);
+            }
+        });
+
+        for (Object key : listDeletedKey) {
+            formAsFkb.remove(key);
+        }
+
+        return formAsFkb;
+    }
+
     public List<FiCol> getFormAsFiColListWithFormValue() {
         FxEditorFactory.bindFormValueToFiColListByEditor(getListFormElements());
         return getListFormElements();
@@ -326,7 +345,7 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
     private void lifeCycleAfterAllFormLoad() {
 
         for (FiCol fiCol : getListFormElementsInit()) {
-            if (fiCol.getFnEditorNodeLfcAfterAllFormLoad()!=null) {
+            if (fiCol.getFnEditorNodeLfcAfterAllFormLoad() != null) {
                 fiCol.getFnEditorNodeLfcAfterAllFormLoad().accept(fiCol);
             }
         }

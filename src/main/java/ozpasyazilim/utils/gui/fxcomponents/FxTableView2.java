@@ -73,6 +73,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     private Runnable fnPageChanged;
 
     // Sayfalama componentleri
+
     private FxButton btnPageBegin;
     private FxButton btnPagePrev;
     private FxButton btnPageForward;
@@ -95,12 +96,23 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     private Runnable fnSummaryChanged;
 
-    // Özel Filtreler buraya eklenir
-    private List<Predicate> predFilterExtraList;
-    // Lokal içeriden yapılan filtrelemedir(ör.tablonun filter editorden gelen)
+    /**
+     * Lokal içeriden yapılan filtrelemedir(ör.tablonun filter editorden gelen)
+     */
     private Predicate predFilterLocal;
-    // Remote ise belli server üzerinde kayıt çekilirken yapılır.
-    private Predicate predFilterRemoteDb;
+
+    /**
+     * predFilterSpec1 - kullanıcı tarafından özel eklenen liste filtresi
+     * <p>
+     * Tüm filtreler, tabloya data eklenirken çalıştırılır.
+     */
+    private Predicate predFilterSpec1;
+
+    /**
+     * Diğer özel filtreler buraya eklenir
+     */
+    private List<Predicate> predFilterExtraList;
+
 
     private BooleanProperty propHeaderChange = new SimpleBooleanProperty(false);
 
@@ -113,41 +125,6 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     private EventHandler<KeyEvent> colFilterNodeKeyDownEvent;
 
     //private String headerSummaryClass = "tblHeaderSummary";
-
-    public void removeItemsAllFi() {
-        setItemsAsFilteredList(new ArrayList());
-    }
-
-    public void setPagingButtonsDisable(boolean boDisabled) {
-        getBtnPagePrev().setDisable(boDisabled);
-        getBtnPageBegin().setDisable(boDisabled);
-        getBtnPageForward().setDisable(boDisabled);
-    }
-
-    public void actiSelectionToSingleCell() {
-        // set selection mode to only 1 row
-        //getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        getSelectionModel().setCellSelectionEnabled(true);
-    }
-
-    public Boolean existColumn(String fieldName) {
-        for (FiCol fiTableCol : getFiColListOverListFxTableCol()) {
-            if (fiTableCol.getOfcTxFieldName().equals(fieldName)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public Boolean removeSelectedItem() {
-        EntClazz selectedItemFiGen = getSelectedItemFiGen();
-
-        if (selectedItemFiGen == null) {
-            return false;
-        }
-        removeItemFi(selectedItemFiGen);
-        return true;
-    }
 
     // TableRow factory içerisine eklenecek eventlar bu map in içerisine tanımlanır
     private Map<FxTableRowActions, Consumer<TableRow>> mapTableRowEvents;
@@ -166,6 +143,56 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     // FxTable comp i , fxtable mig içerisinde ise buraya set edilir.
     private FxTableMig2 fxTableMig;
+
+    /**
+     * Header gelen fkb'ye ek olarak alanlar buraya eklenebilir.
+     */
+    private FiKeyBean fkbHeaderFilterExtra;
+
+    // ******* constructors
+
+    public FxTableView2() {
+        super();
+        setupFxTable();
+    }
+
+    // *********** Metodlar
+
+    public void removeItemsAllFi() {
+        setItemsAsFilteredList(new ArrayList());
+    }
+
+    public void setPagingButtonsDisable(boolean boDisabled) {
+        getBtnPagePrev().setDisable(boDisabled);
+        getBtnPageBegin().setDisable(boDisabled);
+        getBtnPageForward().setDisable(boDisabled);
+    }
+
+    public void actiSelectionToSingleCell() {
+        // set selection mode to only 1 row
+        //getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        getSelectionModel().setCellSelectionEnabled(true);
+    }
+
+    public Boolean existColumn(String fieldName) {
+        for (FiCol fiTableCol : getFiColList()) {
+            if (fiTableCol.getOfcTxFieldName().equals(fieldName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Boolean removeSelectedItem() {
+        EntClazz selectedItemFiGen = getSelectedItemFiGen();
+
+        if (selectedItemFiGen == null) {
+            return false;
+        }
+        removeItemFi(selectedItemFiGen);
+        return true;
+    }
+
 
     public void selectItemFi(int index) {
         getSelectionModel().select(index);
@@ -192,13 +219,6 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     }
 
-
-    // ******* constructors
-
-    public FxTableView2() {
-        super();
-        setupFxTable();
-    }
 
     // **** setup method
 
@@ -370,7 +390,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     }
 
     public <PrmEntClazz> PrmEntClazz getFilterAsEntity(Class<PrmEntClazz> clazz) {
-        return FxEditorFactory.bindFormToEntityByFilterNode(getFiColListOverListFxTableCol(), clazz);
+        return FxEditorFactory.bindFormToEntityByFilterNode(getFiColList(), clazz);
     }
 
     /**
@@ -378,20 +398,20 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
      *
      * @return
      */
-    public FiKeyBean getFilterAsFkb() {
-        return FxEditorFactory.bindFiColToMapByFilterNode(getFiColListOverListFxTableCol());
+    public FiKeyBean getHeaderFilterAsFkb() {
+        return FxEditorFactory.bindFiColToMapByFilterNode(getFiColList());
     }
 
-    public EntClazz getFilterAsEntityGen() {
-        return FxEditorFactory.bindFormToEntityByFilterNode(getFiColListOverListFxTableCol(), getEntityClassAuto());
+    public EntClazz getHeaderFilterAsEntityGen() {
+        return FxEditorFactory.bindFormToEntityByFilterNode(getFiColList(), getEntityClassAuto());
     }
 
     /**
-     * FxTableCol2 objesindeki FiCol alanlarından alır.
+     * FxTableCol2 objesindeki FiCol alanlarının listesini verir
      *
      * @return
      */
-    public List<FiCol> getFiColListOverListFxTableCol() {
+    public List<FiCol> getFiColList() {
         return getListFxTableCol().stream().map(FxTableCol2::getRefFiCol).collect(Collectors.toList());
     }
 
@@ -1939,12 +1959,19 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         eventsAfterTableViewDataChange();
     }
 
+    /**
+     * ## Local filtreleme için tüm predicateler birleştirilir
+     * <p>
+     * getPredFilterLocal + getPredFilterRemoteDb + getPredFilterExtraList
+     *
+     * @return
+     */
     private Predicate getFilterPredicatesAll() {
         Predicate predAll = ent -> true;
         // lokal filtrelemeler, filtre editorune giriş yapılan verilerle yapılan
         if (getPredFilterLocal() != null) predAll = predAll.and(getPredFilterLocal());
         // harici modülden,dışarıdan eklenen filtreler
-        if (getPredFilterRemoteDb() != null) predAll = predAll.and(getPredFilterRemoteDb());
+        if (getPredFilterSpec1() != null) predAll = predAll.and(getPredFilterSpec1());
         //Loghelperr.getInstance(getClass()).debug("Size Filter Out : "+ getListPredFilterExtra().size());
         for (Predicate predItem : getPredFilterExtraList()) {
             predAll = predAll.and(predItem);
@@ -2315,12 +2342,12 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         return predFilterLocal;
     }
 
-    public Predicate getPredFilterRemoteDb() {
-        return predFilterRemoteDb;
+    public Predicate getPredFilterSpec1() {
+        return predFilterSpec1;
     }
 
-    public void setPredFilterRemoteDb(Predicate predFilterRemoteDb) {
-        this.predFilterRemoteDb = predFilterRemoteDb;
+    public void setPredFilterSpec1(Predicate predFilterSpec1) {
+        this.predFilterSpec1 = predFilterSpec1;
         activateFilters();
     }
 
@@ -2753,5 +2780,20 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     public FxButton getBtnPageEnd() {
         return btnPageEnd;
+    }
+
+    public FiKeyBean getFkbHeaderFilterExtra() {
+        return fkbHeaderFilterExtra;
+    }
+
+    public FiKeyBean getFkbHeaderFilterExtraInit() {
+        if (fkbHeaderFilterExtra == null) {
+            fkbHeaderFilterExtra = new FiKeyBean();
+        }
+        return fkbHeaderFilterExtra;
+    }
+
+    public void setFkbHeaderFilterExtra(FiKeyBean fkbHeaderFilterExtra) {
+        this.fkbHeaderFilterExtra = fkbHeaderFilterExtra;
     }
 }

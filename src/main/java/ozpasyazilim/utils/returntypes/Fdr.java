@@ -263,8 +263,13 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     }
 
     public static Fdr bui() {
-        Fdr fdrMethod = new Fdr();
-        return fdrMethod;
+        return new Fdr();
+    }
+
+    public static Fdr bui(Boolean boResult) {
+        Fdr fdr = new Fdr();
+        fdr.setBoResult(boResult);
+        return fdr;
     }
 
     public Optional<Boolean> getOpResult() {
