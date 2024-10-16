@@ -1,5 +1,6 @@
 
 package ozpasyazilim.utils.datatypes;
+
 import javafx.beans.property.StringProperty;
 import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.fidborm.FiFieldUtil;
@@ -38,7 +39,7 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
 
     IFiTableMeta iFiTableMeta;
 
-    HashMap<String,FiCol> mapFiCol;
+    HashMap<String, FiCol> mapFiCol;
 
 
     public FiKeyBean() {
@@ -117,7 +118,7 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
     public FiKeyBean putFiCol(FiCol fiCol, Object value) {
         this.put(fiCol.toString(), value);
         getListFiColInit().add(fiCol);
-        getMapFiColInit().put(fiCol.getOfcTxFieldName(),fiCol);
+        getMapFiColInit().put(fiCol.getOfcTxFieldName(), fiCol);
         return this;
     }
 
@@ -197,15 +198,13 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
     }
 
     /**
-     * Included Not Null Fields
-     * <p>
-     * Included Transient Fields
+     * Generate FiKeybean From Entity Fields (include not null fields and transient)
      *
      * @param entity
      * @param clazz
      * @return
      */
-    public FiKeyBean genFiMapParamsDb(Object entity, Class clazz) {
+    public FiKeyBean genFkbFromEntity(Object entity, Class clazz) {
 
         FiKeyBean fiKeyBean = new FiKeyBean();
         Field[] fields = clazz.getDeclaredFields(); // returns all members including private members but not inherited members.
@@ -294,7 +293,7 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
 
             if (objValue == null) return null;
 
-            if( objValue instanceof Integer){
+            if (objValue instanceof Integer) {
                 return (Integer) objValue;
             }
 
@@ -314,11 +313,11 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
 
             //Loghelper.get(getClass()).debug("Class:"+objValue.getClass().getSimpleName());
 
-            if( objValue instanceof Double){
+            if (objValue instanceof Double) {
                 return (Double) objValue;
             }
 
-            if( objValue instanceof BigDecimal){
+            if (objValue instanceof BigDecimal) {
                 return ((BigDecimal) objValue).doubleValue();
             }
 
@@ -336,7 +335,7 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
 
             if (objValue == null) return null;
 
-            if( objValue instanceof Date){
+            if (objValue instanceof Date) {
                 return (Date) objValue;
             }
 
@@ -461,7 +460,7 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
     }
 
     public String getCombineTireByFiCol(FiCol fiCol, FiCol fiCol2) {
-        return FiString.orEmpty(get(fiCol.getOfcTxFieldName()))+"-"+FiString.orEmpty(get(fiCol2.getOfcTxFieldName()));
+        return FiString.orEmpty(get(fiCol.getOfcTxFieldName())) + "-" + FiString.orEmpty(get(fiCol2.getOfcTxFieldName()));
     }
 
     public Object getByFiCol(FiCol fiCol) {
@@ -484,9 +483,9 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
         this.iFiTableMeta = iFiTableMeta;
     }
 
-    public void appendFiCol(FiCol fiCol){
+    public void appendFiCol(FiCol fiCol) {
         getListFiColInit().add(fiCol);
-        getMapFiColInit().put(fiCol.getOfcTxFieldName(),fiCol);
+        getMapFiColInit().put(fiCol.getOfcTxFieldName(), fiCol);
     }
 
     @Override
@@ -510,7 +509,7 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
     }
 
     public Object getTos(Object fiCol) {
-        if(fiCol==null) return null;
+        if (fiCol == null) return null;
 
         return get(fiCol.toString());
     }

@@ -2507,9 +2507,9 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         Platform.runLater(() -> {
 
             Integer pageCurrent = getLnCurrentPageNoInit();
-            String txPageForwardTooltip = String.valueOf(pageCurrent + 1); // 1/20 =0.1+1 =1+1 =2
+            //String txPageForwardTooltip = String.valueOf(pageCurrent + 1); // 1/20 =0.1+1 =1+1 =2
 
-            getBtnPageForward().setFiSimpleTooltip(txPageForwardTooltip);
+            //getBtnPageForward().setFiSimpleTooltip(txPageForwardTooltip);
             getLblPageNoIndex().setText(pageCurrent.toString() + "/" + calcLnLastPageNo().toString());
 
             //Loghelper.debug(getClass(), "LnPageStartIndex :"+ getLnPageStartIndex());
@@ -2517,12 +2517,12 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
             // İlk Sayfada Prev ve Begin Disable olur
             if (getLnPageStartIndexInit() == 1) {
                 getBtnPagePrev().setDisable(true);
-                getBtnPagePrev().setFiSimpleTooltip("");
+                //getBtnPagePrev().setFiSimpleTooltip("");
                 getBtnPageBegin().setDisable(true);
             } else {
                 getBtnPagePrev().setDisable(false);
-                String pagePrev = String.valueOf(pageCurrent - 1);
-                getBtnPagePrev().setFiSimpleTooltip(pagePrev);
+                //String pagePrev = String.valueOf(pageCurrent - 1);
+                //getBtnPagePrev().setFiSimpleTooltip(pagePrev);
                 getBtnPageBegin().setDisable(false);
             }
 

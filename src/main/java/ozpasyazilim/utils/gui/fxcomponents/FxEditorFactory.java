@@ -676,7 +676,7 @@ public class FxEditorFactory {
     public static <E> E bindFormToEntityByEditorNode(List<? extends IFiCol> listColumns, Class<E> clazz) {
 
         return bindFormToEntityMainByNode(listColumns, clazz, iFiTableCol -> {
-            return getNodeObjValueByEditorNode(iFiTableCol, iFiTableCol.getColEditorClass());
+            return getNodeObjValue(iFiTableCol, iFiTableCol.getColEditorClass());
         });
 
     }
@@ -869,7 +869,7 @@ public class FxEditorFactory {
         FiKeyBean fiKeyBean = new FiKeyBean();
         for (int i = 0; i < listColumns.size(); i++) {
             IFiCol iFiCol = listColumns.get(i);
-            Object cellvalue = getNodeObjValueByEditorNode(iFiCol, iFiCol.getColEditorClass());    // map.get(iFiCol.getHeader());
+            Object cellvalue = getNodeObjValue(iFiCol, iFiCol.getColEditorClass());    // map.get(iFiCol.getHeader());
             //Loghelperr.getInstance(getClass()).debug(" map param cell value :" + cellvalue.toString() + " class:" + cellvalue.getClass().getSimpleName());
             fiKeyBean.put(iFiCol.getOfcTxFieldName().trim(), cellvalue);
         }
@@ -886,7 +886,7 @@ public class FxEditorFactory {
         FiKeyBean fiKeyBean = new FiKeyBean();
         for (int i = 0; i < listColumns.size(); i++) {
             FiCol fiCol = listColumns.get(i);
-            Object cellvalue = getNodeObjValueByEditorNode(fiCol, fiCol.getColEditorClass());    // map.get(fiCol.getHeader());
+            Object cellvalue = getNodeObjValue(fiCol, fiCol.getColEditorClass());    // map.get(fiCol.getHeader());
             //Loghelperr.getInstance(getClass()).debug(" map param cell value :" + cellvalue.toString() + " class:" + cellvalue.getClass().getSimpleName());
             //fiKeyBean.put(fiCol.getFieldName().trim(), cellvalue);
             fiKeyBean.putFiCol(fiCol, cellvalue);
@@ -898,7 +898,7 @@ public class FxEditorFactory {
 
         for (int i = 0; i < listColumns.size(); i++) {
             FiCol fiCol = listColumns.get(i);
-            Object cellvalue = getNodeObjValueByEditorNode(fiCol, fiCol.getColEditorClass());
+            Object cellvalue = getNodeObjValue(fiCol, fiCol.getColEditorClass());
             fiCol.setColValue(cellvalue);
         }
 
@@ -1027,15 +1027,15 @@ public class FxEditorFactory {
     }
 
 
-    public static Object getNodeObjValueByFilterNode(IFiCol iFiTableCol, String prmEditorClass) {
-        return getValueFromNodeCompMain(iFiTableCol.getColType(), prmEditorClass, iFiTableCol.getColFilterNode(), iFiTableCol.getFilterValue());
+    public static Object getNodeObjValueByFilterNode(IFiCol iFiCol, String prmEditorClass) {
+        return getValueFromNodeCompMain(iFiCol.getColType(), prmEditorClass, iFiCol.getColFilterNode(), iFiCol.getFilterValue());
     }
 
-    public static Object getNodeObjValueByEditorNode(IFiCol iFiCol, String txEditorClass) {
+    public static Object getNodeObjValue(IFiCol iFiCol, String txEditorClass) {
         return getValueFromNodeCompMain(iFiCol.getColType(), txEditorClass, iFiCol.getColEditorNode(), iFiCol.getColValue());
     }
 
-    public static Object getNodeObjValueByEditorNode(FiCol fiCol) {
+    public static Object getNodeObjValue(FiCol fiCol) {
         return getValueFromNodeCompMain(fiCol.getColType(), fiCol.getColEditorClass(), fiCol.getColEditorNode(), fiCol.getColValue());
     }
 
@@ -1659,7 +1659,7 @@ public class FxEditorFactory {
             if (FiBool.isTrue(fiTableCol.getBoRequired()) || FiBool.isFalse(fiTableCol.getBoNullable())) {
 
                 //Object cellValue = fiTableCol.getColEditorValue();
-                Object cellValue = FxEditorFactory.getNodeObjValueByEditorNode(fiTableCol, fiTableCol.getColEditorClass());
+                Object cellValue = FxEditorFactory.getNodeObjValue(fiTableCol, fiTableCol.getColEditorClass());
 
                 // Null ve Boş Alan Kontrolü
                 if (cellValue == null ||
