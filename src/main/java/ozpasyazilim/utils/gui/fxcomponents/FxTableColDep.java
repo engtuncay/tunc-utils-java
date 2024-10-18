@@ -31,7 +31,7 @@ import java.util.function.Predicate;
  *
  * @param <Clazz>
  */
-public class FxTableCol<Clazz> extends TableColumn implements IFiCol<Clazz> {
+public class FxTableColDep<Clazz> extends TableColumn implements IFiCol<Clazz> {
 
 	// FxTable Col a Özel Alanlar
 
@@ -85,12 +85,12 @@ public class FxTableCol<Clazz> extends TableColumn implements IFiCol<Clazz> {
 	private BiConsumer<Object, Node> fnEditorNodeRendererAfterLoad;
 
 	private BiConsumer<Object, Node> fnEditorSetOnAction;
-	private TriConsumer<Object, Node, FxTableCol> fnEditorSetOnActionWitCol;
+	private TriConsumer<Object, Node, FxTableColDep> fnEditorSetOnActionWitCol;
 	private TriConsumer<Object, Node, Object> fnEditorSetOnActionWitValue;
 
 	private Function<Object, Object> fnEditorNodeValueFormmatter;
 	private BiConsumer<Object, Node> fnEditorNodeRenderer; // celfactoryedinoderenderer
-	private TriConsumer<Object, Node, FxTableCol> fnEditorNodeRendererWithCol; // celfactoryedinoderenderer
+	private TriConsumer<Object, Node, FxTableColDep> fnEditorNodeRendererWithCol; // celfactoryedinoderenderer
 	private TriConsumer<Object, Node, Object> fnEditorNodeRendererWitValue; // celfactoryedinoderenderer
 
 	// cell value dinamik olarak gelmiyor  deprecated
@@ -160,15 +160,15 @@ public class FxTableCol<Clazz> extends TableColumn implements IFiCol<Clazz> {
 	private IfxNode ifxNodeEditor;
 
 
-	public FxTableCol() {
+	public FxTableColDep() {
 
 	}
 
-	public FxTableCol(String fiHeader) {
+	public FxTableColDep(String fiHeader) {
 		super(fiHeader);
 	}
 
-	public FxTableCol(String fieldName, String fiHeader) {
+	public FxTableColDep(String fieldName, String fiHeader) {
 		super(fiHeader);
 		this.setOfcTxFieldName(fieldName);
 		//this.setId(fieldName);
@@ -176,7 +176,7 @@ public class FxTableCol<Clazz> extends TableColumn implements IFiCol<Clazz> {
 		setCellValueFactory(new PropertyValueFactory<>(fieldName));
 	}
 
-	public FxTableCol(String fiHeader, String fieldName, OzColType fiDataType) {
+	public FxTableColDep(String fiHeader, String fieldName, OzColType fiDataType) {
 		super(fiHeader);
 		this.setOfcTxFieldName(fieldName);
 		this.setId(fieldName);
@@ -186,36 +186,36 @@ public class FxTableCol<Clazz> extends TableColumn implements IFiCol<Clazz> {
 		setAutoFormatter(fiDataType);
 	}
 
-	public FxTableCol(FiCol fiTableCol) {
+	public FxTableColDep(FiCol fiTableCol) {
 		setValuesFromInfTableCol(fiTableCol);
 	}
 
-	public FxTableCol(IFiCol ozTableCol) {
+	public FxTableColDep(IFiCol ozTableCol) {
 		setValuesFromInfTableCol(ozTableCol);
 	}
 
-	public static FxTableCol build(String header, String fieldName) {
+	public static FxTableColDep build(String header, String fieldName) {
 		fieldName = fieldName.replaceFirst("__", ".");
-		FxTableCol fxTableCol = new FxTableCol(fieldName, header);
-		return fxTableCol;
+		FxTableColDep fxTableColDep = new FxTableColDep(fieldName, header);
+		return fxTableColDep;
 	}
 
-	public static FxTableCol build2(String fieldName, String header) {
-		FxTableCol fxTableCol = new FxTableCol(fieldName, header);
-		return fxTableCol;
+	public static FxTableColDep build2(String fieldName, String header) {
+		FxTableColDep fxTableColDep = new FxTableColDep(fieldName, header);
+		return fxTableColDep;
 	}
 
-	public static FxTableCol build3(Object fieldName, String header) {
-		FxTableCol fxTableCol = new FxTableCol(fieldName.toString(), header);
-		return fxTableCol;
+	public static FxTableColDep build3(Object fieldName, String header) {
+		FxTableColDep fxTableColDep = new FxTableColDep(fieldName.toString(), header);
+		return fxTableColDep;
 	}
 
-	public FxTableCol buildFxNodeClass(String editorClassName) {
+	public FxTableColDep buildFxNodeClass(String editorClassName) {
 		this.setFilterNodeClass(editorClassName);
 		return this;
 	}
 
-	public FxTableCol buildIsHidden(Boolean isHidden) {
+	public FxTableColDep buildIsHidden(Boolean isHidden) {
 		this.setBoHidden(isHidden);
 		return this;
 	}
@@ -319,17 +319,17 @@ public class FxTableCol<Clazz> extends TableColumn implements IFiCol<Clazz> {
 
 	}
 
-	public FxTableCol buiColType(OzColType colType) {
+	public FxTableColDep buiColType(OzColType colType) {
 		setColType(colType);
 		return this;
 	}
 
-	public FxTableCol buiPrefSize(Double prefSize) {
+	public FxTableColDep buiPrefSize(Double prefSize) {
 		setPrefSize(prefSize);
 		return this;
 	}
 
-	public FxTableCol buildPrefSize(Integer prefSize) {
+	public FxTableColDep buildPrefSize(Integer prefSize) {
 		setPrefSize(prefSize.doubleValue());
 		return this;
 	}
@@ -340,21 +340,21 @@ public class FxTableCol<Clazz> extends TableColumn implements IFiCol<Clazz> {
 	 * @param lengthCharacter
 	 * @return
 	 */
-	public FxTableCol buildPrintSize(Integer lengthCharacter) {
+	public FxTableColDep buildPrintSize(Integer lengthCharacter) {
 		setPrintSize(lengthCharacter);
 		return this;
 	}
 
-	public FxTableCol buiSumType(OzColSummaryType summaryType) {
+	public FxTableColDep buiSumType(OzColSummaryType summaryType) {
 		setSummaryType(summaryType);
 		return this;
 	}
 
-	public FxTableCol buildColFilterValue(Object fiValue) {
+	public FxTableColDep buildColFilterValue(Object fiValue) {
 		setFilterValue(fiValue);
 		return this;
 	}
-	public FxTableCol buildColEditorValue(Object fiValue) {
+	public FxTableColDep buildColEditorValue(Object fiValue) {
 		setColValue(fiValue);
 		return this;
 	}
@@ -365,18 +365,18 @@ public class FxTableCol<Clazz> extends TableColumn implements IFiCol<Clazz> {
 	 * @param className
 	 * @return
 	 */
-	public FxTableCol buildColEditorClass(String className) {
+	public FxTableColDep buildColEditorClass(String className) {
 		setColEditorClass(className);
 		return this;
 	}
 
-	public static FxTableCol findColumnByFieldName(List<FxTableCol> listFxCols, String fieldName) {
+	public static FxTableColDep findColumnByFieldName(List<FxTableColDep> listFxCols, String fieldName) {
 
 		if (listFxCols.size() > 0) {
 
-			for (FxTableCol fxTableCol : listFxCols) {
-				if (fxTableCol.getOfcTxFieldName().equals(fieldName)) {
-					return fxTableCol;
+			for (FxTableColDep fxTableColDep : listFxCols) {
+				if (fxTableColDep.getOfcTxFieldName().equals(fieldName)) {
+					return fxTableColDep;
 				}
 			}
 		}
@@ -396,13 +396,13 @@ public class FxTableCol<Clazz> extends TableColumn implements IFiCol<Clazz> {
 		return null;
 	}
 
-	public static FxTableCol findColumnByHeader(List<FxTableCol> listFxCols, String headerText) {
+	public static FxTableColDep findColumnByHeader(List<FxTableColDep> listFxCols, String headerText) {
 
 		if (listFxCols.size() > 0) {
 
-			for (FxTableCol fxTableCol : listFxCols) {
-				if (fxTableCol.getOfcTxHeader().equals(headerText)) {
-					return fxTableCol;
+			for (FxTableColDep fxTableColDep : listFxCols) {
+				if (fxTableColDep.getOfcTxHeader().equals(headerText)) {
+					return fxTableColDep;
 				}
 			}
 		}
@@ -416,12 +416,12 @@ public class FxTableCol<Clazz> extends TableColumn implements IFiCol<Clazz> {
 	 * @param biConsumer
 	 * @return
 	 */
-	public FxTableCol buildFnEditorSetOnAction(BiConsumer<Object, Node> biConsumer) {
+	public FxTableColDep buildFnEditorSetOnAction(BiConsumer<Object, Node> biConsumer) {
 		setFnEditorSetOnAction(biConsumer);
 		return this;
 	}
 
-	public FxTableCol buildFnEditorSetOnAction(TriConsumer<Object, Node,FxTableCol> triConsumer) {
+	public FxTableColDep buildFnEditorSetOnAction(TriConsumer<Object, Node, FxTableColDep> triConsumer) {
 		setFnEditorSetOnActionWitCol(triConsumer);
 		return this;
 	}
@@ -435,40 +435,40 @@ public class FxTableCol<Clazz> extends TableColumn implements IFiCol<Clazz> {
 	 * @param triConsumer
 	 * @return
 	 */
-	public FxTableCol buildFnEditorSetOnActionWithValue(TriConsumer<Object, Node, Object> triConsumer) {
+	public FxTableColDep buildFnEditorSetOnActionWithValue(TriConsumer<Object, Node, Object> triConsumer) {
 		setFnEditorSetOnActionWitValue(triConsumer);
 		return this;
 	}
 
-	public FxTableCol buildFnEditorRenderer(BiConsumer<Object, Node> fnCellFactoryEdiNodeRenderer) {
+	public FxTableColDep buildFnEditorRenderer(BiConsumer<Object, Node> fnCellFactoryEdiNodeRenderer) {
 		//this.fnCellFactoryEdiNodeRenderer = fnCellFactoryEdiNodeRenderer;
 		setFnEditorNodeRendererOnLoad(fnCellFactoryEdiNodeRenderer);
 		return this;
 	}
 
-	public FxTableCol buildFnEditorRenderer(TriConsumer<Object, Node, FxTableCol> fnCellFactoryEdiNodeRenderer) {
+	public FxTableColDep buildFnEditorRenderer(TriConsumer<Object, Node, FxTableColDep> fnCellFactoryEdiNodeRenderer) {
 		//this.fnCellFactoryEdiNodeRenderer = fnCellFactoryEdiNodeRenderer;
 		setFnEditorNodeRendererWithCol(fnCellFactoryEdiNodeRenderer);
 		return this;
 	}
 
-	public FxTableCol buildFnEditoreRendererWithVal(TriConsumer<Object, Node, Object> fnCellFactoryEdiNodeRenderer) {
+	public FxTableColDep buildFnEditoreRendererWithVal(TriConsumer<Object, Node, Object> fnCellFactoryEdiNodeRenderer) {
 		//this.fnCellFactoryEdiNodeRenderer = fnCellFactoryEdiNodeRenderer;
 		setFnEditorNodeRendererWitValue(fnCellFactoryEdiNodeRenderer);
 		return this;
 	}
 
-	public FxTableCol buildFxNodeText(String fxNodeText) {
+	public FxTableColDep buildFxNodeText(String fxNodeText) {
 		setColEditorNodeText(fxNodeText);
 		return this;
 	}
 
-	public FxTableCol buildColFilterable(Boolean colFilterable) {
+	public FxTableColDep buildColFilterable(Boolean colFilterable) {
 		setBoFilterable(colFilterable);
 		return this;
 	}
 
-	public FxTableCol buildFiEditable(Boolean boFiEditable) {
+	public FxTableColDep buildFiEditable(Boolean boFiEditable) {
 		setBoEditable(true);
 		return this;
 	}
@@ -796,14 +796,14 @@ public class FxTableCol<Clazz> extends TableColumn implements IFiCol<Clazz> {
 	}
 
 	@Override
-	public FxTableCol buiHeader(String header) {
+	public FxTableColDep buiHeader(String header) {
 		this.fiHeader = header;
 		return this;
 	}
 
-	public void setFiHeaderAsVbox(FxMigPane vboxHeader, FxTableCol fxTableCol) {
+	public void setFiHeaderAsVbox(FxMigPane vboxHeader, FxTableColDep fxTableColDep) {
 		setPaneHeader(vboxHeader);
-		setText(fxTableCol.getOfcTxHeader());
+		setText(fxTableColDep.getOfcTxHeader());
 		setGraphic(vboxHeader);
 	}
 
@@ -923,7 +923,7 @@ public class FxTableCol<Clazz> extends TableColumn implements IFiCol<Clazz> {
 		this.boIsNotExportedExcel = boIsNotExportedExcel;
 	}
 
-	public FxTableCol buildDoNotExportExcel(Boolean doNotExportExcel) {
+	public FxTableColDep buildDoNotExportExcel(Boolean doNotExportExcel) {
 		this.boIsNotExportedExcel = doNotExportExcel;
 		return this;
 	}
@@ -957,19 +957,19 @@ public class FxTableCol<Clazz> extends TableColumn implements IFiCol<Clazz> {
 //	public void setColFxNode(Node colFxNode) {this.colFxNode = colFxNode;}
 
 
-	public TriConsumer<Object, Node, FxTableCol> getFnEditorSetOnActionWitCol() {
+	public TriConsumer<Object, Node, FxTableColDep> getFnEditorSetOnActionWitCol() {
 		return fnEditorSetOnActionWitCol;
 	}
 
-	public void setFnEditorSetOnActionWitCol(TriConsumer<Object, Node, FxTableCol> fnEditorSetOnActionWitCol) {
+	public void setFnEditorSetOnActionWitCol(TriConsumer<Object, Node, FxTableColDep> fnEditorSetOnActionWitCol) {
 		this.fnEditorSetOnActionWitCol = fnEditorSetOnActionWitCol;
 	}
 
-	public TriConsumer<Object, Node, FxTableCol> getFnEditorNodeRendererWithCol() {
+	public TriConsumer<Object, Node, FxTableColDep> getFnEditorNodeRendererWithCol() {
 		return fnEditorNodeRendererWithCol;
 	}
 
-	public void setFnEditorNodeRendererWithCol(TriConsumer<Object, Node, FxTableCol> fnEditorNodeRendererWithCol) {
+	public void setFnEditorNodeRendererWithCol(TriConsumer<Object, Node, FxTableColDep> fnEditorNodeRendererWithCol) {
 		this.fnEditorNodeRendererWithCol = fnEditorNodeRendererWithCol;
 	}
 

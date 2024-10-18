@@ -7,7 +7,6 @@ import ozpasyazilim.utils.core.FiBool;
 import ozpasyazilim.utils.core.FiCollection;
 import ozpasyazilim.utils.core.FiString;
 import ozpasyazilim.utils.datatypes.FiKeyBean;
-import ozpasyazilim.utils.fxwindow.FiArbWindowCont;
 import ozpasyazilim.utils.fxwindow.FiDialogMetaType;
 import ozpasyazilim.utils.gui.fxTableViewExtra.EnumColNodeType;
 import ozpasyazilim.utils.log.Loghelper;
@@ -100,11 +99,11 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
             initPlainFormV1();
             // formEntity varsa, alanlara değerler set edilir
             if (getRefFormEntity() != null) {
-                FxEditorFactory.bindEntityToFormByEditorValue(getListFormElements(), getRefFormEntity());
+                FxEditorFactory.bindEntityToEditorComponentsByEditorValue(getListFormElements(), getRefFormEntity());
             }
 
             if (getRefFormFkb() != null) {
-                FxEditorFactory.bindFiKeybeanToFormByEditorValue(getListFormElements(), getRefFormFkb());
+                FxEditorFactory.bindFkbToFormByEditorValue(getListFormElements(), getRefFormFkb());
             }
             // Form değerleri eklendikten sonra trigger edilecek metodlar
             trigEventsAfterFormLoaded();
@@ -147,7 +146,7 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
 
 
     public void bindEntitytoForm(EntClazz formMikroKodDegistir) {
-        FxEditorFactory.bindEntityToFormByEditorValue(getListFormElements(), formMikroKodDegistir);
+        FxEditorFactory.bindEntityToEditorComponentsByEditorValue(getListFormElements(), formMikroKodDegistir);
     }
 
     /**
@@ -156,12 +155,12 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
      * @return
      */
     public FiKeyBean getFormAsFkb() {
-        return FxEditorFactory.bindFormToFiKeyBeanByEditorNodeForFiCol(getListFormElements());
+        return FxEditorFactory.bindFormToFkbByEditorNodeForFiCol(getListFormElements());
     }
 
     public FiKeyBean getFormAsFkbNotNullKeys() {
 
-        FiKeyBean formAsFkb = FxEditorFactory.bindFormToFiKeyBeanByEditorNodeForFiCol(getListFormElements());
+        FiKeyBean formAsFkb = FxEditorFactory.bindFormToFkbByEditorNodeForFiCol(getListFormElements());
 
         List<Object> listDeletedKey = new ArrayList<>();
 
@@ -420,7 +419,7 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
 
     public void bindEntityToForm(EntClazz formEntity) {
         setRefFormEntity(formEntity);
-        FxEditorFactory.bindEntityToFormByEditorValue(getListFormElements(), getRefFormEntity());
+        FxEditorFactory.bindEntityToEditorComponentsByEditorValue(getListFormElements(), getRefFormEntity());
         trigEventsAfterFormLoaded();
     }
 

@@ -59,7 +59,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 	private String fxId;
 	private Map<String, Object> styleMap;
-	private List<FxTableCol> fxTableColList;
+	private List<FxTableColDep> fxTableColDepList;
 	private FilteredList filteredList;
 	// gereksiz çıkartılabilir
 	private Boolean filteredListActive;
@@ -93,7 +93,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 	FxTableMig fxTableMig;
 	private EventHandler<KeyEvent> colFilterKeyDownEvent;
 
-	public static void setFxColsFilterableNullToTrue(List<FxTableCol> colTblMain) {
+	public static void setFxColsFilterableNullToTrue(List<FxTableColDep> colTblMain) {
 		colTblMain.forEach(fxTableCol -> {
 			if (fxTableCol.getBoFilterable() == null) fxTableCol.setBoFilterable(true);
 		});
@@ -186,28 +186,28 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 	}
 
-	public void addAllFxTableColsPlain(List<FxTableCol> fxTableColList) {
+	public void addAllFxTableColsPlain(List<FxTableColDep> fxTableColDepList) {
 
-		if (fxTableColList == null) return;
+		if (fxTableColDepList == null) return;
 
-		for (int i = 0; i < fxTableColList.size(); i++) {
-			FxTableCol fxTableCol = fxTableColList.get(i);
-			addFxTableCol(fxTableCol);
+		for (int i = 0; i < fxTableColDepList.size(); i++) {
+			FxTableColDep fxTableColDep = fxTableColDepList.get(i);
+			addFxTableCol(fxTableColDep);
 		}
 
 	}
 
-	public FxTableView addAllFxTableColsAuto(List<FxTableCol> fxTableColList) {
+	public FxTableView addAllFxTableColsAuto(List<FxTableColDep> fxTableColDepList) {
 
-		for (int i = 0; i < fxTableColList.size(); i++) {
+		for (int i = 0; i < fxTableColDepList.size(); i++) {
 
-			FxTableCol fxTableCol = fxTableColList.get(i);
+			FxTableColDep fxTableColDep = fxTableColDepList.get(i);
 
 			//fxTableCol.setAutoColumnDefault();
-			autoFiColumnCellValueAndEditorFactoryConfig(fxTableCol);
+			autoFiColumnCellValueAndEditorFactoryConfig(fxTableColDep);
 
 			//Loghelperr.getInstance(getClass()).debug(" Fx TableView col id:"+fxTableCol.getId());
-			addFxTableCol(fxTableCol);
+			addFxTableCol(fxTableColDep);
 		}
 		return this;
 	}
@@ -219,35 +219,35 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 		}
 	}
 
-	private void autoFiColumnCellValueAndEditorFactoryConfig(FxTableCol fxTableCol) {
+	private void autoFiColumnCellValueAndEditorFactoryConfig(FxTableColDep fxTableColDep) {
 		//Loghelperr.getInstance(getClass()).debug("added "+ fxTableCol.getFieldName());
-		fxTableCol.setText(fxTableCol.getOfcTxHeader());
+		fxTableColDep.setText(fxTableColDep.getOfcTxHeader());
 
-		if (fxTableCol.getOfcTxFieldName().contains(".")) {
-			Loghelper.get(getClass()).debug("Nested:" + fxTableCol.getOfcTxFieldName());
-			fxTableCol.setCellValueFactory(new NestedPropertyValueFactory(fxTableCol.getOfcTxFieldName()));
+		if (fxTableColDep.getOfcTxFieldName().contains(".")) {
+			Loghelper.get(getClass()).debug("Nested:" + fxTableColDep.getOfcTxFieldName());
+			fxTableColDep.setCellValueFactory(new NestedPropertyValueFactory(fxTableColDep.getOfcTxFieldName()));
 		} else {
-			fxTableCol.setCellValueFactory(new PropertyValueFactory<>(fxTableCol.getOfcTxFieldName()));
+			fxTableColDep.setCellValueFactory(new PropertyValueFactory<>(fxTableColDep.getOfcTxFieldName()));
 		}
 
-		autoFiCellEditorFactoryDefaultConfig(fxTableCol);
-		fxTableCol.setId(fxTableCol.getOfcTxFieldName());
-		fxTableCol.setAutoFormatter(fxTableCol.getColType());
+		autoFiCellEditorFactoryDefaultConfig(fxTableColDep);
+		fxTableColDep.setId(fxTableColDep.getOfcTxFieldName());
+		fxTableColDep.setAutoFormatter(fxTableColDep.getColType());
 	}
 
 	/**
 	 * Eğer cell editor factory class , default editor factory ayarlar burada yapılır
 	 *
-	 * @param fxTableCol
+	 * @param fxTableColDep
 	 */
-	private void autoFiCellEditorFactoryDefaultConfig(FxTableCol fxTableCol) {
+	private void autoFiCellEditorFactoryDefaultConfig(FxTableColDep fxTableColDep) {
 
 		// cell Factory
-		if (!FiString.isEmpty(fxTableCol.getColEditorClass())) return;
+		if (!FiString.isEmpty(fxTableColDep.getColEditorClass())) return;
 
-		if (fxTableCol.getColType() == OzColType.Boolean) {
+		if (fxTableColDep.getColType() == OzColType.Boolean) {
 
-			fxTableCol.fiStyleAlignCenter();
+			fxTableColDep.fiStyleAlignCenter();
 
 //			fxTableCol.setCellValueFactory(param -> {
 //				TableColumn.CellDataFeatures paramm = (TableColumn.CellDataFeatures) param;
@@ -283,21 +283,21 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 									node.setSelected(false);
 								}
 
-								if (FiBool.isTrue(fxTableCol.getBoEditable())) {
+								if (FiBool.isTrue(fxTableColDep.getBoEditable())) {
 
-									if (fxTableCol.getPredFiEditorDisable() != null) {
-										node.setDisable(fxTableCol.getPredFiEditorDisable().test(getTableView().getItems().get(getIndex())));
+									if (fxTableColDep.getPredFiEditorDisable() != null) {
+										node.setDisable(fxTableColDep.getPredFiEditorDisable().test(getTableView().getItems().get(getIndex())));
 									} else {
 										node.setDisable(false);
 									}
 
 									node.setOnAction(actionEvent -> {
-										Boolean result = FiReflection.setter(getTableView().getItems().get(getIndex()), fxTableCol.getOfcTxFieldName(), node.isSelected());
+										Boolean result = FiReflection.setter(getTableView().getItems().get(getIndex()), fxTableColDep.getOfcTxFieldName(), node.isSelected());
 										if (!result) {
 											FxDialogShow.showPopWarn("Yazılımsal Hata!!! Seçilemedi.");
 										} else {
-											if (fxTableCol.getFnColCellChanged() != null) {
-												fxTableCol.getFnColCellChanged().accept(getTableView().getItems().get(getIndex()));
+											if (fxTableColDep.getFnColCellChanged() != null) {
+												fxTableColDep.getFnColCellChanged().accept(getTableView().getItems().get(getIndex()));
 											}
 											//updateFiltersLocalAndOut();
 										}
@@ -318,18 +318,18 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 				}
 			};
 
-			fxTableCol.setCellFactory(cellFactoryCheckBox);
+			fxTableColDep.setCellFactory(cellFactoryCheckBox);
 
 		}
 
 	}
 
 	//private void setFiCellEditorFactory(FxTableCol fxTableCol) {
-	public void activateCellFactoryClass(FxTableCol fxTableCol) {
+	public void activateCellFactoryClass(FxTableColDep fxTableColDep) {
 
-		if (fxTableCol.getColEditorClass() == null) return;
+		if (fxTableColDep.getColEditorClass() == null) return;
 
-		if (fxTableCol.getColEditorClass().equals(CheckBox.class.getSimpleName())) {
+		if (fxTableColDep.getColEditorClass().equals(CheckBox.class.getSimpleName())) {
 
 //			fxTableCol.setCellFactory(new Callback<TableColumn<S, Boolean>, TableCell<S, Boolean>>() {
 //
@@ -343,7 +343,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 //				}
 //			});
 
-			fxTableCol.setCellFactory(new Callback<TableColumn, TableCell>() {
+			fxTableColDep.setCellFactory(new Callback<TableColumn, TableCell>() {
 				@Override
 				public TableCell call(TableColumn param) {
 					CheckBoxTableCell cell = new CheckBoxTableCell();
@@ -355,8 +355,8 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 		}
 
 
-		if (fxTableCol.getColEditorClass().equals(Button.class.getSimpleName())
-				|| fxTableCol.getColEditorClass().equals(Button.class.getName())) {
+		if (fxTableColDep.getColEditorClass().equals(Button.class.getSimpleName())
+				|| fxTableColDep.getColEditorClass().equals(Button.class.getName())) {
 
 			// callback < P,R> parameter and return types
 			Callback<TableColumn<EntClazz, String>, TableCell<EntClazz, String>> cellFactory
@@ -369,7 +369,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 								// table cell objesi
 
-								final Button btn = new Button(fxTableCol.getColEditorNodeText());
+								final Button btn = new Button(fxTableColDep.getColEditorNodeText());
 
 								@Override
 								public void updateItem(String item, boolean empty) {
@@ -380,8 +380,8 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 									} else { // empty false ise
 										btn.setOnAction(event -> {
 											EntClazz entity = getTableView().getItems().get(getIndex()); // table cell objesinin gettableview methodu
-											if (fxTableCol.getFnEditorSetOnActionWithEntity() != null) {
-												fxTableCol.getFnEditorSetOnActionWithEntity().accept(entity);
+											if (fxTableColDep.getFnEditorSetOnActionWithEntity() != null) {
+												fxTableColDep.getFnEditorSetOnActionWithEntity().accept(entity);
 											}
 											//System.out.println(person.getFirstName()+ "   " + person.getLastName());
 										});
@@ -395,11 +395,11 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 						}
 					};
 
-			fxTableCol.setCellFactory(cellFactory);
+			fxTableColDep.setCellFactory(cellFactory);
 		}
 
 		// 26-09-2019 Genel İşlevli Factory Class , istenilen comp üretilip ona göre render edilir
-		if (fxTableCol.getColEditorClass().equals(Node.class.getName())) {
+		if (fxTableColDep.getColEditorClass().equals(Node.class.getName())) {
 
 			// callback < P,R> parameter and return types
 			Callback<TableColumn<EntClazz, Object>, TableCell<EntClazz, Object>> cellFactory
@@ -424,8 +424,8 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 									} else { // empty false ise
 
 										EntClazz entity = getTableView().getItems().get(getIndex());
-										if (fxTableCol.getFnEditorNodeRendererBeforeSettingValue() != null) {
-											fxTableCol.getFnEditorNodeRendererBeforeSettingValue().accept(entity, nodeComp);
+										if (fxTableColDep.getFnEditorNodeRendererBeforeSettingValue() != null) {
+											fxTableColDep.getFnEditorNodeRendererBeforeSettingValue().accept(entity, nodeComp);
 										}
 
 										setGraphic(nodeComp);
@@ -438,11 +438,11 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 						}
 					};
 
-			fxTableCol.setCellFactory(cellFactory);
+			fxTableColDep.setCellFactory(cellFactory);
 		}
 
 		// 26-09-2019 Genel İşlevli FxButton
-		if (fxTableCol.getColEditorClass().equals(EnumColNodeType.FxButtonV2.toString())) {
+		if (fxTableColDep.getColEditorClass().equals(EnumColNodeType.FxButtonV2.toString())) {
 
 			// callback < P,R> parameter and return types
 			Callback<TableColumn<EntClazz, Object>, TableCell<EntClazz, Object>> cellFactory
@@ -455,7 +455,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 							// table cell objesi
 							final TableCell<EntClazz, Object> cell = new TableCell<EntClazz, Object>() {
 
-								final FxButton nodeComp = new FxButton(FiString.orEmpty(fxTableCol.getColEditorNodeText()));
+								final FxButton nodeComp = new FxButton(FiString.orEmpty(fxTableColDep.getColEditorNodeText()));
 
 								// Item hücrenin içine gelen değer (string,boolean,double vs)
 								@Override
@@ -466,70 +466,70 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 										setText(null);
 									} else { // empty false ise
 
-										if (fxTableCol.getFnEditorNodeRendererBeforeSettingValue() != null) {
+										if (fxTableColDep.getFnEditorNodeRendererBeforeSettingValue() != null) {
 											EntClazz entity = getTableView().getItems().get(getIndex());
-											fxTableCol.getFnEditorNodeRendererBeforeSettingValue().accept(entity, nodeComp);
+											fxTableColDep.getFnEditorNodeRendererBeforeSettingValue().accept(entity, nodeComp);
 										}
 
-										if (fxTableCol.getFnEditorNodeRendererWithCol() != null) {
+										if (fxTableColDep.getFnEditorNodeRendererWithCol() != null) {
 											EntClazz entity = getTableView().getItems().get(getIndex());
-											fxTableCol.getFnEditorNodeRendererWithCol().accept(entity, nodeComp,fxTableCol);
+											fxTableColDep.getFnEditorNodeRendererWithCol().accept(entity, nodeComp, fxTableColDep);
 										}
 
-										if (fxTableCol.getFnEditorNodeRendererWitValue() != null) {
+										if (fxTableColDep.getFnEditorNodeRendererWitValue() != null) {
 											EntClazz entity = getTableView().getItems().get(getIndex());
-											Object propertyNested = FiReflection.getPropertyNested(entity, fxTableCol.getOfcTxFieldName());
-											fxTableCol.getFnEditorNodeRendererWitValue().accept(entity, nodeComp,propertyNested);
+											Object propertyNested = FiReflection.getPropertyNested(entity, fxTableColDep.getOfcTxFieldName());
+											fxTableColDep.getFnEditorNodeRendererWitValue().accept(entity, nodeComp,propertyNested);
 										}
 
 
-										if (fxTableCol.getFnEditorSetOnAction() != null) {
+										if (fxTableColDep.getFnEditorSetOnAction() != null) {
 
 											nodeComp.setOnAction(event -> {
 												EntClazz entity = getTableView().getItems().get(getIndex());
 
 												// Önce action yürütülür , daha sonra renderer işlemi yapılır
-												fxTableCol.getFnEditorSetOnAction().accept(entity, nodeComp);
+												fxTableColDep.getFnEditorSetOnAction().accept(entity, nodeComp);
 
 
-												if (fxTableCol.getFnEditorNodeRendererBeforeSettingValue() != null) {
-													fxTableCol.getFnEditorNodeRendererBeforeSettingValue().accept(entity, nodeComp);
+												if (fxTableColDep.getFnEditorNodeRendererBeforeSettingValue() != null) {
+													fxTableColDep.getFnEditorNodeRendererBeforeSettingValue().accept(entity, nodeComp);
 												}
 
 
 											});
 										}
 
-										if (fxTableCol.getFnEditorSetOnActionWitCol() != null) {
+										if (fxTableColDep.getFnEditorSetOnActionWitCol() != null) {
 
 											nodeComp.setOnAction(event -> {
 												EntClazz entity = getTableView().getItems().get(getIndex());
 
 												// Önce action yürütülür , daha sonra renderer işlemi yapılır
-												fxTableCol.getFnEditorSetOnActionWitCol().accept(entity, nodeComp,fxTableCol);
+												fxTableColDep.getFnEditorSetOnActionWitCol().accept(entity, nodeComp, fxTableColDep);
 
 
-												if (fxTableCol.getFnEditorNodeRendererWithCol() != null) {
-													fxTableCol.getFnEditorNodeRendererWithCol().accept(entity, nodeComp,fxTableCol);
+												if (fxTableColDep.getFnEditorNodeRendererWithCol() != null) {
+													fxTableColDep.getFnEditorNodeRendererWithCol().accept(entity, nodeComp, fxTableColDep);
 												}
 
 											});
 										}
 
-										if (fxTableCol.getFnEditorSetOnActionWitValue() != null) {
+										if (fxTableColDep.getFnEditorSetOnActionWitValue() != null) {
 
 											nodeComp.setOnAction(event -> {
 												EntClazz entity = getTableView().getItems().get(getIndex());
 
 												// Önce action yürütülür , daha sonra renderer işlemi yapılır
 												if(true){
-													Object propertyNested = FiReflection.getPropertyNested(entity, fxTableCol.getOfcTxFieldName());
-													fxTableCol.getFnEditorSetOnActionWitValue().accept(entity, nodeComp,propertyNested);
+													Object propertyNested = FiReflection.getPropertyNested(entity, fxTableColDep.getOfcTxFieldName());
+													fxTableColDep.getFnEditorSetOnActionWitValue().accept(entity, nodeComp,propertyNested);
 												}
 
-												if (fxTableCol.getFnEditorNodeRendererWitValue() != null) {
-													Object propertyNested = FiReflection.getPropertyNested(entity, fxTableCol.getOfcTxFieldName());
-													fxTableCol.getFnEditorNodeRendererWitValue().accept(entity, nodeComp,propertyNested);
+												if (fxTableColDep.getFnEditorNodeRendererWitValue() != null) {
+													Object propertyNested = FiReflection.getPropertyNested(entity, fxTableColDep.getOfcTxFieldName());
+													fxTableColDep.getFnEditorNodeRendererWitValue().accept(entity, nodeComp,propertyNested);
 												}
 
 											});
@@ -545,11 +545,11 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 						}
 					};
 
-			fxTableCol.setCellFactory(cellFactory);
+			fxTableColDep.setCellFactory(cellFactory);
 		}
 
-		if (fxTableCol.getColEditorClass().equals(FxButton.class.getName())
-				|| fxTableCol.getColEditorClass().equals(FxButton.class.getSimpleName())) {
+		if (fxTableColDep.getColEditorClass().equals(FxButton.class.getName())
+				|| fxTableColDep.getColEditorClass().equals(FxButton.class.getSimpleName())) {
 
 			// callback < P,R> parameter and return types
 			Callback<TableColumn<EntClazz, String>, TableCell<EntClazz, String>> cellFactory
@@ -562,7 +562,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 								// table cell objesi
 
-								final FxButton btn = new FxButton(fxTableCol.getColEditorNodeText());
+								final FxButton btn = new FxButton(fxTableColDep.getColEditorNodeText());
 
 								@Override
 								public void updateItem(String item, boolean empty) {
@@ -573,8 +573,8 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 									} else { // empty false ise
 										btn.setOnAction(event -> {
 											EntClazz entity = getTableView().getItems().get(getIndex()); // table cell objesinin gettableview methodu
-											if (fxTableCol.getFnEditorSetOnActionWithEntity() != null) {
-												fxTableCol.getFnEditorSetOnActionWithEntity().accept(entity);
+											if (fxTableColDep.getFnEditorSetOnActionWithEntity() != null) {
+												fxTableColDep.getFnEditorSetOnActionWithEntity().accept(entity);
 											}
 											//System.out.println(person.getFirstName()+ "   " + person.getLastName());
 										});
@@ -588,10 +588,10 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 						}
 					};
 
-			fxTableCol.setCellFactory(cellFactory);
+			fxTableColDep.setCellFactory(cellFactory);
 		}
 
-		if (fxTableCol.getColEditorClass().equals(ToggleButton.class.getSimpleName())) {
+		if (fxTableColDep.getColEditorClass().equals(ToggleButton.class.getSimpleName())) {
 
 			// callback < P,R> parameter and return types
 			Callback<TableColumn<EntClazz, Boolean>, TableCell<EntClazz, Boolean>> cellFactory
@@ -604,7 +604,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 								// table cell objesi
 
-								final ToggleButton btn = new ToggleButton(fxTableCol.getColEditorNodeText());
+								final ToggleButton btn = new ToggleButton(fxTableColDep.getColEditorNodeText());
 
 								@Override
 								public void updateItem(Boolean item, boolean empty) {
@@ -626,7 +626,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 											//if(fxTableCol.getCellFactoryNodeBiAction()==null)return;
 
-											fxTableCol.getFnEditorSetOnAction().accept(entity, btn);
+											fxTableColDep.getFnEditorSetOnAction().accept(entity, btn);
 
 											if (btn.isSelected()) {
 												//new FiProperty().setter(entity,fxTableCol.getFieldName(),true);
@@ -652,10 +652,10 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 						}
 					};
 
-			fxTableCol.setCellFactory(cellFactory);
+			fxTableColDep.setCellFactory(cellFactory);
 		}
 
-		if (fxTableCol.getColEditorClass().equals(FxStateButton.class.getSimpleName())) {
+		if (fxTableColDep.getColEditorClass().equals(FxStateButton.class.getSimpleName())) {
 
 			// callback < P,R> parameter and return types
 			Callback<TableColumn<EntClazz, Integer>, TableCell<EntClazz, Integer>> cellFactory
@@ -668,7 +668,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 								// table cell objesi
 
-								final FxStateButton btn = new FxStateButton(fxTableCol.getColEditorNodeText());
+								final FxStateButton btn = new FxStateButton(fxTableColDep.getColEditorNodeText());
 
 								@Override
 								public void updateItem(Integer item, boolean empty) {
@@ -683,8 +683,8 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 										EntClazz entity = getTableView().getItems().get(getIndex());
 
-										if (fxTableCol.getFnEditorNodeRendererBeforeSettingValue() != null) {
-											fxTableCol.getFnEditorNodeRendererBeforeSettingValue().accept(entity, btn);
+										if (fxTableColDep.getFnEditorNodeRendererBeforeSettingValue() != null) {
+											fxTableColDep.getFnEditorNodeRendererBeforeSettingValue().accept(entity, btn);
 										}
 
 										btn.setOnAction(event -> {
@@ -694,10 +694,10 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 											//if(fxTableCol.getCellFactoryNodeBiAction()==null)return;
 
 											// Action gerçekleştirilir, daha sonra renderer işlemleri yapılır
-											fxTableCol.getFnEditorSetOnAction().accept(entity, btn);
+											fxTableColDep.getFnEditorSetOnAction().accept(entity, btn);
 
-											if (fxTableCol.getFnEditorNodeRendererBeforeSettingValue() != null)
-												fxTableCol.getFnEditorNodeRendererBeforeSettingValue().accept(entity, btn);
+											if (fxTableColDep.getFnEditorNodeRendererBeforeSettingValue() != null)
+												fxTableColDep.getFnEditorNodeRendererBeforeSettingValue().accept(entity, btn);
 
 											//new FiProperty().setter(entity,fxTableCol.getFieldName(),true);
 											//fxTableCol.getCellFactoryNodeBiAction().accept(entity,btn);
@@ -712,10 +712,10 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 						}
 					};
 
-			fxTableCol.setCellFactory(cellFactory);
+			fxTableColDep.setCellFactory(cellFactory);
 		}
 
-		if (fxTableCol.getColEditorClass().equals(FxStateButtonThree.class.getSimpleName())) {
+		if (fxTableColDep.getColEditorClass().equals(FxStateButtonThree.class.getSimpleName())) {
 
 			// callback < P,R> parameter and return types
 			Callback<TableColumn<EntClazz, Integer>, TableCell<EntClazz, Integer>> cellFactory
@@ -728,7 +728,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 								// table cell objesi
 
-								final FxStateButtonThree btn = new FxStateButtonThree(fxTableCol.getColEditorNodeText());
+								final FxStateButtonThree btn = new FxStateButtonThree(fxTableColDep.getColEditorNodeText());
 
 								@Override
 								public void updateItem(Integer item, boolean empty) {
@@ -743,8 +743,8 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 										EntClazz entity = getTableView().getItems().get(getIndex());
 
-										if (fxTableCol.getFnEditorNodeRendererBeforeSettingValue() != null) {
-											fxTableCol.getFnEditorNodeRendererBeforeSettingValue().accept(entity, btn);
+										if (fxTableColDep.getFnEditorNodeRendererBeforeSettingValue() != null) {
+											fxTableColDep.getFnEditorNodeRendererBeforeSettingValue().accept(entity, btn);
 										}
 
 										btn.setOnAction(event -> {
@@ -753,7 +753,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 											//if(fxTableCol.getCellFactoryNodeBiAction()==null)return;
 
-											fxTableCol.getFnEditorSetOnAction().accept(entity, btn);
+											fxTableColDep.getFnEditorSetOnAction().accept(entity, btn);
 
 											//new FiProperty().setter(entity,fxTableCol.getFieldName(),true);
 											//fxTableCol.getCellFactoryNodeBiAction().accept(entity,btn);
@@ -768,13 +768,13 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 						}
 					};
 
-			fxTableCol.setCellFactory(cellFactory);
+			fxTableColDep.setCellFactory(cellFactory);
 			return;
 		}
 
-		if (fxTableCol.getColEditorClass().equals(EnumColNodeType.FxButtonCustom.toString())) {
+		if (fxTableColDep.getColEditorClass().equals(EnumColNodeType.FxButtonCustom.toString())) {
 
-			fxTableCol.fiStyleAlignCenter();
+			fxTableColDep.fiStyleAlignCenter();
 
 			// callback S : entity , Field Tür : Object : Herhangi bir tipde hücre alanı olabilir
 			Callback<TableColumn<EntClazz, Object>, TableCell<EntClazz, Object>> cellFactory =
@@ -786,7 +786,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 								// table cell objesi
 
-								final FxStateButton btn = new FxStateButton(fxTableCol.getColEditorNodeText());
+								final FxStateButton btn = new FxStateButton(fxTableColDep.getColEditorNodeText());
 
 								@Override
 								public void updateItem(Object item, boolean empty) {
@@ -801,8 +801,8 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 										EntClazz entity = getTableView().getItems().get(getIndex());
 
-										if (fxTableCol.getFnEditorNodeRendererBeforeSettingValue() != null) {
-											fxTableCol.getFnEditorNodeRendererBeforeSettingValue().accept(entity, btn);
+										if (fxTableColDep.getFnEditorNodeRendererBeforeSettingValue() != null) {
+											fxTableColDep.getFnEditorNodeRendererBeforeSettingValue().accept(entity, btn);
 										}
 
 										btn.setOnAction(event -> {
@@ -810,11 +810,11 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 											//S entity = getTableView().getItems().get(getIndex()); // table cell objesinin gettableview methodu
 
 											// Action gerçekleştirilir, daha sonra renderer işlemleri yapılır
-											if (fxTableCol.getFnEditorSetOnAction() != null)
-												fxTableCol.getFnEditorSetOnAction().accept(entity, btn);
+											if (fxTableColDep.getFnEditorSetOnAction() != null)
+												fxTableColDep.getFnEditorSetOnAction().accept(entity, btn);
 
-											if (fxTableCol.getFnEditorNodeRendererBeforeSettingValue() != null)
-												fxTableCol.getFnEditorNodeRendererBeforeSettingValue().accept(entity, btn);
+											if (fxTableColDep.getFnEditorNodeRendererBeforeSettingValue() != null)
+												fxTableColDep.getFnEditorNodeRendererBeforeSettingValue().accept(entity, btn);
 
 											//new FiProperty().setter(entity,fxTableCol.getFieldName(),true);
 
@@ -829,24 +829,24 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 						}
 					};
 
-			fxTableCol.setCellFactory(cellFactory);
+			fxTableColDep.setCellFactory(cellFactory);
 		}
 
 	}
 
 	public void addAllInfTableColumnList(List<? extends IFiCol> tableColumns) {
 
-		List<FxTableCol> listFxTableCol = new ArrayList<>();
+		List<FxTableColDep> listFxTableColDep = new ArrayList<>();
 
 		for (int colIndex = 0; colIndex < tableColumns.size(); colIndex++) {
 
 			IFiCol ifiTableCol = tableColumns.get(colIndex);
 			// Column geçerli değilse eklenmez
 			if (FiBool.isFalse(ifiTableCol.getBoEnabled())) continue;
-			listFxTableCol.add(new FxTableCol(ifiTableCol));
+			listFxTableColDep.add(new FxTableColDep(ifiTableCol));
 		}
 
-		addAllFxTableColsAuto(listFxTableCol);
+		addAllFxTableColsAuto(listFxTableColDep);
 
 	}
 
@@ -866,12 +866,12 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 			// Column geçerli değilse eklenmez
 			if (ozTableCol.getBoEnabled() != null && !ozTableCol.getBoEnabled()) continue;
 
-			FxTableCol fxTableCol = new FxTableCol(ozTableCol);
+			FxTableColDep fxTableColDep = new FxTableColDep(ozTableCol);
 
 			if (ozTableCol.getColType() == null) ozTableCol.setColType(OzColType.String);
 
-			fxTableCol.setAutoColumnNoFormatter();
-			addFxTableCol(fxTableCol);
+			fxTableColDep.setAutoColumnNoFormatter();
+			addFxTableCol(fxTableColDep);
 
 			//Loghelperr.getInstance(getClass()).debug(" Fx TableView col id:"+fxTableCol.getId());
 
@@ -879,16 +879,16 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 	}
 
-	public void addFxTableCol(FxTableCol fxTableCol) {
-		this.getColumns().add(fxTableCol);
-		getFxTableColList().add(fxTableCol);
-		setupHeaderPaneAndTitle(fxTableCol);
-		if (getEnabledLocalFilterEditor() || getEnabledRemoteFilterEditor()) setupHeaderFilterNode(fxTableCol);
-		if (getEnableSummaryRowHeader() == true) setupHeaderSummaryNode(fxTableCol);
-		activateFilter(fxTableCol);
-		activateCellFactoryClass(fxTableCol);
+	public void addFxTableCol(FxTableColDep fxTableColDep) {
+		this.getColumns().add(fxTableColDep);
+		getFxTableColList().add(fxTableColDep);
+		setupHeaderPaneAndTitle(fxTableColDep);
+		if (getEnabledLocalFilterEditor() || getEnabledRemoteFilterEditor()) setupHeaderFilterNode(fxTableColDep);
+		if (getEnableSummaryRowHeader() == true) setupHeaderSummaryNode(fxTableColDep);
+		activateFilter(fxTableColDep);
+		activateCellFactoryClass(fxTableColDep);
 
-		fxTableCol.setGraphic(fxTableCol.getPaneHeader());
+		fxTableColDep.setGraphic(fxTableColDep.getPaneHeader());
 	}
 
 //	public void refreshHeader() {
@@ -1010,59 +1010,59 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 	}
 
 
-	public void activateHeader(FxTableCol fxTableCol) {
+	public void activateHeader(FxTableColDep fxTableColDep) {
 
 	}
 
 
-	private void activateFilter(FxTableCol fxTableCol) {
+	private void activateFilter(FxTableColDep fxTableColDep) {
 
 		Boolean headerAdded = false;
 
-		if (FiBool.isFalse(fxTableCol.getBoFilterable())) {
+		if (FiBool.isFalse(fxTableColDep.getBoFilterable())) {
 			return;
 		}
 
-		if (FiBool.isTrue(fxTableCol.getBoFilterable())) {
-			setupHeaderFilterNode(fxTableCol);
+		if (FiBool.isTrue(fxTableColDep.getBoFilterable())) {
+			setupHeaderFilterNode(fxTableColDep);
 			headerAdded = true;
 		}
 
 		if (getEnabledLocalFilterEditor() || getEnabledRemoteFilterEditor()) {
 			if (!headerAdded) {
-				if (fxTableCol.getBoFilterable() == null) fxTableCol.setBoFilterable(true);
-				setupHeaderFilterNode(fxTableCol);
+				if (fxTableColDep.getBoFilterable() == null) fxTableColDep.setBoFilterable(true);
+				setupHeaderFilterNode(fxTableColDep);
 				headerAdded = true;
 			}
 		}
 
 
-		if (getEnabledLocalFilterEditor() || FiType.isTrue(fxTableCol.getBoFilterable())) {
+		if (getEnabledLocalFilterEditor() || FiType.isTrue(fxTableColDep.getBoFilterable())) {
 
 			if (!headerAdded) {
-				if (fxTableCol.getBoFilterable() == null) fxTableCol.setBoFilterable(true);
-				setupHeaderFilterNode(fxTableCol);
+				if (fxTableColDep.getBoFilterable() == null) fxTableColDep.setBoFilterable(true);
+				setupHeaderFilterNode(fxTableColDep);
 				headerAdded = true;
 			}
 
-			if (fxTableCol.getColFilterNode() == null) defAutoEditorClass(Arrays.asList(fxTableCol));
+			if (fxTableColDep.getColFilterNode() == null) defAutoEditorClass(Arrays.asList(fxTableColDep));
 
 			//ChangeListener changeListener = (observable, oldValue, newValue) -> filterLocal(newValue); // fxtablecol da eklenebilir
 			Consumer<String> changeConsumer = textProp -> filterLocal(textProp);
-			FxEditorFactory.registerTextPropertyWithDurationForFilterNode(fxTableCol, changeConsumer, 250);
-			FxEditorFactory.registerEnterFnForFilterNode(fxTableCol, getColFilterNodeEnterFnGlobal());
+			FxEditorFactory.registerTextPropertyWithDurationForFilterNode(fxTableColDep, changeConsumer, 250);
+			FxEditorFactory.registerEnterFnForFilterNode(fxTableColDep, getColFilterNodeEnterFnGlobal());
 			//fxTableCol.getTxfFilter().textProperty().addListener(changeListener);
 		}
 
-		if (getEnabledRemoteFilterEditor() && !FiBool.isFalse(fxTableCol.getBoFilterable())) {
+		if (getEnabledRemoteFilterEditor() && !FiBool.isFalse(fxTableColDep.getBoFilterable())) {
 
 			if (!headerAdded) {
-				if (fxTableCol.getBoFilterable() == null) fxTableCol.setBoFilterable(true);
-				setupHeaderFilterNode(fxTableCol);
+				if (fxTableColDep.getBoFilterable() == null) fxTableColDep.setBoFilterable(true);
+				setupHeaderFilterNode(fxTableColDep);
 				headerAdded = true;
 			}
 
-			FxEditorFactory.registerEnterFnForFilterNode(fxTableCol, getColFilterNodeEnterFnGlobal());
+			FxEditorFactory.registerEnterFnForFilterNode(fxTableColDep, getColFilterNodeEnterFnGlobal());
 		}
 
 	}
@@ -1102,7 +1102,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 //		});
 //
 //	}
-	private void setupHeaderPaneAndTitle(FxTableCol fxcol) {
+	private void setupHeaderPaneAndTitle(FxTableColDep fxcol) {
 
 		if (fxcol.getPaneHeader() != null) return;
 
@@ -1133,7 +1133,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 	}
 
 
-	private void setupHeaderFilterNode(FxTableCol fxcol) {
+	private void setupHeaderFilterNode(FxTableColDep fxcol) {
 
 		if (fxcol.getColFilterNode() != null) return;
 
@@ -1185,7 +1185,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 	}
 
-	private void setupHeaderSummaryNode(FxTableCol fxcol) {
+	private void setupHeaderSummaryNode(FxTableColDep fxcol) {
 
 		//09-08-2019
 		if (fxcol.getColHeaderSummaryNode() != null) return;
@@ -1360,7 +1360,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 			Boolean filterCheckResult = true;
 
-			for (FxTableCol fxTableColumn : getFxTableColList()) {
+			for (FxTableColDep fxTableColumn : getFxTableColList()) {
 
 				// sütun filtrelenebilir olması gerekir
 				if (FiBool.isTrue(fxTableColumn.getBoFilterable())) {
@@ -1687,38 +1687,38 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 	}
 
 
-	public FxTableCol getColumnByID(String colID) {
+	public FxTableColDep getColumnByID(String colID) {
 
 		//ObservableList<TableColumn<S, ?>> columns = getColumns();
 
-		for (FxTableCol fxTableCol : getFxTableColList()) {
-			if (fxTableCol.getId().equals(colID)) {
-				return fxTableCol;
+		for (FxTableColDep fxTableColDep : getFxTableColList()) {
+			if (fxTableColDep.getId().equals(colID)) {
+				return fxTableColDep;
 			}
 
 		}
 		return null;
 	}
 
-	public FxTableCol getColumnByFieldName(String fieldName) {
+	public FxTableColDep getColumnByFieldName(String fieldName) {
 
-		for (FxTableCol fxTableCol : getFxTableColList()) {
-			if (fxTableCol.getOfcTxFieldName().equals(fieldName)) {
-				return fxTableCol;
+		for (FxTableColDep fxTableColDep : getFxTableColList()) {
+			if (fxTableColDep.getOfcTxFieldName().equals(fieldName)) {
+				return fxTableColDep;
 			}
 		}
 		return null;
 	}
 
-	public List<FxTableCol> getFxTableColList() {
-		if (fxTableColList == null) {
-			fxTableColList = new ArrayList<>();
+	public List<FxTableColDep> getFxTableColList() {
+		if (fxTableColDepList == null) {
+			fxTableColDepList = new ArrayList<>();
 		}
-		return fxTableColList;
+		return fxTableColDepList;
 	}
 
-	private void setFxTableColList(List<FxTableCol> fxTableColList) {
-		this.fxTableColList = fxTableColList;
+	private void setFxTableColList(List<FxTableColDep> fxTableColDepList) {
+		this.fxTableColDepList = fxTableColDepList;
 	}
 
 	public Map<String, Object> getStyleMap() {
@@ -1755,14 +1755,14 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 	public Node getEditorComp(String fieldName) {
 
-		FxTableCol ozTableCol = getColumnByFieldName(fieldName);
+		FxTableColDep ozTableCol = getColumnByFieldName(fieldName);
 		return ozTableCol.getColFilterNode();
 
 	}
 
 	public FxTextField getEditorCompFxTexfield(String fieldName) {
 
-		FxTableCol ozTableCol = getColumnByFieldName(fieldName);
+		FxTableColDep ozTableCol = getColumnByFieldName(fieldName);
 
 		if (ozTableCol.getFilterNodeClass().equals(FxTextField.class.getName())) {
 			FxTextField comp = (FxTextField) ozTableCol.getColFilterNode();
@@ -1774,7 +1774,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 	public FxTextFieldBtn getEditorCompFxTexfieldWithButt(String fieldName) {
 
-		FxTableCol ozTableCol = getColumnByFieldName(fieldName);
+		FxTableColDep ozTableCol = getColumnByFieldName(fieldName);
 
 		if (ozTableCol.getFilterNodeClass().equals(FxTextFieldBtn.class.getName())) {
 			FxTextFieldBtn comp = (FxTextFieldBtn) ozTableCol.getColFilterNode();
@@ -1946,9 +1946,9 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 		updateFiltersLocalAndOut();
 	}
 
-	public void removeFxTableCol(FxTableCol fxTableCol) {
-		getColumns().remove(fxTableCol);
-		getFxTableColList().remove(fxTableCol);
+	public void removeFxTableCol(FxTableColDep fxTableColDep) {
+		getColumns().remove(fxTableColDep);
+		getFxTableColList().remove(fxTableColDep);
 	}
 
 	@Override

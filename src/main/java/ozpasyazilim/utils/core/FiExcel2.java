@@ -155,7 +155,7 @@ public class FiExcel2 {
 
             String txHeader = "";
 
-            FxTableCol tblcol = (FxTableCol) table.getColumns().get(indexCol);
+            FxTableColDep tblcol = (FxTableColDep) table.getColumns().get(indexCol);
 
             Object nodeHeader = tblcol.getGraphic();
 
@@ -197,7 +197,7 @@ public class FiExcel2 {
 
         for (int indexCol = 0; indexCol < table.getColumns().size(); indexCol++) { // For each column
 
-            FxTableCol tableColumn = (FxTableCol) table.getColumns().get(indexCol);
+            FxTableColDep tableColumn = (FxTableColDep) table.getColumns().get(indexCol);
 
             String columnId = tableColumn.getId();
 
@@ -328,7 +328,7 @@ public class FiExcel2 {
 
             String txHeader = "";
 
-            FxTableCol tblcol = (FxTableCol) table.getColumns().get(indexColExcel);
+            FxTableColDep tblcol = (FxTableColDep) table.getColumns().get(indexColExcel);
 
             if (FiBool.isTrue(tblcol.getBoIsNotExportedExcel())) continue;
             indexCol++;
@@ -380,7 +380,7 @@ public class FiExcel2 {
         indexCol = -1;
         for (int indexColExcel = 0; indexColExcel < table.getColumns().size(); indexColExcel++) { // For each column
 
-            FxTableCol tableColumn = (FxTableCol) table.getColumns().get(indexColExcel);
+            FxTableColDep tableColumn = (FxTableColDep) table.getColumns().get(indexColExcel);
 
             if (FiBool.isTrue(tableColumn.getBoIsNotExportedExcel())) continue;
             indexCol++;
@@ -864,7 +864,7 @@ public class FiExcel2 {
         int colIndexContent = -1;
         for (int colIndexExcel = 0; colIndexExcel < colSizeTable; colIndexExcel++) { // For each table column
 
-            FxTableCol tblcol = (FxTableCol) table.getColumns().get(colIndexExcel);
+            FxTableColDep tblcol = (FxTableColDep) table.getColumns().get(colIndexExcel);
             //ObservableValue obsval = (ObservableValue) tblcol.getCellObservableValue(row).getValue();
             //Object obj = obsval.getValue();
             if (FiBool.isTrue(tblcol.getBoIsNotExportedExcel())) continue;

@@ -95,7 +95,7 @@ public class FxFormcGen<EntClazz> extends FxMigPaneGenView<EntClazz> implements 
         if (getFormTypeSelected() == FormType.PlainFormV1) initPlainFormV1();
 
         if (getFormEntity() != null) {
-            FxEditorFactory.bindEntityToFormByEditorValue(getListFormElementsInit(), getFormEntity());
+            FxEditorFactory.bindEntityToEditorComponentsByEditorValue(getListFormElementsInit(), getFormEntity());
         }
 
         // Form Değerleri Yüklendikten sonraki Lifecycle metodu çalıştırılır
@@ -185,11 +185,11 @@ public class FxFormcGen<EntClazz> extends FxMigPaneGenView<EntClazz> implements 
     }
 
     public void getFormAsEntity(EntClazz formMikroKodDegistir) {
-        FxEditorFactory.bindEntityToFormByEditorValue(getListFormElementsInit(), formMikroKodDegistir);
+        FxEditorFactory.bindEntityToEditorComponentsByEditorValue(getListFormElementsInit(), formMikroKodDegistir);
     }
 
     public FiKeyBean getFormAsFkb() {
-        return FxEditorFactory.bindFormToFiKeyBeanByEditorNode(getListFormElementsInit());
+        return FxEditorFactory.bindFormToFkbByEditorNode(getListFormElementsInit());
     }
 
     public List<FiCol> getListFiColWithFormValue() {
@@ -361,7 +361,7 @@ public class FxFormcGen<EntClazz> extends FxMigPaneGenView<EntClazz> implements 
 //			fiCol.doNodeOperationsAfterInitialValue2(formEntity,fiCol.getColEditorNode());
 //		}
 
-        FxEditorFactory.bindEntityToFormByEditorValue(getListFormElementsInit(), getFormEntity());
+        FxEditorFactory.bindEntityToEditorComponentsByEditorValue(getListFormElementsInit(), getFormEntity());
         trigEventsAfterLoadFormValue();
     }
 

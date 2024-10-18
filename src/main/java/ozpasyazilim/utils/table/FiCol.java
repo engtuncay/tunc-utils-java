@@ -146,7 +146,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     // ---- Editor Action
     private Consumer<EntClazz> fnEditorSetOnActionWithEntity;
     private BiConsumer<Object, Node> fnEditorSetOnAction;
-    private TriConsumer<Object, Node, FxTableCol> fnEditorSetOnActionWitCol;
+    private TriConsumer<Object, Node, FxTableColDep> fnEditorSetOnActionWitCol;
     private TriConsumer<Object, Node, Object> fnEditorSetOnActionWitValue;
 
     /**
@@ -765,7 +765,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
         return this;
     }
 
-    public FiCol buiBoFilterable(Boolean boFilterable) {
+    public FiCol buiBoFilt(Boolean boFilterable) {
         setBoFilterable(boFilterable);
         return this;
     }
@@ -800,6 +800,12 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     }
 
     public FiCol buiBoFilterLike(Boolean boFilterLike) {
+        setBoFilterLike(boFilterLike);
+        return this;
+    }
+
+    public FiCol buiBoFiltAndLike(Boolean boFilterLike) {
+        setBoFilterable(true);
         setBoFilterLike(boFilterLike);
         return this;
     }
@@ -1272,11 +1278,11 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
         this.fnEditorSetOnAction = fnEditorSetOnAction;
     }
 
-    public TriConsumer<Object, Node, FxTableCol> getFnEditorSetOnActionWitCol() {
+    public TriConsumer<Object, Node, FxTableColDep> getFnEditorSetOnActionWitCol() {
         return fnEditorSetOnActionWitCol;
     }
 
-    public void setFnEditorSetOnActionWitCol(TriConsumer<Object, Node, FxTableCol> fnEditorSetOnActionWitCol) {
+    public void setFnEditorSetOnActionWitCol(TriConsumer<Object, Node, FxTableColDep> fnEditorSetOnActionWitCol) {
         this.fnEditorSetOnActionWitCol = fnEditorSetOnActionWitCol;
     }
 

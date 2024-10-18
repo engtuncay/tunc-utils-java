@@ -399,7 +399,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
      * @return
      */
     public FiKeyBean getHeaderFilterAsFkb() {
-        return FxEditorFactory.bindFiColToMapByFilterNode(getFiColList());
+        return FxEditorFactory.bindFiColListToFkbByFilterNode(getFiColList());
     }
 
     public EntClazz getHeaderFilterAsEntityGen() {
@@ -598,14 +598,13 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         return getSelectionModel().getSelectedItem();
     }
 
-    public FxTableView2 setActivateFxColsFilterableNullToTrue() {
+    public void setActivateColsFilterableNullToTrueAndEnableLocalFilter() {
         getListFxTableCol().forEach(fxTableCol -> {
             if (fxTableCol.getRefFiCol().getBoFilterable() == null)
                 fxTableCol.getRefFiCol().setBoFilterable(true);
         });
         setEnableLocalFilterEditor(true);
         activateFilters();
-        return this;
     }
 
 
@@ -753,7 +752,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     @FiDraft
     @Deprecated
-    public void activateHeader(FxTableCol fxTableCol) {
+    public void activateHeader(FxTableColDep fxTableColDep) {
 
     }
 
@@ -1999,9 +1998,9 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         executeFiltersLocalAndExtra();
     }
 
-    public void removeFxTableCol(FxTableCol fxTableCol) {
-        getColumns().remove(fxTableCol);
-        getListFxTableCol().remove(fxTableCol);
+    public void removeFxTableCol(FxTableColDep fxTableColDep) {
+        getColumns().remove(fxTableColDep);
+        getListFxTableCol().remove(fxTableColDep);
     }
 
     public void removeFiColByFxTableCol2(FiCol fiCol) {

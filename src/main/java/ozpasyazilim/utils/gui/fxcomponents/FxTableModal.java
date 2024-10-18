@@ -349,9 +349,9 @@ public class FxTableModal {
 		return this;
 	}
 
-	public void styleSummaryLabel(FxLabel lblSummary, FxTableCol fxTableCol) {
+	public void styleSummaryLabel(FxLabel lblSummary, FxTableColDep fxTableColDep) {
 
-		if (fxTableCol.getColType() == OzColType.Double || fxTableCol.getColType() == OzColType.Integer) {
+		if (fxTableColDep.getColType() == OzColType.Double || fxTableColDep.getColType() == OzColType.Integer) {
 			lblSummary.setAlignment(Pos.CENTER_RIGHT);
 			lblSummary.getStyleClass().add("summaryDouble");
 
@@ -359,8 +359,8 @@ public class FxTableModal {
 			//Loghelperr.getInstance(getClass()).debug("lbl l:"+ lblSummary.getText().length());
 			//Loghelperr.getInstance(getClass()).debug("col w:"+ fxTableCol.getWidth());
 			//Loghelperr.getInstance(getClass()).debug("oran:"+ fxTableCol.getWidth()/lblSummary.getText().length());
-			if (fxTableCol.getWidth() < width) {
-				fxTableCol.setPrefWidth(width);
+			if (fxTableColDep.getWidth() < width) {
+				fxTableColDep.setPrefWidth(width);
 			}
 
 		}

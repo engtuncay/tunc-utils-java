@@ -70,7 +70,7 @@ public abstract class FxGenWindowContWindow<FormClazz, EntClazz> extends AbsFiMo
 			return;
 		}
 		setFormEntity(entity);
-		FxEditorFactory.bindEntityToFormByFilterValue(getModView().getFxFormMig().getListFormElements(), entity);
+		FxEditorFactory.bindEntityToFormCompsByFilterValue(getModView().getFxFormMig().getListFormElements(), entity);
 	}
 
 	public FormClazz getFiFormEntityV2(Class<FormClazz> clazz) {

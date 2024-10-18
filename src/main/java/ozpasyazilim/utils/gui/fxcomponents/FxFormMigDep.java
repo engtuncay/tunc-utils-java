@@ -139,15 +139,15 @@ public class FxFormMigDep<EntClazz> extends FxMigPaneGenView<EntClazz> implement
 	}
 
 	public void bindEntitytoForm(EntClazz formMikroKodDegistir) {
-		FxEditorFactory.bindEntityToFormByEditorValue(getListFormElements(), formMikroKodDegistir);
+		FxEditorFactory.bindEntityToEditorComponentsByEditorValue(getListFormElements(), formMikroKodDegistir);
 	}
 
 	public FiKeyBean getFormAsFiKeyBean() {
-		return FxEditorFactory.bindFormToFiKeyBeanByEditorNode(getListFormElements());
+		return FxEditorFactory.bindFormToFkbByEditorNode(getListFormElements());
 	}
 
 	public FiKeyBean getFormAsKeyBean() {
-		return FxEditorFactory.bindFormToFiKeyBeanByEditorNode(getListFormElements());
+		return FxEditorFactory.bindFormToFkbByEditorNode(getListFormElements());
 	}
 
 	public List<FiCol> getListFiColWithFormValue() {
@@ -226,7 +226,7 @@ public class FxFormMigDep<EntClazz> extends FxMigPaneGenView<EntClazz> implement
 		// Form Oluşturma metodları
 		if (getFormTypeSelected() == FormType.PlainFormV1) {
 			initPlainFormV1(getListFormElements());  //,formEntityForEdit,formEntityInsert
-			FxEditorFactory.bindEntityToFormByEditorValue(getListFormElements(), getFormEntity());
+			FxEditorFactory.bindEntityToEditorComponentsByEditorValue(getListFormElements(), getFormEntity());
 			afterLoadFormValue();
 			return;
 		}
@@ -476,7 +476,7 @@ public class FxFormMigDep<EntClazz> extends FxMigPaneGenView<EntClazz> implement
 //		}
 
 
-		FxEditorFactory.bindEntityToFormByEditorValue(getListFormElements(), getFormEntity());
+		FxEditorFactory.bindEntityToEditorComponentsByEditorValue(getListFormElements(), getFormEntity());
 		afterLoadFormValue();
 
 
