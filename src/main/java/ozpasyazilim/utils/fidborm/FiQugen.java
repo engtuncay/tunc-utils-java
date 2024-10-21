@@ -3137,7 +3137,7 @@ public class FiQugen {
     }
 
     public static String createQueryByIFiTableMeta(IFiTableMeta iFiTableMeta) {
-        return createQuery30(iFiTableMeta.getITxTableName(),iFiTableMeta.genITableCols());
+        return createQuery30(iFiTableMeta.getITxTableName(), iFiTableMeta.genITableCols());
     }
 
     public static String createQuery30(String txTableName, FiColList prmfiColList) {
@@ -3531,7 +3531,7 @@ public class FiQugen {
 
         // suffix li veya suffix siz txSqlFieldType tanımlanmamışsa null döner
         if (txSqlFieldType == null) {
-            Loghelper.get(FiQugen.class).debug("Sql field type null 2 field:" + field.getOfcTxFieldName()+ " " + field.getColTypeNtn().toString());
+            Loghelper.get(FiQugen.class).debug("Sql field type null 2 field:" + field.getOfcTxFieldName() + " " + field.getColTypeNtn().toString());
             return null;
         }
 
@@ -4034,6 +4034,26 @@ public class FiQugen {
     public static String selectAllSimple(String txTableName) {
         if (FiString.isEmptyTrim(txTableName)) return "";
         return String.format("SELECT * FROM %s", txTableName);
+    }
+
+    /**
+     * SELECT mainQuery.* FROM ( query )
+     * <p>
+     * where mainQuery.lnRowNo >= @lnBegin and mainQuery.lnRowNo <= @lnEnd
+     *
+     * @param txQuery
+     * @return
+     */
+    public static String wrapQueryWithRowConstraint(String txQuery) {
+
+        String tempWrapQuery = "SELECT mainQuery.*\n" +
+                "FROM (\n" +
+                "{{txQuery}}\n" +
+                ") as mainQuery\n" +
+                "where mainQuery.lnRowNo >= @lnBegin and mainQuery.lnRowNo <= @lnEnd";
+
+        return FiString.substitutor(tempWrapQuery, FiKeyBean.bui().buiPut("txQuery", txQuery));
+
     }
 
 

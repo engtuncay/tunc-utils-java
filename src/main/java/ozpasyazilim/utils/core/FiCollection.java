@@ -1493,4 +1493,9 @@ public class FiCollection {
             }
         }
     }
+
+    public static Integer getSizeOrZero(Collection collection) {
+        if(collection==null) return 0;
+        return collection.size();
+    }
 }

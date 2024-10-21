@@ -598,7 +598,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         return getSelectionModel().getSelectedItem();
     }
 
-    public void setActivateColsFilterableNullToTrueAndEnableLocalFilter() {
+    public void setColsFilterableNullToTrueAndActivateEnableLocalFilter() {
         getListFxTableCol().forEach(fxTableCol -> {
             if (fxTableCol.getRefFiCol().getBoFilterable() == null)
                 fxTableCol.getRefFiCol().setBoFilterable(true);
@@ -1012,8 +1012,6 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         SortedList sortableData = new SortedList<>(filteredList);
         setItems(sortableData);
         sortableData.comparatorProperty().bind(this.comparatorProperty());
-
-        if (getBoConfigAutoScrollToLast()) scrollToLastForFilteredList();
 
         eventsAfterTableViewDataChange();
     }
@@ -1979,6 +1977,11 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     }
 
     private void eventsAfterTableViewDataChange() {
+
+        Platform.runLater(() -> {
+            if (getBoConfigAutoScrollToLast()) scrollToLastForFilteredList();
+        });
+
         updateSummary();
         updateStatusBar();
         if (getBtnPagePrev() != null) updatePageToolbarComps();

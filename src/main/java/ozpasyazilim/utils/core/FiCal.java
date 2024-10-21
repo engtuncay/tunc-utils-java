@@ -315,6 +315,17 @@ public class FiCal {
         return calendar.getTime();
     }
 
+    public static Date getDateTwoMonthsAgoBegin() {
+        // geçen ayı bulmak
+        Calendar calendar = Calendar.getInstance();
+        clearTime(calendar);
+        // add -1 month to current month
+        calendar.add(Calendar.MONTH, -2);
+        // set Date to 1, so first date of previous month
+        calendar.set(Calendar.DATE, 1);
+        return calendar.getTime();
+    }
+
     public static Date getDatePrevMonthBegin(Date dtNow) {
         Calendar calendar = convertToCal(dtNow);
         clearTime(calendar);

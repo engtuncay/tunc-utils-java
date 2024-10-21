@@ -81,6 +81,6 @@ public class FiException {
 
 	public static String excToStrSummary(Exception exception) {
 		if (exception == null) return "Exception Tanımı yok";
-		return exception.getMessage();
+		return FiString.orEmpty(exception.getMessage());
 	}
 }
