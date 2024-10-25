@@ -11,6 +11,7 @@ import javafx.scene.control.TreeTableColumn;
 import javafx.scene.input.KeyEvent;
 import org.reactfx.util.TriConsumer;
 import ozpasyazilim.utils.core.FiBool;
+import ozpasyazilim.utils.fidbanno.FiTable;
 import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.fidborm.IFiField;
 import ozpasyazilim.utils.gui.fxcomponents.*;
@@ -35,7 +36,7 @@ import java.util.function.Predicate;
  *
  * @param <EntClazz>
  */
-
+@FiTable
 public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
 
     /**

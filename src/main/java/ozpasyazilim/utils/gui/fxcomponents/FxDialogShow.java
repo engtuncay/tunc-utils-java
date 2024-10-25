@@ -1129,7 +1129,7 @@ public class FxDialogShow {
 
         if (fdr.isTrueBoResult()) {
 
-            Pair<String, Boolean> logAsStringAndErrorExist = fdr.getLogAsStringAndErrorExist();
+            Pair<String, Boolean> logAsStringAndErrorExist = fdr.getLogsAllWitErrorWarnPairErrorExist();
 
             if (FiBool.isTrue(boPopInfo)) {
                 if (logAsStringAndErrorExist.getValue()) {
