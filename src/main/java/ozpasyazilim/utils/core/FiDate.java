@@ -197,7 +197,7 @@ public class FiDate {
 		return formatter.format(date);
 	}
 
-	public static String datetoString_timestamptText(Date date) {
+	public static String tosTimestamptText(Date date) {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd_kkmm_ss");
 		return formatter.format(date);
 	}

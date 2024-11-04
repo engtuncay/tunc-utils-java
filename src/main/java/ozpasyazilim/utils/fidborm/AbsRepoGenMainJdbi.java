@@ -87,6 +87,34 @@ public class AbsRepoGenMainJdbi<EntClazz> extends AbsRepoJdbiCore {
         return fdrMain;
     }
 
+    public <PrmEnt> Fdr<List<PrmEnt>> jdcSelectList(FiQuery fiQuery, Class<PrmEnt> clazz) {
+        return jdcSelectListBindMapMainNtn(fiQuery.getTxQuery(), fiQuery.getMapParams(), clazz);
+    }
+
+    public <PrmEnt> Fdr<List<PrmEnt>> jdcSelectListBindMapMainNtn(String sqlQuery, Map<String, Object> mapBind, Class<PrmEnt> clazz) {
+
+        Fdr<List<PrmEnt>> fdrMain = new Fdr<>();
+
+        try {
+            List<PrmEnt> result = getJdbi().withHandle(handle -> {
+                return handle.createQuery(Fiqt.stoj(sqlQuery))
+                        .bindMap(mapBind)
+                        .mapToBean(clazz)
+                        .list();
+            });
+            fdrMain.setBoResultAndValue(true, result, 1);
+
+        } catch (Exception ex) {
+            Loghelper.get(getClass()).error("Query Problem. Hata (Exception):\n" + FiException.exTosMain(ex));
+            fdrMain.setBoResult(false, ex);
+        }
+
+        // Ntn (not null dönüş)
+        if (fdrMain.getValue() == null) fdrMain.setValue(new ArrayList<>());
+
+        return fdrMain;
+    }
+
     public List<EntClazz> jdSelectListBindMapRaw(String sqlQuery, Map<String, Object> mapBind) {
 
         Jdbi jdbi = getJdbi();

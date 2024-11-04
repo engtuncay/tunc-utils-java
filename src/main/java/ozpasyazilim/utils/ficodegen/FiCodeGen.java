@@ -4,7 +4,7 @@ import org.jdbi.v3.core.Jdbi;
 import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.fidbanno.FiIdGenerationType;
 import ozpasyazilim.utils.fidbanno.FiTable;
-import ozpasyazilim.utils.fidborm.FiFieldUtil;
+import ozpasyazilim.utils.fidborm.FiClassRef;
 import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.fidborm.FiQugen;
 import ozpasyazilim.utils.table.OzColType;
@@ -366,7 +366,7 @@ public class FiCodeGen {
 
 	public static String codeClassFieldList(Class clazz) {
 
-		List<FiField> fieldListFilterAnno = FiFieldUtil.getListFieldsShortWithId(clazz);
+		List<FiField> fieldListFilterAnno = FiClassRef.getListFieldsShortWithId(clazz);
 
 		StringBuilder txFieldList = new StringBuilder();
 		for (FiField fiField : fieldListFilterAnno) {
@@ -378,7 +378,7 @@ public class FiCodeGen {
 
 	public static String codeClassFieldListWithValue(Class clazz) {
 
-		List<FiField> fieldListFilterAnno = FiFieldUtil.getListFieldsShortWithId(clazz);
+		List<FiField> fieldListFilterAnno = FiClassRef.getListFieldsShortWithId(clazz);
 
 		StringBuilder txFieldList = new StringBuilder();
 		for (FiField fiField : fieldListFilterAnno) {

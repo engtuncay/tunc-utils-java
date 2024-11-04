@@ -6,6 +6,9 @@ import ozpasyazilim.utils.table.FiColList;
 import ozpasyazilim.utils.fidbanno.FiIdGenerationType;
 import ozpasyazilim.utils.fidborm.IFiTableMeta;
 
+/**
+ * Orak Code Generatorda kullanılıyor
+ */
 public class FicRfcCoding implements IFiTableMeta {
 
     public String getITxTableName() {

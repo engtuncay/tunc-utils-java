@@ -598,7 +598,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         return getSelectionModel().getSelectedItem();
     }
 
-    public void setColsFilterableNullToTrueAndActivateEnableLocalFilter() {
+    public void setActivateEnableLocalFilterAndColsFilterableNullToTrue() {
         getListFxTableCol().forEach(fxTableCol -> {
             if (fxTableCol.getRefFiCol().getBoFilterable() == null)
                 fxTableCol.getRefFiCol().setBoFilterable(true);

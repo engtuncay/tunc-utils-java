@@ -18,7 +18,7 @@ public class FiZip {
 
 		Date date = new Date();
 
-		String timestamp = FiDate.datetoString_timestamptText(date);
+		String timestamp = FiDate.tosTimestamptText(date);
 
 		String pathtozip = "\\\\Server\\aktarim\\TORKU\\AKTARIM_YEDEK\\Aktarim_" + timestamp + ".zip";
 		String filename = "Aktarim_";

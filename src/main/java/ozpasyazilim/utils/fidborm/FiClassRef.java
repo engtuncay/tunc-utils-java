@@ -20,7 +20,10 @@ import java.util.Map;
 
 import static java.util.stream.Collectors.toList;
 
-public class FiFieldUtil {
+/**
+ * Fi Class Reflection Utility Methods
+ */
+public class FiClassRef {
 
 	/**
 	 * Transient alanlar dahil degil.
@@ -698,7 +701,7 @@ public class FiFieldUtil {
 		for (FiField field : listFiFieldsShort) {
 
 			if (FiBool.isTrue(field.getBoKeyIdField())) {
-				Loghelper.get(FiFieldUtil.class).debug("Id Field:" + field.getOfcTxFieldName());
+				Loghelper.get(FiClassRef.class).debug("Id Field:" + field.getOfcTxFieldName());
 				Object idValue = FiReflection.getPropertyNested(fromEntity, field.getOfcTxFieldName());
 				boResult = FiReflection.setterNested(toEntity, field.getOfcTxFieldName(), idValue);
 			}

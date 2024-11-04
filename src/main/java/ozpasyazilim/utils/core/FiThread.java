@@ -1,6 +1,7 @@
 package ozpasyazilim.utils.core;
 
 import javafx.application.Platform;
+import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import ozpasyazilim.utils.gui.fxcomponents.*;
 import ozpasyazilim.utils.listener.CompoundRunnable;
@@ -374,6 +375,42 @@ public class FiThread {
             //fxToastPopup2.end();
             Platform.runLater(() -> {
                 lblNodes.setText(textOld);
+                //lblNodes.setDisable(false);
+            });
+
+        };
+
+        CompoundRunnable compoundRunnable = new CompoundRunnable(runnable, runnable2);
+
+        Thread thread = new Thread(compoundRunnable);
+        thread.start();
+        return thread;
+    }
+
+    public static Thread startThreadTable(Runnable runnable, FxTableView2 fxTableView2, FxButton btnReport) {
+
+        FxLabel lblNodes = fxTableView2.getFiLblFooterMessage();
+        final String textOld = lblNodes.getText();
+
+        Platform.runLater(() -> {
+            lblNodes.setText("Rapor çalışıyor...");
+            lblNodes.setFxTextColor(Color.RED);
+
+            if(btnReport!=null){
+                btnReport.setDisable(true);
+            }
+            //lblNodes.setFxStyleColor
+            //lblNodes.setDisable(true);
+        });
+
+        Runnable runnable2 = () -> {
+            //fxToastPopup2.end();
+            Platform.runLater(() -> {
+                lblNodes.setText(textOld);
+
+                if(btnReport!=null){
+                    btnReport.setDisable(false);
+                }
                 //lblNodes.setDisable(false);
             });
 

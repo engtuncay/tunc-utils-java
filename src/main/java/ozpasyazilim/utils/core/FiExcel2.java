@@ -1422,8 +1422,8 @@ public class FiExcel2 {
         try {
             Desktop.getDesktop().open(file);
         } catch (IOException e) {
-            e.printStackTrace();
-            new FxDialogShow().showModalWarningAlert("Dosya açılırken Sorunlar Karşılaşıldı.\n" + file.getPath());
+            Loghelper.get(getClass()).error(FiException.exTosMain(e));
+            FxDialogShow.showModalErrorAlert("Dosya açılırken Sorunlar Karşılaşıldı. Dosya:\n" + file.getPath());
         }
 
     }
