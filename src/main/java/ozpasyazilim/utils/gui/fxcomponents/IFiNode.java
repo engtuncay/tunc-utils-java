@@ -12,7 +12,7 @@ import ozpasyazilim.utils.table.OzColType;
  * <p>
  * {@code ifxNode1.getCompValueByColType(ozColType) }
  */
-public interface IfxNode {
+public interface IFiNode {
 
     Object getCompValue();
 

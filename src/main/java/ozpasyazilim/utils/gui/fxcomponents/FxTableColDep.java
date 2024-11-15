@@ -157,7 +157,7 @@ public class FxTableColDep<Clazz> extends TableColumn implements IFiCol<Clazz> {
 
 	private Boolean boDontExportExcelTemplate;
 
-	private IfxNode ifxNodeEditor;
+	private IFiNode IFiNodeEditor;
 
 
 	public FxTableColDep() {
@@ -1019,8 +1019,8 @@ public class FxTableColDep<Clazz> extends TableColumn implements IFiCol<Clazz> {
 	@Override
 	public void setBoDontExportExcelTemplate(Boolean boDontExportExcelTemplate) {this.boDontExportExcelTemplate = boDontExportExcelTemplate;}
 
-	public IfxNode getIfxNodeEditor() {
-		return ifxNodeEditor;
+	public IFiNode getIfxNodeEditor() {
+		return IFiNodeEditor;
 	}
 
 	@Override
@@ -1032,8 +1032,8 @@ public class FxTableColDep<Clazz> extends TableColumn implements IFiCol<Clazz> {
 	public void setColValue(Object colValue) {
 		this.colEditorValue = colValue;
 	}
-	public void setIfxNodeEditor(IfxNode ifxNodeEditor) {
-		this.ifxNodeEditor = ifxNodeEditor;
+	public void setIfxNodeEditor(IFiNode IFiNodeEditor) {
+		this.IFiNodeEditor = IFiNodeEditor;
 	}
 
 }

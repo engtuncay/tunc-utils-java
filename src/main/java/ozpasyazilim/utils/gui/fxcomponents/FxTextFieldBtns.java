@@ -1,6 +1,5 @@
 package ozpasyazilim.utils.gui.fxcomponents;
 
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -12,7 +11,7 @@ import ozpasyazilim.utils.table.OzColType;
 import java.util.function.Consumer;
 
 @FiDraft
-public class FxTextFieldBtns extends FxMigPane implements IfxNode {
+public class FxTextFieldBtns extends FxMigPane implements IFiNode {
 
 	private final FxTextField fxTextField;
 	private final FxButton btnSearch;

@@ -68,7 +68,9 @@ public class FxComboBoxSimple extends FxComboBox<ComboItemText> {
 			if (item.getValue() == null) continue;
 
 			if (item.getValue().equals(getTxValue())) {
+				// Thread içinde çalıştırılırsa, thread bittikten sonra seçim gerçekleşir.
 				setSelectedItemFiAsync(index);
+				break;
 			}
 
 		}

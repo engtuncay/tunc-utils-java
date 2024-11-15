@@ -10,7 +10,7 @@ import ozpasyazilim.utils.table.OzColType;
 
 import java.util.function.Consumer;
 
-public class FxTextFieldBtn<EntClazz> extends FxMigPane implements IfxNode {
+public class FxTextFieldBtn<EntClazz> extends FxMigPane implements IFiNode {
 
 	private final FxTextField<EntClazz> fxTextField;
 	private final FxButton btnSearch;

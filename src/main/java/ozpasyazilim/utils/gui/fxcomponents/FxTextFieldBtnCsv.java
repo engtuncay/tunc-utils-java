@@ -1,6 +1,6 @@
 package ozpasyazilim.utils.gui.fxcomponents;
 
-public class FxTextFieldBtnCsv<EntClazz> extends FxTextFieldBtn<EntClazz> implements IfxNode {
+public class FxTextFieldBtnCsv<EntClazz> extends FxTextFieldBtn<EntClazz> implements IFiNode {
 
 	public FxTextFieldBtnCsv() {
 		super();

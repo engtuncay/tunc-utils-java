@@ -2,7 +2,7 @@ package ozpasyazilim.utils.gui.fxcomponents;
 
 import ozpasyazilim.utils.table.OzColType;
 
-public class FxTextFieldBtnWitLbl2<EntClazz> extends FxTextFieldBtn<EntClazz> implements IfxNode {
+public class FxTextFieldBtnWitLbl2<EntClazz> extends FxTextFieldBtn<EntClazz> implements IFiNode {
 
 	OzColType compValueType;
 

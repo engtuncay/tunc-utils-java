@@ -554,7 +554,7 @@ public class FxSimDialog<EntClazz> extends AbsFiModBaseCont {
 
         FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().getLcg());
         FxTextField fxTextField = new FxTextField();
-        fxTextField.convertNumberDoubleTextField1();
+        fxTextField.setupNumberDoubleTextField1();
         setOzColType(OzColType.Double);
         txValueProperty().bindBidirectional(fxTextField.textProperty());
         fxContent.add(fxTextField, "wrap");
@@ -567,7 +567,7 @@ public class FxSimDialog<EntClazz> extends AbsFiModBaseCont {
         modView.getMigContent().add(lblHeader, "growx,pushx,wrap");
         FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().getLcg());
         FxTextField fxTextField = new FxTextField();
-        fxTextField.convertNumberTextField2();
+        fxTextField.setupNumberTextField2();
         setOzColType(OzColType.Integer);
         txValueProperty().bindBidirectional(fxTextField.textProperty());
         fxContent.add(fxTextField, "wrap");

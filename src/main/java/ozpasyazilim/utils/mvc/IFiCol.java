@@ -4,15 +4,12 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
-import ozpasyazilim.utils.core.FiString;
 import ozpasyazilim.utils.gui.fxcomponents.FxMigPane;
-import ozpasyazilim.utils.gui.fxcomponents.IfxNode;
+import ozpasyazilim.utils.gui.fxcomponents.IFiNode;
 import ozpasyazilim.utils.table.OzColSummaryType;
 import ozpasyazilim.utils.table.OzColType;
 
 import java.text.Format;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -248,9 +245,9 @@ public interface IFiCol<N> {
 
 	void setBoDontExportExcelTemplate(Boolean boDontExportExcelTemplate);
 
-	void setIfxNodeEditor(IfxNode iFxNode);
+	void setIfxNodeEditor(IFiNode iFxNode);
 
-	IfxNode getIfxNodeEditor();
+	IFiNode getIfxNodeEditor();
 
 	public Object getColValue();
 

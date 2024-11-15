@@ -176,7 +176,10 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
      * Object olarak form için kullanılacak entity gönderilir
      * <p>
      * Node : component için kullanılır (FxTextField,FxCombobox gibi)
+     * <p>
+     * Form objesi dinamik olarak çekilmeli
      */
+    @Deprecated
     private BiConsumer<Object, Node> fnEditorNodeRendererAfterFormLoad;
 
     private BiConsumer<Object, Node> fnEditorNodeAfterChangeForForm;
@@ -346,7 +349,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     /**
      *
      */
-    private IfxNode ifxNodeEditor;
+    private IFiNode IFiNodeEditor;
 
     /**
      * Filter node like araması yapılacak mı
@@ -1388,12 +1391,12 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
         return FiString.orEmpty(ofcTxFieldName);
     }
 
-    public IfxNode getIfxNodeEditor() {
-        return ifxNodeEditor;
+    public IFiNode getIfxNodeEditor() {
+        return IFiNodeEditor;
     }
 
-    public void setIfxNodeEditor(IfxNode ifxNodeEditor) {
-        this.ifxNodeEditor = ifxNodeEditor;
+    public void setIfxNodeEditor(IFiNode IFiNodeEditor) {
+        this.IFiNodeEditor = IFiNodeEditor;
     }
 
     public BiConsumer<Object, Node> getFnEditorNodeAfterChangeForForm() {

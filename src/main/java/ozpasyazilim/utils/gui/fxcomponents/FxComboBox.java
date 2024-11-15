@@ -38,6 +38,7 @@ public class FxComboBox<T> extends ComboBox<T> {
 
     public FxComboBox() {
         super();
+
     }
 
     public FxComboBox(ObservableList<T> items) {
@@ -124,6 +125,7 @@ public class FxComboBox<T> extends ComboBox<T> {
 
     public void setSelectedItemFiAsync(Integer index) {
         if (index == null) return;
+
         Platform.runLater(() -> {
             getSelectionModel().select(index);
         });
