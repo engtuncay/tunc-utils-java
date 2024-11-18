@@ -5,28 +5,43 @@ import ozpasyazilim.utils.log.Loghelper;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 
 /**
  * JFrame lerin kalıtım alacağı sınıf
  *
  * @author TUNC
  */
-
 public class OzFrame extends JFrame {
 
 	private String txtid;
-
-	public String getTxtid() {
-		return txtid;
-	}
-
-	public void setTxtid(String txtid) {
-		this.txtid = txtid;
-	}
-
 	// quick frame controller için oluşturuldu.
-	static int intx = 170;
-	static int inty = 160;
+	static int intx; //= 170;
+	static int inty; //= 160;
+
+	public static int getIntx() {
+		return intx;
+	}
+
+	public static int getInty() {
+		return inty;
+	}
+
+	public static int getIntxStart() {
+		return 170;
+	}
+
+	public static void setIntx(int intx) {
+		OzFrame.intx = intx;
+	}
+
+	public static int getIntyStart() {
+		return 160;
+	}
+
+	public static void setInty(int inty) {
+		OzFrame.inty = inty;
+	}
 
 	public static void startQuickFrameByController(OzControllerPro ozcontrollerpro) {
 
@@ -43,12 +58,12 @@ public class OzFrame extends JFrame {
 			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 			Double dimx = screenSize.width * (0.90);
 			Double dimy = screenSize.height * (0.60);
-			ozframe.setBounds(intx, inty, dimx.intValue(), dimy.intValue());
-			OzFrame.intx += 20;
+			ozframe.setBounds(getIntx(), getInty(), dimx.intValue(), dimy.intValue());
+			setIntx(getIntxStart() + 20);
 			//inty += 20;
-			if (intx > 180) {
-				OzFrame.intx = 120;
-				OzFrame.inty = 120;
+			if (getIntx() > 180) {
+				setIntx(120);
+				setInty(120);
 			}
 
 			//ozframe.pack();
@@ -81,10 +96,10 @@ public class OzFrame extends JFrame {
 //			final int y = (screenSize.height - dialog.getHeight()) / 2;
 
 			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-			Double dimx = screenSize.width - Double.valueOf(intx);  //* percentage / 100;
-			Double dimy = screenSize.height - (Double.valueOf(inty+40)); //70d; //* percentage / 100 - 20;
+			Double dimx = screenSize.width - Double.valueOf(getIntx());  //* percentage / 100;
+			Double dimy = screenSize.height - (Double.valueOf(getInty()+40)); //70d; //* percentage / 100 - 20;
 
-			dialog.setBounds(intx, inty, dimx.intValue(), dimy.intValue());
+			dialog.setBounds(getIntx(), getInty(), dimx.intValue(), dimy.intValue());
 			//dialog.setSize(width, height);
 			//dialog.setLocation(x, y);
 			//dialog.pack();
@@ -126,10 +141,10 @@ public class OzFrame extends JFrame {
 //			final int y = (screenSize.height - dialog.getHeight()) / 2;
 
 			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-			Double dimx = screenSize.width - Double.valueOf(intx);  //* percentage / 100;
-			Double dimy = screenSize.height - (Double.valueOf(inty+40)); //70d; //* percentage / 100 - 20;
+			Double dimx = screenSize.width - Double.valueOf(getIntx());  //* percentage / 100;
+			Double dimy = screenSize.height - (Double.valueOf(getInty()+40)); //70d; //* percentage / 100 - 20;
 
-			dialog.setBounds(intx, inty, dimx.intValue(), dimy.intValue());
+			dialog.setBounds(getIntx(), getInty(), dimx.intValue(), dimy.intValue());
 			//dialog.setSize(width, height);
 			//dialog.setLocation(x, y);
 			//dialog.pack();
@@ -156,34 +171,13 @@ public class OzFrame extends JFrame {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception ex) {
-			System.out.println("Exception:" + ex.getStackTrace());
+			System.out.println("Exception:" + Arrays.toString(ex.getStackTrace()));
 			Loghelper.get(OzFrame.class).debug(FiException.exToLog(ex));
 		}
-
-		//        try {
-//            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-//        } catch (ClassNotFoundException ex) {
-//            // Logger.getLogger(ViewfrmMain2.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            // Logger.getLogger(ViewfrmMain2.class.getName()).log(Level.SEVERE,null, ex);
-//        } catch (IllegalAccessException ex) {
-//            // Logger.getLogger(ViewfrmMain2.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (UnsupportedLookAndFeelException ex) {
-//            // Logger.getLogger(ViewfrmMain2.class.getName()).log(Level.SEVERE,null, ex);
-//        } catch (Exception e) {
-//            Loghelper.logexceptionOnlyMail(FiException.exceptionStackTraceStringFull(e));
-//        }
-
 
 	}
 
 	public static OzFrame quickFrameByPanel(OzPanel ozPanel) {
-
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception ex) {
-			System.out.println("Exception:" + ex.getStackTrace());
-		}
 
 		//SwingUtilities.invokeLater(() -> {
 
@@ -193,28 +187,21 @@ public class OzFrame extends JFrame {
 		//frame.setSize(300, 200);
 		//ozframe.pack();
 		//ozframe.setVisible(true);
-
 		return ozframe;
-
-		//});
-
 	}
 
 	public void startFrame() {
-
 		SwingUtilities.invokeLater(() -> {
-
 			this.pack();
 			this.setVisible(true);
-
 		});
-
-		//return this;
-
 	}
 
-	public void runRunnable(Runnable runnable) {
-		runnable.run();
+	public String getTxtid() {
+		return txtid;
+	}
+	public void setTxtid(String txtid) {
+		this.txtid = txtid;
 	}
 
 

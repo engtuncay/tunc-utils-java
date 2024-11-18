@@ -334,7 +334,7 @@ public class FiFile {
 
     }
 
-    public static void saveHtmlContent_to_File(String content) {
+    public static void saveHtmlContentToFile(String content) {
 
         String timestamp = FiDate.datetoString_timestampt3(new Date());
 

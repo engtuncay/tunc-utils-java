@@ -36,7 +36,7 @@ class TestFiHtmlReport2 {
 
 		String content = new ReportHtml2().reportBasicHtml(listData, ozTableColumnList, null);
 
-		FiFile.saveHtmlContent_to_File(content);
+		FiFile.saveHtmlContentToFile(content);
 
 	}
 

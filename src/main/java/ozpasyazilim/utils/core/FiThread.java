@@ -460,5 +460,14 @@ public class FiThread {
         return thread;
     }
 
+    public static void pause(int ms) {
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException e) {
+            //System.err.format("InterruptedException : %s%n", e);
+            Loghelper.get(FiThread.class).error(FiException.exTosMain(e));
+        }
+    }
+
 
 }
