@@ -503,7 +503,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFiModBaseCont {
 
     public Object getObjectValue() {
 
-        return FxEditorFactory.convertStringValueToObjectByOzColType(getOzColType(), getTxValue());
+        return FxEditorFactory.toTypeByOzColType(getOzColType(), getTxValue());
 
     }
 

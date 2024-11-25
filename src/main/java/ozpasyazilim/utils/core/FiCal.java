@@ -203,6 +203,17 @@ public class FiCal {
     //	LocalDateTime.from(dt.toInstant()).plusDays(1);
 
     /**
+     * returns dtX-dtY
+     *
+     * @param dtX
+     * @param dtY
+     * @return
+     */
+    public static Long dateDiffxByDay(Date dtX, Date dtY) {
+        return dateDiffByDay2(dtY, dtX);
+    }
+
+    /**
      * End Date - Start Date
      *
      * @param startDate

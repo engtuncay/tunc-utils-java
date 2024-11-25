@@ -153,7 +153,7 @@ public class FiHtmlParserJsoup {
 					strCellvalue = strCellvalue.replace("\u00a0", "");
 					//String cleaned = s.replace("&nbsp;"," ");
 
-					cellvalue = FxEditorFactory.convertStringValueToObjectByOzColType(fiTableCol.getColType(), strCellvalue);
+					cellvalue = FxEditorFactory.toTypeByOzColType(fiTableCol.getColType(), strCellvalue);
 
 //					if(fiTableCol.getColType()== OzColType.Double){
 //						cellvalue = FiNumber.convertNumberStrtoDouble(strCellvalue);

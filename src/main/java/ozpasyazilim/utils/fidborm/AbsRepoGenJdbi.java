@@ -2209,7 +2209,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
      * @param <PrmEnt>
      * @return
      */
-    public <PrmEnt> Fdr<PrmEnt> jdSelectSingleCustomEntityBindMap(String sql, Map<String, Object> mapParam, Class<PrmEnt> resultClazz) {
+    public <PrmEnt> Fdr<PrmEnt> jdSelectSingleCustomTypeBindMap(String sql, Map<String, Object> mapParam, Class<PrmEnt> resultClazz) {
 
         Fdr<PrmEnt> fdr = new Fdr<>();
 
@@ -2218,12 +2218,10 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
                 return handle.select(Fiqt.stoj(sql))
                         .bindMap(mapParam)
                         .mapTo(resultClazz)
-                        .findFirst();
+                        .findFirst(); // if returns null or zero rows, then return Optional.empty()
             });
 
-            if (result.isPresent()) {
-                fdr.setValue(result.get());
-            }
+            result.ifPresent(fdr::setValue);
             fdr.setBoResult(true);
         } catch (Exception ex) {
             Loghelper.get(getClass()).debug(FiException.exToLog(ex));
@@ -2255,7 +2253,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
      * @return
      */
     public Fdr<Integer> jdSelectSingleInt(String sql, FiKeyBean fiKeyBean) {
-        return jdSelectSingleCustomEntityBindMap(sql, fiKeyBean, Integer.class);
+        return jdSelectSingleCustomTypeBindMap(sql, fiKeyBean, Integer.class);
     }
 
     /**
@@ -2271,7 +2269,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
     }
 
     public Fdr<Integer> jdSelectSingleIntOrMinus1(FiQuery fiQuery) {
-        Fdr<Integer> fdrSql = jdSelectSingleCustomEntityBindMap(fiQuery.getTxQuery(), fiQuery.getMapParams(), Integer.class);
+        Fdr<Integer> fdrSql = jdSelectSingleCustomTypeBindMap(fiQuery.getTxQuery(), fiQuery.getMapParams(), Integer.class);
         if (fdrSql.getValue() == null) {
             fdrSql.setValue(-1);
         }
@@ -2279,7 +2277,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
     }
 
     public Fdr<String> jdSelectSingleString(String sql, FiKeyBean fiKeyBean) {
-        return jdSelectSingleCustomEntityBindMap(sql, fiKeyBean, String.class);
+        return jdSelectSingleCustomTypeBindMap(sql, fiKeyBean, String.class);
     }
 
     /**
@@ -2293,7 +2291,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
      */
     public Fdr<List<String>> jdSelectCsvStringAsList(String sql, FiKeyBean fiMapParams) {
 
-        Fdr<String> stringFdr = jdSelectSingleCustomEntityBindMap(sql, fiMapParams, String.class);
+        Fdr<String> stringFdr = jdSelectSingleCustomTypeBindMap(sql, fiMapParams, String.class);
 
         Fdr<List<String>> fdr = new Fdr<>();
         fdr.copyValues(stringFdr);

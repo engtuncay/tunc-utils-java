@@ -539,7 +539,7 @@ public class FxSimDialog<EntClazz> extends AbsFiModBaseCont {
 
     public Object getObjectValue() {
 
-        return FxEditorFactory.convertStringValueToObjectByOzColType(getOzColType(), getTxValue());
+        return FxEditorFactory.toTypeByOzColType(getOzColType(), getTxValue());
 
     }
 

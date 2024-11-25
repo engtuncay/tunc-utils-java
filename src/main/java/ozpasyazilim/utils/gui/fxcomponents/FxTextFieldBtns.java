@@ -150,7 +150,7 @@ public class FxTextFieldBtns extends FxMigPane implements IFiNode {
 		if(ozColType==null){
 			return getTxValue();
 		}else{
-			return FxEditorFactory.convertStringValueToObjectByOzColType(ozColType, getTxValue());
+			return FxEditorFactory.toTypeByOzColType(ozColType, getTxValue());
 		}
 	}
 

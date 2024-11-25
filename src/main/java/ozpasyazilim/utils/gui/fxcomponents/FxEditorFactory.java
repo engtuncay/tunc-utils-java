@@ -305,7 +305,7 @@ public class FxEditorFactory {
             }
 
             // ********** String Value ilgili tipe dönüştürülür
-            return convertStringValueToObjectByOzColType(ozColType, textValue);
+            return toTypeByOzColType(ozColType, textValue);
 
         }
 
@@ -360,7 +360,7 @@ public class FxEditorFactory {
             if (txNodeClassName.equals(FxComboBox.class.getName())) {
                 FxComboBox<ComboItemText> comp = (FxComboBox<ComboItemText>) nodeComp;
                 String textValue = comp.getSelectedItemFi().getValue();
-                return convertStringValueToObjectByOzColType(ozColType, textValue);
+                return toTypeByOzColType(ozColType, textValue);
             }
 
         }
@@ -370,7 +370,7 @@ public class FxEditorFactory {
             ComboItemText selectedItemFi = comp.getSelectedItemFi();
             String textValue = null;
             if (selectedItemFi != null) textValue = selectedItemFi.getValue();
-            return convertStringValueToObjectByOzColType(ozColType, textValue);
+            return toTypeByOzColType(ozColType, textValue);
         }
 
         if (txNodeClassName.equals(FxComboBoxObj.class.getName())) {
@@ -384,7 +384,7 @@ public class FxEditorFactory {
             FxChoiceBoxSimple comp = (FxChoiceBoxSimple) nodeComp;
             if (comp.getFiSelectedItem() != null) {
                 String textValue = comp.getFiSelectedItem().getValue();
-                return convertStringValueToObjectByOzColType(ozColType, textValue);
+                return toTypeByOzColType(ozColType, textValue);
             }
             return null;
         }
@@ -1271,7 +1271,7 @@ public class FxEditorFactory {
      * @param textValue
      * @return
      */
-    public static Object convertStringValueToObjectByOzColType(OzColType ozColType, String textValue) {
+    public static Object toTypeByOzColType(OzColType ozColType, String textValue) {
 
         // gelen veride özel işaretler temizlenir
         if (ozColType == OzColType.Double || ozColType == OzColType.Integer) {
