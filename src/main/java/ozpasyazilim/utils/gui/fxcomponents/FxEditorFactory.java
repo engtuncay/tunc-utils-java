@@ -13,7 +13,7 @@ import org.reactfx.EventStreams;
 import ozpasyazilim.utils.core.*;
 
 import ozpasyazilim.utils.datatypes.FiKeyBean;
-import ozpasyazilim.utils.fidborm.FiClassRef;
+import ozpasyazilim.utils.fidborm.FiReflectClass;
 import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.gui.components.ComboItemText;
 import ozpasyazilim.utils.gui.components.ComboItemObj;
@@ -544,7 +544,7 @@ public class FxEditorFactory {
 
         Class<?> aClass = entity.getClass();
 
-        List<FiField> fiFieldList = FiClassRef.getListFieldsShortWithId(aClass);
+        List<FiField> fiFieldList = FiReflectClass.getListFieldsShortWithId(aClass);
         Fdr fdr = new Fdr();
         fdr.setBoResult(true);
 
@@ -596,7 +596,7 @@ public class FxEditorFactory {
 
         Boolean boTrimIfNeed = true;
 
-        List<FiField> fiFieldList = FiClassRef.getListFieldsShortWithId(aClass);
+        List<FiField> fiFieldList = FiReflectClass.getListFieldsShortWithId(aClass);
         Fdr fdr = new Fdr();
         fdr.setBoResult(true);
 

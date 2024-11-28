@@ -22,6 +22,9 @@ import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.RegionUtil;
 import org.apache.poi.xssf.usermodel.*;
+import ozpasyazilim.utils.datatypes.FiKeyBean;
+import ozpasyazilim.utils.datatypes.FiKeyList;
+import ozpasyazilim.utils.datatypes.FiListFkb;
 import ozpasyazilim.utils.gui.fxcomponents.*;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.mvc.IFiCol;
@@ -1140,55 +1143,37 @@ public class FiExcel2 {
         }
     }
 
-    public static void writeListDataToExcel(List listdata, List<? extends IFiCol> columnList, Path path) throws FileNotFoundException, IOException {
-
+    public static void writeListDataToExcel(List listData, List<? extends IFiCol> fiCols, Path path) {
         // E eklenebilir
-
-        new WorkbookFactory();
+        // ???
+        WorkbookFactory workbookFactory = new WorkbookFactory();
         Workbook wb = new XSSFWorkbook(); // Excell workbook
         Sheet sheet = wb.createSheet(); // WorkSheet
         Row row = sheet.createRow(1); // Row created at line 3
 
         Row headerRow = sheet.createRow(0); // Create row at line 0
 
-        for (int indexColHeader = 0; indexColHeader < columnList.size(); indexColHeader++) { // For each column
-            headerRow.createCell(indexColHeader).setCellValue(columnList.get(indexColHeader).getOfcTxHeader()); // Write column name
+        for (int indexColHeader = 0; indexColHeader < fiCols.size(); indexColHeader++) { // For each column
+            headerRow.createCell(indexColHeader).setCellValue(fiCols.get(indexColHeader).getOfcTxHeader()); // Write column name
         }
 
+        for (int indexRow = 0; indexRow < listData.size(); indexRow++) { // For each
 
-        for (int indexRow = 0; indexRow < listdata.size(); indexRow++) { // For each
+            Object rowent = listData.get(indexRow);
 
-            Object rowent = listdata.get(indexRow);
+            for (int cols = 0; cols < fiCols.size(); cols++) { // For each table column
 
-            for (int cols = 0; cols < columnList.size(); cols++) { // For each table column
-
-                String fieldname = columnList.get(cols).getOfcTxFieldName();
+                String fieldname = fiCols.get(cols).getOfcTxFieldName();
 
                 String value = "";
                 Object obj = null;
 
                 if (fieldname != null) {
-
-                    try {
-                        obj = PropertyUtils.getProperty(rowent, fieldname);
-                    } catch (IllegalAccessException e) {
-                        //e.printStackTrace();
-                        FiException.exTosMain(e);
-                    } catch (InvocationTargetException e) {
-                        //e.printStackTrace();
-                        FiException.exTosMain(e);
-                    } catch (NoSuchMethodException e) {
-                        //e.printStackTrace();
-                        Loghelper.get(FiExcel2.class).debug(" Metod Bulunamdı:" + fieldname);
-                        FiException.exTosMain(e);
-                    }
-
+                    obj = FiReflection.getProperty(rowent, fieldname);
                 }
 
                 if (obj != null) {
-
                     setCellValueAndStyleByValType(wb, row, cols, obj);
-
                 } else {
                     row.createCell(cols).setCellValue(""); // Write value
                 }
@@ -1198,7 +1183,63 @@ public class FiExcel2 {
             // Set the row to the next one in the sequence
             row = sheet.createRow((indexRow + 2));
         }
-        wb.write(new FileOutputStream(path.toString()));// Save the file
+
+        try {
+            wb.write(Files.newOutputStream(Paths.get(path.toString())));// Save the file
+        } catch (IOException e) {
+            Loghelper.get(FiExcel2.class).error(FiException.exTosMain(e));
+        }
+    }
+
+    public static void writeFiListFkbToExcel(FiListFkb fiListFkb, List<? extends IFiCol> fiCols, Path path) {
+        // E eklenebilir
+        // ???
+        WorkbookFactory workbookFactory = new WorkbookFactory();
+        Workbook wb = new XSSFWorkbook(); // Excell workbook
+        Sheet sheet = wb.createSheet(); // WorkSheet
+        Row row = sheet.createRow(1); // Row created at line 3
+
+        Row headerRow = sheet.createRow(0); // Create row at line 0
+
+        for (int indexColHeader = 0; indexColHeader < fiCols.size(); indexColHeader++) { // For each column
+            headerRow.createCell(indexColHeader).setCellValue(fiCols.get(indexColHeader).getOfcTxHeader()); // Write column name
+        }
+
+        for (int indexRow = 0; indexRow < fiListFkb.size(); indexRow++) { // For each
+
+            FiKeyBean rowent = fiListFkb.get(indexRow);
+
+            for (int colIndex = 0; colIndex < fiCols.size(); colIndex++) { // For each table column
+
+                String fieldname = fiCols.get(colIndex).getOfcTxFieldName();
+
+                //String value = "";
+                Object obj = null;
+
+                if (fieldname != null) {
+                    if (rowent.containsKey(fieldname)) {
+                        obj = rowent.get(fieldname);
+                    }
+
+                }
+
+                if (obj != null) {
+                    setCellValueAndStyleByValType(wb, row, colIndex, obj);
+                } else { // null sa boş doldurulur
+                    row.createCell(colIndex).setCellValue(""); // Write value
+                }
+
+            }
+
+            // Set the row to the next one in the sequence
+            row = sheet.createRow((indexRow + 2));
+        }
+
+        try {
+            wb.write(Files.newOutputStream(Paths.get(path.toString())));// Save the file
+        } catch (IOException e) {
+            Loghelper.get(FiExcel2.class).error(FiException.exTosMain(e));
+        }
     }
 
     public static void writeListDataToExcelWithComment(List listdata, List<? extends IFiCol> columnList, Path path) throws FileNotFoundException, IOException {

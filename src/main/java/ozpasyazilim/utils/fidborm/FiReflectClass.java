@@ -21,9 +21,9 @@ import java.util.Map;
 import static java.util.stream.Collectors.toList;
 
 /**
- * Fi Class Reflection Utility Methods
+ * FiClass Reflection Utility Methods
  */
-public class FiClassRef {
+public class FiReflectClass {
 
 	/**
 	 * Transient alanlar dahil degil.
@@ -215,16 +215,6 @@ public class FiClassRef {
 		return fiFieldList;
 	}
 
-
-	/**
-	 * Transient Dahil Edilmedi
-	 *
-	 * @param clazz
-	 * @return
-	 */
-	public static List<FiField> getListFieldsExtra(Class clazz) {
-		return getListFieldsWoutStaticMain(clazz, false, true);
-	}
 
 	/**
 	 * Normal şartlarda transient alanlar eklenmez, özel olarak belirtmek lazım
@@ -701,7 +691,7 @@ public class FiClassRef {
 		for (FiField field : listFiFieldsShort) {
 
 			if (FiBool.isTrue(field.getBoKeyIdField())) {
-				Loghelper.get(FiClassRef.class).debug("Id Field:" + field.getOfcTxFieldName());
+				Loghelper.get(FiReflectClass.class).debug("Id Field:" + field.getOfcTxFieldName());
 				Object idValue = FiReflection.getPropertyNested(fromEntity, field.getOfcTxFieldName());
 				boResult = FiReflection.setterNested(toEntity, field.getOfcTxFieldName(), idValue);
 			}

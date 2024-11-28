@@ -35,7 +35,7 @@ public class FiQugen {
 
     public static String deleteById(Class clazz) {
 
-        List<FiField> fieldListFilterAnno = FiClassRef.getListFieldsShortWithId(clazz);
+        List<FiField> fieldListFilterAnno = FiReflectClass.getListFieldsShortWithId(clazz);
 
         String tableName = getTableName(clazz);
 
@@ -68,7 +68,7 @@ public class FiQugen {
 
     public static String deleteByCandId1(Class clazz) {
 
-        List<FiField> fieldListFilterAnno = FiClassRef.getListFieldsShortWithId(clazz);
+        List<FiField> fieldListFilterAnno = FiReflectClass.getListFieldsShortWithId(clazz);
 
         String tableName = getTableName(clazz);
 
@@ -101,7 +101,7 @@ public class FiQugen {
 
     public static String deleteByCandId2(Class clazz) {
 
-        List<FiField> fieldListFilterAnno = FiClassRef.getListFieldsShortWithId(clazz);
+        List<FiField> fieldListFilterAnno = FiReflectClass.getListFieldsShortWithId(clazz);
 
         String tableName = getTableName(clazz);
 
@@ -134,7 +134,7 @@ public class FiQugen {
 
     public static String deleteByCandId2ByInFormat(Class clazz) {
 
-        List<FiField> fieldListFilterAnno = FiClassRef.getListFieldsShortWithId(clazz);
+        List<FiField> fieldListFilterAnno = FiReflectClass.getListFieldsShortWithId(clazz);
 
         String tableName = getTableName(clazz);
 
@@ -167,7 +167,7 @@ public class FiQugen {
 
     public static String selectQuery20ById_oldway(Class clazz) {
 
-        List<FiField> fieldListFilterAnno = FiClassRef.getListFieldsShortWithId(clazz);
+        List<FiField> fieldListFilterAnno = FiReflectClass.getListFieldsShortWithId(clazz);
 
         //String idField = getIdFieldSingle(fieldListFilterAnno);
 
@@ -209,7 +209,7 @@ public class FiQugen {
 
     public static String selectQuery20ByIdNew(Class clazz) {
 
-        List<FiField> fieldListFilterAnno = FiClassRef.getListFieldsShortWithId(clazz);
+        List<FiField> fieldListFilterAnno = FiReflectClass.getListFieldsShortWithId(clazz);
 
         //String idField = getIdFieldSingle(fieldListFilterAnno);
 
@@ -255,7 +255,7 @@ public class FiQugen {
 
     public static FiQuery selectQueryByCandIds1Fi(Class clazz) {
 
-        List<FiField> fieldListFilterAnno = FiClassRef.getListFieldsShortWithId(clazz);
+        List<FiField> fieldListFilterAnno = FiReflectClass.getListFieldsShortWithId(clazz);
         FiQuery fiQuery = new FiQuery();
 
         String tableName = getTableName(clazz);
@@ -290,7 +290,7 @@ public class FiQugen {
 
     public static FiQuery selectQueryByCandIds2(Class clazz) {
 
-        List<FiField> selectFieldList = FiClassRef.getListFieldsShortWithId(clazz);
+        List<FiField> selectFieldList = FiReflectClass.getListFieldsShortWithId(clazz);
         List<FiField> fieldsWhere = new ArrayList<>();
 
         FiQuery fiQuery = new FiQuery();
@@ -369,7 +369,7 @@ public class FiQugen {
 
     public static String selectAllDtoByFiSelectFields(Class clazz) {
 
-        List<FiField> fieldListFilterAnno = FiClassRef.getListFieldsShortWithId(clazz);
+        List<FiField> fieldListFilterAnno = FiReflectClass.getListFieldsShortWithId(clazz);
 
         //String idField = getIdFieldSingle(fieldListFilterAnno);
         //if (idField == null) return null;
@@ -412,7 +412,7 @@ public class FiQugen {
 
     public static String selectAllDtoByFiWhere1(Class clazz) {
 
-        List<FiField> fieldListFilterAnno = FiClassRef.getListFieldsShortWithId(clazz);
+        List<FiField> fieldListFilterAnno = FiReflectClass.getListFieldsShortWithId(clazz);
 
         //String idField = getIdFieldSingle(fieldListFilterAnno);
         //if (idField == null) return null;
@@ -464,7 +464,7 @@ public class FiQugen {
 
     public static String selectAllByFiSelectFields(Class clazz) {
 
-        List<FiField> fieldListFilterAnno = FiClassRef.getListFieldsShortWithId(clazz);
+        List<FiField> fieldListFilterAnno = FiReflectClass.getListFieldsShortWithId(clazz);
 
         //String idField = getIdFieldSingle(fieldListFilterAnno);
 
@@ -504,7 +504,7 @@ public class FiQugen {
 
     public static String select1FieldsByCandId(Class clazz) {
 
-        List<FiField> fieldListFilterAnno = FiClassRef.getListFieldsShortWithId(clazz);
+        List<FiField> fieldListFilterAnno = FiReflectClass.getListFieldsShortWithId(clazz);
 
         String tableName = getTableName(clazz);
 
@@ -539,7 +539,7 @@ public class FiQugen {
 
     public static String selectQuery20ByIdFiSelect(Class clazz) {
 
-        List<FiField> fieldList = FiClassRef.getListFieldsShortWithId(clazz);
+        List<FiField> fieldList = FiReflectClass.getListFieldsShortWithId(clazz);
 
         String tableName = getTableName(clazz);
 
@@ -577,7 +577,7 @@ public class FiQugen {
 
     public static String selectQueryFiSelect(Class clazz, Integer rowCount) {
 
-        List<FiField> fieldList = FiClassRef.getListFieldsShortWithId(clazz);
+        List<FiField> fieldList = FiReflectClass.getListFieldsShortWithId(clazz);
 
         String tableName = getTableName(clazz);
 
@@ -615,7 +615,7 @@ public class FiQugen {
      */
     public static String selectQueryFiSelect1WithTop(Class clazz, Integer rowCount) {
 
-        List<FiField> fieldList = FiClassRef.getListFieldsShortWithId(clazz);
+        List<FiField> fieldList = FiReflectClass.getListFieldsShortWithId(clazz);
 
         String tableName = getTableName(clazz);
 
@@ -648,7 +648,7 @@ public class FiQugen {
 
     public static String selectTopQuery(Class clazz, Integer rowCount) {
 
-        List<FiField> fieldList = FiClassRef.getListFieldsShortWithId(clazz);
+        List<FiField> fieldList = FiReflectClass.getListFieldsShortWithId(clazz);
         String tableName = getTableName(clazz);
 
         StringBuilder query = new StringBuilder();
@@ -672,7 +672,7 @@ public class FiQugen {
 
     public static String selectTopQueryLike(Class clazz, Integer rowCount, Object objectt) {
 
-        List<FiField> fieldList = FiClassRef.getListFieldsWoutStatic(clazz);
+        List<FiField> fieldList = FiReflectClass.getListFieldsWoutStatic(clazz);
 
         String tableName = getTableName(clazz);
 
@@ -728,7 +728,7 @@ public class FiQugen {
 
     public static String selectQueryCountWherAllFields(Class clazz, Object objectt) {
 
-        List<FiField> fieldList = FiClassRef.getListFieldsWoutStatic(clazz);
+        List<FiField> fieldList = FiReflectClass.getListFieldsWoutStatic(clazz);
 
         String tableName = getTableName(clazz);
 
@@ -790,7 +790,7 @@ public class FiQugen {
     public static FiQuery selectDtoEntityByCandId1Fi(Class clazz) {
 
         FiQuery fiQuery = new FiQuery();
-        List<FiField> fieldList = FiClassRef.getListFieldsShortWithId(clazz);
+        List<FiField> fieldList = FiReflectClass.getListFieldsShortWithId(clazz);
 
         String tableName = getTableName(clazz);
 
@@ -830,7 +830,7 @@ public class FiQugen {
 
     public static String selectIdByGuid(Class clazz) {
 
-        List<FiField> fieldList = FiClassRef.getListFieldsShortWithId(clazz);
+        List<FiField> fieldList = FiReflectClass.getListFieldsShortWithId(clazz);
 
         String tableName = getTableName(clazz);
 
@@ -877,7 +877,7 @@ public class FiQugen {
      */
     public static String selectDtoFieldsBySeperatedField(Class clazz) {
 
-        List<FiField> fieldList = FiClassRef.getListFieldsShortWithId(clazz);
+        List<FiField> fieldList = FiReflectClass.getListFieldsShortWithId(clazz);
 
         String tableName = getTableName(clazz);
 
@@ -916,7 +916,7 @@ public class FiQugen {
 
     public static String selectDtoFieldsOrderByIdField(Class clazz) {
 
-        List<FiField> fieldList = FiClassRef.getListFieldsShortWithId(clazz);
+        List<FiField> fieldList = FiReflectClass.getListFieldsShortWithId(clazz);
 
         String tableName = getTableName(clazz);
 
@@ -953,7 +953,7 @@ public class FiQugen {
 
     public static String selectDtoFieldsWoutWhereOrderByCandIdField(Class clazz) {
 
-        List<FiField> fieldList = FiClassRef.getListFieldsShortWithId(clazz);
+        List<FiField> fieldList = FiReflectClass.getListFieldsShortWithId(clazz);
 
         String tableName = getTableName(clazz);
 
@@ -990,7 +990,7 @@ public class FiQugen {
 
     public static String selectDtoFieldsWithWhere1(Class clazz) {
 
-        List<FiField> fieldList = FiClassRef.getListFieldsShortWithId(clazz);
+        List<FiField> fieldList = FiReflectClass.getListFieldsShortWithId(clazz);
 
         String tableName = getTableName(clazz);
 
@@ -1032,7 +1032,7 @@ public class FiQugen {
      */
     public static String selectDtoFieldsByFirmFields(Class clazz) {
 
-        List<FiField> fieldList = FiClassRef.getListFieldsShortWithId(clazz);
+        List<FiField> fieldList = FiReflectClass.getListFieldsShortWithId(clazz);
 
         String tableName = getTableName(clazz);
 
@@ -1068,7 +1068,7 @@ public class FiQugen {
 
     public static String selectAllDtoWherFiCols(Class clazz, List<FiCol> fiColsWhere) {
 
-        List<FiField> fieldList = FiClassRef.getListFieldsShortWithId(clazz);
+        List<FiField> fieldList = FiReflectClass.getListFieldsShortWithId(clazz);
 
         String tableName = getTableName(clazz);
 
@@ -1106,7 +1106,7 @@ public class FiQugen {
 
     public static String selectComboFieldsBySeperatedField(Class clazz) {
 
-        List<FiField> fieldList = FiClassRef.getListFieldsShortWithId(clazz);
+        List<FiField> fieldList = FiReflectClass.getListFieldsShortWithId(clazz);
 
         String tableName = getTableName(clazz);
 
@@ -1144,7 +1144,7 @@ public class FiQugen {
 
     public static String selectQueryCountByCandIdFirst(Class clazz) {
 
-        List<FiField> fieldList = FiClassRef.getListFieldsWoutStatic(clazz);
+        List<FiField> fieldList = FiReflectClass.getListFieldsWoutStatic(clazz);
 
         String candId1FirstField = getCandId1FirstField(fieldList);
 
@@ -1170,7 +1170,7 @@ public class FiQugen {
 
     public static String selectQueryCountByCandId1s(Class clazz) {
 
-        List<FiField> fieldList = FiClassRef.getListFieldsWoutStatic(clazz);
+        List<FiField> fieldList = FiReflectClass.getListFieldsWoutStatic(clazz);
 
         String candId1FirstField = getCandId1FirstField(fieldList);
 
@@ -1212,7 +1212,7 @@ public class FiQugen {
     @Deprecated
     public static String selectQueryCountByCandId(Class clazz) {
 
-        List<FiField> fieldList = FiClassRef.getListFieldsWoutStatic(clazz);
+        List<FiField> fieldList = FiReflectClass.getListFieldsWoutStatic(clazz);
 
         String candId1FirstField = getCandId1FirstField(fieldList);
 
@@ -1246,13 +1246,13 @@ public class FiQugen {
     @Deprecated
     public static String insertQueryJParamWoutId(Class clazz) {
 
-        List<FiField> fieldListFilterAnno = FiClassRef.getListFieldsShortWithNotID(clazz);
+        List<FiField> fieldListFilterAnno = FiReflectClass.getListFieldsShortWithNotID(clazz);
 
         StringBuilder query = new StringBuilder();
 
         query.append("INSERT INTO " + getTableName(clazz) + " ( ");
 
-        query.append(String.join(", ", FiClassRef.getListDbFieldName(fieldListFilterAnno)));
+        query.append(String.join(", ", FiReflectClass.getListDbFieldName(fieldListFilterAnno)));
 
         query.append(" ) VALUES ( ");
 
@@ -1272,13 +1272,13 @@ public class FiQugen {
      */
     public static String insertQueryWoutId(Class clazz) {
 
-        List<FiField> fieldListFilterAnno = FiClassRef.getListFieldsShortWithNotID(clazz);
+        List<FiField> fieldListFilterAnno = FiReflectClass.getListFieldsShortWithNotID(clazz);
 
         StringBuilder query = new StringBuilder();
 
         query.append("INSERT INTO " + getTableName(clazz) + " ( ");
 
-        query.append(String.join(", ", FiClassRef.getListDbFieldName(fieldListFilterAnno)));
+        query.append(String.join(", ", FiReflectClass.getListDbFieldName(fieldListFilterAnno)));
 
         query.append(" ) VALUES ( ");
 
@@ -1292,13 +1292,13 @@ public class FiQugen {
 
     public static String insertQueryWoutIdWithFieldName(Class clazz) {
 
-        List<FiField> fieldListFilterAnno = FiClassRef.getListFieldsShortWithNotID(clazz);
+        List<FiField> fieldListFilterAnno = FiReflectClass.getListFieldsShortWithNotID(clazz);
 
         StringBuilder query = new StringBuilder();
 
         query.append("INSERT INTO " + getTableName(clazz) + " ( ");
 
-        query.append(String.join(", ", FiClassRef.getListDbFieldName(fieldListFilterAnno)));
+        query.append(String.join(", ", FiReflectClass.getListDbFieldName(fieldListFilterAnno)));
 
         query.append(" ) VALUES ( ");
 
@@ -1317,11 +1317,11 @@ public class FiQugen {
 //		-- SELECT
 //				--     (SELECT MAX(no)+1  FROM PERSON), @name
 
-        List<FiField> fieldListFilterAnno = FiClassRef.getListFieldsShortWithNotID(clazz);
+        List<FiField> fieldListFilterAnno = FiReflectClass.getListFieldsShortWithNotID(clazz);
         StringBuilder query = new StringBuilder();
         String tableName = getTableName(clazz);
         query.append("INSERT INTO " + tableName + " ( ");
-        query.append(String.join(", ", FiClassRef.getListDbFieldName(fieldListFilterAnno)));
+        query.append(String.join(", ", FiReflectClass.getListDbFieldName(fieldListFilterAnno)));
         query.append(" ) SELECT ");
 
         Integer index = 0;
@@ -1359,13 +1359,13 @@ public class FiQugen {
      */
     public static String insertQueryRtDbName(Class clazz, IRepoJdbi iRepoJdbi) {
 
-        List<FiField> listField = FiClassRef.getListFieldsShortWithNotID(clazz);
+        List<FiField> listField = FiReflectClass.getListFieldsShortWithNotID(clazz);
 
         StringBuilder query = new StringBuilder();
 
         query.append(String.format("INSERT INTO %s.dbo.%s ( ", iRepoJdbi.getDatabaseName(), getTableName(clazz)));
 
-        query.append(String.join(", ", FiClassRef.getListDbFieldName(listField)));
+        query.append(String.join(", ", FiReflectClass.getListDbFieldName(listField)));
 
         query.append(" ) VALUES ( ");
 
@@ -1385,13 +1385,13 @@ public class FiQugen {
      */
     public static String insertQueryWithId(Class clazz) {
 
-        List<FiField> fieldListFilterAnno = FiClassRef.getListFieldsShortWithId(clazz);
+        List<FiField> fieldListFilterAnno = FiReflectClass.getListFieldsShortWithId(clazz);
 
         StringBuilder query = new StringBuilder();
 
         query.append("INSERT INTO " + getTableName(clazz) + " ( ");
 
-        query.append(String.join(", ", FiClassRef.getListDbFieldName(fieldListFilterAnno)));
+        query.append(String.join(", ", FiReflectClass.getListDbFieldName(fieldListFilterAnno)));
 
         query.append(" ) VALUES ( ");
 
@@ -1405,7 +1405,7 @@ public class FiQugen {
 
     public static String updateQueryNotNullFieldsWoutIdFieldByCandId1(Class clazz, Object objectt) {
 
-        List<FiField> fieldListFilterAnno = FiClassRef.getListFieldsNotNullWithCandId1(clazz, objectt);
+        List<FiField> fieldListFilterAnno = FiReflectClass.getListFieldsNotNullWithCandId1(clazz, objectt);
 
         StringBuilder query = new StringBuilder();
         StringBuilder queryWhere = new StringBuilder();
@@ -1450,7 +1450,7 @@ public class FiQugen {
      */
     public static String updateQueryByCandId1(Class clazz, Boolean includeOnlyFirstInsertFields) {
 
-        List<FiField> fieldListFilterAnno = FiClassRef.getListFieldsShortWithId(clazz);
+        List<FiField> fieldListFilterAnno = FiReflectClass.getListFieldsShortWithId(clazz);
 
         StringBuilder query = new StringBuilder();
         StringBuilder queryWhere = new StringBuilder();
@@ -1492,7 +1492,7 @@ public class FiQugen {
 
     public static String updateQuery20NotNullById(Class clazz, Object objectt) {
 
-        List<FiField> fieldListFilterAnno = FiClassRef.getListFieldsNotNullWithId(clazz, objectt);
+        List<FiField> fieldListFilterAnno = FiReflectClass.getListFieldsNotNullWithId(clazz, objectt);
 
         StringBuilder query = new StringBuilder();
         StringBuilder queryWhere = new StringBuilder();
@@ -1538,7 +1538,7 @@ public class FiQugen {
      */
     public static String updateQueryWithFiColsByIdFieldInClass(Class clazz, List<? extends IFiCol> listFields) {
 
-        List<FiField> listClassFields = FiClassRef.getListFieldsShortWithId(clazz);
+        List<FiField> listClassFields = FiReflectClass.getListFieldsShortWithId(clazz);
 
         StringBuilder query = new StringBuilder();
         StringBuilder queryWhere = new StringBuilder();
@@ -1583,7 +1583,7 @@ public class FiQugen {
      */
     public static String updateFiColListAndExtraWhereIdFiCols(Class clazz, List<? extends IFiCol> listFields) {
 
-        Map<String, FiField> listClassFields = FiClassRef.getMapFieldsShort(clazz);
+        Map<String, FiField> listClassFields = FiReflectClass.getMapFieldsShort(clazz);
 
         StringBuilder query = new StringBuilder();
         StringBuilder queryWhere = new StringBuilder();
@@ -2155,7 +2155,7 @@ public class FiQugen {
      */
     public static String updateQueryWithFiTableColByCandId(Class clazz, List<? extends IFiCol> listFields) {
 
-        List<FiField> listClassFields = FiClassRef.getListFieldsShortWithId(clazz);
+        List<FiField> listClassFields = FiReflectClass.getListFieldsShortWithId(clazz);
 
         StringBuilder query = new StringBuilder();
         StringBuilder queryWhere = new StringBuilder();
@@ -2287,7 +2287,7 @@ public class FiQugen {
      */
     public static String updateQueryWithFiMapParamByCandId(Class clazz, FiKeyBean fiKeyBean) {
 
-        List<FiField> listClassFields = FiClassRef.getListFieldsShortWithId(clazz);
+        List<FiField> listClassFields = FiReflectClass.getListFieldsShortWithId(clazz);
 
         StringBuilder query = new StringBuilder();
         StringBuilder queryWhere = new StringBuilder();
@@ -2412,7 +2412,7 @@ public class FiQugen {
 
     public static String codeFormFields(Class clazz) {
 
-        List<FiField> listFields = FiClassRef.getListFieldsWoutStatic(clazz, true);
+        List<FiField> listFields = FiReflectClass.getListFieldsWoutStatic(clazz, true);
 
         StringBuilder query = new StringBuilder();
 
@@ -2451,7 +2451,7 @@ public class FiQugen {
 
     public static String codeTableColsV1(Class clazz) {
 
-        List<FiField> listFields = FiClassRef.getListFieldsWoutStatic(clazz, true);
+        List<FiField> listFields = FiReflectClass.getListFieldsWoutStatic(clazz, true);
 
         StringBuilder query = new StringBuilder();
 
@@ -2483,7 +2483,7 @@ public class FiQugen {
 
     public static String codeTableColsV2(Class clazz, Boolean includeTransients, String fieldEnumClass) {
 
-        List<FiField> listFields = FiClassRef.getListFieldsWoutStatic(clazz, includeTransients);
+        List<FiField> listFields = FiReflectClass.getListFieldsWoutStatic(clazz, includeTransients);
 
         StringBuilder query = new StringBuilder();
 
@@ -2519,7 +2519,7 @@ public class FiQugen {
 
     public static String codeTableColsSimple(Class clazz, Boolean includeTransients) {
 
-        List<FiField> listFields = FiClassRef.getListFieldsWoutStatic(clazz, includeTransients);
+        List<FiField> listFields = FiReflectClass.getListFieldsWoutStatic(clazz, includeTransients);
 
         StringBuilder query = new StringBuilder();
 
@@ -2554,7 +2554,7 @@ public class FiQugen {
 
     public static String codeColsEnum(Class clazz, Boolean includeTransients) {
 
-        List<FiField> listFields = FiClassRef.getListFieldsWoutStatic(clazz, includeTransients);
+        List<FiField> listFields = FiReflectClass.getListFieldsWoutStatic(clazz, includeTransients);
 
         StringBuilder query = new StringBuilder();
 
@@ -3104,7 +3104,7 @@ public class FiQugen {
 
     public static String createQuery20(Class clazz) {
 
-        List<FiField> listFields = FiClassRef.getListFieldsAll(clazz);
+        List<FiField> listFields = FiReflectClass.getListFieldsAll(clazz);
 
         StringBuilder query = new StringBuilder();
 
@@ -3183,7 +3183,7 @@ public class FiQugen {
 
     public static String uniqueQuery(Class clazz) {
 
-        List<FiField> listFields = FiClassRef.getListFieldsAll(clazz);
+        List<FiField> listFields = FiReflectClass.getListFieldsAll(clazz);
 
         StringBuilder sbFields = new StringBuilder();
         StringBuilder sbFieldsForName = new StringBuilder();
@@ -3232,7 +3232,7 @@ public class FiQugen {
 
     public static List<FiField> getFieldsWithDbDefinitionFromCode(Class clazz) {
 
-        List<FiField> listFields = FiClassRef.getListFieldsAll(clazz);
+        List<FiField> listFields = FiReflectClass.getListFieldsAll(clazz);
 
         assignSqlTypeAndDef(listFields);
 
@@ -3684,7 +3684,7 @@ public class FiQugen {
 
         //String sqlUpRecId = "\nUPDATE CARI_HESAPLAR SET cari_RECid_RECno = cari_RECno WHERE cari_RECno = SCOPE_IDENTITY();\nSELECT SCOPE_IDENTITY();";
 
-        List<FiField> fieldListFilterAnno = FiClassRef.getListFieldsShortWithId(clazz);
+        List<FiField> fieldListFilterAnno = FiReflectClass.getListFieldsShortWithId(clazz);
 
         StringBuilder query = new StringBuilder();
         StringBuilder queryWhere = new StringBuilder();
@@ -3722,7 +3722,7 @@ public class FiQugen {
 
     public static String updateScopeIdFieldWithSIdById(Class clazz, String fieldForScopeEntity) {
 
-        List<FiField> fieldListFilterAnno = FiClassRef.getListFieldsShortWithId(clazz);
+        List<FiField> fieldListFilterAnno = FiReflectClass.getListFieldsShortWithId(clazz);
 
         StringBuilder query = new StringBuilder();
         StringBuilder queryWhere = new StringBuilder();
@@ -3760,7 +3760,7 @@ public class FiQugen {
 
     public static String getIdField(Class clazz) {
 
-        List<FiField> fieldList = FiClassRef.getListFieldsShortWithId(clazz);
+        List<FiField> fieldList = FiReflectClass.getListFieldsShortWithId(clazz);
 
         for (FiField fiField : fieldList) {
             if (FiBool.isTrue(fiField.getBoKeyIdField())) {
@@ -3773,7 +3773,7 @@ public class FiQugen {
 
     public static String getCandIdFieldFirst(Class clazz) {
 
-        List<FiField> fieldList = FiClassRef.getListFieldsShortWithId(clazz);
+        List<FiField> fieldList = FiReflectClass.getListFieldsShortWithId(clazz);
 
         for (FiField fiField : fieldList) {
             if (FiBool.isTrue(fiField.getBoCandidateId1())) {
@@ -3786,7 +3786,7 @@ public class FiQugen {
 
     public static String getCandId1FirstField(Class clazz) {
 
-        List<FiField> fieldList = FiClassRef.getListFieldsShortWithId(clazz);
+        List<FiField> fieldList = FiReflectClass.getListFieldsShortWithId(clazz);
         return getCandId1FirstField(fieldList);
 
     }
@@ -3804,7 +3804,7 @@ public class FiQugen {
 
     public static <EntClazz> String getScopeIdentityFirstField(Class<EntClazz> entityClass) {
 
-        List<FiField> fieldList = FiClassRef.getListFieldsShortWithId(entityClass);
+        List<FiField> fieldList = FiReflectClass.getListFieldsShortWithId(entityClass);
 
         for (FiField fiField : fieldList) {
             if (FiBool.isTrue(fiField.getBoScopeIdField())) {
@@ -4001,7 +4001,7 @@ public class FiQugen {
     }
 
     private static String getFieldsCommaSeperated(Class clazz) {
-        List<FiField> fieldListFilterAnno = FiClassRef.getListFieldsShortWithId(clazz);
+        List<FiField> fieldListFilterAnno = FiReflectClass.getListFieldsShortWithId(clazz);
         StringBuilder query = new StringBuilder();
 
         Integer index = 0;

@@ -3,7 +3,7 @@ package ozpasyazilim.utils.core;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.util.ReflectionUtils;
 import ozpasyazilim.utils.datatypes.FiKeyBean;
-import ozpasyazilim.utils.fidborm.FiClassRef;
+import ozpasyazilim.utils.fidborm.FiReflectClass;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.fidborm.FiField;
@@ -385,7 +385,6 @@ public class FiReflection {
 		}
 
 		return mapFields;
-
 	}
 
 	public static Map<String, FiField> getFieldsNtnAsMap(Class clazz, Object entity) {
@@ -686,7 +685,7 @@ public class FiReflection {
 
 	public static <EntClazz> Object getCandId(EntClazz next, Class<EntClazz> clazz) {
 
-		List<FiField> listFiFieldsCandId = FiClassRef.getListFieldsCandId(clazz);
+		List<FiField> listFiFieldsCandId = FiReflectClass.getListFieldsCandId(clazz);
 
 		if (listFiFieldsCandId.size() == 1) {
 			Object property = getProperty(next, listFiFieldsCandId.get(0).getOfcTxFieldName());
@@ -697,7 +696,7 @@ public class FiReflection {
 
 	public static <EntClazz> Object getIdValue(EntClazz next, Class<EntClazz> clazz) {
 
-		List<FiField> listFieldsId = FiClassRef.getListFieldsId(clazz);
+		List<FiField> listFieldsId = FiReflectClass.getListFieldsId(clazz);
 
 		if (listFieldsId.size() == 1) {
 			Object property = getProperty(next, listFieldsId.get(0).getOfcTxFieldName());
