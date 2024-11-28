@@ -111,7 +111,7 @@
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
-            <version>1.10.3</version>
+            <version>1.18.1</version>
         </dependency>
 
         <!-- apache common library (1) - utility methods for java class -->
@@ -124,9 +124,8 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.7</version>
+            <version>2.16.1</version>
         </dependency>
-
 
         <!-- log api (1) slf4j-log4j -->
 
@@ -312,7 +311,7 @@
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
-            <version>20180813</version>
+            <version>20240303</version>
         </dependency>
 
         <!-- Jackson Json Librayr -->
@@ -320,7 +319,7 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.9.5</version>
+            <version>2.17.0</version>
             <!--<type>jar</type>-->
         </dependency>
 
@@ -336,7 +335,7 @@
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <version>2.8.5</version>
+            <version>2.10.1</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.fxmisc.easybind/easybind -->
