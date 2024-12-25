@@ -1460,7 +1460,7 @@ public class FiExcel {
                 // If the cell is missing from the file, generate a blank one
                 // (Works by specifying a MissingCellPolicy)
 
-                Cell cell = row.getCell(cn, Row.CREATE_NULL_AS_BLANK);
+                Cell cell = row.getCell(cn, Row.CREATE_NULL_AS_BLANK ); //Row.CREATE_NULL_AS_BLANK
 
                 switch (cell.getCellType()) {
                     case Cell.CELL_TYPE_BOOLEAN:

@@ -3,13 +3,13 @@ package ozpasyazilim.utils.datatypes;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class FiListFkb extends ArrayList<FiKeyBean> {
+public class FkbList extends ArrayList<FiKeyBean> {
 
-	public FiListFkb() {
+	public FkbList() {
 		super();
 	}
 
-	public FiListFkb(Collection<? extends FiKeyBean> c) {
+	public FkbList(Collection<? extends FiKeyBean> c) {
 		super(c);
 	}
 

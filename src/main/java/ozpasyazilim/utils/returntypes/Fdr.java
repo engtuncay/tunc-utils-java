@@ -1133,7 +1133,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
         this.boFalseExist = boFalseExist;
     }
 
-    public String calcTxResultStatus() {
+    public String convertBoResultToTxResult() {
         if (getBoResult() == null) return "Sonuçsuz (!!!)";
         if (getBoResult()) {
             if (FiBool.isTrue(getBoFalseExist())) {

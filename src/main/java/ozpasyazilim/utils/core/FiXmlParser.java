@@ -250,6 +250,16 @@ public class FiXmlParser {
 		return parseMatchElementToList(openXml(txXml), txSelectorTag, fiColList, clazz, false);
 	}
 
+	/**
+	 *
+	 * @param txXml
+	 * @param txSelectorTag
+	 * @param fiColList
+	 * @param clazz
+	 * @param boChildSameClassCheck Çocuk elementi aynı sınıfa sahipse,aynı entity üzerine yazmaya devam eder.
+	 * @return
+	 * @param <EntClazz>
+	 */
 	public static <EntClazz> List<EntClazz> parseMatchElementToList(String txXml, String txSelectorTag, List<FiCol> fiColList, Class<EntClazz> clazz, Boolean boChildSameClassCheck) {
 		return parseMatchElementToList(openXml(txXml), txSelectorTag, fiColList, clazz, boChildSameClassCheck);
 	}

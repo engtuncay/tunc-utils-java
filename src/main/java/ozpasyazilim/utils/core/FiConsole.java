@@ -3,7 +3,7 @@ package ozpasyazilim.utils.core;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import ozpasyazilim.utils.datatypes.FiKeyBean;
-import ozpasyazilim.utils.datatypes.FiListFkb;
+import ozpasyazilim.utils.datatypes.FkbList;
 import ozpasyazilim.utils.datatypes.FiListKeyString;
 import ozpasyazilim.utils.datatypes.FiKeyString;
 import ozpasyazilim.utils.log.Loghelper;
@@ -818,9 +818,9 @@ public class FiConsole {
         System.out.println(textCollectionOfString(strings));
     }
 
-    public static String textListFiKeyBean(FiListFkb fiListFkb) {
+    public static String textListFiKeyBean(FkbList fkbList) {
         StringBuilder sbOutput = new StringBuilder("");
-        for (FiKeyBean fiKeyBean : fiListFkb) {
+        for (FiKeyBean fiKeyBean : fkbList) {
             sbOutput.append(textFiKeyBean(fiKeyBean) + "\n");
         }
         return sbOutput.toString();

@@ -1,6 +1,5 @@
 package ozpasyazilim.utils.gui.fxcomponents;
 
-import com.google.common.base.Function;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -24,6 +23,7 @@ import ozpasyazilim.utils.gui.components.ComboItemText;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class FxComboBox<T> extends ComboBox<T> {

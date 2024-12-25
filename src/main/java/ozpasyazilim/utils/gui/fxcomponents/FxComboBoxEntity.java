@@ -1,11 +1,11 @@
 package ozpasyazilim.utils.gui.fxcomponents;
 
-import com.google.common.base.Function;
 import javafx.collections.ObservableList;
 import ozpasyazilim.utils.core.FiString;
 import ozpasyazilim.utils.gui.components.ComboItemGen;
 
 import java.util.List;
+import java.util.function.Function;
 
 public class FxComboBoxEntity<EntClazz> extends FxComboBox<ComboItemGen<EntClazz>> {
 

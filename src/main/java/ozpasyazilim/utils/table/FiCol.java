@@ -403,9 +403,16 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     private Boolean ofcBoNullable;
     private Boolean ofcBoUnique;
     private Boolean ofcBoUtfSupport;
+    /**
+     * Default Value
+     */
     private String ofcTxDefValue;
     private String ofcTxCollation;
     private String ofcTxTypeName;
+    /**
+     * column definition (sql alan ilgili extra bilgiler)
+     */
+    private String ofcTxColDefinition;
     /**
      * Text alanın max uzunluğu
      * <p>
@@ -422,6 +429,8 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
 
     private String ofcTxEntityName;
 
+
+    private String txClassNameSimple;
 
     /**
      * alanın veritabanında olmadığını belirtir
@@ -1752,6 +1761,22 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
 
     public void setOfcTxEntityName(String ofcTxEntityName) {
         this.ofcTxEntityName = ofcTxEntityName;
+    }
+
+    public String getTxClassNameSimple() {
+        return txClassNameSimple;
+    }
+
+    public void setTxClassNameSimple(String txClassNameSimple) {
+        this.txClassNameSimple = txClassNameSimple;
+    }
+
+    public String getOfcTxColDefinition() {
+        return ofcTxColDefinition;
+    }
+
+    public void setOfcTxColDefinition(String ofcTxColDefinition) {
+        this.ofcTxColDefinition = ofcTxColDefinition;
     }
 }
 

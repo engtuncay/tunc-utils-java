@@ -3,6 +3,7 @@ package ozpasyazilim.utils.core;
 import javafx.util.Pair;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import ozpasyazilim.utils.datatypes.FiInspect;
 import ozpasyazilim.utils.datatypes.FiMeta;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.mvc.IFiCol;
@@ -1498,4 +1499,22 @@ public class FiCollection {
         if(collection==null) return 0;
         return collection.size();
     }
+
+    public static <Mt> void addInspect(String txKey, Mt object, Map<String, FiInspect<Mt>> mapBelgeler) {
+
+        FiInspect<Mt> fiInspect = null;
+
+        if (mapBelgeler.containsKey(txKey)) {
+            fiInspect = mapBelgeler.get(txKey);
+            fiInspect.incCount1();
+            fiInspect.getListEntityInit().add(object);
+        }else{
+            fiInspect = new FiInspect();
+            fiInspect.incCount1();
+            fiInspect.getListEntityInit().add(object);
+            mapBelgeler.put(txKey, fiInspect);
+        }
+
+    }
+
 }

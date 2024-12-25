@@ -728,6 +728,10 @@ public class FiDate {
 		return formatter5.format(date);
 	}
 
+	public static String getTimeStampt3ForNow() {
+		return datetoString_timestampt3(new Date());
+	}
+
 	public static String datetoString_timestamptHourMinute(Date date) {
 		SimpleDateFormat formatter5 = new SimpleDateFormat("yyyyMMddhhmm");
 		return formatter5.format(date);

@@ -122,31 +122,31 @@ public class FiSoap {
 		try {
 			//Code to make a webservice HTTP request
 			String responseString = "";
-			StringBuilder outputString = new StringBuilder();
-			String wsURL = endPoint; //"<Endpoint of the webservice to be consumed>";
 
-			URL url = new URL(wsURL);
+
+            URL url = new URL(endPoint); //"<Endpoint of the webservice to be consumed>";
 			//URLConnection connection = url.openConnection();
 			HttpsURLConnection httpConn = (HttpsURLConnection) url.openConnection();
 
-			String xmlInput = soapRequest; //"entire SOAP Request";
-			byte[] bytRequestBuffer = xmlInput.getBytes(StandardCharsets.UTF_8); //new byte[xmlInput.length()];
+            //"entire SOAP Request";
+            byte[] arbytRequestBuffer = soapRequest.getBytes(StandardCharsets.UTF_8); //new byte[xmlInput.length()];
 
+			// URREV byteArray stream çevrilip, tekrar array çevrilmiş , neden ???
 			ByteArrayOutputStream bytOutStream = new ByteArrayOutputStream();
-			bytOutStream.write(bytRequestBuffer);
-			byte[] bytOutHttpParams = bytOutStream.toByteArray();
+			bytOutStream.write(arbytRequestBuffer);
+			byte[] bytOutsRequest = bytOutStream.toByteArray();
 			//post.getBytes(Charsets.UTF_8);
 
 			//String SOAPAction = soapAction; //"<SOAP action of the webservice to be consumed>";
 
 			//Set the appropriate HTTP parameters. (default parameters)
 			httpConn.setRequestProperty("Content-Type", "text/xml;charset=utf-8");
-			httpConn.setRequestProperty("Content-Length", String.valueOf(bytOutHttpParams.length));
-//		httpConn.setRequestProperty("Postman-Token","8052f355-19cf-492b-8608-9f796aaeb59b");
-//		httpConn.setRequestProperty("User-Agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36"); 		//PostmanRuntime/7.28.4
-//		httpConn.setRequestProperty("Accept-Encoding","gzip, deflate, br");
-//		httpConn.setRequestProperty("Accept","*/*");
-//    httpConn.setRequestProperty("SOAPAction", FiString.orEmpty(soapAction));
+			httpConn.setRequestProperty("Content-Length", String.valueOf(bytOutsRequest.length));
+			//httpConn.setRequestProperty("Postman-Token","8052f355-19cf-492b-8608-9f796aaeb59b");
+			//httpConn.setRequestProperty("User-Agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36"); 		//PostmanRuntime/7.28.4
+			//httpConn.setRequestProperty("Accept-Encoding","gzip, deflate, br");
+			//httpConn.setRequestProperty("Accept","*/*");
+			//httpConn.setRequestProperty("SOAPAction", FiString.orEmpty(soapAction));
 
 			// custom user headers
 			if (!FiCollection.isEmptyMap(fksHeaders)) {
@@ -160,29 +160,32 @@ public class FiSoap {
 			httpConn.setDoInput(true);
 
 			OutputStream out = httpConn.getOutputStream();
-			//Write the content of the request to the outputstream of the HTTP Connection.
-			out.write(bytOutHttpParams);
+			//Write the content of the request to the output stream of the HTTP Connection.
+			// Tor:write yazıldıktan sonra istek atılmış oluyor.
+			out.write(bytOutsRequest);
 			out.close();
 			//Ready with sending the request.
 
 			//Read the response.
-			InputStreamReader isr = null;
+			InputStreamReader isrResponse = null;
 			fdr.setLnResponseCode(httpConn.getResponseCode());
 
 			if (httpConn.getResponseCode() == 200) {
-				isr = new InputStreamReader(httpConn.getInputStream(),StandardCharsets.UTF_8);
+				isrResponse = new InputStreamReader(httpConn.getInputStream(),StandardCharsets.UTF_8);
 			} else {
-				if (httpConn.getErrorStream() != null) isr = new InputStreamReader(httpConn.getErrorStream(),StandardCharsets.UTF_8);
+				if (httpConn.getErrorStream() != null) isrResponse = new InputStreamReader(httpConn.getErrorStream(),StandardCharsets.UTF_8);
 				//fdr.setLnErrorCode(httpConn.getResponseCode());
 			}
 
-			if (isr != null) {
-				BufferedReader in = new BufferedReader(isr);
-				//Write the SOAP message response to a String.
-				while ((responseString = in.readLine()) != null) {
-					outputString.append(responseString);
+			StringBuilder stbOutput = new StringBuilder();
+
+			if (isrResponse != null) {
+				BufferedReader bfrResponse = new BufferedReader(isrResponse);
+				//Write the SOAP message response to a String Builder.
+				while ((responseString = bfrResponse.readLine()) != null) {
+					stbOutput.append(responseString);
 				}
-				fdr.setValue(outputString.toString());
+				fdr.setValue(stbOutput.toString());
 			} else {
 				fdr.setMessage("!!! Error Code: " + httpConn.getResponseCode());
 			}

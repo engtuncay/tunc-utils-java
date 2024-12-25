@@ -1,7 +1,7 @@
 package ozpasyazilim.utils.fidborm;
 
 import org.jdbi.v3.core.Jdbi;
-import ozpasyazilim.utils.datatypes.FiListFkb;
+import ozpasyazilim.utils.datatypes.FkbList;
 import ozpasyazilim.utils.returntypes.Fdr;
 
 /**
@@ -15,7 +15,7 @@ public class RepoFkbJdbi extends AbsRepoFkbJdbi {
         super(jdbi);
     }
 
-    public Fdr<FiListFkb> selAll(String txTableName) {
+    public Fdr<FkbList> selAll(String txTableName) {
         String sql = FiQugen.selectAllSimple(txTableName);
         return jdSelectListFkb1BindMapMain(sql, null);
     }

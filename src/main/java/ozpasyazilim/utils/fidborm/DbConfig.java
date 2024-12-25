@@ -12,13 +12,12 @@ public class DbConfig {
 		try {
 			Class.forName(driverClass);
 		} catch (ClassNotFoundException e) {
-			Loghelper.get(DbConfig.class).info("Hata :" + FiException.exTosMain(e));
 			System.out.println("ERROR: Sürücü Yüklenemedi");
+			Loghelper.get(DbConfig.class).error("Hata :" + FiException.exTosMain(e));
 			return false;
 		}
 
 		return true;
-
 	}
 
 	public static Boolean checkDriverClassJtdsSqlServer(){

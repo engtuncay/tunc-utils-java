@@ -846,7 +846,6 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
     public Fdr<EntClazz> jdSelectEntityByStringCandId1(String txKod) {
         //Loghelper.get(getClass()).debug("jdSelectEntityByStringCandId1 start");
-
         String sql = FiQugen.selectQueryByCandIds(getEntityClass());
 
         String txFieldName = FiQugen.getCandIdFieldFirst(getEntityClass());
@@ -3448,7 +3447,15 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
         return jdSelectListBindMapMainNtn(fiQuery.getTxQuery(), fiQuery.getMapParams());
     }
 
-    public Fdr<List<EntClazz>> jdSelectListWitMultiOnly(String sql, FiKeyBean fiKeyBean) {
+    /**
+     *
+     *  fiQuery.convertListParamsToMultiParams() çalıştırılır, ekstra olarak.
+     *
+     * @param sql
+     * @param fiKeyBean
+     * @return
+     */
+    public Fdr<List<EntClazz>> jdSelectListWitConvertMulti(String sql, FiKeyBean fiKeyBean) {
         FiQuery fiQuery = new FiQuery(sql, fiKeyBean);
         fiQuery.convertListParamsToMultiParams();
         //Loghelper.get(getClass()).debug("sql:" + fiQuery.getTxQuery());

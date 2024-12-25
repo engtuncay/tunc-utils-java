@@ -23,8 +23,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.RegionUtil;
 import org.apache.poi.xssf.usermodel.*;
 import ozpasyazilim.utils.datatypes.FiKeyBean;
-import ozpasyazilim.utils.datatypes.FiKeyList;
-import ozpasyazilim.utils.datatypes.FiListFkb;
+import ozpasyazilim.utils.datatypes.FkbList;
 import ozpasyazilim.utils.gui.fxcomponents.*;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.mvc.IFiCol;
@@ -117,12 +116,12 @@ public class FiExcel2 {
         Sheet sheet = wb.createSheet(); // WorkSheet
 
         Font fontGlobal = wb.getFontAt((short) 0);
-        Short punto = 12;
+        short punto = 12;
         fontGlobal.setFontHeightInPoints(punto);
         //font.setFontName("Courier New");
         //((XSSFFont)font).setFamily(3);
         //((XSSFFont)font).setScheme(FontScheme.NONE);
-        //	font.setItalic(true);
+        //font.setItalic(true);
         //font.setBold(true);
 
         sheet.setFitToPage(true);
@@ -1191,7 +1190,7 @@ public class FiExcel2 {
         }
     }
 
-    public static void writeFiListFkbToExcel(FiListFkb fiListFkb, List<? extends IFiCol> fiCols, Path path) {
+    public static void writeFiListFkbToExcel(FkbList fkbList, List<? extends IFiCol> fiCols, Path path) {
         // E eklenebilir
         // ???
         WorkbookFactory workbookFactory = new WorkbookFactory();
@@ -1205,9 +1204,9 @@ public class FiExcel2 {
             headerRow.createCell(indexColHeader).setCellValue(fiCols.get(indexColHeader).getOfcTxHeader()); // Write column name
         }
 
-        for (int indexRow = 0; indexRow < fiListFkb.size(); indexRow++) { // For each
+        for (int indexRow = 0; indexRow < fkbList.size(); indexRow++) { // For each
 
-            FiKeyBean rowent = fiListFkb.get(indexRow);
+            FiKeyBean rowent = fkbList.get(indexRow);
 
             for (int colIndex = 0; colIndex < fiCols.size(); colIndex++) { // For each table column
 
@@ -1458,12 +1457,12 @@ public class FiExcel2 {
 
     }
 
-    public void openExcelFileWithApp(File file) {
+    public static void openExcelFileWithApp(File file) {
 
         try {
             Desktop.getDesktop().open(file);
         } catch (IOException e) {
-            Loghelper.get(getClass()).error(FiException.exTosMain(e));
+            Loghelper.get(FiExcel2.class).error(FiException.exTosMain(e));
             FxDialogShow.showModalErrorAlert("Dosya açılırken Sorunlar Karşılaşıldı. Dosya:\n" + file.getPath());
         }
 

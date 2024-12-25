@@ -1,5 +1,8 @@
 package ozpasyazilim.utils.windows;
 
+import ozpasyazilim.utils.core.FiException;
+import ozpasyazilim.utils.log.Loghelper;
+
 import java.io.*;
 
 public class FiWinUtils {
@@ -27,7 +30,6 @@ public class FiWinUtils {
 	private static String findCurrenUserDesktopPath() {
 
 		try {
-
 			Process process = Runtime.getRuntime().exec(DESKTOP_FOLDER_CMD);
 			StreamReader reader = new StreamReader(process.getInputStream());
 
@@ -43,16 +45,17 @@ public class FiWinUtils {
 			return desktopDir;
 
 		} catch (Exception e) {
-			return null;
+			Loghelper.get(FiWinUtils.class).error(FiException.exTosMain(e));
 		}
+
+		return "";
 	}
 
 	/**
 	 * TEST
 	 */
 	public static void main(String[] args) {
-		System.out.println("Desktop directory : "
-				+ getUserDirOrDesktopDir());
+		System.out.println("Desktop directory : "+ getUserDirOrDesktopDir());
 	}
 
 	static class StreamReader extends Thread {
@@ -70,12 +73,16 @@ public class FiWinUtils {
 				while ((c = is.read()) != -1)
 					sw.write(c);
 			} catch (IOException e) {
-				;
+				Loghelper.get(getClass()).error(FiException.exTosMain(e));
 			}
 		}
 
 		String getResult() {
 			return sw.toString();
 		}
+	}
+
+	public static String getTempDir() {
+		return System.getProperty("java.io.tmpdir");
 	}
 }

@@ -1,7 +1,5 @@
 package ozpasyazilim.utils.gui.fxcomponents;
 
-import com.google.common.base.Function;
-import com.google.common.base.Predicate;
 import javafx.collections.ObservableList;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -12,6 +10,8 @@ import ozpasyazilim.utils.gui.components.ComboItemText;
 import ozpasyazilim.utils.log.Loghelper;
 
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class FxComboBoxSimple extends FxComboBox<ComboItemText> {
 
@@ -81,7 +81,7 @@ public class FxComboBoxSimple extends FxComboBox<ComboItemText> {
     }
 
 	public void addSecureComboItem(ComboItemText comboItem, Predicate<String> predSecureCheck) {
-		if(predSecureCheck.apply(comboItem.getTxCode())){
+		if(predSecureCheck.test(comboItem.getTxCode())){
 			getItems().add(comboItem);
 		}
 	}

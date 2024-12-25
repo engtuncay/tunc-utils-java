@@ -4,7 +4,7 @@ import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 import ozpasyazilim.utils.core.FiException;
 import ozpasyazilim.utils.datatypes.FiKeyBean;
-import ozpasyazilim.utils.datatypes.FiListFkb;
+import ozpasyazilim.utils.datatypes.FkbList;
 import ozpasyazilim.utils.jdbi.FiKeyBeanMapper;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.returntypes.Fdr;
@@ -69,10 +69,10 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
         return fdr;
     }
 
-    public Fdr<FiListFkb> jdSelectListFkb1BindMapMain(String sqlQuery, Map<String, Object> mapBind) {
+    public Fdr<FkbList> jdSelectListFkb1BindMapMain(String sqlQuery, Map<String, Object> mapBind) {
 
-        Fdr<FiListFkb> fdr = new Fdr<>();
-        fdr.setValue(new FiListFkb());
+        Fdr<FkbList> fdr = new Fdr<>();
+        fdr.setValue(new FkbList());
 
         try {
             List<FiKeyBean> result = getJdbi().withHandle(handle -> {
@@ -81,8 +81,8 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
                         .map(new FiKeyBeanMapper(false))
                         .list();
             });
-            FiListFkb fiListFkb = new FiListFkb(result);
-            fdr.setBoResultAndValue(true, fiListFkb, 1);
+            FkbList fkbList = new FkbList(result);
+            fdr.setBoResultAndValue(true, fkbList, 1);
         } catch (Exception ex) {
             Loghelper.get(getClass()).error("Query Problem");
             Loghelper.get(getClass()).error("Hata (Exception):\n" + FiException.exTosMain(ex));
