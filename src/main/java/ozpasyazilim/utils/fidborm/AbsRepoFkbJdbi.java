@@ -281,7 +281,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
         String sql = FiQugen.insertFiCols2(iFiTableMeta, formAsFkb.getListFiColInit(),boInserFieldsOnly);
 
         FiQuery fiQuery = new FiQuery(sql, formAsFkb);
-        fiQuery.logQueryAndParams();
+        //fiQuery.logQueryAndParams();
 
         return jdInsertFiQuery(fiQuery);
     }
@@ -297,7 +297,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
         String sql = FiQugen.updateFiColsArb(getiFiTableMeta(), formAsFkb.getListFiColInit(),boUpdateFieldsOnly);
 
         FiQuery fiQuery = new FiQuery(sql, formAsFkb);
-        fiQuery.logQueryAndParams();
+        //fiQuery.logQueryAndParams();
 
         return jdInsertFiQuery(fiQuery);
     }
@@ -307,7 +307,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
         String sql = FiQugen.deleteWhereIdFiColsArb(iFiTableMeta, fiKeyBean.getListFiColInit());
 
         FiQuery fiQuery = new FiQuery(sql, fiKeyBean);
-        fiQuery.logQueryAndParams();
+        //fiQuery.logQueryAndParams();
 
         return jdDeleteFiQuery(fiQuery);
     }

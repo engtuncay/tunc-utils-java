@@ -360,14 +360,14 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
     public Fdr<List<FiKeyBean>> jdfSelectAllDtoOrderByIdField() {
         FiQuery fiQuery = new FiQuery(FiQugen.selectDtoFieldsOrderByIdField(getEntityClass()));
-        fiQuery.logQuery();
+        //fiQuery.logQuery();
         return jdSelectFkbListBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
     }
 
     public Fdr<List<EntClazz>> jdSelectAllDtoWhereFicols(FiKeyBean fkbSorgu, List<FiCol> fiColsWhere) {
         FiQuery fiQuery = new FiQuery(FiQugen.selectAllDtoWherFiCols(getEntityClass(), fiColsWhere), fkbSorgu);
-        fiQuery.logQuery();
-        fiQuery.logParams();
+        //fiQuery.logQuery();
+        //fiQuery.logParams();
         return jdSelectListBindMapMainNtn(fiQuery.getTxQuery(), fiQuery.getMapParams());
     }
 
@@ -1533,7 +1533,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
         FiQuery fiQuery = new FiQuery(sqlQuery, fkbParams);
 
         //fkbParams.logFiCols();
-        fiQuery.logQueryAndParams();
+        //fiQuery.logQueryAndParams();
 
         return jdUpdateBindMapMain(fiQuery);
     }

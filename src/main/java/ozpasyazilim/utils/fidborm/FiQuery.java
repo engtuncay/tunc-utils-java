@@ -187,12 +187,17 @@ public class FiQuery {
 
 
     public void logQuery() {
-        Loghelper.get(getClass()).debug("Fiquery log");
+        Loghelper.get(getClass()).debug("Fiquery log-Query");
         Loghelper.get(getClass()).debug(getTxQuery());
     }
 
     public void logQueryAndParams() {
-        logQuery();logParams();
+        Loghelper.get(getClass()).debug("Fiquery log- Params");
+        Loghelper.get(getClass()).debug(FiConsole.textFiKeyBean(getMapParamsInit()));
+        // Query
+        Loghelper.get(getClass()).debug("Fiquery log - Query");
+        Loghelper.get(getClass()).debug(getTxQuery());
+
     }
 
     // Getter and Setter
@@ -441,7 +446,7 @@ public class FiQuery {
     }
 
     public void logParams() {
-        Loghelper.get(getClass()).debug("Fiquery log");
+        Loghelper.get(getClass()).debug("Fiquery log-params");
         Loghelper.get(getClass()).debug(FiConsole.textFiKeyBean(getMapParamsInit()));
     }
 
