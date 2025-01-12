@@ -45,7 +45,7 @@ public class FxEditorFactory {
     Map<String, String> mapSimpleClassToEditorClass;
 
     /**
-     * ## Component Node'u oluşturmak için kullanılır (Örneğin FxFormMig'de kullanılır)
+     * UBOM Component Node'u oluşturmak için kullanılır (Örneğin FxFormMig'de kullanılır)
      * <p>
      * FiCol'dan extra özellikler alması için eklendi (length vs)
      * <p>
@@ -650,7 +650,7 @@ public class FxEditorFactory {
 //    }
 
     /**
-     * ## Filter node Fkb dönüştürülmesi (FxTableView de kullanılıyor)
+     * UBOM Filter node Fkb dönüştürülmesi (FxTableView de kullanılıyor)
      *
      * @param fiColList
      * @return

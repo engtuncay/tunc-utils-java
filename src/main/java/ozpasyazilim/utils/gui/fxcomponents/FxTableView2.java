@@ -1957,7 +1957,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     }
 
     /**
-     * ## Local filtreleme için tüm predicateler birleştirilir
+     * UBOM Local filtreleme için tüm predicateler birleştirilir
      * <p>
      * getPredFilterLocal + getPredFilterRemoteDb + getPredFilterExtraList
      *
