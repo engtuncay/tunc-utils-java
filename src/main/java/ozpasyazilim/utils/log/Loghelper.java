@@ -53,6 +53,10 @@ public class Loghelper {
 		Loghelper.get(clazz).debug(message);
 	}
 
+	public static void debugLogTemp(Class clazz, String message) {
+		Loghelper.get(clazz).debug(message);
+	}
+
 	public static void debug(Class clazz, String message) {
 		Loghelper.get(clazz).debug(message);
 	}

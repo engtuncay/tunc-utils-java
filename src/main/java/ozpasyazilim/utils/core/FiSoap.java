@@ -99,7 +99,9 @@ public class FiSoap {
 			} else {
 				fdrMain.setMessage("!!! Error Code:" + httpConn.getResponseCode());
 			}
-			//Loghelper.debugLog(FiSoap.class, "Soap Response:"+outputString);
+
+			//Loghelper.debugLogTemp(FiSoap.class,"Soap Response:"+outputString);
+
 		} catch (IOException exception) {
 			Loghelper.get(getClassi()).debug(FiException.exceptionIfToString(exception));
 			fdrMain.setBoResult(false);

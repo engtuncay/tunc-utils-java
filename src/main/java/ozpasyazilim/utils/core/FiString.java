@@ -956,4 +956,12 @@ public class FiString {
         }
         return sbResult.toString();
     }
+
+    public static String capitalizeFirstLetter(String str) {
+
+        if (str == null || str.isEmpty()) {
+            return str; // Boş veya null bir string döndürülür.
+        }
+        return str.substring(0, 1).toUpperCase() + str.substring(1);
+    }
 }

@@ -474,6 +474,12 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
         return this;
     }
 
+    public Fdr<EntClazz> buiMessageWitLog(String message) {
+        this.setMessage(message);
+        addLogInfo(message);
+        return this;
+    }
+
     /**
      * İşlem sonuçlarının hepsi true olursa sonuç true olur, bir tane false varsa sonuç false olur.
      * <p>
