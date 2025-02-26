@@ -3,7 +3,7 @@ package ozpasyazilim.utils.fxwindow;
 import de.jensd.fx.glyphs.icons525.Icons525;
 import ozpasyazilim.utils.gui.fxcomponents.*;
 
-public class FiMinaButtonIcons {
+public class FiButtonIcons {
 
     public static FxButton genBtnRefresh() {
         FxButton btn = new FxButton("Yenile", Icons525.REFRESH);
