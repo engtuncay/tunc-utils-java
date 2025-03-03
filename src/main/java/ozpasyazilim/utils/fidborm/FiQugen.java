@@ -691,7 +691,7 @@ public class FiQugen {
 
         for (FiField fiField : fieldList) {
 
-            if (FiBool.isTrue(fiField.getOftBoTransient())) continue;
+            if (FiBool.isTrue(fiField.getOfcBoTransient())) continue;
 
             index++;
             if (index != 1) query.append(", ");
@@ -706,7 +706,7 @@ public class FiQugen {
 
             for (FiField fiField : fieldList) {
 
-                if (FiBool.isTrue(fiField.getOftBoTransient())) continue;
+                if (FiBool.isTrue(fiField.getOfcBoTransient())) continue;
 
                 Object fieldValue = FiReflection.getProperty(objectt, fiField.getOfcTxFieldName());
 
@@ -3412,9 +3412,9 @@ public class FiQugen {
 
             if (FiBool.isTrue(ficol.getBoKeyIdField())) {
 
-                if (ficol.getOfiTxIdType() == null) ficol.setOfiTxIdType("");
+                if (ficol.getOfcTxIdType() == null) ficol.setOfcTxIdType("");
 
-                if (ficol.getOfiTxIdType().equals(FiIdGenerationType.identity.toString())) {
+                if (ficol.getOfcTxIdType().equals(FiIdGenerationType.identity.toString())) {
                     fieldAttributes += " IDENTITY(1,1)";
                 }
                 fieldAttributes += "  NOT NULL PRIMARY KEY ";

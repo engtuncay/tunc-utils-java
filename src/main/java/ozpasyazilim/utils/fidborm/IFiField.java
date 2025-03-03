@@ -5,9 +5,9 @@ package ozpasyazilim.utils.fidborm;
  */
 public interface IFiField {
 
-    public String getOfiTxIdType();
+    public String getOfcTxIdType();
 
-    public void setOfiTxIdType(String ofiTxIdType);
+    public void setOfcTxIdType(String ofcTxIdType);
 
     public Boolean getOfcBoUniqGro1();
 
@@ -54,9 +54,9 @@ public interface IFiField {
 
     public void setOfcBoFilterLike(Boolean ofcBoFilterLike);
 
-    public Boolean getOftBoTransient();
+    public Boolean getOfcBoTransient();
 
-    public void setOftBoTransient(Boolean oftBoTransient);
+    public void setOfcBoTransient(Boolean ofcBoTransient);
 
     public String getOfcTxFieldType();
 

@@ -476,7 +476,7 @@ public class FiReflectClass {
         // other related db
 
         if (field.isAnnotationPresent(Transient.class) || field.isAnnotationPresent(FiTransient.class)) {
-            fiField.setOftBoTransient(true);
+            fiField.setOfcBoTransient(true);
         }
 
         // Id alanlar için ortak tanımlamalar
@@ -658,7 +658,7 @@ public class FiReflectClass {
         // other related db
 
         if (field.isAnnotationPresent(Transient.class) || field.isAnnotationPresent(FiTransient.class)) {
-            fiField.setOftBoTransient(true);
+            fiField.setOfcBoTransient(true);
         }
 
         // Id alanlar için ortak tanımlamalar

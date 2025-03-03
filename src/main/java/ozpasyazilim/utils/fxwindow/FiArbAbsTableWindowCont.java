@@ -119,15 +119,21 @@ public abstract class FiArbAbsTableWindowCont<EntClazz> extends FiArbWindowCont 
     }
 
     protected FxButton addBtnMotReport() {
-        btnCrudReport = FiButtonIcons.genBtnReport();
+        btnCrudReport = FiButtons.genBtnReport();
         getModView().getMigToolbar().add(btnCrudReport);
         return btnCrudReport;
     }
 
     protected void addBtnReportWithActionThread() {
-        btnCrudReport = FiButtonIcons.genBtnReport();
+        btnCrudReport = FiButtons.genBtnReport();
         getModView().getMigToolbar().add(btnCrudReport);
         btnCrudReport.setOnActionWithThread(this::pullTableData);
+    }
+
+    protected void addBtnReportWithAction() {
+        btnCrudReport = FiButtons.genBtnReport();
+        getModView().getMigToolbar().add(btnCrudReport);
+        btnCrudReport.setOnAction((event)->pullTableData());
     }
 
     public void registerDeleteOnTable(FxButton btn) {
@@ -167,15 +173,15 @@ public abstract class FiArbAbsTableWindowCont<EntClazz> extends FiArbWindowCont 
     }
 
     protected void addSelectAndRefreshButton() {
-        btnCrudSelect = FiButtonIcons.genBtnSecim();
-        btnCrudRefresh = FiButtonIcons.genBtnRefresh();
+        btnCrudSelect = FiButtons.genBtnSecim();
+        btnCrudRefresh = FiButtons.genBtnRefresh();
         // Add Layout
         getModView().getMigToolbar().add(btnCrudSelect);
         getModView().getMigToolbar().add(btnCrudRefresh);
     }
 
     protected void addRefreshButton() {
-        btnCrudRefresh = FiButtonIcons.genBtnRefresh();
+        btnCrudRefresh = FiButtons.genBtnRefresh();
         getModView().getMigToolbar().add(btnCrudRefresh);
     }
 

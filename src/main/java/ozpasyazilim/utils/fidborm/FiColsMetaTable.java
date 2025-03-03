@@ -30,8 +30,8 @@ public class FiColsMetaTable {
         return fiCol;
     }
 
-    public static FiCol field_desc() {
-        FiCol fiCol = new FiCol("field_desc", "");
+    public static FiCol ofcTxFieldDesc() {
+        FiCol fiCol = new FiCol("ofcTxFieldDesc", "");
 // fiCol.buiColType(OzColType.);
         return fiCol;
     }
@@ -108,8 +108,8 @@ public class FiColsMetaTable {
         return fiCol;
     }
 
-    public static FiCol oftBoTransient() {
-        FiCol fiCol = new FiCol("oftBoTransient", "");
+    public static FiCol ofcBoTransient() {
+        FiCol fiCol = new FiCol("ofcBoTransient", "");
 // fiCol.buiColType(OzColType.);
         return fiCol;
     }
@@ -122,7 +122,7 @@ public class FiColsMetaTable {
         fiColList.add(ofcTxFieldType());
         fiColList.add(ofcTxFieldName());
         fiColList.add(ofcTxHeader());
-        fiColList.add(field_desc());
+        fiColList.add(ofcTxFieldDesc());
         fiColList.add(ofiTxIdType());
         fiColList.add(ofcBoUniqGro1());
         fiColList.add(ofcBoNullable());
@@ -135,7 +135,7 @@ public class FiColsMetaTable {
         fiColList.add(ofcLnPrecision());
         fiColList.add(ofcLnScale());
         fiColList.add(ofcBoFilterLike());
-        fiColList.add(oftBoTransient());
+        fiColList.add(ofcBoTransient());
 
         return fiColList;
     }

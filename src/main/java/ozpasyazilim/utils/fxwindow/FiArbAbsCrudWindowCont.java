@@ -102,15 +102,15 @@ public abstract class FiArbAbsCrudWindowCont extends FiArbWindowCont implements 
 	}
 
 	protected void addSelectAndRefreshButton() {
-		btnCrudSelect = FiButtonIcons.genBtnSecim();
-		btnCrudRefresh = FiButtonIcons.genBtnRefresh();
+		btnCrudSelect = FiButtons.genBtnSecim();
+		btnCrudRefresh = FiButtons.genBtnRefresh();
 		// Add Layout
 		getModView().getMigToolbar().add(btnCrudSelect);
 		getModView().getMigToolbar().add(btnCrudRefresh);
 	}
 
 	protected void addRefreshButton() {
-		btnCrudRefresh = FiButtonIcons.genBtnRefresh();
+		btnCrudRefresh = FiButtons.genBtnRefresh();
 		getModView().getMigContent().add(btnCrudRefresh);
 	}
 
@@ -148,7 +148,7 @@ public abstract class FiArbAbsCrudWindowCont extends FiArbWindowCont implements 
 	 * Refrest Button, Default Action pullTableData metodu çalıştırılır (override edilebilir)
 	 */
 	protected void addRefreshButtonWithAction() {
-		btnCrudRefresh = FiButtonIcons.genBtnRefresh();
+		btnCrudRefresh = FiButtons.genBtnRefresh();
 		getModView().getMigToolbar().add(btnCrudRefresh);
 		btnCrudRefresh.setOnAction((event) -> actCrudRefresh());
 	}
@@ -158,7 +158,7 @@ public abstract class FiArbAbsCrudWindowCont extends FiArbWindowCont implements 
 	 * Thread olarak pullTableData yı çalıştırır.
 	 */
 	protected void addRefreshButtonWithActionThread() {
-		btnCrudRefresh = FiButtonIcons.genBtnRefresh();
+		btnCrudRefresh = FiButtons.genBtnRefresh();
 		getModView().getMigToolbar().add(btnCrudRefresh);
 		btnCrudRefresh.setOnActionWithThread(this::actCrudRefresh);
 	}
@@ -179,9 +179,9 @@ public abstract class FiArbAbsCrudWindowCont extends FiArbWindowCont implements 
 	}
 
 	protected void addCrudButtons() {
-		btnCrudAdd = FiButtonIcons.genBtnAdd();
-		btnCrudEdit = FiButtonIcons.genBtnEdit();
-		btnCrudDelete = FiButtonIcons.genBtnDelete();
+		btnCrudAdd = FiButtons.genBtnAdd();
+		btnCrudEdit = FiButtons.genBtnEdit();
+		btnCrudDelete = FiButtons.genBtnDelete();
 
 		getModView().getMigToolbar().add(btnCrudAdd);
 		getModView().getMigContent().add(btnCrudEdit);
@@ -190,15 +190,15 @@ public abstract class FiArbAbsCrudWindowCont extends FiArbWindowCont implements 
 
 	protected void addEditAndDeleteButtons() {
 
-		btnCrudEdit = FiButtonIcons.genBtnEdit();
-		btnCrudDelete = FiButtonIcons.genBtnDelete();
+		btnCrudEdit = FiButtons.genBtnEdit();
+		btnCrudDelete = FiButtons.genBtnDelete();
 
 		getModView().getMigToolbar().add(btnCrudEdit);
 		getModView().getMigToolbar().add(btnCrudDelete);
 	}
 
 	protected void addEditButton() {
-		btnCrudEdit = FiButtonIcons.genBtnEdit();
+		btnCrudEdit = FiButtons.genBtnEdit();
 		getModView().getMigToolbar().add(btnCrudEdit);
 	}
 
@@ -210,7 +210,7 @@ public abstract class FiArbAbsCrudWindowCont extends FiArbWindowCont implements 
 	}
 
 	protected void addEditButtonWithActionBoolArg() {
-		btnCrudEdit = FiButtonIcons.genBtnEdit();
+		btnCrudEdit = FiButtons.genBtnEdit();
 		getModView().getMigToolbar().add(btnCrudEdit);
 		btnCrudEdit.setOnAction(event -> actBtnCrudAddEdit(true));
 	}

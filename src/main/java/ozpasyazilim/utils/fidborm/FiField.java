@@ -208,12 +208,12 @@ public class FiField implements IFiField{
 	public void setBoCandidateId1(Boolean idSelected) {
 		boCandidateId1 = idSelected;}
 
-	public Boolean getOftBoTransient() {
+	public Boolean getOfcBoTransient() {
 		return oftBoTransient;
 	}
 
-	public void setOftBoTransient(Boolean oftBoTransient) {
-		this.oftBoTransient = oftBoTransient;
+	public void setOfcBoTransient(Boolean ofcBoTransient) {
+		this.oftBoTransient = ofcBoTransient;
 	}
 
 	public Integer getOfcLnPrecision() {
@@ -419,13 +419,13 @@ public class FiField implements IFiField{
 	}
 
 	@Override
-	public String getOfiTxIdType() {
+	public String getOfcTxIdType() {
 		return ofiTxIdType;
 	}
 
 	@Override
-	public void setOfiTxIdType(String ofiTxIdType) {
-		this.ofiTxIdType = ofiTxIdType;
+	public void setOfcTxIdType(String ofcTxIdType) {
+		this.ofiTxIdType = ofcTxIdType;
 	}
 
 	@Override

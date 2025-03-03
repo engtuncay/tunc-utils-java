@@ -132,6 +132,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     // --Table Editor ile İgli Alanlar
     private String colEditorClass;
     private Node colEditorNode;
+
     private Object colValue;
 
     /**
@@ -397,7 +398,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     // Reflection Field Alanlar
 
     // FiId
-    private String ofiTxIdType;
+    private String ofcTxIdType;
     // FiColumn
     private Boolean ofcBoUniqGro1;
     private Boolean ofcBoNullable;
@@ -435,7 +436,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     /**
      * alanın veritabanında olmadığını belirtir
      */
-    private Boolean oftBoTransient;
+    private Boolean ofcBoTransient;
 
     /**
      * Code Generate ederken oluşturulan alan tanımı
@@ -1626,12 +1627,12 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
         this.boKeyIdentityField = boKeyIdentityField;
     }
 
-    public Boolean getOftBoTransient() {
-        return oftBoTransient;
+    public Boolean getOfcBoTransient() {
+        return ofcBoTransient;
     }
 
-    public void setOftBoTransient(Boolean oftBoTransient) {
-        this.oftBoTransient = oftBoTransient;
+    public void setOfcBoTransient(Boolean ofcBoTransient) {
+        this.ofcBoTransient = ofcBoTransient;
     }
 
     public Boolean getBoInsertFieldForQuery() {
@@ -1643,12 +1644,12 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
         return this;
     }
 
-    public String getOfiTxIdType() {
-        return ofiTxIdType;
+    public String getOfcTxIdType() {
+        return ofcTxIdType;
     }
 
-    public void setOfiTxIdType(String ofiTxIdType) {
-        this.ofiTxIdType = ofiTxIdType;
+    public void setOfcTxIdType(String ofcTxIdType) {
+        this.ofcTxIdType = ofcTxIdType;
     }
 
     public Boolean getOfcBoUniqGro1() {
