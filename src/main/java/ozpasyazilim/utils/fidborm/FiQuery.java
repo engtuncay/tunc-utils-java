@@ -53,11 +53,11 @@ public class FiQuery {
     }
 
     public static FiQuery bui(String sql, FiKeyBean fkbParams) {
-        return new FiQuery(sql,fkbParams);
+        return new FiQuery(sql, fkbParams);
     }
 
 
-        public void deActivateOptParam(String txOptParamName) {
+    public void deActivateOptParam(String txOptParamName) {
         setTxQuery(Fiqt.deActivateOptParamMain(getTxQuery(), txOptParamName));
     }
 
@@ -111,7 +111,7 @@ public class FiQuery {
     public void convertParamToMultiParamsWithSqlNewLine(String txParamName, Collection collParams) {
         if (getMapParams() == null) return;
         String txCombineSeperator = "+char(13)+char(10)+";
-        setTxQuery(Fiqt.convertSingleParamToMultiParam2(getTxQuery(), getMapParams(),txParamName, collParams, false, txCombineSeperator));
+        setTxQuery(Fiqt.convertSingleParamToMultiParam2(getTxQuery(), getMapParams(), txParamName, collParams, false, txCombineSeperator));
     }
 
     public FiKeyBean getMapParams() {
@@ -143,6 +143,29 @@ public class FiQuery {
      */
     public void activateParamsByMapParams() {
         activateParamsMain(false);
+    }
+
+    /**
+     * activateParamsMain(boActiOnlyFullParams);
+     * <p>
+     * deActivateAllOptParams();
+     */
+    public void processAllParams(Boolean boActiOnlyFullParams) {
+        activateParamsMain(boActiOnlyFullParams);
+        deActivateAllOptParams();
+    }
+
+    /**
+     * activateParamsMain(boActiOnlyFullParams);
+     * <p>
+     * convertListParamsToMultiParams();
+     * <p>
+     * deActivateAllOptParams();
+     */
+    public void processAllParamsWitMulti(Boolean boActiOnlyFullParams) {
+        activateParamsMain(boActiOnlyFullParams);
+        convertListParamsToMultiParams();
+        deActivateAllOptParams();
     }
 
     public void activateParamsOnlyFull() {
@@ -429,7 +452,7 @@ public class FiQuery {
 
     /**
      * Sorguda bulunan __userParam şeklindeki user parametrelerini bulur
-     *
+     * <p>
      * iki alt çizgi seçilmesinin nedeni, değişken tanımlarında _ alt çizgiye izin veriyor oluşu.
      * <p>
      * Bu parametreler eğer mapParams'da var ise, değeri yer değiştirir.
@@ -517,34 +540,34 @@ public class FiQuery {
 //						listParamsWillDeActivate.add(key);
 //					}
 //
-////					if (value instanceof String) {
-////						if (!FiString.isEmpty((String) value)) {
-////							String newQuery = FiQueryTools.activateOptParamMain(getTxQuery(), key);
-////							setTxQuery(newQuery);
-////						} else {
-////							String newQuery = FiQueryTools.deActivateOptParamMain(getTxQuery(), key);
-////							setTxQuery(newQuery);
-////							listParamsWillDeActivate.add(key);
-////						}
-////					} else if (value instanceof Collection) {
-////						if (!FiCollection.isEmpty((Collection) value)) {
-////							String newQuery = FiQueryTools.activateOptParamMain(getTxQuery(), key);
-////							setTxQuery(newQuery);
-////						} else {
-////							String newQuery = FiQueryTools.deActivateOptParamMain(getTxQuery(), key);
-////							setTxQuery(newQuery);
-////							listParamsWillDeActivate.add(key);
-////						}
-////					} else { // string ve collection tipinden dışında olanlar, null degilse aktif edilir
-////						if (value != null) {
-////							String newQuery = FiQueryTools.deActivateOptParamMain(getTxQuery(), key);
-////							setTxQuery(newQuery);
-////						} else {
-////							String newQuery = FiQueryTools.deActivateOptParamMain(getTxQuery(), key);
-////							setTxQuery(newQuery);
-////							listParamsWillDeActivate.add(key);
-////						}
-////					}
+/// /					if (value instanceof String) {
+/// /						if (!FiString.isEmpty((String) value)) {
+/// /							String newQuery = FiQueryTools.activateOptParamMain(getTxQuery(), key);
+/// /							setTxQuery(newQuery);
+/// /						} else {
+/// /							String newQuery = FiQueryTools.deActivateOptParamMain(getTxQuery(), key);
+/// /							setTxQuery(newQuery);
+/// /							listParamsWillDeActivate.add(key);
+/// /						}
+/// /					} else if (value instanceof Collection) {
+/// /						if (!FiCollection.isEmpty((Collection) value)) {
+/// /							String newQuery = FiQueryTools.activateOptParamMain(getTxQuery(), key);
+/// /							setTxQuery(newQuery);
+/// /						} else {
+/// /							String newQuery = FiQueryTools.deActivateOptParamMain(getTxQuery(), key);
+/// /							setTxQuery(newQuery);
+/// /							listParamsWillDeActivate.add(key);
+/// /						}
+/// /					} else { // string ve collection tipinden dışında olanlar, null degilse aktif edilir
+/// /						if (value != null) {
+/// /							String newQuery = FiQueryTools.deActivateOptParamMain(getTxQuery(), key);
+/// /							setTxQuery(newQuery);
+/// /						} else {
+/// /							String newQuery = FiQueryTools.deActivateOptParamMain(getTxQuery(), key);
+/// /							setTxQuery(newQuery);
+/// /							listParamsWillDeActivate.add(key);
+/// /						}
+/// /					}
 //				} else { // boActivateOnlyFullParams false veya null ise, tüm parametreleri aktif eder
 //					String newQuery = FiQueryTools.activateOptParamMain(getTxQuery(), key);
 //					setTxQuery(newQuery);
