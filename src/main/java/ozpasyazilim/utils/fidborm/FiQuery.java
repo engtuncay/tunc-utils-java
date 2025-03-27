@@ -356,7 +356,7 @@ public class FiQuery {
      * <p>
      * 3. List tipinde parametre varsa, çoklu parametreye (convertMultiToSingle) çevirir
      */
-    public void prepSqlParams1() {
+    public void processParamsC1() {
         if (getMapParams() != null) {
 
             // list değer varsa işlem sonunda list paramları single paramlara çevrilecek

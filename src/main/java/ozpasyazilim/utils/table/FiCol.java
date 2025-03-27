@@ -410,6 +410,8 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     private String ofcTxDefValue;
     private String ofcTxCollation;
     private String ofcTxTypeName;
+    private String ofcTxFieldType;
+
     /**
      * column definition (sql alan ilgili extra bilgiler)
      */
@@ -423,8 +425,6 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     private Integer ofcLnPrecision;
     private Integer ofcLnScale;
     private Boolean ofcBoFilterLike;
-
-    private String ofcTxFieldType;
 
     //FiTransient
 

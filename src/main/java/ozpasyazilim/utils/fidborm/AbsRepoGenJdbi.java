@@ -3442,7 +3442,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
      */
     public Fdr<List<EntClazz>> jdSelectListWitPrep(String sql, FiKeyBean fiKeyBean) {
         FiQuery fiQuery = new FiQuery(sql, fiKeyBean);
-        fiQuery.prepSqlParams1();
+        fiQuery.processParamsC1();
 //		Loghelper.get(getClass()).debug("Sql:" + fiQuery.getTxQuery());
         return jdSelectListBindMapMainNtn(fiQuery.getTxQuery(), fiQuery.getMapParams());
     }

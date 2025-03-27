@@ -37,6 +37,10 @@ public interface IFiField {
 
     public void setOfcTxTypeName(String ofcTxTypeName);
 
+    public String getOfcTxFieldType();
+
+    public void setOfcTxFieldType(String ofcTxFieldType);
+
     public Integer getOfcLnLength();
 
     public void setOfcLnLength(Integer ofcLnLength);
@@ -58,9 +62,6 @@ public interface IFiField {
 
     public void setOfcBoTransient(Boolean ofcBoTransient);
 
-    public String getOfcTxFieldType();
-
-    public void setOfcTxFieldType(String ofcTxFieldType);
 
     public String getOfcTxFieldName();
 
