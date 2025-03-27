@@ -8,6 +8,7 @@ import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.fidborm.Fiqt;
 import ozpasyazilim.utils.fidborm.IFiTableMeta;
 import ozpasyazilim.utils.log.Loghelper;
+import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.table.FiCol;
 
 import java.lang.reflect.Field;
@@ -119,6 +120,11 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
         this.put(fiCol.toString(), value);
         getListFiColInit().add(fiCol);
         getMapFiColInit().put(fiCol.getOfcTxFieldName(), fiCol);
+        return this;
+    }
+
+    public FiKeyBean putField(FiCol fiCol, Object value) {
+        this.put(fiCol.getOfcTxFieldName(), value);
         return this;
     }
 
@@ -284,6 +290,10 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
         return null;
     }
 
+    public Integer getAsIntOrMinusOne(FiCol fiCol) {
+        return FiNumber.orMinusOne(getAsInt(fiCol));
+    }
+
     public Integer getAsInt(FiCol fiCol) {
 
         if (fiCol == null || FiString.isEmpty(fiCol.getOfcTxFieldName())) return null;
@@ -303,6 +313,35 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
     }
 
     public Double getAsDouble(FiCol fiCol) {
+
+        if (fiCol == null || FiString.isEmpty(fiCol.getOfcTxFieldName())) return null;
+
+        if (containsKey(fiCol.getOfcTxFieldName())) {
+            Object objValue = get(fiCol.getOfcTxFieldName());
+
+            if (objValue == null) return null;
+
+            //Loghelper.get(getClass()).debug("Class:"+objValue.getClass().getSimpleName());
+
+            if (objValue instanceof Double) {
+                return (Double) objValue;
+            }
+
+            if (objValue instanceof BigDecimal) {
+                return ((BigDecimal) objValue).doubleValue();
+            }
+
+        }
+
+        return null;
+    }
+
+    public Double getAsDoubleOrZero(IFiCol fiCol) {
+        return FiNumber.orZero(getAsDouble(fiCol));
+    }
+
+
+    public Double getAsDouble(IFiCol fiCol) {
 
         if (fiCol == null || FiString.isEmpty(fiCol.getOfcTxFieldName())) return null;
 
@@ -512,5 +551,9 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
         if (fiCol == null) return null;
 
         return get(fiCol.toString());
+    }
+
+    public Object getFiCol(FiCol fiCol) {
+        return get(fiCol.getOfcTxFieldName());
     }
 }

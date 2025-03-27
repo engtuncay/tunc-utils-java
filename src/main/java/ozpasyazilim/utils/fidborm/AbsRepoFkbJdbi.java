@@ -8,6 +8,7 @@ import ozpasyazilim.utils.datatypes.FkbList;
 import ozpasyazilim.utils.jdbi.FiKeyBeanMapper;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.returntypes.Fdr;
+import ozpasyazilim.utils.returntypes.FdrFkb;
 
 import java.util.*;
 
@@ -69,9 +70,36 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
         return fdr;
     }
 
+    public FdrFkb jdSelectListFkb3BindMapMain(FiQuery fiQuery) {
+        return jdSelectListFkb3BindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
+    }
+
     public Fdr<FkbList> jdSelectListFkb1BindMapMain(String sqlQuery, Map<String, Object> mapBind) {
 
         Fdr<FkbList> fdr = new Fdr<>();
+        fdr.setValue(new FkbList());
+
+        try {
+            List<FiKeyBean> result = getJdbi().withHandle(handle -> {
+                return handle.createQuery(Fiqt.stoj(sqlQuery))
+                        .bindMap(mapBind)
+                        .map(new FiKeyBeanMapper(false))
+                        .list();
+            });
+            FkbList fkbList = new FkbList(result);
+            fdr.setBoResultAndValue(true, fkbList, 1);
+        } catch (Exception ex) {
+            Loghelper.get(getClass()).error("Query Problem");
+            Loghelper.get(getClass()).error("Hata (Exception):\n" + FiException.exTosMain(ex));
+            fdr.setBoResult(false, ex);
+        }
+
+        return fdr;
+    }
+
+    public FdrFkb jdSelectListFkb3BindMapMain(String sqlQuery, Map<String, Object> mapBind) {
+
+        FdrFkb fdr = new FdrFkb();
         fdr.setValue(new FkbList());
 
         try {

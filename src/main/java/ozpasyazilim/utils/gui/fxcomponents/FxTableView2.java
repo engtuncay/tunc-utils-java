@@ -53,6 +53,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     // gereksiz çıkartılabilir
     private Boolean filteredListActive;
+    private Boolean boFkbEnabled;
 
     // Filter Editor Lokal ve Remote false olanlar hariç lokal filtreleme enable edilir
     private Boolean enableLocalFilterEditor;
@@ -468,17 +469,15 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         return this;
     }
 
-    public FxTableView2 addAllFiColsAutoAsFkb(List<FiCol> listFiCol) {
+    public void addAllFiColsAutoAsFkb(List<FiCol> listFiCol) {
         for (FiCol fiCol : listFiCol) {
             addFiColAutoAsFiKeyBean(fiCol);
         }
-        return this;
     }
 
-    public FxTableView2 addFiColSelection() {
+    public void addFiColSelection() {
         FiCol fiTableCol = getFiColSelection();
         addFiColAuto(fiTableCol);
-        return this;
     }
 
     private FiCol getFiColSelection() {
@@ -506,9 +505,10 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         addFxTableColAuto(fxTableCol);
     }
 
-    public void addFiColAutoAsFiKeyBean(FiCol fiTableCol) {
-        FxTableCol2 fxTableCol = new FxTableCol2(fiTableCol);
+    public void addFiColAutoAsFiKeyBean(FiCol fiCol) {
+        FxTableCol2 fxTableCol = new FxTableCol2(fiCol);
         addColumnAutoAsFiKeyBean(fxTableCol);
+        setBoFkbEnabled(true);
     }
 
     public FxTableView2 addAllFxTableCols2Auto(List<FxTableCol2> fxTableColList) {
@@ -1535,7 +1535,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
             for (FxTableCol2 fxTableCol : getListFxTableCol()) {
                 if (fxTableCol.getRefFiCol().getSummaryLabelNode() != null && fxTableCol.getRefFiCol().getSummaryType() != null) {
                     Platform.runLater(() -> {
-                        String sumValue = FiNumber.formatNumber(FxTableModal.calcSummaryValue(getFilteredList(), fxTableCol.getRefFiCol(), fiReportConfig));
+                        String sumValue = FiNumber.formatNumber(FxTableModal.calcSummaryValue(getFilteredList(), fxTableCol.getRefFiCol(), fiReportConfig,FiBool.isTrue(getBoFkbEnabled())));
                         fxTableCol.getRefFiCol().getSummaryLabelNode().setText(sumValue);
                         new FxTableModal().styleSummaryLabel(fxTableCol.getRefFiCol().getSummaryLabelNode(), fxTableCol);
                     });
@@ -2797,5 +2797,13 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     public void setFkbHeaderFilterExtra(FiKeyBean fkbHeaderFilterExtra) {
         this.fkbHeaderFilterExtra = fkbHeaderFilterExtra;
+    }
+
+    public Boolean getBoFkbEnabled() {
+        return boFkbEnabled;
+    }
+
+    public void setBoFkbEnabled(Boolean boFkbEnabled) {
+        this.boFkbEnabled = boFkbEnabled;
     }
 }
