@@ -18,7 +18,7 @@ import org.tbee.javafx.scene.layout.MigPane;
 import ozpasyazilim.utils.annotations.FiDraft;
 import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.datatypes.FiKeyBean;
-import ozpasyazilim.utils.gui.components.TableValueFactoryForFiKeyBean;
+import ozpasyazilim.utils.gui.components.TableValueFactoryForFkb;
 import ozpasyazilim.utils.gui.fxTableViewExtra.NestedPropertyValueFactory;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.mvc.IFiCol;
@@ -471,7 +471,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     public void addAllFiColsAutoAsFkb(List<FiCol> listFiCol) {
         for (FiCol fiCol : listFiCol) {
-            addFiColAutoAsFiKeyBean(fiCol);
+            addFiColAutoAsFkb(fiCol);
         }
     }
 
@@ -505,9 +505,9 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         addFxTableColAuto(fxTableCol);
     }
 
-    public void addFiColAutoAsFiKeyBean(FiCol fiCol) {
+    public void addFiColAutoAsFkb(FiCol fiCol) {
         FxTableCol2 fxTableCol = new FxTableCol2(fiCol);
-        addColumnAutoAsFiKeyBean(fxTableCol);
+        addColumnAutoAsFkb(fxTableCol);
         setBoFkbEnabled(true);
     }
 
@@ -526,9 +526,9 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         addFxTableColFi(fxTableCol);
     }
 
-    public void addColumnAutoAsFiKeyBean(FxTableCol2 fxTableCol) {
+    public void addColumnAutoAsFkb(FxTableCol2 fxTableCol) {
         // Cell Value Factory and Editor Factory leri ayarlanır
-        setupCellValueAndEditorFactoryAsFiKeyBean(fxTableCol);
+        setupCellValueAndEditorFactoryAsFkb(fxTableCol);
         //Loghelperr.getInstance(getClass()).debug(" Fx TableView col id:"+fxTableCol.getId());
         addFxTableColFi(fxTableCol);
     }
@@ -572,11 +572,11 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     }
 
-    private void setupCellValueAndEditorFactoryAsFiKeyBean(FxTableCol2 fxTableCol) {
+    private void setupCellValueAndEditorFactoryAsFkb(FxTableCol2 fxTableCol) {
         //Loghelperr.getInstance(getClass()).debug("added "+ fxTableCol.getFieldName());
         fxTableCol.setText(fxTableCol.getRefFiCol().getOfcTxHeader());
 
-        fxTableCol.setCellValueFactory(new TableValueFactoryForFiKeyBean<>(fxTableCol.getRefFiCol().getOfcTxFieldName()));
+        fxTableCol.setCellValueFactory(new TableValueFactoryForFkb<>(fxTableCol.getRefFiCol().getOfcTxFieldName()));
 
         //bydefault idi
         FxTableViewCellFactoryModal.setupCellFactoryGeneral(fxTableCol, getEntityClass());

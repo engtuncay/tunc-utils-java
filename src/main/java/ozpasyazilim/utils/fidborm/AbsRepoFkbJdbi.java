@@ -339,4 +339,19 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
 
         return jdDeleteFiQuery(fiQuery);
     }
+
+    /**
+     * Transaction olmalı
+     *
+     * @param fkbList
+     * @return
+     */
+    public Fdr jdDeleteListById(List<FiKeyBean> fkbList) {
+        Fdr fdrMain = new Fdr();
+        for (FiKeyBean fiKeyBean : fkbList) {
+            Fdr fdrDelete = jdDeleteFkbByIdCols(fiKeyBean, getiFiTableMeta());
+            fdrMain.combineAnd(fdrDelete);
+        }
+        return fdrMain;
+    }
 }

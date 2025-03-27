@@ -41,7 +41,7 @@ import ozpasyazilim.utils.datatypes.FiKeyBean;
 // * @see MapValueFactory
 // * @param <S> The type of the class contained within the TableView.items list.
 // * @param <T> The type of the class contained within the TableColumn cells.
-public class TableValueFactoryForFiKeyBean<S> implements Callback<CellDataFeatures<S, Object>, ObservableValue<Object>> {
+public class TableValueFactoryForFkb<S> implements Callback<CellDataFeatures<S, Object>, ObservableValue<Object>> {
 
 	private final String property;
 
@@ -56,7 +56,7 @@ public class TableValueFactoryForFiKeyBean<S> implements Callback<CellDataFeatur
 	 * @param property The name of the property with which to attempt to
 	 *                 reflectively extract a corresponding value for in a given object.
 	 */
-	public TableValueFactoryForFiKeyBean(@NamedArg("property") String property) {
+	public TableValueFactoryForFkb(@NamedArg("property") String property) {
 		this.property = property;
 	}
 
