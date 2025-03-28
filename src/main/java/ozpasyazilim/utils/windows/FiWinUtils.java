@@ -7,11 +7,13 @@ import java.io.*;
 
 public class FiWinUtils {
 
+	// URFIX static get method çevir
 	private static final String REGQUERY_UTIL = "reg query ";
 	private static final String REGSTR_TOKEN = "REG_SZ";
 	private static final String DESKTOP_FOLDER_CMD = REGQUERY_UTIL
 			+ "\"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\"
 			+ "Explorer\\Shell Folders\" /v DESKTOP";
+
 
 	private static String userDirectory;
 

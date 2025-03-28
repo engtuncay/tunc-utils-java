@@ -31,8 +31,8 @@ public class Fiqt {
         return sql.replaceAll(regex, subst);
     }
 
-    public static String deActivateSqlCustom(String sql) {
-        final String regex = "--(sqlCustomDeact).*\\s*.*"; // 15-10-19
+    public static String deActivateForSqlCount(String sql) {
+        final String regex = "--(deactForSqlCount).*\\s*.*"; // 15-10-19
         final String subst = "--$1 deactivated"; // 15-10-19
         return sql.replaceAll(regex, subst);
     }
@@ -543,9 +543,10 @@ public class Fiqt {
 
         if (matcher.find()) {
             // "--sqlCount" altındaki ilk satırı yakala
-            String matchedLine = matcher.group(1).trim(); // Altındaki satır (-- ile başlıyor)
-            matchedLine = matchedLine.replaceFirst("--SELECT","SELECT");
-            return matchedLine;
+            String result = matcher.group(1).trim(); // Altındaki satır (-- ile başlıyor)
+            result = result.replaceFirst("--SELECT","SELECT");
+            result = Fiqt.deActivateForSqlCount(result);
+            return result;
         } else {
             return null;
         }

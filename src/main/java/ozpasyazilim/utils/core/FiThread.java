@@ -12,7 +12,6 @@ import java.util.function.Supplier;
 
 public class FiThread {
 
-
     public static Thread startThread(Runnable runnable) {
 
         Thread thread = new Thread(runnable);
@@ -25,8 +24,8 @@ public class FiThread {
         return startThread(runnable, btnArray, null);
     }
 
-    public static Thread startThread(Runnable runnable,FiModObserver fiModObserver,  FxButton... btnArray) {
-        return startThread(runnable, btnArray, null,fiModObserver);
+    public static Thread startThread(Runnable runnable, FiModObserver fiModObserver, FxButton... btnArray) {
+        return startThread(runnable, btnArray, null, fiModObserver);
     }
 
 
@@ -89,11 +88,11 @@ public class FiThread {
 
         StringBuilder sbTxOld = new StringBuilder();
 
-        if (arrButtons.length !=0  && arrButtons[0]!=null ) {
+        if (arrButtons.length != 0 && arrButtons[0] != null) {
             sbTxOld.append(arrButtons[0].getText());
         }
 
-        Supplier<Boolean> supTest = () -> arrButtons.length !=0 && arrButtons[0]!=null;
+        Supplier<Boolean> supTest = () -> arrButtons.length != 0 && arrButtons[0] != null;
 
         //FxButton btnListeFirst = arrButtons[0];
         //final String textOld = btnListeFirst.getText();
@@ -137,15 +136,15 @@ public class FiThread {
         return thread;
     }
 
-    public static Thread startThread(Runnable custRunnableMain, FxButton[] arrButtons, Runnable custRunnableEnd,FiModObserver fiModObserver) {
+    public static Thread startThread(Runnable custRunnableMain, FxButton[] arrButtons, Runnable custRunnableEnd, FiModObserver fiModObserver) {
 
         StringBuilder sbTxOld = new StringBuilder();
 
-        if (arrButtons.length !=0  && arrButtons[0]!=null ) {
+        if (arrButtons.length != 0 && arrButtons[0] != null) {
             sbTxOld.append(arrButtons[0].getText());
         }
 
-        Supplier<Boolean> supTest = () -> arrButtons.length !=0 && arrButtons[0]!=null;
+        Supplier<Boolean> supTest = () -> arrButtons.length != 0 && arrButtons[0] != null;
 
         //FxButton btnListeFirst = arrButtons[0];
         //final String textOld = btnListeFirst.getText();
@@ -182,7 +181,8 @@ public class FiThread {
 
         fiModObserver.getObsMethodFinished().add(runnable2);
 
-        if (custRunnableEnd == null) custRunnableEnd = () -> { };
+        if (custRunnableEnd == null) custRunnableEnd = () -> {
+        };
 
         CompoundRunnable compoundRunnable = new CompoundRunnable(custRunnableMain, custRunnableEnd);
 
@@ -191,7 +191,6 @@ public class FiThread {
 
         return thread;
     }
-
 
 
     public static Thread startThreadMb(Runnable runnable, FxMenuButton mbComp, Runnable runnableEnd) {
@@ -396,7 +395,7 @@ public class FiThread {
             lblNodes.setText("Rapor çalışıyor...");
             lblNodes.setFxTextColor(Color.RED);
 
-            if(btnReport!=null){
+            if (btnReport != null) {
                 btnReport.setDisable(true);
             }
             //lblNodes.setFxStyleColor
@@ -408,7 +407,7 @@ public class FiThread {
             Platform.runLater(() -> {
                 lblNodes.setText(textOld);
 
-                if(btnReport!=null){
+                if (btnReport != null) {
                     btnReport.setDisable(false);
                 }
                 //lblNodes.setDisable(false);
@@ -450,7 +449,6 @@ public class FiThread {
                 //lblNodes.setDisable(false);
                 fxTableView2.updatePageToolbarComps();
             });
-
         };
 
         CompoundRunnable compoundRunnable = new CompoundRunnable(runnable, runnable2);
