@@ -91,7 +91,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     /**
      * Sayfalamanın aktif olduğunu gösterir
      */
-    private Boolean boPagingActive;
+    private Boolean boPagingInitialized;
 
     // --- end - Sayfalama
 
@@ -2402,8 +2402,8 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     public void activatePageToolbar() {
 
-        if (getFxTableMig() != null && !FiBool.isTrue(getBoPagingActive())) {
-            setBoPagingActive(true);
+        if (getFxTableMig() != null && !FiBool.isTrue(getBoPagingInitialized())) {
+            setBoPagingInitialized(true);
             btnPageBegin = new FxButton("<<");
             lblPageNoIndex = new FxLabel("");
             btnPagePrev = new FxButton("<");
@@ -2743,12 +2743,12 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         this.fnPageChanged = fnPageChanged;
     }
 
-    public Boolean getBoPagingActive() {
-        return boPagingActive;
+    public Boolean getBoPagingInitialized() {
+        return boPagingInitialized;
     }
 
-    public void setBoPagingActive(Boolean boPagingActive) {
-        this.boPagingActive = boPagingActive;
+    private void setBoPagingInitialized(Boolean boPagingInitialized) {
+        this.boPagingInitialized = boPagingInitialized;
     }
 
     public Integer getLnCurrentPageNoInit() {

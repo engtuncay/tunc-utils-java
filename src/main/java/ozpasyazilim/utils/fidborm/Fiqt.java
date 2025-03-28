@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Sorgu üzerindeki işlemler için statik(!) metodlar
@@ -25,6 +27,12 @@ public class Fiqt {
      */
     public static String deActivateAllOptParams(String sql) {
         final String regex = "--!(\\w+).*\\s*.*"; // 15-10-19
+        final String subst = "--$1 deactivated"; // 15-10-19
+        return sql.replaceAll(regex, subst);
+    }
+
+    public static String deActivateSqlCustom(String sql) {
+        final String regex = "--(sqlCustomDeact).*\\s*.*"; // 15-10-19
         final String subst = "--$1 deactivated"; // 15-10-19
         return sql.replaceAll(regex, subst);
     }
@@ -526,6 +534,21 @@ public class Fiqt {
         }
 
         return txQuery;
+    }
+
+    public static String trimSqlCountQuery(String txQuery) {
+        Pattern pattern = Pattern.compile("(?s)--sqlCount(.*)");
+
+        Matcher matcher = pattern.matcher(txQuery);
+
+        if (matcher.find()) {
+            // "--sqlCount" altındaki ilk satırı yakala
+            String matchedLine = matcher.group(1).trim(); // Altındaki satır (-- ile başlıyor)
+            matchedLine = matchedLine.replaceFirst("--SELECT","SELECT");
+            return matchedLine;
+        } else {
+            return null;
+        }
     }
 
 
