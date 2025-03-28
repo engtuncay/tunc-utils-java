@@ -445,7 +445,8 @@ public class FiThread {
         Runnable runnable2 = () -> {
             //fxToastPopup2.end();
             Platform.runLater(() -> {
-                lblNodes.setText(textOld);
+                //lblNodes.setText(textOld);
+                lblNodes.setText("");
                 //lblNodes.setDisable(false);
                 fxTableView2.updatePageToolbarComps();
             });

@@ -19,7 +19,7 @@ import java.util.function.Function;
  * Use FiCol in all places
  * @param <N>
  */
-@Deprecated
+
 public interface IFiCol<N> {
 
 //	static void setAutoFieldName(List<IFiCol> listCol) {

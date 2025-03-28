@@ -120,6 +120,11 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     private Boolean boFilterable;
 
     /**
+     * Tablodaki sütunun remote filterable olduğunu gösterir. default true kabul edilir
+     */
+    private Boolean boRemoteFilterable;
+
+    /**
      * Alan için hangi tür filter node kullanılacaksa sınıfın ismi tutulur
      */
     String filterNodeClass;
@@ -826,6 +831,11 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
 
     public FiCol buiTxParamName(String txParamName) {
         setTxParamName(txParamName);
+        return this;
+    }
+
+    public FiCol buiBoRemoteFilterable(Boolean boValue) {
+        setBoRemoteFilterable(boValue);
         return this;
     }
 
@@ -1778,6 +1788,22 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
 
     public void setOfcTxColDefinition(String ofcTxColDefinition) {
         this.ofcTxColDefinition = ofcTxColDefinition;
+    }
+
+    public Boolean getBoRemoteFilterable() {
+        return boRemoteFilterable;
+    }
+
+    public void setBoRemoteFilterable(Boolean boRemoteFilterable) {
+        this.boRemoteFilterable = boRemoteFilterable;
+    }
+
+    public IFiNode getIFiNodeEditor() {
+        return IFiNodeEditor;
+    }
+
+    public void setIFiNodeEditor(IFiNode IFiNodeEditor) {
+        this.IFiNodeEditor = IFiNodeEditor;
     }
 }
 

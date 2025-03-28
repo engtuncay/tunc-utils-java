@@ -556,4 +556,15 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
     public Object getFiCol(FiCol fiCol) {
         return get(fiCol.getOfcTxFieldName());
     }
+
+    public FiListString getFullKeys() {
+        FiListString fiListString = new FiListString();
+        for (Map.Entry<String, Object> entry : entrySet()) {
+            //System.out.println(entry.getKey() + "/" + entry.getValue());
+            if (!FiObjects.isEmpty(entry.getValue())) {
+                fiListString.add(entry.getKey());
+            }
+        }
+        return fiListString;
+    }
 }

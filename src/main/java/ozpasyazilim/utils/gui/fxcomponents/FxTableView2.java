@@ -18,6 +18,7 @@ import org.tbee.javafx.scene.layout.MigPane;
 import ozpasyazilim.utils.annotations.FiDraft;
 import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.datatypes.FiKeyBean;
+import ozpasyazilim.utils.datatypes.FiListString;
 import ozpasyazilim.utils.gui.components.TableValueFactoryForFkb;
 import ozpasyazilim.utils.gui.fxTableViewExtra.NestedPropertyValueFactory;
 import ozpasyazilim.utils.log.Loghelper;
@@ -2389,6 +2390,25 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
             colFilterNodeEnterEventWrapper = (keyEvent) -> {
                 if (keyEvent.getCode() == KeyCode.ENTER) {
                     if (getColRemoteFilterEnterEvent() != null) {
+                        FiKeyBean fkbFilter = getHeaderFilterAsFkb();
+                        FiListString keyList =  fkbFilter.getFullKeys();
+
+                        boolean isFilterable = false;
+                        for (FiCol fiCol : getFiColList()) {
+                            for (String txKey : keyList) {
+                                if (fiCol.getOfcTxFieldName().equals(txKey)) {
+                                    if (!FiBool.isFalse(fiCol.getBoRemoteFilterable())) {
+                                        isFilterable = true;
+                                    }
+                                }
+                            }
+                        }
+
+                        if(!isFilterable){
+                            getFiLblFooterMessage().setText("Bu sütun henüz veri çekimine müsait değil");
+                            return;
+                        }
+
                         //sayfalamayı reset eder (1 sayfaya getirir)
                         updatePageSystemBeforeRemoteFilter();
                         getColRemoteFilterEnterEvent().handle(keyEvent);

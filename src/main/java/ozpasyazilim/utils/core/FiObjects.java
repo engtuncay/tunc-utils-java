@@ -132,4 +132,14 @@ public class FiObjects {
         return false;
     }
 
+    public static boolean isEmpty(Object value) {
+        if(value==null) return true;
+
+        if(value instanceof String){
+            String txValue = (String) value;
+            return FiString.isEmptyTrim(txValue);
+        }
+
+        return false;
+    }
 }
