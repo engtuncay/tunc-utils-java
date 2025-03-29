@@ -54,7 +54,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     /**
      * Objedeki alan adı (fieldName) ile db deki alan adı aynı degilse kullanılır.
      */
-    private String ofcTxDbFieldName;
+    private String ofcTxDbField;
 
     /**
      * Col Id olması için konuldu - tekil kodu
@@ -67,6 +67,8 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
 
     // Alanın türünü belirtir (double,string,date vs )
     private OzColType colType;
+
+    private String ofcTxFieldDesc;
 
     /**
      * Column Generic Type. Sütun nasıl bir tipte olduğunu gösterir. (Data Tipi degil)
@@ -1555,17 +1557,17 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
         this.txParamName = txParamName;
     }
 
-    public String getOfcTxDbFieldName() {
-        return ofcTxDbFieldName;
+    public String getOfcTxDbField() {
+        return ofcTxDbField;
     }
 
     public String getTxDbFieldNameOrFieldName() {
-        if (ofcTxDbFieldName != null) return ofcTxDbFieldName;
+        if (ofcTxDbField != null) return ofcTxDbField;
         return ofcTxFieldName;
     }
 
-    public void setOfcTxDbFieldName(String ofcTxDbFieldName) {
-        this.ofcTxDbFieldName = ofcTxDbFieldName;
+    public void setOfcTxDbField(String ofcTxDbField) {
+        this.ofcTxDbField = ofcTxDbField;
     }
 
     public String getTxGuid() {
@@ -1804,6 +1806,14 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
 
     public void setIFiNodeEditor(IFiNode IFiNodeEditor) {
         this.IFiNodeEditor = IFiNodeEditor;
+    }
+
+    public String getOfcTxFieldDesc() {
+        return ofcTxFieldDesc;
+    }
+
+    public void setOfcTxFieldDesc(String ofcTxFieldDesc) {
+        this.ofcTxFieldDesc = ofcTxFieldDesc;
     }
 }
 

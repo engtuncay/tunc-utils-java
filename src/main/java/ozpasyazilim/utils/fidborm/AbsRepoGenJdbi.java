@@ -574,7 +574,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
         String sql = FiQugen.deleteByCandId2ByInFormat(getEntityClass());
 
-        String dbFieldName = FiReflectClass.getListFieldsCandId2(getEntityClass()).get(0).getOfcTxDbFieldName();
+        String dbFieldName = FiReflectClass.getListFieldsCandId2(getEntityClass()).get(0).getOfcTxDbField();
 
         FiKeyBean fiKeyBean = FiKeyBean.bui().buiPut(dbFieldName, listData);
 
@@ -590,7 +590,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
 //		Loghelper.get(getClass()).debug("Delete query:" + sql);
 
-        String dbFieldName = FiReflectClass.getListFieldsCandId2(getEntityClass()).get(0).getOfcTxDbFieldName();
+        String dbFieldName = FiReflectClass.getListFieldsCandId2(getEntityClass()).get(0).getOfcTxDbField();
 
         FiKeyBean fiKeyBean = FiKeyBean.bui().buiPut(dbFieldName, listData);
 
@@ -607,7 +607,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
         String sql = FiQugen.deleteByCandId2ByInFormat(getEntityClass());
 
-        String dbFieldName = FiReflectClass.getListFieldsCandId2(getEntityClass()).get(0).getOfcTxDbFieldName();
+        String dbFieldName = FiReflectClass.getListFieldsCandId2(getEntityClass()).get(0).getOfcTxDbField();
 
         FiKeyBean fiKeyBean = FiKeyBean.bui().buiPut(dbFieldName, listData);
 

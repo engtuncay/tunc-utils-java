@@ -230,9 +230,9 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
                 if (FiBool.isTrue(fiField.getOfcBoFilterLike())) {
                     String txValue = (String) fieldValue;
                     txValue = "%" + txValue + "%";
-                    fiKeyBean.add(fiField.getOfcTxDbFieldName(), txValue);
+                    fiKeyBean.add(fiField.getOfcTxDbField(), txValue);
                 } else {
-                    fiKeyBean.add(fiField.getOfcTxDbFieldName(), fieldValue);
+                    fiKeyBean.add(fiField.getOfcTxDbField(), fieldValue);
                 }
 
 

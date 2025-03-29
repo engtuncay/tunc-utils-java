@@ -105,10 +105,10 @@ public class FiField implements IFiField{
 	}
 
 	public String getDbParamName(){
-		if(FiString.isAllUpperCase(getOfcTxDbFieldName())){
-			return getOfcTxDbFieldName();
+		if(FiString.isAllUpperCase(getOfcTxDbField())){
+			return getOfcTxDbField();
 		}
-		return FiString.firstLetterLowerOnly(getOfcTxDbFieldName());
+		return FiString.firstLetterLowerOnly(getOfcTxDbField());
 	}
 
 	public Boolean getBoKeyIdField() {
@@ -244,9 +244,9 @@ public class FiField implements IFiField{
 
 	public void setDateType(FiSqlDateTypes dateType) {this.dateType = dateType;}
 
-	public String getOfcTxDbFieldName() {return ofcTxDbFieldName;}
+	public String getOfcTxDbField() {return ofcTxDbFieldName;}
 
-	public void setOfcTxDbFieldName(String ofcTxDbFieldName) {this.ofcTxDbFieldName = ofcTxDbFieldName;}
+	public void setOfcTxDbField(String ofcTxDbField) {this.ofcTxDbFieldName = ofcTxDbField;}
 
 	public String getOfcTxFieldType() {return ofcTxFieldType;}
 
@@ -348,8 +348,8 @@ public class FiField implements IFiField{
 	}
 
 	public String getDbFieldNameOrName() {
-		if(!FiString.isEmpty(getOfcTxDbFieldName())){
-			return getOfcTxDbFieldName();
+		if(!FiString.isEmpty(getOfcTxDbField())){
+			return getOfcTxDbField();
 		}else{
 			return getOfcTxFieldName();
 		}

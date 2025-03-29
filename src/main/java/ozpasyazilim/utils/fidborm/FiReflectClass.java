@@ -350,13 +350,13 @@ public class FiReflectClass {
     public static void assignFiFieldBasic(Field field, FiField fiField) {
 
         fiField.setOfcTxFieldName(field.getName());
-        if (fiField.getOfcTxDbFieldName() == null) fiField.setOfcTxDbFieldName(field.getName());
+        if (fiField.getOfcTxDbField() == null) fiField.setOfcTxDbField(field.getName());
         fiField.setClassNameSimple(field.getType().getSimpleName());
 
         if (field.isAnnotationPresent(FiColumn.class)) {
             FiColumn annoFiColumn = field.getAnnotation(FiColumn.class);
             if (!FiString.isEmptyTrim(annoFiColumn.name())) {
-                fiField.setOfcTxDbFieldName(annoFiColumn.name());
+                fiField.setOfcTxDbField(annoFiColumn.name());
             }
 
             if (FiBool.isTrue(annoFiColumn.boFilterLike())) {
@@ -370,13 +370,13 @@ public class FiReflectClass {
     public static void assignFiFieldBasicForFiCol(Field field, FiCol fiCol) {
 
         fiCol.setOfcTxFieldName(field.getName());
-        if (fiCol.getOfcTxDbFieldName() == null) fiCol.setOfcTxDbFieldName(field.getName());
+        if (fiCol.getOfcTxDbField() == null) fiCol.setOfcTxDbField(field.getName());
         fiCol.setTxClassNameSimple(field.getType().getSimpleName());
 
         if (field.isAnnotationPresent(FiColumn.class)) {
             FiColumn annoFiColumn = field.getAnnotation(FiColumn.class);
             if (!FiString.isEmptyTrim(annoFiColumn.name())) {
-                fiCol.setOfcTxDbFieldName(annoFiColumn.name());
+                fiCol.setOfcTxDbField(annoFiColumn.name());
             }
 
             if (FiBool.isTrue(annoFiColumn.boFilterLike())) {
@@ -421,9 +421,9 @@ public class FiReflectClass {
             fiField.setColCustomType(annoColumn.columnDefinition());
 
             if (!FiString.isEmptyTrim(annoColumn.name())) {
-                fiField.setOfcTxDbFieldName(annoColumn.name());
+                fiField.setOfcTxDbField(annoColumn.name());
             } else {
-                fiField.setOfcTxDbFieldName(field.getName());
+                fiField.setOfcTxDbField(field.getName());
             }
 
         }
@@ -450,9 +450,9 @@ public class FiReflectClass {
             if (annoFiColumn.defaultUpdateField()) fiField.setBoDefaultUpdateField(true);
 
             if (!FiString.isEmptyTrim(annoFiColumn.name())) {
-                fiField.setOfcTxDbFieldName(annoFiColumn.name());
+                fiField.setOfcTxDbField(annoFiColumn.name());
             } else {
-                fiField.setOfcTxDbFieldName(field.getName());
+                fiField.setOfcTxDbField(field.getName());
             }
 
         }
@@ -603,9 +603,9 @@ public class FiReflectClass {
             fiField.setOfcTxColDefinition(annoColumn.columnDefinition());
 
             if (!FiString.isEmptyTrim(annoColumn.name())) {
-                fiField.setOfcTxDbFieldName(annoColumn.name());
+                fiField.setOfcTxDbField(annoColumn.name());
             } else {
-                fiField.setOfcTxDbFieldName(field.getName());
+                fiField.setOfcTxDbField(field.getName());
             }
 
         }
@@ -632,9 +632,9 @@ public class FiReflectClass {
             //if (annoFiColumn.defaultUpdateField()) fiField.setBoDefaultUpdateField(true);
 
             if (!FiString.isEmptyTrim(annoFiColumn.name())) {
-                fiField.setOfcTxDbFieldName(annoFiColumn.name());
+                fiField.setOfcTxDbField(annoFiColumn.name());
             } else {
-                fiField.setOfcTxDbFieldName(field.getName());
+                fiField.setOfcTxDbField(field.getName());
             }
 
         }
@@ -973,7 +973,7 @@ public class FiReflectClass {
     }
 
     public static List<String> getListDbFieldName(List<FiField> fieldListFilterAnno) {
-        return fieldListFilterAnno.stream().map(fiField -> fiField.getOfcTxDbFieldName()).collect(toList());
+        return fieldListFilterAnno.stream().map(fiField -> fiField.getOfcTxDbField()).collect(toList());
     }
 
     public static List<String> getListFieldName(List<FiField> fieldListFilterAnno) {

@@ -71,9 +71,9 @@ public interface IFiField {
 
     public void setOfcTxHeader(String ofcTxHeader);
 
-    public String getOfcTxDbFieldName();
+    public String getOfcTxDbField();
 
-    public void setOfcTxDbFieldName(String ofcTxDbFieldName);
+    public void setOfcTxDbField(String ofcTxDbField);
 
 
 }
