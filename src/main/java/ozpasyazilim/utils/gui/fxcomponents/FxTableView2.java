@@ -330,7 +330,9 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     }
 
     /**
-     * SourceList içinde satır silinince,otomatik filtered list etkilenip, filt.list'den de çıkartılıyor,dinamik olarak.
+     * SourceList içinde satır silinince  tomatik filtered list etkilenip
+     * <p>
+     * filt.list'den de çıkartılıyor,dinamik olarak.
      * <p>
      * Dikkatli kullanılmalı.
      *
@@ -1340,9 +1342,9 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
                         // integer,short'tan büyük olduğu için genişletme yapar
                         Integer valueCol = null;
-                        if(objCellValue instanceof Short) {
+                        if (objCellValue instanceof Short) {
                             valueCol = Integer.valueOf((Short) objCellValue);
-                        }else {
+                        } else {
                             valueCol = (Integer) objCellValue;
                         }
 
