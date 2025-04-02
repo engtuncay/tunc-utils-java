@@ -232,14 +232,14 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     public static void setFiColFilterableToTrueIfNull(List<FxTableCol2> colTblMain) {
         colTblMain.forEach(fxTableCol -> {
-            if (fxTableCol.getRefFiCol().getBoFilterable() == null)
-                fxTableCol.getRefFiCol().setBoFilterable(true);
+            if (fxTableCol.getRefFiCol().getBoLocFilterable() == null)
+                fxTableCol.getRefFiCol().setBoLocFilterable(true);
         });
     }
 
     public static void setFiColFilterableToTrueIfNullForIFiCol(List<IFiCol> listFiCol) {
         listFiCol.forEach(ificol -> {
-            if (ificol.getBoFilterable() == null) ificol.setBoFilterable(true);
+            if (ificol.getBoLocFilterable() == null) ificol.setBoLocFilterable(true);
         });
     }
 
@@ -601,8 +601,8 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     public void setActivateEnableLocalFilterAndColsFilterableNullToTrue() {
         getListFxTableCol().forEach(fxTableCol -> {
-            if (fxTableCol.getRefFiCol().getBoFilterable() == null)
-                fxTableCol.getRefFiCol().setBoFilterable(true);
+            if (fxTableCol.getRefFiCol().getBoLocFilterable() == null)
+                fxTableCol.getRefFiCol().setBoLocFilterable(true);
         });
         setEnableLocalFilterEditor(true);
         activateFilters();
@@ -611,7 +611,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     public void setFxColsFilterable(Boolean boFilterable) {
         getListFxTableCol().forEach(fxTableCol -> {
-            fxTableCol.getRefFiCol().setBoFilterable(boFilterable);
+            fxTableCol.getRefFiCol().setBoLocFilterable(boFilterable);
         });
     }
 
@@ -746,9 +746,9 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     }
 
     private void activateFilters() {
-        getListFxTableCol().forEach(fxTableCol -> {
+        for (FxTableCol2 fxTableCol : getListFxTableCol()) {
             activateFilterSearch(fxTableCol);
-        });
+        }
     }
 
     @FiDraft
@@ -765,13 +765,15 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     private void activateFilterSearch(FxTableCol2 fxTableCol) {
 
         // Col Filterable değilse, hiçbir işlem yapılmaz
-        if (FiBool.isFalse(fxTableCol.getRefFiCol().getBoFilterable())) {
+        if (FiBool.isFalse(fxTableCol.getRefFiCol().getBoLocFilterable())) {
             return;
         }
 
         // Aşağıda şartlar olursa Filtreleme etkin oluyor, Header Eklenmemişse eklenir.
         if (getEnableLocalFilterEditorNtn() || getEnableRemoteFilterEditorNtn()
-                || FiType.isTrue(fxTableCol.getRefFiCol().getBoFilterable())) {
+                || FiType.isTrue(fxTableCol.getRefFiCol().getBoLocFilterable())
+                || FiType.isTrue(fxTableCol.getRefFiCol().getBoRemFilterable())
+        ) {
             // filter Node eklenmemişse Header Setup edilir.
             if (fxTableCol.getRefFiCol().getColFilterNode() == null) {
                 setupHeader1ForTableCol(fxTableCol);
@@ -782,17 +784,17 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         if (checkColFilterableLocal(fxTableCol)) {
             //Loghelperr.getInstance(getClass()).debug("Local Filter enabled");
 
-            // Filter Node içindeki değer filterLocal2 fonk'a verilerek tabloda filtreleme yapılır.
-            Consumer<String> fncFilterLocal2 = textProp -> filterLocal(textProp);
+            // Filter Node içindeki değer filterLocal fonk'a verilerek tabloda filtreleme yapılır.
+            Consumer<String> fncFilterLocal2 = this::filterLocal;
 
             // Filter node değişimi tetikleme
             FxEditorFactory.registerTextPropertyWithDurationForFilterNode(fxTableCol.getRefFiCol(), fncFilterLocal2, 250);
         }
 
-        if (checkColFilterableRemote(fxTableCol)) {
-            // 20-02-2020 çıkarıldı enter event zaten setupHeaderFilterNode 'da set ediliyor
-            // new FxEditorFactory().registerEnterFnForFilterNode(fxTableCol.getFiTableCol(), getColFilterNodeEnterEvent());
-        }
+        // 20-02-2020 çıkarıldı enter event zaten setupHeaderFilterNode 'da set ediliyor
+//        if (checkColFilterableRemote(fxTableCol)) {
+//            // new FxEditorFactory().registerEnterFnForFilterNode(fxTableCol.getFiTableCol(), getColFilterNodeEnterEvent());
+//        }
 
     }
 
@@ -827,7 +829,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         fxcol.setText(fxcol.getRefFiCol().getOfcTxHeader());
 
         if (checkColFilterableLocal(fxcol) || checkColFilterableRemote(fxcol)) {
-            fxcol.getRefFiCol().setBoFilterable(true);
+            fxcol.getRefFiCol().setBoLocFilterable(true);
             setupHeader2ForFilterNode(fxcol);
         }
 
@@ -860,10 +862,11 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         //if (fxTableCol.getColFxNode() == null) {
         FxMigPane migHeader = fxTableCol.getRefFiCol().getPaneHeader();
         Node node = null;
-        node = defAutoEditorClass(Arrays.asList(fxTableCol.getRefFiCol()));
+        node = defAutoEditorClass(Collections.singletonList(fxTableCol.getRefFiCol()));
+        if (node == null) node = new FxLabel("");
         node.setId("filterNode");
 
-        if (FiBool.isFalse(fxTableCol.getRefFiCol().getBoFilterable())) {
+        if (FiBool.isFalse(fxTableCol.getRefFiCol().getBoLocFilterable())) {
             //Loghelperr.getInstance(getClass()).debug("Node Filter Pasif");
             node.setDisable(true);
         }
@@ -1084,7 +1087,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         //ObservableValue<? extends String> observable, String oldValue, String newValue, String fieldName
         //System.out.println("text:"+ newValue);
 
-        //Loghelperr.getInstance(getClass()).debug("Filter Lokal");
+        Loghelper.get(getClass()).debug("Filter Lokal Çalıştı");
 
         Predicate predFilterLocal = ent -> {
 
@@ -1118,7 +1121,24 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
                     //Loghelper.get(getClass()).debug(String.format("Filter Lokal %s : %s ", fxTableColumn.getFiTableCol().getFieldName(), objFilterValue));
 
                     // Tablonun içinde hücre değeri
-                    Object objCellValue = FiReflection.getProperty(ent, fxTableColumn.getRefFiCol().getOfcTxFieldName());
+                    Object objCellValue = null;
+
+                    if (getBoFkbEnabled()) {
+                        if (ent instanceof FiKeyBean) {
+                            FiKeyBean fkbEnd = (FiKeyBean) ent;
+                            objCellValue = fkbEnd.getAsObj(fxTableColumn.getRefFiCol().getOfcTxFieldName());
+                        }
+                    } else {
+                        objCellValue = FiReflection.getProperty(ent, fxTableColumn.getRefFiCol().getOfcTxFieldName());
+                    }
+
+//                    if (objCellValue != null) {
+//                        Loghelper.get(getClass()).debug("Filter CellValue:" + objCellValue + objCellValue.getClass().getSimpleName());
+//                    }else {
+//                        Loghelper.get(getClass()).debug("Filter CellValue null");
+//                    }
+
+                    Loghelper.get(getClass()).debug("Filter CellValue:" + objCellValue);
 
                     // !!!!! CellValue Null gelmişse, cellValue yu override edebiliriz türüne göre
                     if (objCellValue == null) {
@@ -1132,36 +1152,32 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
                     } // end if - cellValue == null
 
                     // Özel Aramalar (! ,!! ) ve Boşluk Aramaları
-                    if (true) {
+                    //Loghelperr.getInstance(getClass()).debug("Instance Type" );
+                    //Loghelperr.getInstance(getClass()).debug("ozel kontrol:[" + txFilterValue + "]");
 
-                        //Loghelperr.getInstance(getClass()).debug("Instance Type" );
-                        //Loghelperr.getInstance(getClass()).debug("ozel kontrol:[" + txFilterValue + "]");
+                    if (txFilterValue.equals("!") || txFilterValue.matches("^\\s+")) {
 
-                        if (txFilterValue.equals("!") || txFilterValue.matches("^\\s+")) {
-
-                            if (FiString.isEmptyToStringWithTrim(objCellValue)) {
-                                //filterCheckResult = true;
-                                continue;
-                            } else {
-                                //filterCheckResult = false;
-                                predAllCols = predAllCols.and(entTmp -> false);
-                                //continue
-                                break;
-                            }
+                        if (FiString.isEmptyToStringWithTrim(objCellValue)) {
+                            //filterCheckResult = true;
+                            continue;
+                        } else {
+                            //filterCheckResult = false;
+                            predAllCols = predAllCols.and(entTmp -> false);
+                            //continue
+                            break;
                         }
+                    }
 
-                        if (txFilterValue.equals("!!")) {
+                    if (txFilterValue.equals("!!")) {
 
-                            if (FiString.isEmptyToStringWithTrim(objCellValue) || objCellValue.toString().matches("^\\s+")) {
-                                //filterCheckResult = false;
-                                predAllCols = predAllCols.and(entTmp -> false);
+                        if (FiString.isEmptyToStringWithTrim(objCellValue) || objCellValue.toString().matches("^\\s+")) {
+                            //filterCheckResult = false;
+                            predAllCols = predAllCols.and(entTmp -> false);
 //								continue;
-                                break;
-                            } else {
-                                //filterCheckResult = true;
-                                continue;
-                            }
-
+                            break;
+                        } else {
+                            //filterCheckResult = true;
+                            continue;
                         }
 
                     }
@@ -1201,7 +1217,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
                         //Loghelperr.logSingle("DateCh",getClass(),"Date Cell Value"+ strDateCell + "   : Filter Value :" + strDateFilter );
                         //if (!dtCellValue.equals(objFilterValue)) filterCheckResult = false;
 
-                        if (!strDateFilter.equals("") && !strDateCell.equals(strDateFilter)) {
+                        if (!strDateFilter.isEmpty() && !strDateCell.equals(strDateFilter)) {
                             //filterCheckResult = false;
                             predAllCols = predAllCols.and(entTmp -> false);
                             break;
@@ -1220,11 +1236,11 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
                         if (objFilterValue == null) continue;
 
                         // CellValue null ise sonuca ekleme
-                        if (objCellValue == null) {
-                            predAllCols = predAllCols.and(entTmp -> false);
-                            //continue;
-                            break;
-                        }
+//                        if (objCellValue == null) {
+//                            predAllCols = predAllCols.and(entTmp -> false);
+//                            //continue;
+//                            break;
+//                        }
 
                         Double valueCol = (Double) objCellValue;
                         String txValueCol = FiNumber.formatNumberPlain(valueCol);
@@ -1310,27 +1326,25 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
                     }
 
-                    if (objCellValue instanceof Integer) {
+                    if (objCellValue instanceof Integer || objCellValue instanceof Short) {
+
+                        //Loghelper.get(getClass()).debug("Filter Local Integer-Short Çalıştı ObjFilterValue :" + objFilterValue);
 
                         // objCellValue dolu gelip, objFilterValue yoksa kontrol edilemez, sonuca dahil edilir
                         if (objFilterValue == null) continue;
 
-                        if (objCellValue == null) {
-                            //	filterCheckResult = false;
-                            //	return filterCheckResult;
-                            predAllCols = predAllCols.and(entTmp -> false);
-                            break;
-                            //continue;
-                        }
-
-                        //Integer cellValue = (Integer) objCellValue;
                         String txValueCol = objCellValue.toString();
                         String txFilter = objFilterValue.toString(); //new FiNumber().formatStringExpoNumber(objFilterValue.toString());
                         txFilter = txFilter.replace(" ", "\\s");
                         //Loghelperr.getInstance(getClass()).debug(String.format("Double Obj Value : %s , Filter Value: %s",txValueCol,txFilter));
 
-                        //
-                        Integer valueCol = (Integer) objCellValue;
+                        // integer,short'tan büyük olduğu için genişletme yapar
+                        Integer valueCol = null;
+                        if(objCellValue instanceof Short) {
+                            valueCol = Integer.valueOf((Short) objCellValue);
+                        }else {
+                            valueCol = (Integer) objCellValue;
+                        }
 
                         if (txFilterValue.matches("^[><][1-9]?[0-9]*")) {
                             //Loghelper.get(getClass()).debug("! filter ına girdi");
@@ -1360,7 +1374,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
                         }
 
-                        if (!txValueCol.toString().matches(txFilter + ".*")) {
+                        if (!txValueCol.matches(txFilter + ".*")) {
 //							filterCheckResult = false;
 //							return filterCheckResult;
                             predAllCols = predAllCols.and(entTmp -> false);
@@ -1427,31 +1441,29 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     private boolean checkColFilterableLocal(FxTableCol2 fxTableColumn) {
 
-        if (FiBool.isFalse(fxTableColumn.getRefFiCol().getBoFilterable())) {
+        if (FiBool.isFalse(fxTableColumn.getRefFiCol().getBoLocFilterable())) {
+            //Loghelper.get(getClass()).debug("checkColFilterableLocal LocFilterable False:"+ fxTableColumn.getRefFiCol().getOfcTxFieldName());
             return false;
         }
 
         // fiCol.colFilterable true ise ve enableLocalFilterEditor false edilmemişse
-        if (FiBool.isTrue(fxTableColumn.getRefFiCol().getBoFilterable())
+        if (FiBool.isTrue(fxTableColumn.getRefFiCol().getBoLocFilterable())
                 && !FiBool.isFalse(getEnableLocalFilterEditorNtn())) {
-            //Loghelperr.getInstance(getClass()).debug("FiTableCol ColFilterable is True");
+            Loghelper.get(getClass()).debug("FiTableCol Lokal ColFilterable is True :" + fxTableColumn.getRefFiCol().getOfcTxFieldName());
             return true;
         }
 
         // enableLocalFilterEditor true edilmiş  ( ficol.colFilterable false edilmemişse yukarıda şart saglanmış zaten)
-        if (getEnableLocalFilterEditorNtn()) {
-            //Loghelperr.getInstance(getClass()).debug("Enable Local Filter True");
-            return true;
-        }
-
-        return false;
+        //Loghelperr.getInstance(getClass()).debug("Enable Local Filter True");
+        return getEnableLocalFilterEditorNtn();
     }
 
     private boolean checkColFilterableRemote(FxTableCol2 fxTableColumn) {
 
         //if (FiBoolean.isTrue(fxTableColumn.getFiTableCol().getColFilterable()) && !FiBoolean.isFalse(getEnableRemoteFilterEditor())) return true;
 
-        if (getEnableRemoteFilterEditorNtn() && !FiBool.isFalse(fxTableColumn.getRefFiCol().getBoFilterable())) {
+        if (getEnableRemoteFilterEditorNtn()
+                && !FiBool.isFalse(fxTableColumn.getRefFiCol().getBoLocFilterable())) {
             return true;
         }
 
@@ -1536,7 +1548,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
             for (FxTableCol2 fxTableCol : getListFxTableCol()) {
                 if (fxTableCol.getRefFiCol().getSummaryLabelNode() != null && fxTableCol.getRefFiCol().getSummaryType() != null) {
                     Platform.runLater(() -> {
-                        String sumValue = FiNumber.formatNumber(FxTableModal.calcSummaryValue(getFilteredList(), fxTableCol.getRefFiCol(), fiReportConfig,FiBool.isTrue(getBoFkbEnabled())));
+                        String sumValue = FiNumber.formatNumber(FxTableModal.calcSummaryValue(getFilteredList(), fxTableCol.getRefFiCol(), fiReportConfig, FiBool.isTrue(getBoFkbEnabled())));
                         fxTableCol.getRefFiCol().getSummaryLabelNode().setText(sumValue);
                         new FxTableModal().styleSummaryLabel(fxTableCol.getRefFiCol().getSummaryLabelNode(), fxTableCol);
                     });
@@ -2391,20 +2403,24 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
                 if (keyEvent.getCode() == KeyCode.ENTER) {
                     if (getColRemoteFilterEnterEvent() != null) {
                         FiKeyBean fkbFilter = getHeaderFilterAsFkb();
-                        FiListString keyList =  fkbFilter.getFullKeys();
+
+                        FiListString keyList = fkbFilter.getFullKeys();
 
                         boolean isFilterable = false;
-                        for (FiCol fiCol : getFiColList()) {
-                            for (String txKey : keyList) {
-                                if (fiCol.getOfcTxFieldName().equals(txKey)) {
-                                    if (!FiBool.isFalse(fiCol.getBoRemoteFilterable())) {
-                                        isFilterable = true;
+
+                        if (!keyList.isEmpty()) {
+                            for (FiCol fiCol : getFiColList()) {
+                                for (String txKey : keyList) {
+                                    if (fiCol.getOfcTxFieldName().equals(txKey)) {
+                                        if (!FiBool.isFalse(fiCol.getBoRemFilterable())) {
+                                            isFilterable = true;
+                                        }
                                     }
                                 }
                             }
                         }
 
-                        if(!isFilterable){
+                        if (!isFilterable && !keyList.isEmpty()) {
                             getFiLblFooterMessage().setText("Bu sütun henüz veri çekimine müsait değil");
                             return;
                         }

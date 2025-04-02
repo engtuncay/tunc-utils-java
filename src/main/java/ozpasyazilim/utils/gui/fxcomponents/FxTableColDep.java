@@ -238,7 +238,7 @@ public class FxTableColDep<Clazz> extends TableColumn implements IFiCol<Clazz> {
 		setColEditorClass(iFiCol.getColEditorClass());
 		setBoOptional(iFiCol.getBoOptional());
 		setBoExist(iFiCol.getBoExist());
-		setBoFilterable(iFiCol.getBoFilterable());
+		setBoLocFilterable(iFiCol.getBoLocFilterable());
 		setColEditorNodeText(iFiCol.getColEditorNodeText());
 		setFilterNodeClass(iFiCol.getFilterNodeClass());
 		setColFilterNode(iFiCol.getColFilterNode());
@@ -464,7 +464,7 @@ public class FxTableColDep<Clazz> extends TableColumn implements IFiCol<Clazz> {
 	}
 
 	public FxTableColDep buildColFilterable(Boolean colFilterable) {
-		setBoFilterable(colFilterable);
+		setBoLocFilterable(colFilterable);
 		return this;
 	}
 
@@ -646,13 +646,13 @@ public class FxTableColDep<Clazz> extends TableColumn implements IFiCol<Clazz> {
 	}
 
 	@Override
-	public Boolean getBoFilterable() {
+	public Boolean getBoLocFilterable() {
 		return colFilterable;
 	}
 
 	@Override
-	public void setBoFilterable(Boolean boFilterable) {
-		this.colFilterable = boFilterable;
+	public void setBoLocFilterable(Boolean boLocFilterable) {
+		this.colFilterable = boLocFilterable;
 	}
 
 	@Override

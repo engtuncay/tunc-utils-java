@@ -119,12 +119,12 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     /**
      * Tablo başlıklarındaki filtre için ve formlar daki comp.ler için
      */
-    private Boolean boFilterable;
+    private Boolean boLocFilterable;
 
     /**
      * Tablodaki sütunun remote filterable olduğunu gösterir. default true kabul edilir
      */
-    private Boolean boRemoteFilterable;
+    private Boolean boRemFilterable;
 
     /**
      * Alan için hangi tür filter node kullanılacaksa sınıfın ismi tutulur
@@ -787,7 +787,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     }
 
     public FiCol buiBoFilt(Boolean boFilterable) {
-        setBoFilterable(boFilterable);
+        setBoLocFilterable(boFilterable);
         return this;
     }
 
@@ -826,7 +826,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     }
 
     public FiCol buiBoFiltAndLike(Boolean boFilterLike) {
-        setBoFilterable(true);
+        setBoLocFilterable(true);
         setBoFilterLike(boFilterLike);
         return this;
     }
@@ -837,7 +837,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     }
 
     public FiCol buiBoRemoteFilterable(Boolean boValue) {
-        setBoRemoteFilterable(boValue);
+        setBoRemFilterable(boValue);
         return this;
     }
 
@@ -1028,12 +1028,12 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
         this.summaryCalculateFn = summaryCalculateFn;
     }
 
-    public Boolean getBoFilterable() {
-        return boFilterable;
+    public Boolean getBoLocFilterable() {
+        return boLocFilterable;
     }
 
-    public void setBoFilterable(Boolean boFilterable) {
-        this.boFilterable = boFilterable;
+    public void setBoLocFilterable(Boolean boLocFilterable) {
+        this.boLocFilterable = boLocFilterable;
     }
 
     public String getFilterNodeClass() {
@@ -1792,12 +1792,12 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
         this.ofcTxColDefinition = ofcTxColDefinition;
     }
 
-    public Boolean getBoRemoteFilterable() {
-        return boRemoteFilterable;
+    public Boolean getBoRemFilterable() {
+        return boRemFilterable;
     }
 
-    public void setBoRemoteFilterable(Boolean boRemoteFilterable) {
-        this.boRemoteFilterable = boRemoteFilterable;
+    public void setBoRemFilterable(Boolean boRemFilterable) {
+        this.boRemFilterable = boRemFilterable;
     }
 
     public IFiNode getIFiNodeEditor() {

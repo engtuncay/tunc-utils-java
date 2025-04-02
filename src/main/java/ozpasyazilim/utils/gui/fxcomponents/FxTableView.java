@@ -95,7 +95,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 	public static void setFxColsFilterableNullToTrue(List<FxTableColDep> colTblMain) {
 		colTblMain.forEach(fxTableCol -> {
-			if (fxTableCol.getBoFilterable() == null) fxTableCol.setBoFilterable(true);
+			if (fxTableCol.getBoLocFilterable() == null) fxTableCol.setBoLocFilterable(true);
 		});
 	}
 
@@ -905,7 +905,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 	public FxTableView setActivateFxColsFilterableNullToTrue() {
 		getFxTableColList().forEach(fxTableCol -> {
-			if (fxTableCol.getBoFilterable() == null) fxTableCol.setBoFilterable(true);
+			if (fxTableCol.getBoLocFilterable() == null) fxTableCol.setBoLocFilterable(true);
 		});
 		setEnabledLocalFilterEditor(true);
 		activateFilters();
@@ -915,7 +915,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 	public void setFxColsFilterable(Boolean boFilterable) {
 		getFxTableColList().forEach(fxTableCol -> {
-			fxTableCol.setBoFilterable(boFilterable);
+			fxTableCol.setBoLocFilterable(boFilterable);
 		});
 	}
 
@@ -1019,28 +1019,28 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 		Boolean headerAdded = false;
 
-		if (FiBool.isFalse(fxTableColDep.getBoFilterable())) {
+		if (FiBool.isFalse(fxTableColDep.getBoLocFilterable())) {
 			return;
 		}
 
-		if (FiBool.isTrue(fxTableColDep.getBoFilterable())) {
+		if (FiBool.isTrue(fxTableColDep.getBoLocFilterable())) {
 			setupHeaderFilterNode(fxTableColDep);
 			headerAdded = true;
 		}
 
 		if (getEnabledLocalFilterEditor() || getEnabledRemoteFilterEditor()) {
 			if (!headerAdded) {
-				if (fxTableColDep.getBoFilterable() == null) fxTableColDep.setBoFilterable(true);
+				if (fxTableColDep.getBoLocFilterable() == null) fxTableColDep.setBoLocFilterable(true);
 				setupHeaderFilterNode(fxTableColDep);
 				headerAdded = true;
 			}
 		}
 
 
-		if (getEnabledLocalFilterEditor() || FiType.isTrue(fxTableColDep.getBoFilterable())) {
+		if (getEnabledLocalFilterEditor() || FiType.isTrue(fxTableColDep.getBoLocFilterable())) {
 
 			if (!headerAdded) {
-				if (fxTableColDep.getBoFilterable() == null) fxTableColDep.setBoFilterable(true);
+				if (fxTableColDep.getBoLocFilterable() == null) fxTableColDep.setBoLocFilterable(true);
 				setupHeaderFilterNode(fxTableColDep);
 				headerAdded = true;
 			}
@@ -1054,10 +1054,10 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 			//fxTableCol.getTxfFilter().textProperty().addListener(changeListener);
 		}
 
-		if (getEnabledRemoteFilterEditor() && !FiBool.isFalse(fxTableColDep.getBoFilterable())) {
+		if (getEnabledRemoteFilterEditor() && !FiBool.isFalse(fxTableColDep.getBoLocFilterable())) {
 
 			if (!headerAdded) {
-				if (fxTableColDep.getBoFilterable() == null) fxTableColDep.setBoFilterable(true);
+				if (fxTableColDep.getBoLocFilterable() == null) fxTableColDep.setBoLocFilterable(true);
 				setupHeaderFilterNode(fxTableColDep);
 				headerAdded = true;
 			}
@@ -1155,7 +1155,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 		node = defAutoEditorClass(Arrays.asList(fxcol));
 		node.setId("filterNode");
 
-		if (FiBool.isFalse(fxcol.getBoFilterable())) {
+		if (FiBool.isFalse(fxcol.getBoLocFilterable())) {
 			//Loghelperr.getInstance(getClass()).debug("Node Filter Pasif");
 			node.setDisable(true);
 		}
@@ -1363,7 +1363,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 			for (FxTableColDep fxTableColumn : getFxTableColList()) {
 
 				// sütun filtrelenebilir olması gerekir
-				if (FiBool.isTrue(fxTableColumn.getBoFilterable())) {
+				if (FiBool.isTrue(fxTableColumn.getBoLocFilterable())) {
 
 					// filterCheckResult false olursa filtreden geçmez , sonuca girmez.
 					// true olursa , filtreden geçerek sonuca dahil olur, eklenir.
