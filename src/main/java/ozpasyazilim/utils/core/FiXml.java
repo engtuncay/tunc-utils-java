@@ -13,6 +13,7 @@ import java.io.*;
 import java.util.Properties;
 
 import com.github.underscore.lodash.U;
+import ozpasyazilim.utils.annotations.FiDraft;
 import ozpasyazilim.utils.datatypes.FiKeyBean;
 
 /**
@@ -203,6 +204,14 @@ public class FiXml {
             fkbParams = new FiKeyBean();
         }
         return fkbParams;
+    }
+
+    @FiDraft
+    public void convertCommentParams(){
+// Düzenli ifade ile değişiklik yapılıyor
+        // String updatedXml = xmlContent.replaceAll("<!--\\s*\\{\\{edmFaturaAraYon}}\\s*-->", "{{edmFaturaAraYon}}");
+
+
     }
 
     public void setFkbParams(FiKeyBean fkbParams) {
