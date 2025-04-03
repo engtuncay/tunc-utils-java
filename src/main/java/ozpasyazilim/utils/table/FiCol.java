@@ -786,7 +786,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
         return this;
     }
 
-    public FiCol buiBoFilt(Boolean boFilterable) {
+    public FiCol buiBoLocFilter(Boolean boFilterable) {
         setBoLocFilterable(boFilterable);
         return this;
     }

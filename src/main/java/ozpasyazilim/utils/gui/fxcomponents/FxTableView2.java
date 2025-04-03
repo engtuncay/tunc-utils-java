@@ -1120,13 +1120,14 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
                     //Loghelperr.getInstance(getClass()).debug(" field"+ fxTableCol.getFieldName());
                     Object objFilterValue = FxEditorFactory.getNodeObjValueByFilterNode(fxTableColumn.getRefFiCol());
                     // fxTableCol.getTxfFilter().getText();
-                    //Loghelper.get(getClass()).debug(String.format("Filter Lokal %s : %s ", fxTableColumn.getFiTableCol().getFieldName(), objFilterValue));
+//                    Loghelper.get(getClass()).debug(String.format("Filter Lokal %s : %s (objFilterValue) ", fxTableColumn.getRefFiCol().getOfcTxFieldName(), objFilterValue));
 
                     // Tablonun içinde hücre değeri
                     Object objCellValue = null;
 
-                    if (getBoFkbEnabled()) {
+                    if (FiBool.isTrue(getBoFkbEnabled())) {
                         if (ent instanceof FiKeyBean) {
+                            //Loghelper.get(getClass()).debug("FiKeybean Row Instance");
                             FiKeyBean fkbEnd = (FiKeyBean) ent;
                             objCellValue = fkbEnd.getAsObj(fxTableColumn.getRefFiCol().getOfcTxFieldName());
                         }
@@ -1140,7 +1141,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 //                        Loghelper.get(getClass()).debug("Filter CellValue null");
 //                    }
 
-                    Loghelper.get(getClass()).debug("Filter CellValue:" + objCellValue);
+                    //Loghelper.get(getClass()).debug("Filter CellValue:" + objCellValue);
 
                     // !!!!! CellValue Null gelmişse, cellValue yu override edebiliriz türüne göre
                     if (objCellValue == null) {
