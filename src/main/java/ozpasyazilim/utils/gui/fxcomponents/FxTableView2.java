@@ -2440,90 +2440,108 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     public void activatePageToolbar() {
 
-        if (getFxTableMig() != null && !FiBool.isTrue(getBoPagingInitialized())) {
-            setBoPagingInitialized(true);
-            btnPageBegin = new FxButton("<<");
-            lblPageNoIndex = new FxLabel("");
-            btnPagePrev = new FxButton("<");
-            btnPageForward = new FxButton(">");
-            btnPageBegin.setFiSimpleTooltip("Başa Dön");
-            btnPageEnd = new FxButton(">>");
-
-            FxComboBoxObj cmbPageSize = new FxComboBoxObj();
-            cmbPageSize.setObjValue(30);
-            cmbPageSize.addComboItem(30, "30");
-            cmbPageSize.addComboItem(100, "100");
-            cmbPageSize.addComboItem(500, "500");
-            cmbPageSize.addComboItem(1000, "1000");
-            cmbPageSize.addComboItem(2000, "2000");
-            cmbPageSize.addComboItem(5000, "5000");
-            cmbPageSize.setSelectedItemByObjValueFi();
-
-            cmbPageSize.trigSelectedItemListenerFi((observable, oldValue, newValue) -> {
-                if (newValue != null && newValue.getValue() instanceof Integer) {
-                    setLnPageSizeAndLnCurrentPageNo((Integer) newValue.getValue(), 1);
-                    if (getFnPageChanged() != null) getFnPageChanged().run();
-                }
-            });
-
-            getFxTableMig().getTableHeaderPane().add(btnPageBegin);
-            getFxTableMig().getTableHeaderPane().add(btnPagePrev);
-            getFxTableMig().getTableHeaderPane().add(lblPageNoIndex);
-            getFxTableMig().getTableHeaderPane().add(btnPageForward);
-            getFxTableMig().getTableHeaderPane().add(btnPageEnd);
-            getFxTableMig().getTableHeaderPane().add(cmbPageSize);
-            //setLnPageNo(1);
-            //if (getLnPageSize()==null) {setLnPageSize(30);}
-
-            updatePageToolbarComps();
-
-            // Page 1 : 1-20 : 1 + 20 -1 = 20 lastIndex
-            // Page 2 : 21-40 : 21 + 20 - 1 = 40 lastIndex
-            // 21 + 20 = 41
-
-            btnPageBegin.setOnAction(event -> {
-                //setLnPageStartIndex(1); // 21-20 = 1
-                setLnCurrentPageNoAndPageStartIndex(1);
-                updatePageToolbarComps();
-                if (getFnPageChanged() != null) getFnPageChanged().run();
-                if (getFnPageAction() != null)
-                    getFnPageAction().accept(getLnPageStartIndexInit(), getLnPageStartIndexInit() + getLnPageSizeInit() - 1);
-            });
-
-            btnPagePrev.setOnAction(event -> {
-                if (getLnCurrentPageNoInit() == 1) return;
-                if (getLnCurrentPageNoInit() > 1) {
-                    setLnCurrentPageNoAndPageStartIndex(getLnCurrentPageNoInit() - 1);
-                    updatePageToolbarComps();
-                    if (getFnPageAction() != null)
-                        getFnPageAction().accept(getLnPageStartIndexInit(), getLnPageStartIndexInit() + getLnPageSizeInit() - 1);
-                    if (getFnPageChanged() != null) getFnPageChanged().run();
-                }
-            });
-
-            btnPageForward.setOnAction(event -> {
-                if (getLnCurrentPageNoInit() < calcLnLastPageNo()) {
-                    setLnCurrentPageNoAndPageStartIndex(getLnCurrentPageNoInit() + 1);
-                    updatePageToolbarComps();
-                    if (getFnPageChanged() != null) getFnPageChanged().run();
-                    if (getFnPageAction() != null)
-                        getFnPageAction().accept(getLnPageStartIndexInit(), getLnPageStartIndexInit() + getLnPageSizeInit() - 1);
-                }
-            });
-
-            btnPageEnd.setOnAction(event -> {
-                //lnPageNo = (getLnTotalSize() / getLnPageSize()) + 1;
-                if (getLnCurrentPageNoInit() == calcLnLastPageNo()) return;
-                setLnCurrentPageNoAndPageStartIndex(calcLnLastPageNo());
-                //getFnPageAction().accept((lnPageNo - 1) * getLnPageSize() + 1, lnPageNo * lnPageSize);
-                updatePageToolbarComps();
-                if (getFnPageChanged() != null) getFnPageChanged().run();
-                if (getFnPageAction() != null)
-                    getFnPageAction().accept(getLnPageStartIndexInit(), getLnPageStartIndexInit() + getLnPageSizeInit() - 1);
-            });
-
-
+        if (getFxTableMig() == null || FiBool.isTrue(getBoPagingInitialized())) {
+            return;
         }
+
+        setBoPagingInitialized(true);
+        btnPageBegin = new FxButton("<<");
+        lblPageNoIndex = new FxLabel("");
+        btnPagePrev = new FxButton("<");
+        btnPageForward = new FxButton(">");
+        btnPageBegin.setFiSimpleTooltip("Başa Dön");
+        btnPageEnd = new FxButton(">>");
+
+        FxComboBoxObj cmbPageSize = new FxComboBoxObj();
+        cmbPageSize.setObjValue(30);
+        cmbPageSize.addComboItem(30, "30");
+        cmbPageSize.addComboItem(100, "100");
+        cmbPageSize.addComboItem(500, "500");
+        cmbPageSize.addComboItem(1000, "1000");
+        cmbPageSize.addComboItem(2000, "2000");
+        cmbPageSize.addComboItem(5000, "5000");
+        cmbPageSize.setSelectedItemByObjValueFi();
+
+        cmbPageSize.trigSelectedItemListenerFi((observable, oldValue, newValue) -> {
+            if (newValue != null && newValue.getValue() instanceof Integer) {
+                setLnPageSizeAndLnCurrentPageNo((Integer) newValue.getValue(), 1);
+                if (getFnPageChanged() != null) getFnPageChanged().run();
+            }
+        });
+
+        FxMigPane paneTableHeader = getFxTableMig().getPaneTablePagingHeader();
+
+        paneTableHeader.add(btnPageBegin);
+        paneTableHeader.add(btnPagePrev);
+        paneTableHeader.add(lblPageNoIndex);
+        paneTableHeader.add(btnPageForward);
+        paneTableHeader.add(btnPageEnd);
+        paneTableHeader.add(cmbPageSize);
+
+        //setLnPageNo(1);
+        //if (getLnPageSize()==null) {setLnPageSize(30);}
+
+        updatePageToolbarComps();
+
+        // Page 1 : 1-20 : 1 + 20 -1 = 20 lastIndex
+        // Page 2 : 21-40 : 21 + 20 - 1 = 40 lastIndex
+        // 21 + 20 = 41
+
+        btnPageBegin.setOnAction(event -> {
+            //setLnPageStartIndex(1); // 21-20 = 1
+            setLnCurrentPageNoAndPageStartIndex(1);
+            updatePageToolbarComps();
+            if (getFnPageChanged() != null) getFnPageChanged().run();
+            if (getFnPageAction() != null)
+                getFnPageAction().accept(getLnPageStartIndexInit(), getLnPageStartIndexInit() + getLnPageSizeInit() - 1);
+        });
+
+        btnPagePrev.setOnAction(event -> {
+            if (getLnCurrentPageNoInit() == 1) return;
+            if (getLnCurrentPageNoInit() > 1) {
+                setLnCurrentPageNoAndPageStartIndex(getLnCurrentPageNoInit() - 1);
+                updatePageToolbarComps();
+                if (getFnPageAction() != null)
+                    getFnPageAction().accept(getLnPageStartIndexInit(), getLnPageStartIndexInit() + getLnPageSizeInit() - 1);
+                if (getFnPageChanged() != null) getFnPageChanged().run();
+            }
+        });
+
+        btnPageForward.setOnAction(event -> {
+            if (getLnCurrentPageNoInit() < calcLnLastPageNo()) {
+                setLnCurrentPageNoAndPageStartIndex(getLnCurrentPageNoInit() + 1);
+                updatePageToolbarComps();
+                if (getFnPageChanged() != null) getFnPageChanged().run();
+                if (getFnPageAction() != null)
+                    getFnPageAction().accept(getLnPageStartIndexInit(), getLnPageStartIndexInit() + getLnPageSizeInit() - 1);
+            }
+        });
+
+        btnPageEnd.setOnAction(event -> {
+            //lnPageNo = (getLnTotalSize() / getLnPageSize()) + 1;
+            if (getLnCurrentPageNoInit() == calcLnLastPageNo()) return;
+            setLnCurrentPageNoAndPageStartIndex(calcLnLastPageNo());
+            //getFnPageAction().accept((lnPageNo - 1) * getLnPageSize() + 1, lnPageNo * lnPageSize);
+            updatePageToolbarComps();
+            if (getFnPageChanged() != null) getFnPageChanged().run();
+            if (getFnPageAction() != null)
+                getFnPageAction().accept(getLnPageStartIndexInit(), getLnPageStartIndexInit() + getLnPageSizeInit() - 1);
+        });
+
+
+    }
+
+    public void activateExtraFiltreButton() {
+
+        FxTableMig2 tableMig = getFxTableMig();
+
+        if (tableMig ==null) {
+            Loghelper.get(getClass()).debug("activateExtraFiltreButton fxTableMig null !!!");
+            return;
+        }
+
+
+
 
     }
 
@@ -2569,7 +2587,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
             // Loghelper.debug(getClass(), "Page Start Index:" + getLnPageStartIndex().toString());
 
             // Son sayfada ise PageForward,PageEnd Disable yapılır
-            if (getLnCurrentPageNoInit() == calcLnLastPageNo()) {
+            if (FiObjects.equals(getLnCurrentPageNoInit(), calcLnLastPageNo())) {
                 getBtnPageForward().setDisable(true);
                 getBtnPageEnd().setDisable(true);
             } else {
@@ -2798,8 +2816,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     public void setLnCurrentPageNoAndPageStartIndex(Integer lnPageNo) {
         setLnCurrentPageNo(lnPageNo);
-        // 1 -> 0*20+1=1  2->(2-1)*20+1=21
-        //this.lnPageStartIndex =
+        // 1 -> 0*20+1=1 , 2->(2-1)*20+1=21
         setLnPageStartIndex((lnPageNo - 1) * getLnPageSizeInit() + 1);
     }
 

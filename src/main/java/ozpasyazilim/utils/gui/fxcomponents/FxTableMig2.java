@@ -10,15 +10,26 @@ import ozpasyazilim.utils.windows.FiWinUtils;
 public class FxTableMig2<EntClazz> extends MigPane {
 
 	private FxTableView2<EntClazz> fxTableView;
+
 	private FxMigPane paneFooter;
-	private FxLabel lblFooterRowCount;
 	private FxButton btnExcel;
 	private FxButton btnSettings;
+
+	private FxLabel lblFooterVer;
+	private FxLabel lblFooterRowCount;
 	private FxLabel lblFooterMessage;
 	private FxLabel lblFooterMessageSelection;
-	private FxMigPane tableHeaderPane;
+
+	/**
+	 * Sayfalama buttonların konulduğu panel. Sütun başlıkları paneli degil.
+	 */
+	private FxMigPane paneTablePagingHeader;
+
+	/**
+	 *
+	 */
 	private IFiModCont iFiModCont;
-	private FxLabel lblFooterVer;
+
 
 	public FxTableMig2() {
 		super(FxMigHp.bui().lcgInset0Gap03().getLcg());
@@ -58,9 +69,9 @@ public class FxTableMig2<EntClazz> extends MigPane {
 		paneFooter.add(lblFooterMessage);
 		paneFooter.add(lblFooterMessageSelection);
 
-		tableHeaderPane = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().lcgNoGrid().getLcg());
+		paneTablePagingHeader = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().lcgNoGrid().getLcg());
 
-		this.add(tableHeaderPane, "span");
+		this.add(paneTablePagingHeader, "span");
 		this.add(fxTableView, "span,grow,push");
 		this.add(paneFooter, "span");
 	}
@@ -82,8 +93,8 @@ public class FxTableMig2<EntClazz> extends MigPane {
 
 		String windowName = "entegre_";
 
-		if(getiFxSimpleCont()!=null){
-			windowName = getiFxSimpleCont().getModuleLabel();
+		if(getIFiModCont()!=null){
+			windowName = getIFiModCont().getModuleLabel();
 		}
 
 		String fileName= windowName + FiFile.getCurrentTimeStampForFile() + ".xlsx";
@@ -128,19 +139,19 @@ public class FxTableMig2<EntClazz> extends MigPane {
 
 	public void setLblFooterMessage(FxLabel lblFooterMessage) {this.lblFooterMessage = lblFooterMessage;}
 
-	public FxMigPane getTableHeaderPane() {
-		return tableHeaderPane;
+	public FxMigPane getPaneTablePagingHeader() {
+		return paneTablePagingHeader;
 	}
 
-	public void setTableHeaderPane(FxMigPane tableHeaderPane) {
-		this.tableHeaderPane = tableHeaderPane;
+	public void setPaneTablePagingHeader(FxMigPane paneTablePagingHeader) {
+		this.paneTablePagingHeader = paneTablePagingHeader;
 	}
 
-	public IFiModCont getiFxSimpleCont() {
+	public IFiModCont getIFiModCont() {
 		return iFiModCont;
 	}
 
-	public void setiFxSimpleCont(IFiModCont iFiModCont) {
+	public void setIFiModCont(IFiModCont iFiModCont) {
 		this.iFiModCont = iFiModCont;
 	}
 
