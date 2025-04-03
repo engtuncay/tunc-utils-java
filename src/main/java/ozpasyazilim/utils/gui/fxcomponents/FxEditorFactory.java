@@ -1202,6 +1202,8 @@ public class FxEditorFactory {
 
         FiKeyBean fiKeyBean = new FiKeyBean();
 
+        if(listColumns == null) return fiKeyBean;
+
         for (int i = 0; i < listColumns.size(); i++) {
             FiCol fiCol = listColumns.get(i);
             Object cellvalue = getNodeObjValue(fiCol, fiCol.getColEditorClass());    // map.get(fiCol.getHeader());

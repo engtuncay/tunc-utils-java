@@ -19,13 +19,17 @@ import ozpasyazilim.utils.annotations.FiDraft;
 import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.datatypes.FiKeyBean;
 import ozpasyazilim.utils.datatypes.FiListString;
+import ozpasyazilim.utils.fxwindow.FiArbFormWindowDiaCont;
 import ozpasyazilim.utils.gui.components.TableValueFactoryForFkb;
 import ozpasyazilim.utils.gui.fxTableViewExtra.NestedPropertyValueFactory;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.mvc.IFiCol;
+import ozpasyazilim.utils.mvc.IFxTableCont;
 import ozpasyazilim.utils.mvc.IFxTableSelectionCont;
 import ozpasyazilim.utils.core.FiReflection;
+import ozpasyazilim.utils.returntypes.Fdr;
 import ozpasyazilim.utils.returntypes.FnResult;
+import ozpasyazilim.utils.table.FiColList;
 import ozpasyazilim.utils.table.OzColSummaryType;
 import ozpasyazilim.utils.table.OzColType;
 import ozpasyazilim.utils.table.FiCol;
@@ -150,6 +154,11 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
      * Header gelen fkb'ye ek olarak alanlar buraya eklenebilir.
      */
     private FiKeyBean fkbHeaderFilterExtra;
+    private FiColList ficsFormElemsHeaderFilterExtra;
+
+    IFxTableCont iFxTableCont;
+
+    private FxButton btnExtraFilter;
 
     // ******* constructors
 
@@ -2520,7 +2529,8 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
         btnPageEnd.setOnAction(event -> {
             //lnPageNo = (getLnTotalSize() / getLnPageSize()) + 1;
-            if (getLnCurrentPageNoInit() == calcLnLastPageNo()) return;
+            if (FiObjects.equals(getLnCurrentPageNoInit(), calcLnLastPageNo())) return;
+
             setLnCurrentPageNoAndPageStartIndex(calcLnLastPageNo());
             //getFnPageAction().accept((lnPageNo - 1) * getLnPageSize() + 1, lnPageNo * lnPageSize);
             updatePageToolbarComps();
@@ -2536,13 +2546,51 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
         FxTableMig2 tableMig = getFxTableMig();
 
-        if (tableMig ==null) {
+        if (tableMig == null) {
             Loghelper.get(getClass()).debug("activateExtraFiltreButton fxTableMig null !!!");
             return;
         }
 
+        if (getBtnExtraFilter() != null) {
+            return;
+        }
 
+        btnExtraFilter = new FxButton("Tablo Kriterler");
 
+        btnExtraFilter.setOnAction(event -> {
+
+            FiArbFormWindowDiaCont emmFormWindowCont = new FiArbFormWindowDiaCont(null);
+            emmFormWindowCont.initCont();
+            emmFormWindowCont.addCrudSaveButtonAndAction();
+
+            emmFormWindowCont.getFormMain().setListFormElements(ficsFormElemsHeaderFilterExtra);
+
+            // daha önceden girilen form değerleri yüklenir
+            if (getFkbHeaderFilterExtra() != null) {
+                emmFormWindowCont.getFormMain().setRefFormFkb(getFkbHeaderFilterExtra());
+            }
+
+            emmFormWindowCont.getFormMain().initCont();
+            //emmFormWindowCont.getFormMain().setFormTypeSelected(FormType.PlainFormV1);
+
+            emmFormWindowCont.setFnSaveClose(() -> {
+                FiKeyBean formAsFkb = emmFormWindowCont.getFormMain().getFormAsFkbNotNullKeys();
+                formAsFkb.logParams();
+                setFkbHeaderFilterExtra(formAsFkb);
+                return Fdr.bui(true);
+            });
+
+            emmFormWindowCont.openAsNonModal();
+
+            if (emmFormWindowCont.checkClosedWithDone()) {
+                if (getiFxTableCont() != null) {
+                    getiFxTableCont().pullTableData();
+                }
+            }
+
+        });
+
+        getFxTableMig().getPaneTablePagingHeader().add(btnExtraFilter);
 
     }
 
@@ -2861,5 +2909,21 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     public void setBoFkbEnabled(Boolean boFkbEnabled) {
         this.boFkbEnabled = boFkbEnabled;
+    }
+
+    public IFxTableCont getiFxTableCont() {
+        return iFxTableCont;
+    }
+
+    public void setiFxTableCont(IFxTableCont iFxTableCont) {
+        this.iFxTableCont = iFxTableCont;
+    }
+
+    public FxButton getBtnExtraFilter() {
+        return btnExtraFilter;
+    }
+
+    public void setBtnExtraFilter(FxButton btnExtraFilter) {
+        this.btnExtraFilter = btnExtraFilter;
     }
 }

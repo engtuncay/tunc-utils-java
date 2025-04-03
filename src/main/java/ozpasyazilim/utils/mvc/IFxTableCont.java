@@ -1,11 +1,16 @@
 package ozpasyazilim.utils.mvc;
 
 /**
+ * İçerisinde tablo bulunan kontroller
  *
- * setupTable metod implemente etmeye zorlar
  *
  */
 public interface IFxTableCont {
-	void setupTable();
+
+    void setupTable();
+
+    void pullTableData();
+
+    void pullTableDataThreadBody();
 
 }
