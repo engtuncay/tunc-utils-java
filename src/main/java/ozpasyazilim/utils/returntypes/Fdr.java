@@ -149,6 +149,9 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
      */
     private Boolean boLockAddLog;
 
+    private String fdrTxValue;
+
+    private Integer fdrLnValue;
     /**
      * Fdr ile tetiklemek istediğimiz işlemleri buraya kaydedilebilir
      */
@@ -532,6 +535,9 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
 
         // Birleştirme yapıldığı için eski Fdr'ye log eklenmesi engellenir
         fdrSubWork.setBoLockAddLog(true);
+
+        // subwork'deki ResponseCode da alınır
+        if(fdrSubWork.getLnResponseCode()!=null) setLnResponseCode(fdrSubWork.getLnResponseCode());
     }
 
     public void appendMessageLn(String message) {
@@ -1221,5 +1227,21 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
         for (Runnable runnable : getObsMethodFinished()) {
             runnable.run();
         }
+    }
+
+    public String getFdrTxValue() {
+        return fdrTxValue;
+    }
+
+    public void setFdrTxValue(String fdrTxValue) {
+        this.fdrTxValue = fdrTxValue;
+    }
+
+    public Integer getFdrLnValue() {
+        return fdrLnValue;
+    }
+
+    public void setFdrLnValue(Integer fdrLnValue) {
+        this.fdrLnValue = fdrLnValue;
     }
 }

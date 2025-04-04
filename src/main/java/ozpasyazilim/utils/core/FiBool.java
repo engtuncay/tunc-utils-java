@@ -11,6 +11,8 @@ public class FiBool {
 
     /**
      * false ise true , true veya null ise false gönderir
+     * <p>
+     * null değeri false kabul etmez.
      *
      * @param boValue
      * @return
@@ -169,12 +171,12 @@ public class FiBool {
     public static Boolean convertExcelTxBool(String oftBoTransient) {
 
         if (FiString.isEmpty(oftBoTransient)) return null;
-        if(oftBoTransient.equalsIgnoreCase("ok")) return true;
-        if(oftBoTransient.equalsIgnoreCase("x")) return false;
+        if (oftBoTransient.equalsIgnoreCase("ok")) return true;
+        if (oftBoTransient.equalsIgnoreCase("x")) return false;
         // other options
-        if(oftBoTransient.equalsIgnoreCase("o")) return true;
-        if(oftBoTransient.equalsIgnoreCase("true")) return true;
-        if(oftBoTransient.equalsIgnoreCase("false")) return false;
+        if (oftBoTransient.equalsIgnoreCase("o")) return true;
+        if (oftBoTransient.equalsIgnoreCase("true")) return true;
+        if (oftBoTransient.equalsIgnoreCase("false")) return false;
 
         return null;
     }
