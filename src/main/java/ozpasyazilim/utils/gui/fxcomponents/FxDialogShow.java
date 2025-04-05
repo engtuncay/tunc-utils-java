@@ -90,17 +90,17 @@ public class FxDialogShow {
         Fdr fdr = new Fdr();
 
         btnYes.setOnAction(event -> {
-            fdr.setBoResult(true);
+            fdr.setFdrBoExec(true);
             stage.close();
         });
 
         btnNo.setOnAction(event -> {
-            fdr.setBoResult(false);
+            fdr.setFdrBoExec(false);
             stage.close();
         });
 
         btnCancel.setOnAction(event -> {
-            fdr.setBoResult(null);
+            fdr.setFdrBoExec(null);
             stage.close();
         });
 
@@ -144,17 +144,17 @@ public class FxDialogShow {
         Fdr fdr = new Fdr();
 
         btnYes.setOnAction(event -> {
-            fdr.setBoResult(true);
+            fdr.setFdrBoExec(true);
             stage.close();
         });
 
         btnNo.setOnAction(event -> {
-            fdr.setBoResult(false);
+            fdr.setFdrBoExec(false);
             stage.close();
         });
 
         btnCancel.setOnAction(event -> {
-            fdr.setBoResult(null);
+            fdr.setFdrBoExec(null);
             stage.close();
         });
 
@@ -206,17 +206,17 @@ public class FxDialogShow {
         Fdr fdr = new Fdr();
 
         btnYes.setOnAction(event -> {
-            fdr.setBoResult(true);
+            fdr.setFdrBoExec(true);
             stage.close();
         });
 
         btnNo.setOnAction(event -> {
-            fdr.setBoResult(false);
+            fdr.setFdrBoExec(false);
             stage.close();
         });
 
         btnCancel.setOnAction(event -> {
-            fdr.setBoResult(null);
+            fdr.setFdrBoExec(null);
             stage.close();
         });
 
@@ -326,17 +326,17 @@ public class FxDialogShow {
         Fdr fnResult = new Fdr();
 
         btnYes.setOnAction(event -> {
-            fnResult.setBoResult(true);
+            fnResult.setFdrBoExec(true);
             stage.close();
         });
 
         btnNo.setOnAction(event -> {
-            fnResult.setBoResult(false);
+            fnResult.setFdrBoExec(false);
             stage.close();
         });
 
         btnCancel.setOnAction(event -> {
-            fnResult.setBoResult(null);
+            fnResult.setFdrBoExec(null);
             stage.close();
         });
 
@@ -369,7 +369,7 @@ public class FxDialogShow {
         if (!fdr.isTrueBoResult()) {
             if (fdr.isFalseBoResult()) FxDialogShow.showModalErrorAsyn("Hata oluştu", fdr.getMessage());
 
-            if (fdr.getBoResult() == null) FxDialogShow.showModalErrorAsyn("İşlem sonucu alınamadı.", fdr.getMessage());
+            if (fdr.getFdrBoExec() == null) FxDialogShow.showModalErrorAsyn("İşlem sonucu alınamadı.", fdr.getMessage());
         }
 
     }
@@ -402,7 +402,7 @@ public class FxDialogShow {
 
     public static void showFdr1PopOrFailModal(Fdr fdr) {
 
-        if (fdr.getBoResult() == null) {
+        if (fdr.getFdrBoExec() == null) {
             FxDialogShow.showPopInfo("İşlem sonucu alınamadı." + "\n" + FiString.orEmpty(fdr.getMessage()));
             return;
         }
@@ -417,7 +417,7 @@ public class FxDialogShow {
 
     public static void showFdr1PopOrFailModal2(Fdr fdr) {
 
-        if (fdr.getBoResult() == null) {
+        if (fdr.getFdrBoExec() == null) {
             FxDialogShow.showPopInfo("İşlem sonucu alınamadı." + "\n" + FiString.orEmpty(fdr.getMessage()));
             return;
         }
@@ -451,7 +451,7 @@ public class FxDialogShow {
             return;
         }
 
-        if (fdr.getBoResult() == null) {
+        if (fdr.getFdrBoExec() == null) {
             //FxDialogShow.showPopInfo("İşlem sonucu alınamadı." + "\n" + FiString.orEmpty(fdr.getMessage()));
             FxDialogShow.showModalErrorWitLogAndMessageAndExc("İşlem Sonucu Alınamadı.", fdr);
             return;
@@ -476,7 +476,7 @@ public class FxDialogShow {
             return;
         }
 
-        if (fdr.getBoResult() == null) {
+        if (fdr.getFdrBoExec() == null) {
             //FxDialogShow.showPopInfo("İşlem sonucu alınamadı." + "\n" + FiString.orEmpty(fdr.getMessage()));
             FxDialogShow.showModalErrorWitLogAndMessageAndExc("İşlem Sonucu Alınamadı.", fdr);
             return;
@@ -997,17 +997,17 @@ public class FxDialogShow {
         Fdr fdrResult = new Fdr();
 
         btnYes.setOnAction(event -> {
-            fdrResult.setBoResult(true);
+            fdrResult.setFdrBoExec(true);
             stage.close();
         });
 
         btnNo.setOnAction(event -> {
-            fdrResult.setBoResult(false);
+            fdrResult.setFdrBoExec(false);
             stage.close();
         });
 
         btnCancel.setOnAction(event -> {
-            fdrResult.setBoResult(null);
+            fdrResult.setFdrBoExec(null);
             stage.close();
         });
 
@@ -1064,17 +1064,17 @@ public class FxDialogShow {
             Fdr fdrResult = new Fdr();
 
             btnYes.setOnAction(event -> {
-                fdrResult.setBoResult(true);
+                fdrResult.setFdrBoExec(true);
                 stage.close();
             });
 
             btnNo.setOnAction(event -> {
-                fdrResult.setBoResult(false);
+                fdrResult.setFdrBoExec(false);
                 stage.close();
             });
 
             btnCancel.setOnAction(event -> {
-                fdrResult.setBoResult(null);
+                fdrResult.setFdrBoExec(null);
                 stage.close();
             });
 
@@ -1261,7 +1261,7 @@ public class FxDialogShow {
 
     public static void showDbResultUpdate(Fdr dbResult) {
 
-        if (FiBool.isTrue(dbResult.getBoResult())) {
+        if (FiBool.isTrue(dbResult.getFdrBoExec())) {
 
             if (dbResult.isEmptyMessage()) {
                 dbResult.setMessage(String.format("İşlem Başarı ile Gerçekleşti.\n %s Adet Kayıt Güncellendi.", dbResult.getRowsAffectedNotNull()));
@@ -1284,7 +1284,7 @@ public class FxDialogShow {
 
     public static void showFdrDbResultWithAllModal(Fdr dbResult) {
 
-        if (FiBool.isTrue(dbResult.getBoResult())) {
+        if (FiBool.isTrue(dbResult.getFdrBoExec())) {
 
             if (FiString.isEmpty(dbResult.getMessage())) {
                 dbResult.setMessage(String.format("İşlem Başarı ile Gerçekleşti.\n %s Adet Kayıt Güncellendi.", dbResult.getRowsAffectedNotNull()));
@@ -1314,7 +1314,7 @@ public class FxDialogShow {
 
     public static void showDbResultUpdatePop(Fdr dbResult) {
 
-        if (FiBool.isTrue(dbResult.getBoResult())) {
+        if (FiBool.isTrue(dbResult.getFdrBoExec())) {
 
             if (dbResult.getMessage() == null) {
                 dbResult.setMessage(String.format("İşlem Başarı ile Gerçekleşti.\n %s Adet Kayıt İşleme Alındı.", dbResult.getRowsAffectedNotNull()));
@@ -1337,7 +1337,7 @@ public class FxDialogShow {
 
     public void showDbResultWithOwner(Fdr dbResult, Window windowOwner) {
 
-        if (FiBool.isTrue(dbResult.getBoResult())) {
+        if (FiBool.isTrue(dbResult.getFdrBoExec())) {
 
             if (dbResult.getMessage() == null) {
                 dbResult.setMessage("İşlem Başarı ile Gerçekleşti.");

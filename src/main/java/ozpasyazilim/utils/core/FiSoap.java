@@ -84,7 +84,7 @@ public class FiSoap {
 
 			if (httpConn.getResponseCode() == 200) {
 				isr = new InputStreamReader(httpConn.getInputStream(),StandardCharsets.UTF_8);
-				fdrMain.setBoResult(true);
+				fdrMain.setFdrBoExec(true);
 			} else {
 				if (httpConn.getErrorStream() != null) isr = new InputStreamReader(httpConn.getErrorStream(),StandardCharsets.UTF_8);
 			}
@@ -104,7 +104,7 @@ public class FiSoap {
 
 		} catch (IOException exception) {
 			Loghelper.get(getClassi()).debug(FiException.exceptionIfToString(exception));
-			fdrMain.setBoResult(false);
+			fdrMain.setFdrBoExec(false);
 			fdrMain.setException(exception);
 			fdrMain.setMessage("Soap isteği gerçekleşirken hata oluştu. Detay için Exception inceleyiniz.");
 		}
@@ -192,11 +192,11 @@ public class FiSoap {
 				fdr.setMessage("!!! Error Code: " + httpConn.getResponseCode());
 			}
 			// Exception fırlatmadığı için boResult True verildi.
-			fdr.setBoResult(true);
+			fdr.setFdrBoExec(true);
 
 		} catch (Exception exception) { //	//throws MalformedURLException, IOException
 			Loghelper.get(FiSoap.class).debug(FiException.exToLog(exception));
-			fdr.setBoResult(false);
+			fdr.setFdrBoExec(false);
 			fdr.setMessage("Soap isteği gerçekleşirken hata oluştu. Detay için Exception inceleyiniz.");
 			fdr.setException(exception);
 		}
@@ -238,7 +238,7 @@ public class FiSoap {
 			fdrXmlDoc.setMessage(fdrRequest.getMessage());
 			fdrXmlDoc.combineAnd(fdrRequest);
 		} else {
-			fdrXmlDoc.setBoResult(false);
+			fdrXmlDoc.setFdrBoExec(false);
 			fdrXmlDoc.setMessage("Soap isteği gerçekleşirken hata oluştu. Detay için Exception inceleyiniz.");
 			fdrXmlDoc.setException(fdrRequest.getException());
 		}

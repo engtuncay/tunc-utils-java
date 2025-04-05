@@ -188,10 +188,10 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
             });
 
             result.ifPresent(fdr::setValue);
-            fdr.setBoResult(true);
+            fdr.setFdrBoExec(true);
         } catch (Exception ex) {
             Loghelper.get(getClass()).error(FiException.exTosMain(ex));
-            fdr.setBoResult(false);
+            fdr.setFdrBoExec(false);
             fdr.setValue(null);
         }
         return fdr;

@@ -241,7 +241,7 @@ public class FiXmlParser {
 		List<EntClazz> entClazzes = parseMatchElementToList(xmlRoot, txSelectorTag, listColumn, clazz, false);
 		fdrResult.setValue(entClazzes);
 
-		fdrResult.setBoResult(true);
+		fdrResult.setFdrBoExec(true);
 		return fdrResult;
 
 	}

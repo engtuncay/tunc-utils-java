@@ -34,7 +34,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
      * <p>
      * boQueryExecuted alternatif adı
      */
-    private Boolean boResult;
+    private Boolean fdrBoExec;
 
     private String message;
 
@@ -162,13 +162,13 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     public Fdr() {
     }
 
-    public Fdr(Boolean boResult) {
-        setBoResult(boResult);
+    public Fdr(Boolean fdrBoExec) {
+        setFdrBoExec(fdrBoExec);
         //setResult(Optional.ofNullable(boResult));
     }
 
     public Fdr(FnResultGen fnKayitSonuc) {
-        setBoResult(fnKayitSonuc.getBResult());
+        setFdrBoExec(fnKayitSonuc.getBResult());
         setMessage(fnKayitSonuc.getSMessage());
     }
 
@@ -176,8 +176,8 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
         setRowsAffectedWithUpBoResult(rowCountUpdateWithUpBoResult);
     }
 
-    public Fdr(Boolean boResult, Integer rowCountUpdate) {
-        setBoResult(boResult);
+    public Fdr(Boolean fdrBoExec, Integer rowCountUpdate) {
+        setFdrBoExec(fdrBoExec);
         setRowsAffectedWithUpBoResult(rowCountUpdate);
     }
 
@@ -186,34 +186,34 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
         setException(ex);
     }
 
-    public Fdr(Integer rowCountUpdate, Boolean boResult) {
+    public Fdr(Integer rowCountUpdate, Boolean fdrBoExec) {
         setRowsAffectedWithUpBoResult(rowCountUpdate);
-        setBoResult(boResult);
+        setFdrBoExec(fdrBoExec);
     }
 
-    public Fdr(Boolean boResult, Exception ex) {
-        setBoResult(boResult);
+    public Fdr(Boolean fdrBoExec, Exception ex) {
+        setFdrBoExec(fdrBoExec);
         setException(ex);
     }
 
     public Fdr(FiResponse fiResponse) {
-        this.boResult = fiResponse.boResult;
+        this.fdrBoExec = fiResponse.boResult;
         this.message = fiResponse.message;
     }
 
-    public Fdr(Boolean boResult, String message) {
-        this.boResult = boResult;
+    public Fdr(Boolean fdrBoExec, String message) {
+        this.fdrBoExec = fdrBoExec;
         this.message = message;
     }
 
-    public Fdr(Boolean boResult, String message, MetaLogType metaLogType) {
-        this.boResult = boResult;
+    public Fdr(Boolean fdrBoExec, String message, MetaLogType metaLogType) {
+        this.fdrBoExec = fdrBoExec;
         this.message = message;
         addLog(message, metaLogType);
     }
 
-    public Fdr(Boolean boResult, String txMessage, Boolean boAddException) {
-        this.boResult = boResult;
+    public Fdr(Boolean fdrBoExec, String txMessage, Boolean boAddException) {
+        this.fdrBoExec = fdrBoExec;
         this.message = txMessage;
 
         if (FiBool.isTrue(boAddException)) {
@@ -231,7 +231,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     }
 
     public static void cloneWithoutValue(Fdr fdrNew, Fdr fdrOld) {
-        fdrNew.setBoResult(fdrOld.getBoResult());
+        fdrNew.setFdrBoExec(fdrOld.getFdrBoExec());
         fdrNew.setRowsAffected(fdrOld.getRowsAffectedWithInit());
         fdrNew.setException(fdrOld.getException());
 //		fdrNew.setBoPartialSuccces(fdrOld.getBoPartialSuccces());
@@ -243,7 +243,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
 
     public static Fdr creBoResult(Boolean boResult) {
         Fdr fdr = new Fdr();
-        fdr.setBoResult(boResult);
+        fdr.setFdrBoExec(boResult);
         return fdr;
     }
 
@@ -256,13 +256,13 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     public static Fdr creEmptyAndResultFalse() {
         Fdr fdr = new Fdr();
         fdr.setValue(Optional.empty());
-        fdr.setBoResult(false);
+        fdr.setFdrBoExec(false);
         return fdr;
     }
 
     public static Fdr creByBoResultAndErrorLog(Boolean boResult, String txErrorLog) {
         Fdr fdr = new Fdr();
-        fdr.setBoResult(boResult);
+        fdr.setFdrBoExec(boResult);
         fdr.addLogError(txErrorLog);
         return fdr;
     }
@@ -273,12 +273,12 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
 
     public static Fdr bui(Boolean boResult) {
         Fdr fdr = new Fdr();
-        fdr.setBoResult(boResult);
+        fdr.setFdrBoExec(boResult);
         return fdr;
     }
 
     public Optional<Boolean> getOpResult() {
-        return Optional.ofNullable(getBoResult());
+        return Optional.ofNullable(getFdrBoExec());
     }
 
     /**
@@ -292,18 +292,18 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
      *
      * @return
      */
-    public Boolean getBoResult() {
-        return boResult;
+    public Boolean getFdrBoExec() {
+        return fdrBoExec;
     }
 
-    public void setBoResult(Boolean boResult) {
-        this.boResult = boResult;
+    public void setFdrBoExec(Boolean fdrBoExec) {
+        this.fdrBoExec = fdrBoExec;
     }
 
     // Tek tek kullanılmalı
     @Deprecated
     public void setBoResultWithCheckRowsAffected(Boolean boResult) {
-        this.boResult = boResult;
+        this.fdrBoExec = boResult;
         // rows affected 0 dan büyük olmalı true olması için
         checkRowsAffectedAndBoResult(boResult);
     }
@@ -312,14 +312,14 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     @Deprecated
     public void setBoResultWithCheckRowsAffected(Boolean boResult, Integer rowsAffected) {
         appendRowsAffected(rowsAffected);
-        this.boResult = boResult;
+        this.fdrBoExec = boResult;
         checkRowsAffectedAndBoResult(boResult);
     }
 
     public void checkRowsAffectedAndBoResult(Boolean boResult) {
         // rows affected 0 dan büyük olmalı true olması için
         if (FiBool.isTrue(boResult) && getRowsAffectedNotNull() < 1) {
-            this.boResult = false;
+            this.fdrBoExec = false;
             this.boQueryExecuted = true;
         }
 
@@ -414,7 +414,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     public void setRowsAffectedWithUpBoResult(Integer rowsAffected) {
         this.rowsAffected = rowsAffected;
         if (rowsAffected != null && rowsAffected > 0) {
-            setBoResult(true);
+            setFdrBoExec(true);
         }
     }
 
@@ -497,14 +497,14 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     public void combineAnd(Fdr fdrSubWork) {
 
         // And işlemi olduğu false sonuç, boResult false yapar
-        if (FiBool.isFalse(fdrSubWork.getBoResult())) {
-            setBoResult(false);
+        if (FiBool.isFalse(fdrSubWork.getFdrBoExec())) {
+            setFdrBoExec(false);
             setLnFailureOpCount(getLnFailureOpCountInit() + 1);
         }
 
-        if (FiBool.isTrue(fdrSubWork.getBoResult())) {
+        if (FiBool.isTrue(fdrSubWork.getFdrBoExec())) {
             setLnSuccessOpCount(getLnSuccessOpCountInit() + 1);
-            if (getBoResult() == null) setBoResult(true);
+            if (getFdrBoExec() == null) setFdrBoExec(true);
         }
 
         // null sonuçlara özel combine işlemi
@@ -557,14 +557,14 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     public void combineOr(Fdr fdrSubWork) {
 
         // false sonuç gelirse, boResult null ise false çevirir, yoksa değiştirmez
-        if (FiBool.isFalse(fdrSubWork.getBoResult())) {
+        if (FiBool.isFalse(fdrSubWork.getFdrBoExec())) {
             appendLnFalseResult(1);
-            if (getBoResult() == null) setBoResult(false);
+            if (getFdrBoExec() == null) setFdrBoExec(false);
             setBoFalseExist(true);
         }
 
-        if (FiBool.isTrue(fdrSubWork.getBoResult())) {
-            setBoResult(true);
+        if (FiBool.isTrue(fdrSubWork.getFdrBoExec())) {
+            setFdrBoExec(true);
             appendLnTrueResult(1);
             //getResMessage().append(fiDbResult.getResMessage().toString());
         }
@@ -647,8 +647,8 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     }
 
     public Boolean getBoResultInit() {
-        if (getBoResult() == null) return false;
-        return getBoResult();
+        if (getFdrBoExec() == null) return false;
+        return getFdrBoExec();
     }
 
     /**
@@ -657,14 +657,14 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
      * @return
      */
     public Boolean getResultByRowsAffected() {
-        if (getBoResult() == null) return false;
+        if (getFdrBoExec() == null) return false;
         if (getBoResultInit() && getRowsAffectedWithInit() > 0) return true;
         return false;
     }
 
     public Boolean getBoResultNtn() {
-        if (getBoResult() == null) return false;
-        return getBoResult();
+        if (getFdrBoExec() == null) return false;
+        return getFdrBoExec();
     }
 
     public Boolean getBoResultNotNullWithChecked() {
@@ -672,8 +672,8 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
         if (getRowsAffectedNotNull() < 1) {
             return false;
         }
-        if (getBoResult() == null) return false;
-        return getBoResult();
+        if (getFdrBoExec() == null) return false;
+        return getFdrBoExec();
     }
 
     public Boolean getBoPartialSuccces2() {
@@ -684,12 +684,12 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     }
 
     public void setBoResultAndMess(Boolean boResult, String message) {
-        setBoResult(boResult);
+        setFdrBoExec(boResult);
         setMessage(message);
     }
 
     public Fdr buiBoResult(Boolean b) {
-        setBoResult(b);
+        setFdrBoExec(b);
         return this;
     }
 
@@ -702,24 +702,24 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     }
 
     public void setBoResult(Boolean boResult, Exception exError) {
-        setBoResult(boResult);
+        setFdrBoExec(boResult);
         setException(exError);
     }
 
     public void setBoResultAndValue(Boolean boResult, EntClazz resValue, Integer rowsAffected) {
-        setBoResult(boResult);
+        setFdrBoExec(boResult);
         setRowsAffected(rowsAffected);
         setValue(resValue);
     }
 
     public void setBoResultAndValue(Boolean boResult, EntClazz resValue) {
-        setBoResult(boResult);
+        setFdrBoExec(boResult);
         setRowsAffected(rowsAffected);
         setValue(resValue);
     }
 
     public void setBoResultAndRowsAff(Boolean boResult, Integer rowsAffected) {
-        setBoResult(boResult);
+        setFdrBoExec(boResult);
         setRowsAffected(rowsAffected);
     }
 
@@ -802,29 +802,29 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     }
 
     public boolean isTrueBoResult() {
-        return FiBool.isTrue(getBoResult());
+        return FiBool.isTrue(getFdrBoExec());
     }
 
     public boolean isTrueResultAndValueNtn() {
-        if (FiBool.isTrue(getBoResult()) && getValue() != null) return true;
+        if (FiBool.isTrue(getFdrBoExec()) && getValue() != null) return true;
         return false;
     }
 
     public boolean isTrueBoResultAndValueExists() {
-        return FiBool.isTrue(getBoResult()) && getValue() != null;
+        return FiBool.isTrue(getFdrBoExec()) && getValue() != null;
     }
 
     public boolean isFalseBoResult() {
-        return FiBool.isFalse(getBoResult());
+        return FiBool.isFalse(getFdrBoExec());
     }
 
     public boolean isFalseOrNullBoResult() {
-        if (getBoResult() == null) return true;
-        return FiBool.isFalse(getBoResult());
+        if (getFdrBoExec() == null) return true;
+        return FiBool.isFalse(getFdrBoExec());
     }
 
     public boolean isNullBoResult() {
-        return getBoResult() == null;
+        return getFdrBoExec() == null;
     }
 
     public boolean isEmptyMessage() {
@@ -842,7 +842,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     public void copyValues(Fdr fdr) {
         setException(fdr.getException());
         setMessage(fdr.getMessage());
-        setBoResult(fdr.getBoResult());
+        setFdrBoExec(fdr.getFdrBoExec());
     }
 
     public Integer getLnInsertedRows() {
@@ -893,8 +893,8 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     }
 
     public void setBoResultByNull(Object entiy) {
-        if (entiy == null) setBoResult(false);
-        setBoResult(true);
+        if (entiy == null) setFdrBoExec(false);
+        setFdrBoExec(true);
     }
 
     public Fdr<EntClazz> appendMessageToUp(String s) {
@@ -1134,7 +1134,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     }
 
     public void convertNullResult(boolean boResult) {
-        if (getBoResult() == null) setBoResult(boResult);
+        if (getFdrBoExec() == null) setFdrBoExec(boResult);
     }
 
     public Boolean getBoFalseExist() {
@@ -1146,8 +1146,8 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     }
 
     public String convertBoResultToTxResult() {
-        if (getBoResult() == null) return "Sonuçsuz (!!!)";
-        if (getBoResult()) {
+        if (getFdrBoExec() == null) return "Sonuçsuz (!!!)";
+        if (getFdrBoExec()) {
             if (FiBool.isTrue(getBoFalseExist())) {
                 return "Kısmı Başarılı";
             }

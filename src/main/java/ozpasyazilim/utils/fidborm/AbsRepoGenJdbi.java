@@ -97,7 +97,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
                         .list();
             });
 
-            fdr.setBoResult(true);
+            fdr.setFdrBoExec(true);
             fdr.setValue(result);
 
         } catch (Exception ex) {
@@ -277,7 +277,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
                         .mapToBean(getEntityClass())
                         .list();
             });
-            fdr.setBoResult(true);
+            fdr.setFdrBoExec(true);
             fdr.setValue(result);
         } catch (Exception ex) {
             Loghelper.get(getClass()).error(FiException.exTosMain(ex));
@@ -307,7 +307,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
                         .mapToBean(getEntityClass())
                         .list();
             });
-            fdr.setBoResult(true);
+            fdr.setFdrBoExec(true);
             fdr.setValue(result);
         } catch (Exception ex) {
             Loghelper.errorLog(getClass(), "Query Problem");
@@ -331,7 +331,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
                         .mapToBean(getEntityClass())
                         .list();
             });
-            fdr.setBoResult(true);
+            fdr.setFdrBoExec(true);
             fdr.setValue(result);
         } catch (Exception ex) {
             Loghelper.errorLog(getClass(), "Query Problem");
@@ -710,7 +710,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
                 }
 
             });
-            fdrMain.setBoResult(true);
+            fdrMain.setFdrBoExec(true);
         } catch (Exception ex) {
             Loghelper.get(getClass()).error(FiException.exTosMain(ex));
             fdrMain.setBoResult(false, ex);
@@ -738,7 +738,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
                 }
                 //Loghelperr.getInstance(getClass()).debug("Affected:"+ rowAffectedLast);
             });
-            fdrAll.setBoResult(true);
+            fdrAll.setFdrBoExec(true);
         } catch (Exception ex) {
             Loghelper.errorException(getClass(), ex);
             fdrAll.setBoResult(false, ex);
@@ -765,7 +765,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
                 fdr.appendRowsAffected(rowAffected);
                 //Loghelperr.getInstance(getClass()).debug("Affected:"+ rowAffectedLast);
             });
-            fdr.setBoResult(true);
+            fdr.setFdrBoExec(true);
         } catch (Exception ex) {
             Loghelper.errorException(getClass(), ex);
             fdr.setBoResult(false, ex);
@@ -999,7 +999,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
                         .bindBean(entity)
                         .execute(); // returns row count updated
             });
-            fdr.setBoResult(true);
+            fdr.setFdrBoExec(true);
             fdr.setRowsAffected(rowCountUpdate);
             fdr.setLnInsertedRows(rowCountUpdate);
             fdr.setTxQueryType(MetaQueryTypes.bui().insert);
@@ -1041,7 +1041,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
             Integer rowCountUpdate = handle.createUpdate(sql)
                     .bindBean(entity)
                     .execute(); // returns row count updated
-            fdrMain.setBoResult(true);
+            fdrMain.setFdrBoExec(true);
             fdrMain.setRowsAffected(rowCountUpdate);
         } catch (Exception ex) {
             Loghelper.get(getClass()).error(FiException.exTosMain(ex));
@@ -1061,7 +1061,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
                         .bindBean(entity)
                         .execute(); // returns row count updated
             });
-            fdr.setBoResult(true);
+            fdr.setFdrBoExec(true);
             fdr.setRowsAffected(rowCountUpdate);
         } catch (Exception ex) {
             Loghelper.debugException(getClass(), ex);
@@ -1080,7 +1080,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
                     .bindBean(entity)
                     .execute(); // returns row count updated
 
-            fdr.setBoResult(true);
+            fdr.setFdrBoExec(true);
             fdr.setRowsAffected(rowCountUpdate);
         } catch (Exception ex) {
             Loghelper.debugException(getClass(), ex);
@@ -1171,7 +1171,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
                         fdr.appendRowsAffected(execute);
                     });
                     handle.commit();
-                    fdr.setBoResult(true);
+                    fdr.setFdrBoExec(true);
                     //return true;
                 } catch (Exception e) {
                     Loghelper.debugException(getClass(), e);
@@ -1712,7 +1712,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
                     return false;
                 }
             });
-            fdr.setBoResult(boResultTransaction);
+            fdr.setFdrBoExec(boResultTransaction);
         } catch (Exception ex) {
             Loghelper.debugException(getClass(), ex);
             fdr.setBoResult(false, ex);
@@ -1945,7 +1945,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
             return new Fdr(false, ex);
         }
 
-        fdr.setBoResult(boResult);
+        fdr.setFdrBoExec(boResult);
         return fdr;
 
     }
@@ -2004,7 +2004,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
             return new Fdr(false, ex);
         }
 
-        fdr.setBoResult(boResult);
+        fdr.setFdrBoExec(boResult);
         return fdr;
 
     }
@@ -2152,7 +2152,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
             });
 
             fdr.setValue(result);
-            fdr.setBoResult(true);
+            fdr.setFdrBoExec(true);
         } catch (Exception ex) {
             Loghelper.errorLog(getClass(), "Query Problem");
             Loghelper.errorException(getClass(), ex);
@@ -2185,11 +2185,11 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
             });
 
             fdr.setValue(result);
-            fdr.setBoResult(true);
+            fdr.setFdrBoExec(true);
         } catch (Exception ex) {
             Loghelper.errorLog(getClass(), "Query Problem");
             Loghelper.errorException(getClass(), ex);
-            fdr.setBoResult(false);
+            fdr.setFdrBoExec(false);
         }
 
         if(fdr.getValue()==null) fdr.setValue(Optional.empty());
@@ -2221,10 +2221,10 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
             });
 
             result.ifPresent(fdr::setValue);
-            fdr.setBoResult(true);
+            fdr.setFdrBoExec(true);
         } catch (Exception ex) {
             Loghelper.get(getClass()).debug(FiException.exToLog(ex));
-            fdr.setBoResult(false);
+            fdr.setFdrBoExec(false);
             fdr.setValue(null);
         }
 
@@ -2330,7 +2330,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
             });
 
             fdr.setValue(result);
-            fdr.setBoResult(true);
+            fdr.setFdrBoExec(true);
         } catch (Exception ex) {
             Loghelper.errorLog(getClass(), "Query Problem");
             Loghelper.errorException(getClass(), ex);
@@ -2355,7 +2355,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
             });
 
             result.ifPresent(fdr::setValue);
-            fdr.setBoResult(true);
+            fdr.setFdrBoExec(true);
         } catch (Exception ex) {
             Loghelper.errorLog(getClass(), "Query Problem");
             Loghelper.errorException(getClass(), ex);
@@ -2385,7 +2385,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
             });
 
             result.ifPresent(fdr::setValue);
-            fdr.setBoResult(true);
+            fdr.setFdrBoExec(true);
         } catch (Exception ex) {
             Loghelper.get(getClass()).debug("Query Problem:" + FiException.exToLog(ex));
             fdr.setValue(-1);
@@ -2418,7 +2418,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
             });
 
             fdr.setValue(result);
-            fdr.setBoResult(true);
+            fdr.setFdrBoExec(true);
         } catch (Exception ex) {
             Loghelper.get(getClass()).error(FiException.exTosMain(ex));
             fdr.setBoResult(false, ex);
@@ -2429,7 +2429,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
     private Fdr checkJdbi(Fdr<Optional<EntClazz>> fdr) {
         if (getJdbi() == null) {
             Loghelper.get(getClass()).error("Null jdbi:" + getDatabaseName());
-            fdr.setBoResult(false);
+            fdr.setFdrBoExec(false);
             fdr.setMessage("Jdbi Tanımlı Değil :" + getDatabaseName());
             return fdr;
         }
@@ -2473,7 +2473,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
                         .findFirst();
             });
             result.ifPresent(fdr::setValue);
-            fdr.setBoResult(true);
+            fdr.setFdrBoExec(true);
         } catch (Exception ex) {
             Loghelper.get(getClass()).error("Query Problem");
             Loghelper.get(getClass()).debug(FiException.exTosMain(ex));
@@ -2504,7 +2504,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
             });
 
             fdr.setValue(result);
-            fdr.setBoResult(true);
+            fdr.setFdrBoExec(true);
 
         } catch (Exception ex) {
             Loghelper.errorLog(getClass(), "Query Problem");
@@ -2529,13 +2529,13 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
             });
 
             fdr.setValue(result);
-            fdr.setBoResult(true);
+            fdr.setFdrBoExec(true);
 
         } catch (Exception ex) {
             Loghelper.errorLog(getClass(), "Query Problem");
             Loghelper.errorException(getClass(), ex);
             fdr.setException(ex);
-            fdr.setBoResult(false);
+            fdr.setFdrBoExec(false);
         }
 
         return fdr;
@@ -2556,12 +2556,12 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
             });
 
             if (result.isPresent()) fdrMain.setValue(result.get());
-            fdrMain.setBoResult(true);
+            fdrMain.setFdrBoExec(true);
         } catch (Exception ex) {
             Loghelper.get(getClass()).debug("Query Problem");
             Loghelper.get(getClass()).debug(FiException.exTosMain(ex));
             fdrMain.setException(ex);
-            fdrMain.setBoResult(false);
+            fdrMain.setFdrBoExec(false);
         }
         return fdrMain;
     }
@@ -2648,7 +2648,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
         } catch (Exception ex) {
             Loghelper.debugException(getClass(), ex);
             Loghelper.get(getClass()).debug("Genel Catch de Yakalandı");
-            fdrBatch.setBoResult(false);
+            fdrBatch.setFdrBoExec(false);
             fdrBatch.setException(ex);
             return fdrBatch;
         }
@@ -2721,7 +2721,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
         } catch (Exception ex) {
             Loghelper.debugException(getClass(), ex);
             Loghelper.get(getClass()).debug("Genel Catch de Yakalandı");
-            fdrBatch.setBoResult(false);
+            fdrBatch.setFdrBoExec(false);
             fdrBatch.setException(ex);
         }
 
@@ -2797,7 +2797,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
         } catch (Exception ex) {
             Loghelper.debugException(getClass(), ex);
             Loghelper.get(getClass()).debug("Genel Catch de Yakalandı");
-            fdrBatch.setBoResult(false);
+            fdrBatch.setFdrBoExec(false);
             fdrBatch.setException(ex);
         }
 
@@ -2886,9 +2886,9 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
                     FiReflection.setterNested(ent, idField, insertedId);
                 });
                 fdrMain.appendRowsAffected(1);
-                fdrMain.setBoResult(true);
+                fdrMain.setFdrBoExec(true);
             } catch (Exception ex) {
-                fdrMain.setBoResult(false);
+                fdrMain.setFdrBoExec(false);
                 fdrMain.setException(ex);
             }
             return fdrMain;
@@ -2898,9 +2898,9 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
                         .bindBean(ent)
                         .execute();// returns row count updated
                 fdrMain.appendRowsAffected(execute);
-                fdrMain.setBoResult(true);
+                fdrMain.setFdrBoExec(true);
             } catch (Exception ex) {
-                fdrMain.setBoResult(false);
+                fdrMain.setFdrBoExec(false);
                 fdrMain.setException(ex);
             }
             return fdrMain;
@@ -2957,10 +2957,10 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
             });
 
             fdrMain.appendRowsAffected(1);
-            fdrMain.setBoResult(true);
+            fdrMain.setFdrBoExec(true);
         } catch (Exception ex) {
             Loghelper.get(getClass()).debug(FiException.exTosMain(ex));
-            fdrMain.setBoResult(false);
+            fdrMain.setFdrBoExec(false);
             fdrMain.setException(ex);
         }
 
@@ -2992,10 +2992,10 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
             opId.ifPresent(stringObjectMap -> fdrMain.setValue(stringObjectMap.get("generated_keys")));
             fdrMain.appendRowsAffected(1);
-            fdrMain.setBoResult(true);
+            fdrMain.setFdrBoExec(true);
         } catch (Exception ex) {
             Loghelper.get(getClass()).debug(FiException.exTosMain(ex));
-            fdrMain.setBoResult(false);
+            fdrMain.setFdrBoExec(false);
             fdrMain.setException(ex);
         }
         return fdrMain;
@@ -3115,7 +3115,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 //					//return false;
 //				}
             });
-            fdrBatch.setBoResult(true);
+            fdrBatch.setFdrBoExec(true);
         } catch (Exception ex) {
             Loghelper.debugException(getClass(), ex);
             Loghelper.get(getClass()).debug("Genel Catch de Yakalandı");
@@ -3165,11 +3165,11 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
                     //int rowsAffScopeFieldUpdate = handle.createUpdate(fimSqlAt(sql2)).bind("scopeId", insertedId).execute();
                 });
                 fdrMain.appendRowsAffected(1);
-                fdrMain.setBoResult(true);
+                fdrMain.setFdrBoExec(true);
 
             } catch (Exception ex) {
                 fdrMain.setException(ex);
-                fdrMain.setBoResult(false);
+                fdrMain.setFdrBoExec(false);
                 return fdrMain;
             }
 
@@ -3188,10 +3188,10 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
                         .bindBean(ent)
                         .execute();// returns row count updated
                 fdrMain.appendRowsAffected(execute);
-                fdrMain.setBoResult(true);
+                fdrMain.setFdrBoExec(true);
             } catch (Exception ex) {
                 fdrMain.setException(ex);
-                fdrMain.setBoResult(false);
+                fdrMain.setFdrBoExec(false);
                 return fdrMain;
             }
 
@@ -3242,7 +3242,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
             }
 
             //Loghelperr.getInstance(getClass()).debug("Rows Affected: " + execute);
-            fdrMain.setBoResult(true);
+            fdrMain.setFdrBoExec(true);
             return fdrMain;
         } catch (Exception exception) {
             Loghelper.debugException(getClass(), exception);
@@ -3282,7 +3282,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
                 fdrMain.appendRowsAffected(execute);
             }
             //Loghelperr.getInstance(getClass()).debug("Rows Affected: " + execute);
-            fdrMain.setBoResult(true);
+            fdrMain.setFdrBoExec(true);
             return fdrMain;
         } catch (Exception exception) {
             Loghelper.debugException(getClass(), exception);

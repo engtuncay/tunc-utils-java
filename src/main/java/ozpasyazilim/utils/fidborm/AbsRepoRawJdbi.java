@@ -182,7 +182,7 @@ public abstract class AbsRepoRawJdbi extends AbsRepoJdbiCore { //implements IRep
 				}
 				//Loghelperr.getInstance(getClass()).debug("Affected:"+ rowAffectedLast);
 			});
-			fdr.setBoResult(true);
+			fdr.setFdrBoExec(true);
 		} catch (Exception ex) {
 			Loghelper.errorException(getClass(), ex);
 			fdr.setBoResult(false, ex);
@@ -226,7 +226,7 @@ public abstract class AbsRepoRawJdbi extends AbsRepoJdbiCore { //implements IRep
 						.execute(); // returns row count updated
 			});
 			//Loghelperr.getInstance(getClass()).debug("Row Count Update:"+rowCountUpdate);
-			fdr.setBoResult(true);
+			fdr.setFdrBoExec(true);
 		} catch (Exception ex) {
 			Loghelper.debugException(getClass(), ex);
 			fdr.setBoResult(false, ex);
@@ -304,14 +304,14 @@ public abstract class AbsRepoRawJdbi extends AbsRepoJdbiCore { //implements IRep
 			} else {
 				fdrResult.setValue(-1);
 			}
-			fdrResult.setBoResult(true);
+			fdrResult.setFdrBoExec(true);
 			return fdrResult;
 		} catch (Exception ex) {
 //			System.out.println("Query Problem:"+ FiException.exceptionIfToStr(ex));
 			Loghelper.errorLog(getClass(), "Query Problem");
 			Loghelper.errorException(getClass(), ex);
 			fdrResult.setValue(-1);
-			fdrResult.setBoResult(false);
+			fdrResult.setFdrBoExec(false);
 			return fdrResult;
 		}
 	}
@@ -333,14 +333,14 @@ public abstract class AbsRepoRawJdbi extends AbsRepoJdbiCore { //implements IRep
 			}else{
 				fdrResult.setValue(-1);
 			}
-			fdrResult.setBoResult(true);
+			fdrResult.setFdrBoExec(true);
 			return fdrResult;
 		} catch (Exception ex) {
 			//System.out.println("Query Problem:"+ FiException.exceptionIfToStr(ex));
 			Loghelper.errorLog(getClass(), "Query Problem");
 			Loghelper.errorException(getClass(), ex);
 			fdrResult.setValue(-1);
-			fdrResult.setBoResult(false);
+			fdrResult.setFdrBoExec(false);
 			return fdrResult;
 		}
 	}
@@ -363,11 +363,11 @@ public abstract class AbsRepoRawJdbi extends AbsRepoJdbiCore { //implements IRep
 			if (result.isPresent()) {
 				fdr.setValue(result.get());
 			}
-			fdr.setBoResult(true);
+			fdr.setFdrBoExec(true);
 		} catch (Exception ex) {
 			Loghelper.errorLog(getClass(), "Query Problem");
 			Loghelper.errorException(getClass(), ex);
-			fdr.setBoResult(false);
+			fdr.setFdrBoExec(false);
 			fdr.setValue(null);
 		}
 
