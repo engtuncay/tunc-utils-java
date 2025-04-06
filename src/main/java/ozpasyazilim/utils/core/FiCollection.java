@@ -4,6 +4,7 @@ import javafx.util.Pair;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import ozpasyazilim.utils.datatypes.FiInspect;
+import ozpasyazilim.utils.datatypes.FiKeyList;
 import ozpasyazilim.utils.datatypes.FiMeta;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.mvc.IFiCol;
@@ -363,6 +364,40 @@ public class FiCollection {
             KeyVal keyValValue = fnGetId.apply(t);
 
             if (keyValValue == null) keyValValue = nullKey;
+
+            if (!mapList.containsKey(keyValValue)) mapList.put(keyValValue, new ArrayList());
+
+            mapList.get(keyValValue).add(t);
+
+        }
+
+        return mapList;
+
+    }
+
+
+    /**
+     * nullKey null verilirse, null anahtara eşit olan değerler toplanmaz.
+     *
+     * @param listtum
+     * @param fnGetId
+     * @param nullKey
+     * @param <T>
+     * @return
+     */
+    public static <T> FiKeyList<T> listToMapMulti2(List<T> listtum, Function<T, String> fnGetId, String nullKey) {
+
+        FiKeyList<T> mapList = new FiKeyList<>();
+
+        for (Iterator iterator = listtum.iterator(); iterator.hasNext(); ) {
+
+            T t = (T) iterator.next();
+
+            String keyValValue = fnGetId.apply(t);
+
+            if (keyValValue == null) keyValValue = nullKey;
+
+            if (keyValValue == null) continue;
 
             if (!mapList.containsKey(keyValValue)) mapList.put(keyValValue, new ArrayList());
 
@@ -1496,7 +1531,7 @@ public class FiCollection {
     }
 
     public static Integer getSizeOrZero(Collection collection) {
-        if(collection==null) return 0;
+        if (collection == null) return 0;
         return collection.size();
     }
 
@@ -1508,7 +1543,7 @@ public class FiCollection {
             fiInspect = mapBelgeler.get(txKey);
             fiInspect.incCount1();
             fiInspect.getListEntityInit().add(object);
-        }else{
+        } else {
             fiInspect = new FiInspect();
             fiInspect.incCount1();
             fiInspect.getListEntityInit().add(object);

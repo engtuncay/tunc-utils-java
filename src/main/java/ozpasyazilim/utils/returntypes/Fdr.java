@@ -683,12 +683,21 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
         return false;
     }
 
-    public void setBoResultAndMess(Boolean boResult, String message) {
+    public void setBoExecAndMsg(Boolean boResult, String message) {
         setFdrBoExec(boResult);
         setMessage(message);
     }
 
-    public Fdr buiBoResult(Boolean b) {
+    public Fdr buiBoExec(Boolean boExec, Exception ex) {
+        setFdrBoExec(boExec);
+        setException(ex);
+        if (FiString.isEmpty(getMessage())) {
+            setMessage(FiException.TosSummary(ex));
+        }
+        return this;
+    }
+
+    public Fdr buiBoExec(Boolean b) {
         setFdrBoExec(b);
         return this;
     }
@@ -1165,7 +1174,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
         if (getBoLockAddLogNtn()) Loghelper.get(getClass()).debug("Error: Added Log to Blocked Fdr !!!!!!!!");
         if (!listExceptionInit.isEmpty()) {
             for (Exception exception1 : listExceptionInit) {
-                getLogListInit().add(new OreLog(FiException.excToStrSummary(exception1), MetaLogType.ERROR));
+                getLogListInit().add(new OreLog(FiException.TosSummary(exception1), MetaLogType.ERROR));
             }
         }
     }

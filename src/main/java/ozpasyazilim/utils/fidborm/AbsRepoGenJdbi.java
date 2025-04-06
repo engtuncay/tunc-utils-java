@@ -1285,7 +1285,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
         } catch (Exception ex) {
             Loghelper.debugException(getClass(), ex);
             fdrMain.setBoResult(false, ex);
-            fdrMain.appendMessageLn(FiException.excToStrSummary(ex));
+            fdrMain.appendMessageLn(FiException.TosSummary(ex));
         }
 
         return fdrMain;

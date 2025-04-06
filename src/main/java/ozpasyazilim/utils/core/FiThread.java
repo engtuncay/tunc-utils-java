@@ -1,13 +1,11 @@
 package ozpasyazilim.utils.core;
 
 import javafx.application.Platform;
-import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import ozpasyazilim.utils.gui.fxcomponents.*;
 import ozpasyazilim.utils.listener.CompoundRunnable;
 import ozpasyazilim.utils.log.Loghelper;
 
-import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public class FiThread {
@@ -57,7 +55,7 @@ public class FiThread {
             try {
                 runnable.run();
             } catch (Exception ex) {
-                FxDialogShow.showModalErrorAsyn("Hata oluştu", FiException.excToStrSummary(ex));
+                FxDialogShow.showModalErrorAsyn("Hata oluştu", FiException.TosSummary(ex));
             }
         };
 

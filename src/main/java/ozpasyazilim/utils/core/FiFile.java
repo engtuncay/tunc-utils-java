@@ -15,6 +15,7 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
 import org.apache.commons.io.FilenameUtils;
+import ozpasyazilim.utils.gui.fxcomponents.FxDialogShow;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.returntypes.Fdr;
 
@@ -564,6 +565,22 @@ public class FiFile {
     }
 
 
+    public static void openFile(String txPath) {
+
+        if(FiString.isEmptyTrim(txPath)) {
+            FxDialogShow.showPopWarn("Açılacak dosya yok.");
+            return;
+        }
+        // PDF dosyasını aç
+        try {
+            Process process = new ProcessBuilder("cmd", "/c", txPath).start();
+        } catch (IOException e) {
+            FxDialogShow.showPopError("Pdf dosya açılırken hata oluştu.");
+            Loghelper.get(FiFile.class).error(FiException.exTosMain(e));
+        }
+
+
+    }
 
 
 }

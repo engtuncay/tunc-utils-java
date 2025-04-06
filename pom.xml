@@ -468,6 +468,14 @@
             <version>1.3.1</version>
         </dependency>
 
+        <!--pdf birleştirmek için -->
+
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox</artifactId>
+            <version>2.0.32</version>  <!-- En güncel sürümü kontrol edin -->
+        </dependency>
+
         <!-- JavaFx (4 libraries)-->
 
         <!--        <dependency>-->

@@ -885,7 +885,7 @@ public class FxDialogShow {
             }
 
             if (fdr.getException() != null) {
-                message += "\nException Tanımı : " + FiException.excToStrSummary(fdr.getException());
+                message += "\nException Tanımı : " + FiException.TosSummary(fdr.getException());
             }
 
             FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FiDialogMetaType.DialogError, message, messageHeader);
