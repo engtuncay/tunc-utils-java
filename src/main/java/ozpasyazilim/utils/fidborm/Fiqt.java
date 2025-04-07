@@ -31,6 +31,11 @@ public class Fiqt {
         return sql.replaceAll(regex, subst);
     }
 
+    /**
+     * Sql count sorgusu alındıktan sonra deactivate edilmesi gereken satırlar düzeltilir
+     * @param sql
+     * @return
+     */
     public static String deActivateForSqlCount(String sql) {
         final String regex = "--(deactForSqlCount).*\\s*.*"; // 15-10-19
         final String subst = "--$1 deactivated"; // 15-10-19
@@ -536,7 +541,13 @@ public class Fiqt {
         return txQuery;
     }
 
-    public static String trimSqlCountQuery(String txQuery) {
+    /**
+     * Query içerisin sqlcount sorgusunu alır
+     *
+     * @param txQuery
+     * @return
+     */
+    public static String getSqlCountQueryFromQuery(String txQuery) {
         Pattern pattern = Pattern.compile("(?s)--sqlCount(.*)");
 
         Matcher matcher = pattern.matcher(txQuery);
