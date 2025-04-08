@@ -3374,7 +3374,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
                 }
 
                 handle.commit();
-                Loghelper.get(getClass()).debug("handle commit edildi");
+                //Loghelper.get(getClass()).debug("handle commit edildi");
             });
 
         } catch (Exception ex) {
