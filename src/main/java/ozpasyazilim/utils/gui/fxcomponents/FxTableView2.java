@@ -1461,7 +1461,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         // fiCol.colFilterable true ise ve enableLocalFilterEditor false edilmemişse
         if (FiBool.isTrue(fxTableColumn.getRefFiCol().getBoLocFilterable())
                 && !FiBool.isFalse(getEnableLocalFilterEditorNtn())) {
-            Loghelper.get(getClass()).debug("FiTableCol Lokal ColFilterable is True :" + fxTableColumn.getRefFiCol().getOfcTxFieldName());
+            //Loghelper.get(getClass()).debug("FiTableCol Lokal ColFilterable is True :" + fxTableColumn.getRefFiCol().getOfcTxFieldName());
             return true;
         }
 
