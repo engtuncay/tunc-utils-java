@@ -214,7 +214,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
             fdrMain.setBoResultAndRowsAff(true, rowCountUpdate);
         } catch (Exception ex) {
             fdrMain.setBoResult(false, ex);
-            Loghelper.get(getClass()).error(FiException.exToLog(ex));
+            Loghelper.get(getClass()).error(FiException.exToErrorLog(ex));
         }
         return fdrMain;
     }
@@ -244,7 +244,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
             fdrMain.setBoResultAndRowsAff(true, rowCountUpdate);
         } catch (Exception ex) {
             fdrMain.setBoResult(false, ex);
-            Loghelper.get(getClass()).error(FiException.exToLog(ex));
+            Loghelper.get(getClass()).error(FiException.exToErrorLog(ex));
         }
         return fdrMain;
     }
@@ -267,7 +267,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
             fdrMain.setBoResultAndRowsAff(true, rowCountUpdate);
         } catch (Exception ex) {
             fdrMain.setBoResult(false, ex);
-            Loghelper.get(getClass()).error(FiException.exToLog(ex));
+            Loghelper.get(getClass()).error(FiException.exToErrorLog(ex));
         }
         return fdrMain;
     }

@@ -273,7 +273,7 @@ public class AbsRepoGenMainJdbi<EntClazz> extends AbsRepoJdbiCore {
             fdr.setFdrBoExec(true);
             fdr.setValue(result);
         } catch (Exception ex) {
-            Loghelper.get(getClass()).error(FiException.exToLog(ex));
+            Loghelper.get(getClass()).error(FiException.exToErrorLog(ex));
             fdr.setFdrBoExec(false);
         }
         return fdr;

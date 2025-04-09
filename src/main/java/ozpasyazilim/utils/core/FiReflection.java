@@ -42,11 +42,11 @@ public class FiReflection {
 		try {
 			objectt = PropertyUtils.getProperty(entity, field);
 		} catch (IllegalAccessException e) {
-			Loghelper.get(FiReflection.class).debug(FiException.exToLog(e));
+			Loghelper.get(FiReflection.class).debug(FiException.exToErrorLog(e));
 		} catch (InvocationTargetException e) {
-			Loghelper.get(FiReflection.class).debug(FiException.exToLog(e));
+			Loghelper.get(FiReflection.class).debug(FiException.exToErrorLog(e));
 		} catch (NoSuchMethodException e) {
-			Loghelper.get(FiReflection.class).debug(FiException.exToLog(e));
+			Loghelper.get(FiReflection.class).debug(FiException.exToErrorLog(e));
 		}
 
 		return objectt;

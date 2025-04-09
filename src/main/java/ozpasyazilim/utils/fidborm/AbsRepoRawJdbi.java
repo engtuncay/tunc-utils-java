@@ -2,6 +2,7 @@ package ozpasyazilim.utils.fidborm;
 
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
+import ozpasyazilim.utils.core.FiException;
 import ozpasyazilim.utils.core.FiString;
 import ozpasyazilim.utils.datatypes.FiKeyBean;
 import ozpasyazilim.utils.log.Loghelper;
@@ -203,10 +204,10 @@ public abstract class AbsRepoRawJdbi extends AbsRepoJdbiCore { //implements IRep
 						.bindMap(fiMapParams)
 						.execute(); // returns row count updated
 			});
-			//Loghelperr.getInstance(getClass()).debug("Row Count Update:"+rowCountUpdate);
+			// "Row Count Update:"+rowCountUpdate;
 			fdr.setBoResultAndRowsAff(true, rowCountUpdate);
 		} catch (Exception ex) {
-			Loghelper.debugException(getClass(), ex);
+			Loghelper.get(getClass()).error(FiException.exToErrorLog(ex));
 			fdr.setBoResult(false, ex);
 			fdr.setRowsAffected(-1);
 		}
@@ -281,7 +282,7 @@ public abstract class AbsRepoRawJdbi extends AbsRepoJdbiCore { //implements IRep
 	}
 
 	/**
-	 * null ve hatalı sorgularda değer -1 olarak döner
+	 * isPresent yoksa , null ve hatalı sorgularda değer -1 olarak döner
 	 *
 	 * @param sql
 	 * @param mapParam
@@ -290,7 +291,7 @@ public abstract class AbsRepoRawJdbi extends AbsRepoJdbiCore { //implements IRep
 	public Fdr<Integer> jdSelectSingleIntBindMapOrMinus1(String sql, Map<String, Object> mapParam) {
 		Jdbi jdbi = getJdbi();
 		Fdr<Integer> fdrResult = new Fdr<>();
-//		Loghelper.get(getClass()).debug("Sql:" + FiQuery.stoj(sql));
+		//Loghelper.get(getClass()).debug("Sql:" + FiQuery.stoj(sql));
 		try {
 			Optional<Integer> result = jdbi.withHandle(handle -> {
 				return handle.select(Fiqt.stoj(sql))
@@ -307,9 +308,8 @@ public abstract class AbsRepoRawJdbi extends AbsRepoJdbiCore { //implements IRep
 			fdrResult.setFdrBoExec(true);
 			return fdrResult;
 		} catch (Exception ex) {
-//			System.out.println("Query Problem:"+ FiException.exceptionIfToStr(ex));
-			Loghelper.errorLog(getClass(), "Query Problem");
-			Loghelper.errorException(getClass(), ex);
+			Loghelper.get(getClass()).error( "Query Problem");
+			Loghelper.get(getClass()).error(FiException.exToErrorLog(ex));
 			fdrResult.setValue(-1);
 			fdrResult.setFdrBoExec(false);
 			return fdrResult;
@@ -336,9 +336,8 @@ public abstract class AbsRepoRawJdbi extends AbsRepoJdbiCore { //implements IRep
 			fdrResult.setFdrBoExec(true);
 			return fdrResult;
 		} catch (Exception ex) {
-			//System.out.println("Query Problem:"+ FiException.exceptionIfToStr(ex));
-			Loghelper.errorLog(getClass(), "Query Problem");
-			Loghelper.errorException(getClass(), ex);
+			Loghelper.get(getClass()).error( "Query Problem");
+			Loghelper.get(getClass()).error(FiException.exToErrorLog(ex));
 			fdrResult.setValue(-1);
 			fdrResult.setFdrBoExec(false);
 			return fdrResult;

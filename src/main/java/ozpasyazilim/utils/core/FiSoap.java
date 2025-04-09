@@ -195,7 +195,7 @@ public class FiSoap {
 			fdr.setFdrBoExec(true);
 
 		} catch (Exception exception) { //	//throws MalformedURLException, IOException
-			Loghelper.get(FiSoap.class).debug(FiException.exToLog(exception));
+			Loghelper.get(FiSoap.class).debug(FiException.exToErrorLog(exception));
 			fdr.setFdrBoExec(false);
 			fdr.setMessage("Soap isteği gerçekleşirken hata oluştu. Detay için Exception inceleyiniz.");
 			fdr.setException(exception);

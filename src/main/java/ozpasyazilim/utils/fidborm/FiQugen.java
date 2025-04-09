@@ -2823,7 +2823,7 @@ public class FiQugen {
             });
         } catch (Exception ex) {
             //ex.printStackTrace();
-            Loghelper.get(FiQugen.class).error(FiException.exToLog(ex));
+            Loghelper.get(FiQugen.class).error(FiException.exToErrorLog(ex));
         }
         return result;
     }

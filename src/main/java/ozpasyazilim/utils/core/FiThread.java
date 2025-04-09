@@ -420,37 +420,34 @@ public class FiThread {
         return thread;
     }
 
-    public static Thread startThreadForPaging(Runnable runnable, FxTableView2 fxTableView2) {
+    public static Thread startThreadForPaging(Runnable runnableStart, FxTableView2 fxTableView2) {
 
         //FxToastPopup2 fxToastPopup2 = new FxToastPopup2();
         //		if(message==null) message = "";
         //		String finalMessage = message;
 
-        FxLabel lblNodes = fxTableView2.getFiLblFooterMessage();
+        FxLabel lblFooterMsg = fxTableView2.getFiLblFooterMessage();
 
-        final String textOld = lblNodes.getText();
+        //final String textOld = lblFooterMsg.getText();
 
         Platform.runLater(() -> {
             //fxToastPopup2.show(finalMessage+ " Hazırlanıyor...",atomicReference.get());
-            lblNodes.setText("Veriler alınıyor.");
-            lblNodes.setFxTextColor(Color.RED);
-
+            lblFooterMsg.setText("Veriler alınıyor.");
+            lblFooterMsg.setFxTextColor(Color.RED);
             fxTableView2.setPagingButtonsDisable(true);
-            //lblNodes.setFxStyleColor
-            //lblNodes.setDisable(true);
         });
 
-        Runnable runnable2 = () -> {
+        Runnable runnableEnd = () -> {
             //fxToastPopup2.end();
             Platform.runLater(() -> {
-                //lblNodes.setText(textOld);
-                lblNodes.setText("");
-                //lblNodes.setDisable(false);
+                //lblFooterMsg.setText(textOld);
+                lblFooterMsg.setText("");
+                //lblFooterMsg.setDisable(false);
                 fxTableView2.updatePageToolbarComps();
             });
         };
 
-        CompoundRunnable compoundRunnable = new CompoundRunnable(runnable, runnable2);
+        CompoundRunnable compoundRunnable = new CompoundRunnable(runnableStart, runnableEnd);
 
         Thread thread = new Thread(compoundRunnable);
         thread.start();

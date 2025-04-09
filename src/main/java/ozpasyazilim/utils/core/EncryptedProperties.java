@@ -43,7 +43,7 @@ public class EncryptedProperties extends Properties {
 		try {
 			return decrypt(super.getProperty(key));
 		} catch (Exception e) {
-			Loghelper.get(EncryptedProperties.class).error(FiException.exToLog(e));
+			Loghelper.get(EncryptedProperties.class).error(FiException.exToErrorLog(e));
 			//throw new RuntimeException("Couldn't decrypt property");
 		}
 		return null;
@@ -54,7 +54,7 @@ public class EncryptedProperties extends Properties {
 		try {
 			return super.setProperty(key, encrypt(value));
 		} catch (Exception e) {
-			Loghelper.get(EncryptedProperties.class).error(FiException.exToLog(e));
+			Loghelper.get(EncryptedProperties.class).error(FiException.exToErrorLog(e));
 //			Loghelper.logexceptionOnlyMail(FiException.exceptionStackTraceStringFull(e));
 //			throw new RuntimeException("Couldn't encrypt property");
 		}

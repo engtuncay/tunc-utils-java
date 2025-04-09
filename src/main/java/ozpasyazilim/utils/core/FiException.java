@@ -75,7 +75,13 @@ public class FiException {
 		return exception.toString();
 	}
 
-	public static String exToLog(Exception ex) {
+	/**
+	 * Error Log için Exception String çevirir
+	 *
+	 * @param ex
+	 * @return
+	 */
+	public static String exToErrorLog(Exception ex) {
 		return exTosMain(ex);
 	}
 

@@ -40,7 +40,7 @@ public class FiComputer {
 			InetAddress addr = InetAddress.getLocalHost();
 			return addr.getHostName();
 		} catch (UnknownHostException ex) {
-			Loghelper.get(FiComputer.class).error("Host ismi bulunamadı :"+ FiException.exToLog(ex));
+			Loghelper.get(FiComputer.class).error("Host ismi bulunamadı :"+ FiException.exToErrorLog(ex));
 		}
 
 		return null;

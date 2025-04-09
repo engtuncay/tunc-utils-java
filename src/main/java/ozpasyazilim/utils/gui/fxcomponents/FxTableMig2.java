@@ -17,7 +17,7 @@ public class FxTableMig2<EntClazz> extends MigPane {
 
 	private FxLabel lblFooterVer;
 	private FxLabel lblFooterRowCount;
-	private FxLabel lblFooterMessage;
+	private FxLabel lblFooterMsg;
 	private FxLabel lblFooterMessageSelection;
 
 	/**
@@ -48,7 +48,7 @@ public class FxTableMig2<EntClazz> extends MigPane {
 		fxTableView.setFxTableMig(this);
 		paneFooter = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().lcgNoGrid().getLcg());
 		lblFooterRowCount = new FxLabel("");
-		lblFooterMessage = new FxLabel("");
+		lblFooterMsg = new FxLabel("");
 		lblFooterMessageSelection = new FxLabel("");
 		lblFooterVer = new FxLabel("V2");
 
@@ -66,7 +66,7 @@ public class FxTableMig2<EntClazz> extends MigPane {
 		paneFooter.add(btnExcel,"ay bottom");
 		paneFooter.add(btnSettings,"ay bottom");
 		paneFooter.add(lblFooterRowCount);
-		paneFooter.add(lblFooterMessage);
+		paneFooter.add(lblFooterMsg);
 		paneFooter.add(lblFooterMessageSelection);
 
 		paneTablePagingHeader = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().lcgNoGrid().getLcg());
@@ -135,9 +135,9 @@ public class FxTableMig2<EntClazz> extends MigPane {
 
 	public void setBtnExcel(FxButton btnExcel) {this.btnExcel = btnExcel;}
 
-	public FxLabel getLblFooterMessage() {return lblFooterMessage;}
+	public FxLabel getLblFooterMsg() {return lblFooterMsg;}
 
-	public void setLblFooterMessage(FxLabel lblFooterMessage) {this.lblFooterMessage = lblFooterMessage;}
+	public void setLblFooterMsg(FxLabel lblFooterMsg) {this.lblFooterMsg = lblFooterMsg;}
 
 	public FxMigPane getPaneTablePagingHeader() {
 		return paneTablePagingHeader;

@@ -2223,7 +2223,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
             result.ifPresent(fdr::setValue);
             fdr.setFdrBoExec(true);
         } catch (Exception ex) {
-            Loghelper.get(getClass()).debug(FiException.exToLog(ex));
+            Loghelper.get(getClass()).debug(FiException.exToErrorLog(ex));
             fdr.setFdrBoExec(false);
             fdr.setValue(null);
         }
@@ -2387,7 +2387,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
             result.ifPresent(fdr::setValue);
             fdr.setFdrBoExec(true);
         } catch (Exception ex) {
-            Loghelper.get(getClass()).debug("Query Problem:" + FiException.exToLog(ex));
+            Loghelper.get(getClass()).debug("Query Problem:" + FiException.exToErrorLog(ex));
             fdr.setValue(-1);
             fdr.setBoResult(false, ex);
         }

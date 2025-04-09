@@ -174,9 +174,10 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     }
 
     public void setPagingButtonsDisable(boolean boDisabled) {
-        getBtnPagePrev().setDisable(boDisabled);
-        getBtnPageBegin().setDisable(boDisabled);
-        getBtnPageForward().setDisable(boDisabled);
+        if (getBtnPagePrev() != null) getBtnPagePrev().setDisable(boDisabled);
+        if (getBtnPageBegin() != null) getBtnPageBegin().setDisable(boDisabled);
+        if (getBtnPageForward() != null) getBtnPageForward().setDisable(boDisabled);
+        if (getBtnPageEnd() != null) getBtnPageEnd().setDisable(boDisabled);
     }
 
     public void actiSelectionToSingleCell() {
@@ -359,7 +360,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
             try {
                 return FiBool.convertBooleanElseFalse(PropertyUtils.getNestedProperty(ent, getFiColSelection().getOfcTxFieldName()));
             } catch (Exception e) { // çevirmede hata olursa false döner
-                Loghelper.get(getClass()).debug("bool çevirmede hata" + FiException.exToLog(e));
+                Loghelper.get(getClass()).debug("bool çevirmede hata" + FiException.exToErrorLog(e));
                 return false;
             }
         });
@@ -551,7 +552,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
                 this.entityClass = (Class<EntClazz>) ((ParameterizedType) this.getClass().getGenericSuperclass())
                         .getActualTypeArguments()[0];
             } catch (Exception ex) {
-                Loghelper.get(FxTableView2.class).error("Generic Tip Sınıfı Tespit Edilirken Hata Oluştu. :" + FiException.exToLog(ex));
+                Loghelper.get(FxTableView2.class).error("Generic Tip Sınıfı Tespit Edilirken Hata Oluştu. :" + FiException.exToErrorLog(ex));
             }
 
         }
@@ -692,7 +693,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     public FxLabel getFiLblFooterMessage() {
         if (getFxTableMig() != null) {
-            return getFxTableMig().getLblFooterMessage();
+            return getFxTableMig().getLblFooterMsg();
         }
         return null;
     }
@@ -1098,7 +1099,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         //ObservableValue<? extends String> observable, String oldValue, String newValue, String fieldName
         //System.out.println("text:"+ newValue);
 
-        Loghelper.get(getClass()).debug("Filter Lokal Çalıştı");
+        //Loghelper.get(getClass()).debug("Filter Lokal Çalıştı");
 
         Predicate predFilterLocal = ent -> {
 

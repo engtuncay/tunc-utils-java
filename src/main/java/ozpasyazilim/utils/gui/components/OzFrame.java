@@ -172,7 +172,7 @@ public class OzFrame extends JFrame {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception ex) {
 			System.out.println("Exception:" + Arrays.toString(ex.getStackTrace()));
-			Loghelper.get(OzFrame.class).debug(FiException.exToLog(ex));
+			Loghelper.get(OzFrame.class).debug(FiException.exToErrorLog(ex));
 		}
 
 	}
