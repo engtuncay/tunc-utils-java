@@ -33,6 +33,7 @@ public class Fiqt {
 
     /**
      * Sql count sorgusu alındıktan sonra deactivate edilmesi gereken satırlar düzeltilir
+     *
      * @param sql
      * @return
      */
@@ -507,29 +508,31 @@ public class Fiqt {
     }
 
     /**
-     * Sorguda bulunan __userParam şeklindeki user parametrelerini bulur
+     * Sorguda bulunan __userParam şeklindeki user parametrelerini ilgili değere çevirir.
+     * <p>
+     * __ işareti getTxUserParamPrefix tanımlıdır
      * <p>
      * iki alt çizgi seçilmesinin nedeni, değişken tanımlarında _ alt çizgiye izin veriyor oluşu.
      * <p>
      * Bu parametreler eğer mapParams'da var ise, değeri yer değiştirir.
      */
-    public static String convertUserParamsToValue(String txQuery, FiKeyBean mapParams, String txUserParamPrefix) {
-
+    public static String convertUserParamsToValue(String txQuery, FiKeyBean mapParams) {
+        // String txUserParamPrefix
         if (mapParams.isEmpty()) return txQuery;
 
         // *** sorguda user_param sayısı tespit edilir, eğer varsa işlemler yapılır.
-        String txPattern = "\\b" + txUserParamPrefix + "\\w+\\b";
+        String txPattern = "\\b" + getUserParamPrefix() + "\\w+\\b";
         Set<String> setUserParam = FiRegExp.matchGroupZeroToSet(txPattern, txQuery);
 
         if (!setUserParam.isEmpty()) {
             for (String txUserParam : setUserParam) {
-                String sqlParam = txUserParam.substring(txUserParamPrefix.length()); // txUserParam.length() parametre çıkarıldı
+                String sqlParam = txUserParam.substring(getUserParamPrefix().length()); // txUserParam.length() parametre çıkarıldı
                 //System.out.println("sqlparam:" + sqlParam);
                 if (mapParams.containsKey(sqlParam)) {
                     Object paramValue = mapParams.get(sqlParam);
                     if (paramValue != null) {
                         // URFIX paramvalue sql injection engellebilir
-                        String upQuery = txQuery.replaceAll(String.format("\\b%s%s\\b", txUserParamPrefix, sqlParam), paramValue.toString());
+                        String upQuery = txQuery.replaceAll(String.format("\\b%s%s\\b", getUserParamPrefix(), sqlParam), paramValue.toString());
                         return upQuery;
                     } else {
                         //getTxQuery().replaceAll(String.format("\\b__%s\\b", txUserParam), "NULL");
@@ -539,6 +542,10 @@ public class Fiqt {
         }
 
         return txQuery;
+    }
+
+    public static String getUserParamPrefix() {
+        return "__";
     }
 
     /**
@@ -555,7 +562,7 @@ public class Fiqt {
         if (matcher.find()) {
             // "--sqlCount" altındaki ilk satırı yakala
             String result = matcher.group(1).trim(); // Altındaki satır (-- ile başlıyor)
-            result = result.replaceFirst("--SELECT","SELECT");
+            result = result.replaceFirst("--SELECT", "SELECT");
             result = Fiqt.deActivateForSqlCount(result);
             return result;
         } else {

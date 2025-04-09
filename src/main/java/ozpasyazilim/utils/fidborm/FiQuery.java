@@ -451,7 +451,7 @@ public class FiQuery {
 
 
     /**
-     * Sorguda bulunan __userParam şeklindeki user parametrelerini bulur
+     * Sorguda bulunan __userParam şeklindeki user parametrelerini ilgili değere çevirir
      * <p>
      * iki alt çizgi seçilmesinin nedeni, değişken tanımlarında _ alt çizgiye izin veriyor oluşu.
      * <p>
@@ -460,13 +460,13 @@ public class FiQuery {
     public void convertUserParamsToValue() {
 
         if (getMapParamsInit().isEmpty()) return;
-        setTxQuery(Fiqt.convertUserParamsToValue(getTxQuery(), getMapParamsInit(), getTxUserParamPrefix()));
+        setTxQuery(Fiqt.convertUserParamsToValue(getTxQuery(), getMapParamsInit()));
 
     }
 
-    public String getTxUserParamPrefix() {
-        return "__";
-    }
+//    public String getTxUserParamPrefix() {
+//        return "__";
+//    }
 
     public void logParams() {
         Loghelper.get(getClass()).debug("Fiquery log-params");
