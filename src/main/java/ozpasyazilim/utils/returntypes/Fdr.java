@@ -124,9 +124,11 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
      * <p>
      * Operasyon sonucu nedir , true işlem sonucu pozitif, false işlem sonucu negatif olur.
      * <p>
-     * boResult farkı : boResult, sorgunun başarılı çalıştırıldığını gösterir
+     * boExec farkı : boExec, sorgunun başarılı çalıştırıldığını gösterir
      * <p>
      * Örneğin checkExist yapılıyorsa, kayıt varsa opResutl true olur, yoksa false olur.
+     * <p>
+     * Daha sonra boResult olarak ismi değiştirilebilir
      */
     @FiReview
     Boolean boOpResult;
@@ -374,6 +376,11 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
 
     public void setMessage(String message) {
         this.message = message;
+        addLogInfo(message);
+    }
+
+    public void setMessageForAppend(String message) {
+        this.message = message;
     }
 
     private Integer getRowsAffected() {
@@ -511,7 +518,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
 //        if (fdrSubWork.getBoResult() == null) {
 //
 //        }
-        if(FiBool.isTrue(getBoMultiFdr())){
+        if (FiBool.isTrue(getBoMultiFdr())) {
             getFdrListInit().add(fdrSubWork);
         }
 
@@ -537,12 +544,13 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
         fdrSubWork.setBoLockAddLog(true);
 
         // subwork'deki ResponseCode da alınır
-        if(fdrSubWork.getLnResponseCode()!=null) setLnResponseCode(fdrSubWork.getLnResponseCode());
+        if (fdrSubWork.getLnResponseCode() != null) setLnResponseCode(fdrSubWork.getLnResponseCode());
     }
 
     public void appendMessageLn(String message) {
         if (message == null) return;
-        setMessage(FiString.orEmpty(getMessage()) + FiString.addNewLineToBeginIfNotEmpty(message));
+        addLogInfo(message);
+        setMessageForAppend(FiString.orEmpty(getMessage()) + FiString.addNewLineToBeginIfNotEmpty(message));
     }
 
     /**
@@ -583,7 +591,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
         // Parametre Fdr'nin logları aktarıldığı tekrar üstüne log eklenmemeli
         fdrSubWork.setBoLockAddLog(true);
 
-        if(FiBool.isTrue(getBoMultiFdr())){
+        if (FiBool.isTrue(getBoMultiFdr())) {
             getFdrListInit().add(fdrSubWork);
         }
     }
@@ -806,7 +814,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
         this.listFdr = fdrList;
     }
 
-    public void append(String message) {
+    public void appendMsg(String message) {
         appendMessageLn(message);
     }
 
@@ -906,8 +914,9 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
         setFdrBoExec(true);
     }
 
-    public Fdr<EntClazz> appendMessageToUp(String s) {
-        setMessage(s + "\n" + getMessage());
+    public Fdr<EntClazz> appendMessageToUp(String txMessage) {
+        addLogInfo(txMessage);
+        setMessageForAppend(txMessage + "\n" + getMessage());
         return this;
     }
 
@@ -969,7 +978,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
 
     public List<OreLog> getLogListInit() {
         if (logList == null) {
-            logList = new ArrayList<OreLog>();
+            logList = new ArrayList<>();
         }
         return logList;
     }
@@ -1154,7 +1163,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
         this.boFalseExist = boFalseExist;
     }
 
-    public String convertBoResultToTxResult() {
+    public String convertBoExecToTxResult() {
         if (getFdrBoExec() == null) return "Sonuçsuz (!!!)";
         if (getFdrBoExec()) {
             if (FiBool.isTrue(getBoFalseExist())) {

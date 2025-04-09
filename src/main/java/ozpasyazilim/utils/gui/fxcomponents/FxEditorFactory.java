@@ -558,7 +558,7 @@ public class FxEditorFactory {
 
                 if (property == null) {
                     fdr.setFdrBoExec(false);
-                    fdr.append("alan null olamaz:" + fiField.getOfcTxFieldName());
+                    fdr.appendMsg("alan null olamaz:" + fiField.getOfcTxFieldName());
                 }
 
             }
@@ -577,7 +577,7 @@ public class FxEditorFactory {
                             FiReflection.setter(entity, fiField.getOfcTxFieldName(), txProperty);
                         } else {
                             fdr.setFdrBoExec(false);
-                            fdr.append(String.format("Alan %s karakter fazla olamaz %s : %s"
+                            fdr.appendMsg(String.format("Alan %s karakter fazla olamaz %s : %s"
                                     , fiField.getOfcLnLength(), txProperty.length(), fiField.getOfcTxFieldName()));
                         }
 
@@ -619,7 +619,7 @@ public class FxEditorFactory {
                             fdr.setFdrBoExec(true);
                         } else {
                             fdr.setFdrBoExec(false);
-                            fdr.append(String.format("Alan %s karakter fazla olamaz %s : %s"
+                            fdr.appendMsg(String.format("Alan %s karakter fazla olamaz %s : %s"
                                     , fiField.getOfcLnLength(), txProperty.length(), fiField.getOfcTxFieldName()));
                         }
 

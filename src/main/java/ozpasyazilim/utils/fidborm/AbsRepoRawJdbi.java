@@ -261,17 +261,16 @@ public abstract class AbsRepoRawJdbi extends AbsRepoJdbiCore { //implements IRep
 	}
 
 	public Fdr jdUpdate(String updateQuery) {
-		Jdbi jdbi = getJdbi();
 		Fdr fdr = new Fdr();
 		try {
-			Integer rowCountUpdate = jdbi.withHandle(handle -> {
+			Integer rowCountUpdate = getJdbi().withHandle(handle -> {
 				return handle.createUpdate(updateQuery)
 						.execute(); // returns row count updated
 			});
 			//Loghelperr.getInstance(getClass()).debug("Row Count Update:"+rowCountUpdate);
 			fdr.setBoResultAndRowsAff(true, rowCountUpdate);
 		} catch (Exception ex) {
-			Loghelper.debugException(getClass(), ex);
+			Loghelper.get(getClass()).error(FiException.exToErrorLog(ex));
 			fdr.setBoResult(false, ex);
 		}
 		return fdr;
