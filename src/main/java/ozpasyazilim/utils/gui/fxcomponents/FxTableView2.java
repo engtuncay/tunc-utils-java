@@ -53,7 +53,7 @@ import java.util.stream.Collectors;
 // (Callback lambda bir fonksiyondur.) Callback<TableColumn<S, T>, TableCell<S, T>>
 public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxComp {
 
-    private static final Logger log = LoggerFactory.getLogger(FxTableView2.class);
+    //private static final Logger log = LoggerFactory.getLogger(FxTableView2.class);
     private Class<EntClazz> entityClass;
     private String fxId;
     private Map<String, Object> styleMap;
@@ -62,9 +62,13 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     // gereksiz çıkartılabilir
     private Boolean filteredListActive;
+
+    /**
+     * Dataların FiKeybean olarak yüklendiği durumu gösterir
+     */
     private Boolean boFkbEnabled;
 
-    // Filter Editor Lokal ve Remote false olanlar hariç lokal filtreleme enable edilir
+    // Filter Editor Lokal false olanlar hariç lokal filtreleme enable edilir (ve Remote çıkarıldı)
     private Boolean enableLocalFilterEditor;
     // Remote Filter enable edilir, filter comp de enter action enable yapılır
     private Boolean enableRemoteFilterEditor;
@@ -168,7 +172,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     public FxTableView2() {
         super();
-        setupFxTable();
+        setupFxTableByConstructor();
     }
 
     // *********** Metodlar
@@ -236,9 +240,10 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     }
 
 
-    // **** setup method
-
-    private void setupFxTable() {
+    /**
+     * Constructor ile başlangıçta setup edilecek şeyler
+     */
+    private void setupFxTableByConstructor() {
         setupCopySelectionToClipboard();
     }
 
@@ -2189,7 +2194,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
      */
     public void copySelectionToClipboard2() {
 
-        StringBuilder clipboardString = new StringBuilder();
+        StringBuilder sbClipboardText = new StringBuilder();
         ObservableList<TablePosition> positionList = getSelectionModel().getSelectedCells();
         int prevRow = -1;
 
@@ -2203,9 +2208,9 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
             // determine whether we advance in a row (tab) or a column
             // (newline).
             if (prevRow == row) {
-                clipboardString.append('\t');
+                sbClipboardText.append('\t');
             } else if (prevRow != -1) {
-                clipboardString.append('\n');
+                sbClipboardText.append('\n');
             }
 
             // create string from cell
@@ -2229,37 +2234,29 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
             } else if (observableValue instanceof StringProperty) {
                 text = ((StringProperty) observableValue).get();
 
-            } else {
+            } else { // observableValue!=null and instanceof Something
                 //System.out.println("Unsupported observable value: " + observableValue);
-                if (observableValue != null) {
 
-                    Object value = ((ObjectProperty) observableValue).getValue();
-                    if (value != null) {
-                        text = value.toString();
-                    } else {
-                        text = "";
-                    }
-
+                Object value = ((ObjectProperty) observableValue).getValue();
+                if (value != null) {
+                    text = value.toString();
                 } else {
                     text = "";
                 }
+
             }
-
             // add new item to clipboard
-            clipboardString.append(text);
-
+            sbClipboardText.append(text);
             // remember previous
             prevRow = row;
         }
 
         // create clipboard content
         final ClipboardContent clipboardContent = new ClipboardContent();
-        clipboardContent.putString(clipboardString.toString());
+        clipboardContent.putString(sbClipboardText.toString());
 
         // set clipboard content
         Clipboard.getSystemClipboard().setContent(clipboardContent);
-
-
     }
 
 
