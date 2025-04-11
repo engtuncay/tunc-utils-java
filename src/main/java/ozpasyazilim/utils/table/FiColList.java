@@ -78,10 +78,10 @@ public class FiColList extends ArrayList<FiCol>{
 		this.mapCols = mapCols;
 	}
 
-	public FiCol getFiColByID(String colID) {
+	public FiCol getFiColByField(String txFieldName) {
 
 		for (FiCol fiCol : this) {
-			if (fiCol.getOfcTxFieldName().equalsIgnoreCase(colID)) return fiCol;
+			if (fiCol.getOfcTxFieldName().equalsIgnoreCase(txFieldName)) return fiCol;
 		}
 
 		return null;

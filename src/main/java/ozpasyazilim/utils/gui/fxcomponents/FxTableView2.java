@@ -14,6 +14,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.*;
 import javafx.scene.text.TextAlignment;
 import org.apache.commons.beanutils.PropertyUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tbee.javafx.scene.layout.MigPane;
 import ozpasyazilim.utils.annotations.FiDraft;
 import ozpasyazilim.utils.core.*;
@@ -51,6 +53,7 @@ import java.util.stream.Collectors;
 // (Callback lambda bir fonksiyondur.) Callback<TableColumn<S, T>, TableCell<S, T>>
 public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxComp {
 
+    private static final Logger log = LoggerFactory.getLogger(FxTableView2.class);
     private Class<EntClazz> entityClass;
     private String fxId;
     private Map<String, Object> styleMap;
@@ -798,10 +801,10 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
             //Loghelperr.getInstance(getClass()).debug("Local Filter enabled");
 
             // Filter Node içindeki değer filterLocal fonk'a verilerek tabloda filtreleme yapılır.
-            Consumer<String> fncFilterLocal2 = this::execFilterLocal;
+            Consumer<String> fnFilterLocal = this::execFilterLocal;
 
             // Filter node değişimi tetikleme
-            FxEditorFactory.registerTextPropertyWithDurationForFilterNode(fxTableCol.getRefFiCol(), fncFilterLocal2, 250);
+            FxEditorFactory.registerTextPropertyWithDurationForFilterNode(fxTableCol.getRefFiCol(), fnFilterLocal, 250);
         }
 
         // 20-02-2020 çıkarıldı enter event zaten setupHeaderFilterNode 'da set ediliyor
@@ -2436,29 +2439,34 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     }
 
     private EventHandler<KeyEvent> getColFilterNodeEnterEventWrapper() {
+
         if (colFilterNodeEnterEventWrapper == null) {
             colFilterNodeEnterEventWrapper = (keyEvent) -> {
                 if (keyEvent.getCode() == KeyCode.ENTER) {
+
                     if (getColRemoteFilterEnterEvent() != null) {
                         FiKeyBean fkbFilter = getHeaderFilterAsFkb();
 
-                        FiListString keyList = fkbFilter.getFullKeys();
+                        FiListString fullKeyList = fkbFilter.getFullKeys();
 
-                        boolean isFilterable = false;
+                        boolean boRemoFilterable = false;
 
-                        if (!keyList.isEmpty()) {
-                            for (FiCol fiCol : getFiColList()) {
-                                for (String txKey : keyList) {
-                                    if (fiCol.getOfcTxFieldName().equals(txKey)) {
-                                        if (!FiBool.isFalse(fiCol.getBoRemFilterable())) {
-                                            isFilterable = true;
-                                        }
-                                    }
+                        if (!fullKeyList.isEmpty()) {
+
+                            FiColList fiCols = new FiColList(getFiColList());
+
+                            for (String key : fullKeyList) {
+                                FiCol fiColByField = fiCols.getFiColByField(key);
+
+                                if(fiColByField==null)continue;
+
+                                if (FiBool.isNullOrTrue(fiColByField.getBoRemFilterable())) {
+                                    boRemoFilterable = true;
                                 }
                             }
                         }
 
-                        if (!isFilterable && !keyList.isEmpty()) {
+                        if (!boRemoFilterable && !fullKeyList.isEmpty()) {
                             getFiLblFooterMessage().setText("Bu sütun henüz veri çekimine müsait değil");
                             return;
                         }

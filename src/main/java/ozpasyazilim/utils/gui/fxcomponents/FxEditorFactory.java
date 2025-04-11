@@ -1516,14 +1516,12 @@ public class FxEditorFactory {
      * change listener generic olmalı
      *
      * @param <T>
-     * @param ozTableCol
+     * @param iFiCol
      * @param fncStrProp
      * @param durationMilis
      */
-    public static <T> void registerTextPropertyWithDurationForFilterNode(IFiCol ozTableCol, Consumer<String> fncStrProp, long durationMilis) {
-
-        registerTextPropertyWithDurationForNode(fncStrProp, durationMilis, ozTableCol.getFilterNodeClass(), ozTableCol.getColFilterNode());
-
+    public static <T> void registerTextPropertyWithDurationForFilterNode(IFiCol iFiCol, Consumer<String> fncStrProp, long durationMilis) {
+        registerTextPropertyWithDurationForNode(fncStrProp, durationMilis, iFiCol.getFilterNodeClass(), iFiCol.getColFilterNode());
     }
 
     /**
