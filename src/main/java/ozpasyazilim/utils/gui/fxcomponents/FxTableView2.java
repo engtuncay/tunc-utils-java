@@ -14,8 +14,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.*;
 import javafx.scene.text.TextAlignment;
 import org.apache.commons.beanutils.PropertyUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.tbee.javafx.scene.layout.MigPane;
 import ozpasyazilim.utils.annotations.FiDraft;
 import ozpasyazilim.utils.core.*;
@@ -1265,7 +1263,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
                         if (!FiString.isEmptyTrim(refFiCol.getTxFilterType())) {
                             //Loghelper.get(getClass()).debug("! filter ına girdi");
                             //txFilterValue.charAt(0) == '>'
-                            if (refFiCol.getTxFilterType().equals(FimFicTxFilterType.greaterThan().getTxKey())) {
+                            if (refFiCol.getTxFilterType().equals(FimFicTxFilterType.greaterThan().gk())) {
                                 if (valueCol >= (Double) objFilterValue) {
                                     //return filterCheckResult;
                                     continue;

@@ -845,7 +845,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     }
 
     public FiCol buiTxFilterType(FiMeta fimFicFilterType) {
-        setTxFilterType(fimFicFilterType.getTxKey());
+        setTxFilterType(fimFicFilterType.gk());
         return this;
     }
 
