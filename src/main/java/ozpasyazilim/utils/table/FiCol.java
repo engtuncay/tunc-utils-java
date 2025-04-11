@@ -11,6 +11,7 @@ import javafx.scene.control.TreeTableColumn;
 import javafx.scene.input.KeyEvent;
 import org.reactfx.util.TriConsumer;
 import ozpasyazilim.utils.core.FiBool;
+import ozpasyazilim.utils.datatypes.FiMeta;
 import ozpasyazilim.utils.fidbanno.FiTable;
 import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.fidborm.IFiField;
@@ -445,6 +446,8 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
      */
     private Boolean ofcBoTransient;
 
+    private String txFilterType;
+
     /**
      * Code Generate ederken oluşturulan alan tanımı
      * <p>
@@ -838,6 +841,11 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
 
     public FiCol buiBoRemoteFilterable(Boolean boValue) {
         setBoRemFilterable(boValue);
+        return this;
+    }
+
+    public FiCol buiTxFilterType(FiMeta fimFicFilterType) {
+        setTxFilterType(fimFicFilterType.getTxKey());
         return this;
     }
 
@@ -1814,6 +1822,14 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
 
     public void setOfcTxFieldDesc(String ofcTxFieldDesc) {
         this.ofcTxFieldDesc = ofcTxFieldDesc;
+    }
+
+    public String getTxFilterType() {
+        return txFilterType;
+    }
+
+    public void setTxFilterType(String txFilterType) {
+        this.txFilterType = txFilterType;
     }
 }
 
