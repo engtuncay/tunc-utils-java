@@ -2,6 +2,7 @@ package ozpasyazilim.utils.fidborm;
 
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
+import ozpasyazilim.utils.core.FiConsole;
 import ozpasyazilim.utils.core.FiException;
 import ozpasyazilim.utils.datatypes.FiKeyBean;
 import ozpasyazilim.utils.datatypes.FkbList;
@@ -9,6 +10,7 @@ import ozpasyazilim.utils.jdbi.FiKeyBeanMapper;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.returntypes.Fdr;
 import ozpasyazilim.utils.returntypes.FdrFkb;
+import ozpasyazilim.utils.table.FiCol;
 
 import java.util.*;
 
@@ -304,9 +306,9 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
 
     public Fdr jdInsFkb(FiKeyBean formAsFkb, Boolean boInserFieldsOnly, IFiTableMeta iFiTableMeta) {
 
-        if(iFiTableMeta==null) iFiTableMeta = getiFiTableMeta();
+        if (iFiTableMeta == null) iFiTableMeta = getiFiTableMeta();
 
-        String sql = FiQugen.insertFiCols2(iFiTableMeta, formAsFkb.getListFiColInit(),boInserFieldsOnly);
+        String sql = FiQugen.insertFiCols2(iFiTableMeta, formAsFkb.getListFiColInit(), boInserFieldsOnly);
 
         FiQuery fiQuery = new FiQuery(sql, formAsFkb);
         //fiQuery.logQueryAndParams();
@@ -316,13 +318,12 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
 
 
     /**
-     *
      * @param formAsFkb
      * @param boUpdateFieldsOnly : updateField true olanlar sorguda güncellenir
      * @return
      */
     public Fdr jdUpFkbByIdFields(FiKeyBean formAsFkb, Boolean boUpdateFieldsOnly) {
-        String sql = FiQugen.updateFiColsArb(getiFiTableMeta(), formAsFkb.getListFiColInit(),boUpdateFieldsOnly);
+        String sql = FiQugen.updateFiColsArb(getiFiTableMeta(), formAsFkb.getListFiColInit(), boUpdateFieldsOnly);
 
         FiQuery fiQuery = new FiQuery(sql, formAsFkb);
         //fiQuery.logQueryAndParams();
@@ -332,7 +333,17 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
 
     public Fdr jdDeleteFkbByIdCols(FiKeyBean fiKeyBean, IFiTableMeta iFiTableMeta) {
 
-        String sql = FiQugen.deleteWhereIdFiColsArb(iFiTableMeta, fiKeyBean.getListFiColInit());
+        String sql = FiQugen.deleteWhereIdFiColsV2(iFiTableMeta, fiKeyBean.getListFiColInit());
+
+        FiQuery fiQuery = new FiQuery(sql, fiKeyBean);
+        //fiQuery.logQueryAndParams();
+
+        return jdDeleteFiQuery(fiQuery);
+    }
+
+    public Fdr jdDeleteFkbByIdColsV2(FiKeyBean fiKeyBean, IFiTableMeta iFiTableMeta, List<FiCol> fiCols) {
+
+        String sql = FiQugen.deleteWhereIdFiColsV2(iFiTableMeta, fiCols);
 
         FiQuery fiQuery = new FiQuery(sql, fiKeyBean);
         //fiQuery.logQueryAndParams();
@@ -350,6 +361,24 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
         Fdr fdrMain = new Fdr();
         for (FiKeyBean fiKeyBean : fkbList) {
             Fdr fdrDelete = jdDeleteFkbByIdCols(fiKeyBean, getiFiTableMeta());
+            fdrMain.combineAnd(fdrDelete);
+        }
+        return fdrMain;
+    }
+
+    /**
+     * FkbList'e FiColList tanımlaması yapılmalı
+     *
+     * @param fkbList
+     * @return
+     */
+    public Fdr jdDeleteListByIdV2(FkbList fkbList) {
+        Fdr fdrMain = new Fdr();
+
+        //Loghelper.get(getClass()).debug("FkbList.getFiColList():" + FiConsole.textListObjectsNotNullFields(fkbList.getFiColList()));
+
+        for (FiKeyBean fiKeyBean : fkbList) {
+            Fdr fdrDelete = jdDeleteFkbByIdColsV2(fiKeyBean, getiFiTableMeta(), fkbList.getFiColList());
             fdrMain.combineAnd(fdrDelete);
         }
         return fdrMain;

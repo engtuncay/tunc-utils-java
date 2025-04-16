@@ -1795,7 +1795,7 @@ public class FiQugen {
         return FiString.substitutor(template, fkbTemplate);
     }
 
-    public static String deleteWhereIdFiColsArb(IFiTableMeta iFiTableMeta, List<FiCol> listFields) {
+    public static String deleteWhereIdFiColsV2(IFiTableMeta iFiTableMeta, List<FiCol> listFields) {
 
         String template = "DELETE {{tableName}} \n"
                 + " WHERE {{whereBlock}} ";
