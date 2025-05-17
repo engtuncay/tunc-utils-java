@@ -1151,7 +1151,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
         }
     }
 
-    public void convertNullResult(boolean boResult) {
+    public void convertResultIfNull(boolean boResult) {
         if (getFdrBoExec() == null) setFdrBoExec(boResult);
     }
 

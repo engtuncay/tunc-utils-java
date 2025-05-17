@@ -1,12 +1,16 @@
 package ozpasyazilim.utils.table;
 
+import ozpasyazilim.utils.datatypes.FiKeyBean;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 public class FiColList extends ArrayList<FiCol>{
+
 	Map<String, FiCol> mapCols;
+	FiKeyBean fkbParams;
 
 	public FiColList() {
 	}
@@ -87,7 +91,27 @@ public class FiColList extends ArrayList<FiCol>{
 		return null;
 	}
 
-//	public void equalsKey(String txKey, Object value) {
+	public void addWithFkb(FiCol fiCol,Object value) {
+		add(fiCol);
+		getFkbParamsInit().addDbField(fiCol, value);
+	}
+
+	public FiKeyBean getFkbParams() {
+		return fkbParams;
+	}
+
+	public FiKeyBean getFkbParamsInit() {
+		if (this.fkbParams == null) {
+			this.fkbParams = new FiKeyBean();
+		}
+		return fkbParams;
+	}
+
+	public void setFkbParams(FiKeyBean fkbParams) {
+		this.fkbParams = fkbParams;
+	}
+
+	//	public void equalsKey(String txKey, Object value) {
 //
 //		Map<String, FiCol> fiColMap = formMapCols();
 //

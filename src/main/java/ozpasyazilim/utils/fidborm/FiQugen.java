@@ -6,6 +6,7 @@ import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.datatypes.FiListString;
 import ozpasyazilim.utils.datatypes.FiKeyBean;
 import ozpasyazilim.utils.entitysql.EntSqlColumn;
+import ozpasyazilim.utils.ficols.FicRfcCoding;
 import ozpasyazilim.utils.gui.fxcomponents.FxEditorFactory;
 import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.fidbanno.*;
@@ -4057,6 +4058,20 @@ public class FiQugen {
     }
 
 
+    public static String sqlSelectByWhereFields(FiColList fiCols,String txTableName) {
+
+        String tempWrapQuery = "SELECT {{rfcTxSelectFields}} mainQuery.*\n" +
+                "FROM (\n" +
+                "{{txQuery}}\n" +
+                ") as mainQuery\n" +
+                "where mainQuery.lnRowNo >= @lnBegin and mainQuery.lnRowNo <= @lnEnd";
+
+         FicRfcCoding.rfcTxSelectFields()
+
+        //  FiString.substitutor(tempWrapQuery, FiKeyBean.bui().buiPut("txQuery", txQuery))
+
+        return "";
+    }
 }
 
 /*

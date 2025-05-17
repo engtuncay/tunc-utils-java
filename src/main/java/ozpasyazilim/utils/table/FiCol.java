@@ -398,7 +398,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     // private Boolean boUndefinedCol;
 
     /**
-     * Sorgu oluşturulurken where alanına yazılacak alanlar (update sorgusu için kullanılır)
+     * Sorgu oluşturulurken where alanına yazılacak alanlar (ör update sorgusu için kullanılır)
      */
     private Boolean boWhereField;
 
@@ -454,6 +454,8 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
      * Code Generator tarafından kullanılır.
      */
     private String ficTxSqlFieldDefinition;
+
+
 
 
     // ***** Constructors
@@ -846,6 +848,11 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
 
     public FiCol buiTxFilterType(FiMeta fimFicFilterType) {
         setTxFilterType(fimFicFilterType.gk());
+        return this;
+    }
+
+    public FiCol buiWhereField(Boolean boValue) {
+        this.boWhereField = boValue;
         return this;
     }
 
@@ -1831,6 +1838,9 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     public void setTxFilterType(String txFilterType) {
         this.txFilterType = txFilterType;
     }
+
+
+
 }
 
 

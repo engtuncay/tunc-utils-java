@@ -11,6 +11,8 @@ import ozpasyazilim.utils.fidborm.IFiTableMeta;
  */
 public class FicRfcCoding implements IFiTableMeta {
 
+
+
     public String getITxTableName() {
         return getTxTableName();
     }
@@ -54,6 +56,12 @@ public class FicRfcCoding implements IFiTableMeta {
 
     public static FiCol rfcTxClassBody() {
         FiCol fiCol = new FiCol("rfcTxClassBody", "");
+        fiCol.buiColType(OzColType.String);
+        return fiCol;
+    }
+
+    public static FiCol rfcTxSelectFields() {
+        FiCol fiCol = new FiCol("rfcTxSelectFields", "");
         fiCol.buiColType(OzColType.String);
         return fiCol;
     }
