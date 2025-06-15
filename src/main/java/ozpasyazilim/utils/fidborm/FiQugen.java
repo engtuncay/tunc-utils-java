@@ -4066,7 +4066,7 @@ public class FiQugen {
                 ") as mainQuery\n" +
                 "where mainQuery.lnRowNo >= @lnBegin and mainQuery.lnRowNo <= @lnEnd";
 
-         FicRfcCoding.rfcTxSelectFields()
+         FicRfcCoding.rfcTxSelectFields();
 
         //  FiString.substitutor(tempWrapQuery, FiKeyBean.bui().buiPut("txQuery", txQuery))
 
