@@ -1536,6 +1536,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
             regexPattern = "\\s*";
         } else {
             txFilterValueLower = txFilterValueLower.replace("*", ".*");
+            txFilterValueLower = txFilterValueLower.replace("%", ".*");
             txFilterValueLower = txFilterValueLower.replace(" ", "\\s");
             regexPattern = ".*" + txFilterValueLower + ".*";
             //Loghelper.get(getClass()).debug("Regex:" + txFilterValueLower);

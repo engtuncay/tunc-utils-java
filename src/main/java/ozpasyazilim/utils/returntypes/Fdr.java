@@ -124,7 +124,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
      * <p>
      * Operasyon sonucu nedir , true işlem sonucu pozitif, false işlem sonucu negatif olur.
      * <p>
-     * boExec farkı : boExec, sorgunun başarılı çalıştırıldığını gösterir
+     * boExec farkı : boExec, sorgunun veya yapılacak işlemin başarılı çalıştırıldığını gösterir
      * <p>
      * Örneğin checkExist yapılıyorsa, kayıt varsa opResutl true olur, yoksa false olur.
      * <p>
@@ -718,13 +718,13 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
         }
     }
 
-    public void setBoResult(Boolean boResult, Exception exError) {
-        setFdrBoExec(boResult);
+    public void setBoResult(Boolean boExec, Exception exError) {
+        setFdrBoExec(boExec);
         setException(exError);
     }
 
-    public void setBoResultAndValue(Boolean boResult, EntClazz resValue, Integer rowsAffected) {
-        setFdrBoExec(boResult);
+    public void setBoResultAndValue(Boolean boExec, EntClazz resValue, Integer rowsAffected) {
+        setFdrBoExec(boExec);
         setRowsAffected(rowsAffected);
         setValue(resValue);
     }

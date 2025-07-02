@@ -41,15 +41,11 @@ public class FiReflection {
 		Object objectt = null;
 		try {
 			objectt = PropertyUtils.getProperty(entity, field);
-		} catch (IllegalAccessException e) {
-			Loghelper.get(FiReflection.class).debug(FiException.exToErrorLog(e));
-		} catch (InvocationTargetException e) {
-			Loghelper.get(FiReflection.class).debug(FiException.exToErrorLog(e));
-		} catch (NoSuchMethodException e) {
-			Loghelper.get(FiReflection.class).debug(FiException.exToErrorLog(e));
+		} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException ex) {
+			Loghelper.get(FiReflection.class).debug(FiException.exToErrorLog(ex));
 		}
 
-		return objectt;
+    return objectt;
 	}
 
 	public static String getSimpleTypeName(Class<?> aClass) {
