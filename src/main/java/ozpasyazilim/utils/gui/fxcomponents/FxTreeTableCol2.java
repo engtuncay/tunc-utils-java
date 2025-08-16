@@ -32,7 +32,6 @@ public class FxTreeTableCol2<EntClazz> extends TreeTableColumn implements IFxTab
 		super(header);
 	}
 
-	@Override
 	public ObservableValue getCellObservableValue(Object item) {
 		return null;
 	}

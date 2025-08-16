@@ -2,7 +2,6 @@ package ozpasyazilim.utils.fidborm;
 
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
-import ozpasyazilim.utils.core.FiConsole;
 import ozpasyazilim.utils.core.FiException;
 import ozpasyazilim.utils.datatypes.FiKeyBean;
 import ozpasyazilim.utils.datatypes.FkbList;
@@ -190,10 +189,10 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
             });
 
             result.ifPresent(fdr::setValue);
-            fdr.setFdrBoExec(true);
+            fdr.setFdrBoResult(true);
         } catch (Exception ex) {
             Loghelper.get(getClass()).error(FiException.exTosMain(ex));
-            fdr.setFdrBoExec(false);
+            fdr.setFdrBoResult(false);
             fdr.setValue(null);
         }
         return fdr;

@@ -54,7 +54,7 @@ public class Fro extends Fdr<Object>{
 
 	public static Fro creBoResult(Boolean boResult) {
 		Fro fdr = new Fro();
-		fdr.setFdrBoExec(boResult);
+		fdr.setFdrBoResult(boResult);
 		return fdr;
 	}
 

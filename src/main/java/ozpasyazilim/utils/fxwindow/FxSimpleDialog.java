@@ -444,7 +444,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFiModBaseCont {
             }
 
             if (!fdr.isTrueBoResult()) {
-                FxDialogShow.showPopWarn("Hata \n" + fdr.getMessage());
+                FxDialogShow.showPopWarn("Hata \n" + fdr.getFdrTxMessage());
                 return true;
             }
 
@@ -460,7 +460,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFiModBaseCont {
             }
 
             if (!fdr.isTrueBoResult()) {
-                FxDialogShow.showPopWarn("Hata \n" + fdr.getMessage());
+                FxDialogShow.showPopWarn("Hata \n" + fdr.getFdrTxMessage());
                 return true;
             }
 

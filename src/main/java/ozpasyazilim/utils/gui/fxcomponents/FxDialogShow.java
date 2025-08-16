@@ -90,17 +90,17 @@ public class FxDialogShow {
         Fdr fdr = new Fdr();
 
         btnYes.setOnAction(event -> {
-            fdr.setFdrBoExec(true);
+            fdr.setFdrBoResult(true);
             stage.close();
         });
 
         btnNo.setOnAction(event -> {
-            fdr.setFdrBoExec(false);
+            fdr.setFdrBoResult(false);
             stage.close();
         });
 
         btnCancel.setOnAction(event -> {
-            fdr.setFdrBoExec(null);
+            fdr.setFdrBoResult(null);
             stage.close();
         });
 
@@ -144,17 +144,17 @@ public class FxDialogShow {
         Fdr fdr = new Fdr();
 
         btnYes.setOnAction(event -> {
-            fdr.setFdrBoExec(true);
+            fdr.setFdrBoResult(true);
             stage.close();
         });
 
         btnNo.setOnAction(event -> {
-            fdr.setFdrBoExec(false);
+            fdr.setFdrBoResult(false);
             stage.close();
         });
 
         btnCancel.setOnAction(event -> {
-            fdr.setFdrBoExec(null);
+            fdr.setFdrBoResult(null);
             stage.close();
         });
 
@@ -206,17 +206,17 @@ public class FxDialogShow {
         Fdr fdr = new Fdr();
 
         btnYes.setOnAction(event -> {
-            fdr.setFdrBoExec(true);
+            fdr.setFdrBoResult(true);
             stage.close();
         });
 
         btnNo.setOnAction(event -> {
-            fdr.setFdrBoExec(false);
+            fdr.setFdrBoResult(false);
             stage.close();
         });
 
         btnCancel.setOnAction(event -> {
-            fdr.setFdrBoExec(null);
+            fdr.setFdrBoResult(null);
             stage.close();
         });
 
@@ -326,17 +326,17 @@ public class FxDialogShow {
         Fdr fnResult = new Fdr();
 
         btnYes.setOnAction(event -> {
-            fnResult.setFdrBoExec(true);
+            fnResult.setFdrBoResult(true);
             stage.close();
         });
 
         btnNo.setOnAction(event -> {
-            fnResult.setFdrBoExec(false);
+            fnResult.setFdrBoResult(false);
             stage.close();
         });
 
         btnCancel.setOnAction(event -> {
-            fnResult.setFdrBoExec(null);
+            fnResult.setFdrBoResult(null);
             stage.close();
         });
 
@@ -367,16 +367,16 @@ public class FxDialogShow {
     public static void showDbResultAsErrorIfFail(Fdr fdr) {
 
         if (!fdr.isTrueBoResult()) {
-            if (fdr.isFalseBoResult()) FxDialogShow.showModalErrorAsyn("Hata oluştu", fdr.getMessage());
+            if (fdr.isFalseBoResult()) FxDialogShow.showModalErrorAsyn("Hata oluştu", fdr.getFdrTxMessage());
 
-            if (fdr.getFdrBoExec() == null) FxDialogShow.showModalErrorAsyn("İşlem sonucu alınamadı.", fdr.getMessage());
+            if (fdr.getFdrBoResult() == null) FxDialogShow.showModalErrorAsyn("İşlem sonucu alınamadı.", fdr.getFdrTxMessage());
         }
 
     }
 
     public static Boolean showDbResultIfFailAsPopWarn(Fdr fdr) {
         if (!fdr.isTrueBoResult()) {
-            FxDialogShow.showPopWarn(fdr.getMessage());
+            FxDialogShow.showPopWarn(fdr.getFdrTxMessage());
             return false;
         }
         return true;
@@ -402,28 +402,28 @@ public class FxDialogShow {
 
     public static void showFdr1PopOrFailModal(Fdr fdr) {
 
-        if (fdr.getFdrBoExec() == null) {
-            FxDialogShow.showPopInfo("İşlem sonucu alınamadı." + "\n" + FiString.orEmpty(fdr.getMessage()));
+        if (fdr.getFdrBoResult() == null) {
+            FxDialogShow.showPopInfo("İşlem sonucu alınamadı." + "\n" + FiString.orEmpty(fdr.getFdrTxMessage()));
             return;
         }
 
         if (fdr.isTrueBoResult()) {
-            FxDialogShow.showPopInfo("İşlem Başarı ile Gerçekleşti" + "\n" + FiString.orEmpty(fdr.getMessage()));
+            FxDialogShow.showPopInfo("İşlem Başarı ile Gerçekleşti" + "\n" + FiString.orEmpty(fdr.getFdrTxMessage()));
             return;
         }
 
-        FxDialogShow.showModalErrorAsyn("Hata Oluştu", fdr.getMessage());
+        FxDialogShow.showModalErrorAsyn("Hata Oluştu", fdr.getFdrTxMessage());
     }
 
-    public static void showFdr1PopOrFailModal2(Fdr fdr) {
+    public static void showFdrV11PopOrFailModal(Fdr fdr) {
 
-        if (fdr.getFdrBoExec() == null) {
-            FxDialogShow.showPopInfo("İşlem sonucu alınamadı." + "\n" + FiString.orEmpty(fdr.getMessage()));
+        if (fdr.getFdrBoResult() == null) {
+            FxDialogShow.showPopInfo("İşlem sonucu alınamadı." + "\n" + FiString.orEmpty(fdr.getFdrTxMessage()));
             return;
         }
 
         if (fdr.isTrueBoResult()) {
-            FxDialogShow.showPopInfo("İşlem Başarı ile Gerçekleşti" + "\n" + FiString.orEmpty(fdr.getMessage()));
+            FxDialogShow.showPopInfo("İşlem Başarı ile Gerçekleşti" + "\n" + FiString.orEmpty(fdr.getFdrTxMessage()));
             return;
         }
 
@@ -435,8 +435,8 @@ public class FxDialogShow {
      *
      * @param fdr
      */
-    public static void showFdr1PopOrFailModalDetailed(Fdr fdr) {
-        showFdr1PopOrFailModalDetailed(fdr,null);
+    public static void showFdrV13PopOrFailModalDetailed(Fdr fdr) {
+        showFdrV12PopOrFailModalDetailed(fdr,null);
     }
 
     /**
@@ -444,14 +444,14 @@ public class FxDialogShow {
      *
      * @param fdr
      */
-    public static void showFdr1PopOrFailModalDetailed(Fdr fdr, Boolean boOnlyShowWhenFail) {
+    public static void showFdrV12PopOrFailModalDetailed(Fdr fdr, Boolean boOnlyShowWhenFail) {
 
         if (fdr == null) {
             FxDialogShow.showModalErrorAsyn("", "Fdr Tanımsız !!!. Sistem Yöneticinize Danışın.");
             return;
         }
 
-        if (fdr.getFdrBoExec() == null) {
+        if (fdr.getFdrBoResult() == null) {
             //FxDialogShow.showPopInfo("İşlem sonucu alınamadı." + "\n" + FiString.orEmpty(fdr.getMessage()));
             FxDialogShow.showModalErrorWitLogAndMessageAndExc("İşlem Sonucu Alınamadı.", fdr);
             return;
@@ -462,7 +462,7 @@ public class FxDialogShow {
         }
 
         if (fdr.isTrueBoResult()) {
-            FxDialogShow.showPopInfo("İşlem Başarı ile Gerçekleşti" + "\n" + FiString.orEmpty(fdr.getMessage()));
+            FxDialogShow.showPopInfo("İşlem Başarı ile Gerçekleşti" + "\n" + FiString.orEmpty(fdr.getFdrTxMessage()));
             return;
         }
 
@@ -476,7 +476,7 @@ public class FxDialogShow {
             return;
         }
 
-        if (fdr.getFdrBoExec() == null) {
+        if (fdr.getFdrBoResult() == null) {
             //FxDialogShow.showPopInfo("İşlem sonucu alınamadı." + "\n" + FiString.orEmpty(fdr.getMessage()));
             FxDialogShow.showModalErrorWitLogAndMessageAndExc("İşlem Sonucu Alınamadı.", fdr);
             return;
@@ -487,7 +487,7 @@ public class FxDialogShow {
 //        }
 
         if (fdr.isTrueBoResult()) {
-            FxDialogShow.showPopInfo("İşlem Başarı ile Gerçekleşti" + "\n" + FiString.orEmpty(fdr.getMessage()));
+            FxDialogShow.showPopInfo("İşlem Başarı ile Gerçekleşti" + "\n" + FiString.orEmpty(fdr.getFdrTxMessage()));
             return;
         }
 
@@ -861,7 +861,7 @@ public class FxDialogShow {
 
     public static void showSimModalError2(String messageHeader, Fdr fdr) {
         Platform.runLater(() -> {
-            String message = fdr.getMessage();
+            String message = fdr.getFdrTxMessage();
 
             if (fdr.getException() != null) {
                 message += "\n Exception Tanımı \n\n" + FiException.exceptionIfToString(fdr.getException());
@@ -880,8 +880,8 @@ public class FxDialogShow {
             if (!FiString.isEmptyTrim(logAsString)) {
                 message += "\n" + logAsString;
             }
-            if (!FiString.isEmptyTrim(fdr.getMessage())) {
-                message += "\n" + fdr.getMessage();
+            if (!FiString.isEmptyTrim(fdr.getFdrTxMessage())) {
+                message += "\n" + fdr.getFdrTxMessage();
             }
 
             if (fdr.getException() != null) {
@@ -997,17 +997,17 @@ public class FxDialogShow {
         Fdr fdrResult = new Fdr();
 
         btnYes.setOnAction(event -> {
-            fdrResult.setFdrBoExec(true);
+            fdrResult.setFdrBoResult(true);
             stage.close();
         });
 
         btnNo.setOnAction(event -> {
-            fdrResult.setFdrBoExec(false);
+            fdrResult.setFdrBoResult(false);
             stage.close();
         });
 
         btnCancel.setOnAction(event -> {
-            fdrResult.setFdrBoExec(null);
+            fdrResult.setFdrBoResult(null);
             stage.close();
         });
 
@@ -1064,17 +1064,17 @@ public class FxDialogShow {
             Fdr fdrResult = new Fdr();
 
             btnYes.setOnAction(event -> {
-                fdrResult.setFdrBoExec(true);
+                fdrResult.setFdrBoResult(true);
                 stage.close();
             });
 
             btnNo.setOnAction(event -> {
-                fdrResult.setFdrBoExec(false);
+                fdrResult.setFdrBoResult(false);
                 stage.close();
             });
 
             btnCancel.setOnAction(event -> {
-                fdrResult.setFdrBoExec(null);
+                fdrResult.setFdrBoResult(null);
                 stage.close();
             });
 
@@ -1248,7 +1248,7 @@ public class FxDialogShow {
             }
 
             if (dbResult.isNullBoResult()) {
-                String messageDetail = dbResult.getMessage();
+                String messageDetail = dbResult.getFdrTxMessage();
                 FxDialogShow.showModalInfoAsyn(FiString.orEmpty(title) + FiString.getNewLineIfFull(title)
                         + "İşlem yapılacak kayıt bulunamadı. Result : null", messageDetail); //uygun kayıt bulunamadı.
 
@@ -1261,22 +1261,22 @@ public class FxDialogShow {
 
     public static void showDbResultUpdate(Fdr dbResult) {
 
-        if (FiBool.isTrue(dbResult.getFdrBoExec())) {
+        if (FiBool.isTrue(dbResult.getFdrBoResult())) {
 
             if (dbResult.isEmptyMessage()) {
-                dbResult.setMessage(String.format("İşlem Başarı ile Gerçekleşti.\n %s Adet Kayıt Güncellendi.", dbResult.getRowsAffectedNotNull()));
+                dbResult.setFdrTxMessage(String.format("İşlem Başarı ile Gerçekleşti.\n %s Adet Kayıt Güncellendi.", dbResult.getRowsAffectedNotNull()));
             }
 
             //showInfoDialog(dbResult.getMessage());
-            FxDialogShow.showModalInfoAlertAsyn(dbResult.getMessage());
+            FxDialogShow.showModalInfoAlertAsyn(dbResult.getFdrTxMessage());
 
         } else {
 
             if (dbResult.isEmptyMessage()) {
-                dbResult.setMessage("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getException()));
+                dbResult.setFdrTxMessage("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getException()));
             }
 
-            showModalWarningAlert(dbResult.getMessage());
+            showModalWarningAlert(dbResult.getFdrTxMessage());
 
         }
 
@@ -1284,52 +1284,52 @@ public class FxDialogShow {
 
     public static void showFdrDbResultWithAllModal(Fdr dbResult) {
 
-        if (FiBool.isTrue(dbResult.getFdrBoExec())) {
+        if (FiBool.isTrue(dbResult.getFdrBoResult())) {
 
-            if (FiString.isEmpty(dbResult.getMessage())) {
-                dbResult.setMessage(String.format("İşlem Başarı ile Gerçekleşti.\n %s Adet Kayıt Güncellendi.", dbResult.getRowsAffectedNotNull()));
+            if (FiString.isEmpty(dbResult.getFdrTxMessage())) {
+                dbResult.setFdrTxMessage(String.format("İşlem Başarı ile Gerçekleşti.\n %s Adet Kayıt Güncellendi.", dbResult.getRowsAffectedNotNull()));
             }
 
             //showInfoDialog(dbResult.getMessage());
-            FxDialogShow.showModalInfoAlertAsyn(dbResult.getMessage());
+            FxDialogShow.showModalInfoAlertAsyn(dbResult.getFdrTxMessage());
 
         } else {
 
             if (dbResult.isFalseBoResult()) {
-                if (dbResult.getMessage() == null) {
-                    dbResult.setMessage("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getException()));
+                if (dbResult.getFdrTxMessage() == null) {
+                    dbResult.setFdrTxMessage("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getException()));
                 }
             }
 
             if (dbResult.isNullBoResult()) {
-                if (dbResult.getMessage() == null) {
-                    dbResult.setMessage("İşlem Yapılmadı.");
+                if (dbResult.getFdrTxMessage() == null) {
+                    dbResult.setFdrTxMessage("İşlem Yapılmadı.");
                 }
             }
 
-            showModalWarningAlert(dbResult.getMessage());
+            showModalWarningAlert(dbResult.getFdrTxMessage());
         }
 
     }
 
     public static void showDbResultUpdatePop(Fdr dbResult) {
 
-        if (FiBool.isTrue(dbResult.getFdrBoExec())) {
+        if (FiBool.isTrue(dbResult.getFdrBoResult())) {
 
-            if (dbResult.getMessage() == null) {
-                dbResult.setMessage(String.format("İşlem Başarı ile Gerçekleşti.\n %s Adet Kayıt İşleme Alındı.", dbResult.getRowsAffectedNotNull()));
+            if (dbResult.getFdrTxMessage() == null) {
+                dbResult.setFdrTxMessage(String.format("İşlem Başarı ile Gerçekleşti.\n %s Adet Kayıt İşleme Alındı.", dbResult.getRowsAffectedNotNull()));
             }
 
             //showInfoDialog(dbResult.getMessage());
-            FxDialogShow.showPopInfo(dbResult.getMessage());
+            FxDialogShow.showPopInfo(dbResult.getFdrTxMessage());
 
         } else {
 
-            if (dbResult.getMessage() == null) {
-                dbResult.setMessage("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getException()));
+            if (dbResult.getFdrTxMessage() == null) {
+                dbResult.setFdrTxMessage("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getException()));
             }
 
-            showModalWarningAlert(dbResult.getMessage());
+            showModalWarningAlert(dbResult.getFdrTxMessage());
 
         }
 
@@ -1337,27 +1337,27 @@ public class FxDialogShow {
 
     public void showDbResultWithOwner(Fdr dbResult, Window windowOwner) {
 
-        if (FiBool.isTrue(dbResult.getFdrBoExec())) {
+        if (FiBool.isTrue(dbResult.getFdrBoResult())) {
 
-            if (dbResult.getMessage() == null) {
-                dbResult.setMessage("İşlem Başarı ile Gerçekleşti.");
+            if (dbResult.getFdrTxMessage() == null) {
+                dbResult.setFdrTxMessage("İşlem Başarı ile Gerçekleşti.");
             }
             //showInfoDialog(dbResult.getMessage());
             if (windowOwner != null) {
                 Platform.runLater(() -> {
-                    Notifications.create().owner(windowOwner).position(Pos.CENTER).text(dbResult.getMessage()).showInformation();
+                    Notifications.create().owner(windowOwner).position(Pos.CENTER).text(dbResult.getFdrTxMessage()).showInformation();
                 });
             } else {
-                showPopInfo(dbResult.getMessage());
+                showPopInfo(dbResult.getFdrTxMessage());
             }
 
 
         } else {
 
-            if (dbResult.getMessage() == null) {
-                dbResult.setMessage("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getException()));
+            if (dbResult.getFdrTxMessage() == null) {
+                dbResult.setFdrTxMessage("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getException()));
             }
-            showModalWarningAlert(dbResult.getMessage());
+            showModalWarningAlert(dbResult.getFdrTxMessage());
 
         }
 

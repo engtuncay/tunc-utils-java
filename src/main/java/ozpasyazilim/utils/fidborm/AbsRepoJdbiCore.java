@@ -13,6 +13,7 @@ public class AbsRepoJdbiCore {
 	protected Jdbi jdbi;
 	// Optional (bilgi amaçlı)
 	protected String databaseName;
+  IFiTableMeta iFiTableMeta;
 
 	// Getter and Setter
 	public Jdbi getJdbi() {
@@ -39,5 +40,11 @@ public class AbsRepoJdbiCore {
 		this.databaseName = databaseName;
 	}
 
+  public IFiTableMeta getiFiTableMeta() {
+    return iFiTableMeta;
+  }
 
+  public void setiFiTableMeta(IFiTableMeta iFiTableMeta) {
+    this.iFiTableMeta = iFiTableMeta;
+  }
 }

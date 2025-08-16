@@ -48,7 +48,7 @@ public class FiAes {
         String cipherText = null;
         try {
             cipherText = encryptWex(algorithm, input, secretKey, ivParameterSpec1);
-            fdrMain.setFdrBoExec(true);
+            fdrMain.setFdrBoResult(true);
             fdrMain.setValue(cipherText);
         } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidAlgorithmParameterException |
                  InvalidKeyException | BadPaddingException | IllegalBlockSizeException e) {
@@ -70,7 +70,7 @@ public class FiAes {
         String plainText = null;
         try {
             plainText = decryptWex(algorithm, cipherText, secretKey, ivParameterSpec1);
-            fdrMain.setFdrBoExec(true);
+            fdrMain.setFdrBoResult(true);
             fdrMain.setValue(plainText);
         } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidAlgorithmParameterException |
                  InvalidKeyException | BadPaddingException | IllegalBlockSizeException e) {

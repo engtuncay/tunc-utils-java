@@ -571,4 +571,8 @@ public class FiKeyBean extends LinkedHashMap<String, Object> {
     public void addDbField(FiCol fiCol, Object value) {
         add(fiCol.getTxDbFieldNameOrFieldName(), value);
     }
+
+  public void addField(FiCol fiCol, Object value) {
+    add(fiCol.getOfcTxFieldName(), value);
+  }
 }

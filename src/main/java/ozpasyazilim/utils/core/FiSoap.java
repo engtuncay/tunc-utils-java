@@ -84,7 +84,7 @@ public class FiSoap {
 
 			if (httpConn.getResponseCode() == 200) {
 				isr = new InputStreamReader(httpConn.getInputStream(),StandardCharsets.UTF_8);
-				fdrMain.setFdrBoExec(true);
+				fdrMain.setFdrBoResult(true);
 			} else {
 				if (httpConn.getErrorStream() != null) isr = new InputStreamReader(httpConn.getErrorStream(),StandardCharsets.UTF_8);
 			}
@@ -97,16 +97,16 @@ public class FiSoap {
 				}
 				fdrMain.setValue(outputString.toString());
 			} else {
-				fdrMain.setMessage("!!! Error Code:" + httpConn.getResponseCode());
+				fdrMain.setFdrTxMessage("!!! Error Code:" + httpConn.getResponseCode());
 			}
 
 			//Loghelper.debugLogTemp(FiSoap.class,"Soap Response:"+outputString);
 
 		} catch (IOException exception) {
 			Loghelper.get(getClassi()).debug(FiException.exceptionIfToString(exception));
-			fdrMain.setFdrBoExec(false);
+			fdrMain.setFdrBoResult(false);
 			fdrMain.setException(exception);
-			fdrMain.setMessage("Soap isteği gerçekleşirken hata oluştu. Detay için Exception inceleyiniz.");
+			fdrMain.setFdrTxMessage("Soap isteği gerçekleşirken hata oluştu. Detay için Exception inceleyiniz.");
 		}
 		return fdrMain;
 	}
@@ -189,15 +189,15 @@ public class FiSoap {
 				}
 				fdr.setValue(stbOutput.toString());
 			} else {
-				fdr.setMessage("!!! Error Code: " + httpConn.getResponseCode());
+				fdr.setFdrTxMessage("!!! Error Code: " + httpConn.getResponseCode());
 			}
 			// Exception fırlatmadığı için boResult True verildi.
-			fdr.setFdrBoExec(true);
+			fdr.setFdrBoResult(true);
 
 		} catch (Exception exception) { //	//throws MalformedURLException, IOException
 			Loghelper.get(FiSoap.class).debug(FiException.exToErrorLog(exception));
-			fdr.setFdrBoExec(false);
-			fdr.setMessage("Soap isteği gerçekleşirken hata oluştu. Detay için Exception inceleyiniz.");
+			fdr.setFdrBoResult(false);
+			fdr.setFdrTxMessage("Soap isteği gerçekleşirken hata oluştu. Detay için Exception inceleyiniz.");
 			fdr.setException(exception);
 		}
 
@@ -235,11 +235,11 @@ public class FiSoap {
 
 			fdrXmlDoc.setLnResponseCode(fdrRequest.getLnResponseCode());
 			//fdrXmlDoc.setLnErrorCode(fdrRequest.getLnErrorCode());
-			fdrXmlDoc.setMessage(fdrRequest.getMessage());
+			fdrXmlDoc.setFdrTxMessage(fdrRequest.getFdrTxMessage());
 			fdrXmlDoc.combineAnd(fdrRequest);
 		} else {
-			fdrXmlDoc.setFdrBoExec(false);
-			fdrXmlDoc.setMessage("Soap isteği gerçekleşirken hata oluştu. Detay için Exception inceleyiniz.");
+			fdrXmlDoc.setFdrBoResult(false);
+			fdrXmlDoc.setFdrTxMessage("Soap isteği gerçekleşirken hata oluştu. Detay için Exception inceleyiniz.");
 			fdrXmlDoc.setException(fdrRequest.getException());
 		}
 		return fdrXmlDoc;
