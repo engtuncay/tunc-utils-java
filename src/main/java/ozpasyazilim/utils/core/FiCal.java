@@ -447,6 +447,27 @@ public class FiCal {
         return cal.getTime();
     }
 
+  /**
+   * 0:Aralık
+   *
+   * @param lnMonthNo
+   * @return
+   */
+  public static Date getMonthStartDay(Integer lnMonthNo) {
+
+    if (lnMonthNo == null) return null;
+
+    // Ocak 0 dan başlıyor
+    lnMonthNo--;
+
+    Calendar cal = Calendar.getInstance();
+    clearTime(cal);
+    cal.set(Calendar.MONTH, lnMonthNo);
+    cal.set(Calendar.DATE, 1);
+    cal.set(Calendar.YEAR, Year.now().getValue());
+    return cal.getTime();
+  }
+
     public static Date getDateMonthBegin() {
         Calendar cal = Calendar.getInstance();
         clearTime(cal);
