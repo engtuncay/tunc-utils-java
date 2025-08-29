@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class FkbList extends ArrayList<FiKeyBean> {
+public class FkbList extends ArrayList<FiKeybean> {
 
 	List<FiCol> fiColList;
 
@@ -14,7 +14,7 @@ public class FkbList extends ArrayList<FiKeyBean> {
 		super();
 	}
 
-	public FkbList(Collection<? extends FiKeyBean> c) {
+	public FkbList(Collection<? extends FiKeybean> c) {
 		super(c);
 	}
 

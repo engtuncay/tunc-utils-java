@@ -1,6 +1,6 @@
 package ozpasyazilim.utils.table;
 
-import ozpasyazilim.utils.datatypes.FiKeyBean;
+import ozpasyazilim.utils.datatypes.FiKeybean;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,7 +10,7 @@ import java.util.Map;
 public class FiColList extends ArrayList<FiCol>{
 
 	Map<String, FiCol> mapCols;
-	FiKeyBean fkbParams;
+	FiKeybean fkbParams;
 
 	public FiColList() {
 	}
@@ -96,18 +96,18 @@ public class FiColList extends ArrayList<FiCol>{
 		getFkbParamsInit().addDbField(fiCol, value);
 	}
 
-	public FiKeyBean getFkbParams() {
+	public FiKeybean getFkbParams() {
 		return fkbParams;
 	}
 
-	public FiKeyBean getFkbParamsInit() {
+	public FiKeybean getFkbParamsInit() {
 		if (this.fkbParams == null) {
-			this.fkbParams = new FiKeyBean();
+			this.fkbParams = new FiKeybean();
 		}
 		return fkbParams;
 	}
 
-	public void setFkbParams(FiKeyBean fkbParams) {
+	public void setFkbParams(FiKeybean fkbParams) {
 		this.fkbParams = fkbParams;
 	}
 

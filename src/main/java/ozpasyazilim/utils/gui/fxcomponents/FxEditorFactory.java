@@ -12,7 +12,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.reactfx.EventStreams;
 import ozpasyazilim.utils.core.*;
 
-import ozpasyazilim.utils.datatypes.FiKeyBean;
+import ozpasyazilim.utils.datatypes.FiKeybean;
 import ozpasyazilim.utils.fidborm.FiReflectClass;
 import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.gui.components.ComboItemText;
@@ -655,9 +655,9 @@ public class FxEditorFactory {
      * @param fiColList
      * @return
      */
-    public static FiKeyBean bindFiColListToFkbByFilterNode(List<FiCol> fiColList) {
+    public static FiKeybean bindFiColListToFkbByFilterNode(List<FiCol> fiColList) {
 
-        FiKeyBean fiKeyBean = new FiKeyBean();
+        FiKeybean fiKeyBean = new FiKeybean();
 
         for (FiCol fiCol : fiColList) {
 
@@ -1127,7 +1127,7 @@ public class FxEditorFactory {
 
     }
 
-    public static void updateFiColsCompsWitFkbEntityByEditorValue(List<FiCol> listColumns, FiKeyBean fkbEntity) {
+    public static void updateFiColsCompsWitFkbEntityByEditorValue(List<FiCol> listColumns, FiKeybean fkbEntity) {
 
         if (fkbEntity == null) return;
 
@@ -1165,9 +1165,9 @@ public class FxEditorFactory {
 
     }
 
-    public static FiKeyBean bindFormToFkbByFilterNodeDraft(List<? extends IFiCol> listColumns) {
+    public static FiKeybean bindFormToFkbByFilterNodeDraft(List<? extends IFiCol> listColumns) {
 
-        FiKeyBean fiKeyBean = new FiKeyBean();
+        FiKeybean fiKeyBean = new FiKeybean();
 
         for (int i = 0; i < listColumns.size(); i++) {
 
@@ -1181,8 +1181,8 @@ public class FxEditorFactory {
 
     }
 
-    public static FiKeyBean bindFormToFkbByEditorNode(List<? extends IFiCol> listColumns) {
-        FiKeyBean fiKeyBean = new FiKeyBean();
+    public static FiKeybean bindFormToFkbByEditorNode(List<? extends IFiCol> listColumns) {
+        FiKeybean fiKeyBean = new FiKeybean();
         for (int i = 0; i < listColumns.size(); i++) {
             IFiCol iFiCol = listColumns.get(i);
             Object cellvalue = getNodeObjValue(iFiCol, iFiCol.getColEditorClass());    // map.get(iFiCol.getHeader());
@@ -1198,9 +1198,9 @@ public class FxEditorFactory {
      * @param listColumns
      * @return
      */
-    public static FiKeyBean getFkbColsByEditorNodeForFiCols(List<FiCol> listColumns) {
+    public static FiKeybean getFkbColsByEditorNodeForFiCols(List<FiCol> listColumns) {
 
-        FiKeyBean fiKeyBean = new FiKeyBean();
+        FiKeybean fiKeyBean = new FiKeybean();
 
         if(listColumns == null) return fiKeyBean;
 

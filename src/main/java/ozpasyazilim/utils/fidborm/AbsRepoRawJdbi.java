@@ -4,7 +4,7 @@ import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 import ozpasyazilim.utils.core.FiException;
 import ozpasyazilim.utils.core.FiString;
-import ozpasyazilim.utils.datatypes.FiKeyBean;
+import ozpasyazilim.utils.datatypes.FiKeybean;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.returntypes.Fdr;
 
@@ -90,7 +90,7 @@ public abstract class AbsRepoRawJdbi extends AbsRepoJdbiCore { //implements IRep
 		return sqlQuery;
 	}
 
-	public Fdr<Optional<Integer>> jdSelectSingleOptIntegerByMap(String sqlQuery, FiKeyBean map) {
+	public Fdr<Optional<Integer>> jdSelectSingleOptIntegerByMap(String sqlQuery, FiKeybean map) {
 
 		Jdbi jdbi = getJdbi();
 		Fdr<Optional<Integer>> fdr = new Fdr<>();
@@ -165,7 +165,7 @@ public abstract class AbsRepoRawJdbi extends AbsRepoJdbiCore { //implements IRep
 	}
 
 	// XNOTE jdbi transaction için güzel bir örnek - jdbi
-	public Fdr jdUpdateBatchWitTrans(List<String> queryList, FiKeyBean mapParams) {
+	public Fdr jdUpdateBatchWitTrans(List<String> queryList, FiKeybean mapParams) {
 
 		if (queryList == null || queryList.size() == 0) {
 			return new Fdr(false, "Boş sorgu");
@@ -276,7 +276,7 @@ public abstract class AbsRepoRawJdbi extends AbsRepoJdbiCore { //implements IRep
 		return fdr;
 	}
 
-	public Fdr<Integer> jdSelectSingleInt(String sql, FiKeyBean fiKeyBean) {
+	public Fdr<Integer> jdSelectSingleInt(String sql, FiKeybean fiKeyBean) {
 		return jdSelectSingleIntBindMapOrMinus1(sql, fiKeyBean);
 	}
 

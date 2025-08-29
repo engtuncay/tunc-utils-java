@@ -3,8 +3,8 @@ package ozpasyazilim.utils.fidborm;
 import org.jdbi.v3.core.Jdbi;
 import ozpasyazilim.utils.annotations.FiDraft;
 import ozpasyazilim.utils.core.*;
+import ozpasyazilim.utils.datatypes.FiKeybean;
 import ozpasyazilim.utils.datatypes.FiListString;
-import ozpasyazilim.utils.datatypes.FiKeyBean;
 import ozpasyazilim.utils.entitysql.EntSqlColumn;
 import ozpasyazilim.utils.ficols.FicRfcCoding;
 import ozpasyazilim.utils.gui.fxcomponents.FxEditorFactory;
@@ -1788,7 +1788,7 @@ public class FiQugen {
 
     }
 
-    FiKeyBean fkbTemplate = new FiKeyBean();
+    FiKeybean fkbTemplate = new FiKeybean();
     fkbTemplate.add("tableName", iFiTableMeta.getITxTableName());
     fkbTemplate.add("setBlock", txSetBlock.toString());
     fkbTemplate.add("whereBlock", txWhereBlock.toString());
@@ -1817,7 +1817,7 @@ public class FiQugen {
 
     }
 
-    FiKeyBean fkbTemplate = new FiKeyBean();
+    FiKeybean fkbTemplate = new FiKeybean();
     fkbTemplate.add("tableName", iFiTableMeta.getITxTableName());
     //fkbTemplate.add("setBlock", txSetBlock.toString());
     fkbTemplate.add("whereBlock", txWhereBlock.toString());
@@ -1918,7 +1918,7 @@ public class FiQugen {
       sbWhereCond.append("no where condition - error");
     }
 
-    FiKeyBean fkbTemplate = new FiKeyBean();
+    FiKeybean fkbTemplate = new FiKeybean();
     fkbTemplate.add("tableName", iFiTableMeta.getITxTableName());
     fkbTemplate.add("setParams", sbSetParams.toString());
     fkbTemplate.add("whereCond", sbWhereCond.toString());
@@ -1949,7 +1949,7 @@ public class FiQugen {
       indexParams++;
     }
 
-    FiKeyBean fkbTemplate = new FiKeyBean();
+    FiKeybean fkbTemplate = new FiKeybean();
     fkbTemplate.add("tableName", getTableName(clazz));
     fkbTemplate.add("csvFields", queryFields.toString());
     fkbTemplate.add("paramFields", queryParams.toString());
@@ -2002,7 +2002,7 @@ public class FiQugen {
 
     }
 
-    FiKeyBean fkbTemplate = new FiKeyBean();
+    FiKeybean fkbTemplate = new FiKeybean();
     fkbTemplate.add("tableName", iFiTableMeta.getITxTableName());
     fkbTemplate.add("csvFields", queryFields.toString());
     fkbTemplate.add("paramFields", queryParams.toString());
@@ -2333,7 +2333,7 @@ public class FiQugen {
    * @param fiKeyBean
    * @return
    */
-  public static String updateQueryWithFiMapParamByCandId(Class clazz, FiKeyBean fiKeyBean) {
+  public static String updateQueryWithFiMapParamByCandId(Class clazz, FiKeybean fiKeyBean) {
 
     List<FiField> listClassFields = FiReflectClass.getListFieldsShortWithId(clazz);
 
@@ -3270,7 +3270,7 @@ public class FiQugen {
         "{{fields}}\n" +
         ")";
 
-    FiKeyBean fiKeyBean = new FiKeyBean();
+    FiKeybean fiKeyBean = new FiKeybean();
     fiKeyBean.put("name", name);
     fiKeyBean.put("tableName", getTableName(clazz));
     fiKeyBean.put("fields", sbFields.toString());
@@ -4100,7 +4100,7 @@ public class FiQugen {
         ") as mainQuery\n" +
         "where mainQuery.lnRowNo >= @lnBegin and mainQuery.lnRowNo <= @lnEnd";
 
-    return FiString.substitutor(tempWrapQuery, FiKeyBean.bui().buiPut("txQuery", txQuery));
+    return FiString.substitutor(tempWrapQuery, FiKeybean.bui().buiPut("txQuery", txQuery));
 
   }
 

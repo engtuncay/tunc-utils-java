@@ -1,7 +1,7 @@
 package ozpasyazilim.utils.core;
 
 import org.apache.commons.lang3.text.StrSubstitutor;
-import ozpasyazilim.utils.datatypes.FiKeyBean;
+import ozpasyazilim.utils.datatypes.FiKeybean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 public class FiTemplateNum {
 
-    FiKeyBean fkbParams;
+    FiKeybean fkbParams;
 
     String txTemplate;
 
@@ -36,14 +36,14 @@ public class FiTemplateNum {
         this.txTemplate = txTemplate;
     }
 
-    public FiKeyBean getFkbParams() {
+    public FiKeybean getFkbParams() {
         if (fkbParams == null) {
-            fkbParams = new FiKeyBean();
+            fkbParams = new FiKeybean();
         }
         return fkbParams;
     }
 
-    public void setFkbParams(FiKeyBean fkbParams) {
+    public void setFkbParams(FiKeybean fkbParams) {
         this.fkbParams = fkbParams;
     }
 
@@ -86,7 +86,7 @@ public class FiTemplateNum {
     }
 
     // bunda bazılarını çevirmedi
-    public String substitutor(String txTemplate, FiKeyBean fiKeyBean) {
+    public String substitutor(String txTemplate, FiKeybean fiKeyBean) {
         StrSubstitutor sub = new StrSubstitutor(fiKeyBean, "{", "}");
         return sub.replace(txTemplate);
     }

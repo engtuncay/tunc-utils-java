@@ -32,7 +32,7 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.util.Callback;
-import ozpasyazilim.utils.datatypes.FiKeyBean;
+import ozpasyazilim.utils.datatypes.FiKeybean;
 
 // * @see TableColumn
 // * @see TableView
@@ -78,9 +78,9 @@ public class TableValueFactoryForFkb<S> implements Callback<CellDataFeatures<S, 
 	private ObservableValue<Object> getCellDataReflectively(S rowData) {
 		if (getProperty() == null || getProperty().isEmpty() || rowData == null) return null;
 
-		if (rowData instanceof FiKeyBean) {
+		if (rowData instanceof FiKeybean) {
 
-			FiKeyBean fiKeyBean = (FiKeyBean) rowData;
+			FiKeybean fiKeyBean = (FiKeybean) rowData;
 
 			if (fiKeyBean.containsKey(getProperty())) {
 				Object value = fiKeyBean.get(getProperty());

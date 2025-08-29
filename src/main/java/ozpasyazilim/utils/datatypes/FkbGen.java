@@ -5,7 +5,7 @@ import java.util.Map;
 /**
  * @param <E> Optional FiKeyBean ile ilgili meta data içeren class
  */
-public class FkbGen<E> extends FiKeyBean {
+public class FkbGen<E> extends FiKeybean {
 
     public FkbGen() {
     }

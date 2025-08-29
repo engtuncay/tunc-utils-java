@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 import ozpasyazilim.utils.core.FiBool;
 import ozpasyazilim.utils.core.FiCollection;
 import ozpasyazilim.utils.core.FiString;
-import ozpasyazilim.utils.datatypes.FiKeyBean;
+import ozpasyazilim.utils.datatypes.FiKeybean;
 import ozpasyazilim.utils.fxwindow.FiDialogMetaType;
 import ozpasyazilim.utils.gui.fxTableViewExtra.EnumColNodeType;
 import ozpasyazilim.utils.log.Loghelper;
@@ -45,7 +45,7 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
     /**
      * form objesi fikeybean türünde ise, fikeybean den alınır veriler
      */
-    private FiKeyBean refFormFkb;
+    private FiKeybean refFormFkb;
 
     /**
      * Form güncellemek amacıyla açıldığını belirtir
@@ -154,13 +154,13 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
      *
      * @return
      */
-    public FiKeyBean getFormAsFkb() {
+    public FiKeybean getFormAsFkb() {
         return FxEditorFactory.getFkbColsByEditorNodeForFiCols(getListFormElements());
     }
 
-    public FiKeyBean getFormAsFkbNotNullKeys() {
+    public FiKeybean getFormAsFkbNotNullKeys() {
 
-        FiKeyBean formAsFkb = FxEditorFactory.getFkbColsByEditorNodeForFiCols(getListFormElements());
+        FiKeybean formAsFkb = FxEditorFactory.getFkbColsByEditorNodeForFiCols(getListFormElements());
 
         List<Object> listDeletedKey = new ArrayList<>();
 
@@ -514,15 +514,15 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
         this.fnValidateForm = fnValidateForm;
     }
 
-    public FiKeyBean getRefFormFkb() {
+    public FiKeybean getRefFormFkb() {
         return refFormFkb;
     }
 
-    public void setRefFormFkb(FiKeyBean refFormFkb) {
+    public void setRefFormFkb(FiKeybean refFormFkb) {
         this.refFormFkb = refFormFkb;
     }
 
-    public void updateFormWitFkb(FiKeyBean fkbParams) {
+    public void updateFormWitFkb(FiKeybean fkbParams) {
         setRefFormFkb(fkbParams);
         FxEditorFactory.updateFiColsCompsWitFkbEntityByEditorValue(getListFormElements(), fkbParams);
         trigEventsAfterFormLoaded();

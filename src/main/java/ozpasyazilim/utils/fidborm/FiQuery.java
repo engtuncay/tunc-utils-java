@@ -3,7 +3,7 @@ package ozpasyazilim.utils.fidborm;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import ozpasyazilim.utils.core.*;
-import ozpasyazilim.utils.datatypes.FiKeyBean;
+import ozpasyazilim.utils.datatypes.FiKeybean;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.table.FiColList;
 
@@ -21,7 +21,7 @@ import java.util.*;
 public class FiQuery {
 
   String txQuery;
-  FiKeyBean mapParams; // Map<String,Object>
+  FiKeybean mapParams; // Map<String,Object>
   String txCandIdFieldName;
   String txPrimaryKeyFieldName;
 
@@ -42,9 +42,9 @@ public class FiQuery {
     this.txQuery = sql;
   }
 
-  public FiQuery(String sql, FiKeyBean fkbParams) {
+  public FiQuery(String sql, FiKeybean fkbParams) {
     this.txQuery = sql;
-    this.mapParams = new FiKeyBean(fkbParams);
+    this.mapParams = new FiKeybean(fkbParams);
   }
 
   public static FiQuery bui() {
@@ -55,7 +55,7 @@ public class FiQuery {
     return new FiQuery(sql);
   }
 
-  public static FiQuery bui(String sql, FiKeyBean fkbParams) {
+  public static FiQuery bui(String sql, FiKeybean fkbParams) {
     return new FiQuery(sql, fkbParams);
   }
 
@@ -100,7 +100,7 @@ public class FiQuery {
    *
    * @param mapBind
    */
-  public void convertListParamsToMultiParams(FiKeyBean mapBind) {
+  public void convertListParamsToMultiParams(FiKeybean mapBind) {
     setMapParams(mapBind);
     convertListParamsToMultiParams();
   }
@@ -117,18 +117,18 @@ public class FiQuery {
     setTxQuery(Fiqt.convertSingleParamToMultiParam2(getTxQuery(), getMapParams(), txParamName, collParams, false, txCombineSeperator));
   }
 
-  public FiKeyBean getMapParams() {
+  public FiKeybean getMapParams() {
     return mapParams;
   }
 
-  public FiKeyBean getMapParamsInit() {
+  public FiKeybean getMapParamsInit() {
     if (mapParams == null) {
-      mapParams = new FiKeyBean();
+      mapParams = new FiKeybean();
     }
     return mapParams;
   }
 
-  public FiQuery setMapParams(FiKeyBean mapParams) {
+  public FiQuery setMapParams(FiKeybean mapParams) {
     this.mapParams = mapParams;
     return this;
   }

@@ -17,7 +17,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.tbee.javafx.scene.layout.MigPane;
 import ozpasyazilim.utils.annotations.FiDraft;
 import ozpasyazilim.utils.core.*;
-import ozpasyazilim.utils.datatypes.FiKeyBean;
+import ozpasyazilim.utils.datatypes.FiKeybean;
 import ozpasyazilim.utils.datatypes.FiListString;
 import ozpasyazilim.utils.fxwindow.FiArbFormWindowDiaCont;
 import ozpasyazilim.utils.gui.components.TableValueFactoryForFkb;
@@ -159,7 +159,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     /**
      * Header gelen fkb'ye ek olarak alanlar buraya eklenebilir.
      */
-    private FiKeyBean fkbHeaderFilterExtra;
+    private FiKeybean fkbHeaderFilterExtra;
     private FiColList ficsFormElemsHeaderFilterExtra;
 
     IFxTableCont iFxTableCont;
@@ -264,8 +264,8 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
         return getItemsCurrentFi(ent -> {
 
-            if (ent instanceof FiKeyBean) {
-                FiKeyBean fkbRow = (FiKeyBean) ent;
+            if (ent instanceof FiKeybean) {
+                FiKeybean fkbRow = (FiKeybean) ent;
                 return FiBool.or(fkbRow.getAsBoolean(fieldnameForSelection), false);
             }
 
@@ -285,8 +285,8 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
         FilteredList<EntClazz> itemsCurrentFi = getItemsCurrentFi(ent -> {
 
-            if (ent instanceof FiKeyBean) {
-                FiKeyBean fkbRow = (FiKeyBean) ent;
+            if (ent instanceof FiKeybean) {
+                FiKeybean fkbRow = (FiKeybean) ent;
                 return FiBool.or(fkbRow.getAsBoolean(fieldForSelection), false);
             }
 
@@ -313,8 +313,8 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
         FilteredList<EntClazz> itemsCurrentFi = getItemsCurrentFi(ent -> {
 
-            if (ent instanceof FiKeyBean) {
-                FiKeyBean fkbRow = (FiKeyBean) ent;
+            if (ent instanceof FiKeybean) {
+                FiKeybean fkbRow = (FiKeybean) ent;
                 return FiBool.or(fkbRow.getAsBoolean(fieldForSelection), false);
             }
 
@@ -359,8 +359,8 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
         return getItemsCurrentFi(ent -> {
 
-            if (ent instanceof FiKeyBean) {
-                FiKeyBean fkbRow = (FiKeyBean) ent;
+            if (ent instanceof FiKeybean) {
+                FiKeybean fkbRow = (FiKeybean) ent;
                 return FiBool.or(fkbRow.getAsBoolean(getFiColSelection().getOfcTxFieldName()), false);
             }
 
@@ -378,8 +378,8 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
         return getItemsCurrentFi(ent -> {
 
-            if (ent instanceof FiKeyBean) {
-                FiKeyBean fkbRow = (FiKeyBean) ent;
+            if (ent instanceof FiKeybean) {
+                FiKeybean fkbRow = (FiKeybean) ent;
                 return FiBool.or(fkbRow.getAsBoolean(getFiColSelection().getOfcTxFieldName()), false);
             }
 
@@ -392,8 +392,8 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
         FilteredList<EntClazz> itemsCurrentFi = getItemsAllFromSourceFi(ent -> {
 
-            if (ent instanceof FiKeyBean) {
-                FiKeyBean fkbRow = (FiKeyBean) ent;
+            if (ent instanceof FiKeybean) {
+                FiKeybean fkbRow = (FiKeybean) ent;
                 return FiBool.or(fkbRow.getAsBoolean(getFiColSelection().getOfcTxFieldName()), false);
             }
 
@@ -419,7 +419,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
      *
      * @return
      */
-    public FiKeyBean getHeaderFilterAsFkb() {
+    public FiKeybean getHeaderFilterAsFkb() {
         return FxEditorFactory.bindFiColListToFkbByFilterNode(getFiColList());
     }
 
@@ -1144,9 +1144,9 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
                     Object objCellValue = null;
 
                     if (FiBool.isTrue(getBoFkbEnabled())) {
-                        if (ent instanceof FiKeyBean) {
+                        if (ent instanceof FiKeybean) {
                             //Loghelper.get(getClass()).debug("FiKeybean Row Instance");
-                            FiKeyBean fkbEnd = (FiKeyBean) ent;
+                            FiKeybean fkbEnd = (FiKeybean) ent;
                             objCellValue = fkbEnd.getAsObj(refFiCol.getOfcTxFieldName());
                         }
                     } else {
@@ -2441,7 +2441,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
                 if (keyEvent.getCode() == KeyCode.ENTER) {
 
                     if (getColRemoteFilterEnterEvent() != null) {
-                        FiKeyBean fkbFilter = getHeaderFilterAsFkb();
+                        FiKeybean fkbFilter = getHeaderFilterAsFkb();
 
                         FiListString fullKeyList = fkbFilter.getFullKeys();
 
@@ -2604,7 +2604,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
             //emmFormWindowCont.getFormMain().setFormTypeSelected(FormType.PlainFormV1);
 
             emmFormWindowCont.setFnSaveClose(() -> {
-                FiKeyBean formAsFkb = emmFormWindowCont.getFormMain().getFormAsFkbNotNullKeys();
+                FiKeybean formAsFkb = emmFormWindowCont.getFormMain().getFormAsFkbNotNullKeys();
                 formAsFkb.logParams();
                 setFkbHeaderFilterExtra(formAsFkb);
                 return Fdr.bui(true);
@@ -2918,18 +2918,18 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         return btnPageEnd;
     }
 
-    public FiKeyBean getFkbHeaderFilterExtra() {
+    public FiKeybean getFkbHeaderFilterExtra() {
         return fkbHeaderFilterExtra;
     }
 
-    public FiKeyBean getFkbHeaderFilterExtraInit() {
+    public FiKeybean getFkbHeaderFilterExtraInit() {
         if (fkbHeaderFilterExtra == null) {
-            fkbHeaderFilterExtra = new FiKeyBean();
+            fkbHeaderFilterExtra = new FiKeybean();
         }
         return fkbHeaderFilterExtra;
     }
 
-    public void setFkbHeaderFilterExtra(FiKeyBean fkbHeaderFilterExtra) {
+    public void setFkbHeaderFilterExtra(FiKeybean fkbHeaderFilterExtra) {
         this.fkbHeaderFilterExtra = fkbHeaderFilterExtra;
     }
 

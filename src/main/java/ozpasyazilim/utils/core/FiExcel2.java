@@ -22,7 +22,7 @@ import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.RegionUtil;
 import org.apache.poi.xssf.usermodel.*;
-import ozpasyazilim.utils.datatypes.FiKeyBean;
+import ozpasyazilim.utils.datatypes.FiKeybean;
 import ozpasyazilim.utils.datatypes.FkbList;
 import ozpasyazilim.utils.gui.fxcomponents.*;
 import ozpasyazilim.utils.log.Loghelper;
@@ -1206,7 +1206,7 @@ public class FiExcel2 {
 
         for (int indexRow = 0; indexRow < fkbList.size(); indexRow++) { // For each
 
-            FiKeyBean rowent = fkbList.get(indexRow);
+            FiKeybean rowent = fkbList.get(indexRow);
 
             for (int colIndex = 0; colIndex < fiCols.size(); colIndex++) { // For each table column
 

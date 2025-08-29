@@ -1,6 +1,6 @@
 package ozpasyazilim.utils.repoSql;
 
-import ozpasyazilim.utils.datatypes.FiKeyBean;
+import ozpasyazilim.utils.datatypes.FiKeybean;
 import ozpasyazilim.utils.entitysql.EntSqlColumn;
 import org.jdbi.v3.core.Jdbi;
 import ozpasyazilim.utils.fidborm.AbsRepoGenJdbi;
@@ -19,7 +19,7 @@ public class RepoSqlColumn extends AbsRepoGenJdbi<EntSqlColumn> {
 
 	public Fdr<List<EntSqlColumn>> selectColumnsAll(String txTableName) {
 
-		FiKeyBean fiKeyBean = FiKeyBean.bui().buiPut("txTableName", txTableName);
+		FiKeybean fiKeyBean = FiKeybean.bui().buiPut("txTableName", txTableName);
 
 		String sql = "--sq202203031657\n" +
 				"SELECT col.COLUMN_NAME,col.DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS col\n" +
@@ -30,7 +30,7 @@ public class RepoSqlColumn extends AbsRepoGenJdbi<EntSqlColumn> {
 
 	public Fdr<List<EntSqlColumn>> selectColumnsAllDetailed(String txTableName) {
 
-		FiKeyBean fiKeyBean = FiKeyBean.bui().buiPut("txTableName", txTableName);
+		FiKeybean fiKeyBean = FiKeybean.bui().buiPut("txTableName", txTableName);
 
 		String sql = "--sq202307081736\n" +
 				"--$ver 1\n" +

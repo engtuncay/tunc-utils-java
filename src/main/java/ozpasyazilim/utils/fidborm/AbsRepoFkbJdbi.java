@@ -3,7 +3,7 @@ package ozpasyazilim.utils.fidborm;
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 import ozpasyazilim.utils.core.FiException;
-import ozpasyazilim.utils.datatypes.FiKeyBean;
+import ozpasyazilim.utils.datatypes.FiKeybean;
 import ozpasyazilim.utils.datatypes.FkbList;
 import ozpasyazilim.utils.jdbi.FiKeyBeanMapper;
 import ozpasyazilim.utils.log.Loghelper;
@@ -48,13 +48,13 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
     }
 
     // Sorgu Metodları
-    public Fdr<List<FiKeyBean>> jdSelectListFkb2BindMapMain(String sqlQuery, Map<String, Object> mapBind) {
+    public Fdr<List<FiKeybean>> jdSelectListFkb2BindMapMain(String sqlQuery, Map<String, Object> mapBind) {
 
-        Fdr<List<FiKeyBean>> fdr = new Fdr<>();
+        Fdr<List<FiKeybean>> fdr = new Fdr<>();
         fdr.setValue(new ArrayList<>());
 
         try {
-            List<FiKeyBean> result = getJdbi().withHandle(handle -> {
+            List<FiKeybean> result = getJdbi().withHandle(handle -> {
                 return handle.createQuery(Fiqt.stoj(sqlQuery))
                         .bindMap(mapBind)
                         .map(new FiKeyBeanMapper(false))
@@ -81,7 +81,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
         fdr.setValue(new FkbList());
 
         try {
-            List<FiKeyBean> result = getJdbi().withHandle(handle -> {
+            List<FiKeybean> result = getJdbi().withHandle(handle -> {
                 return handle.createQuery(Fiqt.stoj(sqlQuery))
                         .bindMap(mapBind)
                         .map(new FiKeyBeanMapper(false))
@@ -104,7 +104,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
         fdr.setValue(new FkbList());
 
         try {
-            List<FiKeyBean> result = getJdbi().withHandle(handle -> {
+            List<FiKeybean> result = getJdbi().withHandle(handle -> {
                 return handle.createQuery(Fiqt.stoj(sqlQuery))
                         .bindMap(mapBind)
                         .map(new FiKeyBeanMapper(false))
@@ -128,7 +128,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
      * @param fiMapParams
      * @return
      */
-    public Fdr<Integer> jdSelectSingleIntOrMinus1(String sql, FiKeyBean fiMapParams) {
+    public Fdr<Integer> jdSelectSingleIntOrMinus1(String sql, FiKeybean fiMapParams) {
         Fdr<Integer> fdrSql = jdSelectSingleEntityBindMap(sql, fiMapParams, Integer.class);
         if (fdrSql.getValue() == null) {
             fdrSql.setValue(-1);
@@ -136,13 +136,13 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
         return fdrSql;
     }
 
-    public Fdr<FiKeyBean> jdSelectFkbSingleBindMapMain(String sqlQuery, Map<String, Object> mapBind) {
+    public Fdr<FiKeybean> jdSelectFkbSingleBindMapMain(String sqlQuery, Map<String, Object> mapBind) {
 
-        Fdr<FiKeyBean> fdr = new Fdr<>();
-        fdr.setValue(new FiKeyBean());
+        Fdr<FiKeybean> fdr = new Fdr<>();
+        fdr.setValue(new FiKeybean());
 
         try {
-            Optional<FiKeyBean> result = getJdbi().withHandle(handle -> {
+            Optional<FiKeybean> result = getJdbi().withHandle(handle -> {
                 return handle.createQuery(Fiqt.stoj(sqlQuery))
                         .bindMap(mapBind)
                         .map(new FiKeyBeanMapper(false))
@@ -171,7 +171,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
      * @param fiKeyBean
      * @return
      */
-    public Fdr<Integer> jdSelectSingleInt(String sql, FiKeyBean fiKeyBean) {
+    public Fdr<Integer> jdSelectSingleInt(String sql, FiKeybean fiKeyBean) {
         return jdSelectSingleEntityBindMap(sql, fiKeyBean, Integer.class);
     }
 
@@ -303,7 +303,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
         this.iFiTableMeta = iFiTableMeta;
     }
 
-    public Fdr jdInsFkb(FiKeyBean formAsFkb, Boolean boInserFieldsOnly, IFiTableMeta iFiTableMeta) {
+    public Fdr jdInsFkb(FiKeybean formAsFkb, Boolean boInserFieldsOnly, IFiTableMeta iFiTableMeta) {
 
         if (iFiTableMeta == null) iFiTableMeta = getiFiTableMeta();
 
@@ -321,7 +321,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
      * @param boUpdateFieldsOnly : updateField true olanlar sorguda güncellenir
      * @return
      */
-    public Fdr jdUpFkbByIdFields(FiKeyBean formAsFkb, Boolean boUpdateFieldsOnly) {
+    public Fdr jdUpFkbByIdFields(FiKeybean formAsFkb, Boolean boUpdateFieldsOnly) {
         String sql = FiQugen.updateFiColsArb(getiFiTableMeta(), formAsFkb.getListFiColInit(), boUpdateFieldsOnly);
 
         FiQuery fiQuery = new FiQuery(sql, formAsFkb);
@@ -330,7 +330,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
         return jdInsertFiQuery(fiQuery);
     }
 
-    public Fdr jdDeleteFkbByIdCols(FiKeyBean fiKeyBean, IFiTableMeta iFiTableMeta) {
+    public Fdr jdDeleteFkbByIdCols(FiKeybean fiKeyBean, IFiTableMeta iFiTableMeta) {
 
         String sql = FiQugen.deleteWhereIdFiColsV2(iFiTableMeta, fiKeyBean.getListFiColInit());
 
@@ -340,7 +340,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
         return jdDeleteFiQuery(fiQuery);
     }
 
-    public Fdr jdDeleteFkbByIdColsV2(FiKeyBean fiKeyBean, IFiTableMeta iFiTableMeta, List<FiCol> fiCols) {
+    public Fdr jdDeleteFkbByIdColsV2(FiKeybean fiKeyBean, IFiTableMeta iFiTableMeta, List<FiCol> fiCols) {
 
         String sql = FiQugen.deleteWhereIdFiColsV2(iFiTableMeta, fiCols);
 
@@ -356,9 +356,9 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
      * @param fkbList
      * @return
      */
-    public Fdr jdDeleteListById(List<FiKeyBean> fkbList) {
+    public Fdr jdDeleteListById(List<FiKeybean> fkbList) {
         Fdr fdrMain = new Fdr();
-        for (FiKeyBean fiKeyBean : fkbList) {
+        for (FiKeybean fiKeyBean : fkbList) {
             Fdr fdrDelete = jdDeleteFkbByIdCols(fiKeyBean, getiFiTableMeta());
             fdrMain.combineAnd(fdrDelete);
         }
@@ -376,7 +376,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
 
         //Loghelper.get(getClass()).debug("FkbList.getFiColList():" + FiConsole.textListObjectsNotNullFields(fkbList.getFiColList()));
 
-        for (FiKeyBean fiKeyBean : fkbList) {
+        for (FiKeybean fiKeyBean : fkbList) {
             Fdr fdrDelete = jdDeleteFkbByIdColsV2(fiKeyBean, getiFiTableMeta(), fkbList.getFiColList());
             fdrMain.combineAnd(fdrDelete);
         }

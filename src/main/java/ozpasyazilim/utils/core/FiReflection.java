@@ -2,7 +2,7 @@ package ozpasyazilim.utils.core;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.util.ReflectionUtils;
-import ozpasyazilim.utils.datatypes.FiKeyBean;
+import ozpasyazilim.utils.datatypes.FiKeybean;
 import ozpasyazilim.utils.fidborm.FiReflectClass;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.mvc.IFiCol;
@@ -317,11 +317,11 @@ public class FiReflection {
 		return list;
 	}
 
-	public static <E> E bindKeyBeanToEntity(FiKeyBean keyBean, Class<E> entityclass) {
+	public static <E> E bindKeyBeanToEntity(FiKeybean keyBean, Class<E> entityclass) {
 		return bindKeyBeanToEntityMain(keyBean, entityclass, false);
 	}
 
-	public static <E> E bindKeyBeanToEntityMain(FiKeyBean keyBean, Class<E> entityclass, Boolean boDoNotShowNotSuchMethodException) {
+	public static <E> E bindKeyBeanToEntityMain(FiKeybean keyBean, Class<E> entityclass, Boolean boDoNotShowNotSuchMethodException) {
 
 		E entity = createObject(entityclass);
 
@@ -405,13 +405,13 @@ public class FiReflection {
 		return mapFields;
 	}
 
-	public static FiKeyBean convertEntityToFiKeybean(Class clazz, Object entity) {
+	public static FiKeybean convertEntityToFiKeybean(Class clazz, Object entity) {
 
 		if (clazz == null) return null;
 
 		Field[] fields = clazz.getDeclaredFields();
 
-		FiKeyBean fiKeyBean = new FiKeyBean();
+		FiKeybean fiKeyBean = new FiKeybean();
 
 		for (Field field : fields) {
 			Object property = FiReflection.getProperty(entity, field.getName());
@@ -719,7 +719,7 @@ public class FiReflection {
 
 	}
 
-	public static <E> void bindKeyBeanToEntity(FiKeyBean keyBean, E entity, Class<E> clazz, Boolean boAddOnlyNtnFields) {
+	public static <E> void bindKeyBeanToEntity(FiKeybean keyBean, E entity, Class<E> clazz, Boolean boAddOnlyNtnFields) {
 
 		Field[] fields = clazz.getDeclaredFields();
 

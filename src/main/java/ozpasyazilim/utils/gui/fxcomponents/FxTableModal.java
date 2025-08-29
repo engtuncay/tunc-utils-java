@@ -2,7 +2,7 @@ package ozpasyazilim.utils.gui.fxcomponents;
 
 import javafx.geometry.Pos;
 import ozpasyazilim.utils.core.*;
-import ozpasyazilim.utils.datatypes.FiKeyBean;
+import ozpasyazilim.utils.datatypes.FiKeybean;
 import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.OzColSummaryType;
@@ -208,8 +208,8 @@ public class FxTableModal {
                 if (fiCol.getSummaryType() == OzColSummaryType.SUM) {
 
                     Double sumDouble = FiNumberToText.sumValuesDouble(listdata, ent -> {
-                        if (ent instanceof FiKeyBean) {
-                            return ((FiKeyBean) ent).getAsDoubleOrZero(fiCol);
+                        if (ent instanceof FiKeybean) {
+                            return ((FiKeybean) ent).getAsDoubleOrZero(fiCol);
                         }
                         return 0d;
                     });

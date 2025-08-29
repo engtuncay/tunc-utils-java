@@ -28,7 +28,7 @@ import org.jdbi.v3.core.mapper.CaseStrategy;
 import org.jdbi.v3.core.mapper.MapMappers;
 import org.jdbi.v3.core.mapper.RowMapper;
 import org.jdbi.v3.core.statement.StatementContext;
-import ozpasyazilim.utils.datatypes.FiKeyBean;
+import ozpasyazilim.utils.datatypes.FiKeybean;
 
 /**
  * MapMapper , FiKeyBean'e uyarlandı.
@@ -39,7 +39,7 @@ import ozpasyazilim.utils.datatypes.FiKeyBean;
  * <p>
  * //@see GenericMapMapperFactory
  */
-public class FiKeyBeanMapper implements RowMapper<FiKeyBean> {
+public class FiKeyBeanMapper implements RowMapper<FiKeybean> {
 	/**
 	 * @deprecated remove
 	 */
@@ -64,16 +64,16 @@ public class FiKeyBeanMapper implements RowMapper<FiKeyBean> {
 	}
 
 	@Override
-	public FiKeyBean map(ResultSet rs, StatementContext ctx) throws SQLException {
+	public FiKeybean map(ResultSet rs, StatementContext ctx) throws SQLException {
 		return specialize(rs, ctx).map(rs, ctx);
 	}
 
 	@Override
-	public RowMapper<FiKeyBean> specialize(ResultSet rs, StatementContext ctx) throws SQLException {
+	public RowMapper<FiKeybean> specialize(ResultSet rs, StatementContext ctx) throws SQLException {
 		final List<String> columnNames = getColumnNames(rs, caseStrategy.apply(ctx));
 
 		return (r, c) -> {
-			FiKeyBean row = new FiKeyBean(columnNames.size());
+			FiKeybean row = new FiKeybean(columnNames.size());
 
 			for (int i = 0; i < columnNames.size(); i++) {
 				row.put(columnNames.get(i), rs.getObject(i + 1));

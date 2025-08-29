@@ -3,7 +3,7 @@ package ozpasyazilim.utils.fidborm;
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 import ozpasyazilim.utils.core.FiException;
-import ozpasyazilim.utils.datatypes.FiKeyBean;
+import ozpasyazilim.utils.datatypes.FiKeybean;
 import ozpasyazilim.utils.jdbi.FiKeyBeanMapper;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.returntypes.Fdr;
@@ -163,7 +163,7 @@ public class AbsRepoGenMainJdbi<EntClazz> extends AbsRepoJdbiCore {
 
     }
 
-    public Fdr<List<EntClazz>> jdSelectListBindObjectMain(String sqlQuery, Object entClazz, FiKeyBean mapParams) {
+    public Fdr<List<EntClazz>> jdSelectListBindObjectMain(String sqlQuery, Object entClazz, FiKeybean mapParams) {
 
         if (entityClass == null) setAutoClass();
 
@@ -236,13 +236,13 @@ public class AbsRepoGenMainJdbi<EntClazz> extends AbsRepoJdbiCore {
         return fdr;
     }
 
-    public Fdr<List<FiKeyBean>> jdSelectFkbListBindMapMain(String sqlQuery, Map<String, Object> mapBind) {
+    public Fdr<List<FiKeybean>> jdSelectFkbListBindMapMain(String sqlQuery, Map<String, Object> mapBind) {
 
-        Fdr<List<FiKeyBean>> fdr = new Fdr<>();
+        Fdr<List<FiKeybean>> fdr = new Fdr<>();
         fdr.setValue(new ArrayList<>());
 
         try {
-            List<FiKeyBean> result = getJdbi().withHandle(handle -> {
+            List<FiKeybean> result = getJdbi().withHandle(handle -> {
                 return handle.createQuery(Fiqt.stoj(sqlQuery))
                         .bindMap(mapBind)
                         .map(new FiKeyBeanMapper(false))
@@ -259,7 +259,7 @@ public class AbsRepoGenMainJdbi<EntClazz> extends AbsRepoJdbiCore {
         return fdr;
     }
 
-    public Fdr<List<String>> jdSelectListStringMain(String sql, FiKeyBean fiKeyBean) {
+    public Fdr<List<String>> jdSelectListStringMain(String sql, FiKeybean fiKeyBean) {
         Fdr<List<String>> fdr = new Fdr<>();
         fdr.setValue(new ArrayList<>());
 

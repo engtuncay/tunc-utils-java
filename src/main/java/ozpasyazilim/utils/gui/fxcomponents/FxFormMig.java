@@ -1,8 +1,5 @@
 package ozpasyazilim.utils.gui.fxcomponents;
 
-import ozpasyazilim.utils.datatypes.FiKeyBean;
-import ozpasyazilim.utils.log.Loghelper;
-
 import java.util.List;
 
 public class FxFormMig extends FxFormMigGen<Object> {
