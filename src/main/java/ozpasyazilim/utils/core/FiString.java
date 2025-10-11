@@ -964,4 +964,32 @@ public class FiString {
         }
         return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
+
+  /**
+   * Eğer txValue başında harf varsa, onu kaldırır.
+   *
+   * @param txValue Güncellenmesi gereken değer
+   * @return Güncellenmiş değer
+   */
+  public static String removeFirstLetterIfPresent(String txValue) {
+
+    if (!FiString.isEmpty(txValue) && Character.isLetter(txValue.charAt(0))) {
+      return txValue.substring(1);
+    }
+
+    return txValue;
+  }
+
+  /**
+   * txValue içerisindeki baştaki tüm harfleri kaldırır.
+   *
+   * @param txValue Güncellenmesi gereken değer
+   * @return Güncellenmiş değer
+   */
+  public static String removeLeadingLetters(String txValue) {
+    if (!FiString.isEmptyTrim(txValue)) {
+      return txValue.replaceFirst("^[a-zA-Z]+", "");
+    }
+    return txValue;
+  }
 }
