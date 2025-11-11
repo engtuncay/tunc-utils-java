@@ -238,7 +238,7 @@
             <groupId>com.miglayout</groupId>
             <artifactId>miglayout-javafx</artifactId>
             <version>5.2</version>
-            <scope>compile</scope>
+            <!--<scope>compile</scope>-->
         </dependency>
 
         <!-- MigLayout Swing Library-->
