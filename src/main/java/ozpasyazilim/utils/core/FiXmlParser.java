@@ -21,7 +21,9 @@ import java.util.List;
 
 import static org.joox.JOOX.$;
 
-
+/**
+ * URTODO FkbList'e parse edecek method yazılacak
+ */
 public class FiXmlParser {
 
 	public static FiXmlParser bui() {
