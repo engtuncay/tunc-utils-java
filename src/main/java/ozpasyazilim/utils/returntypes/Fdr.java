@@ -26,13 +26,17 @@ import java.util.*;
 public class Fdr<EntClazz> implements IFdr<EntClazz> {
 
   /**
-   * True ise sorgu başarıyla çalıştırıldığını ifade eder (exception'a düşmemiş)
+   * Sql Sorguları için : True ise sorgu başarıyla çalıştırıldığını ifade eder (exception'a düşmemiş)
    * <p>
    * False ise sorguda hata olup,exception oluşmuştur
    * <p>
    * Null ise işlem yapılmadığını ifade eder (last update:29-12-2019)
    * <p>
    * boQueryExecuted alternatif adı
+   * <p>
+   * Farklı işlemlerde işlemin sonucu : başarılı - başarısız - işlem yapılmadı
+   * <p>
+   * gibi durumları ifade etmek için kullanılır
    */
   private Boolean fdrBoResult;
 
@@ -691,12 +695,12 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     return false;
   }
 
-  public void setBoExecAndMsg(Boolean boResult, String message) {
+  public void setBoResultAndMsg(Boolean boResult, String message) {
     setFdrBoResult(boResult);
     setFdrTxMessage(message);
   }
 
-  public Fdr buiBoExec(Boolean boExec, Exception ex) {
+  public Fdr buiBoResult(Boolean boExec, Exception ex) {
     setFdrBoResult(boExec);
     setException(ex);
     if (FiString.isEmpty(getFdrTxMessage())) {
@@ -705,7 +709,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     return this;
   }
 
-  public Fdr buiBoExec(Boolean b) {
+  public Fdr buiBoResult(Boolean b) {
     setFdrBoResult(b);
     return this;
   }

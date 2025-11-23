@@ -28,7 +28,7 @@ public class FiPdf {
 
         Fdr fdrMain = new Fdr();
 
-        if(FiCollection.isEmpty(fileList))return fdrMain.buiBoExec(false);
+        if(FiCollection.isEmpty(fileList))return fdrMain.buiBoResult(false);
 
         PDFMergerUtility pdfMergerUtility = new PDFMergerUtility();
 
@@ -47,7 +47,7 @@ public class FiPdf {
         } catch (IOException e) {
             //e.printStackTrace();
 
-            fdrMain.buiBoExec(false,e);
+            fdrMain.buiBoResult(false,e);
         }
 
         return fdrMain;
