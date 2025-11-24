@@ -5,7 +5,9 @@ package ozpasyazilim.utils.datatypes;
  * <p>
  * txLabel,lnCode gibi ekstra özellikler eklenmiştir. Integer-String value şeklinde de kullanılabilir.
  * <p>
- * toString de txKey'i döner
+ * toString de txKey'i döner (!!!)
+ * <p>
+ * equals ise txKey'e göre karşılaştırma yapar.
  */
 public class FiMeta {
 
