@@ -20,7 +20,7 @@ public class FiPropertyFile {
 		//Loghelperr.getInstance(getClassi()).debug("path:"+path);
 		//System.out.println("Path:"+path);
 
-		try (InputStream input = new FileInputStream(relativePath)) { //"path/to/config.properties"
+		try (InputStream input = Files.newInputStream(Paths.get(relativePath))) { //"path/to/config.properties"
 
 			Properties prop = new Properties();
 
@@ -33,7 +33,9 @@ public class FiPropertyFile {
 			return prop;
 
 		} catch (IOException ex) {
-			ex.printStackTrace();
+			//ex.printStackTrace();
+      System.out.println("Properties File Okunurken Hata oluştu. File:"+ relativePath);
+      Loghelper.get(getClassi()).error(FiException.exTosMain(ex));
 		}
 
 		return null;
@@ -44,27 +46,27 @@ public class FiPropertyFile {
 		return FiPropertyFile.class;
 	}
 
-	public static void writeProperties(Properties prop, String filePath) {
-
-		try (OutputStream output = new FileOutputStream(filePath)) { //"filePath/to/config.properties"
-
-//			Properties prop = new Properties();
+//	public static void writeProperties(Properties prop, String filePath) {
 //
-			//// set the properties value
-//			prop.setProperty("db.url", "localhost");
-//			prop.setProperty("db.user", "mkyong");
-//			prop.setProperty("db.password", "password");
-
-			// save properties to project root folder
-			prop.store(output, null);
-
-			//System.out.println(prop);
-
-		} catch (IOException io) {
-			io.printStackTrace();
-		}
-
-	}
+//		try (OutputStream output = new FileOutputStream(filePath)) { //"filePath/to/config.properties"
+//
+////			Properties prop = new Properties();
+////
+//			//// set the properties value
+////			prop.setProperty("db.url", "localhost");
+////			prop.setProperty("db.user", "mkyong");
+////			prop.setProperty("db.password", "password");
+//
+//			// save properties to project root folder
+//			prop.store(output, null);
+//
+//			//System.out.println(prop);
+//
+//		} catch (IOException io) {
+//			io.printStackTrace();
+//		}
+//
+//	}
 
 	public static Map<String, String> readPropFile1(String fileName) {
 
@@ -75,7 +77,7 @@ public class FiPropertyFile {
 		} catch (IOException exception) {
 			System.out.println("Prop File Okunurken Hata oluştu.");
 			Loghelper.get(getClassi()).error("Prop File Okunurken Hata Oluştu :"+fileName);
-			Loghelper.get(FiPropertyFile.class).error(FiException.exTosMain(exception));
+			Loghelper.get(getClassi()).error(FiException.exTosMain(exception));
 		}
 
 		// propFileContentStream null olabilir
