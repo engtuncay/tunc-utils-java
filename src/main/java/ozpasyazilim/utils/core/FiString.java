@@ -397,7 +397,7 @@ public class FiString {
      * @return
      */
     public static String cropStringFromBegin(String text, int cropAmount) {
-        if (text == null) return null; //15-01-2020
+        if (FiString.isEmpty(text)) return text;
         return text.substring(0, Math.min(text.length(), cropAmount));
     }
 

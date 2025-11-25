@@ -103,7 +103,7 @@ public class FiSoap {
 			//Loghelper.debugLogTemp(FiSoap.class,"Soap Response:"+outputString);
 
 		} catch (IOException exception) {
-			Loghelper.get(getClassi()).debug(FiException.exceptionIfToString(exception));
+			Loghelper.get(getClassi()).error(FiException.exceptionIfToString(exception));
 			fdrMain.setFdrBoResult(false);
 			fdrMain.setException(exception);
 			fdrMain.setFdrTxMessage("Soap isteği gerçekleşirken hata oluştu. Detay için Exception inceleyiniz.");
