@@ -1,22 +1,14 @@
 package ozpasyazilim.utils.datatypes;
 
+import ozpasyazilim.utils.annotations.FiExpiremental;
+import ozpasyazilim.utils.core.FiString;
+
 /**
- * txKey, txValue propertylerine sahip (keyed/named object her property'sine karşılık gelir (key ve değer string)
- * <p>
- * txLabel,lnCode gibi ekstra özellikler eklenmiştir. Integer-String value şeklinde de kullanılabilir.
- * <p>
- * toString de txKey'i döner (!!!)
- * <p>
- * equals ise txKey'e göre karşılaştırma yapar.
+ *
+ *
  */
-public class FiMeta {
-
-  /**
-   * TxCode (TxKodu)
-   */
-  private String fimTxKey;
-
-  private String fimTxValue;
+@FiExpiremental
+public class FintMeta {
 
   /**
    * LnCode (LnKodu)
@@ -26,13 +18,21 @@ public class FiMeta {
   private Integer fimLnKey;
 
   /**
+   * TxCode (TxKodu)
+   */
+//  private String fimTxKey;
+
+  private String fimTxValue;
+
+
+  /**
    * Açıklama (Description) gibi düşünebiliriz
    */
   private String fimTxLabel;
 
   private String txType;
 
-  public FiMeta() {
+  public FintMeta() {
 
   }
 
@@ -40,25 +40,25 @@ public class FiMeta {
 //		this.lnKey = lnKey;
 //	}
 
-  public FiMeta(String fimTxKey) {
-    this.fimTxKey = fimTxKey;
-  }
+//  public FintMeta(String fimTxKey) {
+//    this.fimTxKey = fimTxKey;
+//  }
 
-  public FiMeta(int fimLnKey, String fimTxLabel) {
+  public FintMeta(int fimLnKey, String fimTxLabel) {
     this.fimLnKey = fimLnKey;
     this.fimTxLabel = fimTxLabel;
   }
 
-  public FiMeta(String fimTxKey, String fimTxLabel) {
-    this.fimTxKey = fimTxKey;
-    this.fimTxLabel = fimTxLabel;
-  }
+//  public FintMeta(String fimTxKey, String fimTxLabel) {
+//    this.fimTxKey = fimTxKey;
+//    this.fimTxLabel = fimTxLabel;
+//  }
 
-  public static FiMeta bui(String txKey) {
-    FiMeta fiMeta = new FiMeta();
-    fiMeta.setFimTxKey(txKey);
-    return fiMeta;
-  }
+//  public static FintMeta bui(String txKey) {
+//    FintMeta fiMeta = new FintMeta();
+//    fiMeta.setFimTxKey(txKey);
+//    return fiMeta;
+//  }
 
   // Getter and Setter
 
@@ -91,18 +91,17 @@ public class FiMeta {
    *
    * @return
    */
-  public String getKey() {
-    return fimTxKey;
-  }
+//  public String getKey() {
+//    return fimTxKey;
+//  }
 
-  public String getFimTxKey() {
-    return fimTxKey;
-  }
+//  public String getFimTxKey() {
+//    return fimTxKey;
+//  }
 
-  public void setFimTxKey(String fimTxKey) {
-    this.fimTxKey = fimTxKey;
-  }
-
+//  public void setFimTxKey(String fimTxKey) {
+//    this.fimTxKey = fimTxKey;
+//  }
   public String getTxType() {
     return txType;
   }
@@ -112,13 +111,13 @@ public class FiMeta {
   }
 
   /**
-   * txKey boş ise lnkey dönsün diye de mekanizma kurulabilir.
+   *
    *
    * @return
    */
   @Override
   public String toString() {
-    return getKey();
+    return FiString.orEmpty(getFimLnKey());
   }
 
   /**
@@ -131,11 +130,13 @@ public class FiMeta {
    */
   @Override
   public boolean equals(Object obj) {
-    if (obj instanceof FiMeta) {
-      FiMeta fiMeta2 = (FiMeta) obj;
-      if (fiMeta2.getKey() == null || getKey() == null) return false;
-      return getKey().equals(fiMeta2.getKey());
+    if (obj instanceof FintMeta) {
+      FintMeta fiMeta2 = (FintMeta) obj;
+      if (fiMeta2.getFimLnKey() == null || getFimLnKey() == null) return false;
+      ;
+      return getFimLnKey().equals(fiMeta2.getFimLnKey());
     }
     return super.equals(obj);
   }
+
 }
