@@ -8,7 +8,7 @@ import ozpasyazilim.utils.datatypes.FkbList;
 import ozpasyazilim.utils.jdbi.FiKeyBeanMapper;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.returntypes.Fdr;
-import ozpasyazilim.utils.returntypes.FdrFkb;
+import ozpasyazilim.utils.returntypes.FdrFkbList;
 import ozpasyazilim.utils.table.FiCol;
 
 import java.util.*;
@@ -71,7 +71,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
         return fdr;
     }
 
-    public FdrFkb jdSelectListFkb3BindMapMain(FiQuery fiQuery) {
+    public FdrFkbList jdSelectListFkb3BindMapMain(FiQuery fiQuery) {
         return jdSelectListFkb3BindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
     }
 
@@ -98,9 +98,9 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
         return fdr;
     }
 
-    public FdrFkb jdSelectListFkb3BindMapMain(String sqlQuery, Map<String, Object> mapBind) {
+    public FdrFkbList jdSelectListFkb3BindMapMain(String sqlQuery, Map<String, Object> mapBind) {
 
-        FdrFkb fdr = new FdrFkb();
+        FdrFkbList fdr = new FdrFkbList();
         fdr.setValue(new FkbList());
 
         try {
