@@ -71,8 +71,25 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
         return fdr;
     }
 
-    public FdrFkbList jdSelectListFkb3BindMapMain(FiQuery fiQuery) {
-        return jdSelectListFkb3BindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
+    public FdrFkbList jdSelectFkbList(FiQuery fiQuery) {
+      FdrFkbList fdr = new FdrFkbList();
+      fdr.setValue(new FkbList());
+
+      try {
+        List<FiKeybean> result = getJdbi().withHandle(handle -> {
+          return handle.createQuery(Fiqt.stoj(fiQuery.getTxQuery()))
+              .bindMap(fiQuery.getMapParams())
+              .map(new FiKeyBeanMapper(false))
+              .list();
+        });
+        FkbList fkbList = new FkbList(result);
+        fdr.setBoResultAndValue(true, fkbList, 1);
+      } catch (Exception ex) {
+        Loghelper.get(getClass()).error("Query Problem. Hata (Exception):\n" + FiException.exTosMain(ex));
+        fdr.setBoResult(false, ex);
+      }
+
+      return fdr;
     }
 
     public Fdr<FkbList> jdSelectListFkb1BindMapMain(String sqlQuery, Map<String, Object> mapBind) {
@@ -98,27 +115,10 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
         return fdr;
     }
 
-    public FdrFkbList jdSelectListFkb3BindMapMain(String sqlQuery, Map<String, Object> mapBind) {
-
-        FdrFkbList fdr = new FdrFkbList();
-        fdr.setValue(new FkbList());
-
-        try {
-            List<FiKeybean> result = getJdbi().withHandle(handle -> {
-                return handle.createQuery(Fiqt.stoj(sqlQuery))
-                        .bindMap(mapBind)
-                        .map(new FiKeyBeanMapper(false))
-                        .list();
-            });
-            FkbList fkbList = new FkbList(result);
-            fdr.setBoResultAndValue(true, fkbList, 1);
-        } catch (Exception ex) {
-            Loghelper.get(getClass()).error("Query Problem");
-            Loghelper.get(getClass()).error("Hata (Exception):\n" + FiException.exTosMain(ex));
-            fdr.setBoResult(false, ex);
-        }
-
-        return fdr;
+    public FdrFkbList jdSelectFkbList(String sqlQuery, Map<String, Object> mapBind) {
+      FiKeybean fkbParams = new FiKeybean(mapBind);
+      FiQuery fiQuery = new FiQuery(sqlQuery, fkbParams);
+      return jdSelectFkbList(fiQuery);
     }
 
     /**
@@ -377,7 +377,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
         //Loghelper.get(getClass()).debug("FkbList.getFiColList():" + FiConsole.textListObjectsNotNullFields(fkbList.getFiColList()));
 
         for (FiKeybean fiKeyBean : fkbList) {
-            Fdr fdrDelete = jdDeleteFkbByIdColsV2(fiKeyBean, getiFiTableMeta(), fkbList.getFiColList());
+            Fdr fdrDelete = jdDeleteFkbByIdColsV2(fiKeyBean, getiFiTableMeta(), fkbList.getFicColList());
             fdrMain.combineAnd(fdrDelete);
         }
         return fdrMain;

@@ -14,7 +14,7 @@ import ozpasyazilim.utils.mvc.IFiModViewEnt;
 import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.IFiColHelper;
-import ozpasyazilim.utils.table.FiColList;
+import ozpasyazilim.utils.table.FicList;
 import ozpasyazilim.utils.fxwindow.FxSimpleDialog;
 
 import java.lang.reflect.ParameterizedType;
@@ -215,8 +215,8 @@ public class FxFormMigDep<EntClazz> extends FxMigPaneGenView<EntClazz> implement
 		if (getFormTypeSelected() == null) setFormTypeSelected(FormType.PlainFormV1);
 
 		// ?????
-		if (getListFormElements() instanceof FiColList) {
-			FiColList fiTableCols = (FiColList) listFormElements;
+		if (getListFormElements() instanceof FicList) {
+			FicList fiTableCols = (FicList) listFormElements;
 			setFormElementsMap(fiTableCols.getMapColsInit());
 		} else {
 			Map<String, FiCol> formMap = FiCollection.listToMapSingle(listFormElements,FiCol::getOfcTxFieldName);

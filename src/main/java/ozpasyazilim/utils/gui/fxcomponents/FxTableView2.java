@@ -30,7 +30,7 @@ import ozpasyazilim.utils.mvc.IFxTableSelectionCont;
 import ozpasyazilim.utils.core.FiReflection;
 import ozpasyazilim.utils.returntypes.Fdr;
 import ozpasyazilim.utils.returntypes.FnResult;
-import ozpasyazilim.utils.table.FiColList;
+import ozpasyazilim.utils.table.FicList;
 import ozpasyazilim.utils.table.OzColSummaryType;
 import ozpasyazilim.utils.table.OzColType;
 import ozpasyazilim.utils.table.FiCol;
@@ -160,7 +160,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
    * Header gelen fkb'ye ek olarak alanlar buraya eklenebilir.
    */
   private FiKeybean fkbHeaderFilterExtra;
-  private FiColList ficsFormElemsHeaderFilterExtra;
+  private FicList ficsFormElemsHeaderFilterExtra;
 
   IFxTableCont iFxTableCont;
 
@@ -2437,7 +2437,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
             if (!fullKeyList.isEmpty()) {
 
-              FiColList fiCols = new FiColList(getFiColList());
+              FicList fiCols = new FicList(getFiColList());
 
               for (String key : fullKeyList) {
                 FiCol fiColByField = fiCols.getFiColByField(key);

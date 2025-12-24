@@ -8,7 +8,10 @@ import java.util.List;
 
 public class FkbList extends ArrayList<FiKeybean> {
 
-	List<FiCol> fiColList;
+	/**
+	 * FiKeybean listesi ile birlikte kullanılacak kolon bilgilerini tutar.
+	 */
+	List<FiCol> ficColList;
 
 	public FkbList() {
 		super();
@@ -18,11 +21,12 @@ public class FkbList extends ArrayList<FiKeybean> {
 		super(c);
 	}
 
-	public List<FiCol> getFiColList() {
-		return fiColList;
+	public List<FiCol> getFicColList() {
+		return ficColList;
 	}
 
-	public void setFiColList(List<FiCol> fiColList) {
-		this.fiColList = fiColList;
+	public void setFicColList(List<FiCol> ficColList) {
+		this.ficColList = ficColList;
 	}
+
 }

@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.datatypes.FiKeybean;
 import ozpasyazilim.utils.log.Loghelper;
-import ozpasyazilim.utils.table.FiColList;
+import ozpasyazilim.utils.table.FicList;
 
 import java.util.*;
 
@@ -30,7 +30,7 @@ public class FiQuery {
    */
   Class retClass;
 
-  FiColList fiCols;
+  FicList fiCols;
 
   //List<FiField> queryFieldList;
   //List<FiField> queryWhereList;
@@ -484,11 +484,11 @@ public class FiQuery {
     this.retClass = retClass;
   }
 
-  public FiColList getFiCols() {
+  public FicList getFiCols() {
     return fiCols;
   }
 
-  public void setFiCols(FiColList fiCols) {
+  public void setFiCols(FicList fiCols) {
     this.fiCols = fiCols;
   }
 }

@@ -7,36 +7,36 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FiColList extends ArrayList<FiCol>{
+public class FicList extends ArrayList<FiCol>{
 
 	Map<String, FiCol> mapCols;
 	FiKeybean fkbParams;
 
-	public FiColList() {
+	public FicList() {
 	}
 
-	public FiColList(Collection<? extends FiCol> c) {
+	public FicList(Collection<? extends FiCol> c) {
 		super(c);
 	}
 
-	public static FiColList bui() {
-		FiColList fiColList = new FiColList();
-		return fiColList;
+	public static FicList bui() {
+		FicList ficList = new FicList();
+		return ficList;
 	}
 
-	public FiColList addField(Object field) {
+	public FicList addField(Object field) {
 		FiCol fiTableCol = new FiCol(field.toString());
 		add(fiTableCol);
 		return this;
 	}
 
-	public FiColList addFieldManual(Object field, Object header) {
+	public FicList addFieldManual(Object field, Object header) {
 		FiCol fiTableCol = new FiCol(field.toString(),header.toString());
 		add(fiTableCol);
 		return this;
 	}
 
-	public FiColList addFields(Object... field) {
+	public FicList addFields(Object... field) {
 		for (Object fieldName : field) {
 			FiCol fiTableCol = new FiCol(fieldName.toString());
 			add(fiTableCol);
@@ -44,14 +44,14 @@ public class FiColList extends ArrayList<FiCol>{
 		return this;
 	}
 
-	public FiColList buiAdd(FiCol ...fiCols) {
+	public FicList buiAdd(FiCol ...fiCols) {
 		for (FiCol fiCol : fiCols) {
 			add(fiCol);
 		}
 		return this;
 	}
 
-	public FiColList buiAdd(Object fieldName, String headerName) {
+	public FicList buiAdd(Object fieldName, String headerName) {
 		if(fieldName==null) return this;
 		FiCol fiTableCol = new FiCol(fieldName.toString(), headerName);
 		add(fiTableCol);

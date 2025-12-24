@@ -513,6 +513,10 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
     return get(fiCol.getOfcTxFieldName());
   }
 
+  public Object getFicValue(FiCol fiCol) {
+    return getByFiCol(fiCol);
+  }
+
   public String getTxTableName() {
     return txTableName;
   }

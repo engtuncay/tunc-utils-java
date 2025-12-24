@@ -15,7 +15,7 @@ import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.repoSql.RepoSqlColumn;
 import ozpasyazilim.utils.returntypes.Fdr;
 import ozpasyazilim.utils.table.FiCol;
-import ozpasyazilim.utils.table.FiColList;
+import ozpasyazilim.utils.table.FicList;
 
 import javax.persistence.*;
 import java.lang.annotation.Annotation;
@@ -3188,7 +3188,7 @@ public class FiQugen {
     return createQuery30(iFiTableMeta.getITxTableName(), iFiTableMeta.genITableCols());
   }
 
-  public static String createQuery30(String txTableName, FiColList prmfiColList) {
+  public static String createQuery30(String txTableName, FicList prmfiColList) {
 
     //List<FiField> listFields = FiFieldUtil.getListFieldsAll(clazz);
 
@@ -3198,12 +3198,12 @@ public class FiQugen {
         .append(txTableName)
         .append(" ( \n");
 
-    FiColList fiColList = prmfiColList;
+    FicList ficList = prmfiColList;
 
-    assignSqlTypeAndDef(fiColList);
+    assignSqlTypeAndDef(ficList);
 
     int index = 0;
-    for (FiCol fiCol : fiColList) {
+    for (FiCol fiCol : ficList) {
 
       // Sql Tipi Belirlenmeyenler için
       if (fiCol.getFicTxSqlFieldDefinition() == null) {
@@ -3394,12 +3394,12 @@ public class FiQugen {
 
   }
 
-  public static void assignSqlTypeAndDef(FiColList fiColList) {
+  public static void assignSqlTypeAndDef(FicList ficList) {
 
     //System.out.println("List Field Size:" + iFiTableMeta.size());
-    Loghelper.get(FiQugen.class).debug(FiConsole.textCollection(fiColList));
+    Loghelper.get(FiQugen.class).debug(FiConsole.textCollection(ficList));
 
-    for (FiCol ficol : fiColList) {
+    for (FiCol ficol : ficList) {
 
       //System.out.println(" Field:" + ficol.getName() + " - Simple Name:" + ficol.getClassNameSimple());
 
@@ -4105,7 +4105,7 @@ public class FiQugen {
   }
 
 
-  public static String sqlSelectByWhereFields(FiColList fiCols, String txTableName) {
+  public static String sqlSelectByWhereFields(FicList fiCols, String txTableName) {
 
     String tempWrapQuery = "SELECT {{rfcTxSelectFields}} mainQuery.*\n" +
         "FROM (\n" +

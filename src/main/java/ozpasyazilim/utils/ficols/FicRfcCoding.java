@@ -2,8 +2,7 @@ package ozpasyazilim.utils.ficols;
 
 import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.OzColType;
-import ozpasyazilim.utils.table.FiColList;
-import ozpasyazilim.utils.fidbanno.FiIdGenerationType;
+import ozpasyazilim.utils.table.FicList;
 import ozpasyazilim.utils.fidborm.IFiTableMeta;
 
 /**
@@ -21,31 +20,31 @@ public class FicRfcCoding implements IFiTableMeta {
         return "RfcCoding";
     }
 
-    public FiColList genITableCols() {
+    public FicList genITableCols() {
         return genTableCols();
     }
 
-    public FiColList genITableColsTrans() {
+    public FicList genITableColsTrans() {
         return genTableColsTrans();
     }
 
 
-    public static FiColList genTableCols() {
+    public static FicList genTableCols() {
 
-        FiColList fiColList = new FiColList();
+        FicList ficList = new FicList();
 
-        fiColList.add(rfcTxClassName());
-        fiColList.add(rfcTxClassBody());
+        ficList.add(rfcTxClassName());
+        ficList.add(rfcTxClassBody());
 
-        return fiColList;
+        return ficList;
     }
 
-    public static FiColList genTableColsTrans() {
+    public static FicList genTableColsTrans() {
 
-        FiColList fiColList = new FiColList();
+        FicList ficList = new FicList();
 
 
-        return fiColList;
+        return ficList;
     }
 
     public static FiCol rfcTxClassName() {

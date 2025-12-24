@@ -1,9 +1,7 @@
 package ozpasyazilim.utils.ficols;// FiCol Class Generation v1
 
 import ozpasyazilim.utils.table.FiCol;
-import ozpasyazilim.utils.table.OzColType;
-import ozpasyazilim.utils.table.FiColList;
-import ozpasyazilim.utils.fidbanno.FiIdGenerationType;
+import ozpasyazilim.utils.table.FicList;
 import ozpasyazilim.utils.fidborm.IFiTableMeta;
 
 public class FicOqfQuery implements IFiTableMeta {
@@ -16,11 +14,11 @@ public class FicOqfQuery implements IFiTableMeta {
         return getTxTableName();
     }
 
-    public FiColList genITableCols() {
+    public FicList genITableCols() {
         return genTableCols();
     }
 
-    public FiColList genITableColsTrans() {
+    public FicList genITableColsTrans() {
         return genTableColsTrans();
     }
 
@@ -33,8 +31,8 @@ public class FicOqfQuery implements IFiTableMeta {
     }
 
 
-    public static FiColList genTableCols() {
-        FiColList ficList = new FiColList();
+    public static FicList genTableCols() {
+        FicList ficList = new FicList();
 
         ficList.add(oqfTxTableName());
         ficList.add(oqfTxTableFields());
@@ -45,8 +43,8 @@ public class FicOqfQuery implements IFiTableMeta {
         return ficList;
     }
 
-    public static FiColList genTableColsTrans() {
-        FiColList ficList = new FiColList();
+    public static FicList genTableColsTrans() {
+        FicList ficList = new FicList();
 
         return ficList;
     }

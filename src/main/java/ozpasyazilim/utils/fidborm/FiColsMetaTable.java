@@ -1,7 +1,7 @@
 package ozpasyazilim.utils.fidborm;
 
 import ozpasyazilim.utils.table.FiCol;
-import ozpasyazilim.utils.table.FiColList;
+import ozpasyazilim.utils.table.FicList;
 import ozpasyazilim.utils.table.OzColType;
 
 public class FiColsMetaTable {
@@ -115,28 +115,28 @@ public class FiColsMetaTable {
     }
 
 
-    public static FiColList genTableCols() {
+    public static FicList genTableCols() {
 
-        FiColList fiColList = new FiColList();
+        FicList ficList = new FicList();
 
-        fiColList.add(ofcTxFieldType());
-        fiColList.add(ofcTxFieldName());
-        fiColList.add(ofcTxHeader());
-        fiColList.add(ofcTxFieldDesc());
-        fiColList.add(ofiTxIdType());
-        fiColList.add(ofcBoUniqGro1());
-        fiColList.add(ofcBoNullable());
-        fiColList.add(ofcBoUnique());
-        fiColList.add(ofcBoUtfSupport());
-        fiColList.add(ofcTxDefValue());
-        fiColList.add(ofcTxCollation());
-        fiColList.add(ofcTxTypeName());
-        fiColList.add(ofcLnLength());
-        fiColList.add(ofcLnPrecision());
-        fiColList.add(ofcLnScale());
-        fiColList.add(ofcBoFilterLike());
-        fiColList.add(ofcBoTransient());
+        ficList.add(ofcTxFieldType());
+        ficList.add(ofcTxFieldName());
+        ficList.add(ofcTxHeader());
+        ficList.add(ofcTxFieldDesc());
+        ficList.add(ofiTxIdType());
+        ficList.add(ofcBoUniqGro1());
+        ficList.add(ofcBoNullable());
+        ficList.add(ofcBoUnique());
+        ficList.add(ofcBoUtfSupport());
+        ficList.add(ofcTxDefValue());
+        ficList.add(ofcTxCollation());
+        ficList.add(ofcTxTypeName());
+        ficList.add(ofcLnLength());
+        ficList.add(ofcLnPrecision());
+        ficList.add(ofcLnScale());
+        ficList.add(ofcBoFilterLike());
+        ficList.add(ofcBoTransient());
 
-        return fiColList;
+        return ficList;
     }
 }
