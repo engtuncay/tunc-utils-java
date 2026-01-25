@@ -8,39 +8,39 @@ import java.util.Collection;
 import java.util.List;
 
 
-public class FiListKeyString extends ArrayList<FiKeyString> {
+public class FiListKeyString extends ArrayList<FiKeytext> {
 
 	public FiListKeyString() {
 		super();
 	}
 
-	public FiListKeyString(Collection<? extends FiKeyString> c) {
+	public FiListKeyString(Collection<? extends FiKeytext> c) {
 		super(c);
 	}
 
 	public void clearEmptyKeys() {
-		for (FiKeyString fiKeyString : this) {
-			fiKeyString.clearEmptyKeys();
+		for (FiKeytext fiKeytext : this) {
+			fiKeytext.clearEmptyKeys();
 		}
 	}
 
 	public void clearRowsKeyIfEmpty(String txDateField) {
-		List<FiKeyString> listToDelete = new ArrayList<>();
-		for (FiKeyString fiKeyString : this) {
-			if (fiKeyString.isEmptyKey(txDateField)) {
-				listToDelete.add(fiKeyString);
+		List<FiKeytext> listToDelete = new ArrayList<>();
+		for (FiKeytext fiKeytext : this) {
+			if (fiKeytext.isEmptyKey(txDateField)) {
+				listToDelete.add(fiKeytext);
 			}
 		}
-		for (FiKeyString fiKeyString : listToDelete) {
-			this.remove(fiKeyString);
+		for (FiKeytext fiKeytext : listToDelete) {
+			this.remove(fiKeytext);
 		}
 	}
 
-	public Optional<FiKeyString> getRow(String txKey, String txValue) {
+	public Optional<FiKeytext> getRow(String txKey, String txValue) {
 		if(FiString.isEmpty(txKey)) return Optional.of(null);
-		for (FiKeyString fiKeyString : this) {
-			if (fiKeyString.getOrDefault(txKey,"-1").equals(txValue)) {
-				Optional<FiKeyString> optResult = Optional.of(fiKeyString);
+		for (FiKeytext fiKeytext : this) {
+			if (fiKeytext.getOrDefault(txKey,"-1").equals(txValue)) {
+				Optional<FiKeytext> optResult = Optional.of(fiKeytext);
 				return optResult;
 			}
 		}

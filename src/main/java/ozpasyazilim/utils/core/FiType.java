@@ -233,7 +233,13 @@ public class FiType {
 		return false;
 	}
 
-	public static boolean isEmptyGen(Object value) {
+	/**
+	 * Generic isEmpty check
+	 *
+	 * @param value
+	 * @return
+	 */
+	public static boolean isEmptyObj(Object value) {
 		if(value==null) return true;
 
 		if(value instanceof String){

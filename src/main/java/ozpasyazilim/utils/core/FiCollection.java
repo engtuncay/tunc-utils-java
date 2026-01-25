@@ -1552,4 +1552,14 @@ public class FiCollection {
 
     }
 
+    public static boolean isListOfType(Object edmInvoiceStatusList, Class emsEdmInvoiceStatusClass) {
+        if (edmInvoiceStatusList instanceof List<?>) {
+            List<?> tempList = (List<?>) edmInvoiceStatusList;
+            if (!tempList.isEmpty()) {
+                return emsEdmInvoiceStatusClass.isInstance(tempList.get(0));
+            }
+        }
+        return false;
+    }
+
 }

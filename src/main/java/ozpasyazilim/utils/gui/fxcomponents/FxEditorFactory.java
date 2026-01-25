@@ -1209,7 +1209,7 @@ public class FxEditorFactory {
             Object cellvalue = getNodeObjValue(fiCol, fiCol.getColEditorClass());    // map.get(fiCol.getHeader());
             //Loghelperr.getInstance(getClass()).debug(" map param cell value :" + cellvalue.toString() + " class:" + cellvalue.getClass().getSimpleName());
             //fiKeyBean.put(fiCol.getFieldName().trim(), cellvalue);
-            fiKeyBean.putFiCol(fiCol, cellvalue);
+            fiKeyBean.addFiCol(fiCol, cellvalue);
         }
         return fiKeyBean;
     }

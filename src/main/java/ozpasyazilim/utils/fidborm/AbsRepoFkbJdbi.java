@@ -15,371 +15,390 @@ import java.util.*;
 
 public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRepoJdbi
 
-    protected Handle handleRepo;
+  protected Handle handleRepo;
 
-    public IFiTableMeta iFiTableMeta;
+  public IFiTableMeta iFiTableMeta;
 
-    // connProfile veya jdbi ile constructor kullanılmalı
-    //    public AbsRepoFkbJdbi() {
-    //
-    //    }
+  public AbsRepoFkbJdbi(Jdbi jdbi) {
+    setJdbi(jdbi);
+  }
 
-    public AbsRepoFkbJdbi(Jdbi jdbi) {
-        setJdbi(jdbi);
+  public AbsRepoFkbJdbi(String connProfile) {
+    this.connProfile = connProfile;
+  }
+
+  public void setAutoClass() {
+  }
+
+  public Handle getHandleRepo() {
+    return handleRepo;
+  }
+
+  public void setHandleRepo(Handle handleRepo) {
+    this.handleRepo = handleRepo;
+  }
+
+  public AbsRepoFkbJdbi(Handle handleRepo) {
+    setHandleRepo(handleRepo);
+  }
+
+  // Sorgu Metodları
+  protected Fdr<List<FiKeybean>> jdSelectListFkb2BindMapMain(String sqlQuery, Map<String, Object> mapBind) {
+
+    Fdr<List<FiKeybean>> fdr = new Fdr<>();
+    fdr.setValue(new ArrayList<>());
+
+    try {
+      List<FiKeybean> result = getJdbi().withHandle(handle -> {
+        return handle.createQuery(Fiqt.stoj(sqlQuery))
+            .bindMap(mapBind)
+            .map(new FiKeyBeanMapper(false))
+            .list();
+      });
+      fdr.setBoResultAndValue(true, result, 1);
+
+    } catch (Exception ex) {
+      Loghelper.get(getClass()).error("Query Problem");
+      Loghelper.get(getClass()).error("Hata (Exception):\n" + FiException.exTosMain(ex));
+      fdr.setBoResult(false, ex);
     }
 
-    public AbsRepoFkbJdbi(String connProfile) {
-        this.connProfile = connProfile;
+    return fdr;
+  }
+
+  protected FdrFkbList jdSelectFkbList(FiQuery fiQuery) {
+    FdrFkbList fdr = new FdrFkbList();
+    fdr.setValue(new FkbList());
+
+    try {
+      List<FiKeybean> result = getJdbi().withHandle(handle -> {
+        return handle.createQuery(Fiqt.stoj(fiQuery.getTxQuery()))
+            .bindMap(fiQuery.getMapParams())
+            .map(new FiKeyBeanMapper(false))
+            .list();
+      });
+      FkbList fkbList = new FkbList(result);
+      fdr.setBoResultAndValue(true, fkbList, 1);
+    } catch (Exception ex) {
+      Loghelper.get(getClass()).error("Query Problem. Hata (Exception):\n" + FiException.exTosMain(ex));
+      fdr.setBoResult(false, ex);
     }
 
-    public void setAutoClass() {
+    return fdr;
+  }
+
+  protected Fdr jdSelectAsFkbList(FiQuery fiQuery) {
+
+    Fdr fdr = new Fdr();
+    fdr.setValue(new FkbList());
+
+    try {
+      List<FiKeybean> result = getJdbi().withHandle(handle -> {
+        return handle.createQuery(Fiqt.stoj(fiQuery.getTxQuery()))
+            .bindMap(fiQuery.getMapParams())
+            .map(new FiKeyBeanMapper(false))
+            .list();
+      });
+      FkbList fkbList = new FkbList(result);
+      fdr.setFdrBoResult(true);
+      fdr.setFdrFkbListVal(fkbList);
+      //fdr.setRowsAffected(1);
+    } catch (Exception ex) {
+      Loghelper.get(getClass()).error("Query Problem. Hata (Exception):\n" + FiException.exTosMain(ex));
+      fdr.setBoResult(false, ex);
     }
 
-    public Handle getHandleRepo() {
-        return handleRepo;
+    return fdr;
+  }
+
+  protected Fdr<FkbList> jdSelectListFkb1BindMapMain(String sqlQuery, Map<String, Object> mapBind) {
+
+    Fdr<FkbList> fdr = new Fdr<>();
+    fdr.setValue(new FkbList());
+
+    try {
+      List<FiKeybean> result = getJdbi().withHandle(handle -> {
+        return handle.createQuery(Fiqt.stoj(sqlQuery))
+            .bindMap(mapBind)
+            .map(new FiKeyBeanMapper(false))
+            .list();
+      });
+      FkbList fkbList = new FkbList(result);
+      fdr.setBoResultAndValue(true, fkbList, 1);
+    } catch (Exception ex) {
+      Loghelper.get(getClass()).error("Query Problem");
+      Loghelper.get(getClass()).error("Hata (Exception):\n" + FiException.exTosMain(ex));
+      fdr.setBoResult(false, ex);
     }
 
-    public void setHandleRepo(Handle handleRepo) {
-        this.handleRepo = handleRepo;
+    return fdr;
+  }
+
+  protected FdrFkbList jdSelectFkbList(String sqlQuery, Map<String, Object> mapBind) {
+    FiKeybean fkbParams = new FiKeybean(mapBind);
+    FiQuery fiQuery = new FiQuery(sqlQuery, fkbParams);
+    return jdSelectFkbList(fiQuery);
+  }
+
+  /**
+   * Value null dönerse, -1 olarak yorumlar
+   *
+   * @param sql
+   * @param fiMapParams
+   * @return
+   */
+  protected Fdr<Integer> jdSelectSingleIntOrMinus1(String sql, FiKeybean fiMapParams) {
+    Fdr<Integer> fdrSql = jdSelectSingleEntityBindMap(sql, fiMapParams, Integer.class);
+    if (fdrSql.getValue() == null) {
+      fdrSql.setValue(-1);
+    }
+    return fdrSql;
+  }
+
+  protected Fdr<FiKeybean> jdSelectFkbSingleBindMapMain(String sqlQuery, Map<String, Object> mapBind) {
+
+    Fdr<FiKeybean> fdr = new Fdr<>();
+    fdr.setValue(new FiKeybean());
+
+    try {
+      Optional<FiKeybean> result = getJdbi().withHandle(handle -> {
+        return handle.createQuery(Fiqt.stoj(sqlQuery))
+            .bindMap(mapBind)
+            .map(new FiKeyBeanMapper(false))
+            .findOne();
+      });
+
+      result.ifPresent(fdr::setValue); //if (result.isPresent()) fdr.setValue(result.get());
+
+      fdr.setBoResultAndRowsAff(true, 1);
+
+    } catch (Exception ex) {
+      Loghelper.get(getClass()).error("Query Problem");
+      Loghelper.get(getClass()).error("Hata (Exception):\n" + FiException.exTosMain(ex));
+      fdr.setBoResult(false, ex);
     }
 
-    public AbsRepoFkbJdbi(Handle handleRepo) {
-        setHandleRepo(handleRepo);
+    return fdr;
+  }
+
+  /**
+   * Sorgu çalışır ve deger cekemezse degeri null olur
+   * <p>
+   * Sorguda hata olursa result false olur, deger yine null olur
+   *
+   * @param sql
+   * @param fiKeyBean
+   * @return
+   */
+  protected Fdr<Integer> jdSelectSingleInt(String sql, FiKeybean fiKeyBean) {
+    return jdSelectSingleEntityBindMap(sql, fiKeyBean, Integer.class);
+  }
+
+  public <PrmEnt> Fdr<PrmEnt> jdSelectSingleEntityBindMap(String sql, Map<String, Object> mapParam, Class<PrmEnt> resultClazz) {
+
+    Fdr<PrmEnt> fdr = new Fdr<>();
+    fdr.setValue(null);
+
+    try {
+      Optional<PrmEnt> result = getJdbi().withHandle(handle -> {
+        return handle.select(Fiqt.stoj(sql))
+            .bindMap(mapParam)
+            .mapTo(resultClazz)
+            .findFirst();
+      });
+
+      result.ifPresent(fdr::setValue);
+      fdr.setFdrBoResult(true);
+    } catch (Exception ex) {
+      Loghelper.get(getClass()).error(FiException.exTosMain(ex));
+      fdr.setFdrBoResult(false);
+      fdr.setValue(null);
     }
+    return fdr;
+  }
 
-    // Sorgu Metodları
-    public Fdr<List<FiKeybean>> jdSelectListFkb2BindMapMain(String sqlQuery, Map<String, Object> mapBind) {
+  protected Fdr jdUpdateBindMapMain(FiQuery fiQuery) {
+    return jdUpdateBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
+  }
 
-        Fdr<List<FiKeybean>> fdr = new Fdr<>();
-        fdr.setValue(new ArrayList<>());
-
-        try {
-            List<FiKeybean> result = getJdbi().withHandle(handle -> {
-                return handle.createQuery(Fiqt.stoj(sqlQuery))
-                        .bindMap(mapBind)
-                        .map(new FiKeyBeanMapper(false))
-                        .list();
-            });
-            fdr.setBoResultAndValue(true, result, 1);
-
-        } catch (Exception ex) {
-            Loghelper.get(getClass()).error("Query Problem");
-            Loghelper.get(getClass()).error("Hata (Exception):\n" + FiException.exTosMain(ex));
-            fdr.setBoResult(false, ex);
-        }
-
-        return fdr;
+  protected Fdr jdUpdateBindMapMain(String updateQuery, Map<String, Object> fiMapParams) {
+    Fdr fdrMain = new Fdr();
+    try {
+      Integer rowCountUpdate = getJdbi().withHandle(handle -> {
+        return handle.createUpdate(Fiqt.stoj(updateQuery))
+            .bindMap(fiMapParams)
+            .execute(); // returns row count updated
+      });
+      //Loghelperr.getInstance(getClass()).debug("Row Count Update:"+rowCountUpdate);
+      //fiDbResult.setLnSuccessWithUpBoResult(1, rowCountUpdate);
+      fdrMain.setBoResultAndRowsAff(true, rowCountUpdate);
+    } catch (Exception ex) {
+      fdrMain.setBoResult(false, ex);
+      Loghelper.get(getClass()).error(FiException.exToErrorLog(ex));
     }
+    return fdrMain;
+  }
 
-    public FdrFkbList jdSelectFkbList(FiQuery fiQuery) {
-      FdrFkbList fdr = new FdrFkbList();
-      fdr.setValue(new FkbList());
+  protected Fdr jdInsertFiQuery(FiQuery fiQuery) {
+    return jdInsertBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
+  }
 
-      try {
-        List<FiKeybean> result = getJdbi().withHandle(handle -> {
-          return handle.createQuery(Fiqt.stoj(fiQuery.getTxQuery()))
-              .bindMap(fiQuery.getMapParams())
-              .map(new FiKeyBeanMapper(false))
-              .list();
-        });
-        FkbList fkbList = new FkbList(result);
-        fdr.setBoResultAndValue(true, fkbList, 1);
-      } catch (Exception ex) {
-        Loghelper.get(getClass()).error("Query Problem. Hata (Exception):\n" + FiException.exTosMain(ex));
-        fdr.setBoResult(false, ex);
-      }
+  /**
+   * Update ile aynı metoddan kopyalandı
+   *
+   * @param insertQuery
+   * @param fiMapParams
+   * @return
+   */
+  protected Fdr jdInsertBindMapMain(String insertQuery, Map<String, Object> fiMapParams) {
 
-      return fdr;
+    Fdr fdrMain = new Fdr();
+    try {
+      Integer rowCountUpdate = getJdbi().withHandle(handle -> {
+        return handle.createUpdate(Fiqt.stoj(insertQuery))
+            .bindMap(fiMapParams)
+            .execute(); // returns row count updated
+      });
+      //Loghelperr.getInstance(getClass()).debug("Row Count Update:"+rowCountUpdate);
+      //fiDbResult.setLnSuccessWithUpBoResult(1, rowCountUpdate);
+      fdrMain.setBoResultAndRowsAff(true, rowCountUpdate);
+    } catch (Exception ex) {
+      fdrMain.setBoResult(false, ex);
+      Loghelper.get(getClass()).error(FiException.exToErrorLog(ex));
     }
+    return fdrMain;
+  }
 
-    public Fdr<FkbList> jdSelectListFkb1BindMapMain(String sqlQuery, Map<String, Object> mapBind) {
+  protected Fdr jdDeleteFiQuery(FiQuery fiQuery) {
+    return jdDeleteBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
+  }
 
-        Fdr<FkbList> fdr = new Fdr<>();
-        fdr.setValue(new FkbList());
+  protected Fdr jdDeleteBindMapMain(String insertQuery, Map<String, Object> fiMapParams) {
 
-        try {
-            List<FiKeybean> result = getJdbi().withHandle(handle -> {
-                return handle.createQuery(Fiqt.stoj(sqlQuery))
-                        .bindMap(mapBind)
-                        .map(new FiKeyBeanMapper(false))
-                        .list();
-            });
-            FkbList fkbList = new FkbList(result);
-            fdr.setBoResultAndValue(true, fkbList, 1);
-        } catch (Exception ex) {
-            Loghelper.get(getClass()).error("Query Problem");
-            Loghelper.get(getClass()).error("Hata (Exception):\n" + FiException.exTosMain(ex));
-            fdr.setBoResult(false, ex);
-        }
-
-        return fdr;
+    Fdr fdrMain = new Fdr();
+    try {
+      Integer rowCountUpdate = getJdbi().withHandle(handle -> {
+        return handle.createUpdate(Fiqt.stoj(insertQuery))
+            .bindMap(fiMapParams)
+            .execute(); // returns row count updated
+      });
+      //Loghelperr.getInstance(getClass()).debug("Row Count Update:"+rowCountUpdate);
+      //fiDbResult.setLnSuccessWithUpBoResult(1, rowCountUpdate);
+      fdrMain.setBoResultAndRowsAff(true, rowCountUpdate);
+    } catch (Exception ex) {
+      fdrMain.setBoResult(false, ex);
+      Loghelper.get(getClass()).error(FiException.exToErrorLog(ex));
     }
+    return fdrMain;
+  }
 
-    public FdrFkbList jdSelectFkbList(String sqlQuery, Map<String, Object> mapBind) {
-      FiKeybean fkbParams = new FiKeybean(mapBind);
-      FiQuery fiQuery = new FiQuery(sqlQuery, fkbParams);
-      return jdSelectFkbList(fiQuery);
+
+  protected <EntMethodClazz> Fdr<List<EntMethodClazz>> jdSelectListBindMapMain(String sqlQuery, Map<String, Object> mapBind, Class<EntMethodClazz> clazz) {
+
+    Fdr<List<EntMethodClazz>> fdr = new Fdr<>();
+    fdr.setValue(new ArrayList<>());
+
+    try {
+      List<EntMethodClazz> result = getJdbi().withHandle(handle -> {
+        return handle.createQuery(Fiqt.stoj(sqlQuery))
+            .bindMap(mapBind)
+            .mapToBean(clazz)
+            .list();
+      });
+      fdr.setBoResultAndValue(true, result, 1);
+    } catch (Exception ex) {
+      Loghelper.get(getClass()).error("Query Problem");
+      Loghelper.get(getClass()).error("Hata (Exception):\n" + FiException.exTosMain(ex));
+      fdr.setBoResult(false, ex);
     }
+    return fdr;
+  }
 
-    /**
-     * Value null dönerse, -1 olarak yorumlar
-     *
-     * @param sql
-     * @param fiMapParams
-     * @return
-     */
-    public Fdr<Integer> jdSelectSingleIntOrMinus1(String sql, FiKeybean fiMapParams) {
-        Fdr<Integer> fdrSql = jdSelectSingleEntityBindMap(sql, fiMapParams, Integer.class);
-        if (fdrSql.getValue() == null) {
-            fdrSql.setValue(-1);
-        }
-        return fdrSql;
+  public IFiTableMeta getiFiTableMeta() {
+    return iFiTableMeta;
+  }
+
+  public void setiFiTableMeta(IFiTableMeta iFiTableMeta) {
+    this.iFiTableMeta = iFiTableMeta;
+  }
+
+  public Fdr jdInsFkb(FiKeybean formAsFkb, Boolean boInserFieldsOnly, IFiTableMeta iFiTableMeta) {
+
+    if (iFiTableMeta == null) iFiTableMeta = getiFiTableMeta();
+
+    String sql = FiQugen.insertFiCols2(iFiTableMeta, formAsFkb.getListFiColInit(), boInserFieldsOnly);
+
+    FiQuery fiQuery = new FiQuery(sql, formAsFkb);
+    //fiQuery.logQueryAndParams();
+
+    return jdInsertFiQuery(fiQuery);
+  }
+
+
+  /**
+   * @param formAsFkb
+   * @param boUpdateFieldsOnly : updateField true olanlar sorguda güncellenir
+   * @return
+   */
+  public Fdr jdUpFkbByIdFields(FiKeybean formAsFkb, Boolean boUpdateFieldsOnly) {
+    String sql = FiQugen.updateFiColsArb(getiFiTableMeta(), formAsFkb.getListFiColInit(), boUpdateFieldsOnly);
+
+    FiQuery fiQuery = new FiQuery(sql, formAsFkb);
+    //fiQuery.logQueryAndParams();
+
+    return jdInsertFiQuery(fiQuery);
+  }
+
+  public Fdr jdDeleteFkbByIdCols(FiKeybean fiKeyBean, IFiTableMeta iFiTableMeta) {
+
+    String sql = FiQugen.deleteWhereIdFiColsV2(iFiTableMeta, fiKeyBean.getListFiColInit());
+
+    FiQuery fiQuery = new FiQuery(sql, fiKeyBean);
+    //fiQuery.logQueryAndParams();
+
+    return jdDeleteFiQuery(fiQuery);
+  }
+
+  protected Fdr jdDeleteFkbByIdColsV2(FiKeybean fiKeyBean, IFiTableMeta iFiTableMeta, List<FiCol> fiCols) {
+
+    String sql = FiQugen.deleteWhereIdFiColsV2(iFiTableMeta, fiCols);
+
+    FiQuery fiQuery = new FiQuery(sql, fiKeyBean);
+    //fiQuery.logQueryAndParams();
+
+    return jdDeleteFiQuery(fiQuery);
+  }
+
+  /**
+   * Transaction olmalı
+   *
+   * @param fkbList
+   * @return
+   */
+  protected Fdr jdDeleteListById(List<FiKeybean> fkbList) {
+    Fdr fdrMain = new Fdr();
+    for (FiKeybean fiKeyBean : fkbList) {
+      Fdr fdrDelete = jdDeleteFkbByIdCols(fiKeyBean, getiFiTableMeta());
+      fdrMain.combineAnd(fdrDelete);
     }
+    return fdrMain;
+  }
 
-    public Fdr<FiKeybean> jdSelectFkbSingleBindMapMain(String sqlQuery, Map<String, Object> mapBind) {
+  /**
+   * FkbList'e FiColList tanımlaması yapılmalı
+   *
+   * @param fkbList
+   * @return
+   */
+  public Fdr jdDeleteListByIdV2(FkbList fkbList) {
+    Fdr fdrMain = new Fdr();
 
-        Fdr<FiKeybean> fdr = new Fdr<>();
-        fdr.setValue(new FiKeybean());
+    //Loghelper.get(getClass()).debug("FkbList.getFiColList():" + FiConsole.textListObjectsNotNullFields(fkbList.getFiColList()));
 
-        try {
-            Optional<FiKeybean> result = getJdbi().withHandle(handle -> {
-                return handle.createQuery(Fiqt.stoj(sqlQuery))
-                        .bindMap(mapBind)
-                        .map(new FiKeyBeanMapper(false))
-                        .findOne();
-            });
-
-            result.ifPresent(fdr::setValue); //if (result.isPresent()) fdr.setValue(result.get());
-
-            fdr.setBoResultAndRowsAff(true, 1);
-
-        } catch (Exception ex) {
-            Loghelper.get(getClass()).error("Query Problem");
-            Loghelper.get(getClass()).error("Hata (Exception):\n" + FiException.exTosMain(ex));
-            fdr.setBoResult(false, ex);
-        }
-
-        return fdr;
+    for (FiKeybean fiKeyBean : fkbList) {
+      Fdr fdrDelete = jdDeleteFkbByIdColsV2(fiKeyBean, getiFiTableMeta(), fkbList.getFicColList());
+      fdrMain.combineAnd(fdrDelete);
     }
-
-    /**
-     * Sorgu çalışır ve deger cekemezse degeri null olur
-     * <p>
-     * Sorguda hata olursa result false olur, deger yine null olur
-     *
-     * @param sql
-     * @param fiKeyBean
-     * @return
-     */
-    public Fdr<Integer> jdSelectSingleInt(String sql, FiKeybean fiKeyBean) {
-        return jdSelectSingleEntityBindMap(sql, fiKeyBean, Integer.class);
-    }
-
-    public <PrmEnt> Fdr<PrmEnt> jdSelectSingleEntityBindMap(String sql, Map<String, Object> mapParam, Class<PrmEnt> resultClazz) {
-
-        Fdr<PrmEnt> fdr = new Fdr<>();
-        fdr.setValue(null);
-
-        try {
-            Optional<PrmEnt> result = getJdbi().withHandle(handle -> {
-                return handle.select(Fiqt.stoj(sql))
-                        .bindMap(mapParam)
-                        .mapTo(resultClazz)
-                        .findFirst();
-            });
-
-            result.ifPresent(fdr::setValue);
-            fdr.setFdrBoResult(true);
-        } catch (Exception ex) {
-            Loghelper.get(getClass()).error(FiException.exTosMain(ex));
-            fdr.setFdrBoResult(false);
-            fdr.setValue(null);
-        }
-        return fdr;
-    }
-
-    public Fdr jdUpdateBindMapMain(FiQuery fiQuery) {
-        return jdUpdateBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
-    }
-
-    public Fdr jdUpdateBindMapMain(String updateQuery, Map<String, Object> fiMapParams) {
-        Fdr fdrMain = new Fdr();
-        try {
-            Integer rowCountUpdate = getJdbi().withHandle(handle -> {
-                return handle.createUpdate(Fiqt.stoj(updateQuery))
-                        .bindMap(fiMapParams)
-                        .execute(); // returns row count updated
-            });
-            //Loghelperr.getInstance(getClass()).debug("Row Count Update:"+rowCountUpdate);
-            //fiDbResult.setLnSuccessWithUpBoResult(1, rowCountUpdate);
-            fdrMain.setBoResultAndRowsAff(true, rowCountUpdate);
-        } catch (Exception ex) {
-            fdrMain.setBoResult(false, ex);
-            Loghelper.get(getClass()).error(FiException.exToErrorLog(ex));
-        }
-        return fdrMain;
-    }
-
-    public Fdr jdInsertFiQuery(FiQuery fiQuery) {
-        return jdInsertBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
-    }
-
-    /**
-     * Update ile aynı metoddan kopyalandı
-     *
-     * @param insertQuery
-     * @param fiMapParams
-     * @return
-     */
-    public Fdr jdInsertBindMapMain(String insertQuery, Map<String, Object> fiMapParams) {
-
-        Fdr fdrMain = new Fdr();
-        try {
-            Integer rowCountUpdate = getJdbi().withHandle(handle -> {
-                return handle.createUpdate(Fiqt.stoj(insertQuery))
-                        .bindMap(fiMapParams)
-                        .execute(); // returns row count updated
-            });
-            //Loghelperr.getInstance(getClass()).debug("Row Count Update:"+rowCountUpdate);
-            //fiDbResult.setLnSuccessWithUpBoResult(1, rowCountUpdate);
-            fdrMain.setBoResultAndRowsAff(true, rowCountUpdate);
-        } catch (Exception ex) {
-            fdrMain.setBoResult(false, ex);
-            Loghelper.get(getClass()).error(FiException.exToErrorLog(ex));
-        }
-        return fdrMain;
-    }
-
-    public Fdr jdDeleteFiQuery(FiQuery fiQuery) {
-        return jdDeleteBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
-    }
-
-    public Fdr jdDeleteBindMapMain(String insertQuery, Map<String, Object> fiMapParams) {
-
-        Fdr fdrMain = new Fdr();
-        try {
-            Integer rowCountUpdate = getJdbi().withHandle(handle -> {
-                return handle.createUpdate(Fiqt.stoj(insertQuery))
-                        .bindMap(fiMapParams)
-                        .execute(); // returns row count updated
-            });
-            //Loghelperr.getInstance(getClass()).debug("Row Count Update:"+rowCountUpdate);
-            //fiDbResult.setLnSuccessWithUpBoResult(1, rowCountUpdate);
-            fdrMain.setBoResultAndRowsAff(true, rowCountUpdate);
-        } catch (Exception ex) {
-            fdrMain.setBoResult(false, ex);
-            Loghelper.get(getClass()).error(FiException.exToErrorLog(ex));
-        }
-        return fdrMain;
-    }
-
-
-    public <EntMethodClazz> Fdr<List<EntMethodClazz>> jdSelectListBindMapMain(String sqlQuery, Map<String, Object> mapBind, Class<EntMethodClazz> clazz) {
-
-        Fdr<List<EntMethodClazz>> fdr = new Fdr<>();
-        fdr.setValue(new ArrayList<>());
-
-        try {
-            List<EntMethodClazz> result = getJdbi().withHandle(handle -> {
-                return handle.createQuery(Fiqt.stoj(sqlQuery))
-                        .bindMap(mapBind)
-                        .mapToBean(clazz)
-                        .list();
-            });
-            fdr.setBoResultAndValue(true, result, 1);
-        } catch (Exception ex) {
-            Loghelper.get(getClass()).error("Query Problem");
-            Loghelper.get(getClass()).error("Hata (Exception):\n" + FiException.exTosMain(ex));
-            fdr.setBoResult(false, ex);
-        }
-        return fdr;
-    }
-
-    public IFiTableMeta getiFiTableMeta() {
-        return iFiTableMeta;
-    }
-
-    public void setiFiTableMeta(IFiTableMeta iFiTableMeta) {
-        this.iFiTableMeta = iFiTableMeta;
-    }
-
-    public Fdr jdInsFkb(FiKeybean formAsFkb, Boolean boInserFieldsOnly, IFiTableMeta iFiTableMeta) {
-
-        if (iFiTableMeta == null) iFiTableMeta = getiFiTableMeta();
-
-        String sql = FiQugen.insertFiCols2(iFiTableMeta, formAsFkb.getListFiColInit(), boInserFieldsOnly);
-
-        FiQuery fiQuery = new FiQuery(sql, formAsFkb);
-        //fiQuery.logQueryAndParams();
-
-        return jdInsertFiQuery(fiQuery);
-    }
-
-
-    /**
-     * @param formAsFkb
-     * @param boUpdateFieldsOnly : updateField true olanlar sorguda güncellenir
-     * @return
-     */
-    public Fdr jdUpFkbByIdFields(FiKeybean formAsFkb, Boolean boUpdateFieldsOnly) {
-        String sql = FiQugen.updateFiColsArb(getiFiTableMeta(), formAsFkb.getListFiColInit(), boUpdateFieldsOnly);
-
-        FiQuery fiQuery = new FiQuery(sql, formAsFkb);
-        //fiQuery.logQueryAndParams();
-
-        return jdInsertFiQuery(fiQuery);
-    }
-
-    public Fdr jdDeleteFkbByIdCols(FiKeybean fiKeyBean, IFiTableMeta iFiTableMeta) {
-
-        String sql = FiQugen.deleteWhereIdFiColsV2(iFiTableMeta, fiKeyBean.getListFiColInit());
-
-        FiQuery fiQuery = new FiQuery(sql, fiKeyBean);
-        //fiQuery.logQueryAndParams();
-
-        return jdDeleteFiQuery(fiQuery);
-    }
-
-    public Fdr jdDeleteFkbByIdColsV2(FiKeybean fiKeyBean, IFiTableMeta iFiTableMeta, List<FiCol> fiCols) {
-
-        String sql = FiQugen.deleteWhereIdFiColsV2(iFiTableMeta, fiCols);
-
-        FiQuery fiQuery = new FiQuery(sql, fiKeyBean);
-        //fiQuery.logQueryAndParams();
-
-        return jdDeleteFiQuery(fiQuery);
-    }
-
-    /**
-     * Transaction olmalı
-     *
-     * @param fkbList
-     * @return
-     */
-    public Fdr jdDeleteListById(List<FiKeybean> fkbList) {
-        Fdr fdrMain = new Fdr();
-        for (FiKeybean fiKeyBean : fkbList) {
-            Fdr fdrDelete = jdDeleteFkbByIdCols(fiKeyBean, getiFiTableMeta());
-            fdrMain.combineAnd(fdrDelete);
-        }
-        return fdrMain;
-    }
-
-    /**
-     * FkbList'e FiColList tanımlaması yapılmalı
-     *
-     * @param fkbList
-     * @return
-     */
-    public Fdr jdDeleteListByIdV2(FkbList fkbList) {
-        Fdr fdrMain = new Fdr();
-
-        //Loghelper.get(getClass()).debug("FkbList.getFiColList():" + FiConsole.textListObjectsNotNullFields(fkbList.getFiColList()));
-
-        for (FiKeybean fiKeyBean : fkbList) {
-            Fdr fdrDelete = jdDeleteFkbByIdColsV2(fiKeyBean, getiFiTableMeta(), fkbList.getFicColList());
-            fdrMain.combineAnd(fdrDelete);
-        }
-        return fdrMain;
-    }
+    return fdrMain;
+  }
 }

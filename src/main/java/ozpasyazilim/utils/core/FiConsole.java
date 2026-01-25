@@ -5,7 +5,7 @@ import javafx.geometry.Point2D;
 import ozpasyazilim.utils.datatypes.FiKeybean;
 import ozpasyazilim.utils.datatypes.FkbList;
 import ozpasyazilim.utils.datatypes.FiListKeyString;
-import ozpasyazilim.utils.datatypes.FiKeyString;
+import ozpasyazilim.utils.datatypes.FiKeytext;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.table.FiCol;
 
@@ -113,11 +113,11 @@ public class FiConsole {
             Loghelper.debugLog(clazz, String.format("Map Null"));
             return;
         }
-        for (FiKeyString fiKeyString : listMap) {
+        for (FiKeytext fiKeytext : listMap) {
             if (FiBool.isTrue(boShowNulls)) {
-                Loghelper.debugLog(clazz, String.format("Map Detail (Not Null)\n\n%s", textFiKeyString(fiKeyString)));
+                Loghelper.debugLog(clazz, String.format("Map Detail (Not Null)\n\n%s", textFiKeyString(fiKeytext)));
             } else {
-                Loghelper.debugLog(clazz, String.format("Map Detail (Not Null)\n\n%s", textMapNotNull(fiKeyString)));
+                Loghelper.debugLog(clazz, String.format("Map Detail (Not Null)\n\n%s", textMapNotNull(fiKeytext)));
             }
 
         }
@@ -818,10 +818,11 @@ public class FiConsole {
         System.out.println(textCollectionOfString(strings));
     }
 
-    public static String textListFiKeyBean(FkbList fkbList) {
-        StringBuilder sbOutput = new StringBuilder("");
+    public static String textFkbList(FkbList fkbList) {
+        if(fkbList == null) return "FkbList is null";
+        StringBuilder sbOutput = new StringBuilder();
         for (FiKeybean fiKeyBean : fkbList) {
-            sbOutput.append(textFiKeyBean(fiKeyBean) + "\n");
+            sbOutput.append(textFiKeyBean(fiKeyBean)).append("\n");
         }
         return sbOutput.toString();
     }
@@ -867,8 +868,8 @@ public class FiConsole {
 
         sbLog.append("FiListKeyString Content\n\n");
 
-        for (FiKeyString fiKeyString : fiListKeyString) {
-            sbLog.append(FiConsole.textFiKeyString(fiKeyString)).append("\n");
+        for (FiKeytext fiKeytext : fiListKeyString) {
+            sbLog.append(FiConsole.textFiKeyString(fiKeytext)).append("\n");
         }
 
         Loghelper.get(FiConsole.class).debug(sbLog.toString());

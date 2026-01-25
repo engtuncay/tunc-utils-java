@@ -605,7 +605,7 @@ public class FiExcel {
     for (; rowIndexExcel <= lastRowNumber; rowIndexExcel++) {
       XSSFRow rowContent = sheet.getRow(rowIndexExcel);
       if (rowContent == null) continue;
-      FiKeyString maprow = new FiKeyString();
+      FiKeytext maprow = new FiKeytext();
       Boolean empty = true;
 
       for (int cn = 0; cn < lastColNumber; cn++) {   //rowContent.getLastCellNum()
@@ -1218,7 +1218,7 @@ public class FiExcel {
     for (Iterator iterator = listmapData.iterator(); iterator.hasNext(); ) {
       Map<String, String> mapExcelRow = (Map<String, String>) iterator.next();
 
-      FiKeyString fiMapEntity = new FiKeyString();
+      FiKeytext fiMapEntity = new FiKeytext();
       for (int i = 0; i < listColumns.size(); i++) {
         IFiCol fiTableCol = listColumns.get(i);
         // Excelden gelen veride bu sütun yoksa atlanır

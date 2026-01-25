@@ -93,7 +93,7 @@ public class FicList extends ArrayList<FiCol>{
 
 	public void addWithFkb(FiCol fiCol,Object value) {
 		add(fiCol);
-		getFkbParamsInit().addDbField(fiCol, value);
+		getFkbParamsInit().addFieldDb(fiCol, value);
 	}
 
 	public FiKeybean getFkbParams() {

@@ -1,6 +1,6 @@
 package ozpasyazilim.utils.core;
 
-import ozpasyazilim.utils.datatypes.FiKeyString;
+import ozpasyazilim.utils.datatypes.FiKeytext;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.returntypes.Fdr;
 
@@ -13,7 +13,7 @@ import java.nio.charset.StandardCharsets;
 public class FiSoap {
 
 
-	FiKeyString mapHeaders;
+	FiKeytext mapHeaders;
 
 	//String soapAction, String rootTagName
 
@@ -25,7 +25,7 @@ public class FiSoap {
 	 * @param mapHeaders
 	 * @return
 	 */
-	public static Fdr<String> requestRawHttp(String endPoint, String soapRequest, FiKeyString mapHeaders) {
+	public static Fdr<String> requestRawHttp(String endPoint, String soapRequest, FiKeytext mapHeaders) {
 
 		//System.setProperty("java.net.useSystemProxies", "true");
 
@@ -115,7 +115,7 @@ public class FiSoap {
 		return FiSoap.class;
 	}
 
-	public static Fdr<String> requestRawHttps(String endPoint, String soapRequest, FiKeyString fksHeaders) {
+	public static Fdr<String> requestRawHttps(String endPoint, String soapRequest, FiKeytext fksHeaders) {
 
 		//System.setProperty("java.net.useSystemProxies", "true");
 
@@ -204,15 +204,15 @@ public class FiSoap {
 		return fdr;
 	}
 
-	public static Fdr<FiXml> requestFiXmlHttps(String endPoint, String soapRequestXml, FiKeyString mapHeaders) {
+	public static Fdr<FiXml> requestFiXmlHttps(String endPoint, String soapRequestXml, FiKeytext mapHeaders) {
 		return requestFiXml(endPoint, soapRequestXml, mapHeaders, true);
 	}
 
-	public static Fdr<FiXml> requestFiXmlHttp(String endPoint, String soapRequestXml, FiKeyString mapHeaders) {
+	public static Fdr<FiXml> requestFiXmlHttp(String endPoint, String soapRequestXml, FiKeytext mapHeaders) {
 		return requestFiXml(endPoint, soapRequestXml, mapHeaders, false);
 	}
 
-	public static Fdr<FiXml> requestFiXml(String endPoint, String soapRequestXml, FiKeyString mapHeaders, Boolean boUseHttps) {
+	public static Fdr<FiXml> requestFiXml(String endPoint, String soapRequestXml, FiKeytext mapHeaders, Boolean boUseHttps) {
 
 		Fdr<FiXml> fdrXmlDoc = new Fdr<>();
 
@@ -246,11 +246,11 @@ public class FiSoap {
 	}
 
 
-	public FiKeyString getMapHeaders() {
+	public FiKeytext getMapHeaders() {
 		return mapHeaders;
 	}
 
-	public void setMapHeaders(FiKeyString mapHeaders) {
+	public void setMapHeaders(FiKeytext mapHeaders) {
 		this.mapHeaders = mapHeaders;
 	}
 }

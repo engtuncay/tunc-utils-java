@@ -992,4 +992,11 @@ public class FiString {
     }
     return txValue;
   }
+
+  public static Boolean stringToBool(String txValue) {
+    if (txValue==null)return null;
+    if(txValue.equalsIgnoreCase("true")) return true;
+    if(txValue.equalsIgnoreCase("false")) return false;
+    return null;
+  }
 }

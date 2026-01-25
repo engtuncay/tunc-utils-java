@@ -180,4 +180,9 @@ public class FiBool {
 
         return null;
     }
+
+  public static Boolean intToBool(Integer intValue) {
+    if (intValue == null) return null;
+    return !intValue.equals(0);
+  }
 }

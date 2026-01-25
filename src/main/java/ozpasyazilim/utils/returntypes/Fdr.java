@@ -4,6 +4,8 @@ import javafx.util.Pair;
 import ozpasyazilim.utils.annotations.FiReview;
 import ozpasyazilim.utils.core.*;
 
+import ozpasyazilim.utils.datatypes.FiKeybean;
+import ozpasyazilim.utils.datatypes.FkbList;
 import ozpasyazilim.utils.fidbanno.FiTable;
 import ozpasyazilim.utils.log.OreLog;
 import ozpasyazilim.utils.log.Loghelper;
@@ -156,6 +158,10 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
   private Boolean boLockAddLog;
 
   private String fdrTxValue;
+
+  private FkbList fdrFkbListVal;
+
+  private FiKeybean fdrFkbVal;
 
   private Integer fdrLnValue;
   /**
@@ -727,6 +733,10 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     setException(exError);
   }
 
+  public void setBoResult(Boolean fdrBoResult) {
+    setFdrBoResult(fdrBoResult);
+  }
+
   public void setBoResultAndValue(Boolean boExec, EntClazz resValue, Integer rowsAffected) {
     setFdrBoResult(boExec);
     setRowsAffected(rowsAffected);
@@ -1265,5 +1275,28 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
 
   public void setFdrLnValue(Integer fdrLnValue) {
     this.fdrLnValue = fdrLnValue;
+  }
+
+  public FkbList getFdrFkbListVal() {
+    return fdrFkbListVal;
+  }
+
+  public FkbList getFdrFkbListValNtn() {
+    if (fdrFkbListVal == null) {
+      fdrFkbListVal = new FkbList();
+    }
+    return fdrFkbListVal;
+  }
+
+  public void setFdrFkbListVal(FkbList fdrFkbListVal) {
+    this.fdrFkbListVal = fdrFkbListVal;
+  }
+
+  public FiKeybean getFdrFkbVal() {
+    return fdrFkbVal;
+  }
+
+  public void setFdrFkbVal(FiKeybean fdrFkbVal) {
+    this.fdrFkbVal = fdrFkbVal;
   }
 }

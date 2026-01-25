@@ -1,9 +1,8 @@
 package ozpasyazilim.utils.fidborm;
 
 import ozpasyazilim.utils.datatypes.FkbList;
-import ozpasyazilim.utils.table.FicList;
 
-public interface IFkcTableMeta {
+public interface IFiTableMetaFkc {
 
     String getITxTableName();
 

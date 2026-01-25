@@ -9,13 +9,13 @@ import java.util.List;
 /**
  * Map [String,String] türünde özel tip
  */
-public class FiKeyString extends HashMap<String, String> {
+public class FiKeytext extends HashMap<String, String> {
 
-	public FiKeyString() {
+	public FiKeytext() {
 	}
 
-	public static FiKeyString build() {
-		return new FiKeyString();
+	public static FiKeytext build() {
+		return new FiKeytext();
 	}
 
 	public void clearEmptyKeys() {
