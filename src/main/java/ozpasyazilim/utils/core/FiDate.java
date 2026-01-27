@@ -182,6 +182,13 @@ public class FiDate {
 		return formatter.format(date);
 	}
 
+	public static String dateToStrGlobalDateTimeFormat(Date date) {
+		//SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS");
+		LocalDateTime localDateTime = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+		return formatter.format(localDateTime);
+	}
+
 	public static String dateToStrAsddmmyyyyWitSlash(Date date) {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		return formatter.format(date);

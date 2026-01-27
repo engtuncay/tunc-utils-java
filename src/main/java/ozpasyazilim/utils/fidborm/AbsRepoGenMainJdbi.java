@@ -52,6 +52,10 @@ public class AbsRepoGenMainJdbi<EntClazz> extends AbsRepoJdbiCore {
 
     }
 
+    public Fdr<List<EntClazz>> jdSelectListBindMapNtn(FiQuery fiQuery) {
+        return jdSelectListBindMapMainNtn(fiQuery.getTxQuery(), fiQuery.getMapParams());
+    }
+
     // Sorgu Metodları
 
     /**

@@ -388,7 +388,7 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
     return null;
   }
 
-  public Date getAsDate(FiCol fiCol) {
+  public Date getFicAsDate(FiCol fiCol) {
     if (fiCol == null || FiString.isEmpty(fiCol.getOfcTxFieldName())) return null;
 
     if (containsKey(fiCol.getOfcTxFieldName())) {

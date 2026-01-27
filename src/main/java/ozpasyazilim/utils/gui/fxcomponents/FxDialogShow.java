@@ -1264,7 +1264,7 @@ public class FxDialogShow {
         if (FiBool.isTrue(dbResult.getFdrBoResult())) {
 
             if (dbResult.isEmptyMessage()) {
-                dbResult.setFdrTxMessage(String.format("İşlem Başarı ile Gerçekleşti.\n %s Adet Kayıt Güncellendi.", dbResult.getRowsAffectedNotNull()));
+                dbResult.setFdrTxMessageWitAddLog(String.format("İşlem Başarı ile Gerçekleşti.\n %s Adet Kayıt Güncellendi.", dbResult.getRowsAffectedNotNull()));
             }
 
             //showInfoDialog(dbResult.getMessage());
@@ -1273,7 +1273,7 @@ public class FxDialogShow {
         } else {
 
             if (dbResult.isEmptyMessage()) {
-                dbResult.setFdrTxMessage("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getException()));
+                dbResult.setFdrTxMessageWitAddLog("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getException()));
             }
 
             showModalWarningAlert(dbResult.getFdrTxMessage());
@@ -1287,7 +1287,7 @@ public class FxDialogShow {
         if (FiBool.isTrue(dbResult.getFdrBoResult())) {
 
             if (FiString.isEmpty(dbResult.getFdrTxMessage())) {
-                dbResult.setFdrTxMessage(String.format("İşlem Başarı ile Gerçekleşti.\n %s Adet Kayıt Güncellendi.", dbResult.getRowsAffectedNotNull()));
+                dbResult.setFdrTxMessageWitAddLog(String.format("İşlem Başarı ile Gerçekleşti.\n %s Adet Kayıt Güncellendi.", dbResult.getRowsAffectedNotNull()));
             }
 
             //showInfoDialog(dbResult.getMessage());
@@ -1297,13 +1297,13 @@ public class FxDialogShow {
 
             if (dbResult.isFalseBoResult()) {
                 if (dbResult.getFdrTxMessage() == null) {
-                    dbResult.setFdrTxMessage("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getException()));
+                    dbResult.setFdrTxMessageWitAddLog("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getException()));
                 }
             }
 
             if (dbResult.isNullBoResult()) {
                 if (dbResult.getFdrTxMessage() == null) {
-                    dbResult.setFdrTxMessage("İşlem Yapılmadı.");
+                    dbResult.setFdrTxMessageWitAddLog("İşlem Yapılmadı.");
                 }
             }
 
@@ -1317,7 +1317,7 @@ public class FxDialogShow {
         if (FiBool.isTrue(dbResult.getFdrBoResult())) {
 
             if (dbResult.getFdrTxMessage() == null) {
-                dbResult.setFdrTxMessage(String.format("İşlem Başarı ile Gerçekleşti.\n %s Adet Kayıt İşleme Alındı.", dbResult.getRowsAffectedNotNull()));
+                dbResult.setFdrTxMessageWitAddLog(String.format("İşlem Başarı ile Gerçekleşti.\n %s Adet Kayıt İşleme Alındı.", dbResult.getRowsAffectedNotNull()));
             }
 
             //showInfoDialog(dbResult.getMessage());
@@ -1326,7 +1326,7 @@ public class FxDialogShow {
         } else {
 
             if (dbResult.getFdrTxMessage() == null) {
-                dbResult.setFdrTxMessage("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getException()));
+                dbResult.setFdrTxMessageWitAddLog("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getException()));
             }
 
             showModalWarningAlert(dbResult.getFdrTxMessage());
@@ -1340,7 +1340,7 @@ public class FxDialogShow {
         if (FiBool.isTrue(dbResult.getFdrBoResult())) {
 
             if (dbResult.getFdrTxMessage() == null) {
-                dbResult.setFdrTxMessage("İşlem Başarı ile Gerçekleşti.");
+                dbResult.setFdrTxMessageWitAddLog("İşlem Başarı ile Gerçekleşti.");
             }
             //showInfoDialog(dbResult.getMessage());
             if (windowOwner != null) {
@@ -1355,7 +1355,7 @@ public class FxDialogShow {
         } else {
 
             if (dbResult.getFdrTxMessage() == null) {
-                dbResult.setFdrTxMessage("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getException()));
+                dbResult.setFdrTxMessageWitAddLog("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getException()));
             }
             showModalWarningAlert(dbResult.getFdrTxMessage());
 
