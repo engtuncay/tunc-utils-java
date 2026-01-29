@@ -1024,12 +1024,16 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
   }
 
   public void addLog(String txMessage, MetaLogType metaLogType) {
-    if (getBoLockAddLogNtn()) Loghelper.get(getClass()).debug("Error: Added Log to Blocked Fdr !!!!!!!!");
+    if (getBoLockAddLogNtn()) {
+      Loghelper.get(getClass()).debug("Error: Added Log to Blocked Fdr !!!!!!!!");
+    }
     getLogListInit().add(new OreLog(txMessage, metaLogType));
   }
 
   public Fdr addLogInfo(String txMessage) {
-    if (getBoLockAddLogNtn()) Loghelper.get(getClass()).debug("Error: Added Log to Blocked Fdr !!!!!!!!");
+    if (getBoLockAddLogNtn()) {
+      Loghelper.get(getClass()).debug("Error: Added Log to Blocked Fdr !!!!!!!!");
+    }
     //if(getBoLockAddLogNtn()) throw new RuntimeException("Error: Added Log to Blocked Fdr !!!!!!!!");
     getLogListInit().add(new OreLog(txMessage, MetaLogType.INFO));
     return this;
