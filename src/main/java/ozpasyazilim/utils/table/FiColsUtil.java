@@ -38,7 +38,7 @@ public class FiColsUtil {
         if (!getFiColList().isEmpty()) {
 
             for (FiCol fiCol : getFiColList()) {
-                if (fiCol.getOfcTxFieldName().equals(fieldName)) {
+                if (fiCol.getFcTxFieldName().equals(fieldName)) {
                     return fiCol;
                 }
             }
@@ -83,7 +83,7 @@ public class FiColsUtil {
     }
 
     public static FiCol changeFieldNameWithNew(FiCol fiCol){
-        fiCol.setOfcTxFieldName(fiCol.getOfcTxFieldName()+ "_new");
+        fiCol.setFcTxFieldName(fiCol.getFcTxFieldName()+ "_new");
         return fiCol;
     }
 

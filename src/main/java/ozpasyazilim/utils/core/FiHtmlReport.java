@@ -161,7 +161,7 @@ public class FiHtmlReport {
 
 		// sütunlar bastırılır
 		for (FiCol fiTableCol : colList) {
-			htmlContent += tagTh + FiString.orEmpty(fiTableCol.getOfcTxHeader()) + "</th>";
+			htmlContent += tagTh + FiString.orEmpty(fiTableCol.getFcTxHeader()) + "</th>";
 		}
 
 		// satırlar bastırılır
@@ -179,7 +179,7 @@ public class FiHtmlReport {
 
 				//Loghelper.get(FiHtmlReport.class).debug("Field:" + fiTableCol.getFieldName());
 
-				String fieldName = fiTableCol.getOfcTxFieldName();
+				String fieldName = fiTableCol.getFcTxFieldName();
 
 				if (FiString.isEmpty(fieldName)) continue;
 

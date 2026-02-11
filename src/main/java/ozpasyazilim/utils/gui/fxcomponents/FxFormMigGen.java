@@ -225,7 +225,7 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
 
 
     private Map<String, FiCol> getFormAsMapFieldNameToFiCol() {
-        return FiCollection.listToMapSingle(getListFormElements(), FiCol::getOfcTxFieldName);
+        return FiCollection.listToMapSingle(getListFormElements(), FiCol::getFcTxFieldName);
     }
 
     /**
@@ -299,13 +299,13 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
 
             // Tek satır label göstermek için
             if (fiCol.getColEditorClass().equals(EnumColNodeType.FxLabelRowComment.toString())) {
-                FxLabel fxLabelComment = new FxLabel(fiCol.getOfcTxHeader());
+                FxLabel fxLabelComment = new FxLabel(fiCol.getFcTxHeader());
                 add(fxLabelComment, "pushx,growx,span");
                 continue;
             }
 
             // Label oluşturulur
-            Label lblForm = new Label(fiCol.getOfcTxHeader());
+            Label lblForm = new Label(fiCol.getFcTxHeader());
             add(lblForm, "width 30%,wmax 150,wmin 120");
 
             Object entityForNode = getRefFormEntity();
@@ -493,7 +493,7 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
     private FiCol getFiCol(FiCol entBoAnacariBirlestir) {
         FiCol fiColFound = null;
         for (FiCol fiCol : getListFormElements()) {
-            if (fiCol.getOfcTxFieldName().equals(entBoAnacariBirlestir.getOfcTxFieldName())) {
+            if (fiCol.getFcTxFieldName().equals(entBoAnacariBirlestir.getFcTxFieldName())) {
                 fiColFound = fiCol;
             }
         }

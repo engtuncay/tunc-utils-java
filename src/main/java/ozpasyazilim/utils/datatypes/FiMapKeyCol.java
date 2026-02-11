@@ -20,6 +20,6 @@ public class FiMapKeyCol extends HashMap<String, FiCol> {
 
 
 	public void putWithHeaderName(FiCol fiCol) {
-		put(fiCol.getOfcTxHeader(), fiCol);
+		put(fiCol.getFcTxHeader(), fiCol);
 	}
 }

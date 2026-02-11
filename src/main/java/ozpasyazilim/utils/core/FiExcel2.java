@@ -1153,7 +1153,7 @@ public class FiExcel2 {
         Row headerRow = sheet.createRow(0); // Create row at line 0
 
         for (int indexColHeader = 0; indexColHeader < fiCols.size(); indexColHeader++) { // For each column
-            headerRow.createCell(indexColHeader).setCellValue(fiCols.get(indexColHeader).getOfcTxHeader()); // Write column name
+            headerRow.createCell(indexColHeader).setCellValue(fiCols.get(indexColHeader).getFcTxHeader()); // Write column name
         }
 
         for (int indexRow = 0; indexRow < listData.size(); indexRow++) { // For each
@@ -1162,7 +1162,7 @@ public class FiExcel2 {
 
             for (int cols = 0; cols < fiCols.size(); cols++) { // For each table column
 
-                String fieldname = fiCols.get(cols).getOfcTxFieldName();
+                String fieldname = fiCols.get(cols).getFcTxFieldName();
 
                 String value = "";
                 Object obj = null;
@@ -1201,7 +1201,7 @@ public class FiExcel2 {
         Row headerRow = sheet.createRow(0); // Create row at line 0
 
         for (int indexColHeader = 0; indexColHeader < fiCols.size(); indexColHeader++) { // For each column
-            headerRow.createCell(indexColHeader).setCellValue(fiCols.get(indexColHeader).getOfcTxHeader()); // Write column name
+            headerRow.createCell(indexColHeader).setCellValue(fiCols.get(indexColHeader).getFcTxHeader()); // Write column name
         }
 
         for (int indexRow = 0; indexRow < fkbList.size(); indexRow++) { // For each
@@ -1210,7 +1210,7 @@ public class FiExcel2 {
 
             for (int colIndex = 0; colIndex < fiCols.size(); colIndex++) { // For each table column
 
-                String fieldname = fiCols.get(colIndex).getOfcTxFieldName();
+                String fieldname = fiCols.get(colIndex).getFcTxFieldName();
 
                 //String value = "";
                 Object obj = null;
@@ -1261,7 +1261,7 @@ public class FiExcel2 {
             }
 
             Cell cell = headerRow.createCell(colIndex);
-            cell.setCellValue(FiString.orEmpty(fiCol.getOfcTxHeader())); // Write column name
+            cell.setCellValue(FiString.orEmpty(fiCol.getFcTxHeader())); // Write column name
             String comment = fiCol.getColComment();
 
             if (comment != null) {
@@ -1286,7 +1286,7 @@ public class FiExcel2 {
                     continue;
                 }
 
-                String fieldname = columnList.get(colCounterIndex).getOfcTxFieldName();
+                String fieldname = columnList.get(colCounterIndex).getFcTxFieldName();
                 Object cellValue = null;
 
                 if (fieldname != null) {

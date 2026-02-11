@@ -194,7 +194,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
   public Boolean existColumn(String fieldName) {
     for (FiCol fiTableCol : getFiColList()) {
-      if (fiTableCol.getOfcTxFieldName().equals(fieldName)) {
+      if (fiTableCol.getFcTxFieldName().equals(fieldName)) {
         return true;
       }
     }
@@ -360,11 +360,11 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
       if (ent instanceof FiKeybean) {
         FiKeybean fkbRow = (FiKeybean) ent;
-        return FiBool.or(fkbRow.getAsBoolean(getFiColSelection().getOfcTxFieldName()), false);
+        return FiBool.or(fkbRow.getAsBoolean(getFiColSelection().getFcTxFieldName()), false);
       }
 
       try {
-        return FiBool.convertBooleanElseFalse(PropertyUtils.getNestedProperty(ent, getFiColSelection().getOfcTxFieldName()));
+        return FiBool.convertBooleanElseFalse(PropertyUtils.getNestedProperty(ent, getFiColSelection().getFcTxFieldName()));
       } catch (Exception e) { // çevirmede hata olursa false döner
         Loghelper.get(getClass()).debug("bool çevirmede hata" + FiException.exToErrorLog(e));
         return false;
@@ -379,7 +379,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
       if (ent instanceof FiKeybean) {
         FiKeybean fkbRow = (FiKeybean) ent;
-        return FiBool.or(fkbRow.getAsBoolean(getFiColSelection().getOfcTxFieldName()), false);
+        return FiBool.or(fkbRow.getAsBoolean(getFiColSelection().getFcTxFieldName()), false);
       }
 
       return false;
@@ -393,11 +393,11 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
       if (ent instanceof FiKeybean) {
         FiKeybean fkbRow = (FiKeybean) ent;
-        return FiBool.or(fkbRow.getAsBoolean(getFiColSelection().getOfcTxFieldName()), false);
+        return FiBool.or(fkbRow.getAsBoolean(getFiColSelection().getFcTxFieldName()), false);
       }
 
       try {
-        return FiBool.convertBooleanElseFalse(PropertyUtils.getNestedProperty(ent, getFiColSelection().getOfcTxFieldName()));
+        return FiBool.convertBooleanElseFalse(PropertyUtils.getNestedProperty(ent, getFiColSelection().getFcTxFieldName()));
       } catch (Exception e) {
         Loghelper.get(getClass()).debug(FiException.exceptiontostring1(e));
         return false;
@@ -574,31 +574,31 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
    */
   private void setupCellValueAndEditorFactory(FxTableCol2 fxTableCol) {
     //Loghelperr.getInstance(getClass()).debug("added "+ fxTableCol.getFieldName());
-    fxTableCol.setText(fxTableCol.getRefFiCol().getOfcTxHeader());
+    fxTableCol.setText(fxTableCol.getRefFiCol().getFcTxHeader());
 
     // iki nokta (aa..bb) şeklinde de olabilir , tek nokta karışabilir
-    if (fxTableCol.getRefFiCol().getOfcTxFieldName().contains(".")) {
+    if (fxTableCol.getRefFiCol().getFcTxFieldName().contains(".")) {
       //Loghelperr.getInstance(getClass()).debug("Nested:" + fxTableCol.getFiTableCol().getFieldName());
-      fxTableCol.setCellValueFactory(new NestedPropertyValueFactory(fxTableCol.getRefFiCol().getOfcTxFieldName()));
+      fxTableCol.setCellValueFactory(new NestedPropertyValueFactory(fxTableCol.getRefFiCol().getFcTxFieldName()));
     } else {
-      fxTableCol.setCellValueFactory(new PropertyValueFactory<>(fxTableCol.getRefFiCol().getOfcTxFieldName()));
+      fxTableCol.setCellValueFactory(new PropertyValueFactory<>(fxTableCol.getRefFiCol().getFcTxFieldName()));
     }
 
     //bydefault idi
     FxTableViewCellFactoryModal.setupCellFactoryGeneral(fxTableCol, getEntityClass());
-    fxTableCol.setId(fxTableCol.getRefFiCol().getOfcTxFieldName());
+    fxTableCol.setId(fxTableCol.getRefFiCol().getFcTxFieldName());
 
   }
 
   private void setupCellValueAndEditorFactoryAsFkb(FxTableCol2 fxTableCol) {
     //Loghelperr.getInstance(getClass()).debug("added "+ fxTableCol.getFieldName());
-    fxTableCol.setText(fxTableCol.getRefFiCol().getOfcTxHeader());
+    fxTableCol.setText(fxTableCol.getRefFiCol().getFcTxHeader());
 
-    fxTableCol.setCellValueFactory(new TableValueFactoryForFkb<>(fxTableCol.getRefFiCol().getOfcTxFieldName()));
+    fxTableCol.setCellValueFactory(new TableValueFactoryForFkb<>(fxTableCol.getRefFiCol().getFcTxFieldName()));
 
     //bydefault idi
     FxTableViewCellFactoryModal.setupCellFactoryGeneral(fxTableCol, getEntityClass());
-    fxTableCol.setId(fxTableCol.getRefFiCol().getOfcTxFieldName());
+    fxTableCol.setId(fxTableCol.getRefFiCol().getFcTxFieldName());
     //fxTableCol.setAutoFormatter(fxTableCol.getFiTableCol().getColType());
   }
 
@@ -824,7 +824,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
   private void setupHeader1ForTableCol(FxTableCol2 fxcol) {
 
     //if (fxcol.getOzTableCol().getFiPaneHeader() != null) return;
-    FxLabel label = new FxLabel(fxcol.getRefFiCol().getOfcTxHeader());
+    FxLabel label = new FxLabel(fxcol.getRefFiCol().getFcTxHeader());
     label.setStyle("-fx-padding: 2px;");
     label.setWrapText(false); // true idi
     label.setAlignment(Pos.CENTER);
@@ -842,7 +842,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     //fxcol.setFiHeaderAsVbox(migColHeader, fxcol);
     fxcol.getRefFiCol().setPaneHeader(migColHeader);
-    fxcol.setText(fxcol.getRefFiCol().getOfcTxHeader());
+    fxcol.setText(fxcol.getRefFiCol().getFcTxHeader());
 
     if (checkColFilterableLocal(fxcol) || checkColFilterableRemote(fxcol)) {
       fxcol.getRefFiCol().setBoLocFilterable(true);
@@ -949,7 +949,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
           }
 
           if (!disabledSelection) {
-            String fieldName = fxcol.getRefFiCol().getOfcTxFieldName();
+            String fieldName = fxcol.getRefFiCol().getFcTxFieldName();
             try {
               PropertyUtils.setNestedProperty(ent, fieldName, false);
             } catch (IllegalAccessException | InvocationTargetException e) {
@@ -973,7 +973,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
           }
 
           if (!disabledSelection) {
-            String fieldName = fxcol.getRefFiCol().getOfcTxFieldName();
+            String fieldName = fxcol.getRefFiCol().getFcTxFieldName();
             try {
               PropertyUtils.setNestedProperty(ent, fieldName, boStatus);
             } catch (IllegalAccessException | InvocationTargetException e) {
@@ -1143,10 +1143,10 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
             if (ent instanceof FiKeybean) {
               //Loghelper.get(getClass()).debug("FiKeybean Row Instance");
               FiKeybean fkbEnd = (FiKeybean) ent;
-              objCellValue = fkbEnd.getAsObj(refFiCol.getOfcTxFieldName());
+              objCellValue = fkbEnd.getAsObj(refFiCol.getFcTxFieldName());
             }
           } else {
-            objCellValue = FiReflection.getProperty(ent, refFiCol.getOfcTxFieldName());
+            objCellValue = FiReflection.getProperty(ent, refFiCol.getFcTxFieldName());
           }
 
 //                    if (objCellValue != null) {
@@ -1613,7 +1613,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
   public FxTableCol2 getColumnByFieldName(String fieldName) {
 
     for (FxTableCol2 fxTableCol : getListFxTableCol()) {
-      if (fxTableCol.getRefFiCol().getOfcTxFieldName().equals(fieldName)) {
+      if (fxTableCol.getRefFiCol().getFcTxFieldName().equals(fieldName)) {
         return fxTableCol;
       }
     }
@@ -2061,7 +2061,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
   public void removeFiColById(FiCol fiCol) {
 
-    TableColumn tableColumn = getColumnByFieldName1(fiCol.getOfcTxFieldName());
+    TableColumn tableColumn = getColumnByFieldName1(fiCol.getFcTxFieldName());
 
     if (tableColumn != null) {
       getColumns().remove(tableColumn);

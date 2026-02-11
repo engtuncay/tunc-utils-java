@@ -145,7 +145,7 @@ public class FiHtmlParserJsoup {
 
 					Object cellvalue=null;
 
-					String strCellvalue = mapRow.get(fiTableCol.getOfcTxHeader());
+					String strCellvalue = mapRow.get(fiTableCol.getFcTxHeader());
 
 					if(strCellvalue==null)continue;
 
@@ -167,7 +167,7 @@ public class FiHtmlParserJsoup {
 //						cellvalue = Integer.parseInt(strCellvalue);
 //					}
 
-					PropertyUtils.setProperty(entity, fiTableCol.getOfcTxFieldName(), cellvalue);
+					PropertyUtils.setProperty(entity, fiTableCol.getFcTxFieldName(), cellvalue);
 				} catch (IllegalAccessException e) {
 					e.printStackTrace();
 				} catch (InvocationTargetException e) {

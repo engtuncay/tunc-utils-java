@@ -60,13 +60,13 @@ public interface IFiCol<N> {
 
 	public void setId(String id);
 
-	public String getOfcTxFieldName();
+	public String getFcTxFieldName();
 
-	public void setOfcTxFieldName(String ofcTxFieldName);
+	public void setFcTxFieldName(String fcTxFieldName);
 
-	public String getOfcTxHeader();
+	public String getFcTxHeader();
 
-	public void setOfcTxHeader(String ofcTxHeader);
+	public void setFcTxHeader(String fcTxHeader);
 
 	public Double getPrefSize();
 

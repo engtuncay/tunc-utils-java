@@ -120,12 +120,12 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
   public FiKeybean addFiCol(FiCol fiCol, Object value) {
     this.put(fiCol.toString(), value);
     getListFiColInit().add(fiCol);
-    getMapFiColInit().put(fiCol.getOfcTxFieldName(), fiCol);
+    getMapFiColInit().put(fiCol.getFcTxFieldName(), fiCol);
     return this;
   }
 
   public FiKeybean putField(FiCol fiCol, Object value) {
-    this.put(fiCol.getOfcTxFieldName(), value);
+    this.put(fiCol.getFcTxFieldName(), value);
     return this;
   }
 
@@ -228,12 +228,12 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
       if (fieldValue != null) {
         FiField fiField = FiReflectClass.setupFiFieldBasic(field, null);
 
-        if (FiBool.isTrue(fiField.getOfcBoFilterLike())) {
+        if (FiBool.isTrue(fiField.getFcBoFilterLike())) {
           String txValue = (String) fieldValue;
           txValue = "%" + txValue + "%";
-          fiKeyBean.add(fiField.getOfcTxDbField(), txValue);
+          fiKeyBean.add(fiField.getFcTxDbField(), txValue);
         } else {
-          fiKeyBean.add(fiField.getOfcTxDbField(), fieldValue);
+          fiKeyBean.add(fiField.getFcTxDbField(), fieldValue);
         }
 
 
@@ -278,10 +278,10 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
    * @return
    */
   public String getAsString(FiCol fiCol) {
-    if (fiCol == null || FiString.isEmpty(fiCol.getOfcTxFieldName())) return null;
+    if (fiCol == null || FiString.isEmpty(fiCol.getFcTxFieldName())) return null;
 
-    if (containsKey(fiCol.getOfcTxFieldName())) {
-      Object objValue = get(fiCol.getOfcTxFieldName());
+    if (containsKey(fiCol.getFcTxFieldName())) {
+      Object objValue = get(fiCol.getFcTxFieldName());
 
       if (objValue == null) return null;
 
@@ -319,10 +319,10 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
 
   public Integer getAsInt(FiCol fiCol) {
 
-    if (fiCol == null || FiString.isEmpty(fiCol.getOfcTxFieldName())) return null;
+    if (fiCol == null || FiString.isEmpty(fiCol.getFcTxFieldName())) return null;
 
-    if (containsKey(fiCol.getOfcTxFieldName())) {
-      Object objValue = get(fiCol.getOfcTxFieldName());
+    if (containsKey(fiCol.getFcTxFieldName())) {
+      Object objValue = get(fiCol.getFcTxFieldName());
 
       if (objValue == null) return null;
 
@@ -337,10 +337,10 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
 
   public Double getAsDouble(FiCol fiCol) {
 
-    if (fiCol == null || FiString.isEmpty(fiCol.getOfcTxFieldName())) return null;
+    if (fiCol == null || FiString.isEmpty(fiCol.getFcTxFieldName())) return null;
 
-    if (containsKey(fiCol.getOfcTxFieldName())) {
-      Object objValue = get(fiCol.getOfcTxFieldName());
+    if (containsKey(fiCol.getFcTxFieldName())) {
+      Object objValue = get(fiCol.getFcTxFieldName());
 
       if (objValue == null) return null;
 
@@ -366,10 +366,10 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
 
   public Double getAsDouble(IFiCol fiCol) {
 
-    if (fiCol == null || FiString.isEmpty(fiCol.getOfcTxFieldName())) return null;
+    if (fiCol == null || FiString.isEmpty(fiCol.getFcTxFieldName())) return null;
 
-    if (containsKey(fiCol.getOfcTxFieldName())) {
-      Object objValue = get(fiCol.getOfcTxFieldName());
+    if (containsKey(fiCol.getFcTxFieldName())) {
+      Object objValue = get(fiCol.getFcTxFieldName());
 
       if (objValue == null) return null;
 
@@ -389,11 +389,11 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
   }
 
   public Date getFicAsDate(FiCol fiCol) {
-    if (fiCol == null || FiString.isEmpty(fiCol.getOfcTxFieldName())) return null;
+    if (fiCol == null || FiString.isEmpty(fiCol.getFcTxFieldName())) return null;
 
-    if (containsKey(fiCol.getOfcTxFieldName())) {
+    if (containsKey(fiCol.getFcTxFieldName())) {
       //return (Date) get(fiCol.getFieldName());
-      Object objValue = get(fiCol.getOfcTxFieldName());
+      Object objValue = get(fiCol.getFcTxFieldName());
 
       //Loghelper.get(getClass()).debug("Obje Türü" + objValue.getClass().getName());
 
@@ -410,11 +410,11 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
   }
 
   public Boolean getFicValAsBool(FiCol fiCol) {
-    if (fiCol == null || FiString.isEmpty(fiCol.getOfcTxFieldName())) return null;
+    if (fiCol == null || FiString.isEmpty(fiCol.getFcTxFieldName())) return null;
 
-    if (containsKey(fiCol.getOfcTxFieldName())) {
-      if (get(fiCol.getOfcTxFieldName()) instanceof Boolean) {
-        return (Boolean) get(fiCol.getOfcTxFieldName());
+    if (containsKey(fiCol.getFcTxFieldName())) {
+      if (get(fiCol.getFcTxFieldName()) instanceof Boolean) {
+        return (Boolean) get(fiCol.getFcTxFieldName());
       }
     }
 
@@ -544,7 +544,7 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
   }
 
   public boolean containsFiColFn(FiCol fiCol) {
-    return containsKey(fiCol.getOfcTxFieldName());
+    return containsKey(fiCol.getFcTxFieldName());
   }
 
   public void logParams() {
@@ -577,11 +577,11 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
   }
 
   public String getCombineTireByFiCol(FiCol fiCol, FiCol fiCol2) {
-    return FiString.orEmpty(get(fiCol.getOfcTxFieldName())) + "-" + FiString.orEmpty(get(fiCol2.getOfcTxFieldName()));
+    return FiString.orEmpty(get(fiCol.getFcTxFieldName())) + "-" + FiString.orEmpty(get(fiCol2.getFcTxFieldName()));
   }
 
   public Object getByFiCol(FiCol fiCol) {
-    return get(fiCol.getOfcTxFieldName());
+    return get(fiCol.getFcTxFieldName());
   }
 
   public Object getFicValue(FiCol fiCol) {
@@ -626,7 +626,7 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
 
   public void appendFiCol(FiCol fiCol) {
     getListFiColInit().add(fiCol);
-    getMapFiColInit().put(fiCol.getOfcTxFieldName(), fiCol);
+    getMapFiColInit().put(fiCol.getFcTxFieldName(), fiCol);
   }
 
   @Override
@@ -656,7 +656,7 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
   }
 
   public Object getFiCol(FiCol fiCol) {
-    return get(fiCol.getOfcTxFieldName());
+    return get(fiCol.getFcTxFieldName());
   }
 
   public FiListString getFullKeys() {
@@ -675,11 +675,11 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
   }
 
   public void addFieldBy(FiCol fiCol, Object value) {
-    addField(fiCol.getOfcTxFieldName(), value);
+    addField(fiCol.getFcTxFieldName(), value);
   }
 
   public void addFieldFic(FiCol fiCol, Object value) {
-    addField(fiCol.getOfcTxFieldName(), value);
+    addField(fiCol.getFcTxFieldName(), value);
   }
 
   public void addField(String txKey, Object value) {
@@ -687,9 +687,9 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
   }
 
   public void addFicIfNotExist(FiCol fiCol, Object value) {
-    if(fiCol==null || FiString.isEmpty(fiCol.getOfcTxFieldName())) return;
+    if(fiCol==null || FiString.isEmpty(fiCol.getFcTxFieldName())) return;
 
-    addFieldIfNotExist(fiCol.getOfcTxFieldName(), value);
+    addFieldIfNotExist(fiCol.getFcTxFieldName(), value);
   }
 
   public void addFieldIfNotExist(String txKey, Object value) {
@@ -708,6 +708,6 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
    * @return
    */
   public String getFnm() {
-    return getFimValueAsString(FimFiCol.ofcTxFieldName());
+    return getFimValueAsString(FimFiCol.fcTxFieldName());
   }
 }

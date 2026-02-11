@@ -159,9 +159,9 @@ public class FxTextField<EntClazz> extends TextField {
 			//System.out.println("Control New Text:"+ change.getControlNewText());
 			//System.out.println("Control text:"+ change.getControlText());
 
-			if(fiCol.getOfcLnLength()!=null){
-				if(wholeText.length()>fiCol.getOfcLnLength()){
-					Platform.runLater(() -> FxDialogShow.showPopWarn(String.format("Yazı uzunluğu %s karakteri geçemez.",fiCol.getOfcLnLength())));
+			if(fiCol.getFcLnLength()!=null){
+				if(wholeText.length()>fiCol.getFcLnLength()){
+					Platform.runLater(() -> FxDialogShow.showPopWarn(String.format("Yazı uzunluğu %s karakteri geçemez.",fiCol.getFcLnLength())));
 					return null;
 				}
 			}

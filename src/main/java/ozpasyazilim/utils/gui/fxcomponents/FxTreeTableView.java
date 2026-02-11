@@ -67,7 +67,7 @@ public class FxTreeTableView<EntClazz> extends TreeTableView<EntClazz> {
 			fxTableColumn.setRefFiCol(fiCol);
 //			fxTableColumn.setHeader(fiCol.getHeaderName());
 //			fxTableColumn.setFieldName(fiCol.getFieldName());
-			fxTableColumn.setId(fiCol.getOfcTxFieldName());
+			fxTableColumn.setId(fiCol.getFcTxFieldName());
 			if(fiCol.getColType()==null) fiCol.setColType(OzColType.String);
 			//fxTableColumn.setColType(fiCol.getColType().toString());
 			if(fiCol.getPrefSize()!=null){

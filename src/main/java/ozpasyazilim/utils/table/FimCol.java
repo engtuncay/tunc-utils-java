@@ -5,28 +5,28 @@ public class FimCol extends FiCol<Object> {
     public FimCol() {
     }
 
-    public FimCol(String ofcTxFieldName, String ofcTxHeader) {
-        super(ofcTxFieldName, ofcTxHeader);
+    public FimCol(String fcTxFieldName, String fcTxHeader) {
+        super(fcTxFieldName, fcTxHeader);
     }
 
-    public FimCol(String ofcTxFieldName) {
-        super(ofcTxFieldName);
+    public FimCol(String fcTxFieldName) {
+        super(fcTxFieldName);
     }
 
-    public FimCol(String ofcTxFieldName, String ofcTxHeader, String colComment) {
-        super(ofcTxFieldName, ofcTxHeader, colComment);
+    public FimCol(String fcTxFieldName, String fcTxHeader, String colComment) {
+        super(fcTxFieldName, fcTxHeader, colComment);
     }
 
-    public FimCol(String ofcTxHeader, Object ofcTxFieldName) {
-        super(ofcTxHeader, ofcTxFieldName);
+    public FimCol(String fcTxHeader, Object fcTxFieldName) {
+        super(fcTxHeader, fcTxFieldName);
     }
 
-    public FimCol(Object ofcTxFieldName, String ofcTxHeader, OzColType colType) {
-        super(ofcTxFieldName, ofcTxHeader, colType);
+    public FimCol(Object fcTxFieldName, String fcTxHeader, OzColType colType) {
+        super(fcTxFieldName, fcTxHeader, colType);
     }
 
-    public FimCol(Object ofcTxFieldName, String ofcTxHeader, OzColType colType, String colComment) {
-        super(ofcTxFieldName, ofcTxHeader, colType, colComment);
+    public FimCol(Object fcTxFieldName, String fcTxHeader, OzColType colType, String colComment) {
+        super(fcTxFieldName, fcTxHeader, colType, colComment);
     }
 
 }

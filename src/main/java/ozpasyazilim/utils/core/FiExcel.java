@@ -232,7 +232,7 @@ public class FiExcel {
 
       //Loghelper.getInstance(getClass()).debug(" headar1 : " + rowHeader[0]);
 
-      if (headers.contains(listColumns.get(0).getOfcTxHeader().trim())) {
+      if (headers.contains(listColumns.get(0).getFcTxHeader().trim())) {
         //Loghelper.getInstance(getClass()).debug(" Başlık bulundu:" + rowIndexExcel);
         colFound = true;
         break;
@@ -249,7 +249,7 @@ public class FiExcel {
     List<String> finalHeaders = headers;
 
     listColumns.forEach(entity -> {
-      if (finalHeaders.contains(entity.getOfcTxHeader().trim())) {
+      if (finalHeaders.contains(entity.getFcTxHeader().trim())) {
         entity.setBoEnabled(true);
       }
     });
@@ -370,9 +370,9 @@ public class FiExcel {
     }
 
     listColumns.forEach(fiTableCol -> {
-      if (fiTableCol.getOfcTxHeader() == null) return;
+      if (fiTableCol.getFcTxHeader() == null) return;
 
-      if (finalHeaders.contains(fiTableCol.getOfcTxHeader().trim())) {
+      if (finalHeaders.contains(fiTableCol.getFcTxHeader().trim())) {
         fiTableCol.setBoEnabled(true);
       }
     });
@@ -485,9 +485,9 @@ public class FiExcel {
     }
 
     listColumns.forEach(fiTableCol -> {
-      if (fiTableCol.getOfcTxHeader() == null) return;
+      if (fiTableCol.getFcTxHeader() == null) return;
 
-      if (finalHeaders.contains(fiTableCol.getOfcTxHeader().trim())) {
+      if (finalHeaders.contains(fiTableCol.getFcTxHeader().trim())) {
         fiTableCol.setBoEnabled(true);
       }
     });
@@ -586,9 +586,9 @@ public class FiExcel {
     }
 
     listColumns.forEach(fiTableCol -> {
-      if (fiTableCol.getOfcTxHeader() == null) return;
+      if (fiTableCol.getFcTxHeader() == null) return;
 
-      if (finalHeaders.contains(fiTableCol.getOfcTxHeader().trim())) {
+      if (finalHeaders.contains(fiTableCol.getFcTxHeader().trim())) {
         fiTableCol.setBoEnabled(true);
       }
     });
@@ -743,7 +743,7 @@ public class FiExcel {
     //Loghelper.getInstance(getClass()).debug(" aranan col:" + listColumns.get(0).getHeader());
     List<String> headers = null;
 
-    Map<String, ? extends IFiCol> mapHeaderToFiCol = FiCollection.listToMapSingle(listColumns, ozTableCol -> ozTableCol.getOfcTxHeader().trim());
+    Map<String, ? extends IFiCol> mapHeaderToFiCol = FiCollection.listToMapSingle(listColumns, ozTableCol -> ozTableCol.getFcTxHeader().trim());
 
     // ** rowIndexExcel start header row okunur
     Integer rowIndexExcel = 0;
@@ -822,7 +822,7 @@ public class FiExcel {
 
     // ??????? bulunan satırları colEnabled prop si true yapılmış , nedeni anlaşıldı , bunun yerine boIsExist var olduğu belirtilmişti
     listColumns.forEach(entity -> {
-      if (finalHeaders.contains(entity.getOfcTxHeader().trim())) {
+      if (finalHeaders.contains(entity.getFcTxHeader().trim())) {
         entity.setBoEnabled(true);
       }
     });
@@ -873,7 +873,7 @@ public class FiExcel {
     //Loghelper.getInstance(getClass()).debug(" aranan col:" + listColumns.get(0).getHeader());
     List<String> headers = null;
 
-    Map<String, ? extends IFiCol> mapOztableCol = FiCollection.listToMapSingle(listColumns, ozTableCol -> ozTableCol.getOfcTxHeader().trim());
+    Map<String, ? extends IFiCol> mapOztableCol = FiCollection.listToMapSingle(listColumns, ozTableCol -> ozTableCol.getFcTxHeader().trim());
 
     // Öncelikle Başlıkların olduğu satır aranıyor
     for (; rowIndexExcel <= lastRowNumber; rowIndexExcel++) {
@@ -966,7 +966,7 @@ public class FiExcel {
     List<String> finalHeaders = headers;
 
     listColumns.forEach(entity -> {
-      if (finalHeaders.contains(entity.getOfcTxHeader().trim())) {
+      if (finalHeaders.contains(entity.getFcTxHeader().trim())) {
         entity.setBoEnabled(true);
       }
     });
@@ -1094,18 +1094,18 @@ public class FiExcel {
         IFiCol fiTableCol = listColumns.get(i);
 
         // Excelden gelen veride bu sütun yoksa atlanır
-        if (!map.containsKey(fiTableCol.getOfcTxHeader())) {
+        if (!map.containsKey(fiTableCol.getFcTxHeader())) {
           // FIXME bir defa gösterilmeli
           //Loghelper.getInstance(getClass()).debug(" Sütun bulunamadı:" + fiTableCol.getHeader());
           continue;
         }
 
         try {
-          Object cellvalue = map.get(fiTableCol.getOfcTxHeader());
+          Object cellvalue = map.get(fiTableCol.getFcTxHeader());
 
           if (cellvalue != null && ((String) cellvalue).isEmpty()) cellvalue = null;
 
-          String colTypeName = fieldsAsMap.getOrDefault(fiTableCol.getOfcTxFieldName(), new FiField()).getClassNameSimple();
+          String colTypeName = fieldsAsMap.getOrDefault(fiTableCol.getFcTxFieldName(), new FiField()).getClassNameSimple();
           String colTypeName2 = colTypeName == null ? "" : colTypeName;
 
           if (fiTableCol.equalsColType(OzColType.Date) || (fiTableCol.getColType() == null && colTypeName2.equals("Date"))) {
@@ -1123,7 +1123,7 @@ public class FiExcel {
             cellvalue = FiNumber.strToDouble(cellvalue);
           }
 
-          PropertyUtils.setProperty(entity, fiTableCol.getOfcTxFieldName().trim(), cellvalue);
+          PropertyUtils.setProperty(entity, fiTableCol.getFcTxFieldName().trim(), cellvalue);
 
         } catch (IllegalAccessException e) {
           e.printStackTrace();
@@ -1166,11 +1166,11 @@ public class FiExcel {
 //        }
 
         try {
-          Object cellvalue = map.get(fiTableCol.getOfcTxHeader());
+          Object cellvalue = map.get(fiTableCol.getFcTxHeader());
 
           if (cellvalue != null && ((String) cellvalue).isEmpty()) cellvalue = null;
 
-          //String colTypeName = fieldsAsMap.getOrDefault(fiTableCol.getOfcTxFieldName(), new FiField()).getClassNameSimple();
+          //String colTypeName = fieldsAsMap.getOrDefault(fiTableCol.getFcTxFieldName(), new FiField()).getClassNameSimple();
           //String colTypeName2 = colTypeName == null ? "" : colTypeName;
 
           if (fiTableCol.equalsColType(OzColType.Date)
@@ -1195,7 +1195,7 @@ public class FiExcel {
           }
 
           //PropertyUtils.setProperty(entity, fiTableCol.getOfcTxFieldName().trim(), cellvalue);
-          entity.add(fiTableCol.getOfcTxFieldName().trim(), cellvalue);
+          entity.add(fiTableCol.getFcTxFieldName().trim(), cellvalue);
 
         } catch (Exception e) {
           Loghelper.get(getClass()).debug(FiException.exToErrorLog(e));
@@ -1222,12 +1222,12 @@ public class FiExcel {
       for (int i = 0; i < listColumns.size(); i++) {
         IFiCol fiTableCol = listColumns.get(i);
         // Excelden gelen veride bu sütun yoksa atlanır
-        if (!mapExcelRow.containsKey(fiTableCol.getOfcTxHeader())) continue;
+        if (!mapExcelRow.containsKey(fiTableCol.getFcTxHeader())) continue;
 
-        String cellvalue = mapExcelRow.get(fiTableCol.getOfcTxHeader());
+        String cellvalue = mapExcelRow.get(fiTableCol.getFcTxHeader());
         if (FiString.isEmpty(cellvalue)) cellvalue = null;
         // Tip Çevrilmesi yapılmadan String olarak Eklendi
-        fiMapEntity.put(fiTableCol.getOfcTxFieldName().trim(), cellvalue);
+        fiMapEntity.put(fiTableCol.getFcTxFieldName().trim(), cellvalue);
       }
       if (fiMapEntity.size() > 0) fiListMapEntity.add(fiMapEntity);
     }
@@ -1242,7 +1242,7 @@ public class FiExcel {
     //listmapexcel.get(0).keySet().forEach(s -> System.out.print(s + " : "));
     columnList.forEach(entity -> {
       if (entity.getBoEnabled() != null && entity.getBoEnabled())
-        System.out.print(entity.getOfcTxHeader() + " :: ");
+        System.out.print(entity.getFcTxHeader() + " :: ");
     });
     System.out.println("");
     System.out.println("Satır Sayısı : " + listdata.size() + "\n");
@@ -1257,7 +1257,7 @@ public class FiExcel {
 
       for (int cols = 0; cols < columnList.size(); cols++) { // For each table column
 
-        String fieldname = columnList.get(cols).getOfcTxFieldName();
+        String fieldname = columnList.get(cols).getFcTxFieldName();
 
         String value = "";
         Object obj = null;
@@ -1561,7 +1561,7 @@ public class FiExcel {
     List<String> finalHeaders = excelHeadersXLSX.getValue1();
 
     listColumns.forEach(entity -> {
-      if (finalHeaders.contains(entity.getOfcTxHeader().trim())) {
+      if (finalHeaders.contains(entity.getFcTxHeader().trim())) {
         entity.setBoEnabled(true);
       }
     });
@@ -1666,7 +1666,7 @@ public class FiExcel {
     List<String> finalHeaders = excelHeadersXLSX.getValue1();
 
     listColumns.forEach(entity -> {
-      if (finalHeaders.contains(entity.getOfcTxHeader().trim())) {
+      if (finalHeaders.contains(entity.getFcTxHeader().trim())) {
         entity.setBoEnabled(true);
       }
     });
@@ -2167,19 +2167,19 @@ public class FiExcel {
       // Loghelper.getInstance(getClass()).debug(" headar1 : " + rowHeader[0]);
 
       // FIXME bütün zorunlu sütunlar aratılabilir
-      if (headers.contains(listColumns.get(0).getOfcTxHeader().trim())) {
+      if (headers.contains(listColumns.get(0).getFcTxHeader().trim())) {
         //Loghelper.getInstance(getClass()).debug(" Başlık bulundu:" + rowIndexExcel);
         colFound = true;
         break;
       }
 
-      if (listColumns.size() > 1 && headers.contains(listColumns.get(1).getOfcTxHeader().trim())) {
+      if (listColumns.size() > 1 && headers.contains(listColumns.get(1).getFcTxHeader().trim())) {
         //Loghelper.getInstance(getClass()).debug(" Başlık bulundu:" + rowIndexExcel);
         colFound = true;
         break;
       }
 
-      if (listColumns.size() > 2 && headers.contains(listColumns.get(2).getOfcTxHeader().trim())) {
+      if (listColumns.size() > 2 && headers.contains(listColumns.get(2).getFcTxHeader().trim())) {
         //Loghelper.getInstance(getClass()).debug(" Başlık bulundu:" + rowIndexExcel);
         colFound = true;
         break;
@@ -2196,7 +2196,7 @@ public class FiExcel {
     List<String> finalHeaders = headers;
 
     listColumns.forEach(entity -> {
-      if (finalHeaders.contains(entity.getOfcTxHeader().trim())) {
+      if (finalHeaders.contains(entity.getFcTxHeader().trim())) {
         entity.setBoEnabled(true);
       }
     });

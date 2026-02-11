@@ -29,15 +29,15 @@ public class FxTableCol2<EntClazz> extends TableColumn implements IFxTableCol<En
 	public FxTableCol2(String fiHeader) {
 		super(fiHeader);
 		setupFiTableListener();
-		getRefFiCol().setOfcTxHeader(fiHeader);
+		getRefFiCol().setFcTxHeader(fiHeader);
 	}
 
 	public FxTableCol2(String fiHeader, String fieldName) {
 		super(fiHeader);
 		setupFiTableListener();
-		getRefFiCol().setOfcTxFieldName(fieldName);
+		getRefFiCol().setFcTxFieldName(fieldName);
 		//this.setId(fieldName);
-		getRefFiCol().setOfcTxHeader(fiHeader);
+		getRefFiCol().setFcTxHeader(fiHeader);
 		setCellValueFactory(new PropertyValueFactory<>(fieldName));
 	}
 
@@ -51,7 +51,7 @@ public class FxTableCol2<EntClazz> extends TableColumn implements IFxTableCol<En
 		setupFiTableListener();
 		setRefFiCol(refFiCol);
 		// added 29-04-2023 tor (setId)
-		setId(refFiCol.getOfcTxFieldName());
+		setId(refFiCol.getFcTxFieldName());
 		refFiCol.setFxTableCol2(this);
 		refFiCol.setTableColumnFx(this);
 	}

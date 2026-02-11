@@ -137,7 +137,7 @@ public class FiReflection {
 				cellvalue = strCellvalue;
 			}
 
-			PropertyUtils.setProperty(objectt, fiCol.getOfcTxFieldName(), cellvalue); //cellvalue == null ? strCellvalue : cellvalue
+			PropertyUtils.setProperty(objectt, fiCol.getFcTxFieldName(), cellvalue); //cellvalue == null ? strCellvalue : cellvalue
 			return true;
 		} catch (Exception e) {
 			Loghelper.get(FiReflection.class).debug(FiException.exTosMain(e));
@@ -180,7 +180,7 @@ public class FiReflection {
 
 			Object cellvalue = convertObjectByOzColType(fiTableCol.getColType(), strCellvalue);
 
-			PropertyUtils.setProperty(objectt, fiTableCol.getOfcTxFieldName(), cellvalue == null ? strCellvalue : cellvalue);
+			PropertyUtils.setProperty(objectt, fiTableCol.getFcTxFieldName(), cellvalue == null ? strCellvalue : cellvalue);
 			return true;
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
@@ -217,7 +217,7 @@ public class FiReflection {
 	public static <T> Boolean setter(T objectt, IFiCol ozTableCol, Object value) {
 
 		try {
-			PropertyUtils.setProperty(objectt, ozTableCol.getOfcTxFieldName(), value);
+			PropertyUtils.setProperty(objectt, ozTableCol.getFcTxFieldName(), value);
 			return true;
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
@@ -271,14 +271,14 @@ public class FiReflection {
 				FiCol fiTableCol = listColumns.get(i);
 
 				// Excelden gelen veride bu sütun yoksa atlanır
-				if (!map.containsKey(fiTableCol.getOfcTxHeader())) {
+				if (!map.containsKey(fiTableCol.getFcTxHeader())) {
 					// FIXME bir defa gösterilmeli
 					//Loghelper.getInstance(getClass()).debug(" Sütun bulunamadı:" + ozTableCol.getHeader());
 					continue;
 				}
 
 				try {
-					Object cellvalue = map.get(fiTableCol.getOfcTxHeader());
+					Object cellvalue = map.get(fiTableCol.getFcTxHeader());
 
 					if (cellvalue != null && ((String) cellvalue).isEmpty()) cellvalue = null;
 
@@ -298,7 +298,7 @@ public class FiReflection {
 						cellvalue = FiNumber.strToDouble(cellvalue.toString());
 					}
 
-					PropertyUtils.setProperty(entity, fiTableCol.getOfcTxFieldName().trim(), cellvalue);
+					PropertyUtils.setProperty(entity, fiTableCol.getFcTxFieldName().trim(), cellvalue);
 
 				} catch (IllegalAccessException e) {
 					e.printStackTrace();
@@ -374,7 +374,7 @@ public class FiReflection {
 
 			FiField fiField = new FiField();
 
-			fiField.setOfcTxFieldName(field.getName());
+			fiField.setFcTxFieldName(field.getName());
 			fiField.setClassNameSimple(field.getType().getSimpleName());
 
 			mapFields.put(field.getName(), fiField);
@@ -395,7 +395,7 @@ public class FiReflection {
 
 			Object property = FiReflection.getProperty(entity, field.getName());
 			if(property!=null) {
-				fiField.setOfcTxFieldName(field.getName());
+				fiField.setFcTxFieldName(field.getName());
 				fiField.setClassNameSimple(field.getType().getSimpleName());
 
 				mapFields.put(field.getName(), fiField);
@@ -684,7 +684,7 @@ public class FiReflection {
 		List<FiField> listFiFieldsCandId = FiReflectClass.getListFieldsCandId(clazz);
 
 		if (listFiFieldsCandId.size() == 1) {
-			Object property = getProperty(next, listFiFieldsCandId.get(0).getOfcTxFieldName());
+			Object property = getProperty(next, listFiFieldsCandId.get(0).getFcTxFieldName());
 			return property;
 		}
 		return null;
@@ -695,7 +695,7 @@ public class FiReflection {
 		List<FiField> listFieldsId = FiReflectClass.getListFieldsId(clazz);
 
 		if (listFieldsId.size() == 1) {
-			Object property = getProperty(next, listFieldsId.get(0).getOfcTxFieldName());
+			Object property = getProperty(next, listFieldsId.get(0).getFcTxFieldName());
 			return property;
 		}
 		return null;

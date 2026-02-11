@@ -59,11 +59,11 @@ public class IFiColHelper {
 
 		for (FiCol fiTableCol : listFiCol) {
 
-			if (mapFiFieldsShort.containsKey(fiTableCol.getOfcTxFieldName())) {
+			if (mapFiFieldsShort.containsKey(fiTableCol.getFcTxFieldName())) {
 
-				FiField fiField = mapFiFieldsShort.get(fiTableCol.getOfcTxFieldName());
+				FiField fiField = mapFiFieldsShort.get(fiTableCol.getFcTxFieldName());
 
-				if (FiBool.isFalse(fiField.getOfcBoNullable())) {
+				if (FiBool.isFalse(fiField.getFcBoNullable())) {
 					fiTableCol.setColComment(FiString.addNewLineToEndIfNotEmpty(fiTableCol.getColComment()) + "Zorunlu Alan");
 				}
 
@@ -82,7 +82,7 @@ public class IFiColHelper {
 	public IFiCol getIFiColByID(String colID) {
 
 		for (IFiCol fiTableCol : getListIFiColInit()) {
-			if (fiTableCol.getOfcTxFieldName().equalsIgnoreCase(colID)) {
+			if (fiTableCol.getFcTxFieldName().equalsIgnoreCase(colID)) {
 				return fiTableCol;
 			}
 		}
@@ -119,7 +119,7 @@ public class IFiColHelper {
 				fxTableColumn.setRefFiCol(fiCol);
 //				fxTableColumn.setHeader(iFiCol.getHeaderName());
 //				fxTableColumn.setFieldName(iFiCol.getFieldName());
-				fxTableColumn.setId(iFiCol.getOfcTxFieldName());
+				fxTableColumn.setId(iFiCol.getFcTxFieldName());
 				if (fiCol.getColType() == null) fiCol.setColType(OzColType.String);
 //				fxTableColumn.setColType(iFiCol.getColType().toString());
 				if (fiCol.getPrefSize() != null) {
@@ -170,7 +170,7 @@ public class IFiColHelper {
 		if (!getListIFiColInit().isEmpty()) {
 
 			for (IFiCol ozTableCol : getListIFiColInit()) {
-				if (ozTableCol.getOfcTxFieldName().equals(fieldName)) {
+				if (ozTableCol.getFcTxFieldName().equals(fieldName)) {
 					return ozTableCol;
 				}
 			}

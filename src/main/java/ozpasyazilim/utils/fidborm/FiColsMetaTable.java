@@ -6,32 +6,32 @@ import ozpasyazilim.utils.table.OzColType;
 
 public class FiColsMetaTable {
 
-    public static FiCol ofcTxFieldType() {
-        FiCol fiCol = new FiCol("ofcTxFieldType", "");
+    public static FiCol fcTxFieldType() {
+        FiCol fiCol = new FiCol("fcTxFieldType", "");
 // fiCol.buiColType(OzColType.);
         return fiCol;
     }
 
-    public static FiCol ofcTxFieldName() {
-        FiCol fiCol = new FiCol("ofcTxFieldName", "");
+    public static FiCol fcTxFieldName() {
+        FiCol fiCol = new FiCol("fcTxFieldName", "");
         fiCol.buiColType(OzColType.String);
         return fiCol;
     }
 
-    public static FiCol ofcTxEntityName() {
-        FiCol fiCol = new FiCol("ofcTxEntityName", "");
+    public static FiCol fcTxEntityName() {
+        FiCol fiCol = new FiCol("fcTxEntityName", "");
         fiCol.buiColType(OzColType.String);
         return fiCol;
     }
 
-    public static FiCol ofcTxHeader() {
-        FiCol fiCol = new FiCol("ofcTxHeader", "");
+    public static FiCol fcTxHeader() {
+        FiCol fiCol = new FiCol("fcTxHeader", "");
 // fiCol.buiColType(OzColType.);
         return fiCol;
     }
 
-    public static FiCol ofcTxFieldDesc() {
-        FiCol fiCol = new FiCol("ofcTxFieldDesc", "");
+    public static FiCol fcTxFieldDesc() {
+        FiCol fiCol = new FiCol("fcTxFieldDesc", "");
 // fiCol.buiColType(OzColType.);
         return fiCol;
     }
@@ -42,74 +42,74 @@ public class FiColsMetaTable {
         return fiCol;
     }
 
-    public static FiCol ofcBoUniqGro1() {
-        FiCol fiCol = new FiCol("ofcBoUniqGro1", "");
+    public static FiCol fcBoUniqGro1() {
+        FiCol fiCol = new FiCol("fcBoUniqGro1", "");
 // fiCol.buiColType(OzColType.);
         return fiCol;
     }
 
-    public static FiCol ofcBoNullable() {
-        FiCol fiCol = new FiCol("ofcBoNullable", "");
+    public static FiCol fcBoNullable() {
+        FiCol fiCol = new FiCol("fcBoNullable", "");
 // fiCol.buiColType(OzColType.);
         return fiCol;
     }
 
-    public static FiCol ofcBoUnique() {
-        FiCol fiCol = new FiCol("ofcBoUnique", "");
+    public static FiCol fcBoUnique() {
+        FiCol fiCol = new FiCol("fcBoUnique", "");
 // fiCol.buiColType(OzColType.);
         return fiCol;
     }
 
-    public static FiCol ofcBoUtfSupport() {
-        FiCol fiCol = new FiCol("ofcBoUtfSupport", "");
+    public static FiCol fcBoUtfSupport() {
+        FiCol fiCol = new FiCol("fcBoUtfSupport", "");
 // fiCol.buiColType(OzColType.);
         return fiCol;
     }
 
-    public static FiCol ofcTxDefValue() {
-        FiCol fiCol = new FiCol("ofcTxDefValue", "");
+    public static FiCol fcTxDefValue() {
+        FiCol fiCol = new FiCol("fcTxDefValue", "");
 // fiCol.buiColType(OzColType.);
         return fiCol;
     }
 
-    public static FiCol ofcTxCollation() {
-        FiCol fiCol = new FiCol("ofcTxCollation", "");
+    public static FiCol fcTxCollation() {
+        FiCol fiCol = new FiCol("fcTxCollation", "");
 // fiCol.buiColType(OzColType.);
         return fiCol;
     }
 
-    public static FiCol ofcTxTypeName() {
-        FiCol fiCol = new FiCol("ofcTxTypeName", "");
+    public static FiCol fcTxTypeName() {
+        FiCol fiCol = new FiCol("fcTxTypeName", "");
 // fiCol.buiColType(OzColType.);
         return fiCol;
     }
 
-    public static FiCol ofcLnLength() {
-        FiCol fiCol = new FiCol("ofcLnLength", "");
+    public static FiCol fcLnLength() {
+        FiCol fiCol = new FiCol("fcLnLength", "");
 // fiCol.buiColType(OzColType.);
         return fiCol;
     }
 
-    public static FiCol ofcLnPrecision() {
-        FiCol fiCol = new FiCol("ofcLnPrecision", "");
+    public static FiCol fcLnPrecision() {
+        FiCol fiCol = new FiCol("fcLnPrecision", "");
 // fiCol.buiColType(OzColType.);
         return fiCol;
     }
 
-    public static FiCol ofcLnScale() {
-        FiCol fiCol = new FiCol("ofcLnScale", "");
+    public static FiCol fcLnScale() {
+        FiCol fiCol = new FiCol("fcLnScale", "");
 // fiCol.buiColType(OzColType.);
         return fiCol;
     }
 
-    public static FiCol ofcBoFilterLike() {
-        FiCol fiCol = new FiCol("ofcBoFilterLike", "");
+    public static FiCol fcBoFilterLike() {
+        FiCol fiCol = new FiCol("fcBoFilterLike", "");
 // fiCol.buiColType(OzColType.);
         return fiCol;
     }
 
-    public static FiCol ofcBoTransient() {
-        FiCol fiCol = new FiCol("ofcBoTransient", "");
+    public static FiCol fcBoTransient() {
+        FiCol fiCol = new FiCol("fcBoTransient", "");
 // fiCol.buiColType(OzColType.);
         return fiCol;
     }
@@ -119,23 +119,23 @@ public class FiColsMetaTable {
 
         FicList ficList = new FicList();
 
-        ficList.add(ofcTxFieldType());
-        ficList.add(ofcTxFieldName());
-        ficList.add(ofcTxHeader());
-        ficList.add(ofcTxFieldDesc());
+        ficList.add(fcTxFieldType());
+        ficList.add(fcTxFieldName());
+        ficList.add(fcTxHeader());
+        ficList.add(fcTxFieldDesc());
         ficList.add(ofiTxIdType());
-        ficList.add(ofcBoUniqGro1());
-        ficList.add(ofcBoNullable());
-        ficList.add(ofcBoUnique());
-        ficList.add(ofcBoUtfSupport());
-        ficList.add(ofcTxDefValue());
-        ficList.add(ofcTxCollation());
-        ficList.add(ofcTxTypeName());
-        ficList.add(ofcLnLength());
-        ficList.add(ofcLnPrecision());
-        ficList.add(ofcLnScale());
-        ficList.add(ofcBoFilterLike());
-        ficList.add(ofcBoTransient());
+        ficList.add(fcBoUniqGro1());
+        ficList.add(fcBoNullable());
+        ficList.add(fcBoUnique());
+        ficList.add(fcBoUtfSupport());
+        ficList.add(fcTxDefValue());
+        ficList.add(fcTxCollation());
+        ficList.add(fcTxTypeName());
+        ficList.add(fcLnLength());
+        ficList.add(fcLnPrecision());
+        ficList.add(fcLnScale());
+        ficList.add(fcBoFilterLike());
+        ficList.add(fcBoTransient());
 
         return ficList;
     }

@@ -38,8 +38,8 @@ public class FxTreeTableCol2<EntClazz> extends TreeTableColumn implements IFxTab
 
 	public FxTreeTableCol2(String header, String fieldName) {
 		super(header);
-		getRefFiCol().setOfcTxHeader(header);
-		getRefFiCol().setOfcTxFieldName(fieldName);
+		getRefFiCol().setFcTxHeader(header);
+		getRefFiCol().setFcTxFieldName(fieldName);
 		setId(fieldName);
 		getRefFiCol().setId(fieldName);
 		setCellValueFactory(new TreeItemPropertyValueFactory<>(fieldName));
@@ -47,7 +47,7 @@ public class FxTreeTableCol2<EntClazz> extends TreeTableColumn implements IFxTab
 
 	public FxTreeTableCol2(String header, String fieldName, OzColType dataType) {
 		super(header);
-		getRefFiCol().setOfcTxFieldName(fieldName);
+		getRefFiCol().setFcTxFieldName(fieldName);
 		setId(fieldName);
 		getRefFiCol().setId(fieldName);
 		setCellValueFactory(new TreeItemPropertyValueFactory<>(fieldName));

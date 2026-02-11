@@ -104,7 +104,7 @@ public class FxEditorFactory {
             }
 
             if (ozColType == OzColType.String) {
-                if (fiCol.getOfcLnLength() != null) {
+                if (fiCol.getFcLnLength() != null) {
                     Loghelper.get(FxEditorFactory.class).debug("Text Limiti Tanımlandı.");
                     comp.setupTextFieldAsLimitLength(fiCol);
                 }
@@ -498,7 +498,7 @@ public class FxEditorFactory {
 
         // 04-11-22 added.
         if (colNodeClass.equals(FxComboBoxObj.class.getName())) {
-            Loghelper.get(FxEditorFactory.class).debug("FxComboBoxObj Set Value :" + iFiCol.getOfcTxHeader());
+            Loghelper.get(FxEditorFactory.class).debug("FxComboBoxObj Set Value :" + iFiCol.getFcTxHeader());
             FxComboBoxObj comp = (FxComboBoxObj) colNode;
             comp.setObjValue(compValue);
             comp.setSelectedItemByObjValueFi();
@@ -552,33 +552,33 @@ public class FxEditorFactory {
 
             Object property = null;
 
-            if (FiBool.isFalse(fiField.getOfcBoNullable())) {
+            if (FiBool.isFalse(fiField.getFcBoNullable())) {
 
-                if (property == null) property = FiReflection.getProperty(entity, fiField.getOfcTxFieldName());
+                if (property == null) property = FiReflection.getProperty(entity, fiField.getFcTxFieldName());
 
                 if (property == null) {
                     fdr.setFdrBoResult(false);
-                    fdr.appendMsg("alan null olamaz:" + fiField.getOfcTxFieldName());
+                    fdr.appendMsg("alan null olamaz:" + fiField.getFcTxFieldName());
                 }
 
             }
 
-            if (fiField.getOfcLnLength() != null && fiField.getOfcLnLength() > 0 && fiField.getClassNameSimple().equals("String")) {
+            if (fiField.getFcLnLength() != null && fiField.getFcLnLength() > 0 && fiField.getClassNameSimple().equals("String")) {
 
-                if (property == null) property = FiReflection.getProperty(entity, fiField.getOfcTxFieldName());
+                if (property == null) property = FiReflection.getProperty(entity, fiField.getFcTxFieldName());
 
                 if (property != null) {
                     String txProperty = (String) property;
-                    if (txProperty.length() > fiField.getOfcLnLength()) {
+                    if (txProperty.length() > fiField.getFcLnLength()) {
 
                         if (FiBool.isTrue(boTrimIfNeed)) {
                             //Loghelper.debug(FxEditorFactory.class,"FiField Length:"+fiField.getLength());
-                            txProperty = txProperty.substring(0, fiField.getOfcLnLength() - 1);
-                            FiReflection.setter(entity, fiField.getOfcTxFieldName(), txProperty);
+                            txProperty = txProperty.substring(0, fiField.getFcLnLength() - 1);
+                            FiReflection.setter(entity, fiField.getFcTxFieldName(), txProperty);
                         } else {
                             fdr.setFdrBoResult(false);
                             fdr.appendMsg(String.format("Alan %s karakter fazla olamaz %s : %s"
-                                    , fiField.getOfcLnLength(), txProperty.length(), fiField.getOfcTxFieldName()));
+                                    , fiField.getFcLnLength(), txProperty.length(), fiField.getFcTxFieldName()));
                         }
 
                     }
@@ -604,23 +604,23 @@ public class FxEditorFactory {
 
             Object property = null;
 
-            if (fiField.getOfcLnLength() != null && fiField.getOfcLnLength() > 0 && fiField.getClassNameSimple().equals("String")) {
+            if (fiField.getFcLnLength() != null && fiField.getFcLnLength() > 0 && fiField.getClassNameSimple().equals("String")) {
 
-                property = FiReflection.getProperty(entity, fiField.getOfcTxFieldName());
+                property = FiReflection.getProperty(entity, fiField.getFcTxFieldName());
 
                 if (property != null) {
                     String txProperty = (String) property;
-                    if (txProperty.length() > fiField.getOfcLnLength()) {
+                    if (txProperty.length() > fiField.getFcLnLength()) {
 
                         if (FiBool.isTrue(boTrimIfNeed)) {
                             //Loghelper.debug(FxEditorFactory.class,"FiField Length:"+fiField.getLength());
-                            txProperty = txProperty.substring(0, fiField.getOfcLnLength() - 1);
-                            FiReflection.setter(entity, fiField.getOfcTxFieldName(), txProperty);
+                            txProperty = txProperty.substring(0, fiField.getFcLnLength() - 1);
+                            FiReflection.setter(entity, fiField.getFcTxFieldName(), txProperty);
                             fdr.setFdrBoResult(true);
                         } else {
                             fdr.setFdrBoResult(false);
                             fdr.appendMsg(String.format("Alan %s karakter fazla olamaz %s : %s"
-                                    , fiField.getOfcLnLength(), txProperty.length(), fiField.getOfcTxFieldName()));
+                                    , fiField.getFcLnLength(), txProperty.length(), fiField.getFcTxFieldName()));
                         }
 
                     }
@@ -666,10 +666,10 @@ public class FxEditorFactory {
             if (FiBool.isTrue(fiCol.getBoFilterLike()) && nodeObjValue instanceof String) {
                 String txNodeValue = (String) nodeObjValue;
                 txNodeValue = txNodeValue.trim().replaceAll(" ", "%");
-                fiKeyBean.add(fiCol.getOfcTxFieldName(), "%" + txNodeValue + "%");
+                fiKeyBean.add(fiCol.getFcTxFieldName(), "%" + txNodeValue + "%");
                 continue;
             }
-            fiKeyBean.add(fiCol.getOfcTxFieldName(), nodeObjValue);
+            fiKeyBean.add(fiCol.getFcTxFieldName(), nodeObjValue);
         }
 
         return fiKeyBean;
@@ -1015,7 +1015,7 @@ public class FxEditorFactory {
 
 //			Loghelper.get(FxEditorFactory.class).debug("FiCol:"+ iFiTableCol.getFieldName());
 
-            if (iFiTableCol.getOfcTxFieldName() == null) {
+            if (iFiTableCol.getFcTxFieldName() == null) {
                 continue;
             }
 
@@ -1026,7 +1026,7 @@ public class FxEditorFactory {
 //			Loghelper.get(FxEditorFactory.class).debug("FiCol Value:"+ FiString.toStringOrNull(cellvalue));
 
             try {
-                PropertyUtils.setProperty(entity, iFiTableCol.getOfcTxFieldName().trim(), cellvalue);
+                PropertyUtils.setProperty(entity, iFiTableCol.getFcTxFieldName().trim(), cellvalue);
 
                 // if (cellvalue != null && ((String) cellvalue).isEmpty()) cellvalue = null;
 
@@ -1050,9 +1050,9 @@ public class FxEditorFactory {
 
             IFiCol fiCol = listColumns.get(i);
 
-            if (fiCol.getOfcTxFieldName() == null) continue;
+            if (fiCol.getFcTxFieldName() == null) continue;
 
-            Object cellvalue = FiReflection.getProperty(entity, fiCol.getOfcTxFieldName());
+            Object cellvalue = FiReflection.getProperty(entity, fiCol.getFcTxFieldName());
 
             //Loghelperr.getInstance(getClass()).debug("Entity to Editor: Col:"+ fiCol.getFieldName());
 
@@ -1097,9 +1097,9 @@ public class FxEditorFactory {
 
             IFiCol fiCol = listColumns.get(i);
 
-            if (fiCol.getOfcTxFieldName() == null) continue;
+            if (fiCol.getFcTxFieldName() == null) continue;
 
-            Object cellvalue = FiReflection.getProperty(entity, fiCol.getOfcTxFieldName());
+            Object cellvalue = FiReflection.getProperty(entity, fiCol.getFcTxFieldName());
             //Loghelperr.getInstance(getClass()).debug("Entity to Editor: Col:"+ fiCol.getFieldName());
 
             if (cellvalue == null) continue;
@@ -1135,9 +1135,9 @@ public class FxEditorFactory {
 
             FiCol fiCol = listColumns.get(i);
 
-            if (fiCol.getOfcTxFieldName() == null) continue;
+            if (fiCol.getFcTxFieldName() == null) continue;
 
-            Object cellvalue = fkbEntity.get(fiCol.getOfcTxFieldName());
+            Object cellvalue = fkbEntity.get(fiCol.getFcTxFieldName());
             //Loghelperr.getInstance(getClass()).debug("Entity to Editor: Col:"+ fiCol.getFieldName());
 
             if (cellvalue == null) continue;
@@ -1174,7 +1174,7 @@ public class FxEditorFactory {
             IFiCol ozTableCol = listColumns.get(i);
             Object cellvalue = getNodeObjValueByFilterNode(ozTableCol);    // map.get(ozTableCol.getHeader());
             //Loghelperr.getInstance(getClass()).debug(" map param cell value :" + cellvalue.toString() + " class:" + cellvalue.getClass().getSimpleName());
-            fiKeyBean.put(ozTableCol.getOfcTxFieldName().trim(), cellvalue);
+            fiKeyBean.put(ozTableCol.getFcTxFieldName().trim(), cellvalue);
         }
 
         return fiKeyBean;
@@ -1187,7 +1187,7 @@ public class FxEditorFactory {
             IFiCol iFiCol = listColumns.get(i);
             Object cellvalue = getNodeObjValue(iFiCol, iFiCol.getColEditorClass());    // map.get(iFiCol.getHeader());
             //Loghelperr.getInstance(getClass()).debug(" map param cell value :" + cellvalue.toString() + " class:" + cellvalue.getClass().getSimpleName());
-            fiKeyBean.put(iFiCol.getOfcTxFieldName().trim(), cellvalue);
+            fiKeyBean.put(iFiCol.getFcTxFieldName().trim(), cellvalue);
         }
         return fiKeyBean;
     }
@@ -1603,7 +1603,7 @@ public class FxEditorFactory {
 
             if (FiBool.isTrue(iFiTableCol.getBoRequired()) || FiBool.isFalse(iFiTableCol.getBoNullable())) {
 
-                Object propertyNested = FiReflection.getPropertyNested(entity, iFiTableCol.getOfcTxFieldName());
+                Object propertyNested = FiReflection.getPropertyNested(entity, iFiTableCol.getFcTxFieldName());
 
                 if (propertyNested == null) {
                     listEmptyCols.add(iFiTableCol);
@@ -1661,7 +1661,7 @@ public class FxEditorFactory {
                 if (cellValue == null ||
                         (cellValue instanceof String && FiString.isEmpty((String) cellValue))) {
 //					return new FdrResult(false, "Lütfen Gerekli Alanları Doldurunuz");
-                    return new Fdr(false, String.format("%s Alanı Zorunludur.Boş Geçilemez.", fiTableCol.getOfcTxHeader()));
+                    return new Fdr(false, String.format("%s Alanı Zorunludur.Boş Geçilemez.", fiTableCol.getFcTxHeader()));
                 }
 
             }
@@ -1690,7 +1690,7 @@ public class FxEditorFactory {
                 if (cellValue == null ||
                         (cellValue instanceof String && FiString.isEmpty((String) cellValue))) {
 //					return new FdrResult(false, "Lütfen Gerekli Alanları Doldurunuz");
-                    return new Fdr(false, String.format("%s Alanı Zorunludur. Geçerli bir değer giriniz.", fiTableCol.getOfcTxHeader()));
+                    return new Fdr(false, String.format("%s Alanı Zorunludur. Geçerli bir değer giriniz.", fiTableCol.getFcTxHeader()));
                 }
 
             }

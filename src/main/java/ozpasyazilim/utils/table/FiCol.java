@@ -43,19 +43,19 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     /**
      * Alanın ismini (veritabanındaki veya objedeki refere ettiği alan ismi )
      */
-    private String ofcTxFieldName;
+    private String fcTxFieldName;
 
     /**
      * Alanın başlık açıklaması ( tablo için sütün başlığı , form için label alanı değeri / excelde başlık )
      */
-    private String ofcTxHeader;
+    private String fcTxHeader;
 
     private String txLabel;
 
     /**
      * Objedeki alan adı (fieldName) ile db deki alan adı aynı degilse kullanılır.
      */
-    private String ofcTxDbField;
+    private String fcTxDbField;
 
     /**
      * Col Id olması için konuldu - tekil kodu
@@ -69,7 +69,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     // Alanın türünü belirtir (double,string,date vs )
     private OzColType colType;
 
-    private String ofcTxFieldDesc;
+    private String fcTxFieldDesc;
 
     /**
      * Column Generic Type. Sütun nasıl bir tipte olduğunu gösterir. (Data Tipi degil)
@@ -406,37 +406,37 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     // Reflection Field Alanlar
 
     // FiId
-    private String ofcTxIdType;
+    private String fcTxIdType;
     // FiColumn
-    private Boolean ofcBoUniqGro1;
-    private Boolean ofcBoNullable;
-    private Boolean ofcBoUnique;
-    private Boolean ofcBoUtfSupport;
+    private Boolean fcBoUniqGro1;
+    private Boolean fcBoNullable;
+    private Boolean fcBoUnique;
+    private Boolean fcBoUtfSupport;
     /**
      * Default Value
      */
-    private String ofcTxDefValue;
-    private String ofcTxCollation;
-    private String ofcTxTypeName;
-    private String ofcTxFieldType;
+    private String fcTxDefValue;
+    private String fcTxCollation;
+    private String fcTxTypeName;
+    private String fcTxFieldType;
 
     /**
      * column definition (sql alan ilgili extra bilgiler)
      */
-    private String ofcTxColDefinition;
+    private String fcTxColDefinition;
     /**
      * Text alanın max uzunluğu
      * <p>
      * FxEditorFactory'de textfield oluştururken text limiti olarak belirlenir
      */
-    private Integer ofcLnLength;
-    private Integer ofcLnPrecision;
-    private Integer ofcLnScale;
-    private Boolean ofcBoFilterLike;
+    private Integer fcLnLength;
+    private Integer fcLnPrecision;
+    private Integer fcLnScale;
+    private Boolean fcBoFilterLike;
 
     //FiTransient
 
-    private String ofcTxEntityName;
+    private String fcTxEntityName;
 
 
     private String txClassNameSimple;
@@ -444,7 +444,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     /**
      * alanın veritabanında olmadığını belirtir
      */
-    private Boolean ofcBoTransient;
+    private Boolean fcBoTransient;
 
     private String txFilterType;
 
@@ -464,40 +464,40 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
         setupFiCol();
     }
 
-    public FiCol(String ofcTxFieldName, String ofcTxHeader) {
-        this.ofcTxHeader = ofcTxHeader;
-        this.ofcTxFieldName = ofcTxFieldName;
+    public FiCol(String fcTxFieldName, String fcTxHeader) {
+        this.fcTxHeader = fcTxHeader;
+        this.fcTxFieldName = fcTxFieldName;
         setupFiCol();
     }
 
-    public FiCol(String ofcTxFieldName) {
-        this.ofcTxFieldName = ofcTxFieldName;
+    public FiCol(String fcTxFieldName) {
+        this.fcTxFieldName = fcTxFieldName;
         setupFiCol();
     }
 
-    public FiCol(String ofcTxFieldName, String ofcTxHeader, String colComment) {
-        this.ofcTxHeader = ofcTxHeader;
-        this.ofcTxFieldName = ofcTxFieldName;
+    public FiCol(String fcTxFieldName, String fcTxHeader, String colComment) {
+        this.fcTxHeader = fcTxHeader;
+        this.fcTxFieldName = fcTxFieldName;
         setColComment(colComment);
         setupFiCol();
     }
 
-    public FiCol(String ofcTxHeader, Object ofcTxFieldName) {
-        this.ofcTxHeader = ofcTxHeader;
-        this.ofcTxFieldName = ofcTxFieldName.toString();
+    public FiCol(String fcTxHeader, Object fcTxFieldName) {
+        this.fcTxHeader = fcTxHeader;
+        this.fcTxFieldName = fcTxFieldName.toString();
         setupFiCol();
     }
 
-    public FiCol(Object ofcTxFieldName, String ofcTxHeader, OzColType colType) {
-        this.ofcTxHeader = ofcTxHeader;
-        if (ofcTxFieldName != null) this.ofcTxFieldName = ofcTxFieldName.toString();
+    public FiCol(Object fcTxFieldName, String fcTxHeader, OzColType colType) {
+        this.fcTxHeader = fcTxHeader;
+        if (fcTxFieldName != null) this.fcTxFieldName = fcTxFieldName.toString();
         this.setColType(colType);
         setupFiCol();
     }
 
-    public FiCol(Object ofcTxFieldName, String ofcTxHeader, OzColType colType, String colComment) {
-        this.ofcTxHeader = ofcTxHeader;
-        if (ofcTxFieldName != null) this.ofcTxFieldName = ofcTxFieldName.toString();
+    public FiCol(Object fcTxFieldName, String fcTxHeader, OzColType colType, String colComment) {
+        this.fcTxHeader = fcTxHeader;
+        if (fcTxFieldName != null) this.fcTxFieldName = fcTxFieldName.toString();
         setColType(colType);
         setColComment(colComment);
         setupFiCol();
@@ -513,7 +513,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
 
         for (FiField fiField : listFiFieldsSummary) {
             if (FiBool.isTrue(fiField.getBoExcludeFromAutoColList())) continue;
-            FiCol fiTableCol = new FiCol(fiField.getOfcTxFieldName(), fiField.getOfcTxFieldName());
+            FiCol fiTableCol = new FiCol(fiField.getFcTxFieldName(), fiField.getFcTxFieldName());
             fiTableCol.setColType(convertOzColType(fiField.getClassNameSimple()));
             if (fiTableCol.getColTypeNtn().equals(OzColType.Double) || fiTableCol.getColTypeNtn().equals(OzColType.Integer)) {
                 fiTableCol.setSummaryType(OzColSummaryType.SUM);
@@ -544,8 +544,8 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     public static FiCol buildFromIFiCol(IFiCol iFiCol) {
         FiCol fiCol = new FiCol();
 
-        fiCol.setOfcTxHeader(iFiCol.getOfcTxHeader());
-        fiCol.setOfcTxFieldName(iFiCol.getOfcTxFieldName());
+        fiCol.setFcTxHeader(iFiCol.getFcTxHeader());
+        fiCol.setFcTxFieldName(iFiCol.getFcTxFieldName());
         fiCol.setColType(iFiCol.getColType());
         fiCol.setPrefSize(iFiCol.getPrefSize());
         fiCol.setBoEditable(iFiCol.getBoEditable());
@@ -556,12 +556,12 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     // build Methods
 
     public FiCol buiHeader(String header) {
-        this.setOfcTxHeader(header);
+        this.setFcTxHeader(header);
         return this;
     }
 
     public FiCol buiSynFieldToHeader() {
-        this.setOfcTxHeader(getOfcTxFieldName());
+        this.setFcTxHeader(this.getFcTxFieldName());
         return this;
     }
 
@@ -787,7 +787,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     }
 
     public FiCol buildFieldName(String fieldName) {
-        this.ofcTxFieldName = fieldName;
+        this.fcTxFieldName = fieldName;
         return this;
     }
 
@@ -871,8 +871,8 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
 
     public static void setAutoFieldName(List<IFiCol> listCol) {
         listCol.forEach(ent -> {
-            if (ent.getOfcTxFieldName() == null) {
-                ent.setOfcTxFieldName(FiString.trimFieldNameWithEngAccent(ent.getOfcTxHeader()));
+            if (ent.getFcTxFieldName() == null) {
+                ent.setFcTxFieldName(FiString.trimFieldNameWithEngAccent(ent.getFcTxHeader()));
             }
         });
     }
@@ -881,7 +881,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
 
         Map<String, String> mapHeaderToField = new HashMap<>();
 
-        listCol.forEach(ozTableCol -> mapHeaderToField.put(ozTableCol.getOfcTxHeader(), ozTableCol.ofcTxFieldName));
+        listCol.forEach(ozTableCol -> mapHeaderToField.put(ozTableCol.getFcTxHeader(), ozTableCol.fcTxFieldName));
 
         return mapHeaderToField;
 
@@ -891,7 +891,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
 
         Map<String, String> mapFieldtoHeader = new HashMap<>();
 
-        listCol.forEach(ozTableCol -> mapFieldtoHeader.put(ozTableCol.getOfcTxFieldName(), ozTableCol.getOfcTxHeader()));
+        listCol.forEach(ozTableCol -> mapFieldtoHeader.put(ozTableCol.getFcTxFieldName(), ozTableCol.getFcTxHeader()));
 
         return mapFieldtoHeader;
 
@@ -900,28 +900,28 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     // ***** Getter and Setters
 
     public String getId() {
-        return getOfcTxFieldName();
+        return this.getFcTxFieldName();
     }
 
     public void setId(String id) {
-        this.ofcTxFieldName = id;
+        this.fcTxFieldName = id;
     }
 
-    public String getOfcTxFieldName() {
-        return ofcTxFieldName;
+    public String getFcTxFieldName() {
+        return fcTxFieldName;
     }
 
-    public void setOfcTxFieldName(String ofcTxFieldName) {
-        this.ofcTxFieldName = ofcTxFieldName;
+    public void setFcTxFieldName(String fcTxFieldName) {
+        this.fcTxFieldName = fcTxFieldName;
     }
 
-    public String getOfcTxHeader() {
-        if (ofcTxHeader == null) return "";
-        return ofcTxHeader;
+    public String getFcTxHeader() {
+        if (fcTxHeader == null) return "";
+        return fcTxHeader;
     }
 
-    public void setOfcTxHeader(String ofcTxHeader) {
-        this.ofcTxHeader = ofcTxHeader;
+    public void setFcTxHeader(String fcTxHeader) {
+        this.fcTxHeader = fcTxHeader;
     }
 
     public ObjectProperty<Double> prefSizeProperty() {
@@ -1425,7 +1425,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
 
     @Override
     public String toString() {
-        return FiString.orEmpty(ofcTxFieldName);
+        return FiString.orEmpty(fcTxFieldName);
     }
 
     public IFiNode getIfxNodeEditor() {
@@ -1572,17 +1572,17 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
         this.txParamName = txParamName;
     }
 
-    public String getOfcTxDbField() {
-        return ofcTxDbField;
+    public String getFcTxDbField() {
+        return fcTxDbField;
     }
 
     public String getTxDbFieldNameOrFieldName() {
-        if (ofcTxDbField != null) return ofcTxDbField;
-        return ofcTxFieldName;
+        if (fcTxDbField != null) return fcTxDbField;
+        return fcTxFieldName;
     }
 
-    public void setOfcTxDbField(String ofcTxDbField) {
-        this.ofcTxDbField = ofcTxDbField;
+    public void setFcTxDbField(String fcTxDbField) {
+        this.fcTxDbField = fcTxDbField;
     }
 
     public String getTxGuid() {
@@ -1654,12 +1654,12 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
         this.boKeyIdentityField = boKeyIdentityField;
     }
 
-    public Boolean getOfcBoTransient() {
-        return ofcBoTransient;
+    public Boolean getFcBoTransient() {
+        return fcBoTransient;
     }
 
-    public void setOfcBoTransient(Boolean ofcBoTransient) {
-        this.ofcBoTransient = ofcBoTransient;
+    public void setFcBoTransient(Boolean fcBoTransient) {
+        this.fcBoTransient = fcBoTransient;
     }
 
     public Boolean getBoInsertFieldForQuery() {
@@ -1671,108 +1671,108 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
         return this;
     }
 
-    public String getOfcTxIdType() {
-        return ofcTxIdType;
+    public String getFcTxIdType() {
+        return fcTxIdType;
     }
 
-    public void setOfcTxIdType(String ofcTxIdType) {
-        this.ofcTxIdType = ofcTxIdType;
+    public void setFcTxIdType(String fcTxIdType) {
+        this.fcTxIdType = fcTxIdType;
     }
 
-    public Boolean getOfcBoUniqGro1() {
-        return ofcBoUniqGro1;
+    public Boolean getFcBoUniqGro1() {
+        return fcBoUniqGro1;
     }
 
-    public void setOfcBoUniqGro1(Boolean ofcBoUniqGro1) {
-        this.ofcBoUniqGro1 = ofcBoUniqGro1;
+    public void setFcBoUniqGro1(Boolean fcBoUniqGro1) {
+        this.fcBoUniqGro1 = fcBoUniqGro1;
     }
 
-    public Boolean getOfcBoNullable() {
-        return ofcBoNullable;
+    public Boolean getFcBoNullable() {
+        return fcBoNullable;
     }
 
-    public void setOfcBoNullable(Boolean ofcBoNullable) {
-        this.ofcBoNullable = ofcBoNullable;
+    public void setFcBoNullable(Boolean fcBoNullable) {
+        this.fcBoNullable = fcBoNullable;
     }
 
-    public Boolean getOfcBoUnique() {
-        return ofcBoUnique;
+    public Boolean getFcBoUnique() {
+        return fcBoUnique;
     }
 
-    public void setOfcBoUnique(Boolean ofcBoUnique) {
-        this.ofcBoUnique = ofcBoUnique;
+    public void setFcBoUnique(Boolean fcBoUnique) {
+        this.fcBoUnique = fcBoUnique;
     }
 
-    public Boolean getOfcBoUtfSupport() {
-        return ofcBoUtfSupport;
+    public Boolean getFcBoUtfSupport() {
+        return fcBoUtfSupport;
     }
 
-    public void setOfcBoUtfSupport(Boolean ofcBoUtfSupport) {
-        this.ofcBoUtfSupport = ofcBoUtfSupport;
+    public void setFcBoUtfSupport(Boolean fcBoUtfSupport) {
+        this.fcBoUtfSupport = fcBoUtfSupport;
     }
 
-    public String getOfcTxDefValue() {
-        return ofcTxDefValue;
+    public String getFcTxDefValue() {
+        return fcTxDefValue;
     }
 
-    public void setOfcTxDefValue(String ofcTxDefValue) {
-        this.ofcTxDefValue = ofcTxDefValue;
+    public void setFcTxDefValue(String fcTxDefValue) {
+        this.fcTxDefValue = fcTxDefValue;
     }
 
-    public String getOfcTxCollation() {
-        return ofcTxCollation;
+    public String getFcTxCollation() {
+        return fcTxCollation;
     }
 
-    public void setOfcTxCollation(String ofcTxCollation) {
-        this.ofcTxCollation = ofcTxCollation;
+    public void setFcTxCollation(String fcTxCollation) {
+        this.fcTxCollation = fcTxCollation;
     }
 
-    public String getOfcTxTypeName() {
-        return ofcTxTypeName;
+    public String getFcTxTypeName() {
+        return fcTxTypeName;
     }
 
-    public void setOfcTxTypeName(String ofcTxTypeName) {
-        this.ofcTxTypeName = ofcTxTypeName;
+    public void setFcTxTypeName(String fcTxTypeName) {
+        this.fcTxTypeName = fcTxTypeName;
     }
 
-    public Integer getOfcLnLength() {
-        return ofcLnLength;
+    public Integer getFcLnLength() {
+        return fcLnLength;
     }
 
-    public void setOfcLnLength(Integer ofcLnLength) {
-        this.ofcLnLength = ofcLnLength;
+    public void setFcLnLength(Integer fcLnLength) {
+        this.fcLnLength = fcLnLength;
     }
 
-    public Integer getOfcLnPrecision() {
-        return ofcLnPrecision;
+    public Integer getFcLnPrecision() {
+        return fcLnPrecision;
     }
 
-    public void setOfcLnPrecision(Integer ofcLnPrecision) {
-        this.ofcLnPrecision = ofcLnPrecision;
+    public void setFcLnPrecision(Integer fcLnPrecision) {
+        this.fcLnPrecision = fcLnPrecision;
     }
 
-    public Integer getOfcLnScale() {
-        return ofcLnScale;
+    public Integer getFcLnScale() {
+        return fcLnScale;
     }
 
-    public void setOfcLnScale(Integer ofcLnScale) {
-        this.ofcLnScale = ofcLnScale;
+    public void setFcLnScale(Integer fcLnScale) {
+        this.fcLnScale = fcLnScale;
     }
 
-    public Boolean getOfcBoFilterLike() {
-        return ofcBoFilterLike;
+    public Boolean getFcBoFilterLike() {
+        return fcBoFilterLike;
     }
 
-    public void setOfcBoFilterLike(Boolean ofcBoFilterLike) {
-        this.ofcBoFilterLike = ofcBoFilterLike;
+    public void setFcBoFilterLike(Boolean fcBoFilterLike) {
+        this.fcBoFilterLike = fcBoFilterLike;
     }
 
-    public String getOfcTxFieldType() {
-        return ofcTxFieldType;
+    public String getFcTxFieldType() {
+        return fcTxFieldType;
     }
 
-    public void setOfcTxFieldType(String ofcTxFieldType) {
-        this.ofcTxFieldType = ofcTxFieldType;
+    public void setFcTxFieldType(String fcTxFieldType) {
+        this.fcTxFieldType = fcTxFieldType;
     }
 
     public String getFicTxSqlFieldDefinition() {
@@ -1783,12 +1783,12 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
         this.ficTxSqlFieldDefinition = ficTxSqlFieldDefinition;
     }
 
-    public String getOfcTxEntityName() {
-        return ofcTxEntityName;
+    public String getFcTxEntityName() {
+        return fcTxEntityName;
     }
 
-    public void setOfcTxEntityName(String ofcTxEntityName) {
-        this.ofcTxEntityName = ofcTxEntityName;
+    public void setFcTxEntityName(String fcTxEntityName) {
+        this.fcTxEntityName = fcTxEntityName;
     }
 
     public String getTxClassNameSimple() {
@@ -1799,12 +1799,12 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
         this.txClassNameSimple = txClassNameSimple;
     }
 
-    public String getOfcTxColDefinition() {
-        return ofcTxColDefinition;
+    public String getFcTxColDefinition() {
+        return fcTxColDefinition;
     }
 
-    public void setOfcTxColDefinition(String ofcTxColDefinition) {
-        this.ofcTxColDefinition = ofcTxColDefinition;
+    public void setFcTxColDefinition(String fcTxColDefinition) {
+        this.fcTxColDefinition = fcTxColDefinition;
     }
 
     public Boolean getBoRemFilterable() {
@@ -1823,12 +1823,12 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
         this.IFiNodeEditor = IFiNodeEditor;
     }
 
-    public String getOfcTxFieldDesc() {
-        return ofcTxFieldDesc;
+    public String getFcTxFieldDesc() {
+        return fcTxFieldDesc;
     }
 
-    public void setOfcTxFieldDesc(String ofcTxFieldDesc) {
-        this.ofcTxFieldDesc = ofcTxFieldDesc;
+    public void setFcTxFieldDesc(String fcTxFieldDesc) {
+        this.fcTxFieldDesc = fcTxFieldDesc;
     }
 
     public String getTxFilterType() {

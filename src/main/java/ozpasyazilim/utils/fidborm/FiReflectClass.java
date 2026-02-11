@@ -108,7 +108,7 @@ public class FiReflectClass {
                 assignFiFieldExtraRelatedDb(field, fiField);
             }
 
-            mapFiFields.put(fiField.getOfcTxFieldName(), fiField);
+            mapFiFields.put(fiField.getFcTxFieldName(), fiField);
 
         }
 
@@ -317,7 +317,7 @@ public class FiReflectClass {
         List<FiField> listFields = getListFieldsWoutStatic(clazz, includeTransient);
 
         return listFields.stream().filter(fiField -> {
-            if (FiBool.isFalse(fiField.getOfcBoNullable())) return true;
+            if (FiBool.isFalse(fiField.getFcBoNullable())) return true;
             return false;
         }).collect(toList());
 
@@ -349,18 +349,18 @@ public class FiReflectClass {
      */
     public static void assignFiFieldBasic(Field field, FiField fiField) {
 
-        fiField.setOfcTxFieldName(field.getName());
-        if (fiField.getOfcTxDbField() == null) fiField.setOfcTxDbField(field.getName());
+        fiField.setFcTxFieldName(field.getName());
+        if (fiField.getFcTxDbField() == null) fiField.setFcTxDbField(field.getName());
         fiField.setClassNameSimple(field.getType().getSimpleName());
 
         if (field.isAnnotationPresent(FiColumn.class)) {
             FiColumn annoFiColumn = field.getAnnotation(FiColumn.class);
             if (!FiString.isEmptyTrim(annoFiColumn.name())) {
-                fiField.setOfcTxDbField(annoFiColumn.name());
+                fiField.setFcTxDbField(annoFiColumn.name());
             }
 
             if (FiBool.isTrue(annoFiColumn.boFilterLike())) {
-                fiField.setOfcBoFilterLike(true);
+                fiField.setFcBoFilterLike(true);
             }
         }
 
@@ -369,18 +369,18 @@ public class FiReflectClass {
 
     public static void assignFiFieldBasicForFiCol(Field field, FiCol fiCol) {
 
-        fiCol.setOfcTxFieldName(field.getName());
-        if (fiCol.getOfcTxDbField() == null) fiCol.setOfcTxDbField(field.getName());
+        fiCol.setFcTxFieldName(field.getName());
+        if (fiCol.getFcTxDbField() == null) fiCol.setFcTxDbField(field.getName());
         fiCol.setTxClassNameSimple(field.getType().getSimpleName());
 
         if (field.isAnnotationPresent(FiColumn.class)) {
             FiColumn annoFiColumn = field.getAnnotation(FiColumn.class);
             if (!FiString.isEmptyTrim(annoFiColumn.name())) {
-                fiCol.setOfcTxDbField(annoFiColumn.name());
+                fiCol.setFcTxDbField(annoFiColumn.name());
             }
 
             if (FiBool.isTrue(annoFiColumn.boFilterLike())) {
-                fiCol.setOfcBoFilterLike(true);
+                fiCol.setFcBoFilterLike(true);
             }
         }
 
@@ -413,17 +413,17 @@ public class FiReflectClass {
 
         if (field.isAnnotationPresent(Column.class)) {
             Column annoColumn = field.getAnnotation(Column.class);
-            fiField.setOfcLnPrecision(annoColumn.precision());
-            fiField.setOfcLnScale(annoColumn.scale());
-            fiField.setOfcLnLength(annoColumn.length());
-            fiField.setOfcBoUnique(annoColumn.unique());
-            fiField.setOfcBoNullable(annoColumn.nullable()); // def:true (in interface)
+            fiField.setFcLnPrecision(annoColumn.precision());
+            fiField.setFcLnScale(annoColumn.scale());
+            fiField.setFcLnLength(annoColumn.length());
+            fiField.setFcBoUnique(annoColumn.unique());
+            fiField.setFcBoNullable(annoColumn.nullable()); // def:true (in interface)
             fiField.setColCustomType(annoColumn.columnDefinition());
 
             if (!FiString.isEmptyTrim(annoColumn.name())) {
-                fiField.setOfcTxDbField(annoColumn.name());
+                fiField.setFcTxDbField(annoColumn.name());
             } else {
-                fiField.setOfcTxDbField(field.getName());
+                fiField.setFcTxDbField(field.getName());
             }
 
         }
@@ -432,33 +432,33 @@ public class FiReflectClass {
 
             FiColumn annoFiColumn = field.getAnnotation(FiColumn.class);
 
-            fiField.setOfcLnPrecision(annoFiColumn.precision());
-            fiField.setOfcLnScale(annoFiColumn.scale());
-            fiField.setOfcLnLength(annoFiColumn.length());
-            fiField.setOfcBoUnique(annoFiColumn.isUnique());
-            fiField.setOfcBoNullable(annoFiColumn.isNullable());
+            fiField.setFcLnPrecision(annoFiColumn.precision());
+            fiField.setFcLnScale(annoFiColumn.scale());
+            fiField.setFcLnLength(annoFiColumn.length());
+            fiField.setFcBoUnique(annoFiColumn.isUnique());
+            fiField.setFcBoNullable(annoFiColumn.isNullable());
             //if (FiBoolean.isFalse(annoFiColumn.isNullable())) fiField.setNullable(false);
             fiField.setColCustomType(annoFiColumn.colCustomTypeDefinition());
-            fiField.setOfcTxDefValue(annoFiColumn.defaultValue());
+            fiField.setFcTxDefValue(annoFiColumn.defaultValue());
             fiField.setColDefinitionExtra(annoFiColumn.colDefinitionExtra());
-            fiField.setOfcBoUtfSupport(annoFiColumn.isUnicodeSupport());
+            fiField.setFcBoUtfSupport(annoFiColumn.isUnicodeSupport());
             fiField.setBoExcludeFromAutoColList(annoFiColumn.boExcludeFromAutoColList());
 
-            if (!FiString.isEmpty(annoFiColumn.label())) fiField.setOfcTxHeader(annoFiColumn.label());
+            if (!FiString.isEmpty(annoFiColumn.label())) fiField.setFcTxHeader(annoFiColumn.label());
             if (annoFiColumn.collation() != FiCollation.Default) fiField.setFiCollation(annoFiColumn.collation());
-            if (!FiString.isEmpty(annoFiColumn.typeName())) fiField.setOfcTxTypeName(annoFiColumn.typeName());
+            if (!FiString.isEmpty(annoFiColumn.typeName())) fiField.setFcTxTypeName(annoFiColumn.typeName());
             if (annoFiColumn.defaultUpdateField()) fiField.setBoDefaultUpdateField(true);
 
             if (!FiString.isEmptyTrim(annoFiColumn.name())) {
-                fiField.setOfcTxDbField(annoFiColumn.name());
+                fiField.setFcTxDbField(annoFiColumn.name());
             } else {
-                fiField.setOfcTxDbField(field.getName());
+                fiField.setFcTxDbField(field.getName());
             }
 
         }
 
         if (field.isAnnotationPresent(FiNotNull.class)) {
-            fiField.setOfcBoNullable(false);
+            fiField.setFcBoNullable(false);
         }
 
         if (field.isAnnotationPresent(FiWhere1.class)) {
@@ -476,7 +476,7 @@ public class FiReflectClass {
         // other related db
 
         if (field.isAnnotationPresent(Transient.class) || field.isAnnotationPresent(FiTransient.class)) {
-            fiField.setOfcBoTransient(true);
+            fiField.setFcBoTransient(true);
         }
 
         // Id alanlar için ortak tanımlamalar
@@ -495,7 +495,7 @@ public class FiReflectClass {
         if (field.isAnnotationPresent(FiCandId1.class)) {
             fiField.setBoCandidateId1(true);
             //FIXME nullable false olmayabilir , çoklu candid ise
-            fiField.setOfcBoNullable(false);
+            fiField.setFcBoNullable(false);
             fiField.setBoDtoField(true);
         }
 
@@ -578,7 +578,7 @@ public class FiReflectClass {
         }
 
         if (field.isAnnotationPresent(FiUniqGroup1.class)) {
-            fiField.setOfcBoUniqGro1(true);
+            fiField.setFcBoUniqGro1(true);
 
             FiUniqGroup1 anno = field.getAnnotation(FiUniqGroup1.class);
 
@@ -594,18 +594,18 @@ public class FiReflectClass {
 
         if (field.isAnnotationPresent(Column.class)) {
             Column annoColumn = field.getAnnotation(Column.class);
-            fiField.setOfcLnPrecision(annoColumn.precision());
-            fiField.setOfcLnScale(annoColumn.scale());
-            fiField.setOfcLnLength(annoColumn.length());
-            fiField.setOfcBoUnique(annoColumn.unique());
-            fiField.setOfcBoNullable(annoColumn.nullable()); // def:true (in interface)
+            fiField.setFcLnPrecision(annoColumn.precision());
+            fiField.setFcLnScale(annoColumn.scale());
+            fiField.setFcLnLength(annoColumn.length());
+            fiField.setFcBoUnique(annoColumn.unique());
+            fiField.setFcBoNullable(annoColumn.nullable()); // def:true (in interface)
             //ColCustomType
-            fiField.setOfcTxColDefinition(annoColumn.columnDefinition());
+            fiField.setFcTxColDefinition(annoColumn.columnDefinition());
 
             if (!FiString.isEmptyTrim(annoColumn.name())) {
-                fiField.setOfcTxDbField(annoColumn.name());
+                fiField.setFcTxDbField(annoColumn.name());
             } else {
-                fiField.setOfcTxDbField(field.getName());
+                fiField.setFcTxDbField(field.getName());
             }
 
         }
@@ -614,33 +614,33 @@ public class FiReflectClass {
 
             FiColumn annoFiColumn = field.getAnnotation(FiColumn.class);
 
-            fiField.setOfcLnPrecision(annoFiColumn.precision());
-            fiField.setOfcLnScale(annoFiColumn.scale());
-            fiField.setOfcLnLength(annoFiColumn.length());
-            fiField.setOfcBoUnique(annoFiColumn.isUnique());
-            fiField.setOfcBoNullable(annoFiColumn.isNullable());
+            fiField.setFcLnPrecision(annoFiColumn.precision());
+            fiField.setFcLnScale(annoFiColumn.scale());
+            fiField.setFcLnLength(annoFiColumn.length());
+            fiField.setFcBoUnique(annoFiColumn.isUnique());
+            fiField.setFcBoNullable(annoFiColumn.isNullable());
             //if (FiBoolean.isFalse(annoFiColumn.isNullable())) fiField.setNullable(false);
-            fiField.setOfcTxDefValue(annoFiColumn.colCustomTypeDefinition());
-            fiField.setOfcTxDefValue(annoFiColumn.defaultValue());
-            fiField.setOfcTxColDefinition(annoFiColumn.colDefinitionExtra());
-            fiField.setOfcBoUtfSupport(annoFiColumn.isUnicodeSupport());
+            fiField.setFcTxDefValue(annoFiColumn.colCustomTypeDefinition());
+            fiField.setFcTxDefValue(annoFiColumn.defaultValue());
+            fiField.setFcTxColDefinition(annoFiColumn.colDefinitionExtra());
+            fiField.setFcBoUtfSupport(annoFiColumn.isUnicodeSupport());
             //fiField.setBoExcludeFromAutoColList(annoFiColumn.boExcludeFromAutoColList());
 
-            if (!FiString.isEmpty(annoFiColumn.label())) fiField.setOfcTxHeader(annoFiColumn.label());
+            if (!FiString.isEmpty(annoFiColumn.label())) fiField.setFcTxHeader(annoFiColumn.label());
             //if (annoFiColumn.collation() != FiCollation.Default) fiField.setFiCollation(annoFiColumn.collation());
-            if (!FiString.isEmpty(annoFiColumn.typeName())) fiField.setOfcTxTypeName(annoFiColumn.typeName());
+            if (!FiString.isEmpty(annoFiColumn.typeName())) fiField.setFcTxTypeName(annoFiColumn.typeName());
             //if (annoFiColumn.defaultUpdateField()) fiField.setBoDefaultUpdateField(true);
 
             if (!FiString.isEmptyTrim(annoFiColumn.name())) {
-                fiField.setOfcTxDbField(annoFiColumn.name());
+                fiField.setFcTxDbField(annoFiColumn.name());
             } else {
-                fiField.setOfcTxDbField(field.getName());
+                fiField.setFcTxDbField(field.getName());
             }
 
         }
 
         if (field.isAnnotationPresent(FiNotNull.class)) {
-            fiField.setOfcBoNullable(false);
+            fiField.setFcBoNullable(false);
         }
 
 //        if (field.isAnnotationPresent(FiWhere1.class)) {
@@ -658,7 +658,7 @@ public class FiReflectClass {
         // other related db
 
         if (field.isAnnotationPresent(Transient.class) || field.isAnnotationPresent(FiTransient.class)) {
-            fiField.setOfcBoTransient(true);
+            fiField.setFcBoTransient(true);
         }
 
         // Id alanlar için ortak tanımlamalar
@@ -677,7 +677,7 @@ public class FiReflectClass {
 //        if (field.isAnnotationPresent(FiCandId1.class)) {
 //            fiField.setBoCandidateId1(true);
 //            //FIXME nullable false olmayabilir , çoklu candid ise
-//            fiField.setOfcBoNullable(false);
+//            fiField.setFcBoNullable(false);
 //            fiField.setBoDtoField(true);
 //        }
 //
@@ -760,7 +760,7 @@ public class FiReflectClass {
 //        }
 //
 //        if (field.isAnnotationPresent(FiUniqGroup1.class)) {
-//            fiField.setOfcBoUniqGro1(true);
+//            fiField.setFcBoUniqGro1(true);
 //
 //            FiUniqGroup1 anno = field.getAnnotation(FiUniqGroup1.class);
 //
@@ -897,7 +897,7 @@ public class FiReflectClass {
 
             if (FiBool.isTrue(field.getBoKeyIdField())) {
                 //Loghelperr.staticLogDebug("Id Fiedl"+field.getName());
-                Object idValue = FiReflection.getPropertyNested(entity, field.getOfcTxFieldName());
+                Object idValue = FiReflection.getPropertyNested(entity, field.getFcTxFieldName());
 
                 if (isNull == null && idValue != null) isNull = false;
                 if (idValue == null) isNull = true;
@@ -919,7 +919,7 @@ public class FiReflectClass {
 
             if (FiBool.isTrue(field.getBoCusFieldDtCreate())) {
                 //Loghelperr.staticLogDebug("Id Fiedl"+field.getName());
-                Object idValue = FiReflection.getPropertyNested(entity, field.getOfcTxFieldName());
+                Object idValue = FiReflection.getPropertyNested(entity, field.getFcTxFieldName());
 
                 if (isNull == null && idValue != null) isNull = false;
                 if (idValue == null) isNull = true;
@@ -942,9 +942,9 @@ public class FiReflectClass {
         for (FiField field : listFiFieldsShort) {
 
             if (FiBool.isTrue(field.getBoKeyIdField())) {
-                Loghelper.get(FiReflectClass.class).debug("Id Field:" + field.getOfcTxFieldName());
-                Object idValue = FiReflection.getPropertyNested(fromEntity, field.getOfcTxFieldName());
-                boResult = FiReflection.setterNested(toEntity, field.getOfcTxFieldName(), idValue);
+                Loghelper.get(FiReflectClass.class).debug("Id Field:" + field.getFcTxFieldName());
+                Object idValue = FiReflection.getPropertyNested(fromEntity, field.getFcTxFieldName());
+                boResult = FiReflection.setterNested(toEntity, field.getFcTxFieldName(), idValue);
             }
         }
 
@@ -965,7 +965,7 @@ public class FiReflectClass {
 
             if (FiBool.isTrue(field.getBoKeyIdField())) {
                 //Loghelperr.staticLogDebug("Id Field:"+field.getName());
-                listIdFields.add(field.getOfcTxFieldName());
+                listIdFields.add(field.getFcTxFieldName());
             }
         }
 
@@ -973,11 +973,11 @@ public class FiReflectClass {
     }
 
     public static List<String> getListDbFieldName(List<FiField> fieldListFilterAnno) {
-        return fieldListFilterAnno.stream().map(fiField -> fiField.getOfcTxDbField()).collect(toList());
+        return fieldListFilterAnno.stream().map(fiField -> fiField.getFcTxDbField()).collect(toList());
     }
 
     public static List<String> getListFieldName(List<FiField> fieldListFilterAnno) {
-        return fieldListFilterAnno.stream().map(fiField -> fiField.getOfcTxFieldName()).collect(toList());
+        return fieldListFilterAnno.stream().map(fiField -> fiField.getFcTxFieldName()).collect(toList());
     }
 
     public static String getIdFieldSingle(List<Field> fieldListFilterAnno) {
@@ -996,7 +996,7 @@ public class FiReflectClass {
 
         for (FiField fiField : listNotNullFields) {
 
-            if (FiReflection.getProperty(entity, fiField.getOfcTxFieldName()) == null) {
+            if (FiReflection.getProperty(entity, fiField.getFcTxFieldName()) == null) {
                 fiField.setNullCheck(true);
                 found = true;
             }

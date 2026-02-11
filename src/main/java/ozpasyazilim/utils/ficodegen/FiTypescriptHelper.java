@@ -20,7 +20,7 @@ public class FiTypescriptHelper {
 
 		for (FiField fiField : listFiFieldsSummary) {
 			String typeTypesript = convertJavaTypeToTypescript(fiField); //"string";
-			result.append(String.format("\t%s: %s;",fiField.getOfcTxFieldName(),typeTypesript));
+			result.append(String.format("\t%s: %s;",fiField.getFcTxFieldName(),typeTypesript));
 			if (typeTypesript.equalsIgnoreCase("any")) {
 				result.append(" // " + fiField.getClassNameSimple());
 			}

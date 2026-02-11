@@ -34,7 +34,7 @@ public class FxTreeTableCol<E> extends TreeTableColumn implements IFxTableCol<E>
 
 	public FxTreeTableCol(String header, String fieldName) {
 		super(header);
-		getRefFiCol().setOfcTxFieldName(fieldName);
+		getRefFiCol().setFcTxFieldName(fieldName);
 		this.setId(fieldName);
 		setCellValueFactory(new TreeItemPropertyValueFactory<>(fieldName));
 	}
@@ -42,17 +42,17 @@ public class FxTreeTableCol<E> extends TreeTableColumn implements IFxTableCol<E>
 	public FxTreeTableCol(String header, String fieldName, OzColType dataType) {
 		super(header);
 		setId(fieldName);
-		getRefFiCol().setOfcTxFieldName(fieldName);
-		getRefFiCol().setOfcTxHeader(header);
+		getRefFiCol().setFcTxFieldName(fieldName);
+		getRefFiCol().setFcTxHeader(header);
 		getRefFiCol().setColType(dataType);
 		setCellValueFactory(new TreeItemPropertyValueFactory<>(fieldName));
 		setAutoFormatter(dataType);
 	}
 
 	public void setAutoColumnDefaultByFiCol() {
-		setText(getRefFiCol().getOfcTxHeader());
-		setCellValueFactory(new TreeItemPropertyValueFactory<>(getRefFiCol().getOfcTxFieldName()));
-		setId(getRefFiCol().getOfcTxFieldName());
+		setText(getRefFiCol().getFcTxHeader());
+		setCellValueFactory(new TreeItemPropertyValueFactory<>(getRefFiCol().getFcTxFieldName()));
+		setId(getRefFiCol().getFcTxFieldName());
 		setAutoFormatter(getRefFiCol().getColType());
 	}
 

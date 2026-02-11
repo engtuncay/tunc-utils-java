@@ -169,7 +169,7 @@ public class FxTableViewCellFactoryModal {
 		if (entitClazz != null) {
 
 			Map<String, FiField> fieldsAsMap = FiReflection.getFieldsAsMap(entitClazz);
-			String classNameSimple = fieldsAsMap.getOrDefault(fxTableCol.getRefFiCol().getOfcTxFieldName(), new FiField()).getClassNameSimple();
+			String classNameSimple = fieldsAsMap.getOrDefault(fxTableCol.getRefFiCol().getFcTxFieldName(), new FiField()).getClassNameSimple();
 			//Loghelper.getInstance(getClass()).debug("Class Name Simple:"+classNameSimple + " Field:"+fxTableCol.getFiTableCol().getFieldName());
 			if (classNameSimple == null) return;
 
@@ -281,7 +281,7 @@ public class FxTableViewCellFactoryModal {
 								}
 
 								node.setOnAction(actionEvent -> {
-									Boolean result = FiReflection.setter(entity, fxTableCol.getRefFiCol().getOfcTxFieldName(), node.isSelected());
+									Boolean result = FiReflection.setter(entity, fxTableCol.getRefFiCol().getFcTxFieldName(), node.isSelected());
 									if (!result) {
 										FxDialogShow.showPopWarn("Yazılımsal Hata!!! Seçilemedi.");
 									} else {
@@ -673,7 +673,7 @@ public class FxTableViewCellFactoryModal {
 
 									if (fxTableCol.getRefFiCol().getFnEditorNodeRendererWitValue() != null) {
 										EntClazz entity = getTableView().getItems().get(getIndex());
-										Object propertyNested = FiReflection.getPropertyNested(entity, fxTableCol.getRefFiCol().getOfcTxFieldName());
+										Object propertyNested = FiReflection.getPropertyNested(entity, fxTableCol.getRefFiCol().getFcTxFieldName());
 										fxTableCol.getRefFiCol().getFnEditorNodeRendererWitValue().accept(entity, nodeComp, propertyNested);
 									}
 
@@ -718,12 +718,12 @@ public class FxTableViewCellFactoryModal {
 
 											// Önce action yürütülür , daha sonra renderer işlemi yapılır
 											if (true) {
-												Object propertyNested = FiReflection.getPropertyNested(entity, fxTableCol.getRefFiCol().getOfcTxFieldName());
+												Object propertyNested = FiReflection.getPropertyNested(entity, fxTableCol.getRefFiCol().getFcTxFieldName());
 												fxTableCol.getRefFiCol().getFnEditorSetOnActionWitValue().accept(entity, nodeComp, propertyNested);
 											}
 
 											if (fxTableCol.getRefFiCol().getFnEditorNodeRendererWitValue() != null) {
-												Object propertyNested = FiReflection.getPropertyNested(entity, fxTableCol.getRefFiCol().getOfcTxFieldName());
+												Object propertyNested = FiReflection.getPropertyNested(entity, fxTableCol.getRefFiCol().getFcTxFieldName());
 												fxTableCol.getRefFiCol().getFnEditorNodeRendererWitValue().accept(entity, nodeComp, propertyNested);
 											}
 
@@ -845,7 +845,7 @@ public class FxTableViewCellFactoryModal {
 
 		Map<String, FiField> fieldsAsMap = FiReflection.getFieldsAsMap(entitClazz);
 
-		String classNameSimple = fieldsAsMap.getOrDefault(fxTableCol.getRefFiCol().getOfcTxFieldName(), new FiField()).getClassNameSimple();
+		String classNameSimple = fieldsAsMap.getOrDefault(fxTableCol.getRefFiCol().getFcTxFieldName(), new FiField()).getClassNameSimple();
 
 		if (classNameSimple == null) classNameSimple = "";
 

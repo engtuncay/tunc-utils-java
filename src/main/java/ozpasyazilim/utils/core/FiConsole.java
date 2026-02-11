@@ -808,7 +808,7 @@ public class FiConsole {
         log.append("\n");
 
         for (FiCol entry : listFiColInit) {
-            log.append(entry.getOfcTxFieldName()).append(" : ").append(FiString.ToStrOrEmpty(entry.getColValue())).append("\n");
+            log.append(entry.getFcTxFieldName()).append(" : ").append(FiString.ToStrOrEmpty(entry.getColValue())).append("\n");
         }
 
         return log.toString();

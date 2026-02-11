@@ -5,75 +5,75 @@ package ozpasyazilim.utils.fidborm;
  */
 public interface IFiField {
 
-    public String getOfcTxIdType();
+    public String getFcTxIdType();
 
-    public void setOfcTxIdType(String ofcTxIdType);
+    public void setFcTxIdType(String fcTxIdType);
 
-    public Boolean getOfcBoUniqGro1();
+    public Boolean getFcBoUniqGro1();
 
-    public void setOfcBoUniqGro1(Boolean ofcBoUniqGro1);
+    public void setFcBoUniqGro1(Boolean fcBoUniqGro1);
 
-    public Boolean getOfcBoNullable();
+    public Boolean getFcBoNullable();
 
-    public void setOfcBoNullable(Boolean ofcBoNullable);
+    public void setFcBoNullable(Boolean fcBoNullable);
 
-    public Boolean getOfcBoUnique();
+    public Boolean getFcBoUnique();
 
-    public void setOfcBoUnique(Boolean ofcBoUnique);
+    public void setFcBoUnique(Boolean fcBoUnique);
 
-    public Boolean getOfcBoUtfSupport();
+    public Boolean getFcBoUtfSupport();
 
-    public void setOfcBoUtfSupport(Boolean ofcBoUtfSupport);
+    public void setFcBoUtfSupport(Boolean fcBoUtfSupport);
 
-    public String getOfcTxDefValue();
+    public String getFcTxDefValue();
 
-    public void setOfcTxDefValue(String ofcTxDefValue);
+    public void setFcTxDefValue(String fcTxDefValue);
 
-    public String getOfcTxCollation();
+    public String getFcTxCollation();
 
-    public void setOfcTxCollation(String ofcTxCollation);
+    public void setFcTxCollation(String fcTxCollation);
 
-    public String getOfcTxTypeName();
+    public String getFcTxTypeName();
 
-    public void setOfcTxTypeName(String ofcTxTypeName);
+    public void setFcTxTypeName(String fcTxTypeName);
 
-    public String getOfcTxFieldType();
+    public String getFcTxFieldType();
 
-    public void setOfcTxFieldType(String ofcTxFieldType);
+    public void setFcTxFieldType(String fcTxFieldType);
 
-    public Integer getOfcLnLength();
+    public Integer getFcLnLength();
 
-    public void setOfcLnLength(Integer ofcLnLength);
+    public void setFcLnLength(Integer fcLnLength);
 
-    public Integer getOfcLnPrecision();
+    public Integer getFcLnPrecision();
 
-    public void setOfcLnPrecision(Integer ofcLnPrecision);
+    public void setFcLnPrecision(Integer fcLnPrecision);
 
-    public Integer getOfcLnScale();
+    public Integer getFcLnScale();
 
-    public void setOfcLnScale(Integer ofcLnScale);
-
-
-    public Boolean getOfcBoFilterLike();
-
-    public void setOfcBoFilterLike(Boolean ofcBoFilterLike);
-
-    public Boolean getOfcBoTransient();
-
-    public void setOfcBoTransient(Boolean ofcBoTransient);
+    public void setFcLnScale(Integer fcLnScale);
 
 
-    public String getOfcTxFieldName();
+    public Boolean getFcBoFilterLike();
 
-    public void setOfcTxFieldName(String ofcTxFieldName);
+    public void setFcBoFilterLike(Boolean fcBoFilterLike);
 
-    public String getOfcTxHeader();
+    public Boolean getFcBoTransient();
 
-    public void setOfcTxHeader(String ofcTxHeader);
+    public void setFcBoTransient(Boolean fcBoTransient);
 
-    public String getOfcTxDbField();
 
-    public void setOfcTxDbField(String ofcTxDbField);
+    public String getFcTxFieldName();
+
+    public void setFcTxFieldName(String fcTxFieldName);
+
+    public String getFcTxHeader();
+
+    public void setFcTxHeader(String fcTxHeader);
+
+    public String getFcTxDbField();
+
+    public void setFcTxDbField(String fcTxDbField);
 
 
 }

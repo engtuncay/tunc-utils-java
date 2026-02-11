@@ -579,12 +579,23 @@ public class FiCal {
     return aCalendar.getTime();
   }
 
+  /**
+   * 0 girilirse değişiklik olmaz, negatif girilirse geçmişe, pozitif girilirse geleceğe tarih verir.
+   *
+   * @param lndayDifference
+   * @param lnMonthDiff
+   * @return
+   */
   public static Date getDateDiffFromToday(int lndayDifference, int lnMonthDiff) {
     Calendar aCalendar = Calendar.getInstance();
     clearTime(aCalendar);
     // Calendar.Date günü belirtiyor
-    aCalendar.add(Calendar.DATE, lndayDifference);
-    aCalendar.add(Calendar.MONTH, lnMonthDiff);
+    if(lndayDifference!=0) {
+      aCalendar.add(Calendar.DATE, lndayDifference);
+    }
+    if(lnMonthDiff!=0) {
+      aCalendar.add(Calendar.MONTH, lnMonthDiff);
+    }
     Date result = aCalendar.getTime();
     return result;
   }

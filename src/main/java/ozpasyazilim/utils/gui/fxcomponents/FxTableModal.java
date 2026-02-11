@@ -33,7 +33,7 @@ public class FxTableModal {
 
             if (ozTableCol != null && ozTableCol.getColType() == OzColType.Double) {
 
-                Class clazzType = FiReflection.getPropertyType(summaryEntity, ozTableCol.getOfcTxFieldName());
+                Class clazzType = FiReflection.getPropertyType(summaryEntity, ozTableCol.getFcTxFieldName());
 
                 //Loghelperr.getInstance(getClass()).debug(" Type"+ clazzType.getSimpleName());
 
@@ -44,7 +44,7 @@ public class FxTableModal {
                     //Loghelperr.getInstance(getClass()).debug(" Double type Field: "+ ozTableCol.getFieldName());
 
                     Double sumDouble = FiNumberToText.sumValuesDouble(listdata, ent -> {
-                        Object objectByField = FiReflection.getPropertyy(ent, ozTableCol.getOfcTxFieldName());
+                        Object objectByField = FiReflection.getPropertyy(ent, ozTableCol.getFcTxFieldName());
                         if (objectByField == null) return 0d;
                         return (Double) objectByField;
                     });
@@ -60,7 +60,7 @@ public class FxTableModal {
                     //Loghelperr.getInstance(getClass()).debug(" Double type Field: "+ ozTableCol.getFieldName());
 
                     Double sumDouble = FiNumberToText.avgDoubleValues(listdata, ent -> {
-                        Object objectByField = FiReflection.getPropertyy(ent, ozTableCol.getOfcTxFieldName());
+                        Object objectByField = FiReflection.getPropertyy(ent, ozTableCol.getFcTxFieldName());
                         if (objectByField == null) return 0d;
                         return (Double) objectByField;
                     });
@@ -119,7 +119,7 @@ public class FxTableModal {
                 // 06.08.2019 Not: yanlış field name verilirse null dönüş yapılıyor
                 //Class clazzType = new FiProperty().getPropertyType(exampleEntity, fiCol.getFieldName());
                 // 07.08.2019
-                Class clazzType = FiReflection.getFieldClassType(exampleEntity.getClass(), fiCol.getOfcTxFieldName());
+                Class clazzType = FiReflection.getFieldClassType(exampleEntity.getClass(), fiCol.getFcTxFieldName());
 
 //			if(clazzType==null) Loghelper.getInstance(FxTableModal.class).debug(String.format("Col %s : ClazzType Null : %s",fiCol.getFiHeader(),fiCol.getFieldName()));
 //			Loghelperr.getInstance(getClass()).debug(String.format("Col Summary For: %s -- Sum Type %s -- Class Type %s ", fiCol.getFiHeader(),fiCol.getSummaryType(),clazzType.getSimpleName()));
@@ -127,7 +127,7 @@ public class FxTableModal {
                 if (fiCol.getSummaryType() == OzColSummaryType.SUM && clazzType != null && clazzType.equals(Double.class)) {
 
                     Double sumDouble = FiNumberToText.sumValuesDouble(listdata, ent -> {
-                        Object objectByField = FiReflection.getPropertyNested(ent, fiCol.getOfcTxFieldName());
+                        Object objectByField = FiReflection.getPropertyNested(ent, fiCol.getFcTxFieldName());
                         if (objectByField == null) return 0d;
                         return (Double) objectByField;
                     });
@@ -144,7 +144,7 @@ public class FxTableModal {
                 if (fiCol.getSummaryType() == OzColSummaryType.SUM && clazzType != null && clazzType.equals(BigDecimal.class)) {
 
                     BigDecimal sumDouble = FiNumberToText.sumValuesBigDecimal(listdata, ent -> {
-                        Object objectByField = FiReflection.getPropertyNested(ent, fiCol.getOfcTxFieldName());
+                        Object objectByField = FiReflection.getPropertyNested(ent, fiCol.getFcTxFieldName());
                         if (objectByField == null) return BigDecimal.ZERO;
                         return (BigDecimal) objectByField;
                     });
@@ -167,7 +167,7 @@ public class FxTableModal {
                     //Loghelperr.getInstance(getClass()).debug(" Double type Field: "+ fiCol.getFieldName());
 
                     Double sumDouble = FiNumberToText.avgDoubleValues(listdata, ent -> {
-                        Object objectByField = new FiReflection().getPropertyNested(ent, fiCol.getOfcTxFieldName());
+                        Object objectByField = new FiReflection().getPropertyNested(ent, fiCol.getFcTxFieldName());
                         if (objectByField == null) return 0d;
                         return (Double) objectByField;
                     });
@@ -292,7 +292,7 @@ public class FxTableModal {
             // 06.08.2019 Not: yanlış field name verilirse null dönüş yapılıyor
             //Class clazzType = new FiProperty().getPropertyType(exampleEntity, fiTableCol.getFieldName());
             // 07.08.2019
-            Class clazzType = FiReflection.getFieldClassType(exampleEntity.getClass(), fiTableCol.getOfcTxFieldName());
+            Class clazzType = FiReflection.getFieldClassType(exampleEntity.getClass(), fiTableCol.getFcTxFieldName());
 
             //if(clazzType==null) Loghelperr.getInstance(getClass()).debug("ClazzType Null");
 
@@ -303,7 +303,7 @@ public class FxTableModal {
             if (fiTableCol.getSummaryType() == OzColSummaryType.SUM && clazzType.equals(Double.class)) { //.equals(Double.class
 
                 Double sumDouble = FiNumberToText.sumValuesDouble(listdata, ent -> {
-                    Object objectByField = new FiReflection().getPropertyNested(ent, fiTableCol.getOfcTxFieldName());
+                    Object objectByField = new FiReflection().getPropertyNested(ent, fiTableCol.getFcTxFieldName());
                     if (objectByField == null) return 0d;
                     return (Double) objectByField;
                 });
@@ -320,7 +320,7 @@ public class FxTableModal {
             if (fiTableCol.getSummaryType() == OzColSummaryType.SumOutOfNegatives && clazzType.equals(Double.class)) { //.equals(Double.class
 
                 Double sumDouble = FiNumberToText.sumValuesDouble(listdata, ent -> {
-                    Object objectByField = new FiReflection().getPropertyNested(ent, fiTableCol.getOfcTxFieldName());
+                    Object objectByField = new FiReflection().getPropertyNested(ent, fiTableCol.getFcTxFieldName());
                     if (objectByField == null) return 0d;
                     if ((Double) objectByField < 0d) return 0d;
                     return (Double) objectByField;
@@ -338,7 +338,7 @@ public class FxTableModal {
             if (fiTableCol.getSummaryType() == OzColSummaryType.SUM && clazzType.equals(BigDecimal.class)) { //.equals(Double.class
 
                 BigDecimal sumDouble = FiNumberToText.sumValuesBigDecimal(listdata, ent -> {
-                    Object objectByField = new FiReflection().getPropertyNested(ent, fiTableCol.getOfcTxFieldName());
+                    Object objectByField = new FiReflection().getPropertyNested(ent, fiTableCol.getFcTxFieldName());
                     if (objectByField == null) return BigDecimal.ZERO;
                     return (BigDecimal) objectByField;
                 });
@@ -358,7 +358,7 @@ public class FxTableModal {
                 //Loghelperr.getInstance(getClass()).debug(" Double type Field: "+ fiTableCol.getFieldName());
 
                 Double sumDouble = FiNumberToText.avgDoubleValues(listdata, ent -> {
-                    Object objectByField = new FiReflection().getPropertyNested(ent, fiTableCol.getOfcTxFieldName());
+                    Object objectByField = new FiReflection().getPropertyNested(ent, fiTableCol.getFcTxFieldName());
                     if (objectByField == null) return 0d;
                     return (Double) objectByField;
                 });

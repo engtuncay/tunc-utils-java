@@ -868,7 +868,7 @@ public class FiCollection {
 
                 T exampleObj = listDataByKey.get(0);
 
-                Object objectColValue = FiReflection.getProperty(exampleObj, oztablecol.getOfcTxFieldName());
+                Object objectColValue = FiReflection.getProperty(exampleObj, oztablecol.getFcTxFieldName());
 
                 if (oztablecol.getColType() == null || oztablecol.getColType() == OzColType.String) {
                     new FiReflection().setter(filteredEntity, oztablecol, objectColValue);
@@ -877,7 +877,7 @@ public class FiCollection {
                 if (objectColValue instanceof Double) {
 
                     Double sumDouble = FiNumberToText.sumValuesDouble(listDataByKey, ent -> {
-                        Object objectByField = FiReflection.getProperty(ent, oztablecol.getOfcTxFieldName());
+                        Object objectByField = FiReflection.getProperty(ent, oztablecol.getFcTxFieldName());
                         if (objectByField == null) return 0d;
                         return (Double) objectByField;
                     });
@@ -932,10 +932,10 @@ public class FiCollection {
 
             for (IFiCol oztablecol : listCol) {
 
-                Object objectColValue = FiReflection.getProperty(exampleObj, oztablecol.getOfcTxFieldName());
+                Object objectColValue = FiReflection.getProperty(exampleObj, oztablecol.getFcTxFieldName());
 
                 // yukarıda yapıldığı için atlanır
-                if (listGroupbyfields.contains(oztablecol.getOfcTxFieldName())) {
+                if (listGroupbyfields.contains(oztablecol.getFcTxFieldName())) {
                     continue;
                     //new FiProperty().setter(filteredEntity, oztablecol, objectColValue);
                 }
@@ -943,7 +943,7 @@ public class FiCollection {
                 if (objectColValue instanceof Double) {
 
                     Double sumDouble = FiNumberToText.sumValuesDouble(listDataByKey, ent -> {
-                        Object objectByField = FiReflection.getProperty(ent, oztablecol.getOfcTxFieldName());
+                        Object objectByField = FiReflection.getProperty(ent, oztablecol.getFcTxFieldName());
                         if (objectByField == null) return 0d;
                         return (Double) objectByField;
                     });
@@ -1560,6 +1560,42 @@ public class FiCollection {
             }
         }
         return false;
+    }
+
+    /**
+     * Partitions the given collection into parts of size {@code partSize} and returns
+     * a map where the key is the 1-based part number and the value is the list for that part.
+     *
+     * @param collection the source collection (must not be null)
+     * @param partSize size of each part (must be > 0)
+     * @param <T> element type
+     * @return LinkedHashMap with partNumber -> List&lt;T&gt; (empty map for empty collection)
+     * @throws IllegalArgumentException for invalid arguments
+     */
+    public static <T> Map<Integer, List<T>> partition(Collection<T> collection, int partSize) {
+        if (collection == null) {
+            throw new IllegalArgumentException("collection must not be null");
+        }
+        if (partSize <= 0) {
+            throw new IllegalArgumentException("partSize must be > 0");
+        }
+
+        Map<Integer, List<T>> result = new LinkedHashMap<>();
+        if (collection.isEmpty()) {
+            return result;
+        }
+
+        List<T> list = new ArrayList<>(collection);
+        int total = list.size();
+        int parts = (int) Math.ceil((double) total / partSize);
+
+        for (int i = 0; i < parts; i++) {
+            int start = i * partSize;
+            int end = Math.min(start + partSize, total);
+            result.put(i + 1, new ArrayList<>(list.subList(start, end)));
+        }
+
+        return result;
     }
 
 }

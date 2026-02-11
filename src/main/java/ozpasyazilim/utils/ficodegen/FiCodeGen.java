@@ -370,7 +370,7 @@ public class FiCodeGen {
 
 		StringBuilder txFieldList = new StringBuilder();
 		for (FiField fiField : fieldListFilterAnno) {
-			txFieldList.append(fiField.getOfcTxFieldName() + "\n");
+			txFieldList.append(fiField.getFcTxFieldName() + "\n");
 		}
 
 		return txFieldList.toString();
@@ -382,7 +382,7 @@ public class FiCodeGen {
 
 		StringBuilder txFieldList = new StringBuilder();
 		for (FiField fiField : fieldListFilterAnno) {
-			txFieldList.append(fiField.getOfcTxFieldName() + "\n");
+			txFieldList.append(fiField.getFcTxFieldName() + "\n");
 		}
 
 		return txFieldList.toString();
