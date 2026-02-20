@@ -15,20 +15,20 @@ public class FintMeta {
    * <p>
    * Key olarak Integer kullanmak istenirse
    */
-  private Integer fimLnKey;
+  private Integer ftLnKey;
 
-  /**
-   * TxCode (TxKodu)
-   */
-//  private String fimTxKey;
+  //  /**
+  //   * TxCode (TxKodu)
+  //   */
+  //  private String fimTxKey;
 
-  private String fimTxValue;
+  private String ftTxValue;
 
 
   /**
    * Açıklama (Description) gibi düşünebiliriz
    */
-  private String fimTxLabel;
+  private String ftTxLabel;
 
   private String txType;
 
@@ -36,72 +36,37 @@ public class FintMeta {
 
   }
 
-//	public FiMeta(Integer lnKey) {
-//		this.lnKey = lnKey;
-//	}
-
-//  public FintMeta(String fimTxKey) {
-//    this.fimTxKey = fimTxKey;
-//  }
-
-  public FintMeta(int fimLnKey, String fimTxLabel) {
-    this.fimLnKey = fimLnKey;
-    this.fimTxLabel = fimTxLabel;
+  public FintMeta(int ftLnKey, String ftTxLabel) {
+    this.ftLnKey = ftLnKey;
+    this.ftTxLabel = ftTxLabel;
   }
-
-//  public FintMeta(String fimTxKey, String fimTxLabel) {
-//    this.fimTxKey = fimTxKey;
-//    this.fimTxLabel = fimTxLabel;
-//  }
-
-//  public static FintMeta bui(String txKey) {
-//    FintMeta fiMeta = new FintMeta();
-//    fiMeta.setFimTxKey(txKey);
-//    return fiMeta;
-//  }
 
   // Getter and Setter
 
-  public String getFimTxValue() {
-    return fimTxValue;
+  public String getFtTxValue() {
+    return ftTxValue;
   }
 
-  public void setFimTxValue(String fimTxValue) {
-    this.fimTxValue = fimTxValue;
+  public void setFtTxValue(String ftTxValue) {
+    this.ftTxValue = ftTxValue;
   }
 
-  public Integer getFimLnKey() {
-    return fimLnKey;
+  public Integer getFtLnKey() {
+    return ftLnKey;
   }
 
-  public void setFimLnKey(Integer fimLnKey) {
-    this.fimLnKey = fimLnKey;
+  public void setFtLnKey(Integer ftLnKey) {
+    this.ftLnKey = ftLnKey;
   }
 
-  public String getFimTxLabel() {
-    return fimTxLabel;
+  public String getFtTxLabel() {
+    return ftTxLabel;
   }
 
-  public void setFimTxLabel(String fimTxLabel) {
-    this.fimTxLabel = fimTxLabel;
+  public void setFtTxLabel(String ftTxLabel) {
+    this.ftTxLabel = ftTxLabel;
   }
 
-  /**
-   * gk: getTxKey
-   *
-   * @return
-   */
-//  public String getKey() {
-//    return fimTxKey;
-//  }
-
-//  public String getFimTxKey() {
-//    return fimTxKey;
-//  }
-
-//  public void setFimTxKey(String fimTxKey) {
-//    this.fimTxKey = fimTxKey;
-//  }
   public String getTxType() {
     return txType;
   }
@@ -117,7 +82,7 @@ public class FintMeta {
    */
   @Override
   public String toString() {
-    return FiString.orEmpty(getFimLnKey());
+    return FiString.orEmpty(getFtLnKey());
   }
 
   /**
@@ -132,9 +97,9 @@ public class FintMeta {
   public boolean equals(Object obj) {
     if (obj instanceof FintMeta) {
       FintMeta fiMeta2 = (FintMeta) obj;
-      if (fiMeta2.getFimLnKey() == null || getFimLnKey() == null) return false;
+      if (fiMeta2.getFtLnKey() == null || getFtLnKey() == null) return false;
       ;
-      return getFimLnKey().equals(fiMeta2.getFimLnKey());
+      return getFtLnKey().equals(fiMeta2.getFtLnKey());
     }
     return super.equals(obj);
   }

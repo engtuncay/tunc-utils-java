@@ -458,7 +458,7 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
   }
 
   public int getFimValueAsBoolBit(FiMeta fiMeta) {
-    return getValAsBoolBit(fiMeta.getFimTxKey());
+    return getValAsBoolBit(fiMeta.getFtTxKey());
   }
 
   public int getValAsBoolBit(String txKey) {
@@ -589,11 +589,11 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
   }
 
   public Object getFimValue(FiMeta fiCol) {
-    return getFieldValue(fiCol.getFimTxKey());
+    return getFieldValue(fiCol.getFtTxKey());
   }
 
   public String getFimValueAsString(FiMeta fiCol) {
-    return getValueAsString(fiCol.getFimTxKey());
+    return getValueAsString(fiCol.getFtTxKey());
   }
 
   public String getFkcValueAsString(FiKeybean fkbCol) {
@@ -601,7 +601,7 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
   }
 
   public String getFimValueAsStringNtn(FiMeta fiCol) {
-    return getValueAsStringNtn(fiCol.getFimTxKey());
+    return getValueAsStringNtn(fiCol.getFtTxKey());
   }
 
   private Object getFieldValue(String txKey) {

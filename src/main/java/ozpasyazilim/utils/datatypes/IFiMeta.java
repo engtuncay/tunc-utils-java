@@ -2,12 +2,12 @@ package ozpasyazilim.utils.datatypes;
 
 public interface IFiMeta {
 
-    public String getFimTxKey();
+    public String getFtTxKey();
 
-    public void setFimTxKey(String fimTxKey);
+    public void setFtTxKey(String ftTxKey);
 
-    public String getFimTxValue();
+    public String getFtTxValue();
 
-    public void setFimTxValue(String fimTxValue);
+    public void setFtTxValue(String fimTxValue);
 
 }

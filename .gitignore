@@ -4,3 +4,5 @@
 target/
 .sts4-cache/
 debug.log
+.vscode/
+
