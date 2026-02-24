@@ -93,7 +93,7 @@ public class FiMeta {
    *
    * @return
    */
-  public String getKey() {
+  public String getTxKey() {
     return ftTxKey;
   }
 
@@ -102,6 +102,10 @@ public class FiMeta {
   }
 
   public void setFtTxKey(String ftTxKey) {
+    this.ftTxKey = ftTxKey;
+  }
+
+  public void setTxKey(String ftTxKey) {
     this.ftTxKey = ftTxKey;
   }
 
@@ -120,7 +124,7 @@ public class FiMeta {
    */
   @Override
   public String toString() {
-    return getKey();
+    return getTxKey();
   }
 
   /**
@@ -135,8 +139,8 @@ public class FiMeta {
   public boolean equals(Object obj) {
     if (obj instanceof FiMeta) {
       FiMeta fiMeta2 = (FiMeta) obj;
-      if (fiMeta2.getKey() == null || getKey() == null) return false;
-      return getKey().equals(fiMeta2.getKey());
+      if (fiMeta2.getTxKey() == null || getTxKey() == null) return false;
+      return getTxKey().equals(fiMeta2.getTxKey());
     }
     return super.equals(obj);
   }

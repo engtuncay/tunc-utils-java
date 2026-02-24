@@ -1259,7 +1259,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
             if (!FiString.isEmptyTrim(refFiCol.getTxFilterType())) {
               //Loghelper.get(getClass()).debug("! filter ına girdi");
               //txFilterValue.charAt(0) == '>'
-              if (refFiCol.getTxFilterType().equals(FimFicTxFilterType.greaterThan().getKey())) {
+              if (refFiCol.getTxFilterType().equals(FimFicTxFilterType.greaterThan().getTxKey())) {
                 if (valueCol >= (Double) objFilterValue) {
                   //return filterCheckResult;
                   continue;

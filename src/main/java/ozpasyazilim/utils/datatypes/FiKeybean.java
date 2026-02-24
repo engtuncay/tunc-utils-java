@@ -699,7 +699,7 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
   }
 
   public void AddFieldBy(FiMeta fiMeta, Object value) {
-    addField(fiMeta.getKey(), value);
+    addField(fiMeta.getTxKey(), value);
   }
 
   /**
