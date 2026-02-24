@@ -723,7 +723,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
 //		return this;
 //	}
 
-    public FiCol buildDontExportExcel(Boolean boDoNotExportExcel) {
+    public FiCol buiBoDoNotExportExcel(Boolean boDoNotExportExcel) {
         setBoDontExportExcel(boDoNotExportExcel);
         return this;
     }

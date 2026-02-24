@@ -2933,6 +2933,11 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     return iFxTableCont;
   }
 
+  /**
+   * Table için Controller Metodlarını içeren interface
+   *
+   * @param iFxTableCont
+   */
   public void setiFxTableCont(IFxTableCont iFxTableCont) {
     this.iFxTableCont = iFxTableCont;
   }
