@@ -500,7 +500,7 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
         return fiColFound;
     }
 
-    public static void setFieldsAllToRequiredFi(List<? extends IFiCol> listColumn) {
+    public static void setFieldsAllToRequired(List<? extends IFiCol> listColumn) {
         listColumn.forEach(o -> {
             o.setBoRequired(true);
         });
