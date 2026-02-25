@@ -7,6 +7,7 @@ Some packages will be removed ( com/maimart/fx/tablefilter , mark/utils,  net/co
 # Contents
 
 - [Contents](#contents)
+- [Kısaltmalar](#kısaltmalar)
 - [Sql Yardımcı Sınıflar](#sql-yardımcı-sınıflar)
   - [FiQugen - Fi Query Generator](#fiqugen---fi-query-generator)
 - [Kod Üretme](#kod-üretme)
@@ -18,9 +19,10 @@ Some packages will be removed ( com/maimart/fx/tablefilter , mark/utils,  net/co
   - [Form](#form)
     - [FxFormMig](#fxformmig)
     - [FxFormMigc](#fxformmigc)
-- [Entegre Fx Bulunan Utility Sınıflar](#entegre-fx-bulunan-utility-sınıflar)
+- [Entegre Mikro - Utility Sınıfları](#entegre-mikro---utility-sınıfları)
+- [Entegre Fx - Utility Classes](#entegre-fx---utility-classes)
   - [FiColsCompEfx](#ficolscompefx)
-- [Önemli Kısaltmalar](#önemli-kısaltmalar)
+  - [EfhFiColList](#efhficollist)
 - [Entegre Controller Yapısı](#entegre-controller-yapısı)
   - [TuncUtils Sınıfında Gui Sınıflar](#tuncutils-sınıfında-gui-sınıflar)
     - [IFxSimpleCont](#ifxsimplecont-1)
@@ -32,11 +34,17 @@ Some packages will be removed ( com/maimart/fx/tablefilter , mark/utils,  net/co
     - [AbsMotWindowCont extends AbsModBaseCont](#absmotwindowcont-extends-absmodbasecont)
 
 
+
 [🔝](#contents)
 
 # Kısaltmalar
 
-- **EnhpMod** : Entegre Helper Modules. örneğin : EnhpModHelper (modüllerde kullanılacak yardımcı metodlar - gui de içerir)
+- EnhpMod : Entegre Helper Modules. örneğin : EnhpModHelper (modüllerde kullanılacak yardımcı metodlar - gui de içerir)
+
+**EntegreFx**
+
+- Efh : EntegreFx Helper. Örnek : EfhFiColList
+
 
 # Sql Yardımcı Sınıflar
 
@@ -64,19 +72,26 @@ IFxSimpleCont'u uygulayan, tüm controllerde olması gereken alan ve metodlar. O
 
 ## Form
 
-### FxFormMig 
+### FxFormMig
 
 ### FxFormMigc
 
 config objesi ile çalışan FxFormMig
 
-# Entegre Fx - Utility Classes 
+
+# Entegre Mikro - Utility Sınıfları
+
+- EmhIcon : Entegre Mikro'da kullanılan ikonları tutan sınıf. (örneğin : getReportIcon() )
+
+# Entegre Fx - Utility Classes
 
 ## FiColsCompEfx
 
 - EntegreFx projesinde yer alır.
 
 - FiCol kullanarak componentler oluşturulabilir. ( FxComboBox, FxListView ve EntegreFx modullerini kullanabilir. )
+
+## EfhFiColList
 
 
 
