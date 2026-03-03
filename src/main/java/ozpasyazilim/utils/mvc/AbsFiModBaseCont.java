@@ -3,7 +3,6 @@ package ozpasyazilim.utils.mvc;
 import javafx.stage.Stage;
 import ozpasyazilim.utils.entity.FiModule;
 import ozpasyazilim.utils.gui.fxcomponents.DialogConf;
-import ozpasyazilim.utils.gui.fxcomponents.FxDialogShow;
 import ozpasyazilim.utils.gui.fxcomponents.FxStage;
 import ozpasyazilim.utils.gui.fxcomponents.FxWindow;
 
@@ -149,7 +148,7 @@ public abstract class AbsFiModBaseCont implements IFiModCont {
         }
 
         dialogConf.setCssFileName("main.css");
-        FxWindow.nodeWindow(this, dialogConf);
+        FxWindow.creNodeWindow(this, dialogConf);
     }
 
     public String getConnProfile() {

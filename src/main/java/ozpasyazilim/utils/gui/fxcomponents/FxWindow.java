@@ -11,11 +11,11 @@ import ozpasyazilim.utils.mvc.IFiModCont;
 
 public class FxWindow {
 
-    public static void nodeWindow(Node nodeRelative, IFiModCont ifxSimpleModCont) {
-        nodeWindow(nodeRelative, ifxSimpleModCont, null, null, null);
+    public static void creNodeWindow(Node nodeRelative, IFiModCont ifxSimpleModCont) {
+        creNodeWindow(nodeRelative, ifxSimpleModCont, null, null, null);
     }
 
-    public static void nodeWindow(IFiModCont iFiModCont, DialogConf dialogConf) {
+    public static void creNodeWindow(IFiModCont iFiModCont, DialogConf dialogConf) {
 
         if (dialogConf == null) dialogConf = new DialogConf();
 
@@ -74,7 +74,7 @@ public class FxWindow {
 
     }
 
-    public static void nodeWindow(Node nodeRelative, IFiModCont iFiModCont, Integer width, Integer height, Boolean isNonModal) {
+    public static void creNodeWindow(Node nodeRelative, IFiModCont iFiModCont, Integer width, Integer height, Boolean isNonModal) {
         //Loghelper.get(getClass()).debug("nodeModalByIFxSimpleCont Giriş");
 
         Stage stage = iFiModCont.getFxStageInit();

@@ -51,7 +51,7 @@ public class FxSimpleContGen<E> extends AbsFiModBaseCont implements IFxTableSele
 		}
 
 		getModView().getRootPane().getStylesheets().add("app.css");
-		FxWindow.nodeWindow(nodeRelative, this, width, height, boNonModal);
+		FxWindow.creNodeWindow(nodeRelative, this, width, height, boNonModal);
 	}
 
 	@Override

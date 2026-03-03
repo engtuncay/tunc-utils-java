@@ -239,8 +239,8 @@ public class FiSoap {
 
       fdrXmlDoc.setLnResponseCode(fdrRequest.getLnResponseCode());
       //fdrXmlDoc.setLnErrorCode(fdrRequest.getLnErrorCode());
-      if(!FiString.isEmpty(fdrRequest.getFdrTxMessage())) {
-        fdrXmlDoc.setFdrTxMessageWitAddLog(fdrRequest.getFdrTxMessage());
+      if(!FiString.isEmpty(fdrRequest.getFdTxMessage())) {
+        fdrXmlDoc.setFdrTxMessageWitAddLog(fdrRequest.getFdTxMessage());
       }
       fdrXmlDoc.combineAnd(fdrRequest);
     } else {

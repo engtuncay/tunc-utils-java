@@ -121,7 +121,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFiModBaseCont {
             initCont();
         }
         //getiFxModCont().getModView().getRootPane().getStylesheets().add("main.css");
-        FxWindow.nodeWindow(null, this);
+        FxWindow.creNodeWindow(null, this);
     }
 
     public static FxSimpleDialog bui(FiDialogMetaType fiDialogMetaType, String message) {
@@ -444,7 +444,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFiModBaseCont {
             }
 
             if (!fdr.isTrueBoResult()) {
-                FxDialogShow.showPopWarn("Hata \n" + fdr.getFdrTxMessage());
+                FxDialogShow.showPopWarn("Hata \n" + fdr.getFdTxMessage());
                 return true;
             }
 
@@ -460,7 +460,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFiModBaseCont {
             }
 
             if (!fdr.isTrueBoResult()) {
-                FxDialogShow.showPopWarn("Hata \n" + fdr.getFdrTxMessage());
+                FxDialogShow.showPopWarn("Hata \n" + fdr.getFdTxMessage());
                 return true;
             }
 

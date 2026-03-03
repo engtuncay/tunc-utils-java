@@ -1,7 +1,7 @@
 package ozpasyazilim.utils.log;
 
 public enum MetaLogType {
-  INFO, LOG, WARN, ERROR, ALERT
+  INFO, INFOBACK, LOG, WARN, WARNBACK, ERROR, ERRBACK, ALERT
   /**
    * Ntn metodlar için
    */

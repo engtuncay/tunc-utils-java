@@ -326,6 +326,8 @@ public class FiQuery {
    * FiMapParam'da null olmayan parametreleri aktive eder, null olanları deAktif eder.
    * <p>
    * Deaktif edilmek istenen parametreler null olarak gönderilir !!!
+   * <p>
+   * Not: Sql içinde olup, FiMapParams de olmayan parametreler etkilenmez
    */
   public void activateParamsNotNull() {
 

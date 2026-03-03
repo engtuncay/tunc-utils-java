@@ -1899,7 +1899,7 @@ public class FiQugen {
           .append("@")
           .append(fiCol.getTxDbFieldNameOrFieldName());
 
-      if(FiBool.isTrue(fiCol.getBoWhereField())){
+      if(FiBool.isTrue(fiCol.getFcBoWhereField())){
         if (indexWhereParams != 1) sbWhereCond.append(" AND ");
 
         sbWhereCond.append(fiCol.getTxDbFieldNameOrFieldName())

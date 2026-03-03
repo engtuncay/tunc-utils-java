@@ -999,4 +999,31 @@ public class FiString {
     if(txValue.equalsIgnoreCase("false")) return false;
     return null;
   }
+
+    /**
+     * StringBuilder'ın sonundan txTrimValue kadar karakteri kaldırır, eğer o karakterler txTrimValue'ya eşitse.
+     *
+     * @param sbValue
+     * @param txTrimValue
+     */
+  public static void rtrimSb(StringBuilder sbValue, String txTrimValue) {
+      if (sbValue.length() > 0 && sbValue.toString().endsWith(txTrimValue)) {
+          sbValue.setLength(sbValue.length() - txTrimValue.length());
+      }
+  }
+
+    /**
+     * String sonundaki txTrimValue kadar karakteri kaldırır, eğer o karakterler txTrimValue'ya eşitse.
+     *
+     * @param txValue
+     * @param txTrimValue
+     */
+    public static String rtrim(String txValue, String txTrimValue) {
+        if (txValue != null && txValue.endsWith(txTrimValue)) {
+            return txValue.substring(0, txValue.length() - txTrimValue.length());
+        }
+        return txValue;
+    }
+
+
 }

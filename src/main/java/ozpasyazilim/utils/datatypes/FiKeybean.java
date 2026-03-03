@@ -313,11 +313,11 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
     return txVal;
   }
 
-  public Integer getAsIntOrMinusOne(FiCol fiCol) {
-    return FiNumber.orMinusOne(getAsInt(fiCol));
+  public Integer getFicValAsIntOrMinusOne(FiCol fiCol) {
+    return FiNumber.orMinusOne(getFicValAsInt(fiCol));
   }
 
-  public Integer getAsInt(FiCol fiCol) {
+  public Integer getFicValAsInt(FiCol fiCol) {
 
     if (fiCol == null || FiString.isEmpty(fiCol.getFcTxFieldName())) return null;
 
@@ -676,6 +676,10 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
 
   public void addFieldBy(FiCol fiCol, Object value) {
     addField(fiCol.getFcTxFieldName(), value);
+  }
+
+  public void addFieldBy(FiMeta fiMeta, Object value) {
+    addField(fiMeta.getFtTxKey(), value);
   }
 
   public void addFieldFic(FiCol fiCol, Object value) {

@@ -72,6 +72,16 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     private String fcTxFieldDesc;
 
     /**
+     * Sorguda where bloğunda olacak
+     */
+    private Boolean fcBoWhereField;
+
+    /**
+     * sorguda count içerisine alınacak alan
+     */
+    private Boolean fcBoCountField;
+
+    /**
      * Column Generic Type. Sütun nasıl bir tipte olduğunu gösterir. (Data Tipi degil)
      * <p>
      * Örneğin , Xml parse edilirken, alanın xmlAttribute türünde olduğunu gösterir.
@@ -284,7 +294,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
      */
     private Boolean boKeyIdField;
 
-    private Boolean boKeyIdentityField;
+    private Boolean fcBoKeyIdentity;
 
     /**
      * Sorgu hazırlanırken update olacak alan olduğunu gösterir
@@ -1200,6 +1210,16 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
         return this;
     }
 
+    public FiCol<EntClazz> buiBoWhereField(Boolean boWhereField) {
+        setFcBoWhereField(boWhereField);
+        return this;
+    }
+
+    public FiCol<EntClazz> buiBoCountField(Boolean boCountField) {
+        setFcBoCountField(boCountField);
+        return this;
+    }
+
     public Boolean getBoKeyIdField() {
         return boKeyIdField;
     }
@@ -1624,13 +1644,13 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
         this.boEditorOnlyNumber = boEditorOnlyNumber;
     }
 
-    public Boolean getBoWhereField() {
-        return boWhereField;
-    }
-
-    public void setBoWhereField(Boolean boWhereField) {
-        this.boWhereField = boWhereField;
-    }
+//    public Boolean getBoWhereField() {
+//        return boWhereField;
+//    }
+//
+//    public void setBoWhereField(Boolean boWhereField) {
+//        this.boWhereField = boWhereField;
+//    }
 
     public Consumer<FiCol> getFnEditorNodeLfcAfterAllFormLoad() {
         return fnEditorNodeLfcAfterAllFormLoad;
@@ -1645,13 +1665,13 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
         return this;
     }
 
-    public Boolean getBoKeyIdentityField() {
-        return boKeyIdentityField;
+    public Boolean getFcBoKeyIdentity() {
+        return fcBoKeyIdentity;
     }
 
-    public void setBoKeyIdentityField(Boolean boKeyIdentityField) {
-        if (FiBool.isTrue(boKeyIdentityField)) setBoKeyIdField(true);
-        this.boKeyIdentityField = boKeyIdentityField;
+    public void setFcBoKeyIdentity(Boolean fcBoKeyIdentity) {
+        if (FiBool.isTrue(fcBoKeyIdentity)) setBoKeyIdField(true);
+        this.fcBoKeyIdentity = fcBoKeyIdentity;
     }
 
     public Boolean getFcBoTransient() {
@@ -1839,8 +1859,21 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
         this.txFilterType = txFilterType;
     }
 
+    public Boolean getFcBoWhereField() {
+        return fcBoWhereField;
+    }
 
+    public void setFcBoWhereField(Boolean fcBoWhereField) {
+        this.fcBoWhereField = fcBoWhereField;
+    }
 
+    public Boolean getFcBoCountField() {
+        return fcBoCountField;
+    }
+
+    public void setFcBoCountField(Boolean fcBoCountField) {
+        this.fcBoCountField = fcBoCountField;
+    }
 }
 
 

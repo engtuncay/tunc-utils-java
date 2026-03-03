@@ -149,7 +149,7 @@ public class FxSimDialog<EntClazz> extends AbsFiModBaseCont {
             initCont();
         }
         //getiFxModCont().getModView().getRootPane().getStylesheets().add("main.css");
-        FxWindow.nodeWindow(null, this);
+        FxWindow.creNodeWindow(null, this);
     }
 
     public void openAsDialogASync() {
@@ -158,7 +158,7 @@ public class FxSimDialog<EntClazz> extends AbsFiModBaseCont {
         }
 
         Platform.runLater(()->{
-            FxWindow.nodeWindow(null, this);
+            FxWindow.creNodeWindow(null, this);
         });
         //getiFxModCont().getModView().getRootPane().getStylesheets().add("main.css");
 
@@ -489,7 +489,7 @@ public class FxSimDialog<EntClazz> extends AbsFiModBaseCont {
                 }
 
                 if (!fdr.isTrueBoResult()) {
-                    FxDialogShow.showPopWarn("Hata \n" + fdr.getFdrTxMessage());
+                    FxDialogShow.showPopWarn("Hata \n" + fdr.getFdTxMessage());
                     return;
                 }
 

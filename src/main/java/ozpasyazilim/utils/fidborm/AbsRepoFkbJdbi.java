@@ -79,6 +79,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
       });
       FkbList fkbList = new FkbList(result);
       fdr.setBoResultAndValue(true, fkbList, 1);
+      fdr.setFdFkbListVal(fkbList);
     } catch (Exception ex) {
       Loghelper.get(getClass()).error("Query Problem. Hata (Exception):\n" + FiException.exTosMain(ex));
       fdr.setBoResult(false, ex);
@@ -101,7 +102,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
       });
       FkbList fkbList = new FkbList(result);
       fdr.setFdrBoResult(true);
-      fdr.setFdrFkbListVal(fkbList);
+      fdr.setFdFkbListVal(fkbList);
       //fdr.setRowsAffected(1);
     } catch (Exception ex) {
       Loghelper.get(getClass()).error("Query Problem. Hata (Exception):\n" + FiException.exTosMain(ex));
@@ -222,6 +223,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
   }
 
   protected Fdr jdUpdateBindMapMain(String updateQuery, Map<String, Object> fiMapParams) {
+
     Fdr fdrMain = new Fdr();
     try {
       Integer rowCountUpdate = getJdbi().withHandle(handle -> {

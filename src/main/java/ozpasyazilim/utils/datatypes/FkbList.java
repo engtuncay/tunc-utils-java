@@ -29,4 +29,12 @@ public class FkbList extends ArrayList<FiKeybean> {
 		this.ficColList = ficColList;
 	}
 
+	public FiKeybean getNtn(int index) {
+		if(index < 0 || (index+1) > size()) {
+			return new FiKeybean();
+		}
+		//rangeCheck(index);
+		return get(index);
+	}
+
 }

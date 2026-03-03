@@ -1301,8 +1301,16 @@ public class FiCollection {
         return listSelect;
     }
 
-
-    public static <NewClazz, OldClazz> List<NewClazz> convertEntity(Collection<OldClazz> listDataOld, Function<OldClazz, NewClazz> convertFunction) {
+    /**
+     * List'e Entity'sini verilen fonksiyon ile dönüştürülmüş yeni bir liste döndürür. List_OldClass -> List_NewClass
+     *
+     * @param listDataOld
+     * @param convertFunction
+     * @return
+     * @param <NewClazz>
+     * @param <OldClazz>
+     */
+    public static <NewClazz, OldClazz> List<NewClazz> convertEntityOfList(Collection<OldClazz> listDataOld, Function<OldClazz, NewClazz> convertFunction) {
 
         List<NewClazz> listNew = new ArrayList<>();
 
