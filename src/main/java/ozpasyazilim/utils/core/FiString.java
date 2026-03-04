@@ -460,19 +460,18 @@ public class FiString {
      * @return
      */
     public static String orElse(String value, String elseValue) {
-
         if (value == null) return elseValue;
-
         return value;
+    }
 
+    public static String orElseIfEmpty(String value, String elseValue) {
+        if (FiString.isEmptyTrim(value)) return elseValue;
+        return value;
     }
 
     public static String ifEmptyElseValue(String value, String elseValue) {
-
         if (isEmpty(value)) return elseValue;
-
         return value;
-
     }
 
     private static final Pattern INVALID_CHARS_PATTERNWITH_SPACE = Pattern.compile("^.*[~#@*+%{}<>\\[\\]|\"\\_\\s].*$");
