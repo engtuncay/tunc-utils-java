@@ -156,7 +156,7 @@ public class AbsRepoGenMainJdbi<EntClazz> extends AbsRepoJdbiCore {
                         .mapToBean(getEntityClass())
                         .list();
             });
-            fdr.setFdrBoResult(true);
+            fdr.setFdBoResult(true);
             fdr.setValue(result);
         } catch (Exception ex) {
             Loghelper.errorLog(getClass(), "Query Problem");
@@ -184,7 +184,7 @@ public class AbsRepoGenMainJdbi<EntClazz> extends AbsRepoJdbiCore {
                         .mapToBean(getEntityClass())
                         .list();
             });
-            fdr.setFdrBoResult(true);
+            fdr.setFdBoResult(true);
             fdr.setValue(result);
         } catch (Exception ex) {
             Loghelper.errorLog(getClass(), "Query Problem");
@@ -274,11 +274,11 @@ public class AbsRepoGenMainJdbi<EntClazz> extends AbsRepoJdbiCore {
                         .mapTo(String.class)
                         .collect(Collectors.toList());
             });
-            fdr.setFdrBoResult(true);
+            fdr.setFdBoResult(true);
             fdr.setValue(result);
         } catch (Exception ex) {
             Loghelper.get(getClass()).error(FiException.exToErrorLog(ex));
-            fdr.setFdrBoResult(false);
+            fdr.setFdBoResult(false);
         }
         return fdr;
     }

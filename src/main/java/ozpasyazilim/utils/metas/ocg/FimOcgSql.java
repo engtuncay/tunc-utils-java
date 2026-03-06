@@ -19,6 +19,12 @@ public class FimOcgSql {
     return fimeta;
   }
 
+  public static FiMeta sfTxFields() {
+    FiMeta fimeta = new FiMeta("sfTxFields");
+
+    return fimeta;
+  }
+
   public static FiMeta sfCsvFields() {
     FiMeta fimeta = new FiMeta("sfCsvFields");
 

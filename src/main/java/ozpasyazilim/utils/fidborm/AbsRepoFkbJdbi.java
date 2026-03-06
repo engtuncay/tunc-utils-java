@@ -101,7 +101,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
             .list();
       });
       FkbList fkbList = new FkbList(result);
-      fdr.setFdrBoResult(true);
+      fdr.setFdBoResult(true);
       fdr.setFdFkbListVal(fkbList);
       //fdr.setRowsAffected(1);
     } catch (Exception ex) {
@@ -209,10 +209,10 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
       });
 
       result.ifPresent(fdr::setValue);
-      fdr.setFdrBoResult(true);
+      fdr.setFdBoResult(true);
     } catch (Exception ex) {
       Loghelper.get(getClass()).error(FiException.exTosMain(ex));
-      fdr.setFdrBoResult(false);
+      fdr.setFdBoResult(false);
       fdr.setValue(null);
     }
     return fdr;

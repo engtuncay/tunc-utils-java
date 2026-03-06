@@ -19,7 +19,7 @@ public class FiResult {
 
 	public void popFiDbResult(Fdr fdr) {
 
-		if(fdr.getFdrBoResult()){
+		if(fdr.getFdBoResult()){
 			FxDialogShow.showPopWarn("*** İşlem Başarıyla Gerçekleşti ***");
 		}else{
 			FxDialogShow.showPopWarn("!!! Hata Oluştu.!!!");

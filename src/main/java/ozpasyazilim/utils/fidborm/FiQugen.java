@@ -3890,7 +3890,7 @@ public class FiQugen {
     }
 
     fdrAlter.setValue(listAlterQueries);
-    fdrAlter.setFdrBoResult(true);
+    fdrAlter.setFdBoResult(true);
     return fdrAlter;
   }
 

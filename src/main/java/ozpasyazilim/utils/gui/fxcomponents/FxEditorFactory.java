@@ -546,7 +546,7 @@ public class FxEditorFactory {
 
         List<FiField> fiFieldList = FiReflectClass.getListFieldsShortWithId(aClass);
         Fdr fdr = new Fdr();
-        fdr.setFdrBoResult(true);
+        fdr.setFdBoResult(true);
 
         for (FiField fiField : fiFieldList) {
 
@@ -557,7 +557,7 @@ public class FxEditorFactory {
                 if (property == null) property = FiReflection.getProperty(entity, fiField.getFcTxFieldName());
 
                 if (property == null) {
-                    fdr.setFdrBoResult(false);
+                    fdr.setFdBoResult(false);
                     fdr.appendMsg("alan null olamaz:" + fiField.getFcTxFieldName());
                 }
 
@@ -576,7 +576,7 @@ public class FxEditorFactory {
                             txProperty = txProperty.substring(0, fiField.getFcLnLength() - 1);
                             FiReflection.setter(entity, fiField.getFcTxFieldName(), txProperty);
                         } else {
-                            fdr.setFdrBoResult(false);
+                            fdr.setFdBoResult(false);
                             fdr.appendMsg(String.format("Alan %s karakter fazla olamaz %s : %s"
                                     , fiField.getFcLnLength(), txProperty.length(), fiField.getFcTxFieldName()));
                         }
@@ -598,7 +598,7 @@ public class FxEditorFactory {
 
         List<FiField> fiFieldList = FiReflectClass.getListFieldsShortWithId(aClass);
         Fdr fdr = new Fdr();
-        fdr.setFdrBoResult(true);
+        fdr.setFdBoResult(true);
 
         for (FiField fiField : fiFieldList) {
 
@@ -616,9 +616,9 @@ public class FxEditorFactory {
                             //Loghelper.debug(FxEditorFactory.class,"FiField Length:"+fiField.getLength());
                             txProperty = txProperty.substring(0, fiField.getFcLnLength() - 1);
                             FiReflection.setter(entity, fiField.getFcTxFieldName(), txProperty);
-                            fdr.setFdrBoResult(true);
+                            fdr.setFdBoResult(true);
                         } else {
-                            fdr.setFdrBoResult(false);
+                            fdr.setFdBoResult(false);
                             fdr.appendMsg(String.format("Alan %s karakter fazla olamaz %s : %s"
                                     , fiField.getFcLnLength(), txProperty.length(), fiField.getFcTxFieldName()));
                         }

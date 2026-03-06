@@ -8,8 +8,8 @@ import ozpasyazilim.utils.table.FicList;
 public class FiSqlGenConfig {
 
   IFiTableMeta iFiTableMeta;
-  FicList ficUpFields;
-  FicList ficWhereFields;
+  FicList fclFields;
+  //FicList ficWhereFields;
   Boolean boUpdateFieldsOnly;
 
 
@@ -23,21 +23,21 @@ public class FiSqlGenConfig {
     this.iFiTableMeta = iFiTableMeta;
   }
 
-  public FicList getFicUpFields() {
-    return ficUpFields;
+  public FicList getFclFields() {
+    return fclFields;
   }
 
-  public void setFicUpFields(FicList ficUpFields) {
-    this.ficUpFields = ficUpFields;
+  public void setFclFields(FicList fclFields) {
+    this.fclFields = fclFields;
   }
 
-  public FicList getFicWhereFields() {
-    return ficWhereFields;
-  }
-
-  public void setFicWhereFields(FicList ficWhereFields) {
-    this.ficWhereFields = ficWhereFields;
-  }
+//  public FicList getFicWhereFields() {
+//    return ficWhereFields;
+//  }
+//
+//  public void setFicWhereFields(FicList ficWhereFields) {
+//    this.ficWhereFields = ficWhereFields;
+//  }
 
   public Boolean getBoUpdateFieldsOnly() {
     return boUpdateFieldsOnly;
