@@ -265,7 +265,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
       if (ent instanceof FiKeybean) {
         FiKeybean fkbRow = (FiKeybean) ent;
-        return FiBool.or(fkbRow.getAsBoolean(fieldnameForSelection), false);
+        return FiBool.or(fkbRow.getAsBool(fieldnameForSelection), false);
       }
 
       try {
@@ -286,7 +286,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
       if (ent instanceof FiKeybean) {
         FiKeybean fkbRow = (FiKeybean) ent;
-        return FiBool.or(fkbRow.getAsBoolean(fieldForSelection), false);
+        return FiBool.or(fkbRow.getAsBool(fieldForSelection), false);
       }
 
       try {
@@ -314,7 +314,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
       if (ent instanceof FiKeybean) {
         FiKeybean fkbRow = (FiKeybean) ent;
-        return FiBool.or(fkbRow.getAsBoolean(fieldForSelection), false);
+        return FiBool.or(fkbRow.getAsBool(fieldForSelection), false);
       }
 
       try {
@@ -360,7 +360,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
       if (ent instanceof FiKeybean) {
         FiKeybean fkbRow = (FiKeybean) ent;
-        return FiBool.or(fkbRow.getAsBoolean(getFiColSelection().getFcTxFieldName()), false);
+        return FiBool.or(fkbRow.getAsBool(getFiColSelection().getFcTxFieldName()), false);
       }
 
       try {
@@ -379,7 +379,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
       if (ent instanceof FiKeybean) {
         FiKeybean fkbRow = (FiKeybean) ent;
-        return FiBool.or(fkbRow.getAsBoolean(getFiColSelection().getFcTxFieldName()), false);
+        return FiBool.or(fkbRow.getAsBool(getFiColSelection().getFcTxFieldName()), false);
       }
 
       return false;
@@ -393,7 +393,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
       if (ent instanceof FiKeybean) {
         FiKeybean fkbRow = (FiKeybean) ent;
-        return FiBool.or(fkbRow.getAsBoolean(getFiColSelection().getFcTxFieldName()), false);
+        return FiBool.or(fkbRow.getAsBool(getFiColSelection().getFcTxFieldName()), false);
       }
 
       try {

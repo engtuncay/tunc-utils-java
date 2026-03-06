@@ -1332,7 +1332,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     return fdFkbListVal;
   }
 
-  public FkbList getFdrFkbListValNtn() {
+  public FkbList getFdFkbListValNtn() {
     if (fdFkbListVal == null) {
       fdFkbListVal = new FkbList();
     }

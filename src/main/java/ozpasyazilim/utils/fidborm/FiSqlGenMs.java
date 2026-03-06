@@ -129,6 +129,10 @@ public class FiSqlGenMs {
       return fdrResult;
     }
 
+    //SELECT cha_cinsi
+    //FROM CARI_HESAP_HAREKETLERI
+    //WHERE cha_evrakno_seri = @cha_evrakno_seri AND cha_evrakno_sira = @cha_evrakno_sira AND cha_evrak_tip = @cha_evrak_tip
+
     fdrResult.setBoResult(true);
     return fdrResult;
   }

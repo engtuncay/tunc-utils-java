@@ -314,33 +314,69 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
   }
 
   public Integer getFicValAsIntOrMinusOne(FiCol fiCol) {
-    return FiNumber.orMinusOne(getFicValAsInt(fiCol));
+    return FiNumber.orMinusOne(getFicAsInt(fiCol));
   }
 
-  public Integer getFicValAsInt(FiCol fiCol) {
+  public Integer getFicAsInt(FiCol fiCol) {
 
-    if (fiCol == null || FiString.isEmpty(fiCol.getFcTxFieldName())) return null;
+    if (fiCol == null) return null;
 
-    if (containsKey(fiCol.getFcTxFieldName())) {
-      Object objValue = get(fiCol.getFcTxFieldName());
+    return getAsInt(fiCol.getFcTxFieldName());
+  }
+
+  public int getFicAsIntNtnMinusOne(FiCol fiCol) {
+
+    if (fiCol == null) return -1;
+
+    // Returns an Optional describing the specified value, if non-null, otherwise returns an empty Optional.
+    return Optional.ofNullable(getAsInt(fiCol.getFcTxFieldName())).orElse(-1);
+  }
+
+  public Integer getAsInt(String txKey) {
+
+    if (FiString.isEmpty(txKey)) return null;
+
+    if (containsKey(txKey)) {
+      Object objValue = get(txKey);
 
       if (objValue == null) return null;
+
+      //Loghelper.get(getClass()).debug(FiReflection.getSimpleTypeName(objValue.getClass()));
 
       if (objValue instanceof Integer) {
         return (Integer) objValue;
       }
 
+      if (objValue instanceof Short) {
+        Short shortValue = (Short) objValue;
+        return shortValue.intValue();
+      }
+
     }
 
     return null;
   }
 
-  public Double getAsDouble(FiCol fiCol) {
+  public Double getFicAsDouble(FiCol fiCol) {
+    if (fiCol == null) return null;
+    return getAsDouble(fiCol.getFcTxFieldName());
+  }
 
-    if (fiCol == null || FiString.isEmpty(fiCol.getFcTxFieldName())) return null;
+  public Double getFicAsDouble(IFiCol fiCol) {
+    if (fiCol == null) return null;
+    return getAsDouble(fiCol.getFcTxFieldName());
+  }
 
-    if (containsKey(fiCol.getFcTxFieldName())) {
-      Object objValue = get(fiCol.getFcTxFieldName());
+  public Double getIFicAsDoubleOrZero(IFiCol fiCol) {
+    return FiNumber.orZero(getFicAsDouble(fiCol));
+  }
+
+  public Double getAsDouble(String txKey) {
+
+    if (FiString.isEmpty(txKey)) return null;
+
+    if (containsKey(txKey)) {
+      Object objValue = get(txKey);
 
       if (objValue == null) return null;
 
@@ -359,34 +395,10 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
     return null;
   }
 
-  public Double getAsDoubleOrZero(IFiCol fiCol) {
-    return FiNumber.orZero(getAsDouble(fiCol));
-  }
 
 
-  public Double getAsDouble(IFiCol fiCol) {
 
-    if (fiCol == null || FiString.isEmpty(fiCol.getFcTxFieldName())) return null;
 
-    if (containsKey(fiCol.getFcTxFieldName())) {
-      Object objValue = get(fiCol.getFcTxFieldName());
-
-      if (objValue == null) return null;
-
-      //Loghelper.get(getClass()).debug("Class:"+objValue.getClass().getSimpleName());
-
-      if (objValue instanceof Double) {
-        return (Double) objValue;
-      }
-
-      if (objValue instanceof BigDecimal) {
-        return ((BigDecimal) objValue).doubleValue();
-      }
-
-    }
-
-    return null;
-  }
 
   public Date getFicAsDate(FiCol fiCol) {
     if (fiCol == null || FiString.isEmpty(fiCol.getFcTxFieldName())) return null;
@@ -409,7 +421,7 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
     return null;
   }
 
-  public Boolean getFicValAsBool(FiCol fiCol) {
+  public Boolean getFicAsBool(FiCol fiCol) {
     if (fiCol == null || FiString.isEmpty(fiCol.getFcTxFieldName())) return null;
 
     if (containsKey(fiCol.getFcTxFieldName())) {
@@ -421,7 +433,7 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
     return null;
   }
 
-  public Boolean getAsBoolean(String txKey) {
+  public Boolean getAsBool(String txKey) {
     return getValueAsBool(txKey);
   }
 
@@ -691,7 +703,7 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
   }
 
   public void addFicIfNotExist(FiCol fiCol, Object value) {
-    if(fiCol==null || FiString.isEmpty(fiCol.getFcTxFieldName())) return;
+    if (fiCol == null || FiString.isEmpty(fiCol.getFcTxFieldName())) return;
 
     addFieldIfNotExist(fiCol.getFcTxFieldName(), value);
   }

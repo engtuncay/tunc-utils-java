@@ -209,7 +209,7 @@ public class FxTableModal {
 
                     Double sumDouble = FiNumberToText.sumValuesDouble(listdata, ent -> {
                         if (ent instanceof FiKeybean) {
-                            return ((FiKeybean) ent).getAsDoubleOrZero(fiCol);
+                            return ((FiKeybean) ent).getIFicAsDoubleOrZero(fiCol);
                         }
                         return 0d;
                     });

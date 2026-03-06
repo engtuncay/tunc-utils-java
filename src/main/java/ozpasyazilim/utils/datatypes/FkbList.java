@@ -1,5 +1,7 @@
 package ozpasyazilim.utils.datatypes;
 
+import ozpasyazilim.utils.core.FiConsole;
+import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.table.FiCol;
 
 import java.util.ArrayList;
@@ -37,4 +39,7 @@ public class FkbList extends ArrayList<FiKeybean> {
 		return get(index);
 	}
 
+  public void logContent() {
+		Loghelper.get(getClass()).debug(FiConsole.textFkbList(this));
+	}
 }
