@@ -2593,7 +2593,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
       emmFormWindowCont.setFnSaveClose(() -> {
         FiKeybean formAsFkb = emmFormWindowCont.getFormMain().getFormAsFkbNotNullKeys();
-        formAsFkb.logParams();
+        //formAsFkb.logParams();
         setFkbHeaderFilterExtra(formAsFkb);
         return Fdr.bui(true);
       });

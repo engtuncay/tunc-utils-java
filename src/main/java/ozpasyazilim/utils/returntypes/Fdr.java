@@ -161,7 +161,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
 
   private FkbList fdFkbListVal;
 
-  private FiKeybean fdrFkbVal;
+  private FiKeybean fdFkbVal;
 
   private Integer fdrLnValue;
   /**
@@ -1343,11 +1343,11 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     this.fdFkbListVal = fdFkbListVal;
   }
 
-  public FiKeybean getFdrFkbVal() {
-    return fdrFkbVal;
+  public FiKeybean getFdFkbVal() {
+    return fdFkbVal;
   }
 
-  public void setFdrFkbVal(FiKeybean fdrFkbVal) {
-    this.fdrFkbVal = fdrFkbVal;
+  public void setFdFkbVal(FiKeybean fdFkbVal) {
+    this.fdFkbVal = fdFkbVal;
   }
 }
