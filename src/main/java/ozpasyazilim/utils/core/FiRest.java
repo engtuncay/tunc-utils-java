@@ -110,7 +110,7 @@ public class FiRest {
       if (isr != null) {
         try (BufferedReader br = new BufferedReader(isr)) {
           while ((responseString = br.readLine()) != null) {
-            stbOutput.append(responseString);
+            stbOutput.append(responseString).append(System.lineSeparator());
           }
         }
         fdrMain.setFdTxValue(stbOutput.toString());
@@ -125,13 +125,13 @@ public class FiRest {
           });
         } catch (Exception ignore) {
         }
-        fdrMain.setFdrTxMessageWitAddLog("!!! Error Code: " + code + "; Response headers: " + hdrs.toString());
+        fdrMain.setFdrTxMessageWitAddLog("!!! Error Code: " + code + "; Response headers: " + hdrs);
       }
 
     } catch (Exception exception) {
       Loghelper.get(FiRest.class).debug(FiException.exToErrorLog(exception));
       fdrMain.setFdBoResult(false);
-      fdrMain.setFdrTxMessageWitAddLog("REST isteği gerçekleşirken hata oluştu. Detay için Exception inceleyiniz.");
+      fdrMain.setFdrTxMessageWitAddLog("An error occurred during the REST request. Please check the exception details. / REST isteği gerçekleşirken hata oluştu. Detay için Exception inceleyiniz.");
       fdrMain.setException(exception);
     }
 
