@@ -698,6 +698,10 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
     addField(fiCol.getFcTxFieldName(), value);
   }
 
+  public void addFic(FiCol fiCol, Object value) {
+    addField(fiCol.getFcTxFieldName(), value);
+  }
+
   public void addField(String txKey, Object value) {
     add(txKey, value);
   }
@@ -714,7 +718,11 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
     }
   }
 
-  public void AddFieldBy(FiMeta fiMeta, Object value) {
+//  public void addFieldBy(FiMeta fiMeta, Object value) {
+//    addField(fiMeta.getTxKey(), value);
+//  }
+
+  public void addFim(FiMeta fiMeta, Object value) {
     addField(fiMeta.getTxKey(), value);
   }
 
