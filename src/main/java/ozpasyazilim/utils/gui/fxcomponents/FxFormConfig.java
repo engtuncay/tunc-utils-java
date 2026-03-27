@@ -20,8 +20,9 @@ public class FxFormConfig<EntClazz> {
 
     private Boolean boReadOnlyForm;
 
-    private Function<FxFormcGen, Fdr> fnValidateFormForFormc;
+    private Function<FxFormcGen, Fdr> fnValidateForm;
 
+    // Miggen için yapılmış
     private Function<FxFormMigGen, Fdr> fnValidateFormForFormMigGen;
 
     public FxFormConfig() {
@@ -90,12 +91,12 @@ public class FxFormConfig<EntClazz> {
         this.boReadOnlyForm = boReadOnlyForm;
     }
 
-    public Function<FxFormcGen, Fdr> getFnValidateFormForFormc() {
-        return fnValidateFormForFormc;
+    public Function<FxFormcGen, Fdr> getFnValidateForm() {
+        return fnValidateForm;
     }
 
-    public void setFnValidateFormForFormc(Function<FxFormcGen, Fdr> fnValidateFormForFormc) {
-        this.fnValidateFormForFormc = fnValidateFormForFormc;
+    public void setFnValidateForm(Function<FxFormcGen, Fdr> fnValidateForm) {
+        this.fnValidateForm = fnValidateForm;
     }
 
     public Function<FxFormMigGen, Fdr> getFnValidateFormForFormMigGen() {

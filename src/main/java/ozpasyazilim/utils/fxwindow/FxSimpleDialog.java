@@ -434,9 +434,9 @@ public class FxSimpleDialog<EntClazz> extends AbsFiModBaseCont {
 //
 //			}
 
-        if (getFxFormcMig() != null && getFxFormcMig().getFxFormConfigInit().getFnValidateFormForFormc() != null) {
+        if (getFxFormcMig() != null && getFxFormcMig().getFxFormConfigInit().getFnValidateForm() != null) {
 
-            Fdr fdr = (Fdr) getFxFormcMig().getFxFormConfig().getFnValidateFormForFormc().apply(getFxFormcMig());
+            Fdr fdr = (Fdr) getFxFormcMig().getFxFormConfig().getFnValidateForm().apply(getFxFormcMig());
 
             if (fdr == null) {
                 FxDialogShow.showPopWarn("İşlem yapılamadı. Sistem Yöneticinize Başvurun. Hata Tanımı:Fdr-Null");

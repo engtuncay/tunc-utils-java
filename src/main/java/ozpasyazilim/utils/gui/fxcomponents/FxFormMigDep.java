@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * use FxFormC veya FxFormMig kullan
+ * Use FxFormc veya FxFormMig kullan
  * @param <EntClazz>
  */
 @Deprecated
