@@ -2256,18 +2256,18 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
   }
 
   /**
-   * M1 means minus 1
+   * Mi1 means minus 1
    *
    * @param sql
    * @param fiMapParams
    * @return
    */
-  public Fdr<Integer> jdSelectSingleIntOrMinus1(String sql, FiKeybean fiMapParams) {
+  public Fdr<Integer> jdSelectSingleIntOrMi1(String sql, FiKeybean fiMapParams) {
     FiQuery fiQuery = new FiQuery(sql, fiMapParams);
-    return jdSelectSingleIntOrMinus1(fiQuery);
+    return jdSelectSingleIntOrMi1(fiQuery);
   }
 
-  public Fdr<Integer> jdSelectSingleIntOrMinus1(FiQuery fiQuery) {
+  public Fdr<Integer> jdSelectSingleIntOrMi1(FiQuery fiQuery) {
     Fdr<Integer> fdrSql = jdSelectSingleCustomTypeBindMap(fiQuery.getTxQuery(), fiQuery.getMapParams(), Integer.class);
     if (fdrSql.getValue() == null) {
       fdrSql.setValue(-1);
