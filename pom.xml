@@ -24,7 +24,6 @@
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
-
                 <!--
                     <dependencies>
                         <dependency>
@@ -55,16 +54,6 @@
 <!--                </executions>-->
 <!--            </plugin>-->
 
-            <!--                <plugin>-->
-            <!--                    <groupId>org.openjfx</groupId>-->
-            <!--                    <artifactId>javafx-maven-plugin</artifactId>-->
-            <!--                    <version>0.0.6</version>-->
-            <!--&lt;!&ndash;                    <configuration>&ndash;&gt;-->
-            <!--&lt;!&ndash;                        <mainClass>HelloFX</mainClass>&ndash;&gt;-->
-            <!--&lt;!&ndash;                    </configuration>&ndash;&gt;-->
-            <!--                </plugin>-->
-
-
         </plugins>
 
     </build>
@@ -86,8 +75,8 @@
     <repositories>
 
         <repository>
-            <id>jcenter</id>
-            <url>https://jcenter.bintray.com</url>
+            <id>maven-central</id>
+            <url>https://repo1.maven.org/maven2</url>
         </repository>
 
         <repository>
@@ -95,9 +84,10 @@
             <url>https://jitpack.io</url>
         </repository>
 
+        <!-- JCenter / Bintray 2021 itibarıyla fiilen kullanımdan kalkmış/deprecated. -->
         <repository>
-            <id>maven-central</id>
-            <url>https://repo1.maven.org/maven2</url>
+            <id>jcenter</id>
+            <url>https://jcenter.bintray.com</url>
         </repository>
 
     </repositories>
@@ -124,36 +114,43 @@
             <version>2.7</version>
         </dependency>
 
-        <!-- log api (1) slf4j-log4j -->
+        <!-- log api (2) slf4j + logback -->
 
+        <!--java 8 için 1.7.x -->
         <dependency>
             <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-reload4j</artifactId>  <!--slf4j-log4j12 -->
+            <artifactId>slf4j-api</artifactId>
             <version>1.7.36</version>
         </dependency>
 
-<!--org.slf4j:slf4j-reload4j:jar:1.7.36  slf4j-reload4j-->
-
-        <!--log (2) 17/07/23-->
-
-        <!-- log api (1) slf4j-log4j -->
-        <!--<dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>log4j-over-slf4j</artifactId>
-            <version>1.7.25</version>
-        </dependency>-->
-
-        <!--
+        <!--java 8 için 1.2.x -->
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>1.6.4</version>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.13</version>
         </dependency>
-        -->
+
+        <dependency>
+            <groupId>org.codehaus.janino</groupId>
+            <artifactId>janino</artifactId>
+            <version>3.1.11</version>
+        </dependency>
+
+        <!--Log4j Libs-->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.logging.log4j</groupId>-->
+<!--            <artifactId>log4j-slf4j2-impl</artifactId>-->
+<!--            <version>2.23.1</version>-->
+<!--        </dependency>-->
+<!--        &lt;!&ndash; log4j core &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.logging.log4j</groupId>-->
+<!--            <artifactId>log4j-core</artifactId>-->
+<!--            <version>2.23.1</version>-->
+<!--        </dependency>-->
 
 
         <!-- Ftp Client (1) commons-net https://mvnrepository.com/artifact/commons-net/commons-net -->
-
         <dependency>
             <groupId>commons-net</groupId>
             <artifactId>commons-net</artifactId>
@@ -243,6 +240,7 @@
 
         <!-- MigLayout Swing Library-->
         <!-- https://mvnrepository.com/artifact/com.miglayout/miglayout-swing -->
+
         <dependency>
             <groupId>com.miglayout</groupId>
             <artifactId>miglayout-swing</artifactId>
@@ -302,11 +300,13 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.15.4</version>
         </dependency>
+
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
             <version>2.15.4</version>
         </dependency>
+
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
@@ -373,14 +373,12 @@
             <groupId>org.javatuples</groupId>
             <artifactId>javatuples</artifactId>
             <version>1.2</version>
-            <!--<scope>compile</scope>-->
         </dependency>
 
         <dependency>
             <groupId>org.reactfx</groupId>
             <artifactId>reactfx</artifactId>
             <version>1.4.1</version>
-            <scope>compile</scope>
         </dependency>
 
         <!--jaxb xml binding-->
@@ -399,8 +397,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <version>5.0.14.RELEASE</version>
-            <scope>compile</scope>
+            <version>5.3.31</version>
         </dependency>
 
         <!--org.json Json Parse Deparse-->

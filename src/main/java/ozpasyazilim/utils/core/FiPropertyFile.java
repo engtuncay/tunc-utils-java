@@ -1,6 +1,8 @@
 package ozpasyazilim.utils.core;
 
+import ozpasyazilim.utils.datatypes.FiKeytext;
 import ozpasyazilim.utils.log.Loghelper;
+import ozpasyazilim.utils.returntypes.Fdr;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -13,41 +15,79 @@ import java.util.stream.Stream;
 
 public class FiPropertyFile {
 
-	public static Properties readProperties(String relativePath) {
+  public static Fdr<FiKeytext> readPropFile(String fileName) {
 
-		//String path = new File(relativePath).getAbsolutePath();
-		//Path path1 = Paths.get(relativePath);
+    Fdr<FiKeytext> fdrMain = new Fdr<>();
 
-		//Loghelperr.getInstance(getClassi()).debug("path:"+path);
-		//System.out.println("Path:"+path);
+    Path path = Paths.get(fileName);
+    System.out.println("Prop File Path:" + path.toAbsolutePath());
+    //Loghelper.get(getClassi()).debug("Prop File Path:"+path.toAbsolutePath());
 
-		try (InputStream input = Files.newInputStream(Paths.get(relativePath))) { //"path/to/config.properties"
+    FiKeytext propMap = new FiKeytext();
 
-			Properties prop = new Properties();
+    try (Stream<String> propFileContentStream = Files.lines(path, StandardCharsets.UTF_8)) {
+      List<String> listContent = propFileContentStream.collect(Collectors.toList());
 
-			// load a properties file
-			prop.load(input);
+      for (String rowprop : listContent) {
+        // comment rows skip
+        if (rowprop.matches("^#.*")) continue;
 
-			// get the property value and print it out
-			//System.out.println(prop.getProperty("db.url"));
+        String[] arrRow = rowprop.split("=", 2);
 
-			return prop;
+        if (arrRow.length == 2) {
+          propMap.put(arrRow[0].trim(), arrRow[1].trim());
+          //System.out.println("key:" + arrRow[0] + " value:" + arrRow[1]);
+        }
+      }
+      //FiConsole.printMap(propMap);
+      fdrMain.setValue(propMap);
+      fdrMain.setBoResult(true);
+      return fdrMain;
+    } catch (IOException exception) {
+      System.out.println("Prop File Okunurken Hata oluştu.");
+      fdrMain.setMessageForAppend("Prop File Okunurken Hata Oluştu :" + fileName);
+      fdrMain.setValue(new FiKeytext());
+      fdrMain.setBoResult(false);
+      return fdrMain;
+    }
 
-		} catch (IOException ex) {
-			//ex.printStackTrace();
-      System.out.println("Properties File Okunurken Hata oluştu. File:"+ relativePath);
+  }
+
+  public static Properties readProperties(String relativePath) {
+
+    //String path = new File(relativePath).getAbsolutePath();
+    //Path path1 = Paths.get(relativePath);
+
+    //Loghelperr.getInstance(getClassi()).debug("path:"+path);
+    //System.out.println("Path:"+path);
+
+    try (InputStream input = Files.newInputStream(Paths.get(relativePath))) { //"path/to/config.properties"
+
+      Properties prop = new Properties();
+
+      // load a properties file
+      prop.load(input);
+
+      // get the property value and print it out
+      //System.out.println(prop.getProperty("db.url"));
+
+      return prop;
+
+    } catch (IOException ex) {
+      //ex.printStackTrace();
+      System.out.println("Properties File Okunurken Hata oluştu. File:" + relativePath);
       Loghelper.get(getClassi()).error(FiException.exTosMain(ex));
-		}
+    }
 
-		return null;
+    return null;
 
-	}
+  }
 
-	private static Class<FiPropertyFile> getClassi() {
-		return FiPropertyFile.class;
-	}
+  private static Class<FiPropertyFile> getClassi() {
+    return FiPropertyFile.class;
+  }
 
-//	public static void writeProperties(Properties prop, String filePath) {
+  //	public static void writeProperties(Properties prop, String filePath) {
 //
 //		try (OutputStream output = new FileOutputStream(filePath)) { //"filePath/to/config.properties"
 //
@@ -69,37 +109,5 @@ public class FiPropertyFile {
 //
 //	}
 
-	public static Map<String, String> readPropFile1(String fileName) {
-		Path path = Paths.get(fileName);
-		System.out.println("Prop File Path:" + path.toAbsolutePath());
-		//Loghelper.get(getClassi()).debug("Prop File Path:"+path.toAbsolutePath());
-
-		Map<String, String> propMap = new HashMap<>();
-
-		try (Stream<String> propFileContentStream = Files.lines(path, StandardCharsets.UTF_8)) {
-			List<String> listContent = propFileContentStream.collect(Collectors.toList());
-
-			for (String rowprop : listContent) {
-				// comment rows skip
-				if (rowprop.matches("^#.*")) continue;
-
-				String[] arrRow = rowprop.split("=", 2);
-
-				if (arrRow.length == 2) {
-					propMap.put(arrRow[0].trim(), arrRow[1].trim());
-					//System.out.println("key:" + arrRow[0] + " value:" + arrRow[1]);
-				}
-			}
-		} catch (IOException exception) {
-			System.out.println("Prop File Okunurken Hata oluştu.");
-			Loghelper.get(getClassi()).error("Prop File Okunurken Hata Oluştu :" + fileName);
-			Loghelper.get(getClassi()).error(FiException.exTosMain(exception));
-			//System.out.println("Prop File Bulunamadı !!! File:" + fileName);
-			//Loghelper.get(getClassi()).debug("Prop File Bulunamadı !!! File:" + fileName);
-			return new HashMap<>();
-		}
-		//FiConsole.printMap(propMap);
-		return propMap;
-	}
 
 }
