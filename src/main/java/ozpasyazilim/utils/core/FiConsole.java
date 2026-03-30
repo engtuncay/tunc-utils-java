@@ -115,7 +115,7 @@ public class FiConsole {
         }
         for (FiKeytext fiKeytext : listMap) {
             if (FiBool.isTrue(boShowNulls)) {
-                Loghelper.debugLog(clazz, String.format("Map Detail (Not Null)\n\n%s", textFiKeyString(fiKeytext)));
+                Loghelper.debugLog(clazz, String.format("Map Detail (Not Null)\n\n%s", textFiKeytext(fiKeytext)));
             } else {
                 Loghelper.debugLog(clazz, String.format("Map Detail (Not Null)\n\n%s", textMapNotNull(fiKeytext)));
             }
@@ -759,7 +759,7 @@ public class FiConsole {
     }
 
     public static void printMap(Map<String, String> mapData) {
-        System.out.println(textFiKeyString(mapData));
+        System.out.println(textFiKeytext(mapData));
     }
 
     public static void printMap2(Map<String, Object> mapData) {
@@ -771,10 +771,10 @@ public class FiConsole {
     }
 
     public static String textFiMapString(Map<String, String> appMap) {
-        return textFiKeyString(appMap);
+        return textFiKeytext(appMap);
     }
 
-    public static String textFiKeyString(Map<String, String> appMap) {
+    public static String textFiKeytext(Map<String, String> appMap) {
 
         StringBuilder log = new StringBuilder("");
         for (Map.Entry<String, String> entry : appMap.entrySet()) {
@@ -869,7 +869,7 @@ public class FiConsole {
         sbLog.append("FiListKeyString Content\n\n");
 
         for (FiKeytext fiKeytext : fiListKeyString) {
-            sbLog.append(FiConsole.textFiKeyString(fiKeytext)).append("\n");
+            sbLog.append(FiConsole.textFiKeytext(fiKeytext)).append("\n");
         }
 
         Loghelper.get(FiConsole.class).debug(sbLog.toString());
