@@ -37,13 +37,13 @@ public class FiDbCsConfig {
 	}
 
 	public static String getUrlMicrosoftJdbcSqlServer(String server, String dbName) {
-		return String.format("jdbc:sqlserver://%s;databaseName=%s;autoCommit=false",server,dbName);
-		// tls hatası engellemek için denendi
-		// ;encrypt=true;trustServerCertificate=true
+		return String.format("jdbc:sqlserver://%s;databaseName=%s;autoCommit=false;trustServerCertificate=true",server,dbName);
+		// trustServerCertificate parametresi eklendi, SSL hatası önlenir
 	}
 
 	public static String getUrlMicrosoftJdbcSqlServerWoutDb(String server) {
-		return String.format("jdbc:sqlserver://%s;autoCommit=false",server);
+		return String.format("jdbc:sqlserver://%s;autoCommit=false;trustServerCertificate=true",server);
+
 		// tls hatası engellemek için denendi
 		// ;encrypt=true;trustServerCertificate=true
 	}
