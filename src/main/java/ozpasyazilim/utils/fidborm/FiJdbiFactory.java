@@ -20,13 +20,13 @@ public class FiJdbiFactory {
     //Loghelper.get(getClassi()).debug(String.format("server"));
     //Loghelper.get(getClassi()).debug(String.format("Server: %s DbName: %s User: %s Pass: %s",server,dbName,user,pass));
 
-    if (!FiDbCsConfig.checkDriverClassMicrosoftJdbc()) {
+    if (!FiDbUrlHelper.checkDriverClassMicrosoftJdbc()) {
       String message = "Sql Jdbc Sürücü Kütüphanesi bulunamadı.";
       Loghelper.get(FiJdbiFactory.class).error(message);
       return null;
     }
 
-    String url = FiDbCsConfig.getUrlMicrosoftJdbcSqlServer(server, dbName);
+    String url = FiDbUrlHelper.getUrlMicrosoftJdbcSqlServer(server, dbName);
 
     Jdbi jdbi = null;
     try {
@@ -57,7 +57,7 @@ public class FiJdbiFactory {
     //Loghelper.get(getClassi()).debug(String.format("server"));
     //Loghelper.get(getClassi()).debug(String.format("Server: %s DbName: %s User: %s Pass: %s",server,dbName,user,pass));
 
-    if (!FiDbCsConfig.checkDriverClassMicrosoftJdbc()) {
+    if (!FiDbUrlHelper.checkDriverClassMicrosoftJdbc()) {
       String message = "Sql Jdbc Sürücü Kütüphanesi bulunamadı.";
       Loghelper.get(FiJdbiFactory.class).error(message);
       fdrMain.setMessageForAppend(message);
@@ -65,7 +65,7 @@ public class FiJdbiFactory {
       return fdrMain;
     }
 
-    String url = FiDbCsConfig.getUrlMicrosoftJdbcSqlServer(server, dbName);
+    String url = FiDbUrlHelper.getUrlMicrosoftJdbcSqlServer(server, dbName);
 
     Jdbi jdbi = null;
     try {
@@ -100,13 +100,13 @@ public class FiJdbiFactory {
 
   public static Jdbi createJdbiToMasterDb(String server, String user, String pass) {
 
-    if (!FiDbCsConfig.checkDriverClassMicrosoftJdbc()) {
+    if (!FiDbUrlHelper.checkDriverClassMicrosoftJdbc()) {
       String message = String.format("Sql Sürücü Kütüphanesi bulunamadı.");
       Loghelper.get(FiJdbiFactory.class).error(message);
       return null;
     }
 
-    String url = FiDbCsConfig.getUrlMicrosoftJdbcSqlServerWoutDb(server);
+    String url = FiDbUrlHelper.getUrlMicrosoftJdbcSqlServerWoutDb(server);
 
     Jdbi jdbi = Jdbi.create(url, user, pass);
     jdbi.installPlugin(new SqlObjectPlugin());

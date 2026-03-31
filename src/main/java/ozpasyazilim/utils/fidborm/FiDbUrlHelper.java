@@ -3,7 +3,7 @@ package ozpasyazilim.utils.fidborm;
 import ozpasyazilim.utils.core.FiException;
 import ozpasyazilim.utils.log.Loghelper;
 
-public class FiDbCsConfig {
+public class FiDbUrlHelper {
 
 	public static Boolean checkDriverClassMicrosoftJdbc(){
 
@@ -13,7 +13,7 @@ public class FiDbCsConfig {
 			Class.forName(driverClass);
 		} catch (ClassNotFoundException e) {
 			System.out.println("ERROR: Sürücü Yüklenemedi");
-			Loghelper.get(FiDbCsConfig.class).error("Hata :" + FiException.exTosMain(e));
+			Loghelper.get(FiDbUrlHelper.class).error("Hata :" + FiException.exTosMain(e));
 			return false;
 		}
 
@@ -27,7 +27,7 @@ public class FiDbCsConfig {
 		try {
 			Class.forName(driverClass);
 		} catch (ClassNotFoundException e) {
-			Loghelper.get(FiDbCsConfig.class).error("Hata :" + FiException.exTosMain(e));
+			Loghelper.get(FiDbUrlHelper.class).error("Hata :" + FiException.exTosMain(e));
 			System.out.println("ERROR: Sürücü Yüklenemedi");
 			return false;
 		}
