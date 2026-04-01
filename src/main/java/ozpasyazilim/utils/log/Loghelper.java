@@ -20,11 +20,10 @@ public class Loghelper {
     if (FiBool.isTrue(boDebugModeEnabled)) {
       // NOTE: switched to SLF4J API. Do not depend on log4j 1.x PropertyConfigurator here.
       //PropertyConfigurator.configure("log4jd.properties");
-      Loghelper.get(Loghelper.class).info("Log4jd Props (Debug)");
+      Loghelper.get(Loghelper.class).info("Logger Installation (Debug Mode True)");
     } else {
-      //System.out.println("Logger installing...(production mode) (Log4jp)");
       //PropertyConfigurator.configure("log4jp.properties");
-      Loghelper.get(Loghelper.class).info("Log4jp Props Mode (Production)");
+      Loghelper.get(Loghelper.class).info("Logger Installation (Debug Mode False)");
     }
 
   }
@@ -48,10 +47,6 @@ public class Loghelper {
   }
 
   public static void debugLog(Class<?> clazz, String message) {
-    Loghelper.get(clazz).debug(message);
-  }
-
-  public static void debugLogTemp(Class<?> clazz, String message) {
     Loghelper.get(clazz).debug(message);
   }
 
