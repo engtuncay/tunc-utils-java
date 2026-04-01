@@ -646,6 +646,15 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
     return super.get(key);
   }
 
+  public Optional<Class<?>> getAsClass(Object key) {
+    Object value = get(key);
+    if (value instanceof Class<?>) {
+      return Optional.of((Class<?>) value);
+    }
+    return Optional.empty();
+  }
+
+
   public HashMap<String, FiCol> getMapFiCol() {
     return mapFiCol;
   }
