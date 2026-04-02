@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Fkl : FkbList
+ */
 public class FkbList extends ArrayList<FiKeybean> {
 
 	/**
