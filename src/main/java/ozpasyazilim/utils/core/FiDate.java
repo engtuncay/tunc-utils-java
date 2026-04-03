@@ -846,4 +846,21 @@ public class FiDate {
 		java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 		return now.format(formatter);
 	}
+
+	/**
+	 * Returns the current date and time in ISO-8601 format without time,
+	 * e.g. 2026-04-03
+	 * @return formatted date-time string
+	 */
+	public static String nowIsoLocalDateWoutTime() {
+		java.time.LocalDateTime now = java.time.LocalDateTime.now();
+		java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		return now.format(formatter);
+	}
+
+	public static String nowLocalDateDayMonthYearWithTire() {
+		java.time.LocalDateTime now = java.time.LocalDateTime.now();
+		java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		return now.format(formatter);
+	}
 }
