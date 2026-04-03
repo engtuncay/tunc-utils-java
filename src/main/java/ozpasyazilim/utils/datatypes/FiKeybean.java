@@ -313,7 +313,7 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
     return txVal;
   }
 
-  public Integer getFicValAsIntOrMinusOne(FiCol fiCol) {
+  public Integer getFicAsIntOrMinusOne(FiCol fiCol) {
     return FiNumber.orMinusOne(getFicAsInt(fiCol));
   }
 
@@ -322,14 +322,6 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
     if (fiCol == null) return null;
 
     return getAsInt(fiCol.getFcTxFieldName());
-  }
-
-  public int getFicAsIntNtnMinusOne(FiCol fiCol) {
-
-    if (fiCol == null) return -1;
-
-    // Returns an Optional describing the specified value, if non-null, otherwise returns an empty Optional.
-    return Optional.ofNullable(getAsInt(fiCol.getFcTxFieldName())).orElse(-1);
   }
 
   public Integer getAsInt(String txKey) {
@@ -365,6 +357,10 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
   public Double getFicAsDouble(IFiCol fiCol) {
     if (fiCol == null) return null;
     return getAsDouble(fiCol.getFcTxFieldName());
+  }
+
+  public Double getFicAsDoubleOrZero(FiCol fiCol) {
+    return FiNumber.orZero(getFicAsDouble(fiCol));
   }
 
   public Double getIFicAsDoubleOrZero(IFiCol fiCol) {
@@ -592,14 +588,6 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
     return FiString.orEmpty(get(fiCol.getFcTxFieldName())) + "-" + FiString.orEmpty(get(fiCol2.getFcTxFieldName()));
   }
 
-  public Object getByFiCol(FiCol fiCol) {
-    return get(fiCol.getFcTxFieldName());
-  }
-
-  public Object getFicValue(FiCol fiCol) {
-    return getByFiCol(fiCol);
-  }
-
   public Object getFimValue(FiMeta fiCol) {
     return getFieldValue(fiCol.getFtTxKey());
   }
@@ -676,7 +664,7 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
     return get(fiCol.toString());
   }
 
-  public Object getFiCol(FiCol fiCol) {
+  public Object getFicVal(FiCol fiCol) {
     return get(fiCol.getFcTxFieldName());
   }
 
@@ -744,7 +732,7 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
     return getFimValueAsString(FimFiCol.fcTxFieldName());
   }
 
-  public String getFicValueAsString(FiCol fiCol) {
+  public String getFicAsString(FiCol fiCol) {
     return getValueAsString(fiCol.getFcTxFieldName());
   }
 }

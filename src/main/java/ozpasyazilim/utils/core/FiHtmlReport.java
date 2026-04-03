@@ -7,239 +7,352 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
 
+import ozpasyazilim.utils.datatypes.FiKeybean;
+import ozpasyazilim.utils.datatypes.FkbList;
 import ozpasyazilim.utils.gui.fxcomponents.FxTableModal;
 import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.OzColType;
 
 public class FiHtmlReport {
 
-	public static String ALIGNLEFT = "-1";
-	public static String ALIGNRIGHT = "1";
+  public static String ALIGNLEFT = "-1";
+  public static String ALIGNRIGHT = "1";
 
-	public static String KEYContent = "content";
-	public static String KEYAlign = "align";
+  public static String KEYContent = "content";
+  public static String KEYAlign = "align";
 
-	public static <T> String reportBasicHtml(List<T> listrut, Map<Integer, String> mapCols,
-	                                         BiFunction<T, Integer, Map<String, String>> funcReport3045, T footer) {
+  public static <T> String reportBasicHtml(List<T> listrut, Map<Integer, String> mapCols,
+                                           BiFunction<T, Integer, Map<String, String>> funcReport3045, T footer) {
 
-		Integer numberofcol = mapCols.size();
+    Integer numberofcol = mapCols.size();
 
-		//Loghelper.get(FiHtmlReport.class).info("col size:" + numberofcol);
+    //Loghelper.get(FiHtmlReport.class).info("col size:" + numberofcol);
 
-		// başlık sütunları
-		String htmlthtag = "<th style=\"border-width: 1px;padding: 8px;border-style: solid;"
-				+ "border-color: #666666;background-color: #dedede;\">";
+    // başlık sütunları
+    String htmlthtag = "<th style=\"border-width: 1px;padding: 8px;border-style: solid;"
+        + "border-color: #666666;background-color: #dedede;\">";
 
-		String tag_td_string = "<td style=\"border-width: 1px;padding: 8px;border-style: solid;"
-				+ "border-color: #666666;background-color: #ffffff;\">";
+    String tag_td_string = "<td style=\"border-width: 1px;padding: 8px;border-style: solid;"
+        + "border-color: #666666;background-color: #ffffff;\">";
 
-		String tag_td_num = "<td class=\"formattutar\" style=\"text-align: right;"
-				+ "border-width: 1px;padding: 8px;border-style: solid;border-color: #666666;"
-				+ "background-color: #ffffff;\">";
+    String tag_td_num = "<td class=\"formattutar\" style=\"text-align: right;"
+        + "border-width: 1px;padding: 8px;border-style: solid;border-color: #666666;"
+        + "background-color: #ffffff;\">";
 
-		String tag_td_end = "</td>";
+    String tag_td_end = "</td>";
 
-		String htmlreport = "";
+    String htmlreport = "";
 
-		// table tanımı
+    // table tanımı
 
-		htmlreport += "<table " + "style=\"font-family: verdana,arial,sans-serif;font-size: 11px;"
-				+ "color: #333333;border-width: 1px;border-color: #666666;border-collapse: collapse;\">\r\n";
+    htmlreport += "<table " + "style=\"font-family: verdana,arial,sans-serif;font-size: 11px;"
+        + "color: #333333;border-width: 1px;border-color: #666666;border-collapse: collapse;\">\r\n";
 
-		// tablo başlık satırı
-		htmlreport += "<tr>\r\n";
+    // tablo başlık satırı
+    htmlreport += "<tr>\r\n";
 
-		// sütunlar bastırılır
+    // sütunlar bastırılır
 
-		for (int i = 1; i <= mapCols.size(); i++) {
+    for (int i = 1; i <= mapCols.size(); i++) {
 
-			String colname = "";
-			if (mapCols.containsKey(i)) {
-				colname = mapCols.get(i);
-			}
-			htmlreport += htmlthtag + colname + "</th>";
-		}
+      String colname = "";
+      if (mapCols.containsKey(i)) {
+        colname = mapCols.get(i);
+      }
+      htmlreport += htmlthtag + colname + "</th>";
+    }
 
-		// satırlar bastırılır
+    // satırlar bastırılır
 
-		for (Iterator iterator = listrut.iterator(); iterator.hasNext(); ) {
+    for (Iterator iterator = listrut.iterator(); iterator.hasNext(); ) {
 
-			T t = (T) iterator.next();
+      T t = (T) iterator.next();
 
-			htmlreport += "<tr>\r\n";
+      htmlreport += "<tr>\r\n";
 
-			// FIXME numara satırlarını yazdırmak için
-			for (int i = 1; i <= numberofcol; i++) {
-				Map<String, String> colmap = funcReport3045.apply(t, i);
-				String content = "";
-				if (colmap.containsKey(KEYContent))
-					content = colmap.get(KEYContent);
+      // FIXME numara satırlarını yazdırmak için
+      for (int i = 1; i <= numberofcol; i++) {
+        Map<String, String> colmap = funcReport3045.apply(t, i);
+        String content = "";
+        if (colmap.containsKey(KEYContent))
+          content = colmap.get(KEYContent);
 
-				String align = "-1";
-				if (colmap.containsKey(KEYAlign))
-					align = colmap.get(KEYAlign);
+        String align = "-1";
+        if (colmap.containsKey(KEYAlign))
+          align = colmap.get(KEYAlign);
 
-				if (align.equals(FiHtmlReport.ALIGNLEFT))
-					htmlreport += tag_td_string + content + tag_td_end;
-				if (align.equals(FiHtmlReport.ALIGNRIGHT))
-					htmlreport += tag_td_num + content + tag_td_end;
+        if (align.equals(FiHtmlReport.ALIGNLEFT))
+          htmlreport += tag_td_string + content + tag_td_end;
+        if (align.equals(FiHtmlReport.ALIGNRIGHT))
+          htmlreport += tag_td_num + content + tag_td_end;
 
-			}
+      }
 
-			htmlreport += "</tr>\r\n";
+      htmlreport += "</tr>\r\n";
 
-		}
+    }
 
-		// toplam satırı var mı ?
-		if (footer != null) {
+    // toplam satırı var mı ?
+    if (footer != null) {
 
-			T rowFooter = footer;
+      T rowFooter = footer;
 
-			htmlreport += "<tr>\r\n";
+      htmlreport += "<tr>\r\n";
 
-			for (int i = 1; i <= numberofcol; i++) {
-				Map<String, String> colmap = funcReport3045.apply(rowFooter, i);
-				String content = "";
-				if (colmap.containsKey(KEYContent))
-					content = colmap.get(KEYContent);
+      for (int i = 1; i <= numberofcol; i++) {
+        Map<String, String> colmap = funcReport3045.apply(rowFooter, i);
+        String content = "";
+        if (colmap.containsKey(KEYContent))
+          content = colmap.get(KEYContent);
 
-				String align = "-1";
-				if (colmap.containsKey(KEYAlign))
-					align = colmap.get(KEYAlign);
+        String align = "-1";
+        if (colmap.containsKey(KEYAlign))
+          align = colmap.get(KEYAlign);
 
-				if (align.equals("-1"))
-					htmlreport += tag_td_string + content + tag_td_end;
-				if (align.equals("1"))
-					htmlreport += tag_td_num + content + tag_td_end;
+        if (align.equals("-1"))
+          htmlreport += tag_td_string + content + tag_td_end;
+        if (align.equals("1"))
+          htmlreport += tag_td_num + content + tag_td_end;
 
-			}
+      }
 
-			htmlreport += "</tr>\r\n";
+      htmlreport += "</tr>\r\n";
 
-		}
+    }
 
-		htmlreport += "</table>\r\n" + "";
+    htmlreport += "</table>\r\n" + "";
 
-		return htmlreport;
+    return htmlreport;
 
-	}
+  }
 
-	public static <T> String reportBasicHtmlByFiTableCol(List<T> listData, List<FiCol> colList, FiReportConfig fiReportConfig) {
+  public static <T> String reportBasicHtmlByFiTableCol(List<T> listData, List<FiCol> colList, FiReportConfig fiReportConfig) {
 
-		//Integer numberofcol = colList.size();
-		//Loghelper.get(FiHtmlReport.class).info("col size:" + numberofcol);
+    //Integer numberofcol = colList.size();
+    //Loghelper.get(FiHtmlReport.class).info("col size:" + numberofcol);
 
-		// başlık sütunları
-		String tagTh = "<th style=\"border-width: 1px;padding: 8px;border-style: solid;"
-				+ "border-color: #666666;background-color: #dedede;\">";
+    // başlık sütunları
+    String tagTh = "<th style=\"border-width: 1px;padding: 8px;border-style: solid;"
+        + "border-color: #666666;background-color: #dedede;\">";
 
-		String tagTdString = "<td style=\"border-width: 1px;padding: 8px;border-style: solid;"
-				+ "border-color: #666666;background-color: #ffffff;\">";
+    String tagTdString = "<td style=\"border-width: 1px;padding: 8px;border-style: solid;"
+        + "border-color: #666666;background-color: #ffffff;\">";
 
-		String tagTdNum = "<td class=\"formattutar\" style=\"text-align: right;"
-				+ "border-width: 1px;padding: 8px;border-style: solid;border-color: #666666;"
-				+ "background-color: #ffffff;\">";
+    String tagTdNum = "<td class=\"formattutar\" style=\"text-align: right;"
+        + "border-width: 1px;padding: 8px;border-style: solid;border-color: #666666;"
+        + "background-color: #ffffff;\">";
 
-		String tagTdNumSum = "<td class=\"formattutar\" style=\"text-align: right;"
-				+ "border-width: 1px;padding: 8px;border-style: solid;border-color: red;"
-				+ "background-color: #ffffff;font-weight: bold;\">";
+    String tagTdNumSum = "<td class=\"formattutar\" style=\"text-align: right;"
+        + "border-width: 1px;padding: 8px;border-style: solid;border-color: red;"
+        + "background-color: #ffffff;font-weight: bold;\">";
 
-		String tagTdStringSum = "<td style=\"border-width: 1px;padding: 8px;border-style: solid;"
-				+ "border-color: red;background-color: #ffffff;font-weight: bold;\">";
+    String tagTdStringSum = "<td style=\"border-width: 1px;padding: 8px;border-style: solid;"
+        + "border-color: red;background-color: #ffffff;font-weight: bold;\">";
 
-		String tagTdEnd = "</td>";
+    String tagTdEnd = "</td>";
 
-		String htmlContent = "";
+    String htmlContent = "";
 
-		// table tanımı
+    // table tanımı
 
-		htmlContent += "<table " + "style=\"font-family: verdana,arial,sans-serif;font-size: 11px;"
-				+ "color: #333333;border-width: 1px;border-color: #666666;border-collapse: collapse;\">\r\n";
+    htmlContent += "<table " + "style=\"font-family: verdana,arial,sans-serif;font-size: 11px;"
+        + "color: #333333;border-width: 1px;border-color: #666666;border-collapse: collapse;\">\r\n";
 
-		// tablo başlık satırı
-		htmlContent += "<tr>\r\n";
+    // tablo başlık satırı
+    htmlContent += "<tr>\r\n";
 
-		// sütunlar bastırılır
-		for (FiCol fiTableCol : colList) {
-			htmlContent += tagTh + FiString.orEmpty(fiTableCol.getFcTxHeader()) + "</th>";
-		}
+    // sütunlar bastırılır
+    for (FiCol fiTableCol : colList) {
+      htmlContent += tagTh + FiString.orEmpty(fiTableCol.getFcTxHeader()) + "</th>";
+    }
 
-		// satırlar bastırılır
+    // satırlar bastırılır
 
-		for (Iterator iterator = listData.iterator(); iterator.hasNext(); ) {
+    for (Iterator iterator = listData.iterator(); iterator.hasNext(); ) {
 
-			T t = (T) iterator.next();
+      T t = (T) iterator.next();
 
-			if (t == null) continue;
+      if (t == null) continue;
 
-			htmlContent += "<tr>\r\n";
+      htmlContent += "<tr>\r\n";
 
-			// FIXME numara satırlarını yazdırmak için
-			for (FiCol fiTableCol : colList) {
+      // FIXME numara satırlarını yazdırmak için
+      for (FiCol fiTableCol : colList) {
 
-				//Loghelper.get(FiHtmlReport.class).debug("Field:" + fiTableCol.getFieldName());
+        //Loghelper.get(FiHtmlReport.class).debug("Field:" + fiTableCol.getFieldName());
 
-				String fieldName = fiTableCol.getFcTxFieldName();
+        String fieldName = fiTableCol.getFcTxFieldName();
 
-				if (FiString.isEmpty(fieldName)) continue;
+        if (FiString.isEmpty(fieldName)) continue;
 
-				Object objCellValue = FiReflection.getProperty(t, fieldName);
-				String txCellValue = FiString.ToStrOrEmpty(objCellValue);
+        Object objCellValue = FiReflection.getProperty(t, fieldName);
+        String txCellValue = FiString.ToStrOrEmpty(objCellValue);
 
-				if (fiTableCol.getColType() == OzColType.Double || fiTableCol.getColType() == OzColType.Integer
-						|| fiTableCol.getColType() == OzColType.BigDecimal
-						|| fiTableCol.getColType() == OzColType.Date) {
+        if (fiTableCol.getColType() == OzColType.Double || fiTableCol.getColType() == OzColType.Integer
+            || fiTableCol.getColType() == OzColType.BigDecimal
+            || fiTableCol.getColType() == OzColType.Date) {
 
-					if (objCellValue instanceof Double) {
-						if (objCellValue == null) objCellValue = 0d;
-						Double dbValue = (Double) objCellValue;
-						txCellValue = FiNumber.formatlaNumbertoString(dbValue);
-					}
+          if (objCellValue instanceof Double) {
+            if (objCellValue == null) objCellValue = 0d;
+            Double dbValue = (Double) objCellValue;
+            txCellValue = FiNumber.formatlaNumbertoString(dbValue);
+          }
 
-					if (objCellValue instanceof BigDecimal) {
-						if (objCellValue == null) objCellValue = BigDecimal.ZERO;
-						Double dbValue = ((BigDecimal) objCellValue).doubleValue();
-						txCellValue = FiNumber.formatlaNumbertoString(dbValue);
-					}
+          if (objCellValue instanceof BigDecimal) {
+            if (objCellValue == null) objCellValue = BigDecimal.ZERO;
+            Double dbValue = ((BigDecimal) objCellValue).doubleValue();
+            txCellValue = FiNumber.formatlaNumbertoString(dbValue);
+          }
 
-					if (objCellValue instanceof Date) {
-						Date dbValue = (Date) objCellValue;
-						txCellValue = FiDate.dateToStrAsddmmyyyyWitDot(dbValue);
-					}
+          if (objCellValue instanceof Date) {
+            Date dbValue = (Date) objCellValue;
+            txCellValue = FiDate.dateToStrAsddmmyyyyWitDot(dbValue);
+          }
 
-					htmlContent += tagTdNum + txCellValue + tagTdEnd;
-				} else {
-					htmlContent += tagTdString + txCellValue + tagTdEnd;
-				}
+          htmlContent += tagTdNum + txCellValue + tagTdEnd;
+        } else {
+          htmlContent += tagTdString + txCellValue + tagTdEnd;
+        }
 
-			}
+      }
 
-			htmlContent += "</tr>\r\n";
+      htmlContent += "</tr>\r\n";
 
-		}
+    }
 
 
-		// toplam satırı var mı ?
-		if (FiBool.isTrue(fiReportConfig.getBoSummaryEnabled())) {
+    // toplam satırı var mı ?
+    if (FiBool.isTrue(fiReportConfig.getBoSummaryEnabled())) {
 
-			htmlContent += "<tr>\r\n";
-			for (FiCol fiTableCol : colList) {
+      htmlContent += "<tr>\r\n";
+      for (FiCol fiTableCol : colList) {
 
-				if (fiTableCol.getSummaryType() != null) {
-					String sumValue = FiNumber.formatNumber(FxTableModal.calcSummaryValueFi(listData, fiTableCol, fiReportConfig));
-					htmlContent += tagTdNumSum + sumValue + tagTdEnd;
-				} else {
-					htmlContent += tagTdStringSum + "" + tagTdEnd;
-				}
-			}
-			htmlContent += "</tr>\r\n";
-		}
+        if (fiTableCol.getSummaryType() != null) {
+          String sumValue = FiNumber.formatNumber(FxTableModal.calcSummaryValueFi(listData, fiTableCol, fiReportConfig));
+          htmlContent += tagTdNumSum + sumValue + tagTdEnd;
+        } else {
+          htmlContent += tagTdStringSum + "" + tagTdEnd;
+        }
+      }
+      htmlContent += "</tr>\r\n";
+    }
 
-		htmlContent += "</table>\r\n" + "";
+    htmlContent += "</table>\r\n" + "";
 
-		return htmlContent;
+    return htmlContent;
 
-	}
+  }
 
+  public static <T> String reportBasicHtmlByFiTableColByFkl(FkbList listData, List<FiCol> colList, FiReportConfig fiReportConfig) {
 
+    //Integer numberofcol = colList.size();
+    //Loghelper.get(FiHtmlReport.class).info("col size:" + numberofcol);
+
+    // başlık sütunları
+    String tagTh = "<th style=\"border-width: 1px;padding: 8px;border-style: solid;"
+        + "border-color: #666666;background-color: #dedede;\">";
+
+    String tagTdString = "<td style=\"border-width: 1px;padding: 8px;border-style: solid;"
+        + "border-color: #666666;background-color: #ffffff;\">";
+
+    String tagTdNum = "<td class=\"formattutar\" style=\"text-align: right;"
+        + "border-width: 1px;padding: 8px;border-style: solid;border-color: #666666;"
+        + "background-color: #ffffff;\">";
+
+    String tagTdNumSum = "<td class=\"formattutar\" style=\"text-align: right;"
+        + "border-width: 1px;padding: 8px;border-style: solid;border-color: red;"
+        + "background-color: #ffffff;font-weight: bold;\">";
+
+    String tagTdStringSum = "<td style=\"border-width: 1px;padding: 8px;border-style: solid;"
+        + "border-color: red;background-color: #ffffff;font-weight: bold;\">";
+
+    String tagTdEnd = "</td>";
+
+    StringBuilder htmlContent = new StringBuilder();
+
+    // table tanımı
+
+    htmlContent.append("<table " + "style=\"font-family: verdana,arial,sans-serif;font-size: 11px;" + "color: #333333;border-width: 1px;border-color: #666666;border-collapse: collapse;\">\r\n");
+
+    // tablo başlık satırı
+    htmlContent.append("<tr>\r\n");
+
+    // sütunlar bastırılır
+    for (FiCol fiTableCol : colList) {
+      htmlContent.append(tagTh).append(FiString.orEmpty(fiTableCol.getFcTxHeader())).append("</th>");
+    }
+
+    // satırlar bastırılır
+    for (FiKeybean t : listData) {
+      if (t == null) continue;
+
+      htmlContent.append("<tr>\r\n");
+
+      // FIXME numara satırlarını yazdırmak için
+      for (FiCol fiCol : colList) {
+
+        //Loghelper.get(FiHtmlReport.class).debug("Field:" + fiCol.getFieldName());
+
+        String fieldName = fiCol.getFcTxFieldName();
+
+        if (FiString.isEmpty(fieldName)) continue;
+
+        Object objCellValue = t.getAsObj(fieldName); // FiReflection.getProperty(t, fieldName);
+        String txCellValue = FiString.ToStrOrEmpty(objCellValue);
+
+        if (fiCol.getColType() == OzColType.Double || fiCol.getColType() == OzColType.Integer
+            || fiCol.getColType() == OzColType.BigDecimal
+            || fiCol.getColType() == OzColType.Date) {
+
+          if (objCellValue instanceof Double) {
+            // URFIX ficol auto type tanımlama gibi bir şey yapılabilr
+            //if (objCellValue == null) objCellValue = 0d;
+            Double dbValue = (Double) objCellValue;
+            txCellValue = FiNumber.formatlaNumbertoString(dbValue);
+          }
+
+          if (objCellValue instanceof BigDecimal) {
+            //if (objCellValue == null) objCellValue = BigDecimal.ZERO;
+            Double dbValue = ((BigDecimal) objCellValue).doubleValue();
+            txCellValue = FiNumber.formatlaNumbertoString(dbValue);
+          }
+
+          if (objCellValue instanceof Date) {
+            Date dbValue = (Date) objCellValue;
+            txCellValue = FiDate.dateToStrAsddmmyyyyWitDot(dbValue);
+          }
+
+          htmlContent.append(tagTdNum).append(txCellValue).append(tagTdEnd);
+        } else {
+          htmlContent.append(tagTdString).append(txCellValue).append(tagTdEnd);
+        }
+
+      }
+
+      htmlContent.append("</tr>\r\n");
+
+    }
+
+
+    // toplam satırı var mı ?
+    if (FiBool.isTrue(fiReportConfig.getBoSummaryEnabled())) {
+
+      htmlContent.append("<tr>\r\n");
+      for (FiCol fiTableCol : colList) {
+
+        if (fiTableCol.getSummaryType() != null) {
+          String sumValue = FiNumber.formatNumber(FxTableModal.calcSummaryValueFi(listData, fiTableCol, fiReportConfig));
+          htmlContent.append(tagTdNumSum).append(sumValue).append(tagTdEnd);
+        } else {
+          htmlContent.append(tagTdStringSum).append(tagTdEnd);
+        }
+      }
+      htmlContent.append("</tr>\r\n");
+    }
+
+    htmlContent.append("</table>\r\n" + "");
+
+    return htmlContent.toString();
+
+  }
 }

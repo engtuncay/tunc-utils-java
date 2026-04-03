@@ -836,4 +836,14 @@ public class FiDate {
 		tCalendar.setTime(date);
 		return tCalendar;
 	}
+
+	/**
+	 * Returns the current date and time in ISO-8601 format without milliseconds, e.g. 2026-04-03T15:43:56
+	 * @return formatted date-time string
+	 */
+	public static String nowIsoLocalNoMillis() {
+		java.time.LocalDateTime now = java.time.LocalDateTime.now();
+		java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+		return now.format(formatter);
+	}
 }
