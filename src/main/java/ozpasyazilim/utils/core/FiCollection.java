@@ -2,6 +2,7 @@ package ozpasyazilim.utils.core;
 
 import javafx.util.Pair;
 
+import mark.utils.collections.filter.Filter;
 import org.apache.commons.beanutils.PropertyUtils;
 import ozpasyazilim.utils.datatypes.FiInspect;
 import ozpasyazilim.utils.datatypes.FiKeyList;
@@ -19,1591 +20,1655 @@ import java.util.stream.Collectors;
 
 public class FiCollection {
 
-    public static void main(String[] args) {
+  public static void main(String[] args) {
 
-        PersonEntityTest pt = new PersonEntityTest("Def", "Defdef");
-        PersonEntityTest pt2 = new PersonEntityTest("Zur", "Zurref");
+    PersonEntityTest pt = new PersonEntityTest("Def", "Defdef");
+    PersonEntityTest pt2 = new PersonEntityTest("Zur", "Zurref");
 
-        List<PersonEntityTest> personTests = Arrays.asList(pt, pt2);
+    List<PersonEntityTest> personTests = Arrays.asList(pt, pt2);
 
-        Map<String, List<PersonEntityTest>> stringListMap = FiCollection.groupByFieldToMap(personTests, PersonEntityTest::getName);
+    Map<String, List<PersonEntityTest>> stringListMap = FiCollection.groupByFieldToMap(personTests, PersonEntityTest::getName);
 
-        System.out.println("Size:" + stringListMap.size());
+    System.out.println("Size:" + stringListMap.size());
 
 
-    }
-
-    /**
-     * predicareFunc fonksiyonuna göre filtrelenmiş yeni bir list döndürür. True ise ekler, false ise eklemez.
-     *
-     * @param listtum
-     * @param predicateFunc
-     * @return
-     */
-    public static <E> List<E> listFilter(List<E> listtum, Predicate<E> predicateFunc) {
+  }
 
-        List<E> listfiltered = new ArrayList<>();
+  /**
+   * predicareFunc fonksiyonuna göre filtrelenmiş yeni bir list döndürür. True ise ekler, false ise eklemez.
+   *
+   * @param listtum
+   * @param predicateFunc
+   * @return
+   */
+  public static <E> List<E> listFilter(List<E> listtum, Predicate<E> predicateFunc) {
 
-        for (Iterator iterator = listtum.iterator(); iterator.hasNext(); ) {
-            E e = (E) iterator.next();
+    List<E> listfiltered = new ArrayList<>();
 
-            if (predicateFunc.test(e)) {
-                listfiltered.add(e);
-            }
+    for (Iterator iterator = listtum.iterator(); iterator.hasNext(); ) {
+      E e = (E) iterator.next();
 
-        }
+      if (predicateFunc.test(e)) {
+        listfiltered.add(e);
+      }
 
-        return listfiltered;
     }
-
-    /**
-     * 0 index , filterin List döner
-     * 1 index , filterout List döner
-     * predicareFunc fonksiyonuna göre filtre uyan(in) ve uymayan (out) iki list döndürür
-     *
-     * @param listtum
-     * @param predicateFunc
-     * @return
-     */
-    public static <E> List<List<E>> listFilters(List<E> listtum, Predicate<E> predicateFunc) {
 
-        List<E> listfilterin = new ArrayList<>();
-        List<E> listfilterout = new ArrayList<>();
+    return listfiltered;
+  }
 
-        for (Iterator iterator = listtum.iterator(); iterator.hasNext(); ) {
-            E e = (E) iterator.next();
+  /**
+   * 0 index , filterin List döner
+   * 1 index , filterout List döner
+   * predicareFunc fonksiyonuna göre filtre uyan(in) ve uymayan (out) iki list döndürür
+   *
+   * @param listtum
+   * @param predicateFunc
+   * @return
+   */
+  public static <E> List<List<E>> listFilters(List<E> listtum, Predicate<E> predicateFunc) {
 
-            if (predicateFunc.test(e)) {
-                listfilterin.add(e);
-            } else {
-                listfilterout.add(e);
-            }
+    List<E> listfilterin = new ArrayList<>();
+    List<E> listfilterout = new ArrayList<>();
 
-        }
+    for (Iterator iterator = listtum.iterator(); iterator.hasNext(); ) {
+      E e = (E) iterator.next();
 
-        List<List<E>> listAll = new ArrayList<>();
-        listAll.add(listfilterin);
-        listAll.add(listfilterout);
-        return listAll;
+      if (predicateFunc.test(e)) {
+        listfilterin.add(e);
+      } else {
+        listfilterout.add(e);
+      }
 
     }
-
-    /**
-     * Left (key), Listenin predicate den false değeri dönen değerleri alır
-     * Right (value),  Listenin predicate den true değeri dönen değerleri alır
-     * <p>
-     * predicareFunc fonksiyonuna göre filtre uyan(Right) ve uymayan (Left) list çifti dönderir
-     *
-     * @param listData
-     * @param predicateFunc
-     * @return
-     */
-    public static <E> Pair<List<E>, List<E>> listFilterPair(List<E> listData, Predicate<E> predicateFunc) {
 
-        List<E> listfilterTrue = new ArrayList<>();
-        List<E> listfilterFalse = new ArrayList<>();
+    List<List<E>> listAll = new ArrayList<>();
+    listAll.add(listfilterin);
+    listAll.add(listfilterout);
+    return listAll;
 
-        for (Iterator iterator = listData.iterator(); iterator.hasNext(); ) {
-            E e = (E) iterator.next();
+  }
 
-            if (predicateFunc.test(e)) {
-                listfilterTrue.add(e);
-            } else {
-                listfilterFalse.add(e);
-            }
+  /**
+   * Left (key), Listenin predicate den false değeri dönen değerleri alır
+   * Right (value),  Listenin predicate den true değeri dönen değerleri alır
+   * <p>
+   * predicareFunc fonksiyonuna göre filtre uyan(Right) ve uymayan (Left) list çifti dönderir
+   *
+   * @param listData
+   * @param predicateFunc
+   * @return
+   */
+  public static <E> Pair<List<E>, List<E>> listFilterPair(List<E> listData, Predicate<E> predicateFunc) {
 
-        }
+    List<E> listfilterTrue = new ArrayList<>();
+    List<E> listfilterFalse = new ArrayList<>();
 
-        Pair<List<E>, List<E>> listPair = new Pair<>(listfilterFalse, listfilterTrue);
+    for (Iterator iterator = listData.iterator(); iterator.hasNext(); ) {
+      E e = (E) iterator.next();
 
-        return listPair;
+      if (predicateFunc.test(e)) {
+        listfilterTrue.add(e);
+      } else {
+        listfilterFalse.add(e);
+      }
 
     }
 
-    // T input: chh
-    // R result : integer
-
-    /**
-     * List<T> yi alarak
-     * fnKeyGetter fonksiyonu ile map e key olacak değer return edilir.
-     * <p>
-     * Bir değere karşılık, sadece bir entity bağlanır.
-     *
-     * @param listData    Data Listesi
-     * @param fnKeyGetter Key değerini döndüren fonksiyon
-     * @param <KeyVal>    Key value
-     * @param <T>         Entity object
-     * @return
-     */
-    public static <KeyVal, T> Map<KeyVal, T> listToMapSingle(List<T> listData, Function<T, KeyVal> fnKeyGetter) {
-
-        Map<KeyVal, T> mapList = new HashMap<>();
-
-        for (Iterator iterator = listData.iterator(); iterator.hasNext(); ) {
-            T t = (T) iterator.next();
-            KeyVal keyVal = fnKeyGetter.apply(t);
-            if (keyVal == null) return null;
-            mapList.put(keyVal, t);
-        }
+    Pair<List<E>, List<E>> listPair = new Pair<>(listfilterFalse, listfilterTrue);
 
-        return mapList;
-    }
-
-    /**
-     * fnKeyGetter ve fnKeyValueGetter ile map oluşturur.
-     *
-     * @param listData
-     * @param fnKeyGetter
-     * @param fnKeyValueGetter
-     * @param <KeyVal>
-     * @param <T>
-     * @param <KeyValue>
-     * @return
-     */
-    public static <KeyVal, T, KeyValue> Map<KeyVal, KeyValue> listToMapManual(List<T> listData, Function<T, KeyVal> fnKeyGetter, Function<T, KeyValue> fnKeyValueGetter) {
-
-        Map<KeyVal, KeyValue> mapList = new HashMap<>();
-
-        for (Iterator iterator = listData.iterator(); iterator.hasNext(); ) {
-            T t = (T) iterator.next();
-            KeyVal keyVal = fnKeyGetter.apply(t);
-            if (keyVal == null) continue;
-
-            KeyValue keyValue = fnKeyValueGetter.apply(t);
-            mapList.put(keyVal, keyValue);
-        }
+    return listPair;
+
+  }
 
-        return mapList;
+  // T input: chh
+  // R result : integer
+
+  /**
+   * List<T> yi alarak
+   * fnKeyGetter fonksiyonu ile map e key olacak değer return edilir.
+   * <p>
+   * Bir değere karşılık, sadece bir entity bağlanır.
+   *
+   * @param listData    Data Listesi
+   * @param fnKeyGetter Key değerini döndüren fonksiyon
+   * @param <KeyVal>    Key value
+   * @param <T>         Entity object
+   * @return
+   */
+  public static <KeyVal, T> Map<KeyVal, T> listToMapSingle(List<T> listData, Function<T, KeyVal> fnKeyGetter) {
+
+    Map<KeyVal, T> mapList = new HashMap<>();
+
+    for (Iterator iterator = listData.iterator(); iterator.hasNext(); ) {
+      T t = (T) iterator.next();
+      KeyVal keyVal = fnKeyGetter.apply(t);
+      if (keyVal == null) return null;
+      mapList.put(keyVal, t);
     }
 
-    public static <KeyVal, T> Map<KeyVal, T> listToMapSingleIgnoreNullKey(List<T> listData, Function<T, KeyVal> fnKeyGetter) {
+    return mapList;
+  }
 
-        Map<KeyVal, T> mapList = new HashMap<>();
+  /**
+   * fnKeyGetter ve fnKeyValueGetter ile map oluşturur.
+   *
+   * @param listData
+   * @param fnKeyGetter
+   * @param fnKeyValueGetter
+   * @param <KeyVal>
+   * @param <T>
+   * @param <KeyValue>
+   * @return
+   */
+  public static <KeyVal, T, KeyValue> Map<KeyVal, KeyValue> listToMapManual(List<T> listData, Function<T, KeyVal> fnKeyGetter, Function<T, KeyValue> fnKeyValueGetter) {
 
-        for (Iterator iterator = listData.iterator(); iterator.hasNext(); ) {
-            T t = (T) iterator.next();
-            KeyVal keyVal = fnKeyGetter.apply(t);
-            if (keyVal == null) continue;
-            mapList.put(keyVal, t);
-        }
-        return mapList;
+    Map<KeyVal, KeyValue> mapList = new HashMap<>();
+
+    for (Iterator iterator = listData.iterator(); iterator.hasNext(); ) {
+      T t = (T) iterator.next();
+      KeyVal keyVal = fnKeyGetter.apply(t);
+      if (keyVal == null) continue;
+
+      KeyValue keyValue = fnKeyValueGetter.apply(t);
+      mapList.put(keyVal, keyValue);
     }
 
-    /**
-     * null değerli keyler map e dahil edilmez
-     *
-     * @param listData
-     * @param fnKey
-     * @param fnCombineWhenEqual prm1: ana kayıt (güncellenir), prm2 birleştirilecek yeni kayıt
-     * @param <KeyVal>
-     * @return
-     */
-    public static <KeyVal, EntClazz> Map<KeyVal, EntClazz> listToMapSingleCombine(List<EntClazz> listData, Function<EntClazz, KeyVal> fnKey, BiConsumer<EntClazz, EntClazz> fnCombineWhenEqual) {
+    return mapList;
+  }
 
-        Map<KeyVal, EntClazz> mapList = new HashMap<>();
+  public static <KeyVal, T> Map<KeyVal, T> listToMapSingleIgnoreNullKey(List<T> listData, Function<T, KeyVal> fnKeyGetter) {
 
-        for (Iterator iterator = listData.iterator(); iterator.hasNext(); ) {
+    Map<KeyVal, T> mapList = new HashMap<>();
 
-            EntClazz entClazz = (EntClazz) iterator.next();
-            KeyVal keyVal = fnKey.apply(entClazz);
+    for (Iterator iterator = listData.iterator(); iterator.hasNext(); ) {
+      T t = (T) iterator.next();
+      KeyVal keyVal = fnKeyGetter.apply(t);
+      if (keyVal == null) continue;
+      mapList.put(keyVal, t);
+    }
+    return mapList;
+  }
 
-            // null değerli keyler map e dahil edilmez
-            if (keyVal == null) continue;
+  /**
+   * null değerli keyler map e dahil edilmez
+   *
+   * @param listData
+   * @param fnKey
+   * @param fnCombineWhenEqual prm1: ana kayıt (güncellenir), prm2 birleştirilecek yeni kayıt
+   * @param <KeyVal>
+   * @return
+   */
+  public static <KeyVal, EntClazz> Map<KeyVal, EntClazz> listToMapSingleCombine(List<EntClazz> listData, Function<EntClazz, KeyVal> fnKey, BiConsumer<EntClazz, EntClazz> fnCombineWhenEqual) {
 
-            if (mapList.containsKey(keyVal)) {
-                fnCombineWhenEqual.accept(mapList.get(keyVal), entClazz);
-            } else {
-                mapList.put(keyVal, entClazz);
-            }
+    Map<KeyVal, EntClazz> mapList = new HashMap<>();
 
-        }
+    for (Iterator iterator = listData.iterator(); iterator.hasNext(); ) {
+
+      EntClazz entClazz = (EntClazz) iterator.next();
+      KeyVal keyVal = fnKey.apply(entClazz);
 
-        return mapList;
+      // null değerli keyler map e dahil edilmez
+      if (keyVal == null) continue;
 
+      if (mapList.containsKey(keyVal)) {
+        fnCombineWhenEqual.accept(mapList.get(keyVal), entClazz);
+      } else {
+        mapList.put(keyVal, entClazz);
+      }
+
     }
 
-    /**
-     * Key null olursa dahil etmez
-     *
-     * @param listData
-     * @param fnKey
-     * @param fnValue
-     * @param <KeyType>
-     * @param <ValueType>
-     * @param <PrmEntClass>
-     * @return
-     */
-    public static <KeyType, ValueType, PrmEntClass> Map<KeyType, ValueType> listToMapKeyValue(List<PrmEntClass> listData, Function<PrmEntClass, KeyType> fnKey, Function<PrmEntClass, ValueType> fnValue) {
+    return mapList;
 
-        Map<KeyType, ValueType> mapList = new HashMap<>();
+  }
 
-        for (Iterator iterator = listData.iterator(); iterator.hasNext(); ) {
+  /**
+   * Key null olursa dahil etmez
+   *
+   * @param listData
+   * @param fnKey
+   * @param fnValue
+   * @param <KeyType>
+   * @param <ValueType>
+   * @param <PrmEntClass>
+   * @return
+   */
+  public static <KeyType, ValueType, PrmEntClass> Map<KeyType, ValueType> listToMapKeyValue(List<PrmEntClass> listData, Function<PrmEntClass, KeyType> fnKey, Function<PrmEntClass, ValueType> fnValue) {
 
-            PrmEntClass prmEntClass = (PrmEntClass) iterator.next();
+    Map<KeyType, ValueType> mapList = new HashMap<>();
 
-            KeyType key = fnKey.apply(prmEntClass);
-            ValueType value = fnValue.apply(prmEntClass);
+    for (Iterator iterator = listData.iterator(); iterator.hasNext(); ) {
 
-            if (key == null) continue;
+      PrmEntClass prmEntClass = (PrmEntClass) iterator.next();
 
-            mapList.put(key, value);
+      KeyType key = fnKey.apply(prmEntClass);
+      ValueType value = fnValue.apply(prmEntClass);
 
-        }
+      if (key == null) continue;
 
-        return mapList;
+      mapList.put(key, value);
 
     }
 
-    /**
-     * null keyler dahil edilmez
-     *
-     * @param listData
-     * @param fnKey
-     * @param <KeyType>
-     * @param <PrmEntClass>
-     * @return
-     */
-    public static <KeyType, PrmEntClass> Set<KeyType> listToSetByKeyValue(List<PrmEntClass> listData, Function<PrmEntClass, KeyType> fnKey) {
+    return mapList;
 
-        Set<KeyType> setNew = new HashSet<>();
+  }
 
-        for (Iterator iterator = listData.iterator(); iterator.hasNext(); ) {
+  /**
+   * null keyler dahil edilmez
+   *
+   * @param listData
+   * @param fnKey
+   * @param <KeyType>
+   * @param <PrmEntClass>
+   * @return
+   */
+  public static <KeyType, PrmEntClass> Set<KeyType> listToSetByKeyValue(List<PrmEntClass> listData, Function<PrmEntClass, KeyType> fnKey) {
 
-            PrmEntClass prmEntClass = (PrmEntClass) iterator.next();
-            KeyType key = fnKey.apply(prmEntClass);
+    Set<KeyType> setNew = new HashSet<>();
 
-            // null key dahil edilmez
-            if (key == null) continue;
+    for (Iterator iterator = listData.iterator(); iterator.hasNext(); ) {
 
-            setNew.add(key);
-        }
+      PrmEntClass prmEntClass = (PrmEntClass) iterator.next();
+      KeyType key = fnKey.apply(prmEntClass);
 
-        return setNew;
-    }
+      // null key dahil edilmez
+      if (key == null) continue;
 
-    /**
-     * Verilen Listedeki elemanları belli bir key ye (fnGetId den dönen değer) göre bir listede toplar, bunu map'a ekler. map, key:id value:listEntity şeklinde olur.
-     * <p>
-     * id null olursa atlar
-     * <p>
-     * Fav1
-     *
-     * @param listtum
-     * @param fnGetId
-     * @param <T>
-     * @param <KeyVal>
-     * @return
-     */
+      setNew.add(key);
+    }
 
-    public static <T, KeyVal> Map<KeyVal, List<T>> listToMapMulti(Collection<T> listtum, Function<T, KeyVal> fnGetId) {
+    return setNew;
+  }
 
-        Map<KeyVal, List<T>> mapList = new HashMap<>();
+  /**
+   * Verilen Listedeki elemanları belli bir key ye (fnGetId den dönen değer) göre bir listede toplar, bunu map'a ekler. map, key:id value:listEntity şeklinde olur.
+   * <p>
+   * id null olursa atlar
+   * <p>
+   * Fav1
+   *
+   * @param listtum
+   * @param fnGetId
+   * @param <T>
+   * @param <KeyVal>
+   * @return
+   */
 
-        for (Iterator iterator = listtum.iterator(); iterator.hasNext(); ) {
+  public static <T, KeyVal> Map<KeyVal, List<T>> listToMapMulti(Collection<T> listtum, Function<T, KeyVal> fnGetId) {
 
-            T t = (T) iterator.next();
+    Map<KeyVal, List<T>> mapList = new HashMap<>();
 
-            KeyVal keyValValue = fnGetId.apply(t);
+    for (Iterator iterator = listtum.iterator(); iterator.hasNext(); ) {
 
-            if (keyValValue == null) continue;
+      T t = (T) iterator.next();
 
-            if (!mapList.containsKey(keyValValue)) mapList.put(keyValValue, new ArrayList());
+      KeyVal keyValValue = fnGetId.apply(t);
 
-            mapList.get(keyValValue).add(t);
+      if (keyValValue == null) continue;
 
-        }
+      if (!mapList.containsKey(keyValValue)) mapList.put(keyValValue, new ArrayList());
 
-        return mapList;
+      mapList.get(keyValValue).add(t);
 
     }
 
-    public static <T, KeyVal> Map<KeyVal, List<T>> listToLinkedMapMulti(Collection<T> listtum, Function<T, KeyVal> fnGetId) {
+    return mapList;
 
-        Map<KeyVal, List<T>> mapList = new LinkedHashMap<>();
+  }
 
-        for (Iterator iterator = listtum.iterator(); iterator.hasNext(); ) {
+  public static <T, KeyVal> Map<KeyVal, List<T>> listToLinkedMapMulti(Collection<T> listtum, Function<T, KeyVal> fnGetId) {
 
-            T t = (T) iterator.next();
+    Map<KeyVal, List<T>> mapList = new LinkedHashMap<>();
 
-            KeyVal keyValValue = fnGetId.apply(t);
+    for (Iterator iterator = listtum.iterator(); iterator.hasNext(); ) {
 
-            if (keyValValue == null) continue;
+      T t = (T) iterator.next();
 
-            if (!mapList.containsKey(keyValValue)) mapList.put(keyValValue, new ArrayList());
+      KeyVal keyValValue = fnGetId.apply(t);
 
-            mapList.get(keyValValue).add(t);
+      if (keyValValue == null) continue;
 
-        }
+      if (!mapList.containsKey(keyValValue)) mapList.put(keyValValue, new ArrayList());
 
-        return mapList;
+      mapList.get(keyValValue).add(t);
 
     }
 
-    /**
-     * Verilen Listedeki elemanları belli bir key ye (fnGetId den dönen değer) göre toplar map<id,list<entity>> şeklinde oluşur
-     * <p>
-     * id null olursa empty key içine atar
-     * <p>
-     * Fav1
-     *
-     * @param listtum
-     * @param fnGetId
-     * @param <T>
-     * @param <KeyVal>
-     * @return
-     */
+    return mapList;
 
-    public static <T, KeyVal> Map<KeyVal, List<T>> listToMapMulti(List<T> listtum, Function<T, KeyVal> fnGetId, KeyVal nullKey) {
+  }
 
-        Map<KeyVal, List<T>> mapList = new HashMap<>();
+  /**
+   * Verilen Listedeki elemanları belli bir key ye (fnGetId den dönen değer) göre toplar map<id,list<entity>> şeklinde oluşur
+   * <p>
+   * id null olursa empty key içine atar
+   * <p>
+   * Fav1
+   *
+   * @param listtum
+   * @param fnGetId
+   * @param <T>
+   * @param <KeyVal>
+   * @return
+   */
 
-        for (Iterator iterator = listtum.iterator(); iterator.hasNext(); ) {
+  public static <T, KeyVal> Map<KeyVal, List<T>> listToMapMulti(List<T> listtum, Function<T, KeyVal> fnGetId, KeyVal nullKey) {
 
-            T t = (T) iterator.next();
+    Map<KeyVal, List<T>> mapList = new HashMap<>();
 
-            KeyVal keyValValue = fnGetId.apply(t);
+    for (Iterator iterator = listtum.iterator(); iterator.hasNext(); ) {
 
-            if (keyValValue == null) keyValValue = nullKey;
+      T t = (T) iterator.next();
 
-            if (!mapList.containsKey(keyValValue)) mapList.put(keyValValue, new ArrayList());
+      KeyVal keyValValue = fnGetId.apply(t);
 
-            mapList.get(keyValValue).add(t);
+      if (keyValValue == null) keyValValue = nullKey;
 
-        }
+      if (!mapList.containsKey(keyValValue)) mapList.put(keyValValue, new ArrayList());
 
-        return mapList;
+      mapList.get(keyValValue).add(t);
 
     }
 
+    return mapList;
 
-    /**
-     * nullKey null verilirse, null anahtara eşit olan değerler toplanmaz.
-     *
-     * @param listtum
-     * @param fnGetId
-     * @param nullKey
-     * @param <T>
-     * @return
-     */
-    public static <T> FiKeyList<T> listToMapMulti2(List<T> listtum, Function<T, String> fnGetId, String nullKey) {
+  }
 
-        FiKeyList<T> mapList = new FiKeyList<>();
 
-        for (Iterator iterator = listtum.iterator(); iterator.hasNext(); ) {
+  /**
+   * nullKey null verilirse, null anahtara eşit olan değerler toplanmaz.
+   *
+   * @param listtum
+   * @param fnGetId
+   * @param nullKey
+   * @param <T>
+   * @return
+   */
+  public static <T> FiKeyList<T> listToMapMulti2(List<T> listtum, Function<T, String> fnGetId, String nullKey) {
 
-            T t = (T) iterator.next();
+    FiKeyList<T> mapList = new FiKeyList<>();
 
-            String keyValValue = fnGetId.apply(t);
+    for (Iterator iterator = listtum.iterator(); iterator.hasNext(); ) {
 
-            if (keyValValue == null) keyValValue = nullKey;
+      T t = (T) iterator.next();
 
-            if (keyValValue == null) continue;
+      String keyValValue = fnGetId.apply(t);
 
-            if (!mapList.containsKey(keyValValue)) mapList.put(keyValValue, new ArrayList());
+      if (keyValValue == null) keyValValue = nullKey;
 
-            mapList.get(keyValValue).add(t);
+      if (keyValValue == null) continue;
 
-        }
+      if (!mapList.containsKey(keyValValue)) mapList.put(keyValValue, new ArrayList());
 
-        return mapList;
+      mapList.get(keyValValue).add(t);
 
     }
 
-    /**
-     * index 0 , list1 kalanlar
-     * index 1 , list2 kalanlar
-     *
-     * @param list1
-     * @param list2
-     * @param functionKey
-     * @return
-     */
-    public static <R, T> List<List<T>> listCompare(List<T> list1, List<T> list2, Function<T, R> functionKey) {
+    return mapList;
 
-        Map<R, T> mapList1 = FiCollection.listToMapSingle(list1, functionKey);
+  }
 
-        Map<R, T> mapList2 = FiCollection.listToMapSingle(list2, functionKey);
+  /**
+   * index 0 , list1 kalanlar
+   * index 1 , list2 kalanlar
+   *
+   * @param list1
+   * @param list2
+   * @param functionKey
+   * @return
+   */
+  public static <R, T> List<List<T>> listCompare(List<T> list1, List<T> list2, Function<T, R> functionKey) {
 
-        for (Iterator iterator = list1.iterator(); iterator.hasNext(); ) {
+    Map<R, T> mapList1 = FiCollection.listToMapSingle(list1, functionKey);
 
-            T t = (T) iterator.next();
+    Map<R, T> mapList2 = FiCollection.listToMapSingle(list2, functionKey);
 
-            R key = functionKey.apply(t);
+    for (Iterator iterator = list1.iterator(); iterator.hasNext(); ) {
 
-            if (mapList2.containsKey(key)) {
-                mapList1.remove(key);
-                mapList2.remove(key);
-            }
+      T t = (T) iterator.next();
 
-        }
+      R key = functionKey.apply(t);
 
-        List<T> listres1 = new ArrayList<>();
-        for (Entry<R, T> entry : mapList1.entrySet()) {
-            R key = entry.getKey();
-            T value = entry.getValue();
-            listres1.add(value);
-        }
+      if (mapList2.containsKey(key)) {
+        mapList1.remove(key);
+        mapList2.remove(key);
+      }
 
-        List<T> listres2 = new ArrayList<>();
-        for (Entry<R, T> entry : mapList2.entrySet()) {
-            R key = entry.getKey();
-            T value = entry.getValue();
-            listres2.add(value);
-        }
+    }
 
-        List<List<T>> listResAll = new ArrayList<>();
+    List<T> listres1 = new ArrayList<>();
+    for (Entry<R, T> entry : mapList1.entrySet()) {
+      R key = entry.getKey();
+      T value = entry.getValue();
+      listres1.add(value);
+    }
 
-        listResAll.add(listres1);
-        listResAll.add(listres2);
+    List<T> listres2 = new ArrayList<>();
+    for (Entry<R, T> entry : mapList2.entrySet()) {
+      R key = entry.getKey();
+      T value = entry.getValue();
+      listres2.add(value);
+    }
 
-        // List<Map<R, T>> list = new ArrayList<>();
-        // list.add(mapList1);
-        // list.add(mapList2);
+    List<List<T>> listResAll = new ArrayList<>();
 
-        return listResAll;
+    listResAll.add(listres1);
+    listResAll.add(listres2);
 
-    }
+    // List<Map<R, T>> list = new ArrayList<>();
+    // list.add(mapList1);
+    // list.add(mapList2);
 
-    /**
-     * @param list1
-     * @param list2
-     * @param functionCompare Karşılaştırma fonksiyonu
-     * @return
-     */
-    public static <R, T1, T2> Map<T1, T2> listCompareAndPointByCompareFunction(List<T1> list1, List<T2> list2, BiFunction<T1, T2, Boolean> functionCompare
-            , BiConsumer<T1, Boolean> functPoint1, BiConsumer<T2, Boolean> functPoint2) {
+    return listResAll;
 
-        Map<T1, T2> mapEslesen = new HashMap<>();
+  }
 
-        for (Iterator iterator = list1.iterator(); iterator.hasNext(); ) {
+  /**
+   * @param list1
+   * @param list2
+   * @param functionCompare Karşılaştırma fonksiyonu
+   * @return
+   */
+  public static <R, T1, T2> Map<T1, T2> listCompareAndPointByCompareFunction(List<T1> list1, List<T2> list2, BiFunction<T1, T2, Boolean> functionCompare
+      , BiConsumer<T1, Boolean> functPoint1, BiConsumer<T2, Boolean> functPoint2) {
 
-            T1 t1 = (T1) iterator.next();
+    Map<T1, T2> mapEslesen = new HashMap<>();
 
-            for (Iterator iterator2 = list2.iterator(); iterator.hasNext(); ) {
+    for (Iterator iterator = list1.iterator(); iterator.hasNext(); ) {
 
-                T2 t2 = (T2) iterator2.next();
+      T1 t1 = (T1) iterator.next();
 
-                if (functionCompare.apply(t1, t2)) {
-                    if (functPoint1 != null) functPoint1.accept(t1, true);
-                    if (functPoint2 != null) functPoint2.accept(t2, true);
-                    mapEslesen.put(t1, t2);
-                    break;
+      for (Iterator iterator2 = list2.iterator(); iterator.hasNext(); ) {
 
-                }
-            }
-        }
+        T2 t2 = (T2) iterator2.next();
 
-        return mapEslesen;
+        if (functionCompare.apply(t1, t2)) {
+          if (functPoint1 != null) functPoint1.accept(t1, true);
+          if (functPoint2 != null) functPoint2.accept(t2, true);
+          mapEslesen.put(t1, t2);
+          break;
 
+        }
+      }
     }
 
-    /**
-     * index 0 , list1 kalanlar
-     * index 1 , list2 kalanlar
-     *
-     * @param list1
-     * @param list2
-     * @param functionID   eşitliği belirleyecek alan, primary key (id) alanı
-     * @param predFunction
-     * @return
-     */
-    public static <R, T> List<List<T>> listCompare2(List<T> list1, List<T> list2, Function<T, R> functionID,
-                                                    BiPredicate<T, T> predFunction) {
+    return mapEslesen;
 
-        Map<R, T> mapList1 = FiCollection.listToMapSingle(list1, functionID);
+  }
 
-        Map<R, T> mapList2 = FiCollection.listToMapSingle(list2, functionID);
+  /**
+   * index 0 , list1 kalanlar
+   * index 1 , list2 kalanlar
+   *
+   * @param list1
+   * @param list2
+   * @param functionID   eşitliği belirleyecek alan, primary key (id) alanı
+   * @param predFunction
+   * @return
+   */
+  public static <R, T> List<List<T>> listCompare2(List<T> list1, List<T> list2, Function<T, R> functionID,
+                                                  BiPredicate<T, T> predFunction) {
 
-        for (Iterator iterator = list1.iterator(); iterator.hasNext(); ) {
+    Map<R, T> mapList1 = FiCollection.listToMapSingle(list1, functionID);
 
-            T t1 = (T) iterator.next();
+    Map<R, T> mapList2 = FiCollection.listToMapSingle(list2, functionID);
 
-            R key = functionID.apply(t1);
+    for (Iterator iterator = list1.iterator(); iterator.hasNext(); ) {
 
-            if (mapList2.containsKey(key)) {
+      T t1 = (T) iterator.next();
 
-                T t2 = mapList2.get(key);
+      R key = functionID.apply(t1);
 
-                if (predFunction.test(t1, t2)) {
-                    mapList1.remove(key);
-                    mapList2.remove(key);
-                }
+      if (mapList2.containsKey(key)) {
 
-            }
+        T t2 = mapList2.get(key);
 
+        if (predFunction.test(t1, t2)) {
+          mapList1.remove(key);
+          mapList2.remove(key);
         }
 
-        // map ler , tekrar liste çevrilir
+      }
 
-        List<T> listres1 = new ArrayList<>();
+    }
 
-        for (Entry<R, T> entry : mapList1.entrySet()) {
-            R key = entry.getKey();
-            T value = entry.getValue();
-            listres1.add(value);
-        }
+    // map ler , tekrar liste çevrilir
 
-        List<T> listres2 = new ArrayList<>();
-        for (Entry<R, T> entry : mapList2.entrySet()) {
-            R key = entry.getKey();
-            T value = entry.getValue();
-            listres2.add(value);
-        }
+    List<T> listres1 = new ArrayList<>();
 
-        List<List<T>> listResAll = new ArrayList<>();
+    for (Entry<R, T> entry : mapList1.entrySet()) {
+      R key = entry.getKey();
+      T value = entry.getValue();
+      listres1.add(value);
+    }
 
-        listResAll.add(listres1);
-        listResAll.add(listres2);
+    List<T> listres2 = new ArrayList<>();
+    for (Entry<R, T> entry : mapList2.entrySet()) {
+      R key = entry.getKey();
+      T value = entry.getValue();
+      listres2.add(value);
+    }
 
-        // List<Map<R, T>> list = new ArrayList<>();
-        // list.add(mapList1);
-        // list.add(mapList2);
+    List<List<T>> listResAll = new ArrayList<>();
 
-        return listResAll;
+    listResAll.add(listres1);
+    listResAll.add(listres2);
 
-    }
+    // List<Map<R, T>> list = new ArrayList<>();
+    // list.add(mapList1);
+    // list.add(mapList2);
 
+    return listResAll;
 
-    /**
-     * taslak devam edilmedi , copy paste edildi
-     * index 0 , list1 kalanlar
-     * index 1 , list2 kalanlar
-     * index 2 , list1,list2 olup, predfunc fonksiyonunu sağlamayanlar
-     *
-     * @param list1
-     * @param list2
-     * @param functionID   eşitliği belirleyecek alan, primary key (id) alanı
-     * @param predFunction
-     * @return
-     */
-    public static <R, T> Pair<List<List<T>>, Map<T, T>> listCompare3(List<T> list1, List<T> list2, Function<T, R> functionID,
-                                                                     BiPredicate<T, T> predFunction) {
+  }
 
-        Map<R, T> mapList1 = FiCollection.listToMapSingle(list1, functionID);
 
-        Map<R, T> mapList2 = FiCollection.listToMapSingle(list2, functionID);
+  /**
+   * taslak devam edilmedi , copy paste edildi
+   * index 0 , list1 kalanlar
+   * index 1 , list2 kalanlar
+   * index 2 , list1,list2 olup, predfunc fonksiyonunu sağlamayanlar
+   *
+   * @param list1
+   * @param list2
+   * @param functionID   eşitliği belirleyecek alan, primary key (id) alanı
+   * @param predFunction
+   * @return
+   */
+  public static <R, T> Pair<List<List<T>>, Map<T, T>> listCompare3(List<T> list1, List<T> list2, Function<T, R> functionID,
+                                                                   BiPredicate<T, T> predFunction) {
 
-        Map<T, T> mapList3 = new HashMap<>();
+    Map<R, T> mapList1 = FiCollection.listToMapSingle(list1, functionID);
 
-        for (Iterator iterator = list1.iterator(); iterator.hasNext(); ) {
+    Map<R, T> mapList2 = FiCollection.listToMapSingle(list2, functionID);
 
-            T t1 = (T) iterator.next();
+    Map<T, T> mapList3 = new HashMap<>();
 
-            R key = functionID.apply(t1);
+    for (Iterator iterator = list1.iterator(); iterator.hasNext(); ) {
 
+      T t1 = (T) iterator.next();
 
-            if (mapList2.containsKey(key)) { // list 2 de kayıt var
+      R key = functionID.apply(t1);
 
-                T t2 = mapList2.get(key);
-                // id ler eşitse koleksiyondan çıkar
-                mapList1.remove(key);
-                mapList2.remove(key);
 
-                if (!predFunction.test(t1, t2)) { // ikinci şartı yerine getirmiyorsa ayrı koleksiyona yaz
-                    mapList3.put(t1, t2);
-                }
+      if (mapList2.containsKey(key)) { // list 2 de kayıt var
 
-            }
+        T t2 = mapList2.get(key);
+        // id ler eşitse koleksiyondan çıkar
+        mapList1.remove(key);
+        mapList2.remove(key);
 
+        if (!predFunction.test(t1, t2)) { // ikinci şartı yerine getirmiyorsa ayrı koleksiyona yaz
+          mapList3.put(t1, t2);
         }
-
-        // map ler , tekrar liste çevrilir
 
-        List<T> listres1 = new ArrayList<>();
+      }
 
-        for (Entry<R, T> entry : mapList1.entrySet()) {
-            R key = entry.getKey();
-            T value = entry.getValue();
-            listres1.add(value);
-        }
+    }
 
-        List<T> listres2 = new ArrayList<>();
-        for (Entry<R, T> entry : mapList2.entrySet()) {
-            R key = entry.getKey();
-            T value = entry.getValue();
-            listres2.add(value);
-        }
+    // map ler , tekrar liste çevrilir
 
-        List<List<T>> listResAll = new ArrayList<>();
+    List<T> listres1 = new ArrayList<>();
 
-        listResAll.add(listres1);
-        listResAll.add(listres2);
+    for (Entry<R, T> entry : mapList1.entrySet()) {
+      R key = entry.getKey();
+      T value = entry.getValue();
+      listres1.add(value);
+    }
 
+    List<T> listres2 = new ArrayList<>();
+    for (Entry<R, T> entry : mapList2.entrySet()) {
+      R key = entry.getKey();
+      T value = entry.getValue();
+      listres2.add(value);
+    }
 
-        // List<Map<R, T>> list = new ArrayList<>();
-        // list.add(mapList1);
-        // list.add(mapList2);
+    List<List<T>> listResAll = new ArrayList<>();
 
-        return new Pair<>(listResAll, mapList3);
+    listResAll.add(listres1);
+    listResAll.add(listres2);
 
-    }
 
-    public static <E> void printList(List<E> listObjects) {
+    // List<Map<R, T>> list = new ArrayList<>();
+    // list.add(mapList1);
+    // list.add(mapList2);
 
-        for (Iterator iterator = listObjects.iterator(); iterator.hasNext(); ) {
-            E e = (E) iterator.next();
-            System.out.println(e);
-        }
+    return new Pair<>(listResAll, mapList3);
 
-    }
+  }
 
-    public static <E, V> Map<String, List> listcomparebi(List<E> listdata1, List<V> listdata2,
-                                                         BiPredicate<E, V> funcPredicate) {
+  public static <E> void printList(List<E> listObjects) {
 
-        List<E> listdata1kalan = new ArrayList<>(listdata1);
-        List<V> listdata2kalan = new ArrayList<>(listdata2);
-        List<E> listeslesenler1 = new ArrayList<>();
-        List<V> listeslesenler2 = new ArrayList<>();
+    for (Iterator iterator = listObjects.iterator(); iterator.hasNext(); ) {
+      E e = (E) iterator.next();
+      System.out.println(e);
+    }
 
-        for (Iterator iterator = listdata1kalan.iterator(); iterator.hasNext(); ) {
-            E entity1 = (E) iterator.next();
+  }
 
-            Boolean found = false;
+  public static <E, V> Map<String, List> listcomparebi(List<E> listdata1, List<V> listdata2,
+                                                       BiPredicate<E, V> funcPredicate) {
 
-            for (Iterator iterator2 = listdata2kalan.iterator(); iterator2.hasNext(); ) {
-                V entity2 = (V) iterator2.next();
+    List<E> listdata1kalan = new ArrayList<>(listdata1);
+    List<V> listdata2kalan = new ArrayList<>(listdata2);
+    List<E> listeslesenler1 = new ArrayList<>();
+    List<V> listeslesenler2 = new ArrayList<>();
 
-                if (funcPredicate.test(entity1, entity2)) {
-                    listeslesenler1.add(entity1);
-                    listeslesenler2.add(entity2);
-                    iterator2.remove();
-                    found = true;
-                    break;
-                }
+    for (Iterator iterator = listdata1kalan.iterator(); iterator.hasNext(); ) {
+      E entity1 = (E) iterator.next();
 
-            }
+      Boolean found = false;
 
-            if (found) {
-                iterator.remove();
-            }
+      for (Iterator iterator2 = listdata2kalan.iterator(); iterator2.hasNext(); ) {
+        V entity2 = (V) iterator2.next();
 
+        if (funcPredicate.test(entity1, entity2)) {
+          listeslesenler1.add(entity1);
+          listeslesenler2.add(entity2);
+          iterator2.remove();
+          found = true;
+          break;
         }
 
-        Map<String, List> returnlist = new HashMap<>();
+      }
 
-        returnlist.put("list1kalan", listdata1kalan);
-        returnlist.put("list2kalan", listdata2kalan);
-        returnlist.put("list1eslesen", listeslesenler1);
-        returnlist.put("list2eslesen", listeslesenler2);
+      if (found) {
+        iterator.remove();
+      }
 
-        return returnlist;
-
     }
 
-    public static <E> Map<String, List> listcompare(List<E> listdata1, List<E> listdata2,
-                                                    BiPredicate<E, E> funcPredicate) {
+    Map<String, List> returnlist = new HashMap<>();
 
-        List<E> listdata1kalan = new ArrayList<>(listdata1);
-        List<E> listdata2kalan = new ArrayList<>(listdata2);
-        List<E> listeslesenler = new ArrayList<>();
+    returnlist.put("list1kalan", listdata1kalan);
+    returnlist.put("list2kalan", listdata2kalan);
+    returnlist.put("list1eslesen", listeslesenler1);
+    returnlist.put("list2eslesen", listeslesenler2);
 
-        for (Iterator iterator = listdata1kalan.iterator(); iterator.hasNext(); ) {
-            E entity1 = (E) iterator.next();
+    return returnlist;
 
-            Boolean found = false;
+  }
 
-            for (Iterator iterator2 = listdata2kalan.iterator(); iterator2.hasNext(); ) {
-                E entity2 = (E) iterator2.next();
+  public static <E> Map<String, List> listcompare(List<E> listdata1, List<E> listdata2,
+                                                  BiPredicate<E, E> funcPredicate) {
 
-                if (funcPredicate.test(entity1, entity2)) {
-                    listeslesenler.add(entity1);
-                    iterator2.remove();
-                    found = true;
-                    break;
-                }
+    List<E> listdata1kalan = new ArrayList<>(listdata1);
+    List<E> listdata2kalan = new ArrayList<>(listdata2);
+    List<E> listeslesenler = new ArrayList<>();
 
-            }
+    for (Iterator iterator = listdata1kalan.iterator(); iterator.hasNext(); ) {
+      E entity1 = (E) iterator.next();
 
-            if (found) {
-                iterator.remove();
-            }
+      Boolean found = false;
 
-        }
+      for (Iterator iterator2 = listdata2kalan.iterator(); iterator2.hasNext(); ) {
+        E entity2 = (E) iterator2.next();
 
-        Map<String, List> returnlist = new HashMap<>();
+        if (funcPredicate.test(entity1, entity2)) {
+          listeslesenler.add(entity1);
+          iterator2.remove();
+          found = true;
+          break;
+        }
 
-        returnlist.put("list1kalan", listdata1kalan);
-        returnlist.put("list2kalan", listdata2kalan);
-        returnlist.put("listeslesen", listeslesenler);
+      }
 
-        return returnlist;
+      if (found) {
+        iterator.remove();
+      }
 
     }
-
-    public static <E, V> Map<String, List> listcomparebi_noclone(List<E> listdata1, List<V> listdata2,
-                                                                 BiPredicate<E, V> funcPredicate) {
 
-        List<E> listdata1kalan = new ArrayList<>();
-        List<V> listdata2kalan = new ArrayList<>();
-        List<E> listeslesenler1 = new ArrayList<>();
-        List<V> listeslesenler2 = new ArrayList<>();
+    Map<String, List> returnlist = new HashMap<>();
 
-        Map<Integer, Boolean> mapBulunanlar_index_boolean = new HashMap<>();
+    returnlist.put("list1kalan", listdata1kalan);
+    returnlist.put("list2kalan", listdata2kalan);
+    returnlist.put("listeslesen", listeslesenler);
 
-        for (Iterator iterator = listdata1.iterator(); iterator.hasNext(); ) {
-            E entity1 = (E) iterator.next();
+    return returnlist;
 
-            Boolean found = false;
-            int index2 = 0;
-            for (Iterator iterator2 = listdata2.iterator(); iterator2.hasNext(); ) {
-                V entity2 = (V) iterator2.next();
+  }
 
-                if (funcPredicate.test(entity1, entity2)) {
-                    listeslesenler1.add(entity1);
-                    listeslesenler2.add(entity2);
-                    mapBulunanlar_index_boolean.put(index2, true);
-                    found = true;
-                    break;
-                }
+  public static <E, V> Map<String, List> listcomparebi_noclone(List<E> listdata1, List<V> listdata2,
+                                                               BiPredicate<E, V> funcPredicate) {
 
-                index2++;
-            }
+    List<E> listdata1kalan = new ArrayList<>();
+    List<V> listdata2kalan = new ArrayList<>();
+    List<E> listeslesenler1 = new ArrayList<>();
+    List<V> listeslesenler2 = new ArrayList<>();
 
-            if (found == false) {
-                listdata1kalan.add(entity1);
-            }
+    Map<Integer, Boolean> mapBulunanlar_index_boolean = new HashMap<>();
 
-        }
+    for (Iterator iterator = listdata1.iterator(); iterator.hasNext(); ) {
+      E entity1 = (E) iterator.next();
 
-        for (int i = 0; i < listdata2.size(); i++) {
-            if (!mapBulunanlar_index_boolean.containsKey(i)) {
-                listdata2kalan.add(listdata2.get(i));
-            }
+      Boolean found = false;
+      int index2 = 0;
+      for (Iterator iterator2 = listdata2.iterator(); iterator2.hasNext(); ) {
+        V entity2 = (V) iterator2.next();
 
+        if (funcPredicate.test(entity1, entity2)) {
+          listeslesenler1.add(entity1);
+          listeslesenler2.add(entity2);
+          mapBulunanlar_index_boolean.put(index2, true);
+          found = true;
+          break;
         }
+
+        index2++;
+      }
 
-        Map<String, List> returnlist = new HashMap<>();
+      if (found == false) {
+        listdata1kalan.add(entity1);
+      }
 
-        returnlist.put("list1kalan", listdata1kalan);
-        returnlist.put("list2kalan", listdata2kalan);
-        returnlist.put("list1eslesen", listeslesenler1);
-        returnlist.put("list2eslesen", listeslesenler2);
+    }
 
-        return returnlist;
+    for (int i = 0; i < listdata2.size(); i++) {
+      if (!mapBulunanlar_index_boolean.containsKey(i)) {
+        listdata2kalan.add(listdata2.get(i));
+      }
 
     }
 
-    /**
-     * Finds the index of all entries in the list that matches the regex
-     *
-     * @param list  The list of strings to check
-     * @param regex The regular expression to use
-     * @return list containing the indexes of all matching entries
-     */
-    public static List<Integer> getMatchingIndexes(List<String> list, String regex) {
+    Map<String, List> returnlist = new HashMap<>();
 
-        ListIterator<String> li = list.listIterator();
+    returnlist.put("list1kalan", listdata1kalan);
+    returnlist.put("list2kalan", listdata2kalan);
+    returnlist.put("list1eslesen", listeslesenler1);
+    returnlist.put("list2eslesen", listeslesenler2);
 
-        List<Integer> indexes = new ArrayList<Integer>();
+    return returnlist;
 
-        while (li.hasNext()) {
-            int i = li.nextIndex();
-            String next = li.next();
-            if (Pattern.matches(regex, next)) {
-                indexes.add(i);
-            }
-        }
+  }
 
-        return indexes;
-    }
+  /**
+   * Finds the index of all entries in the list that matches the regex
+   *
+   * @param list  The list of strings to check
+   * @param regex The regular expression to use
+   * @return list containing the indexes of all matching entries
+   */
+  public static List<Integer> getMatchingIndexes(List<String> list, String regex) {
 
-    public static <T, R> Optional<R> mapcheckGet(Map<T, R> mapData, T key) {
+    ListIterator<String> li = list.listIterator();
 
-        if (mapData.containsKey(key)) {
-            return Optional.ofNullable(mapData.get(key));
-        }
-        return Optional.ofNullable(null);
-    }
+    List<Integer> indexes = new ArrayList<Integer>();
 
-    public static Boolean isEmpty(Collection collection) {
-        if (collection == null) return true;
-        if (collection.isEmpty()) return true;
-        return false;
+    while (li.hasNext()) {
+      int i = li.nextIndex();
+      String next = li.next();
+      if (Pattern.matches(regex, next)) {
+        indexes.add(i);
+      }
     }
+
+    return indexes;
+  }
 
-    public static Boolean isNotEmpty(Collection collection) {
+  public static <T, R> Optional<R> mapcheckGet(Map<T, R> mapData, T key) {
 
-        if (collection != null && collection.size() > 0) return true;
-        return false;
+    if (mapData.containsKey(key)) {
+      return Optional.ofNullable(mapData.get(key));
     }
+    return Optional.ofNullable(null);
+  }
 
-    public static Boolean isEmptyKey(Map mapData, String key) {
+  public static Boolean isEmpty(Collection collection) {
+    if (collection == null) return true;
+    if (collection.isEmpty()) return true;
+    return false;
+  }
 
-        if (!mapData.containsKey(key)) return true;
-        if (mapData.get(key) == null) return true;
+  public static Boolean isNotEmpty(Collection collection) {
 
-        return false;
-    }
+    if (collection != null && collection.size() > 0) return true;
+    return false;
+  }
 
-    public static Boolean isNotEmptyKey(Map mapData, String key) {
+  public static Boolean isEmptyKey(Map mapData, String key) {
 
-        if (mapData.containsKey(key) && mapData.get(key) != null) return true;
-        return false;
-    }
+    if (!mapData.containsKey(key)) return true;
+    if (mapData.get(key) == null) return true;
 
-    public static <T> List<T> groupByField(List<T> listData, String field, List<IFiCol> listCol, Class<T> clazz) {
+    return false;
+  }
 
-        Map<String, List<T>> mapData = new HashMap<>();
+  public static Boolean isNotEmptyKey(Map mapData, String key) {
 
-        // map list e çevrildi
-        for (T entity : listData) {
+    if (mapData.containsKey(key) && mapData.get(key) != null) return true;
+    return false;
+  }
 
-            String key = FiReflection.getProperty(entity, field).toString();
+  public static <T> List<T> groupByField(List<T> listData, String field, List<IFiCol> listCol, Class<T> clazz) {
 
-            if (!mapData.containsKey(key)) mapData.put(key, new ArrayList<>());
+    Map<String, List<T>> mapData = new HashMap<>();
 
-            mapData.get(key).add(entity);
-        }
+    // map list e çevrildi
+    for (T entity : listData) {
 
-        List<T> listFiltered = new ArrayList<>();
+      String key = FiReflection.getProperty(entity, field).toString();
 
-        // gruplanarak grup özeti çıkarılır
-        for (String keyData : mapData.keySet()) {
+      if (!mapData.containsKey(key)) mapData.put(key, new ArrayList<>());
 
-            List<T> listDataByKey = mapData.get(keyData);
+      mapData.get(key).add(entity);
+    }
 
-            T filteredEntity = new FiReflection().generateObject(clazz);
+    List<T> listFiltered = new ArrayList<>();
 
-            for (IFiCol oztablecol : listCol) {
+    // gruplanarak grup özeti çıkarılır
+    for (String keyData : mapData.keySet()) {
 
-                T exampleObj = listDataByKey.get(0);
+      List<T> listDataByKey = mapData.get(keyData);
 
-                Object objectColValue = FiReflection.getProperty(exampleObj, oztablecol.getFcTxFieldName());
+      T filteredEntity = new FiReflection().generateObject(clazz);
 
-                if (oztablecol.getColType() == null || oztablecol.getColType() == OzColType.String) {
-                    new FiReflection().setter(filteredEntity, oztablecol, objectColValue);
-                }
+      for (IFiCol oztablecol : listCol) {
 
-                if (objectColValue instanceof Double) {
+        T exampleObj = listDataByKey.get(0);
 
-                    Double sumDouble = FiNumberToText.sumValuesDouble(listDataByKey, ent -> {
-                        Object objectByField = FiReflection.getProperty(ent, oztablecol.getFcTxFieldName());
-                        if (objectByField == null) return 0d;
-                        return (Double) objectByField;
-                    });
+        Object objectColValue = FiReflection.getProperty(exampleObj, oztablecol.getFcTxFieldName());
 
-                    new FiReflection().setter(filteredEntity, oztablecol, sumDouble);
+        if (oztablecol.getColType() == null || oztablecol.getColType() == OzColType.String) {
+          new FiReflection().setter(filteredEntity, oztablecol, objectColValue);
+        }
 
-                }
+        if (objectColValue instanceof Double) {
 
-            }
+          Double sumDouble = FiNumberToText.sumValuesDouble(listDataByKey, ent -> {
+            Object objectByField = FiReflection.getProperty(ent, oztablecol.getFcTxFieldName());
+            if (objectByField == null) return 0d;
+            return (Double) objectByField;
+          });
 
-            listFiltered.add(filteredEntity);
+          new FiReflection().setter(filteredEntity, oztablecol, sumDouble);
 
         }
 
+      }
 
-        return listFiltered;
-    }
+      listFiltered.add(filteredEntity);
 
-    public static <T> List<T> groupByField(List<T> listData, List<String> listGroupbyfields, List<IFiCol> listCol, Class<T> clazz) {
+    }
 
-        if (FiCollection.isEmpty(listGroupbyfields)) return null;
 
-        Map<String, List<T>> mapData = new HashMap<>();
+    return listFiltered;
+  }
 
-        String field = listGroupbyfields.get(0);
+  public static <T> List<T> groupByField(List<T> listData, List<String> listGroupbyfields, List<IFiCol> listCol, Class<T> clazz) {
 
-        // map list e çevrildi
-        for (T entity : listData) {
+    if (FiCollection.isEmpty(listGroupbyfields)) return null;
 
-            String key = FiReflection.getProperty(entity, field).toString();
+    Map<String, List<T>> mapData = new HashMap<>();
 
-            if (!mapData.containsKey(key)) mapData.put(key, new ArrayList<>());
+    String field = listGroupbyfields.get(0);
 
-            mapData.get(key).add(entity);
-        }
+    // map list e çevrildi
+    for (T entity : listData) {
 
-        List<T> listFiltered = new ArrayList<>();
+      String key = FiReflection.getProperty(entity, field).toString();
 
-        // gruplanarak grup özeti çıkarılır
-        for (String keyData : mapData.keySet()) {
+      if (!mapData.containsKey(key)) mapData.put(key, new ArrayList<>());
 
-            List<T> listDataByKey = mapData.get(keyData);
+      mapData.get(key).add(entity);
+    }
 
-            T filteredEntity = new FiReflection().generateObject(clazz);
+    List<T> listFiltered = new ArrayList<>();
 
-            T exampleObj = listDataByKey.get(0);
+    // gruplanarak grup özeti çıkarılır
+    for (String keyData : mapData.keySet()) {
 
-            for (String fieldGrouped : listGroupbyfields) {
-                Object objectColValue = FiReflection.getProperty(exampleObj, fieldGrouped);
-                new FiReflection().setter(filteredEntity, fieldGrouped, objectColValue);
-            }
+      List<T> listDataByKey = mapData.get(keyData);
 
-            for (IFiCol oztablecol : listCol) {
+      T filteredEntity = new FiReflection().generateObject(clazz);
 
-                Object objectColValue = FiReflection.getProperty(exampleObj, oztablecol.getFcTxFieldName());
+      T exampleObj = listDataByKey.get(0);
 
-                // yukarıda yapıldığı için atlanır
-                if (listGroupbyfields.contains(oztablecol.getFcTxFieldName())) {
-                    continue;
-                    //new FiProperty().setter(filteredEntity, oztablecol, objectColValue);
-                }
+      for (String fieldGrouped : listGroupbyfields) {
+        Object objectColValue = FiReflection.getProperty(exampleObj, fieldGrouped);
+        new FiReflection().setter(filteredEntity, fieldGrouped, objectColValue);
+      }
 
-                if (objectColValue instanceof Double) {
+      for (IFiCol oztablecol : listCol) {
 
-                    Double sumDouble = FiNumberToText.sumValuesDouble(listDataByKey, ent -> {
-                        Object objectByField = FiReflection.getProperty(ent, oztablecol.getFcTxFieldName());
-                        if (objectByField == null) return 0d;
-                        return (Double) objectByField;
-                    });
+        Object objectColValue = FiReflection.getProperty(exampleObj, oztablecol.getFcTxFieldName());
 
-                    new FiReflection().setter(filteredEntity, oztablecol, sumDouble);
-                }
+        // yukarıda yapıldığı için atlanır
+        if (listGroupbyfields.contains(oztablecol.getFcTxFieldName())) {
+          continue;
+          //new FiProperty().setter(filteredEntity, oztablecol, objectColValue);
+        }
 
-            }
+        if (objectColValue instanceof Double) {
 
-            listFiltered.add(filteredEntity);
+          Double sumDouble = FiNumberToText.sumValuesDouble(listDataByKey, ent -> {
+            Object objectByField = FiReflection.getProperty(ent, oztablecol.getFcTxFieldName());
+            if (objectByField == null) return 0d;
+            return (Double) objectByField;
+          });
 
+          new FiReflection().setter(filteredEntity, oztablecol, sumDouble);
         }
+
+      }
 
+      listFiltered.add(filteredEntity);
 
-        return listFiltered;
     }
 
-    public static <T> Map<String, List<T>> groupByFieldToMap(List<T> listData, String field) {
 
-        if (field == null) return null;
+    return listFiltered;
+  }
 
-        Map<String, List<T>> mapData = new HashMap<>();
+  public static <T> Map<String, List<T>> groupByFieldToMap(List<T> listData, String field) {
 
-        // map list e çevrildi
-        for (T entity : listData) {
+    if (field == null) return null;
 
-            String key = FiReflection.getProperty(entity, field).toString();
+    Map<String, List<T>> mapData = new HashMap<>();
 
-            if (!mapData.containsKey(key)) mapData.put(key, new ArrayList<>());
+    // map list e çevrildi
+    for (T entity : listData) {
 
-            mapData.get(key).add(entity);
-        }
+      String key = FiReflection.getProperty(entity, field).toString();
+
+      if (!mapData.containsKey(key)) mapData.put(key, new ArrayList<>());
 
-        return mapData;
+      mapData.get(key).add(entity);
     }
 
-    public static <T> Map<String, List<T>> groupByFieldToMap(List<T> listData, Function<T, ?> getterFunc) {
+    return mapData;
+  }
 
-        if (getterFunc == null) return null;
+  public static <T> Map<String, List<T>> groupByFieldToMap(List<T> listData, Function<T, ?> getterFunc) {
 
-        //Arrays.asList(1,2).forEach();
+    if (getterFunc == null) return null;
 
-        Map<String, List<T>> mapData = new HashMap<>();
+    //Arrays.asList(1,2).forEach();
 
-        // map list e çevrildi
-        for (T entity : listData) {
+    Map<String, List<T>> mapData = new HashMap<>();
 
-            String key = getterFunc.apply(entity).toString();
+    // map list e çevrildi
+    for (T entity : listData) {
 
-            if (!mapData.containsKey(key)) mapData.put(key, new ArrayList<>());
+      String key = getterFunc.apply(entity).toString();
 
-            mapData.get(key).add(entity);
-        }
+      if (!mapData.containsKey(key)) mapData.put(key, new ArrayList<>());
 
-        return mapData;
+      mapData.get(key).add(entity);
     }
 
-    public static <T, R> Map<R, List<T>> groupByFieldToMap2(List<T> listData, Function<T, R> getterFunc) {
+    return mapData;
+  }
 
-        if (getterFunc == null) return null;
+  public static <T, R> Map<R, List<T>> groupByFieldToMap2(List<T> listData, Function<T, R> getterFunc) {
 
-        //Arrays.asList(1,2).forEach();
+    if (getterFunc == null) return null;
 
-        Map<R, List<T>> mapData = new HashMap<>();
+    //Arrays.asList(1,2).forEach();
 
-        // map list e çevrildi
-        for (T entity : listData) {
+    Map<R, List<T>> mapData = new HashMap<>();
 
-            R key = getterFunc.apply(entity);
+    // map list e çevrildi
+    for (T entity : listData) {
 
-            if (!mapData.containsKey(key)) mapData.put(key, new ArrayList<>());
+      R key = getterFunc.apply(entity);
 
-            mapData.get(key).add(entity);
-        }
+      if (!mapData.containsKey(key)) mapData.put(key, new ArrayList<>());
 
-        return mapData;
+      mapData.get(key).add(entity);
     }
 
+    return mapData;
+  }
 
-    public static <T, R> List<R> mapToList(Map<T, R> mapData) {
 
-        List<R> list = new ArrayList<>();
-        mapData.values().forEach(ent -> list.add(ent));
+  public static <T, R> List<R> mapToList(Map<T, R> mapData) {
 
-        return list;
+    List<R> list = new ArrayList<>();
+    mapData.values().forEach(ent -> list.add(ent));
 
-
-    }
+    return list;
 
-    /**
-     * Predicate'den True dönen elemanları siler.
-     *
-     * @param listData
-     * @param predRemove
-     * @param <E>
-     */
-    public static <E> void removeListItems(List<E> listData, Predicate<E> predRemove) {
 
-        if (listData == null || predRemove == null) return;
+  }
 
-        for (ListIterator<E> iter = listData.listIterator(); iter.hasNext(); ) {
+  /**
+   * Predicate'den True dönen elemanları siler.
+   *
+   * @param listData
+   * @param predRemove
+   * @param <E>
+   */
+  public static <E> void removeListItems(List<E> listData, Predicate<E> predRemove) {
 
-            E element = iter.next();
+    if (listData == null || predRemove == null) return;
 
-            if (predRemove.test(element)) iter.remove();
+    for (ListIterator<E> iter = listData.listIterator(); iter.hasNext(); ) {
 
-            // 1 - can call methods of element
-            // 2 - can use iter.remove() to remove the current element from the list
-            // 3 - can use iter.add(...) to insert a new element into the list
-            //     between element and iter->next()
-            // 4 - can use iter.set(...) to replace the current element
+      E element = iter.next();
 
-            // ...
+      if (predRemove.test(element)) iter.remove();
 
-        }
+      // 1 - can call methods of element
+      // 2 - can use iter.remove() to remove the current element from the list
+      // 3 - can use iter.add(...) to insert a new element into the list
+      //     between element and iter->next()
+      // 4 - can use iter.set(...) to replace the current element
 
+      // ...
 
     }
 
-    public static void addIfNotNull(Map<String, Object> mapParam, String key, Object value) {
-        if (value != null) mapParam.put(key, value);
-    }
 
-    /**
-     * list içindeki değerleri fonksiyona göre string olarak birleştirir (deparsing)
-     *
-     * @param listSelected
-     * @param fnTxValue
-     * @param <E>
-     * @return
-     */
-    public static <E> String commaSeperatedDeParseMain(List<E> listSelected, Function<E, Object> fnTxValue) {
-        if (listSelected == null || listSelected.size() == 0) return "";
+  }
 
-        StringBuilder result = new StringBuilder();
-        int index = 0;
-        for (E entity : listSelected) {
-            Object txValue = fnTxValue.apply(entity);
-            if (txValue == null) continue;
+  public static void addIfNotNull(Map<String, Object> mapParam, String key, Object value) {
+    if (value != null) mapParam.put(key, value);
+  }
 
-            index++;
-            if (index != 1) {
-                result.append(",");
-            }
+  /**
+   * list içindeki değerleri fonksiyona göre string olarak birleştirir (deparsing)
+   *
+   * @param listSelected
+   * @param fnTxValue
+   * @param <E>
+   * @return
+   */
+  public static <E> String commaSeperatedDeParseMain(List<E> listSelected, Function<E, Object> fnTxValue) {
+    if (listSelected == null || listSelected.size() == 0) return "";
 
-            result.append(txValue.toString());
+    StringBuilder result = new StringBuilder();
+    int index = 0;
+    for (E entity : listSelected) {
+      Object txValue = fnTxValue.apply(entity);
+      if (txValue == null) continue;
 
-        }
+      index++;
+      if (index != 1) {
+        result.append(",");
+      }
 
-        return result.toString();
+      result.append(txValue.toString());
+
     }
 
-    public static String commaSeperatedDeParseWithKesmeWoutEmpty(List<String> listSelected) {
-        if (listSelected == null || listSelected.size() == 0) return "";
+    return result.toString();
+  }
 
-        StringBuilder result = new StringBuilder();
-        int index = 0;
-        for (String txValue : listSelected) {
-            if (FiString.isEmpty(txValue)) continue;
+  public static String commaSeperatedDeParseWithKesmeWoutEmpty(List<String> listSelected) {
+    if (listSelected == null || listSelected.size() == 0) return "";
 
-            index++;
-            if (index != 1) {
-                result.append(",");
-            }
-            result.append("'" + txValue.toString() + "'");
-        }
-        return result.toString();
-    }
+    StringBuilder result = new StringBuilder();
+    int index = 0;
+    for (String txValue : listSelected) {
+      if (FiString.isEmpty(txValue)) continue;
 
-    public static String commaSeperatedDeParseIntList(List<Integer> listSelected) {
-        return commaSeperatedDeParseMain(listSelected, lnValue -> lnValue);
+      index++;
+      if (index != 1) {
+        result.append(",");
+      }
+      result.append("'" + txValue.toString() + "'");
     }
+    return result.toString();
+  }
 
-    public static String commaSeperatedDeParseStringWoutEmpty(List<String> listSelected) {
-        if (listSelected == null || listSelected.size() == 0) return "";
+  public static String commaSeperatedDeParseIntList(List<Integer> listSelected) {
+    return commaSeperatedDeParseMain(listSelected, lnValue -> lnValue);
+  }
 
-        StringBuilder result = new StringBuilder();
-        int index = 0;
-        for (String txValue : listSelected) {
-            if (FiString.isEmpty(txValue)) continue;
+  public static String commaSeperatedDeParseStringWoutEmpty(List<String> listSelected) {
+    if (listSelected == null || listSelected.size() == 0) return "";
 
-            index++;
-            if (index != 1) {
-                result.append(",");
-            }
-            result.append(txValue.toString());
-        }
+    StringBuilder result = new StringBuilder();
+    int index = 0;
+    for (String txValue : listSelected) {
+      if (FiString.isEmpty(txValue)) continue;
 
-        return result.toString();
+      index++;
+      if (index != 1) {
+        result.append(",");
+      }
+      result.append(txValue.toString());
     }
 
+    return result.toString();
+  }
 
-    /**
-     * string değeri virgüle göre değerlere ayrıştırır(parsing). Değerleri listeye ekler.
-     *
-     * @param txCommaSeperated
-     * @return
-     */
-    public static List<String> commaSeperatedParseToStrList(String txCommaSeperated) {
 
-        if (txCommaSeperated == null) return new ArrayList<>();
+  /**
+   * string değeri virgüle göre değerlere ayrıştırır(parsing). Değerleri listeye ekler.
+   *
+   * @param txCommaSeperated
+   * @return
+   */
+  public static List<String> commaSeperatedParseToStrList(String txCommaSeperated) {
 
-        List<String> listData = new ArrayList<>();
+    if (txCommaSeperated == null) return new ArrayList<>();
 
-        String[] splitData = txCommaSeperated.split(",");
-
-        for (String item : splitData) {
-            if (!FiString.isEmpty(item)) {
-                listData.add(item);
-            }
-        }
+    List<String> listData = new ArrayList<>();
 
-        return listData;
+    String[] splitData = txCommaSeperated.split(",");
 
+    for (String item : splitData) {
+      if (!FiString.isEmpty(item)) {
+        listData.add(item);
+      }
     }
 
-    public static List<FiMeta> commaSeperatedParseToStrListMeta(String txCommaSeperated) {
+    return listData;
 
-        if (txCommaSeperated == null) return new ArrayList<>();
+  }
 
-        List<FiMeta> listData = new ArrayList<>();
+  public static List<FiMeta> commaSeperatedParseToStrListMeta(String txCommaSeperated) {
 
-        String[] splitData = txCommaSeperated.split(",");
+    if (txCommaSeperated == null) return new ArrayList<>();
 
-        for (String item : splitData) {
-            if (!FiString.isEmpty(item)) {
-                listData.add(FiMeta.bui(item));
-            }
-        }
+    List<FiMeta> listData = new ArrayList<>();
 
-        return listData;
+    String[] splitData = txCommaSeperated.split(",");
 
+    for (String item : splitData) {
+      if (!FiString.isEmpty(item)) {
+        listData.add(FiMeta.bui(item));
+      }
     }
 
-    public static List<Integer> commaSeperatedParseToIntList(String txCommaSeperated) {
+    return listData;
 
-        if (txCommaSeperated == null) return new ArrayList<>();
+  }
 
-        List<Integer> listData = new ArrayList<>();
+  public static List<Integer> commaSeperatedParseToIntList(String txCommaSeperated) {
 
-        String[] splitData = txCommaSeperated.split(",");
+    if (txCommaSeperated == null) return new ArrayList<>();
 
-        for (String item : splitData) {
-            if (!FiString.isEmpty(item)) {
-                try {
-                    Integer parsed = Integer.parseInt(item);
-                    listData.add(parsed);
-                } catch (Exception ex) {
-                    Loghelper.debugException(FiCollection.class, ex);
-                }
-            }
-        }
+    List<Integer> listData = new ArrayList<>();
 
-        return listData;
+    String[] splitData = txCommaSeperated.split(",");
 
+    for (String item : splitData) {
+      if (!FiString.isEmpty(item)) {
+        try {
+          Integer parsed = Integer.parseInt(item);
+          listData.add(parsed);
+        } catch (Exception ex) {
+          Loghelper.debugException(FiCollection.class, ex);
+        }
+      }
     }
 
-    /**
-     * Null değerler eklenmez
-     *
-     * @param listSelected
-     * @param fnTxValue
-     * @param <E>
-     * @return
-     */
-    public static <E> List<String> listToListString(List<E> listSelected, Function<E, String> fnTxValue) {
-        if (listSelected == null) return null;
-        if (listSelected.size() == 0) return new ArrayList<>();
+    return listData;
 
-        List<String> list = new ArrayList<>();
+  }
 
-        for (E entity : listSelected) {
+  /**
+   * Null değerler eklenmez
+   *
+   * @param listSelected
+   * @param fnTxValue
+   * @param <E>
+   * @return
+   */
+  public static <E> List<String> listToListString(List<E> listSelected, Function<E, String> fnTxValue) {
+    if (listSelected == null) return null;
+    if (listSelected.size() == 0) return new ArrayList<>();
 
-            String txValue = fnTxValue.apply(entity);
+    List<String> list = new ArrayList<>();
 
-            if (txValue != null) {
-                list.add(txValue);
-            }
+    for (E entity : listSelected) {
 
-        }
+      String txValue = fnTxValue.apply(entity);
 
-        return list;
+      if (txValue != null) {
+        list.add(txValue);
+      }
 
     }
 
-    /**
-     * Null Değerler eklenmez
-     *
-     * @param listSelected
-     * @param fnTxValue
-     * @param <E>
-     * @return
-     */
-    public static <E> List<Integer> listToListInt(List<E> listSelected, Function<E, Integer> fnTxValue) {
+    return list;
 
-        if (listSelected == null) return null;
-        if (listSelected.size() == 0) return new ArrayList<>();
+  }
 
-        List<Integer> list = new ArrayList<>();
+  /**
+   * Null Değerler eklenmez
+   *
+   * @param listSelected
+   * @param fnTxValue
+   * @param <E>
+   * @return
+   */
+  public static <E> List<Integer> listToListInt(List<E> listSelected, Function<E, Integer> fnTxValue) {
 
-        for (E entity : listSelected) {
+    if (listSelected == null) return null;
+    if (listSelected.size() == 0) return new ArrayList<>();
 
-            Integer txValue = fnTxValue.apply(entity);
+    List<Integer> list = new ArrayList<>();
 
-            if (txValue != null) {
-                list.add(txValue);
-            }
+    for (E entity : listSelected) {
 
-        }
+      Integer txValue = fnTxValue.apply(entity);
 
-        return list;
+      if (txValue != null) {
+        list.add(txValue);
+      }
 
     }
 
-    public static <E> Integer[] listToArrayInt(List<E> listSelected, Function<E, Integer> fnTxValue) {
+    return list;
 
-        if (listSelected == null) return null;
-        if (listSelected.size() == 0) return new Integer[0];
+  }
 
-        Integer[] list = new Integer[listSelected.size()];
+  public static <E> Integer[] listToArrayInt(List<E> listSelected, Function<E, Integer> fnTxValue) {
 
-        int index = -1;
-        for (E entity : listSelected) {
+    if (listSelected == null) return null;
+    if (listSelected.size() == 0) return new Integer[0];
 
-            Integer txValue = fnTxValue.apply(entity);
+    Integer[] list = new Integer[listSelected.size()];
 
-            if (txValue != null) {
-                index++;
-                list[index] = txValue;
-            }
+    int index = -1;
+    for (E entity : listSelected) {
 
-        }
+      Integer txValue = fnTxValue.apply(entity);
 
-        return list;
+      if (txValue != null) {
+        index++;
+        list[index] = txValue;
+      }
 
     }
 
-    public static <A> List<A> getItemsByBoField(List<A> listData, String boolField) {
+    return list;
 
-        List<A> listSelect = new ArrayList<>();
+  }
 
-        listData.forEach(ent -> {
+  public static <A> List<A> getItemsByBoField(List<A> listData, String boolField) {
 
-            try {
-                Boolean aBoolean = FiBool.convertBooleanElseFalse(PropertyUtils.getNestedProperty(ent, boolField));
-                if (aBoolean) {
-                    listSelect.add(ent);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+    List<A> listSelect = new ArrayList<>();
 
-        });
+    listData.forEach(ent -> {
 
-        return listSelect;
-    }
+      try {
+        Boolean aBoolean = FiBool.convertBooleanElseFalse(PropertyUtils.getNestedProperty(ent, boolField));
+        if (aBoolean) {
+          listSelect.add(ent);
+        }
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
 
-    /**
-     * List'e Entity'sini verilen fonksiyon ile dönüştürülmüş yeni bir liste döndürür. List_OldClass -> List_NewClass
-     *
-     * @param listDataOld
-     * @param convertFunction
-     * @return
-     * @param <NewClazz>
-     * @param <OldClazz>
-     */
-    public static <NewClazz, OldClazz> List<NewClazz> convertEntityOfList(Collection<OldClazz> listDataOld, Function<OldClazz, NewClazz> convertFunction) {
+    });
 
-        List<NewClazz> listNew = new ArrayList<>();
+    return listSelect;
+  }
 
-        for (OldClazz oldClazz : listDataOld) {
-            listNew.add(convertFunction.apply(oldClazz));
-        }
+  /**
+   * List'e Entity'sini verilen fonksiyon ile dönüştürülmüş yeni bir liste döndürür. List_OldClass -> List_NewClass
+   *
+   * @param listDataOld
+   * @param convertFunction
+   * @param <NewClazz>
+   * @param <OldClazz>
+   * @return
+   */
+  public static <NewClazz, OldClazz> List<NewClazz> convertEntityOfList(Collection<OldClazz> listDataOld, Function<OldClazz, NewClazz> convertFunction) {
+
+    List<NewClazz> listNew = new ArrayList<>();
 
-        return listNew;
+    for (OldClazz oldClazz : listDataOld) {
+      listNew.add(convertFunction.apply(oldClazz));
     }
 
-    public static String joinList(List listData, String txJoin) {
+    return listNew;
+  }
 
-        StringBuilder joinString = new StringBuilder("");
-        int i = 1;
-        for (Object listDatum : listData) {
-            if (listDatum == null) continue;
-            if (i != 1) joinString.append(txJoin);
-            joinString.append(listDatum.toString());
-            i++;
-        }
+  public static String joinList(List listData, String txJoin) {
 
-        return joinString.toString();
+    StringBuilder joinString = new StringBuilder("");
+    int i = 1;
+    for (Object listDatum : listData) {
+      if (listDatum == null) continue;
+      if (i != 1) joinString.append(txJoin);
+      joinString.append(listDatum.toString());
+      i++;
     }
 
-    public static <PrmEnt> Double sumDouble(Collection<PrmEnt> itemsCheckedByBoSecimAsList, Function<PrmEnt, Double> fnValue) {
+    return joinString.toString();
+  }
 
-        Double dbSum = 0d;
+  public static <PrmEnt> Double sumDouble(Collection<PrmEnt> itemsCheckedByBoSecimAsList, Function<PrmEnt, Double> fnValue) {
 
-        for (PrmEnt prmEnt : itemsCheckedByBoSecimAsList) {
-            Double value = fnValue.apply(prmEnt);
-            if (value == null) value = 0d;
-            dbSum += value;
-        }
+    Double dbSum = 0d;
 
-        return dbSum;
+    for (PrmEnt prmEnt : itemsCheckedByBoSecimAsList) {
+      Double value = fnValue.apply(prmEnt);
+      if (value == null) value = 0d;
+      dbSum += value;
     }
 
-    public static <PrmEnt> Integer findMinInt(Collection<PrmEnt> hizmetHareketList, Function<PrmEnt, Integer> fnGetInteger) {
+    return dbSum;
+  }
 
-        Integer min = null;
+  public static <PrmEnt> Integer findMinInt(Collection<PrmEnt> hizmetHareketList, Function<PrmEnt, Integer> fnGetInteger) {
 
-        for (PrmEnt prmEnt : hizmetHareketList) {
+    Integer min = null;
 
-            Integer tempValue = fnGetInteger.apply(prmEnt);
-            if (tempValue == null) continue;
+    for (PrmEnt prmEnt : hizmetHareketList) {
 
-            if (min == null) {
-                min = tempValue;
-                continue;
-            }
+      Integer tempValue = fnGetInteger.apply(prmEnt);
+      if (tempValue == null) continue;
 
-            if (tempValue < min) {
-                min = tempValue;
-            }
+      if (min == null) {
+        min = tempValue;
+        continue;
+      }
 
-        }
+      if (tempValue < min) {
+        min = tempValue;
+      }
 
-        return min;
     }
 
-    public static <PrmEnt> Date findMinDate(Collection<PrmEnt> hizmetHareketList, Function<PrmEnt, Date> fnGetInteger) {
+    return min;
+  }
 
-        Date min = null;
-        for (PrmEnt prmEnt : hizmetHareketList) {
+  public static <PrmEnt> Date findMinDate(Collection<PrmEnt> hizmetHareketList, Function<PrmEnt, Date> fnGetInteger) {
 
-            Date tempValue = fnGetInteger.apply(prmEnt);
-            if (tempValue == null) continue;
+    Date min = null;
+    for (PrmEnt prmEnt : hizmetHareketList) {
 
-            if (min == null) {
-                min = tempValue;
-                continue;
-            }
+      Date tempValue = fnGetInteger.apply(prmEnt);
+      if (tempValue == null) continue;
 
-            if (tempValue.compareTo(min) < 0) {
-                min = tempValue;
-            }
-        }
+      if (min == null) {
+        min = tempValue;
+        continue;
+      }
 
-        return min;
+      if (tempValue.compareTo(min) < 0) {
+        min = tempValue;
+      }
     }
 
-    public static <PrmEnt> Date findMaxDate(Collection<PrmEnt> hizmetHareketList, Function<PrmEnt, Date> fnGetInteger) {
+    return min;
+  }
 
-        Date max = null;
+  public static <PrmEnt> Date findMaxDate(Collection<PrmEnt> hizmetHareketList, Function<PrmEnt, Date> fnGetInteger) {
 
-        for (PrmEnt prmEnt : hizmetHareketList) {
+    Date max = null;
 
-            Date tempValue = fnGetInteger.apply(prmEnt);
-            if (tempValue == null) continue;
+    for (PrmEnt prmEnt : hizmetHareketList) {
 
-            if (max == null) {
-                max = tempValue;
-                continue;
-            }
+      Date tempValue = fnGetInteger.apply(prmEnt);
+      if (tempValue == null) continue;
 
-            if (tempValue.compareTo(max) > 0) {
-                max = tempValue;
-            }
-        }
+      if (max == null) {
+        max = tempValue;
+        continue;
+      }
 
-        return max;
+      if (tempValue.compareTo(max) > 0) {
+        max = tempValue;
+      }
     }
 
-    public static <PrmEnt> PrmEnt findMinDateEntity(Collection<PrmEnt> hizmetHareketList, Function<PrmEnt, Date> fnGetInteger) {
+    return max;
+  }
 
-        Date min = null;
-        PrmEnt minPrmEnt = null;
-        for (PrmEnt prmEnt : hizmetHareketList) {
+  public static <PrmEnt> PrmEnt findMinDateEntity(Collection<PrmEnt> hizmetHareketList, Function<PrmEnt, Date> fnGetInteger) {
 
-            Date tempValue = fnGetInteger.apply(prmEnt);
-            if (tempValue == null) continue;
+    Date min = null;
+    PrmEnt minPrmEnt = null;
+    for (PrmEnt prmEnt : hizmetHareketList) {
 
-            if (min == null) {
-                min = tempValue;
-                minPrmEnt = prmEnt;
-                continue;
-            }
+      Date tempValue = fnGetInteger.apply(prmEnt);
+      if (tempValue == null) continue;
 
-            if (tempValue.compareTo(min) < 0) {
-                min = tempValue;
-                minPrmEnt = prmEnt;
-            }
-        }
+      if (min == null) {
+        min = tempValue;
+        minPrmEnt = prmEnt;
+        continue;
+      }
 
-        return minPrmEnt;
+      if (tempValue.compareTo(min) < 0) {
+        min = tempValue;
+        minPrmEnt = prmEnt;
+      }
     }
+
+    return minPrmEnt;
+  }
+
+  public static boolean isEmptyMap(Map mapData) {
+    if (mapData == null || mapData.size() == 0) return true;
+    return false;
+  }
+
+  /**
+   * Sıralanmış yeni bir liste döndürü, orijinal list'de değişiklik yapmaz.
+   * <p>
+   * Örnek 1 (Comparator ile örnek)
+   * <p>
+   * List sortedListCariHar  = FiCollection.sort(cariEvrak.getListCariHareketInit(), Comparator.comparing(cariHar -> FiNumber.orZero(cariHar.getCha_satir_no())));
+   *
+   * @param listData
+   * @param comparator varsayılan olarak küçükten büyüğe sıralar. Örneğin -1,0,1 gibi..., tam tersine çevirmek için -1 ile çarpılır.
+   * @param <E>
+   * @return
+   */
+  public static <E> List<E> sort(List<E> listData, Comparator<E> comparator) {
+    return listData.stream().sorted(comparator).collect(Collectors.toList());
+
+  }
+
+  public static List orValue(List value, List orValue) {
+    if (value == null) return orValue;
+    return value;
+  }
 
-    public static boolean isEmptyMap(Map mapData) {
-        if (mapData == null || mapData.size() == 0) return true;
-        return false;
+  public static <E> List<E> toList(E... entObject) {
+    List<E> list = new ArrayList<>();
+    for (E tempObj : entObject) {
+      list.add(tempObj);
     }
+    return list;
+  }
 
-    /**
-     * Sıralanmış yeni bir liste döndürü, orijinal list'de değişiklik yapmaz.
-     * <p>
-     * Örnek 1 (Comparator ile örnek)
-     * <p>
-     * List sortedListCariHar  = FiCollection.sort(cariEvrak.getListCariHareketInit(), Comparator.comparing(cariHar -> FiNumber.orZero(cariHar.getCha_satir_no())));
-     *
-     * @param listData
-     * @param comparator varsayılan olarak küçükten büyüğe sıralar. Örneğin -1,0,1 gibi..., tam tersine çevirmek için -1 ile çarpılır.
-     * @param <E>
-     * @return
-     */
-    public static <E> List<E> sort(List<E> listData, Comparator<E> comparator) {
-        return listData.stream().sorted(comparator).collect(Collectors.toList());
+  public static <PrmEnt> Boolean containsEmptyString(List<PrmEnt> value, Function<PrmEnt, String> getApcTxValue) {
 
+    Boolean boEmptyfound = false;
+
+    for (PrmEnt prmEnt : value) {
+      if (FiString.isEmpty(getApcTxValue.apply(prmEnt))) {
+        boEmptyfound = true;
+        break;
+      }
     }
+
+    return boEmptyfound;
+  }
+
+  public static boolean contains(Map<String, String> mapStHaricInit, Set<String> setStKod) {
+    if (mapStHaricInit.isEmpty()) return false;
+    if (setStKod.isEmpty()) return false;
+
+    for (String txValue : setStKod) {
+      if (mapStHaricInit.containsKey(txValue)) {
+        return true;
+      }
 
-    public static List orValue(List value, List orValue) {
-        if (value == null) return orValue;
-        return value;
     }
+    return false;
+  }
 
-    public static <E> List<E> toList(E... entObject) {
-        List<E> list = new ArrayList<>();
-        for (E tempObj : entObject) {
-            list.add(tempObj);
+  /**
+   * @param listDbEntAppConfig
+   * @param allMapByGuid
+   * @param fnKey
+   * @param fnAddingExtraInfoDbAndMeta param1 : DbObject, param2 : MetaObject
+   * @param <PrmEntity>
+   */
+  public static <PrmEntity> void completeListByMetaList(List<PrmEntity> listDbEntAppConfig, Map<String, PrmEntity> allMapByGuid, Function<PrmEntity, String> fnKey
+      , BiConsumer<PrmEntity, PrmEntity> fnAddingExtraInfoDbAndMeta
+      , Consumer<PrmEntity> fnAddingExtraInfoForMeta) {
+
+    // Db config objesine, ek bilgilerin eklenmesi (ayar adı vs)
+    for (PrmEntity prmEntity : listDbEntAppConfig) {
+      if (allMapByGuid.containsKey(fnKey.apply(prmEntity))) {
+        PrmEntity metaPrmEntity = allMapByGuid.get(fnKey.apply(prmEntity));
+
+        if (fnAddingExtraInfoDbAndMeta != null) {
+          fnAddingExtraInfoDbAndMeta.accept(prmEntity, metaPrmEntity);
         }
-        return list;
-    }
 
-    public static <PrmEnt> Boolean containsEmptyString(List<PrmEnt> value, Function<PrmEnt, String> getApcTxValue) {
+      }
+    }
 
-        Boolean boEmptyfound = false;
+    // vt'de olmayan ayarların eklenmesi
+    Set<String> setDb = FiCollection.listToSetByKeyValue(listDbEntAppConfig, fnKey);
 
-        for (PrmEnt prmEnt : value) {
-            if (FiString.isEmpty(getApcTxValue.apply(prmEnt))) {
-                boEmptyfound = true;
-                break;
-            }
+    for (PrmEntity prmEntity : allMapByGuid.values()) {
+      if (!setDb.contains(fnKey.apply(prmEntity))) {
+        // MetaObjesine eklenecek bilgiler
+        if (fnAddingExtraInfoForMeta != null) {
+          fnAddingExtraInfoForMeta.accept(prmEntity);
         }
 
-        return boEmptyfound;
+        listDbEntAppConfig.add(prmEntity);
+      }
     }
+  }
 
-    public static boolean contains(Map<String, String> mapStHaricInit, Set<String> setStKod) {
-        if (mapStHaricInit.isEmpty()) return false;
-        if (setStKod.isEmpty()) return false;
+  public static Integer getSizeOrZero(Collection collection) {
+    if (collection == null) return 0;
+    return collection.size();
+  }
 
-        for (String txValue : setStKod) {
-            if (mapStHaricInit.containsKey(txValue)) {
-                return true;
-            }
+  public static <Mt> void addInspect(String txKey, Mt object, Map<String, FiInspect<Mt>> mapBelgeler) {
 
-        }
-        return false;
-    }
-
-    /**
-     * @param listDbEntAppConfig
-     * @param allMapByGuid
-     * @param fnKey
-     * @param fnAddingExtraInfoDbAndMeta param1 : DbObject, param2 : MetaObject
-     * @param <PrmEntity>
-     */
-    public static <PrmEntity> void completeListByMetaList(List<PrmEntity> listDbEntAppConfig, Map<String, PrmEntity> allMapByGuid, Function<PrmEntity, String> fnKey
-            , BiConsumer<PrmEntity, PrmEntity> fnAddingExtraInfoDbAndMeta
-            , Consumer<PrmEntity> fnAddingExtraInfoForMeta) {
-
-        // Db config objesine, ek bilgilerin eklenmesi (ayar adı vs)
-        for (PrmEntity prmEntity : listDbEntAppConfig) {
-            if (allMapByGuid.containsKey(fnKey.apply(prmEntity))) {
-                PrmEntity metaPrmEntity = allMapByGuid.get(fnKey.apply(prmEntity));
-
-                if (fnAddingExtraInfoDbAndMeta != null) {
-                    fnAddingExtraInfoDbAndMeta.accept(prmEntity, metaPrmEntity);
-                }
-
-            }
-        }
+    FiInspect<Mt> fiInspect = null;
 
-        // vt'de olmayan ayarların eklenmesi
-        Set<String> setDb = FiCollection.listToSetByKeyValue(listDbEntAppConfig, fnKey);
-
-        for (PrmEntity prmEntity : allMapByGuid.values()) {
-            if (!setDb.contains(fnKey.apply(prmEntity))) {
-                // MetaObjesine eklenecek bilgiler
-                if (fnAddingExtraInfoForMeta != null) {
-                    fnAddingExtraInfoForMeta.accept(prmEntity);
-                }
-
-                listDbEntAppConfig.add(prmEntity);
-            }
-        }
+    if (mapBelgeler.containsKey(txKey)) {
+      fiInspect = mapBelgeler.get(txKey);
+      fiInspect.incCount1();
+      fiInspect.getListEntityInit().add(object);
+    } else {
+      fiInspect = new FiInspect();
+      fiInspect.incCount1();
+      fiInspect.getListEntityInit().add(object);
+      mapBelgeler.put(txKey, fiInspect);
     }
 
-    public static Integer getSizeOrZero(Collection collection) {
-        if (collection == null) return 0;
-        return collection.size();
+  }
+
+  public static boolean isListOfType(Object edmInvoiceStatusList, Class emsEdmInvoiceStatusClass) {
+    if (edmInvoiceStatusList instanceof List<?>) {
+      List<?> tempList = (List<?>) edmInvoiceStatusList;
+      if (!tempList.isEmpty()) {
+        return emsEdmInvoiceStatusClass.isInstance(tempList.get(0));
+      }
     }
+    return false;
+  }
 
-    public static <Mt> void addInspect(String txKey, Mt object, Map<String, FiInspect<Mt>> mapBelgeler) {
+  /**
+   * Partitions the given collection into parts of size {@code partSize} and returns
+   * a map where the key is the 1-based part number and the value is the list for that part.
+   *
+   * @param collection the source collection (must not be null)
+   * @param partSize   size of each part (must be > 0)
+   * @param <T>        element type
+   * @return LinkedHashMap with partNumber -> List&lt;T&gt; (empty map for empty collection)
+   * @throws IllegalArgumentException for invalid arguments
+   */
+  public static <T> Map<Integer, List<T>> partition(Collection<T> collection, int partSize) {
+    if (collection == null) {
+      throw new IllegalArgumentException("collection must not be null");
+    }
+    if (partSize <= 0) {
+      throw new IllegalArgumentException("partSize must be > 0");
+    }
 
-        FiInspect<Mt> fiInspect = null;
+    Map<Integer, List<T>> result = new LinkedHashMap<>();
+    if (collection.isEmpty()) {
+      return result;
+    }
 
-        if (mapBelgeler.containsKey(txKey)) {
-            fiInspect = mapBelgeler.get(txKey);
-            fiInspect.incCount1();
-            fiInspect.getListEntityInit().add(object);
-        } else {
-            fiInspect = new FiInspect();
-            fiInspect.incCount1();
-            fiInspect.getListEntityInit().add(object);
-            mapBelgeler.put(txKey, fiInspect);
-        }
+    List<T> list = new ArrayList<>(collection);
+    int total = list.size();
+    int parts = (int) Math.ceil((double) total / partSize);
 
+    for (int i = 0; i < parts; i++) {
+      int start = i * partSize;
+      int end = Math.min(start + partSize, total);
+      result.put(i + 1, new ArrayList<>(list.subList(start, end)));
     }
 
-    public static boolean isListOfType(Object edmInvoiceStatusList, Class emsEdmInvoiceStatusClass) {
-        if (edmInvoiceStatusList instanceof List<?>) {
-            List<?> tempList = (List<?>) edmInvoiceStatusList;
-            if (!tempList.isEmpty()) {
-                return emsEdmInvoiceStatusClass.isInstance(tempList.get(0));
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Partitions the given collection into parts of size {@code partSize} and returns
-     * a map where the key is the 1-based part number and the value is the list for that part.
-     *
-     * @param collection the source collection (must not be null)
-     * @param partSize size of each part (must be > 0)
-     * @param <T> element type
-     * @return LinkedHashMap with partNumber -> List&lt;T&gt; (empty map for empty collection)
-     * @throws IllegalArgumentException for invalid arguments
-     */
-    public static <T> Map<Integer, List<T>> partition(Collection<T> collection, int partSize) {
-        if (collection == null) {
-            throw new IllegalArgumentException("collection must not be null");
-        }
-        if (partSize <= 0) {
-            throw new IllegalArgumentException("partSize must be > 0");
-        }
+    return result;
+  }
 
-        Map<Integer, List<T>> result = new LinkedHashMap<>();
-        if (collection.isEmpty()) {
-            return result;
-        }
+  public static <T> List<T> filter(List<T> coll, Filter<T> filter) {
+    List<T> result = new ArrayList<>();
+    for (T t : coll)
+      if (filter.accept(t))
+        result.add(t);
+    return result;
+  }
 
-        List<T> list = new ArrayList<>(collection);
-        int total = list.size();
-        int parts = (int) Math.ceil((double) total / partSize);
-
-        for (int i = 0; i < parts; i++) {
-            int start = i * partSize;
-            int end = Math.min(start + partSize, total);
-            result.put(i + 1, new ArrayList<>(list.subList(start, end)));
-        }
+  // ilk yakaladığı (filtrenin doğruladığı) elemanın indexi
+  public static <T> int firstIndexOf(List<T> coll, Filter<T> filter) {
+    int i = coll.size();
+    for (int j = 0; j < i; j++)
+      if (filter.accept(coll.get(j)))
+        return j;
+    return -1;
+  }
 
-        return result;
-    }
+  public static <T> int lastIndexOf(List<T> coll, Filter<T> filter) {
+    int i = coll.size();
+    int idx = -1;
+    for (int j = 0; j < i; j++)
+      if (filter.accept(coll.get(j)))
+        idx = j;
+    return idx;
+  }
+
+  public static <T> int firstIndexOf(T[] obj, Filter<T> filter) {
+    int i = obj.length;
+    for (int j = 0; j < i; j++)
+      if (filter.accept(obj[j]))
+        return j;
+    return -1;
+  }
+
+  public static <T> int lastIndexOf(T[] obj, Filter<T> filter) {
+    int i = obj.length;
+    int idx = -1;
+    for (int j = 0; j < i; j++)
+      if (filter.accept(obj[j]))
+        idx = j;
+    return idx;
+  }
+
+  public static <T> Integer[] allMatchIndex(List<T> list, Filter<T> filter) {
+    Integer[] result = new Integer[list.size()];
+    int currentIdx = 0;
+    for (int i = 0; i < list.size(); i++)
+      if (filter.accept(list.get(i)))
+        result[currentIdx++] = i;
+    return (Integer[]) trim(result);
+  }
+
+  public static Object[] trim(Object[] obj) {
+    int nullIndex = -1;
+    for (int i = 0; i < obj.length; i++)
+      if (obj[i] == null)
+        nullIndex = i;
+    Object[] objs = new Object[++nullIndex];
+    for (int i = 0; i < nullIndex; i++)
+      objs[i] = obj[i];
+    return objs;
+  }
+
 
 }
