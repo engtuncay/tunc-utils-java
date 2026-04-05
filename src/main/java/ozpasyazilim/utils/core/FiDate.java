@@ -450,7 +450,9 @@ public class FiDate {
 			return cellvalue;
 		}
 
+		//Date date = HSSFDateUtil.getJavaDate(Double.parseDouble(strDate));
 		if (strDate.matches("[0-9]+[\\,\\.]*[0-9]*")) {
+			// HssfDateUtil, PoiDateUtil olarak util paketine eklendi
 			Date date = HSSFDateUtil.getJavaDate(Double.parseDouble(strDate));
 			cellvalue = date;
 			return cellvalue;

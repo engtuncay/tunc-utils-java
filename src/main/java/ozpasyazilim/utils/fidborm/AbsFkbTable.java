@@ -4,14 +4,12 @@ import ozpasyazilim.utils.datatypes.FiKeybean;
 
 public abstract class AbsFkbTable {
 
-  public static FiKeybean sqTableName()
-  {
+  public static FiKeybean sqTableName() {
     FiKeybean fkbCol = new FiKeybean();
     return fkbCol;
   }
 
-  public static FiKeybean genFkbFields()
-  {
+  public static FiKeybean genFkbFields() {
     FiKeybean fkbCol = new FiKeybean();
     return fkbCol;
   }
