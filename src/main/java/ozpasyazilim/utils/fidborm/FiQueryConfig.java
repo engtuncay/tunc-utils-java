@@ -3,14 +3,15 @@ package ozpasyazilim.utils.fidborm;
 import ozpasyazilim.utils.table.FicList;
 
 /**
- * FiSqlGenConfig : FiSqlGen Query Generation Configuration Class
+ * {@link FiQueryConfig} : FiSqlGen Query Generation Configuration Class
  */
-public class FiSqlGenConfig {
+public class FiQueryConfig {
 
   IFiTableMeta iFiTableMeta;
   FicList fclFields;
-  //FicList ficWhereFields;
   Boolean boUpdateFieldsOnly;
+
+  //FicList ficWhereFields;
 
 
   // Getters and Setters
@@ -31,14 +32,6 @@ public class FiSqlGenConfig {
     this.fclFields = fclFields;
   }
 
-//  public FicList getFicWhereFields() {
-//    return ficWhereFields;
-//  }
-//
-//  public void setFicWhereFields(FicList ficWhereFields) {
-//    this.ficWhereFields = ficWhereFields;
-//  }
-
   public Boolean getBoUpdateFieldsOnly() {
     return boUpdateFieldsOnly;
   }
@@ -46,4 +39,12 @@ public class FiSqlGenConfig {
   public void setBoUpdateFieldsOnly(Boolean boUpdateFieldsOnly) {
     this.boUpdateFieldsOnly = boUpdateFieldsOnly;
   }
+
+//  public FicList getFicWhereFields() {
+//    return ficWhereFields;
+//  }
+//
+//  public void setFicWhereFields(FicList ficWhereFields) {
+//    this.ficWhereFields = ficWhereFields;
+//  }
 }
