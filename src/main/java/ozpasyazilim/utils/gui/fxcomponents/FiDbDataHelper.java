@@ -21,16 +21,16 @@ public class FiDbDataHelper {
         if (objValue == null) return "null";
 
         // Sayısal değerler aynı şekilde verilir
-        if (FiString.equalsOne(dataType, "tinyint", "smallint", "int", "float", "double")) {
+        if (FiString.equalsAny(dataType, "tinyint", "smallint", "int", "float", "double")) {
             return objValue.toString();
         }
 
         // Text değerler çift tırnak içinde verilir
-        if (FiString.equalsOne(dataType, "nvarchar", "varchar")) {
+        if (FiString.equalsAny(dataType, "nvarchar", "varchar")) {
             return "'" + objValue + "'";
         }
 
-        if (FiString.equalsOne(dataType, "datetime")) {
+        if (FiString.equalsAny(dataType, "datetime")) {
             return "'" + objValue + "'";
         }
 

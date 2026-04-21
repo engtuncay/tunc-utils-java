@@ -18,6 +18,7 @@ import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.gui.components.ComboItemText;
 import ozpasyazilim.utils.gui.components.ComboItemObj;
 import ozpasyazilim.utils.log.Loghelper;
+import ozpasyazilim.utils.metadata.fimCodegen.FimOcFieldType;
 import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.core.FiReflection;
 import ozpasyazilim.utils.returntypes.Fdr;
@@ -83,7 +84,7 @@ public class FxEditorFactory {
         String fcTxFieldType = fiCol.getFcTxFieldType();
 
         //if(fcTxFieldType.equals())
-        //if(fcTxFieldType.equals(FimOcFie))
+        if(FiString.equalsOne() fcTxFieldType.equals(FimOcFieldType.f))
 
 
 
@@ -323,7 +324,7 @@ public class FxEditorFactory {
 
     //*** Tarih Componentleri
 
-    if (FiString.equalsOne(txNodeClassName, DatePicker.class.getName(), FxDatePicker.class.getName())) {
+    if (FiString.equalsAny(txNodeClassName, DatePicker.class.getName(), FxDatePicker.class.getName())) {
 
       LocalDate localDate = null;
       String txDate = null;

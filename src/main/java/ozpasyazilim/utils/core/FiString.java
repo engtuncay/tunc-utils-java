@@ -676,7 +676,7 @@ public class FiString {
      * @param txtValueArr
      * @return
      */
-    public static boolean equalsOne(String txCheckValue, String... txtValueArr) {
+    public static boolean equalsAny(String txCheckValue, String... txtValueArr) {
         if (txCheckValue == null) return false;
         for (String val : txtValueArr) {
 
@@ -689,7 +689,7 @@ public class FiString {
         return false;
     }
 
-    public static boolean equalsOne(String txCheckValue, Object... txtValueArr) {
+    public static boolean equalsAny(String txCheckValue, Object... txtValueArr) {
         if (txCheckValue == null) return false;
         for (Object val : txtValueArr) {
 
