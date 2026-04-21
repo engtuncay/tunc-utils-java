@@ -1,25 +1,28 @@
 package ozpasyazilim.utils.gui.fxcomponents;
 
+import ozpasyazilim.utils.table.FiCol;
+
 import java.util.List;
 
 public class FxFormMig extends FxFormMigGen<Object> {
 
-	public FxFormMig() {
-		super();
-//		Loghelper.get(getClass()).debug("fxformig initialized");
-	}
+  public FxFormMig() {
+  }
 
-	public FxFormMig(Class entityClazz) {
-		super(entityClazz);
-	}
+  public FxFormMig(Class<Object> entityClazz) {
+    super(entityClazz);
+  }
 
-	public FxFormMig(List listFormElements) {
-		super(listFormElements);
-	}
+  public FxFormMig(List<FiCol> listFormElements) {
+    super(listFormElements);
+  }
 
-	public FxFormMig(List colsForm, FormType formType) {
-		super(colsForm, formType);
-	}
+  public FxFormMig(List<FiCol> listFormElements, Boolean boInit) {
+    super(listFormElements, boInit);
+  }
 
+  public FxFormMig(FxFormConfig<Object> fxFormConfig) {
+    super(fxFormConfig);
+  }
 
 }

@@ -207,7 +207,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     private TriConsumer<Object, Node, Object> fnEditorNodeRendererWitValue;
 
     /**
-     * bütün form elemanları oluşturulduktan sonra çalıştırılır {@link FxFormMigGen}
+     * bütün form elemanları oluşturulduktan sonra çalıştırılır {@link FxFormMigaGen}
      */
     private Consumer<FiCol> fnEditorNodeLfcAfterAllFormLoad;
 

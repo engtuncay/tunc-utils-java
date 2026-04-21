@@ -41,7 +41,7 @@ public class FxSimDialog<EntClazz> extends AbsFiModBaseCont {
     private FxButton btnCancel;
     private Boolean boInitExecuted;
     private FxLabel lblHeader;
-    private FxFormMigGen fxForm;
+    private FxFormMigaGen fxForm;
 
     //
     private String messageContent;
@@ -69,7 +69,7 @@ public class FxSimDialog<EntClazz> extends AbsFiModBaseCont {
     // Experimental
     private Predicate<EntClazz> predValidateEntity;
 
-    private Predicate<FxFormMigGen> predValidateForm;
+    private Predicate<FxFormMigaGen> predValidateForm;
 
     /**
      * set edilirse actBtnOk kontrol edilir.
@@ -869,18 +869,18 @@ public class FxSimDialog<EntClazz> extends AbsFiModBaseCont {
         this.txInitialValue = txInitialValue;
     }
 
-    public FxFormMigGen getFxFormMigGenInit() {
+    public FxFormMigaGen getFxFormMigGenInit() {
         if (fxForm == null) {
-            fxForm = new FxFormMigGen<>();
+            fxForm = new FxFormMigaGen<>();
         }
         return fxForm;
     }
 
-    public Predicate<FxFormMigGen> getPredValidateForm() {
+    public Predicate<FxFormMigaGen> getPredValidateForm() {
         return predValidateForm;
     }
 
-    public void setPredValidateForm(Predicate<FxFormMigGen> predValidateForm) {
+    public void setPredValidateForm(Predicate<FxFormMigaGen> predValidateForm) {
         this.predValidateForm = predValidateForm;
     }
 
@@ -892,11 +892,11 @@ public class FxSimDialog<EntClazz> extends AbsFiModBaseCont {
         this.runAfterOkEvent = runAfterOkEvent;
     }
 
-    public FxFormMigGen getFxForm() {
+    public FxFormMigaGen getFxForm() {
         return fxForm;
     }
 
-    public void setFxForm(FxFormMigGen fxForm) {
+    public void setFxForm(FxFormMigaGen fxForm) {
         this.fxForm = fxForm;
     }
 
