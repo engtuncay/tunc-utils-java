@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * FxFormc -> FxForm with FxFormConfig
+ * FxForm -> FxForm with FxFormConfig
  * <p>
  * Form config bilgileri, FxFormConfig objesinde tutulur.
  *
@@ -125,7 +125,7 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> implement
                 continue;
             }
 
-            FxEditorFactory.setAutoColEditorClassByColType(fiCol);
+            FxEditorFactory.setAutoColEditorClassByColType2(fiCol);
 
             if (FiString.isEmpty(fiCol.getColEditorClass())) {
                 fiCol.setColEditorClass(FxTextField.class.getName());

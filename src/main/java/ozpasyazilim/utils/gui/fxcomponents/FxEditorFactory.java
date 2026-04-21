@@ -82,9 +82,15 @@ public class FxEditorFactory {
       if (!FiString.isEmpty(fiCol.getFcTxFieldType())) {
 
         String fcTxFieldType = fiCol.getFcTxFieldType();
+        //Loghelper.get(FxEditorFactory.class).debug("fcTxFieldType:"+fcTxFieldType);
 
-        //if(fcTxFieldType.equals())
-        if(FiString.equalsOne() fcTxFieldType.equals(FimOcFieldType.f))
+
+        // 26-04-21
+        if(FiString.equalsAny(fcTxFieldType
+            ,FimOcFieldType.fbool().getValue())
+        ) {
+          txClassName = FxCheckBox.class.getName();
+        }
 
 
 
@@ -903,6 +909,15 @@ public class FxEditorFactory {
 
   }
 
+  public static void setAutoColEditorClassByColType2(FiCol iFiCol) {
+
+    if (iFiCol.getColEditorClass() == null) {
+      String autoColCellFactoryClassByType = FxEditorFactory.getAutoEditorClassMainByOzColType2(iFiCol);
+      iFiCol.setColEditorClass(autoColCellFactoryClassByType);
+    }
+
+  }
+
   /**
    * Ozcoltype göre editor class belirler (formlarda uygulanıyor)
    *
@@ -917,6 +932,39 @@ public class FxEditorFactory {
 
     if (iFiCol.getColType() == OzColType.Boolean) {
       return FxCheckBox.class.getName();
+    }
+
+    return null;
+  }
+
+  /**
+   * Ozcoltype göre editor class belirler (formlarda uygulanıyor)
+   *
+   * @param fiCol
+   * @return
+   */
+  public static String getAutoEditorClassMainByOzColType2(FiCol fiCol) {
+
+    if (fiCol.getColType() == OzColType.Date) {
+      return FxDatePicker.class.getName();
+    }
+
+    if (fiCol.getColType() == OzColType.Boolean) {
+      return FxCheckBox.class.getName();
+    }
+
+    if(!FiString.isEmpty(fiCol.getFcTxFieldType())) {
+
+      String fcTxFieldType = fiCol.getFcTxFieldType();
+
+      if(FiString.equalsAny(fcTxFieldType,FimOcFieldType.fbool().getValue())) {
+        return FxCheckBox.class.getName();
+      }
+
+      if(FiString.equalsAny(fcTxFieldType,FimOcFieldType.fdate().getValue())) {
+        return FxDatePicker.class.getName();
+      }
+
     }
 
     return null;

@@ -68,6 +68,10 @@ public class FiMeta {
     return ftTxValue;
   }
 
+  public String getValue() {
+    return ftTxValue;
+  }
+
   public void setFtTxValue(String ftTxValue) {
     this.ftTxValue = ftTxValue;
   }
