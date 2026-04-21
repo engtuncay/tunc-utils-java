@@ -5,17 +5,17 @@ import ozpasyazilim.utils.table.FiCol;
 
 public abstract class AbsFicTable {
 
-  public static FiCol sqTableName()
-  {
-    FiCol fiCol = new FiCol();
-    return fiCol;
-  }
-
-  public static FiKeybean genFkbFields()
-  {
-    FiKeybean fkbCol = new FiKeybean();
-    return fkbCol;
-  }
+//  public static FiCol sqTableName()
+//  {
+//    FiCol fiCol = new FiCol();
+//    return fiCol;
+//  }
+//
+//  public static FiKeybean genFkbFields()
+//  {
+//    FiKeybean fkbCol = new FiKeybean();
+//    return fkbCol;
+//  }
 
 
 }
