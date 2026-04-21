@@ -3,7 +3,7 @@ package ozpasyazilim.utils.fxwindow;
 import de.jensd.fx.glyphs.icons525.Icons525;
 import javafx.scene.input.KeyCode;
 import ozpasyazilim.utils.gui.fxcomponents.FxButton;
-import ozpasyazilim.utils.metadata.MetaCrudConstant;
+import ozpasyazilim.utils.metadata.metaOther.MetaCrudConstant;
 import ozpasyazilim.utils.mvc.IFiModCont;
 import ozpasyazilim.utils.returntypes.Fdr;
 

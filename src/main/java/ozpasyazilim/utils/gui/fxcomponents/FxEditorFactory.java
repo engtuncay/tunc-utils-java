@@ -83,6 +83,7 @@ public class FxEditorFactory {
         String fcTxFieldType = fiCol.getFcTxFieldType();
 
         //if(fcTxFieldType.equals())
+        //if(fcTxFieldType.equals(FimOcFie))
 
 
 

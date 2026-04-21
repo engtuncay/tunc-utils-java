@@ -1,4 +1,4 @@
-package ozpasyazilim.utils.metadata;
+package ozpasyazilim.utils.metadata.metaOther;
 
 import ozpasyazilim.utils.datatypes.FiMeta;
 
