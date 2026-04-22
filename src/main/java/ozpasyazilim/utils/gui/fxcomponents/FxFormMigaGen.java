@@ -291,7 +291,7 @@ public class FxFormMigaGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
                 continue;
             }
 
-            FxEditorFactory.setAutoColEditorClassByColType(fiCol);
+            // FxEditorFactory.setAutoColEditorClassByColType(fiCol);
 
             if (FiString.isEmpty(fiCol.getColEditorClass())) {
                 fiCol.setColEditorClass(FxTextField.class.getName());

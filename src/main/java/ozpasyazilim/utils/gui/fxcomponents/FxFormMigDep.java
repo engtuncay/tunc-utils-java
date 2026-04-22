@@ -331,7 +331,7 @@ public class FxFormMigDep<EntClazz> extends FxMigPaneGenView<EntClazz> implement
 				continue;
 			}
 
-			FxEditorFactory.setAutoColEditorClassByColType(fiCol);
+//			FxEditorFactory.setAutoColEditorClassByColType(fiCol);
 
 			if (FiString.isEmpty(fiCol.getColEditorClass())) {
 				fiCol.setColEditorClass(FxTextField.class.getName());

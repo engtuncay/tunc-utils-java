@@ -52,20 +52,26 @@ public class FxEditorFactory {
    * <p>
    * txClassName verilmemişse, OzColType'a göre component class belirlenir
    *
-   * @param ozColType
    * @param txClassName
    * @param fiCol
+   * @param ozColType
    * @return
    */
-  public static Node genNodeCompByClassNameMain(OzColType ozColType, String txClassName, FiCol fiCol) {
+  public static Node genNodeCompByClassNameMain(String txClassName, FiCol fiCol, OzColType ozColType) {
     //, Object compValue çıkarıldı
+
+    Loghelper.get(FxEditorFactory.class).debug("OzColType:" + ozColType);
+    Loghelper.get(FxEditorFactory.class).debug("txClassName:" + txClassName );
+
+
+
 
     //Loghelper.getInstance(FxEditorFactory.class).debug(" Ozcoltype:"+ozColType.toString());
     //Loghelper.getInstance(FxEditorFactory.class).debug(" Prm Comp Class:"+txClassName);
 
     if (fiCol == null) fiCol = new FiCol();
 
-    // txClassName verilmemişse, OzColType'a göre comp class belirlenir
+    // txClassName yoksa - belirleleme süreci
     if (txClassName == null) {
       //iFiCol.setColFxNodeClass(FxTextField.class.getName());
       txClassName = FxTextField.class.getName();
@@ -73,6 +79,10 @@ public class FxEditorFactory {
       // 14-12 eklendi
       if (ozColType == OzColType.Boolean) {
         txClassName = FxCheckBox.class.getName();
+      }
+
+      if (fiCol.getColType() == OzColType.Date) {
+        txClassName = FxDatePicker.class.getName();
       }
 
       if (ozColType == OzColType.CommaSeperatedStr) {
@@ -84,7 +94,6 @@ public class FxEditorFactory {
         String fcTxFieldType = fiCol.getFcTxFieldType();
         //Loghelper.get(FxEditorFactory.class).debug("fcTxFieldType:"+fcTxFieldType);
 
-
         // 26-04-21
         if(FiString.equalsAny(fcTxFieldType
             ,FimOcFieldType.fbool().getValue())
@@ -92,14 +101,13 @@ public class FxEditorFactory {
           txClassName = FxCheckBox.class.getName();
         }
 
-
-
-
       }
 
     }
 
     //Loghelper.getInstance(FxEditorFactory.class).debug(" Comp Class:"+txClassName.toString());
+
+    // txClassName (bir nevi comp türü) belirlendikten Comp oluşturma süreci
 
     if (txClassName.equals(FxTextField.class.getSimpleName())
         || txClassName.equals(FxTextField.class.getName())) {
@@ -746,7 +754,7 @@ public class FxEditorFactory {
    */
   public static Node generateAndSetFilterNode(IFiCol iFiCol) {
 
-    Node comp = genNodeCompByClassNameMain(iFiCol.getColType(), iFiCol.getFilterNodeClass(), null);
+    Node comp = genNodeCompByClassNameMain(iFiCol.getFilterNodeClass(), null, iFiCol.getColType());
 
     // generator içinden çıkarılıp buraya eklendi, esas amaç anlaşılmadı
     setNodeValueByCompClass(comp, iFiCol.getFilterNodeClass(), iFiCol.getFilterValue());
@@ -793,7 +801,7 @@ public class FxEditorFactory {
    */
   public static Node generateAndRenderNodeBeforeLoadByEditorClassEntry(IFiCol ifiCol, Object entity) {
 
-    Node comp = genNodeCompByClassNameMain(ifiCol.getColType(), ifiCol.getColEditorClass(), null);
+    Node comp = genNodeCompByClassNameMain(ifiCol.getColEditorClass(), null, ifiCol.getColType());
 
     if (ifiCol.getFnEditorNodeRendererBeforeSettingValue() != null) {
       ifiCol.getFnEditorNodeRendererBeforeSettingValue().accept(entity, comp);
@@ -829,7 +837,7 @@ public class FxEditorFactory {
    */
   public static Node genEditorNodeFullLifeCycle(FiCol fiCol, Object entity) {
 
-    Node comp = genNodeCompByClassNameMain(fiCol.getColType(), fiCol.getColEditorClass(), fiCol);
+    Node comp = genNodeCompByClassNameMain(fiCol.getColEditorClass(), fiCol, fiCol.getColType());
 
     if (fiCol.getFnNodeFocusTrigger() != null && comp != null) {
       comp.focusedProperty().addListener((observable, oldValue, newValue) -> fiCol.getFnNodeFocusTrigger().accept(comp));
@@ -894,84 +902,6 @@ public class FxEditorFactory {
       }
     }
   }
-
-  /**
-   * Editor Class tanımlanmamışsa , otomatik olarak colType alanına göre editor class tanımlar.
-   *
-   * @param iFiCol
-   */
-  public static void setAutoColEditorClassByColType(IFiCol iFiCol) {
-
-    if (iFiCol.getColEditorClass() == null) {
-      String autoColCellFactoryClassByType = FxEditorFactory.getAutoEditorClassMainByOzColType(iFiCol);
-      iFiCol.setColEditorClass(autoColCellFactoryClassByType);
-    }
-
-  }
-
-  public static void setAutoColEditorClassByColType2(FiCol iFiCol) {
-
-    if (iFiCol.getColEditorClass() == null) {
-      String autoColCellFactoryClassByType = FxEditorFactory.getAutoEditorClassMainByOzColType2(iFiCol);
-      iFiCol.setColEditorClass(autoColCellFactoryClassByType);
-    }
-
-  }
-
-  /**
-   * Ozcoltype göre editor class belirler (formlarda uygulanıyor)
-   *
-   * @param iFiCol
-   * @return
-   */
-  public static String getAutoEditorClassMainByOzColType(IFiCol iFiCol) {
-
-    if (iFiCol.getColType() == OzColType.Date) {
-      return FxDatePicker.class.getName();
-    }
-
-    if (iFiCol.getColType() == OzColType.Boolean) {
-      return FxCheckBox.class.getName();
-    }
-
-    return null;
-  }
-
-  /**
-   * Ozcoltype göre editor class belirler (formlarda uygulanıyor)
-   *
-   * @param fiCol
-   * @return
-   */
-  public static String getAutoEditorClassMainByOzColType2(FiCol fiCol) {
-
-    if (fiCol.getColType() == OzColType.Date) {
-      return FxDatePicker.class.getName();
-    }
-
-    if (fiCol.getColType() == OzColType.Boolean) {
-      return FxCheckBox.class.getName();
-    }
-
-    if(!FiString.isEmpty(fiCol.getFcTxFieldType())) {
-
-      String fcTxFieldType = fiCol.getFcTxFieldType();
-
-      if(FiString.equalsAny(fcTxFieldType,FimOcFieldType.fbool().getValue())) {
-        return FxCheckBox.class.getName();
-      }
-
-      if(FiString.equalsAny(fcTxFieldType,FimOcFieldType.fdate().getValue())) {
-        return FxDatePicker.class.getName();
-      }
-
-    }
-
-    return null;
-  }
-
-  //
-
 
   public static void registerEnterFnForFilterNode(IFiCol iFiCol, EventHandler<KeyEvent> customKeyEvent) {
 
