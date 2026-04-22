@@ -31,9 +31,9 @@ public class FiQueryGenMs {
     IFiTableMeta iFiTableMeta = fiQueryConfig.getiFiTableMeta();
     FicList ficFields = fiQueryConfig.getFclFields();
 
-    FimOcSql.sfTableName();
-    FimOcSql.sfTxWhere();
-    FimOcSql.sfTxUpSet();
+//    FimOcSql.sfTableName();
+//    FimOcSql.sfTxWhere();
+//    FimOcSql.sfTxUpSet();
 
     String template = "UPDATE {{sfTableName}} SET {{sfTxUpSet}} \n"
         + " WHERE {{sfTxWhere}} ";
@@ -98,6 +98,10 @@ public class FiQueryGenMs {
     int indexWhereBlock = 0;
 
     for (FiCol fiCol : ficUpFields) {
+
+      if (FiBool.isTrue(fiCol.getFcBoTransient())) {
+        continue;
+      }
 
       if (FiBool.isTrue(fiCol.getFcBoWhereField())) {
         indexWhereBlock++;
@@ -167,6 +171,10 @@ public class FiQueryGenMs {
     int indexWhereBlock = 0;
 
     for (FiCol fiCol : ficUpFields) {
+
+      if (FiBool.isTrue(fiCol.getFcBoTransient())) {
+        continue;
+      }
 
       if (FiBool.isTrue(fiCol.getFcBoWhereField())) {
         indexWhereBlock++;
@@ -240,6 +248,11 @@ public class FiQueryGenMs {
     int indexWhereBlock = 0;
 
     for (FiCol fiCol : ficUpFields) {
+
+      // transient alanlar atlanmalı
+      if (FiBool.isTrue(fiCol.getFcBoTransient())) {
+        continue;
+      }
 
       if (FiBool.isTrue(fiCol.getFcBoWhereField())) {
         indexWhereBlock++;
