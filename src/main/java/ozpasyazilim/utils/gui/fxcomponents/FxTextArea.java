@@ -13,7 +13,7 @@ public class FxTextArea extends TextArea {
 	}
 
 
-	public void appendTextLnAsyn(String text) {
+	public void appendTextNlAsyn(String text) {
 		Platform.runLater(() -> {
 			appendText("\n"+text);
 		});

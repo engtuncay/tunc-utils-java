@@ -222,6 +222,16 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
     return jdUpdateBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
   }
 
+  /**
+   * fkbParams bind eder
+   *
+   * @param fiQuery
+   * @return
+   */
+  public Fdr jdExecute(FiQuery fiQuery) {
+    return jdUpdateBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
+  }
+
   protected Fdr jdUpdateBindMapMain(String updateQuery, Map<String, Object> fiMapParams) {
 
     Fdr fdrMain = new Fdr();
