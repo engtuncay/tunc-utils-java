@@ -41,8 +41,6 @@ public class FiJdbiPool {
     }
   }
 
-
-
   private static Map<String, Jdbi> getMapKeyJdbi() {
     return mapKeyJdbi;
   }
