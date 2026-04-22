@@ -26,6 +26,7 @@ import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.IFiColHelper;
 import ozpasyazilim.utils.table.OzColType;
 
+import javax.annotation.Nonnull;
 import java.lang.reflect.InvocationTargetException;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -70,43 +71,12 @@ public class FxEditorFactory {
     //Loghelper.getInstance(FxEditorFactory.class).debug(" Ozcoltype:"+ozColType.toString());
     //Loghelper.getInstance(FxEditorFactory.class).debug(" Prm Comp Class:"+txClassName);
 
-    // txClassName yoksa - belirleleme süreci
-    if (txClassName == null) {
-      //iFiCol.setColFxNodeClass(FxTextField.class.getName());
-      txClassName = FxTextField.class.getName();
+    // txClassName yoksa - belirleme süreci
+    if (txClassName == null) txClassName = calcTxClassNameMain(fiCol, ozColType);
 
-      // 14-12 eklendi
-      if (ozColType == OzColType.Boolean) {
-        txClassName = FxCheckBox.class.getName();
-      }
+    //Loghelper.getInstance(FxEditorFactory.class).debug("Comp Class:"+txClassName);
 
-      if (fiCol.getColType() == OzColType.Date) {
-        txClassName = FxDatePicker.class.getName();
-      }
-
-      if (ozColType == OzColType.CommaSeperatedStr) {
-        txClassName = FxTextFieldBtnCsv.class.getName();
-      }
-
-      if (!FiString.isEmpty(fiCol.getFcTxFieldType())) {
-
-        String fcTxFieldType = fiCol.getFcTxFieldType();
-        //Loghelper.get(FxEditorFactory.class).debug("fcTxFieldType:"+fcTxFieldType);
-
-        // 26-04-21
-        if (FiString.equalsAny(fcTxFieldType
-            , FimOcFieldType.fbool().getValue())
-        ) {
-          txClassName = FxCheckBox.class.getName();
-        }
-
-      }
-
-    }
-
-    //Loghelper.getInstance(FxEditorFactory.class).debug(" Comp Class:"+txClassName.toString());
-
-    // txClassName (bir nevi comp türü) belirlendikten Comp oluşturma süreci
+    // txClassName belirlendikten comp oluşturma süreci
 
     if (txClassName.equals(FxTextField.class.getSimpleName())
         || txClassName.equals(FxTextField.class.getName())) {
@@ -240,6 +210,50 @@ public class FxEditorFactory {
     }
 
     return null;
+  }
+
+  /**
+   * TxClassName belirleme süreci - bir comp türü belirlenir
+   *
+   * @param fiCol
+   * @param ozColType
+   * @return
+   */
+  @Nonnull
+  private static String calcTxClassNameMain(FiCol fiCol, OzColType ozColType) {
+
+    String txClassName;
+    //iFiCol.setColFxNodeClass(FxTextField.class.getName());
+    txClassName = FxTextField.class.getName();
+
+    // 14-12 eklendi
+    if (ozColType == OzColType.Boolean) {
+      txClassName = FxCheckBox.class.getName();
+    }
+
+    if (fiCol.getColType() == OzColType.Date) {
+      txClassName = FxDatePicker.class.getName();
+    }
+
+    if (ozColType == OzColType.CommaSeperatedStr) {
+      txClassName = FxTextFieldBtnCsv.class.getName();
+    }
+
+    if (!FiString.isEmpty(fiCol.getFcTxFieldType())) {
+
+      String fcTxFieldType = fiCol.getFcTxFieldType();
+      //Loghelper.get(FxEditorFactory.class).debug("fcTxFieldType:"+fcTxFieldType);
+
+      // 26-04-21
+      if (FiString.equalsAny(fcTxFieldType
+          , FimOcFieldType.fbool().getValue())
+      ) {
+        txClassName = FxCheckBox.class.getName();
+      }
+
+    }
+
+    return txClassName;
   }
 
   /**

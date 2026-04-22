@@ -125,8 +125,6 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> implement
                 continue;
             }
 
-            //FxEditorFactory.setAutoColEditorClassByColType2(fiCol);
-
             // Tek satır label göstermek için
             if (fiCol.getColEditorClassNtn().equals(EnumColNodeType.FxLabelRowComment.toString())) {
                 FxLabel fxLabelComment = new FxLabel(fiCol.getFcTxHeader());
