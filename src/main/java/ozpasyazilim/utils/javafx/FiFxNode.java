@@ -11,7 +11,7 @@ import ozpasyazilim.utils.gui.fxcomponents.FxTextFieldBtn;
 import java.time.Duration;
 import java.util.function.Consumer;
 
-public class FiNodeFx {
+public class FiFxNode {
 
 	public static void registerTextPropertyWithDurationForNode(Consumer<String> consumerStrProp, long durationMilis, String colNodeClass, Node node) {
 
@@ -71,4 +71,6 @@ public class FiNodeFx {
 				.successionEnds(Duration.ofMillis(durationMilis))
 				.subscribe(s -> consumerStrProp.accept(s));
 	}
+
+
 }

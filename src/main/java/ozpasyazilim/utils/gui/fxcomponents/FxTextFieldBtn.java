@@ -5,7 +5,7 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import ozpasyazilim.utils.core.FiBool;
-import ozpasyazilim.utils.javafx.FiNodeFx;
+import ozpasyazilim.utils.javafx.FiFxNode;
 import ozpasyazilim.utils.table.OzColType;
 
 import java.util.function.Consumer;
@@ -125,7 +125,7 @@ public class FxTextFieldBtn<EntClazz> extends FxMigPane implements IFiNode {
 
 			if(lnDurationChange==null) lnDurationChange = getLnDurationChangeDefaultVal();
 
-			FiNodeFx.registerTextPropertyWithDurationForFxTextfield((s) -> {
+			FiFxNode.registerTextPropertyWithDurationForFxTextfield((s) -> {
 				if (getFnTxfDataChanged() != null) {
 					getFnTxfDataChanged().accept(s);
 				}

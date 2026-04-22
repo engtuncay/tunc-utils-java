@@ -64,12 +64,9 @@ public class FxEditorFactory {
 
     if (fiCol == null) fiCol = new FiCol();
 
-    Loghelper.get(FxEditorFactory.class).debug("OzColType:" + ozColType);
-    Loghelper.get(FxEditorFactory.class).debug("txClassName:" + txClassName);
-    Loghelper.get(FxEditorFactory.class).debug("ficol-fn:" + fiCol.getFcTxFieldName());
-
-    // Loghelper.getInstance(FxEditorFactory.class).debug("Ozcoltype:"+ozColType.toString());
-    // Loghelper.getInstance(FxEditorFactory.class).debug("Prm Comp Class:"+txClassName);
+//    Loghelper.get(FxEditorFactory.class).debug("OzColType:" + ozColType);
+//    Loghelper.get(FxEditorFactory.class).debug("txClassName:" + txClassName);
+//    Loghelper.get(FxEditorFactory.class).debug("ficol-fn:" + fiCol.getFcTxFieldName());
 
     // txClassName yoksa - belirleme süreci
     if (txClassName == null) txClassName = calcTxClassNameMain(fiCol, ozColType);
