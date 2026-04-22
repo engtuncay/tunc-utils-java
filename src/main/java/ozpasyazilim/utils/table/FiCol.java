@@ -40,835 +40,833 @@ import java.util.function.Predicate;
 @FiTable
 public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
 
-    /**
-     * Alanın ismini (veritabanındaki veya objedeki refere ettiği alan ismi )
-     */
-    private String fcTxFieldName;
+  /**
+   * Alanın ismini (veritabanındaki veya objedeki refere ettiği alan ismi )
+   */
+  private String fcTxFieldName;
 
-    /**
-     * Alanın başlık açıklaması ( tablo için sütün başlığı , form için label alanı değeri / excelde başlık )
-     */
-    private String fcTxHeader;
+  /**
+   * Alanın başlık açıklaması ( tablo için sütün başlığı , form için label alanı değeri / excelde başlık )
+   */
+  private String fcTxHeader;
 
-    private String txLabel;
+  private String txLabel;
 
-    /**
-     * Objedeki alan adı (fieldName) ile db deki alan adı aynı degilse kullanılır.
-     */
-    private String fcTxDbField;
+  /**
+   * Objedeki alan adı (fieldName) ile db deki alan adı aynı degilse kullanılır.
+   */
+  private String fcTxDbField;
 
-    /**
-     * Col Id olması için konuldu - tekil kodu
-     */
-    private String txGuid;
+  /**
+   * Col Id olması için konuldu - tekil kodu
+   */
+  private String txGuid;
 
-    private ObjectProperty<Double> prefSize;
+  private ObjectProperty<Double> prefSize;
 
-    private Integer printSize;
+  private Integer printSize;
 
-    // Alanın türünü belirtir (double,string,date vs )
-    private OzColType colType;
+  // Alanın türünü belirtir (double,string,date vs )
+  private OzColType colType;
 
-    private String fcTxFieldDesc;
+  private String fcTxFieldDesc;
 
-    /**
-     * Sorguda where bloğunda olacak
-     */
-    private Boolean fcBoWhereField;
+  /**
+   * Sorguda where bloğunda olacak
+   */
+  private Boolean fcBoWhereField;
 
-    /**
-     * sorguda count içerisine alınacak alan
-     */
-    private Boolean fcBoCountField;
+  /**
+   * sorguda count içerisine alınacak alan
+   */
+  private Boolean fcBoCountField;
 
-    /**
-     * Column Generic Type. Sütun nasıl bir tipte olduğunu gösterir. (Data Tipi degil)
-     * <p>
-     * Örneğin , Xml parse edilirken, alanın xmlAttribute türünde olduğunu gösterir.
-     */
-    private OzColType colGenType;
+  /**
+   * Column Generic Type. Sütun nasıl bir tipte olduğunu gösterir. (Data Tipi degil)
+   * <p>
+   * Örneğin , Xml parse edilirken, alanın xmlAttribute türünde olduğunu gösterir.
+   */
+  private OzColType colGenType;
 
-    // Formlarda default true olarak çalışır, false olursa düzenleme izni vermez
-    private Boolean boEditable;
+  // Formlarda default true olarak çalışır, false olursa düzenleme izni vermez
+  private Boolean boEditable;
 
 
-    /**
-     * Formlarda gösterilmeyeceğini belirtir
-     */
-    private Boolean boHidden;
+  /**
+   * Formlarda gösterilmeyeceğini belirtir
+   */
+  private Boolean boHidden;
 
-    // excelden sütunları ayarlarken opsiyonel sütunların belinmesi için (zorunlu degil) , vs.. (boRequired:false da kullanılabilirdi.)
-    private Boolean boOptional;
+  // excelden sütunları ayarlarken opsiyonel sütunların belinmesi için (zorunlu degil) , vs.. (boRequired:false da kullanılabilirdi.)
+  private Boolean boOptional;
 
-    // excelde sütunun bulunduğunu gösterir
-    private Boolean boExist;
+  // excelde sütunun bulunduğunu gösterir
+  private Boolean boExist;
 
-    // Excel için true olursa sütunun olması gerektiğini gösterir
-    private Boolean boRequired;
+  // Excel için true olursa sütunun olması gerektiğini gösterir
+  private Boolean boRequired;
 
-    // For Excel Reading, the field shows whether or not column exists in the excel
-    private Boolean boEnabled;
+  // For Excel Reading, the field shows whether or not column exists in the excel
+  private Boolean boEnabled;
 
-    // phpde buraya kadar kopyalanadı
+  // phpde buraya kadar kopyalanadı
 
-    // For Forms, entity is edit value for the field
-    private EntClazz entity;
+  // For Forms, entity is edit value for the field
+  private EntClazz entity;
 
-    // Filter Component tutulur
-    Node colFilterNode;
+  // Filter Component tutulur
+  Node colFilterNode;
 
-    EventHandler<KeyEvent> colFilterKeyEvent;
+  EventHandler<KeyEvent> colFilterKeyEvent;
 
-    // -- FxTable Header Comp ile İlgili Alanlar
+  // -- FxTable Header Comp ile İlgili Alanlar
 
-    // FxTable'da header pane (başlık componenti)
-    FxMigPane paneHeader;
+  // FxTable'da header pane (başlık componenti)
+  FxMigPane paneHeader;
 
-    // ---- Filter Node ile ilgili Alanlar
-    private Object filterValue;
+  // ---- Filter Node ile ilgili Alanlar
+  private Object filterValue;
 
-    /**
-     * Tablo başlıklarındaki filtre için ve formlar daki comp.ler için
-     */
-    private Boolean boLocFilterable;
+  /**
+   * Tablo başlıklarındaki filtre için ve formlar daki comp.ler için
+   */
+  private Boolean boLocFilterable;
 
-    /**
-     * Tablodaki sütunun remote filterable olduğunu gösterir. default true kabul edilir
-     */
-    private Boolean boRemFilterable;
+  /**
+   * Tablodaki sütunun remote filterable olduğunu gösterir. default true kabul edilir
+   */
+  private Boolean boRemFilterable;
 
-    /**
-     * Alan için hangi tür filter node kullanılacaksa sınıfın ismi tutulur
-     */
-    String filterNodeClass;
-
-    // experimental
-    private Function<Object, String> funcFormatter;
-
-    private Format formatter;
-
-    // --Table Editor ile İgli Alanlar
-    private String colEditorClass;
-    private Node colEditorNode;
-
-    private Object colValue;
-
-    /**
-     * Editörde kullanılacak component kullanılack yazı , örneğin button ise üzerine yazılacak text
-     */
-    private String colEditorNodeText;
-
-    /**
-     * editorde enter basılınca action tanımı
-     */
-    EventHandler<KeyEvent> colEditorKeyEvent; //
+  /**
+   * Alan için hangi tür filter node kullanılacaksa sınıfın ismi tutulur
+   */
+  String filterNodeClass;
+
+  // experimental
+  private Function<Object, String> funcFormatter;
+
+  private Format formatter;
+
+  // --Table Editor ile İgli Alanlar
+  private String colEditorClass;
+  private Node colEditorNode;
+
+  private Object colValue;
+
+  /**
+   * Editörde kullanılacak component kullanılack yazı , örneğin button ise üzerine yazılacak text
+   */
+  private String colEditorNodeText;
+
+  /**
+   * editorde enter basılınca action tanımı
+   */
+  EventHandler<KeyEvent> colEditorKeyEvent; //
 
-    // ---- Editor Action
-    private Consumer<EntClazz> fnEditorSetOnActionWithEntity;
-    private BiConsumer<Object, Node> fnEditorSetOnAction;
-    private TriConsumer<Object, Node, FxTableColDep> fnEditorSetOnActionWitCol;
-    private TriConsumer<Object, Node, Object> fnEditorSetOnActionWitValue;
+  // ---- Editor Action
+  private Consumer<EntClazz> fnEditorSetOnActionWithEntity;
+  private BiConsumer<Object, Node> fnEditorSetOnAction;
+  private TriConsumer<Object, Node, FxTableColDep> fnEditorSetOnActionWitCol;
+  private TriConsumer<Object, Node, Object> fnEditorSetOnActionWitValue;
 
-    /**
-     * entity giren, value çıkan -- comp üzerinde yazan (text) değeri formatlamak için , (arka plan değeri değiştirmez (txValue su varsa eğer)
-     */
-    private Function<Object, Object> fnEditorNodeValueFormmatter;
+  /**
+   * entity giren, value çıkan -- comp üzerinde yazan (text) değeri formatlamak için , (arka plan değeri değiştirmez (txValue su varsa eğer)
+   */
+  private Function<Object, Object> fnEditorNodeValueFormmatter;
 
-    // ---- Editor Renderer
+  // ---- Editor Renderer
 
-    /**
-     * Değer ataması öncesinde Node comp'ine özel renderer yapacaksak bu fonksiyonu kulanırız. (formlarda alanlar için, tabloda editor için)
-     */
-    private BiConsumer<Object, Node> fnEditorNodeRendererBeforeSettingValue;
+  /**
+   * Değer ataması öncesinde Node comp'ine özel renderer yapacaksak bu fonksiyonu kulanırız. (formlarda alanlar için, tabloda editor için)
+   */
+  private BiConsumer<Object, Node> fnEditorNodeRendererBeforeSettingValue;
 
-    /**
-     * Değer ataması sonrasında bileşene(comp) yapılacak işlemler. Genellikle Object olarak entity gönderilir.
-     */
-    private BiConsumer<Object, Node> fnEditorNodeRendererAfterInitialValue1;
-    private BiConsumer<Object, Node> fnEditorNodeRendererAfterInitialValue2;
+  /**
+   * Değer ataması sonrasında bileşene(comp) yapılacak işlemler. Genellikle Object olarak entity gönderilir.
+   */
+  private BiConsumer<Object, Node> fnEditorNodeRendererAfterInitialValue1;
+  private BiConsumer<Object, Node> fnEditorNodeRendererAfterInitialValue2;
 
-    /**
-     * Form yüklendikten (After Setup) sonra çalıştırılacak
-     * <p>
-     * Editorler için , after form load, it executes
-     * <p>
-     * Object olarak form için kullanılacak entity gönderilir
-     * <p>
-     * Node : component için kullanılır (FxTextField,FxCombobox gibi)
-     * <p>
-     * Form objesi dinamik olarak çekilmeli
-     */
-    @Deprecated
-    private BiConsumer<Object, Node> fnEditorNodeRendererAfterFormLoad;
+  /**
+   * Form yüklendikten (After Setup) sonra çalıştırılacak
+   * <p>
+   * Editorler için , after form load, it executes
+   * <p>
+   * Object olarak form için kullanılacak entity gönderilir
+   * <p>
+   * Node : component için kullanılır (FxTextField,FxCombobox gibi)
+   * <p>
+   * Form objesi dinamik olarak çekilmeli
+   */
+  @Deprecated
+  private BiConsumer<Object, Node> fnEditorNodeRendererAfterFormLoad;
 
-    private BiConsumer<Object, Node> fnEditorNodeAfterChangeForForm;
+  private BiConsumer<Object, Node> fnEditorNodeAfterChangeForForm;
 
-    private TriConsumer<Object, Node, FxTableCol2> fnEditorNodeRendererWithCol;
-    private TriConsumer<Object, Node, Object> fnEditorNodeRendererWitValue;
+  private TriConsumer<Object, Node, FxTableCol2> fnEditorNodeRendererWithCol;
+  private TriConsumer<Object, Node, Object> fnEditorNodeRendererWitValue;
 
-    /**
-     * bütün form elemanları oluşturulduktan sonra çalıştırılır {@link FxFormMigaGen}
-     */
-    private Consumer<FiCol> fnEditorNodeLfcAfterAllFormLoad;
+  /**
+   * bütün form elemanları oluşturulduktan sonra çalıştırılır {@link FxFormMigaGen}
+   */
+  private Consumer<FiCol> fnEditorNodeLfcAfterAllFormLoad;
 
 
-    /**
-     * Editör comp, mesela tabloda bu pred e göre disable olmasını sağlar ( ifc ye eklenmedi)
-     */
-    private Predicate<EntClazz> predEditorDisable;
+  /**
+   * Editör comp, mesela tabloda bu pred e göre disable olmasını sağlar ( ifc ye eklenmedi)
+   */
+  private Predicate<EntClazz> predEditorDisable;
 
-    // --Excel İle İlgili Alanlar
+  // --Excel İle İlgili Alanlar
 
-    /**
-     * excel için kaçıncı sütunda olduğunu gösterir
-     */
-    Integer colIndex;
+  /**
+   * excel için kaçıncı sütunda olduğunu gösterir
+   */
+  Integer colIndex;
 
-    // Xml okumalar için
+  // Xml okumalar için
 
-    /**
-     * Elemente ait, alt çocuk elementleri
-     * <p>
-     * Form Elemanın içinde bulunan alt propertiler
-     */
-    List<FiCol> listChildCol;
+  /**
+   * Elemente ait, alt çocuk elementleri
+   * <p>
+   * Form Elemanın içinde bulunan alt propertiler
+   */
+  List<FiCol> listChildCol;
 
-    /**
-     *
-     */
-    Class childClazz;
+  /**
+   *
+   */
+  Class childClazz;
 
-    /**
-     * Hangi Tablonun veya Sınıfın Alanı olduğunu belirtir
-     */
-    Class<EntClazz> entClass;
+  /**
+   * Hangi Tablonun veya Sınıfın Alanı olduğunu belirtir
+   */
+  Class<EntClazz> entClass;
 
 
-    /**
-     * Excelde, sütunun yorum balonunda gösterilecek açıklamayı belirtir
-     */
-    private String colComment;
+  /**
+   * Excelde, sütunun yorum balonunda gösterilecek açıklamayı belirtir
+   */
+  private String colComment;
 
-    /**
-     *
-     */
-    private Map<String, String> mapStyle;
-
-
-    // --Form ile İlgili Alanlar
+  /**
+   *
+   */
+  private Map<String, String> mapStyle;
+
+
+  // --Form ile İlgili Alanlar
 
-
-    // -- FxTableView için alanlar
-
-    private BiConsumer<EntClazz, Button> fnColButton;
-
-    // ****** Sql Sorgular ile ilgili alanlar
-
-
-    /**
-     * Bu alanın null değer alıp alamayacağını gösterir.
-     */
-    private Boolean boNullable;
-
-    /**
-     * Alanlarda update query oluşturulurken dahil edilmeyecek alanlar
-     * <p>
-     * Formlarda ilgili alanın update edilmeyeceğini gösterir
-     */
-    private Boolean boNonUpdatable;
-
-    /**
-     * Formlarda edit yapılmayacak alanı gösterir
-     */
-    private Boolean boNonEditableForForm;
-
-    // ****** SORGULAR İÇİN OLUŞTURULAN ALANLAR *******
-
-    /**
-     * Genel olarak parametre ismi fieldName seçilir , farklı seçilecekse bu alandaki değer kullanılır.
-     */
-    private String txParamName;
-
-    /**
-     * Sorgular için, alanın primary key alanı olduğunu belirtir
-     */
-    private Boolean boKeyIdField;
-
-    private Boolean fcBoKeyIdentity;
-
-    /**
-     * Sorgu hazırlanırken update olacak alan olduğunu gösterir
-     */
-    private Boolean boUpdateFieldForQuery;
-
-    /**
-     * Sorgu hazırlanırken insert sorgusuna dahil edilecek alanları gösterir
-     */
-    private Boolean boInsertFieldForQuery;
-
-    /**
-     * True olur Sorguda Aktif Edilmesini
-     * <p>
-     * False olursa Pasif Edilmesini gösterir
-     */
-    private Boolean boParamStatus;
-
-    // ------ End - Sorgular için --------------
-
-    // ***** FxTable ve FxTreeTable ile İlişkilendirmeleri *****
-    private ObjectProperty<TableColumn> tableColumnFx = new SimpleObjectProperty<>();
-    private ObjectProperty<TreeTableColumn> fxTreeTableCol = new SimpleObjectProperty<>();
-
-    // Exprerimental - çıkartılabilir
-    private FxTableCol2<EntClazz> fxTableCol2;
-
-    // yeni 02-10-19
-
-    /**
-     * Editörte bir değişim olursa çağrılır (tablonun hücresi değişiklik olursa bildirilir) (property de çevrilebilir) (Inf'ye eklenmedi.)
-     */
-    private Consumer<EntClazz> fnColCellManualChanged;
-
-    // Header summary node ile ilgili alanlar
-
-    /**
-     * Header Summary Label (inftable cola eklenmedi)
-     */
-    private FxLabel summaryLabelNode; //
-
-    /**
-     *
-     */
-    private FxCheckBox summaryCheckBox;
-    /**
-     * Tabloda Özetleme Alanına Yerleştirilecek Bileşen (node)
-     */
-    private Node summaryNode;
-
-    /**
-     * Tablolarda özet alanının türünü belirtir (toplam,ortalama vs. gibi )
-     */
-    private OzColSummaryType summaryType;
-
-    /**
-     *
-     */
-    private Function summaryCalculateFn;
-
-    /**
-     * Sütunun excel dosyasına aktarılmayacağını gösterir
-     */
-    private Boolean boDontExportExcel;
-
-    /**
-     * Sütunun excel şablon dosyasına aktarılmayacağını gösterir
-     */
-    private Boolean boDontExportExcelTemplate;
-
-    /**
-     *
-     */
-    private IFiNode IFiNodeEditor;
-
-    /**
-     * Filter node like araması yapılacak mı
-     */
-    private Boolean boFilterLike;
-
-    /**
-     * Entity , Node Componet, List-FiCol- degerlerini alan consumer fn
-     */
-    private TriConsumer<Object, Node, List<FiCol>> fnEditorNodeRendererAfterFormLoad2;
-
-
-    /**
-     * formlarda comp.'a focus olunca trigger edilecek fonksiyon
-     */
-    private Consumer<Node> fnNodeFocusTrigger;
-
-    /**
-     * Sütun veya Alan için Sayısal karşılık saklamak için, canceled için 1 gibi
-     */
-    private Integer lnCode;
-
-
-    /**
-     * sütun veya form alanı için validate fonksiyonu, object olarak form alanınına değeri gönderilir (draft)
-     */
-    private Function<Object, Fdr> fnValidate;
-
-    /**
-     * Editor Component içerisine sadece sayısal veri girilecek (String olan VergiNo alanına sadece sayısal alan girilir)
-     */
-    private Boolean boEditorOnlyNumber;
-
-    /**
-     * Tanımlanmamış FiCol olduğunu , obje olarak null pointer almaması için oluşturulduğunu gösterir
-     */
-    // private Boolean boUndefinedCol;
-
-    /**
-     * Sorgu oluşturulurken where alanına yazılacak alanlar (ör update sorgusu için kullanılır)
-     */
-    private Boolean boWhereField;
-
-
-    // Reflection Field Alanlar
-
-    // FiId
-    private String fcTxIdType;
-    // FiColumn
-    private Boolean fcBoUniqGro1;
-    private Boolean fcBoNullable;
-    private Boolean fcBoUnique;
-    private Boolean fcBoUtfSupport;
-    /**
-     * Default Value
-     */
-    private String fcTxDefValue;
-    private String fcTxCollation;
-    private String fcTxTypeName;
-    private String fcTxFieldType;
-
-    /**
-     * column definition (sql alan ilgili extra bilgiler)
-     */
-    private String fcTxColDefinition;
-    /**
-     * Text alanın max uzunluğu
-     * <p>
-     * FxEditorFactory'de textfield oluştururken text limiti olarak belirlenir
-     */
-    private Integer fcLnLength;
-    private Integer fcLnPrecision;
-    private Integer fcLnScale;
-    private Boolean fcBoFilterLike;
-
-    //FiTransient
-
-    private String fcTxEntityName;
-
-
-    private String txClassNameSimple;
-
-    /**
-     * alanın veritabanında olmadığını belirtir
-     */
-    private Boolean fcBoTransient;
-
-    private String txFilterType;
-
-    /**
-     * Code Generate ederken oluşturulan alan tanımı
-     * <p>
-     * Code Generator tarafından kullanılır.
-     */
-    private String ficTxSqlFieldDefinition;
-
-
-
-
-    // ***** Constructors
-    public FiCol() {
-        // FiCol için standard ön ayarlar
-        setupFiCol();
+
+  // -- FxTableView için alanlar
+
+  private BiConsumer<EntClazz, Button> fnColButton;
+
+  // ****** Sql Sorgular ile ilgili alanlar
+
+
+  /**
+   * Bu alanın null değer alıp alamayacağını gösterir.
+   */
+  private Boolean boNullable;
+
+  /**
+   * Alanlarda update query oluşturulurken dahil edilmeyecek alanlar
+   * <p>
+   * Formlarda ilgili alanın update edilmeyeceğini gösterir
+   */
+  private Boolean boNonUpdatable;
+
+  /**
+   * Formlarda edit yapılmayacak alanı gösterir
+   */
+  private Boolean boNonEditableForForm;
+
+  // ****** SORGULAR İÇİN OLUŞTURULAN ALANLAR *******
+
+  /**
+   * Genel olarak parametre ismi fieldName seçilir , farklı seçilecekse bu alandaki değer kullanılır.
+   */
+  private String txParamName;
+
+  /**
+   * Sorgular için, alanın primary key alanı olduğunu belirtir
+   */
+  private Boolean boKeyIdField;
+
+  private Boolean fcBoKeyIdentity;
+
+  /**
+   * Sorgu hazırlanırken update olacak alan olduğunu gösterir
+   */
+  private Boolean boUpdateFieldForQuery;
+
+  /**
+   * Sorgu hazırlanırken insert sorgusuna dahil edilecek alanları gösterir
+   */
+  private Boolean boInsertFieldForQuery;
+
+  /**
+   * True olur Sorguda Aktif Edilmesini
+   * <p>
+   * False olursa Pasif Edilmesini gösterir
+   */
+  private Boolean boParamStatus;
+
+  // ------ End - Sorgular için --------------
+
+  // ***** FxTable ve FxTreeTable ile İlişkilendirmeleri *****
+  private ObjectProperty<TableColumn> tableColumnFx = new SimpleObjectProperty<>();
+  private ObjectProperty<TreeTableColumn> fxTreeTableCol = new SimpleObjectProperty<>();
+
+  // Exprerimental - çıkartılabilir
+  private FxTableCol2<EntClazz> fxTableCol2;
+
+  // yeni 02-10-19
+
+  /**
+   * Editörte bir değişim olursa çağrılır (tablonun hücresi değişiklik olursa bildirilir) (property de çevrilebilir) (Inf'ye eklenmedi.)
+   */
+  private Consumer<EntClazz> fnColCellManualChanged;
+
+  // Header summary node ile ilgili alanlar
+
+  /**
+   * Header Summary Label (inftable cola eklenmedi)
+   */
+  private FxLabel summaryLabelNode; //
+
+  /**
+   *
+   */
+  private FxCheckBox summaryCheckBox;
+  /**
+   * Tabloda Özetleme Alanına Yerleştirilecek Bileşen (node)
+   */
+  private Node summaryNode;
+
+  /**
+   * Tablolarda özet alanının türünü belirtir (toplam,ortalama vs. gibi )
+   */
+  private OzColSummaryType summaryType;
+
+  /**
+   *
+   */
+  private Function summaryCalculateFn;
+
+  /**
+   * Sütunun excel dosyasına aktarılmayacağını gösterir
+   */
+  private Boolean boDontExportExcel;
+
+  /**
+   * Sütunun excel şablon dosyasına aktarılmayacağını gösterir
+   */
+  private Boolean boDontExportExcelTemplate;
+
+  /**
+   *
+   */
+  private IFiNode IFiNodeEditor;
+
+  /**
+   * Filter node like araması yapılacak mı
+   */
+  private Boolean boFilterLike;
+
+  /**
+   * Entity , Node Componet, List-FiCol- degerlerini alan consumer fn
+   */
+  private TriConsumer<Object, Node, List<FiCol>> fnEditorNodeRendererAfterFormLoad2;
+
+
+  /**
+   * formlarda comp.'a focus olunca trigger edilecek fonksiyon
+   */
+  private Consumer<Node> fnNodeFocusTrigger;
+
+  /**
+   * Sütun veya Alan için Sayısal karşılık saklamak için, canceled için 1 gibi
+   */
+  private Integer lnCode;
+
+
+  /**
+   * sütun veya form alanı için validate fonksiyonu, object olarak form alanınına değeri gönderilir (draft)
+   */
+  private Function<Object, Fdr> fnValidate;
+
+  /**
+   * Editor Component içerisine sadece sayısal veri girilecek (String olan VergiNo alanına sadece sayısal alan girilir)
+   */
+  private Boolean boEditorOnlyNumber;
+
+  /**
+   * Tanımlanmamış FiCol olduğunu , obje olarak null pointer almaması için oluşturulduğunu gösterir
+   */
+  // private Boolean boUndefinedCol;
+
+  /**
+   * Sorgu oluşturulurken where alanına yazılacak alanlar (ör update sorgusu için kullanılır)
+   */
+  private Boolean boWhereField;
+
+
+  // Reflection Field Alanlar
+
+  // FiId
+  private String fcTxIdType;
+  // FiColumn
+  private Boolean fcBoUniqGro1;
+  private Boolean fcBoNullable;
+  private Boolean fcBoUnique;
+  private Boolean fcBoUtfSupport;
+  /**
+   * Default Value
+   */
+  private String fcTxDefValue;
+  private String fcTxCollation;
+  private String fcTxTypeName;
+  private String fcTxFieldType;
+
+  /**
+   * column definition (sql alan ilgili extra bilgiler)
+   */
+  private String fcTxColDefinition;
+  /**
+   * Text alanın max uzunluğu
+   * <p>
+   * FxEditorFactory'de textfield oluştururken text limiti olarak belirlenir
+   */
+  private Integer fcLnLength;
+  private Integer fcLnPrecision;
+  private Integer fcLnScale;
+  private Boolean fcBoFilterLike;
+
+  //FiTransient
+
+  private String fcTxEntityName;
+
+
+  private String txClassNameSimple;
+
+  /**
+   * alanın veritabanında olmadığını belirtir
+   */
+  private Boolean fcBoTransient;
+
+  private String txFilterType;
+
+  /**
+   * Code Generate ederken oluşturulan alan tanımı
+   * <p>
+   * Code Generator tarafından kullanılır.
+   */
+  private String ficTxSqlFieldDefinition;
+
+
+  // ***** Constructors
+  public FiCol() {
+    // FiCol için standard ön ayarlar
+    setupFiCol();
+  }
+
+  public FiCol(String fcTxFieldName, String fcTxHeader) {
+    this.fcTxHeader = fcTxHeader;
+    this.fcTxFieldName = fcTxFieldName;
+    setupFiCol();
+  }
+
+  public FiCol(String fcTxFieldName) {
+    this.fcTxFieldName = fcTxFieldName;
+    setupFiCol();
+  }
+
+  public FiCol(String fcTxFieldName, String fcTxHeader, String colComment) {
+    this.fcTxHeader = fcTxHeader;
+    this.fcTxFieldName = fcTxFieldName;
+    setColComment(colComment);
+    setupFiCol();
+  }
+
+  public FiCol(String fcTxHeader, Object fcTxFieldName) {
+    this.fcTxHeader = fcTxHeader;
+    this.fcTxFieldName = fcTxFieldName.toString();
+    setupFiCol();
+  }
+
+  public FiCol(Object fcTxFieldName, String fcTxHeader, OzColType colType) {
+    this.fcTxHeader = fcTxHeader;
+    if (fcTxFieldName != null) this.fcTxFieldName = fcTxFieldName.toString();
+    this.setColType(colType);
+    setupFiCol();
+  }
+
+  public FiCol(Object fcTxFieldName, String fcTxHeader, OzColType colType, String colComment) {
+    this.fcTxHeader = fcTxHeader;
+    if (fcTxFieldName != null) this.fcTxFieldName = fcTxFieldName.toString();
+    setColType(colType);
+    setColComment(colComment);
+    setupFiCol();
+  }
+
+  public static FiCol buildo(Object objFieldName) {
+    return new FiCol(objFieldName.toString());
+  }
+
+  public static List<FiCol> convertListFiField(List<FiField> listFiFieldsSummary) {
+
+    List<FiCol> fiTableColList = new ArrayList<>();
+
+    for (FiField fiField : listFiFieldsSummary) {
+      if (FiBool.isTrue(fiField.getBoExcludeFromAutoColList())) continue;
+      FiCol fiTableCol = new FiCol(fiField.getFcTxFieldName(), fiField.getFcTxFieldName());
+      fiTableCol.setColType(convertOzColType(fiField.getClassNameSimple()));
+      if (fiTableCol.getColTypeNtn().equals(OzColType.Double) || fiTableCol.getColTypeNtn().equals(OzColType.Integer)) {
+        fiTableCol.setSummaryType(OzColSummaryType.SUM);
+      }
+      fiTableColList.add(fiTableCol);
+    }
+    return fiTableColList;
+  }
+
+  public static OzColType convertOzColType(String classNameSimple) {
+
+    for (OzColType value : OzColType.values()) {
+
+      if (value.toString().equals(classNameSimple)) {
+        return value;
+      }
     }
 
-    public FiCol(String fcTxFieldName, String fcTxHeader) {
-        this.fcTxHeader = fcTxHeader;
-        this.fcTxFieldName = fcTxFieldName;
-        setupFiCol();
-    }
+    return null;
+  }
 
-    public FiCol(String fcTxFieldName) {
-        this.fcTxFieldName = fcTxFieldName;
-        setupFiCol();
-    }
+  /**
+   * Eksik ihtiyaçlara göre doldurulması lazım
+   *
+   * @param iFiCol
+   * @return
+   */
+  public static FiCol buildFromIFiCol(IFiCol iFiCol) {
+    FiCol fiCol = new FiCol();
 
-    public FiCol(String fcTxFieldName, String fcTxHeader, String colComment) {
-        this.fcTxHeader = fcTxHeader;
-        this.fcTxFieldName = fcTxFieldName;
-        setColComment(colComment);
-        setupFiCol();
-    }
+    fiCol.setFcTxHeader(iFiCol.getFcTxHeader());
+    fiCol.setFcTxFieldName(iFiCol.getFcTxFieldName());
+    fiCol.setColType(iFiCol.getColType());
+    fiCol.setPrefSize(iFiCol.getPrefSize());
+    fiCol.setBoEditable(iFiCol.getBoEditable());
 
-    public FiCol(String fcTxHeader, Object fcTxFieldName) {
-        this.fcTxHeader = fcTxHeader;
-        this.fcTxFieldName = fcTxFieldName.toString();
-        setupFiCol();
-    }
+    return fiCol;
+  }
 
-    public FiCol(Object fcTxFieldName, String fcTxHeader, OzColType colType) {
-        this.fcTxHeader = fcTxHeader;
-        if (fcTxFieldName != null) this.fcTxFieldName = fcTxFieldName.toString();
-        this.setColType(colType);
-        setupFiCol();
-    }
+  // build Methods
 
-    public FiCol(Object fcTxFieldName, String fcTxHeader, OzColType colType, String colComment) {
-        this.fcTxHeader = fcTxHeader;
-        if (fcTxFieldName != null) this.fcTxFieldName = fcTxFieldName.toString();
-        setColType(colType);
-        setColComment(colComment);
-        setupFiCol();
-    }
+  public FiCol buiHeader(String header) {
+    this.setFcTxHeader(header);
+    return this;
+  }
 
-    public static FiCol buildo(Object objFieldName) {
-        return new FiCol(objFieldName.toString());
-    }
-
-    public static List<FiCol> convertListFiField(List<FiField> listFiFieldsSummary) {
-
-        List<FiCol> fiTableColList = new ArrayList<>();
-
-        for (FiField fiField : listFiFieldsSummary) {
-            if (FiBool.isTrue(fiField.getBoExcludeFromAutoColList())) continue;
-            FiCol fiTableCol = new FiCol(fiField.getFcTxFieldName(), fiField.getFcTxFieldName());
-            fiTableCol.setColType(convertOzColType(fiField.getClassNameSimple()));
-            if (fiTableCol.getColTypeNtn().equals(OzColType.Double) || fiTableCol.getColTypeNtn().equals(OzColType.Integer)) {
-                fiTableCol.setSummaryType(OzColSummaryType.SUM);
-            }
-            fiTableColList.add(fiTableCol);
-        }
-        return fiTableColList;
-    }
-
-    public static OzColType convertOzColType(String classNameSimple) {
-
-        for (OzColType value : OzColType.values()) {
-
-            if (value.toString().equals(classNameSimple)) {
-                return value;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * Eksik ihtiyaçlara göre doldurulması lazım
-     *
-     * @param iFiCol
-     * @return
-     */
-    public static FiCol buildFromIFiCol(IFiCol iFiCol) {
-        FiCol fiCol = new FiCol();
-
-        fiCol.setFcTxHeader(iFiCol.getFcTxHeader());
-        fiCol.setFcTxFieldName(iFiCol.getFcTxFieldName());
-        fiCol.setColType(iFiCol.getColType());
-        fiCol.setPrefSize(iFiCol.getPrefSize());
-        fiCol.setBoEditable(iFiCol.getBoEditable());
-
-        return fiCol;
-    }
-
-    // build Methods
-
-    public FiCol buiHeader(String header) {
-        this.setFcTxHeader(header);
-        return this;
-    }
-
-    public FiCol buiSynFieldToHeader() {
-        this.setFcTxHeader(this.getFcTxFieldName());
-        return this;
-    }
+  public FiCol buiSynFieldToHeader() {
+    this.setFcTxHeader(this.getFcTxFieldName());
+    return this;
+  }
 
 
-    public FiCol buildNullable(Boolean nullable) {
-        this.setBoNullable(nullable);
-        return this;
-    }
+  public FiCol buildNullable(Boolean nullable) {
+    this.setBoNullable(nullable);
+    return this;
+  }
 
-    public FiCol buildOptional(Boolean isOptional) {
-        this.setBoOptional(isOptional);
-        return this;
-    }
+  public FiCol buildOptional(Boolean isOptional) {
+    this.setBoOptional(isOptional);
+    return this;
+  }
 
-    public FiCol buildFilterNodeClass(String editorClassName) {
-        this.setFilterNodeClass(editorClassName);
-        return this;
-    }
+  public FiCol buildFilterNodeClass(String editorClassName) {
+    this.setFilterNodeClass(editorClassName);
+    return this;
+  }
 
-    public FiCol buiEditorNodeClass(String editorClassName) {
-        this.setColEditorClass(editorClassName);
-        return this;
-    }
+  public FiCol buiEditorNodeClass(String editorClassName) {
+    this.setColEditorClass(editorClassName);
+    return this;
+  }
 
-    public FiCol buiEditorNodeClass(Class editorClass) {
-        this.setColEditorClass(editorClass.getName());
-        return this;
-    }
+  public FiCol buiEditorNodeClass(Class editorClass) {
+    this.setColEditorClass(editorClass.getName());
+    return this;
+  }
 
-    /**
-     * Formlarda Gösterilmemesini sağlar
-     *
-     * @param isHidden
-     * @return
-     */
-    public FiCol buiBoHidden(boolean isHidden) {
-        this.setBoHidden(isHidden);
-        return this;
-    }
+  /**
+   * Formlarda Gösterilmemesini sağlar
+   *
+   * @param isHidden
+   * @return
+   */
+  public FiCol buiBoHidden(boolean isHidden) {
+    this.setBoHidden(isHidden);
+    return this;
+  }
 
-    /**
-     * vt de key alanını işaret eder
-     *
-     * @param boKeyField
-     * @return
-     */
-    public FiCol buildKeyField(boolean boKeyField) {
-        this.setBoKeyIdField(boKeyField);
-        return this;
-    }
+  /**
+   * vt de key alanını işaret eder
+   *
+   * @param boKeyField
+   * @return
+   */
+  public FiCol buildKeyField(boolean boKeyField) {
+    this.setBoKeyIdField(boKeyField);
+    return this;
+  }
 
-    /**
-     * Formlarda node component üretildikten sonra bu fonksiyon ile özelleştirmeleri yapılır. TextfieldButton mesela
-     * , button özelliği ayarlanır.
-     * <p>
-     * Editor Comp :
-     * <p>
-     * Formlarda editor componenti
-     * <p>
-     * Tablolarda ?? satırlar için üretilen prototip component
-     *
-     * @param fnCellFactoryEdiNodeRenderer
-     * @return
-     */
-    public FiCol buildFnEditorRenderer(BiConsumer<Object, Node> fnCellFactoryEdiNodeRenderer) {
-        setFnEditorNodeRendererOnLoad(fnCellFactoryEdiNodeRenderer);
-        return this;
-    }
+  /**
+   * Formlarda node component üretildikten sonra bu fonksiyon ile özelleştirmeleri yapılır. TextfieldButton mesela
+   * , button özelliği ayarlanır.
+   * <p>
+   * Editor Comp :
+   * <p>
+   * Formlarda editor componenti
+   * <p>
+   * Tablolarda ?? satırlar için üretilen prototip component
+   *
+   * @param fnCellFactoryEdiNodeRenderer
+   * @return
+   */
+  public FiCol buildFnEditorRenderer(BiConsumer<Object, Node> fnCellFactoryEdiNodeRenderer) {
+    setFnEditorNodeRendererOnLoad(fnCellFactoryEdiNodeRenderer);
+    return this;
+  }
 
-    public FiCol buildFnEditorRenderer(TriConsumer<Object, Node, FxTableCol2> fnCellFactoryEdiNodeRenderer) {
-        setFnEditorNodeRendererWithCol(fnCellFactoryEdiNodeRenderer);
-        return this;
-    }
+  public FiCol buildFnEditorRenderer(TriConsumer<Object, Node, FxTableCol2> fnCellFactoryEdiNodeRenderer) {
+    setFnEditorNodeRendererWithCol(fnCellFactoryEdiNodeRenderer);
+    return this;
+  }
 
-    public FiCol buildFnEditoreRendererWithVal(TriConsumer<Object, Node, Object> fnCellFactoryEdiNodeRenderer) {
-        setFnEditorNodeRendererWitValue(fnCellFactoryEdiNodeRenderer);
-        return this;
-    }
+  public FiCol buildFnEditoreRendererWithVal(TriConsumer<Object, Node, Object> fnCellFactoryEdiNodeRenderer) {
+    setFnEditorNodeRendererWitValue(fnCellFactoryEdiNodeRenderer);
+    return this;
+  }
 
-    public static FiCol build(String header, String fieldName) {
-        return new FiCol(fieldName, header);
-    }
+  public static FiCol build(String header, String fieldName) {
+    return new FiCol(fieldName, header);
+  }
 
-    public static FiCol build(String fieldName) {
-        return new FiCol(fieldName, fieldName);
-    }
+  public static FiCol build(String fieldName) {
+    return new FiCol(fieldName, fieldName);
+  }
 
-    public static FiCol build(String header, Object fieldName) {
-        return new FiCol(header, fieldName);
-    }
+  public static FiCol build(String header, Object fieldName) {
+    return new FiCol(header, fieldName);
+  }
 
-    public static FiCol buildo(Object fieldName, String header, OzColType colType) {
-        return new FiCol(fieldName, header, colType);
-    }
+  public static FiCol buildo(Object fieldName, String header, OzColType colType) {
+    return new FiCol(fieldName, header, colType);
+  }
 
-    public FiCol buiColType(OzColType colType) {
-        setColType(colType);
-        return this;
-    }
+  public FiCol buiColType(OzColType colType) {
+    setColType(colType);
+    return this;
+  }
 
-    public FiCol buildColGenType(OzColType colType) {
-        setColGenType(colType);
-        return this;
-    }
+  public FiCol buildColGenType(OzColType colType) {
+    setColGenType(colType);
+    return this;
+  }
 
-    public FiCol buiPrefSize(Double prefSize) {
-        setPrefSize(prefSize);
-        return this;
-    }
+  public FiCol buiPrefSize(Double prefSize) {
+    setPrefSize(prefSize);
+    return this;
+  }
 
-    public FiCol buiPrefSize(Integer prefSize) {
-        if (prefSize == null) setPrefSize(null);
-        setPrefSize(prefSize.doubleValue());
-        return this;
-    }
+  public FiCol buiPrefSize(Integer prefSize) {
+    if (prefSize == null) setPrefSize(null);
+    setPrefSize(prefSize.doubleValue());
+    return this;
+  }
 
-    public FiCol buildPrefSizeSet(Double prefSize) {
-        setPrefSize(prefSize);
-        return this;
-    }
+  public FiCol buildPrefSizeSet(Double prefSize) {
+    setPrefSize(prefSize);
+    return this;
+  }
 
-    /**
-     * Karakter olarak uzunluğu verilir.
-     *
-     * @param charLength
-     * @return
-     */
-    public FiCol buildPrintSize(Integer charLength) {
-        this.setPrintSize(charLength);
-        return this;
-    }
+  /**
+   * Karakter olarak uzunluğu verilir.
+   *
+   * @param charLength
+   * @return
+   */
+  public FiCol buildPrintSize(Integer charLength) {
+    this.setPrintSize(charLength);
+    return this;
+  }
 
 
-    public FiCol buiSumType(OzColSummaryType summaryType) {
-        setSummaryType(summaryType);
-        return this;
-    }
+  public FiCol buiSumType(OzColSummaryType summaryType) {
+    setSummaryType(summaryType);
+    return this;
+  }
 
-    public FiCol buiNonEditable(boolean boNonEditable) {
-        setBoNonEditableForForm(boNonEditable);
-        return this;
-    }
+  public FiCol buiNonEditable(boolean boNonEditable) {
+    setBoNonEditableForForm(boNonEditable);
+    return this;
+  }
 
-    /**
-     * Excelde, sütunun yorum balonunda gösterilecek açıklamayı belirtir
-     */
-    public FiCol buiComment(String txComment) {
-        setColComment(txComment);
-        return this;
-    }
+  /**
+   * Excelde, sütunun yorum balonunda gösterilecek açıklamayı belirtir
+   */
+  public FiCol buiComment(String txComment) {
+    setColComment(txComment);
+    return this;
+  }
 
-    public FiCol buiBoEditable(Boolean boEditable) {
-        setBoEditable(boEditable);
-        return this;
-    }
+  public FiCol buiBoEditable(Boolean boEditable) {
+    setBoEditable(boEditable);
+    return this;
+  }
 
 //	public FiTableCol buildFiEditable(Boolean editable) {
 //		this.setFiEditable(editable);
 //		return this;
 //	}
 
-    public FiCol buiBoDoNotExportExcel(Boolean boDoNotExportExcel) {
-        setBoDontExportExcel(boDoNotExportExcel);
-        return this;
+  public FiCol buiBoDoNotExportExcel(Boolean boDoNotExportExcel) {
+    setBoDontExportExcel(boDoNotExportExcel);
+    return this;
+  }
+
+  public FiCol buildDontExportExcelTemplate(Boolean boDontExportExcelTemplate) {
+    setBoDontExportExcelTemplate(boDontExportExcelTemplate);
+    return this;
+  }
+
+  public FiCol buildColFilterValue(Object colFilterValue) {
+    setFilterValue(colFilterValue);
+    return this;
+  }
+
+  public FiCol buiColValue(Object colValue) {
+    setColValue(colValue);
+    return this;
+  }
+
+
+  /**
+   * Alanın zorunlu doldurulması gerektiğini belirtir (Formlar için)
+   *
+   * @param boIsRequired
+   * @return
+   */
+  public FiCol buiBoIsRequired(Boolean boIsRequired) {
+    setBoRequired(boIsRequired);
+    return this;
+  }
+
+  public FiCol buiBoKeyIdField(Boolean boKeyField) {
+    setBoKeyIdField(boKeyField);
+    return this;
+  }
+
+  /**
+   * Class getName kullanılır (uzun sınıf ismi)
+   *
+   * @param name
+   * @return
+   */
+  public FiCol buiColEditorClass(String name) {
+    setColEditorClass(name);
+    return this;
+  }
+
+
+  /**
+   * @param fnEditorNodeRendererAfterLoad
+   * @return
+   */
+  public FiCol buildAfterFormLoadRenderer(BiConsumer<Object, Node> fnEditorNodeRendererAfterLoad) {
+    this.fnEditorNodeRendererAfterFormLoad = fnEditorNodeRendererAfterLoad;
+    return this;
+  }
+
+  public FiCol buildAfterFormLoadRenderer2(TriConsumer<Object, Node, List<FiCol>> fnEditorNodeRendererAfterLoad2) {
+    this.fnEditorNodeRendererAfterFormLoad2 = fnEditorNodeRendererAfterLoad2;
+    return this;
+  }
+
+  public FiCol buildFieldName(String fieldName) {
+    this.fcTxFieldName = fieldName;
+    return this;
+  }
+
+  public FiCol buiBoLocFilter(Boolean boFilterable) {
+    setBoLocFilterable(boFilterable);
+    return this;
+  }
+
+  public FiCol buildFiEditorDisabled(Predicate<EntClazz> predFiEditorDisable) {
+    setPredEditorDisable(predFiEditorDisable);
+    return this;
+  }
+
+  /**
+   * getFnEditorNodeRendererBeforeSettingValue çalıştırır
+   *
+   * @param entity
+   * @param comp
+   */
+  public void lifeCycleNodeOperationsBeforeSettingValue(Object entity, Node comp) {
+    if (getFnEditorNodeRendererBeforeSettingValue() != null) {
+      getFnEditorNodeRendererBeforeSettingValue().accept(entity, comp);
+    }
+  }
+
+  public void lifeCycleNodeOperationsAfterInitialValue(Object entity, Node comp) {
+
+    if (getFnEditorNodeRendererAfterInitialValue1() != null) {
+      getFnEditorNodeRendererAfterInitialValue1().accept(entity, comp);
     }
 
-    public FiCol buildDontExportExcelTemplate(Boolean boDontExportExcelTemplate) {
-        setBoDontExportExcelTemplate(boDontExportExcelTemplate);
-        return this;
+    if (getFnEditorNodeRendererAfterInitialValue2() != null) {
+      getFnEditorNodeRendererAfterInitialValue2().accept(entity, comp);
     }
 
-    public FiCol buildColFilterValue(Object colFilterValue) {
-        setFilterValue(colFilterValue);
-        return this;
-    }
+  }
 
-    public FiCol buiColValue(Object colValue) {
-        setColValue(colValue);
-        return this;
-    }
+  public FiCol buiBoFilterLike(Boolean boFilterLike) {
+    setBoFilterLike(boFilterLike);
+    return this;
+  }
 
+  public FiCol buiBoFiltAndLike(Boolean boFilterLike) {
+    setBoLocFilterable(true);
+    setBoFilterLike(boFilterLike);
+    return this;
+  }
 
-    /**
-     * Alanın zorunlu doldurulması gerektiğini belirtir (Formlar için)
-     *
-     * @param boIsRequired
-     * @return
-     */
-    public FiCol buiBoIsRequired(Boolean boIsRequired) {
-        setBoRequired(boIsRequired);
-        return this;
-    }
+  public FiCol buiTxParamName(String txParamName) {
+    setTxParamName(txParamName);
+    return this;
+  }
 
-    public FiCol buiBoKeyIdField(Boolean boKeyField) {
-        setBoKeyIdField(boKeyField);
-        return this;
-    }
+  public FiCol buiBoRemoteFilterable(Boolean boValue) {
+    setBoRemFilterable(boValue);
+    return this;
+  }
 
-    /**
-     * Class getName kullanılır (uzun sınıf ismi)
-     *
-     * @param name
-     * @return
-     */
-    public FiCol buiColEditorClass(String name) {
-        setColEditorClass(name);
-        return this;
-    }
+  public FiCol buiTxFilterType(FiMeta fimFicFilterType) {
+    setTxFilterType(fimFicFilterType.getTxKey());
+    return this;
+  }
 
+  public FiCol buiWhereField(Boolean boValue) {
+    this.boWhereField = boValue;
+    return this;
+  }
 
-    /**
-     * @param fnEditorNodeRendererAfterLoad
-     * @return
-     */
-    public FiCol buildAfterFormLoadRenderer(BiConsumer<Object, Node> fnEditorNodeRendererAfterLoad) {
-        this.fnEditorNodeRendererAfterFormLoad = fnEditorNodeRendererAfterLoad;
-        return this;
-    }
+  public enum ColStyle {alignment;}
 
-    public FiCol buildAfterFormLoadRenderer2(TriConsumer<Object, Node, List<FiCol>> fnEditorNodeRendererAfterLoad2) {
-        this.fnEditorNodeRendererAfterFormLoad2 = fnEditorNodeRendererAfterLoad2;
-        return this;
-    }
-
-    public FiCol buildFieldName(String fieldName) {
-        this.fcTxFieldName = fieldName;
-        return this;
-    }
-
-    public FiCol buiBoLocFilter(Boolean boFilterable) {
-        setBoLocFilterable(boFilterable);
-        return this;
-    }
-
-    public FiCol buildFiEditorDisabled(Predicate<EntClazz> predFiEditorDisable) {
-        setPredEditorDisable(predFiEditorDisable);
-        return this;
-    }
-
-    /**
-     * getFnEditorNodeRendererBeforeSettingValue çalıştırır
-     *
-     * @param entity
-     * @param comp
-     */
-    public void lifeCycleNodeOperationsBeforeSettingValue(Object entity, Node comp) {
-        if (getFnEditorNodeRendererBeforeSettingValue() != null) {
-            getFnEditorNodeRendererBeforeSettingValue().accept(entity, comp);
-        }
-    }
-
-    public void lifeCycleNodeOperationsAfterInitialValue(Object entity, Node comp) {
-
-        if (getFnEditorNodeRendererAfterInitialValue1() != null) {
-            getFnEditorNodeRendererAfterInitialValue1().accept(entity, comp);
-        }
-
-        if (getFnEditorNodeRendererAfterInitialValue2() != null) {
-            getFnEditorNodeRendererAfterInitialValue2().accept(entity, comp);
-        }
-
-    }
-
-    public FiCol buiBoFilterLike(Boolean boFilterLike) {
-        setBoFilterLike(boFilterLike);
-        return this;
-    }
-
-    public FiCol buiBoFiltAndLike(Boolean boFilterLike) {
-        setBoLocFilterable(true);
-        setBoFilterLike(boFilterLike);
-        return this;
-    }
-
-    public FiCol buiTxParamName(String txParamName) {
-        setTxParamName(txParamName);
-        return this;
-    }
-
-    public FiCol buiBoRemoteFilterable(Boolean boValue) {
-        setBoRemFilterable(boValue);
-        return this;
-    }
-
-    public FiCol buiTxFilterType(FiMeta fimFicFilterType) {
-        setTxFilterType(fimFicFilterType.getTxKey());
-        return this;
-    }
-
-    public FiCol buiWhereField(Boolean boValue) {
-        this.boWhereField = boValue;
-        return this;
-    }
-
-    public enum ColStyle {alignment;}
-
-    public void setupFiCol() {
+  public void setupFiCol() {
 //		fxTableColProperty().addListener((observable, oldValue, tableColNew) -> {
 //			setupPrefSize();
 //		});
@@ -876,80 +874,80 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
 //		fxTreeTableColProperty().addListener((observable, oldValue, tableColNew) -> {
 //			setupPrefSize();
 //		});
+  }
+
+
+  public static void setAutoFieldName(List<IFiCol> listCol) {
+    listCol.forEach(ent -> {
+      if (ent.getFcTxFieldName() == null) {
+        ent.setFcTxFieldName(FiString.trimFieldNameWithEngAccent(ent.getFcTxHeader()));
+      }
+    });
+  }
+
+  public static Map<String, String> getMapColHeaderToFieldName(List<FiCol> listCol) {
+
+    Map<String, String> mapHeaderToField = new HashMap<>();
+
+    listCol.forEach(ozTableCol -> mapHeaderToField.put(ozTableCol.getFcTxHeader(), ozTableCol.fcTxFieldName));
+
+    return mapHeaderToField;
+
+  }
+
+  public static Map<String, String> getMapColFieldToHeaderName(List<IFiCol> listCol) {
+
+    Map<String, String> mapFieldtoHeader = new HashMap<>();
+
+    listCol.forEach(ozTableCol -> mapFieldtoHeader.put(ozTableCol.getFcTxFieldName(), ozTableCol.getFcTxHeader()));
+
+    return mapFieldtoHeader;
+
+  }
+
+  // ***** Getter and Setters
+
+  public String getId() {
+    return this.getFcTxFieldName();
+  }
+
+  public void setId(String id) {
+    this.fcTxFieldName = id;
+  }
+
+  public String getFcTxFieldName() {
+    return fcTxFieldName;
+  }
+
+  public void setFcTxFieldName(String fcTxFieldName) {
+    this.fcTxFieldName = fcTxFieldName;
+  }
+
+  public String getFcTxHeader() {
+    if (fcTxHeader == null) return "";
+    return fcTxHeader;
+  }
+
+  public void setFcTxHeader(String fcTxHeader) {
+    this.fcTxHeader = fcTxHeader;
+  }
+
+  public ObjectProperty<Double> prefSizeProperty() {
+    if (prefSize == null) {
+      prefSize = new SimpleObjectProperty<>();
     }
+    return prefSize;
+  }
+
+  @Override
+  public Double getPrefSize() {
+    return prefSizeProperty().get();
+  }
 
 
-    public static void setAutoFieldName(List<IFiCol> listCol) {
-        listCol.forEach(ent -> {
-            if (ent.getFcTxFieldName() == null) {
-                ent.setFcTxFieldName(FiString.trimFieldNameWithEngAccent(ent.getFcTxHeader()));
-            }
-        });
-    }
-
-    public static Map<String, String> getMapColHeaderToFieldName(List<FiCol> listCol) {
-
-        Map<String, String> mapHeaderToField = new HashMap<>();
-
-        listCol.forEach(ozTableCol -> mapHeaderToField.put(ozTableCol.getFcTxHeader(), ozTableCol.fcTxFieldName));
-
-        return mapHeaderToField;
-
-    }
-
-    public static Map<String, String> getMapColFieldToHeaderName(List<IFiCol> listCol) {
-
-        Map<String, String> mapFieldtoHeader = new HashMap<>();
-
-        listCol.forEach(ozTableCol -> mapFieldtoHeader.put(ozTableCol.getFcTxFieldName(), ozTableCol.getFcTxHeader()));
-
-        return mapFieldtoHeader;
-
-    }
-
-    // ***** Getter and Setters
-
-    public String getId() {
-        return this.getFcTxFieldName();
-    }
-
-    public void setId(String id) {
-        this.fcTxFieldName = id;
-    }
-
-    public String getFcTxFieldName() {
-        return fcTxFieldName;
-    }
-
-    public void setFcTxFieldName(String fcTxFieldName) {
-        this.fcTxFieldName = fcTxFieldName;
-    }
-
-    public String getFcTxHeader() {
-        if (fcTxHeader == null) return "";
-        return fcTxHeader;
-    }
-
-    public void setFcTxHeader(String fcTxHeader) {
-        this.fcTxHeader = fcTxHeader;
-    }
-
-    public ObjectProperty<Double> prefSizeProperty() {
-        if (prefSize == null) {
-            prefSize = new SimpleObjectProperty<>();
-        }
-        return prefSize;
-    }
-
-    @Override
-    public Double getPrefSize() {
-        return prefSizeProperty().get();
-    }
-
-
-    public void setPrefSize(Double prefSize) {
-        prefSizeProperty().set(prefSize);
-    }
+  public void setPrefSize(Double prefSize) {
+    prefSizeProperty().set(prefSize);
+  }
 
 //	public void setupPrefSize() {
 //
@@ -963,686 +961,693 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
 //
 //	}
 
-    public Map<String, String> getMapStyle() {
-        if (mapStyle == null) {
-            mapStyle = new HashMap<>();
-        }
-        return mapStyle;
+  public Map<String, String> getMapStyle() {
+    if (mapStyle == null) {
+      mapStyle = new HashMap<>();
     }
+    return mapStyle;
+  }
 
-    public void setMapStyle(Map<String, String> mapStyle) {
-        this.mapStyle = mapStyle;
-    }
-
-    public OzColType getColType() {
-        return colType;
-    }
-
-    public OzColType getColTypeNtn() {
-        if (colType == null) {
-            return OzColType.Undefined;
-        }
-        return colType;
-    }
-
-    public void setColType(OzColType colType) {
-        this.colType = colType;
-    }
-
-    public Format getFormatter() {
-        return formatter;
-    }
-
-    public void setFormatter(Format formatter) {
-        this.formatter = formatter;
-    }
-
-    public Function<Object, String> getFuncFormatter() {
-        return funcFormatter;
-    }
-
-    public void setFuncFormatter(Function<Object, String> funcFormatter) {
-        this.funcFormatter = funcFormatter;
-    }
-
-    public String getColComment() {
-        return colComment;
-    }
-
-    public void setColComment(String colComment) {
-        this.colComment = colComment;
-    }
-
-    public Boolean getBoEnabled() {
-        return boEnabled;
-    }
-
-    public void setBoEnabled(Boolean boEnabled) {
-        this.boEnabled = boEnabled;
-    }
-
-    public OzColSummaryType getSummaryType() {
-        return summaryType;
-    }
-
-    public void setSummaryType(OzColSummaryType summaryType) {
-        this.summaryType = summaryType;
-    }
-
-    public Integer getPrintSize() {
-        return printSize;
-    }
-
-    public void setPrintSize(Integer printSize) {
-        this.printSize = printSize;
-    }
-
-    public Boolean getBoEditable() {
-        return boEditable;
-    }
-
-    public void setBoEditable(Boolean boEditable) {
-        this.boEditable = boEditable;
-    }
-
-    public Function getSummaryCalculateFn() {
-        return summaryCalculateFn;
-    }
-
-    public void setSummaryCalculateFn(Function summaryCalculateFn) {
-        this.summaryCalculateFn = summaryCalculateFn;
-    }
-
-    public Boolean getBoLocFilterable() {
-        return boLocFilterable;
-    }
-
-    public void setBoLocFilterable(Boolean boLocFilterable) {
-        this.boLocFilterable = boLocFilterable;
-    }
-
-    public String getFilterNodeClass() {
-        return filterNodeClass;
-    }
-
-    public void setFilterNodeClass(String filterNodeClass) {
-        this.filterNodeClass = filterNodeClass;
-    }
-
-    public Consumer<EntClazz> getFnEditorSetOnActionWithEntity() {
-        return fnEditorSetOnActionWithEntity;
-    }
-
-    public void setFnEditorSetOnActionWithEntity(Consumer<EntClazz> fnEditorSetOnActionWithEntity) {
-        this.fnEditorSetOnActionWithEntity = fnEditorSetOnActionWithEntity;
-    }
-
-    public String getColEditorNodeText() {
-        return colEditorNodeText;
-    }
-
-    public void setColEditorNodeText(String colEditorNodeText) {
-        this.colEditorNodeText = colEditorNodeText;
-    }
-
-    public BiConsumer<EntClazz, Button> getFnColButton() {
-        return fnColButton;
-    }
-
-    public void setFnColButton(BiConsumer<EntClazz, Button> fnColButton) {
-        this.fnColButton = fnColButton;
-    }
-
-    public Node getColFilterNode() {
-        return colFilterNode;
-    }
-
-    public void setColFilterNode(Node colFilterNode) {
-        this.colFilterNode = colFilterNode;
-    }
-
-    public EntClazz getEntity() {
-        return entity;
-    }
-
-    public void setEntity(EntClazz entity) {
-        this.entity = entity;
-    }
-
-    public Object getFilterValue() {
-        return filterValue;
-    }
-
-    public void setFilterValue(Object filterValue) {
-        this.filterValue = filterValue;
-    }
-
-    public Boolean getBoHidden() {
-        return boHidden;
-    }
-
-    public void setBoHidden(Boolean hidden) {
-        boHidden = hidden;
-    }
-
-    public String getColEditorClass() {
-        return colEditorClass;
-    }
-
-    public String getColEditorClassInit() {
-        if (colEditorClass == null) {
-            colEditorClass = "";
-        }
-        return colEditorClass;
-    }
-
-    public void setColEditorClass(String colEditorClass) {
-        this.colEditorClass = colEditorClass;
-    }
-
-    public void setColEditorClassByClass(Class colEditorClass) {
-        this.colEditorClass = colEditorClass.getName();
-    }
+  public void setMapStyle(Map<String, String> mapStyle) {
+    this.mapStyle = mapStyle;
+  }
 
-    public EventHandler<KeyEvent> getColFilterKeyEvent() {
-        return this.colFilterKeyEvent;
-    }
-
-    public void setColFilterKeyEvent(EventHandler<KeyEvent> colFilterKeyEvent) {
-        this.colFilterKeyEvent = colFilterKeyEvent;
-    }
-
-    public Boolean getBoOptional() {
-        return boOptional;
-    }
-
-    public void setBoOptional(Boolean optional) {
-        boOptional = optional;
-    }
-
-    public Boolean getBoExist() {
-        return boExist;
-    }
-
-    public void setBoExist(Boolean exist) {
-        boExist = exist;
-    }
-
-    public Integer getColIndex() {
-        return colIndex;
-    }
-
-    public void setColIndex(Integer colIndex) {
-        this.colIndex = colIndex;
-    }
-
-    public FxMigPane getPaneHeader() {
-        return paneHeader;
-    }
-
-    public void setPaneHeader(FxMigPane paneHeader) {
-        this.paneHeader = paneHeader;
-    }
-
-    public Boolean getBoNullable() {
-        return boNullable;
-    }
-
-    public void setBoNullable(Boolean boNullable) {
-        this.boNullable = boNullable;
-    }
-
-    public Boolean getBoNonUpdatable() {
-        return boNonUpdatable;
-    }
-
-    public void setBoNonUpdatable(Boolean boNonUpdatable) {
-        this.boNonUpdatable = boNonUpdatable;
-    }
-
-    public FiCol<EntClazz> buiBoNonUpdatable(Boolean boNonUpdatable) {
-        this.boNonUpdatable = boNonUpdatable;
-        return this;
-    }
-
-    public FiCol<EntClazz> buiBoUpdateFieldForQuery(Boolean boUpdateField) {
-        this.boUpdateFieldForQuery = boUpdateField;
-        return this;
-    }
-
-    public FiCol<EntClazz> buiBoWhereField(Boolean boWhereField) {
-        setFcBoWhereField(boWhereField);
-        return this;
-    }
-
-    public FiCol<EntClazz> buiBoCountField(Boolean boCountField) {
-        setFcBoCountField(boCountField);
-        return this;
-    }
-
-    public Boolean getBoKeyIdField() {
-        return boKeyIdField;
-    }
-
-    public void setBoKeyIdField(Boolean boKeyIdField) {
-        this.boKeyIdField = boKeyIdField;
-    }
-
-    public Boolean getBoNonEditableForForm() {
-        return boNonEditableForForm;
-    }
+  public OzColType getColType() {
+    return colType;
+  }
 
-    public void setBoNonEditableForForm(Boolean boNonEditableForForm) {
-        this.boNonEditableForForm = boNonEditableForForm;
+  public OzColType getColTypeNtn() {
+    if (colType == null) {
+      return OzColType.Undefined;
     }
+    return colType;
+  }
+
+  public void setColType(OzColType colType) {
+    this.colType = colType;
+  }
+
+  public Format getFormatter() {
+    return formatter;
+  }
+
+  public void setFormatter(Format formatter) {
+    this.formatter = formatter;
+  }
+
+  public Function<Object, String> getFuncFormatter() {
+    return funcFormatter;
+  }
+
+  public void setFuncFormatter(Function<Object, String> funcFormatter) {
+    this.funcFormatter = funcFormatter;
+  }
+
+  public String getColComment() {
+    return colComment;
+  }
+
+  public void setColComment(String colComment) {
+    this.colComment = colComment;
+  }
+
+  public Boolean getBoEnabled() {
+    return boEnabled;
+  }
+
+  public void setBoEnabled(Boolean boEnabled) {
+    this.boEnabled = boEnabled;
+  }
+
+  public OzColSummaryType getSummaryType() {
+    return summaryType;
+  }
+
+  public void setSummaryType(OzColSummaryType summaryType) {
+    this.summaryType = summaryType;
+  }
+
+  public Integer getPrintSize() {
+    return printSize;
+  }
+
+  public void setPrintSize(Integer printSize) {
+    this.printSize = printSize;
+  }
 
-    @Override
-    public Node getColEditorNode() {
-        return colEditorNode;
-    }
-
-    @Override
-    public void setColEditorNode(Node colEditorNode) {
-        this.colEditorNode = colEditorNode;
-    }
-
-    public BiConsumer<Object, Node> getFnEditorNodeRendererBeforeSettingValue() {
-        return fnEditorNodeRendererBeforeSettingValue;
-    }
-
-    public void setFnEditorNodeRendererOnLoad(BiConsumer<Object, Node> fnEditorNodeRendererOnLoad) {
-        this.fnEditorNodeRendererBeforeSettingValue = fnEditorNodeRendererOnLoad;
-    }
-
-    @Override
-    public Boolean getBoRequired() {
-        return boRequired;
-    }
-
-    @Override
-    public void setBoRequired(Boolean boRequired) {
-        this.boRequired = boRequired;
-    }
-
-    public Predicate<EntClazz> getPredEditorDisable() {
-        return predEditorDisable;
-    }
-
-    public void setPredEditorDisable(Predicate<EntClazz> predEditorDisable) {
-        this.predEditorDisable = predEditorDisable;
-    }
-
-    /**
-     * table col'da manuel bir değişik yapıldıktan sonra tetiklenir
-     *
-     * @return
-     */
-    public Consumer<EntClazz> getFnColCellManualChanged() {
-        return fnColCellManualChanged;
-    }
-
-    /**
-     * table col'da manuel bir değişik yapıldıktan sonra tetiklenir
-     *
-     * @return
-     */
-    public void setFnColCellManualChanged(Consumer<EntClazz> fnColCellManualChanged) {
-        this.fnColCellManualChanged = fnColCellManualChanged;
-    }
-
-    public FxLabel getSummaryLabelNode() {
-        return summaryLabelNode;
-    }
+  public Boolean getBoEditable() {
+    return boEditable;
+  }
 
-    public void setSummaryLabelNode(FxLabel summaryLabelNode) {
-        this.summaryLabelNode = summaryLabelNode;
-    }
-
-    public Node getSummaryNode() {
-        return summaryNode;
-    }
+  public void setBoEditable(Boolean boEditable) {
+    this.boEditable = boEditable;
+  }
 
-    public void setSummaryNode(Node summaryNode) {
-        this.summaryNode = summaryNode;
-    }
+  public Function getSummaryCalculateFn() {
+    return summaryCalculateFn;
+  }
 
-    public FxCheckBox getSummaryCheckBox() {
-        return summaryCheckBox;
-    }
+  public void setSummaryCalculateFn(Function summaryCalculateFn) {
+    this.summaryCalculateFn = summaryCalculateFn;
+  }
 
-    public void setSummaryCheckBox(FxCheckBox summaryCheckBox) {
-        this.summaryCheckBox = summaryCheckBox;
-    }
+  public Boolean getBoLocFilterable() {
+    return boLocFilterable;
+  }
 
-    public TriConsumer<Object, Node, FxTableCol2> getFnEditorNodeRendererWithCol() {
-        return fnEditorNodeRendererWithCol;
-    }
+  public void setBoLocFilterable(Boolean boLocFilterable) {
+    this.boLocFilterable = boLocFilterable;
+  }
 
-    public void setFnEditorNodeRendererWithCol(TriConsumer<Object, Node, FxTableCol2> fnEditorNodeRendererWithCol) {
-        this.fnEditorNodeRendererWithCol = fnEditorNodeRendererWithCol;
-    }
+  public String getFilterNodeClass() {
+    return filterNodeClass;
+  }
 
+  public void setFilterNodeClass(String filterNodeClass) {
+    this.filterNodeClass = filterNodeClass;
+  }
 
-    public TriConsumer<Object, Node, Object> getFnEditorNodeRendererWitValue() {
-        return fnEditorNodeRendererWitValue;
-    }
+  public Consumer<EntClazz> getFnEditorSetOnActionWithEntity() {
+    return fnEditorSetOnActionWithEntity;
+  }
 
-    public void setFnEditorNodeRendererWitValue(TriConsumer<Object, Node, Object> fnEditorNodeRendererWitValue) {
-        this.fnEditorNodeRendererWitValue = fnEditorNodeRendererWitValue;
-    }
+  public void setFnEditorSetOnActionWithEntity(Consumer<EntClazz> fnEditorSetOnActionWithEntity) {
+    this.fnEditorSetOnActionWithEntity = fnEditorSetOnActionWithEntity;
+  }
 
-    public BiConsumer<Object, Node> getFnEditorSetOnAction() {
-        return fnEditorSetOnAction;
-    }
+  public String getColEditorNodeText() {
+    return colEditorNodeText;
+  }
 
-    public void setFnEditorSetOnAction(BiConsumer<Object, Node> fnEditorSetOnAction) {
-        this.fnEditorSetOnAction = fnEditorSetOnAction;
-    }
+  public void setColEditorNodeText(String colEditorNodeText) {
+    this.colEditorNodeText = colEditorNodeText;
+  }
 
-    public TriConsumer<Object, Node, FxTableColDep> getFnEditorSetOnActionWitCol() {
-        return fnEditorSetOnActionWitCol;
-    }
+  public BiConsumer<EntClazz, Button> getFnColButton() {
+    return fnColButton;
+  }
 
-    public void setFnEditorSetOnActionWitCol(TriConsumer<Object, Node, FxTableColDep> fnEditorSetOnActionWitCol) {
-        this.fnEditorSetOnActionWitCol = fnEditorSetOnActionWitCol;
-    }
+  public void setFnColButton(BiConsumer<EntClazz, Button> fnColButton) {
+    this.fnColButton = fnColButton;
+  }
 
-    public TriConsumer<Object, Node, Object> getFnEditorSetOnActionWitValue() {
-        return fnEditorSetOnActionWitValue;
-    }
+  public Node getColFilterNode() {
+    return colFilterNode;
+  }
 
-    public void setFnEditorSetOnActionWitValue(TriConsumer<Object, Node, Object> fnEditorSetOnActionWitValue) {
-        this.fnEditorSetOnActionWitValue = fnEditorSetOnActionWitValue;
-    }
+  public void setColFilterNode(Node colFilterNode) {
+    this.colFilterNode = colFilterNode;
+  }
 
-    public FxTableCol2<EntClazz> getFxTableCol2() {
-        return fxTableCol2;
-    }
+  public EntClazz getEntity() {
+    return entity;
+  }
 
-    public void setFxTableCol2(FxTableCol2<EntClazz> fxTableCol2) {
-        this.fxTableCol2 = fxTableCol2;
-    }
+  public void setEntity(EntClazz entity) {
+    this.entity = entity;
+  }
 
-    public Boolean getBoDontExportExcel() {
-        return boDontExportExcel;
-    }
+  public Object getFilterValue() {
+    return filterValue;
+  }
 
-    public void setBoDontExportExcel(Boolean boDontExportExcel) {
-        this.boDontExportExcel = boDontExportExcel;
-    }
+  public void setFilterValue(Object filterValue) {
+    this.filterValue = filterValue;
+  }
+
+  public Boolean getBoHidden() {
+    return boHidden;
+  }
+
+  public void setBoHidden(Boolean hidden) {
+    boHidden = hidden;
+  }
+
+  public String getColEditorClass() {
+    return colEditorClass;
+  }
+
+  public String getColEditorClassNtn() {
+    if (colEditorClass == null) {
+      return "null";
+    }
+    return colEditorClass;
+  }
 
-    public TableColumn getTableColumnFx() {
-        if (tableColumnFx == null) return null;
-        return tableColumnFx.get();
+  public String getColEditorClassInit() {
+    if (colEditorClass == null) {
+      colEditorClass = "";
     }
-
-    public ObjectProperty<TableColumn> tableColumnFxProperty() {
+    return colEditorClass;
+  }
+
+  public void setColEditorClass(String colEditorClass) {
+    this.colEditorClass = colEditorClass;
+  }
+
+  public void setColEditorClassByClass(Class colEditorClass) {
+    this.colEditorClass = colEditorClass.getName();
+  }
+
+  public EventHandler<KeyEvent> getColFilterKeyEvent() {
+    return this.colFilterKeyEvent;
+  }
+
+  public void setColFilterKeyEvent(EventHandler<KeyEvent> colFilterKeyEvent) {
+    this.colFilterKeyEvent = colFilterKeyEvent;
+  }
+
+  public Boolean getBoOptional() {
+    return boOptional;
+  }
+
+  public void setBoOptional(Boolean optional) {
+    boOptional = optional;
+  }
+
+  public Boolean getBoExist() {
+    return boExist;
+  }
+
+  public void setBoExist(Boolean exist) {
+    boExist = exist;
+  }
+
+  public Integer getColIndex() {
+    return colIndex;
+  }
+
+  public void setColIndex(Integer colIndex) {
+    this.colIndex = colIndex;
+  }
+
+  public FxMigPane getPaneHeader() {
+    return paneHeader;
+  }
+
+  public void setPaneHeader(FxMigPane paneHeader) {
+    this.paneHeader = paneHeader;
+  }
+
+  public Boolean getBoNullable() {
+    return boNullable;
+  }
+
+  public void setBoNullable(Boolean boNullable) {
+    this.boNullable = boNullable;
+  }
+
+  public Boolean getBoNonUpdatable() {
+    return boNonUpdatable;
+  }
+
+  public void setBoNonUpdatable(Boolean boNonUpdatable) {
+    this.boNonUpdatable = boNonUpdatable;
+  }
+
+  public FiCol<EntClazz> buiBoNonUpdatable(Boolean boNonUpdatable) {
+    this.boNonUpdatable = boNonUpdatable;
+    return this;
+  }
+
+  public FiCol<EntClazz> buiBoUpdateFieldForQuery(Boolean boUpdateField) {
+    this.boUpdateFieldForQuery = boUpdateField;
+    return this;
+  }
+
+  public FiCol<EntClazz> buiBoWhereField(Boolean boWhereField) {
+    setFcBoWhereField(boWhereField);
+    return this;
+  }
+
+  public FiCol<EntClazz> buiBoCountField(Boolean boCountField) {
+    setFcBoCountField(boCountField);
+    return this;
+  }
+
+  public Boolean getBoKeyIdField() {
+    return boKeyIdField;
+  }
+
+  public void setBoKeyIdField(Boolean boKeyIdField) {
+    this.boKeyIdField = boKeyIdField;
+  }
+
+  public Boolean getBoNonEditableForForm() {
+    return boNonEditableForForm;
+  }
+
+  public void setBoNonEditableForForm(Boolean boNonEditableForForm) {
+    this.boNonEditableForForm = boNonEditableForForm;
+  }
+
+  @Override
+  public Node getColEditorNode() {
+    return colEditorNode;
+  }
+
+  @Override
+  public void setColEditorNode(Node colEditorNode) {
+    this.colEditorNode = colEditorNode;
+  }
+
+  public BiConsumer<Object, Node> getFnEditorNodeRendererBeforeSettingValue() {
+    return fnEditorNodeRendererBeforeSettingValue;
+  }
+
+  public void setFnEditorNodeRendererOnLoad(BiConsumer<Object, Node> fnEditorNodeRendererOnLoad) {
+    this.fnEditorNodeRendererBeforeSettingValue = fnEditorNodeRendererOnLoad;
+  }
+
+  @Override
+  public Boolean getBoRequired() {
+    return boRequired;
+  }
+
+  @Override
+  public void setBoRequired(Boolean boRequired) {
+    this.boRequired = boRequired;
+  }
+
+  public Predicate<EntClazz> getPredEditorDisable() {
+    return predEditorDisable;
+  }
+
+  public void setPredEditorDisable(Predicate<EntClazz> predEditorDisable) {
+    this.predEditorDisable = predEditorDisable;
+  }
+
+  /**
+   * table col'da manuel bir değişik yapıldıktan sonra tetiklenir
+   *
+   * @return
+   */
+  public Consumer<EntClazz> getFnColCellManualChanged() {
+    return fnColCellManualChanged;
+  }
+
+  /**
+   * table col'da manuel bir değişik yapıldıktan sonra tetiklenir
+   *
+   * @return
+   */
+  public void setFnColCellManualChanged(Consumer<EntClazz> fnColCellManualChanged) {
+    this.fnColCellManualChanged = fnColCellManualChanged;
+  }
+
+  public FxLabel getSummaryLabelNode() {
+    return summaryLabelNode;
+  }
+
+  public void setSummaryLabelNode(FxLabel summaryLabelNode) {
+    this.summaryLabelNode = summaryLabelNode;
+  }
+
+  public Node getSummaryNode() {
+    return summaryNode;
+  }
+
+  public void setSummaryNode(Node summaryNode) {
+    this.summaryNode = summaryNode;
+  }
+
+  public FxCheckBox getSummaryCheckBox() {
+    return summaryCheckBox;
+  }
+
+  public void setSummaryCheckBox(FxCheckBox summaryCheckBox) {
+    this.summaryCheckBox = summaryCheckBox;
+  }
+
+  public TriConsumer<Object, Node, FxTableCol2> getFnEditorNodeRendererWithCol() {
+    return fnEditorNodeRendererWithCol;
+  }
+
+  public void setFnEditorNodeRendererWithCol(TriConsumer<Object, Node, FxTableCol2> fnEditorNodeRendererWithCol) {
+    this.fnEditorNodeRendererWithCol = fnEditorNodeRendererWithCol;
+  }
+
+
+  public TriConsumer<Object, Node, Object> getFnEditorNodeRendererWitValue() {
+    return fnEditorNodeRendererWitValue;
+  }
+
+  public void setFnEditorNodeRendererWitValue(TriConsumer<Object, Node, Object> fnEditorNodeRendererWitValue) {
+    this.fnEditorNodeRendererWitValue = fnEditorNodeRendererWitValue;
+  }
+
+  public BiConsumer<Object, Node> getFnEditorSetOnAction() {
+    return fnEditorSetOnAction;
+  }
+
+  public void setFnEditorSetOnAction(BiConsumer<Object, Node> fnEditorSetOnAction) {
+    this.fnEditorSetOnAction = fnEditorSetOnAction;
+  }
+
+  public TriConsumer<Object, Node, FxTableColDep> getFnEditorSetOnActionWitCol() {
+    return fnEditorSetOnActionWitCol;
+  }
+
+  public void setFnEditorSetOnActionWitCol(TriConsumer<Object, Node, FxTableColDep> fnEditorSetOnActionWitCol) {
+    this.fnEditorSetOnActionWitCol = fnEditorSetOnActionWitCol;
+  }
+
+  public TriConsumer<Object, Node, Object> getFnEditorSetOnActionWitValue() {
+    return fnEditorSetOnActionWitValue;
+  }
+
+  public void setFnEditorSetOnActionWitValue(TriConsumer<Object, Node, Object> fnEditorSetOnActionWitValue) {
+    this.fnEditorSetOnActionWitValue = fnEditorSetOnActionWitValue;
+  }
+
+  public FxTableCol2<EntClazz> getFxTableCol2() {
+    return fxTableCol2;
+  }
+
+  public void setFxTableCol2(FxTableCol2<EntClazz> fxTableCol2) {
+    this.fxTableCol2 = fxTableCol2;
+  }
+
+  public Boolean getBoDontExportExcel() {
+    return boDontExportExcel;
+  }
+
+  public void setBoDontExportExcel(Boolean boDontExportExcel) {
+    this.boDontExportExcel = boDontExportExcel;
+  }
+
+  public TableColumn getTableColumnFx() {
+    if (tableColumnFx == null) return null;
+    return tableColumnFx.get();
+  }
+
+  public ObjectProperty<TableColumn> tableColumnFxProperty() {
 //		if (tableColProp == null) {
 //			tableColProp = new SimpleObjectProperty<>();
 //		}
-        return tableColumnFx;
-    }
+    return tableColumnFx;
+  }
 
-    public void setTableColumnFx(TableColumn tableColumn) {
-        this.tableColumnFx.set(tableColumn);
-    }
+  public void setTableColumnFx(TableColumn tableColumn) {
+    this.tableColumnFx.set(tableColumn);
+  }
 
-    public TreeTableColumn getFxTreeTableCol() {
-        return fxTreeTableCol.get();
-    }
+  public TreeTableColumn getFxTreeTableCol() {
+    return fxTreeTableCol.get();
+  }
 
-    public ObjectProperty<TreeTableColumn> fxTreeTableColProperty() {
-        return fxTreeTableCol;
-    }
+  public ObjectProperty<TreeTableColumn> fxTreeTableColProperty() {
+    return fxTreeTableCol;
+  }
 
-    public void setFxTreeTableCol(TreeTableColumn fxTreeTableCol) {
-        this.fxTreeTableCol.set(fxTreeTableCol);
-    }
+  public void setFxTreeTableCol(TreeTableColumn fxTreeTableCol) {
+    this.fxTreeTableCol.set(fxTreeTableCol);
+  }
 
-    public EventHandler<KeyEvent> getColEditorKeyEvent() {
-        return colEditorKeyEvent;
-    }
+  public EventHandler<KeyEvent> getColEditorKeyEvent() {
+    return colEditorKeyEvent;
+  }
 
-    public void setColEditorKeyEvent(EventHandler<KeyEvent> colEditorKeyEvent) {
-        this.colEditorKeyEvent = colEditorKeyEvent;
-    }
+  public void setColEditorKeyEvent(EventHandler<KeyEvent> colEditorKeyEvent) {
+    this.colEditorKeyEvent = colEditorKeyEvent;
+  }
 
-    public Function<Object, Object> getFnEditorNodeValueFormmatter() {
-        return fnEditorNodeValueFormmatter;
-    }
+  public Function<Object, Object> getFnEditorNodeValueFormmatter() {
+    return fnEditorNodeValueFormmatter;
+  }
 
-    /**
-     * Formlarda componenta değeri basılmazdan önce,
-     * bu fonksiyona entity gönderilir, string bir değer alınır ve componenta basılır.
-     *
-     * @return
-     */
-    public void setFnEditorNodeValueFormmatter(Function<Object, Object> fnEditorNodeValueFormmatter) {
-        this.fnEditorNodeValueFormmatter = fnEditorNodeValueFormmatter;
-    }
+  /**
+   * Formlarda componenta değeri basılmazdan önce,
+   * bu fonksiyona entity gönderilir, string bir değer alınır ve componenta basılır.
+   *
+   * @return
+   */
+  public void setFnEditorNodeValueFormmatter(Function<Object, Object> fnEditorNodeValueFormmatter) {
+    this.fnEditorNodeValueFormmatter = fnEditorNodeValueFormmatter;
+  }
 
-    public BiConsumer<Object, Node> getFnEditorNodeRendererAfterFormLoad() {
-        return fnEditorNodeRendererAfterFormLoad;
-    }
+  public BiConsumer<Object, Node> getFnEditorNodeRendererAfterFormLoad() {
+    return fnEditorNodeRendererAfterFormLoad;
+  }
 
-    public void setFnEditorNodeRendererAfterFormLoad(BiConsumer<Object, Node> fnEditorNodeRendererAfterFormLoad) {
-        this.fnEditorNodeRendererAfterFormLoad = fnEditorNodeRendererAfterFormLoad;
-    }
+  public void setFnEditorNodeRendererAfterFormLoad(BiConsumer<Object, Node> fnEditorNodeRendererAfterFormLoad) {
+    this.fnEditorNodeRendererAfterFormLoad = fnEditorNodeRendererAfterFormLoad;
+  }
 
-    @Override
-    public Boolean equalsColType(OzColType ozColType) {
-        if (getColType() == null) return false;
-        return getColType() == ozColType;
-    }
+  @Override
+  public Boolean equalsColType(OzColType ozColType) {
+    if (getColType() == null) return false;
+    return getColType() == ozColType;
+  }
 
-    public Boolean getBoDontExportExcelTemplate() {
-        return boDontExportExcelTemplate;
-    }
+  public Boolean getBoDontExportExcelTemplate() {
+    return boDontExportExcelTemplate;
+  }
 
-    public void setBoDontExportExcelTemplate(Boolean boDontExportExcelTemplate) {
-        this.boDontExportExcelTemplate = boDontExportExcelTemplate;
-    }
+  public void setBoDontExportExcelTemplate(Boolean boDontExportExcelTemplate) {
+    this.boDontExportExcelTemplate = boDontExportExcelTemplate;
+  }
 
-    @Override
-    public String toString() {
-        return FiString.orEmpty(fcTxFieldName);
-    }
+  @Override
+  public String toString() {
+    return FiString.orEmpty(fcTxFieldName);
+  }
 
-    public IFiNode getIfxNodeEditor() {
-        return IFiNodeEditor;
-    }
+  public IFiNode getIfxNodeEditor() {
+    return IFiNodeEditor;
+  }
 
-    public void setIfxNodeEditor(IFiNode IFiNodeEditor) {
-        this.IFiNodeEditor = IFiNodeEditor;
-    }
+  public void setIfxNodeEditor(IFiNode IFiNodeEditor) {
+    this.IFiNodeEditor = IFiNodeEditor;
+  }
 
-    public BiConsumer<Object, Node> getFnEditorNodeAfterChangeForForm() {
-        return fnEditorNodeAfterChangeForForm;
-    }
+  public BiConsumer<Object, Node> getFnEditorNodeAfterChangeForForm() {
+    return fnEditorNodeAfterChangeForForm;
+  }
 
-    public void setFnEditorNodeAfterChangeForForm(BiConsumer<Object, Node> fnEditorNodeAfterChangeForForm) {
-        this.fnEditorNodeAfterChangeForForm = fnEditorNodeAfterChangeForForm;
-    }
+  public void setFnEditorNodeAfterChangeForForm(BiConsumer<Object, Node> fnEditorNodeAfterChangeForForm) {
+    this.fnEditorNodeAfterChangeForForm = fnEditorNodeAfterChangeForForm;
+  }
 
-    public void setFnEditorNodeRendererBeforeSettingValue(BiConsumer<Object, Node> fnEditorNodeRendererBeforeSettingValue) {
-        this.fnEditorNodeRendererBeforeSettingValue = fnEditorNodeRendererBeforeSettingValue;
-    }
+  public void setFnEditorNodeRendererBeforeSettingValue(BiConsumer<Object, Node> fnEditorNodeRendererBeforeSettingValue) {
+    this.fnEditorNodeRendererBeforeSettingValue = fnEditorNodeRendererBeforeSettingValue;
+  }
 
-    public FiCol buiFnEditorNodeRendererBeforeSettingValue(BiConsumer<Object, Node> fnEditorNodeRendererBeforeSettingValue) {
-        this.fnEditorNodeRendererBeforeSettingValue = fnEditorNodeRendererBeforeSettingValue;
-        return this;
-    }
+  public FiCol buiFnEditorNodeRendererBeforeSettingValue(BiConsumer<Object, Node> fnEditorNodeRendererBeforeSettingValue) {
+    this.fnEditorNodeRendererBeforeSettingValue = fnEditorNodeRendererBeforeSettingValue;
+    return this;
+  }
 
-    public BiConsumer<Object, Node> getFnEditorNodeRendererAfterInitialValue1() {
-        return fnEditorNodeRendererAfterInitialValue1;
-    }
+  public BiConsumer<Object, Node> getFnEditorNodeRendererAfterInitialValue1() {
+    return fnEditorNodeRendererAfterInitialValue1;
+  }
 
-    public FiCol setFnEditorNodeRendererAfterInitialValue1(BiConsumer<Object, Node> fnEditorNodeRendererAfterInitialValue1) {
-        this.fnEditorNodeRendererAfterInitialValue1 = fnEditorNodeRendererAfterInitialValue1;
-        return this;
-    }
+  public FiCol setFnEditorNodeRendererAfterInitialValue1(BiConsumer<Object, Node> fnEditorNodeRendererAfterInitialValue1) {
+    this.fnEditorNodeRendererAfterInitialValue1 = fnEditorNodeRendererAfterInitialValue1;
+    return this;
+  }
 
-    public BiConsumer<Object, Node> getFnEditorNodeRendererAfterInitialValue2() {
-        return fnEditorNodeRendererAfterInitialValue2;
-    }
+  public BiConsumer<Object, Node> getFnEditorNodeRendererAfterInitialValue2() {
+    return fnEditorNodeRendererAfterInitialValue2;
+  }
 
-    public FiCol setFnEditorNodeRendererAfterInitialValue2(BiConsumer<Object, Node> fnEditorNodeRendererAfterInitialValue2) {
-        this.fnEditorNodeRendererAfterInitialValue2 = fnEditorNodeRendererAfterInitialValue2;
-        return this;
-    }
+  public FiCol setFnEditorNodeRendererAfterInitialValue2(BiConsumer<Object, Node> fnEditorNodeRendererAfterInitialValue2) {
+    this.fnEditorNodeRendererAfterInitialValue2 = fnEditorNodeRendererAfterInitialValue2;
+    return this;
+  }
 
-    public List<FiCol> getListChildCol() {
-        return listChildCol;
-    }
+  public List<FiCol> getListChildCol() {
+    return listChildCol;
+  }
 
-    public void setListChildCol(List<FiCol> listChildCol) {
-        this.listChildCol = listChildCol;
-    }
+  public void setListChildCol(List<FiCol> listChildCol) {
+    this.listChildCol = listChildCol;
+  }
 
-    public Class getChildClazz() {
-        return childClazz;
-    }
+  public Class getChildClazz() {
+    return childClazz;
+  }
 
-    /**
-     * Xml okunurken, çocuk xml elementin class tanımı
-     *
-     * @param childClazz
-     */
-    public void setChildClazz(Class childClazz) {
-        this.childClazz = childClazz;
-    }
+  /**
+   * Xml okunurken, çocuk xml elementin class tanımı
+   *
+   * @param childClazz
+   */
+  public void setChildClazz(Class childClazz) {
+    this.childClazz = childClazz;
+  }
 
-    public Boolean getBoFilterLike() {
-        return boFilterLike;
-    }
+  public Boolean getBoFilterLike() {
+    return boFilterLike;
+  }
 
-    public void setBoFilterLike(Boolean boFilterLike) {
-        this.boFilterLike = boFilterLike;
-    }
+  public void setBoFilterLike(Boolean boFilterLike) {
+    this.boFilterLike = boFilterLike;
+  }
 
-    public TriConsumer<Object, Node, List<FiCol>> getFnEditorNodeRendererAfterFormLoad2() {
-        return fnEditorNodeRendererAfterFormLoad2;
-    }
+  public TriConsumer<Object, Node, List<FiCol>> getFnEditorNodeRendererAfterFormLoad2() {
+    return fnEditorNodeRendererAfterFormLoad2;
+  }
 
-    public void setFnEditorNodeRendererAfterFormLoad2(TriConsumer<Object, Node, List<FiCol>> fnEditorNodeRendererAfterFormLoad2) {
-        this.fnEditorNodeRendererAfterFormLoad2 = fnEditorNodeRendererAfterFormLoad2;
-    }
+  public void setFnEditorNodeRendererAfterFormLoad2(TriConsumer<Object, Node, List<FiCol>> fnEditorNodeRendererAfterFormLoad2) {
+    this.fnEditorNodeRendererAfterFormLoad2 = fnEditorNodeRendererAfterFormLoad2;
+  }
 
-    public Consumer<Node> getFnNodeFocusTrigger() {
-        return fnNodeFocusTrigger;
-    }
+  public Consumer<Node> getFnNodeFocusTrigger() {
+    return fnNodeFocusTrigger;
+  }
 
-    public void setFnNodeFocusTrigger(Consumer<Node> fnNodeFocusTrigger) {
-        this.fnNodeFocusTrigger = fnNodeFocusTrigger;
-    }
+  public void setFnNodeFocusTrigger(Consumer<Node> fnNodeFocusTrigger) {
+    this.fnNodeFocusTrigger = fnNodeFocusTrigger;
+  }
 
-    public Integer getLnCode() {
-        return lnCode;
-    }
+  public Integer getLnCode() {
+    return lnCode;
+  }
 
-    public void setLnCode(Integer lnCode) {
-        this.lnCode = lnCode;
-    }
+  public void setLnCode(Integer lnCode) {
+    this.lnCode = lnCode;
+  }
 
-    public Function<Object, Fdr> getFnValidate() {
-        return fnValidate;
-    }
+  public Function<Object, Fdr> getFnValidate() {
+    return fnValidate;
+  }
 
-    public void setFnValidate(Function<Object, Fdr> fnValidate) {
-        this.fnValidate = fnValidate;
-    }
+  public void setFnValidate(Function<Object, Fdr> fnValidate) {
+    this.fnValidate = fnValidate;
+  }
 
-    public Object getColValue() {
-        return colValue;
-    }
+  public Object getColValue() {
+    return colValue;
+  }
 
-    public void setColValue(Object colValue) {
-        this.colValue = colValue;
-    }
+  public void setColValue(Object colValue) {
+    this.colValue = colValue;
+  }
 
-    public Boolean getBoUpdateFieldForQuery() {
-        return boUpdateFieldForQuery;
-    }
+  public Boolean getBoUpdateFieldForQuery() {
+    return boUpdateFieldForQuery;
+  }
 
-    public void setBoUpdateFieldForQuery(Boolean boUpdateFieldForQuery) {
-        this.boUpdateFieldForQuery = boUpdateFieldForQuery;
-    }
+  public void setBoUpdateFieldForQuery(Boolean boUpdateFieldForQuery) {
+    this.boUpdateFieldForQuery = boUpdateFieldForQuery;
+  }
 
-    public String getTxLabel() {
-        return txLabel;
-    }
+  public String getTxLabel() {
+    return txLabel;
+  }
 
-    public void setTxLabel(String txLabel) {
-        this.txLabel = txLabel;
-    }
+  public void setTxLabel(String txLabel) {
+    this.txLabel = txLabel;
+  }
 
-    public Class<EntClazz> getEntClass() {
-        return entClass;
-    }
+  public Class<EntClazz> getEntClass() {
+    return entClass;
+  }
 
-    public void setEntClass(Class<EntClazz> entClass) {
-        this.entClass = entClass;
-    }
+  public void setEntClass(Class<EntClazz> entClass) {
+    this.entClass = entClass;
+  }
 
-    public String getTxParamName() {
-        return txParamName;
-    }
+  public String getTxParamName() {
+    return txParamName;
+  }
 
-    public void setTxParamName(String txParamName) {
-        this.txParamName = txParamName;
-    }
+  public void setTxParamName(String txParamName) {
+    this.txParamName = txParamName;
+  }
 
-    public String getFcTxDbField() {
-        return fcTxDbField;
-    }
+  public String getFcTxDbField() {
+    return fcTxDbField;
+  }
 
-    public String getTxDbFieldNameOrFieldName() {
-        if (fcTxDbField != null) return fcTxDbField;
-        return fcTxFieldName;
-    }
+  public String getTxDbFieldNameOrFieldName() {
+    if (fcTxDbField != null) return fcTxDbField;
+    return fcTxFieldName;
+  }
 
-    public void setFcTxDbField(String fcTxDbField) {
-        this.fcTxDbField = fcTxDbField;
-    }
+  public void setFcTxDbField(String fcTxDbField) {
+    this.fcTxDbField = fcTxDbField;
+  }
 
-    public String getTxGuid() {
-        return txGuid;
-    }
+  public String getTxGuid() {
+    return txGuid;
+  }
 
-    public void setTxGuid(String txGuid) {
-        this.txGuid = txGuid;
-    }
+  public void setTxGuid(String txGuid) {
+    this.txGuid = txGuid;
+  }
 
-    public Boolean getBoParamStatus() {
-        return boParamStatus;
-    }
+  public Boolean getBoParamStatus() {
+    return boParamStatus;
+  }
 
-    public void setBoParamStatus(Boolean boParamStatus) {
-        this.boParamStatus = boParamStatus;
-    }
+  public void setBoParamStatus(Boolean boParamStatus) {
+    this.boParamStatus = boParamStatus;
+  }
 
-    public OzColType getColGenType() {
-        return colGenType;
-    }
+  public OzColType getColGenType() {
+    return colGenType;
+  }
 
-    public OzColType getColGenTypeNtn() {
-        if (colGenType == null) {
-            return OzColType.Undefined;
-        }
-        return colGenType;
+  public OzColType getColGenTypeNtn() {
+    if (colGenType == null) {
+      return OzColType.Undefined;
     }
+    return colGenType;
+  }
 
-    public void setColGenType(OzColType colGenType) {
-        this.colGenType = colGenType;
-    }
+  public void setColGenType(OzColType colGenType) {
+    this.colGenType = colGenType;
+  }
 
-    public Boolean getBoEditorOnlyNumber() {
-        return boEditorOnlyNumber;
-    }
+  public Boolean getBoEditorOnlyNumber() {
+    return boEditorOnlyNumber;
+  }
 
-    public void setBoEditorOnlyNumber(Boolean boEditorOnlyNumber) {
-        this.boEditorOnlyNumber = boEditorOnlyNumber;
-    }
+  public void setBoEditorOnlyNumber(Boolean boEditorOnlyNumber) {
+    this.boEditorOnlyNumber = boEditorOnlyNumber;
+  }
 
 //    public Boolean getBoWhereField() {
 //        return boWhereField;
@@ -1652,228 +1657,228 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
 //        this.boWhereField = boWhereField;
 //    }
 
-    public Consumer<FiCol> getFnEditorNodeLfcAfterAllFormLoad() {
-        return fnEditorNodeLfcAfterAllFormLoad;
-    }
+  public Consumer<FiCol> getFnEditorNodeLfcAfterAllFormLoad() {
+    return fnEditorNodeLfcAfterAllFormLoad;
+  }
 
-    public void setFnEditorNodeLfcAfterAllFormLoad(Consumer<FiCol> fnEditorNodeLfcAfterAllFormLoad) {
-        this.fnEditorNodeLfcAfterAllFormLoad = fnEditorNodeLfcAfterAllFormLoad;
-    }
+  public void setFnEditorNodeLfcAfterAllFormLoad(Consumer<FiCol> fnEditorNodeLfcAfterAllFormLoad) {
+    this.fnEditorNodeLfcAfterAllFormLoad = fnEditorNodeLfcAfterAllFormLoad;
+  }
 
-    public FiCol buiFnEditorNodeLfcAfterAllFormLoad(Consumer<FiCol> fnEditorNodeRendererAfterAllFormLoad) {
-        this.fnEditorNodeLfcAfterAllFormLoad = fnEditorNodeRendererAfterAllFormLoad;
-        return this;
-    }
+  public FiCol buiFnEditorNodeLfcAfterAllFormLoad(Consumer<FiCol> fnEditorNodeRendererAfterAllFormLoad) {
+    this.fnEditorNodeLfcAfterAllFormLoad = fnEditorNodeRendererAfterAllFormLoad;
+    return this;
+  }
 
-    public Boolean getFcBoKeyIdentity() {
-        return fcBoKeyIdentity;
-    }
+  public Boolean getFcBoKeyIdentity() {
+    return fcBoKeyIdentity;
+  }
 
-    public void setFcBoKeyIdentity(Boolean fcBoKeyIdentity) {
-        if (FiBool.isTrue(fcBoKeyIdentity)) setBoKeyIdField(true);
-        this.fcBoKeyIdentity = fcBoKeyIdentity;
-    }
+  public void setFcBoKeyIdentity(Boolean fcBoKeyIdentity) {
+    if (FiBool.isTrue(fcBoKeyIdentity)) setBoKeyIdField(true);
+    this.fcBoKeyIdentity = fcBoKeyIdentity;
+  }
 
-    public Boolean getFcBoTransient() {
-        return fcBoTransient;
-    }
+  public Boolean getFcBoTransient() {
+    return fcBoTransient;
+  }
 
-    public void setFcBoTransient(Boolean fcBoTransient) {
-        this.fcBoTransient = fcBoTransient;
-    }
+  public void setFcBoTransient(Boolean fcBoTransient) {
+    this.fcBoTransient = fcBoTransient;
+  }
 
-    public Boolean getBoInsertFieldForQuery() {
-        return boInsertFieldForQuery;
-    }
+  public Boolean getBoInsertFieldForQuery() {
+    return boInsertFieldForQuery;
+  }
 
-    public FiCol setBoInsertFieldForQuery(Boolean boInsertFieldForQuery) {
-        this.boInsertFieldForQuery = boInsertFieldForQuery;
-        return this;
-    }
+  public FiCol setBoInsertFieldForQuery(Boolean boInsertFieldForQuery) {
+    this.boInsertFieldForQuery = boInsertFieldForQuery;
+    return this;
+  }
 
-    public String getFcTxIdType() {
-        return fcTxIdType;
-    }
+  public String getFcTxIdType() {
+    return fcTxIdType;
+  }
 
-    public void setFcTxIdType(String fcTxIdType) {
-        this.fcTxIdType = fcTxIdType;
-    }
+  public void setFcTxIdType(String fcTxIdType) {
+    this.fcTxIdType = fcTxIdType;
+  }
 
-    public Boolean getFcBoUniqGro1() {
-        return fcBoUniqGro1;
-    }
+  public Boolean getFcBoUniqGro1() {
+    return fcBoUniqGro1;
+  }
 
-    public void setFcBoUniqGro1(Boolean fcBoUniqGro1) {
-        this.fcBoUniqGro1 = fcBoUniqGro1;
-    }
+  public void setFcBoUniqGro1(Boolean fcBoUniqGro1) {
+    this.fcBoUniqGro1 = fcBoUniqGro1;
+  }
 
-    public Boolean getFcBoNullable() {
-        return fcBoNullable;
-    }
+  public Boolean getFcBoNullable() {
+    return fcBoNullable;
+  }
 
-    public void setFcBoNullable(Boolean fcBoNullable) {
-        this.fcBoNullable = fcBoNullable;
-    }
+  public void setFcBoNullable(Boolean fcBoNullable) {
+    this.fcBoNullable = fcBoNullable;
+  }
 
-    public Boolean getFcBoUnique() {
-        return fcBoUnique;
-    }
+  public Boolean getFcBoUnique() {
+    return fcBoUnique;
+  }
 
-    public void setFcBoUnique(Boolean fcBoUnique) {
-        this.fcBoUnique = fcBoUnique;
-    }
+  public void setFcBoUnique(Boolean fcBoUnique) {
+    this.fcBoUnique = fcBoUnique;
+  }
 
-    public Boolean getFcBoUtfSupport() {
-        return fcBoUtfSupport;
-    }
+  public Boolean getFcBoUtfSupport() {
+    return fcBoUtfSupport;
+  }
 
-    public void setFcBoUtfSupport(Boolean fcBoUtfSupport) {
-        this.fcBoUtfSupport = fcBoUtfSupport;
-    }
+  public void setFcBoUtfSupport(Boolean fcBoUtfSupport) {
+    this.fcBoUtfSupport = fcBoUtfSupport;
+  }
 
-    public String getFcTxDefValue() {
-        return fcTxDefValue;
-    }
+  public String getFcTxDefValue() {
+    return fcTxDefValue;
+  }
 
-    public void setFcTxDefValue(String fcTxDefValue) {
-        this.fcTxDefValue = fcTxDefValue;
-    }
+  public void setFcTxDefValue(String fcTxDefValue) {
+    this.fcTxDefValue = fcTxDefValue;
+  }
 
-    public String getFcTxCollation() {
-        return fcTxCollation;
-    }
+  public String getFcTxCollation() {
+    return fcTxCollation;
+  }
 
-    public void setFcTxCollation(String fcTxCollation) {
-        this.fcTxCollation = fcTxCollation;
-    }
+  public void setFcTxCollation(String fcTxCollation) {
+    this.fcTxCollation = fcTxCollation;
+  }
 
-    public String getFcTxTypeName() {
-        return fcTxTypeName;
-    }
+  public String getFcTxTypeName() {
+    return fcTxTypeName;
+  }
 
-    public void setFcTxTypeName(String fcTxTypeName) {
-        this.fcTxTypeName = fcTxTypeName;
-    }
+  public void setFcTxTypeName(String fcTxTypeName) {
+    this.fcTxTypeName = fcTxTypeName;
+  }
 
-    public Integer getFcLnLength() {
-        return fcLnLength;
-    }
+  public Integer getFcLnLength() {
+    return fcLnLength;
+  }
 
-    public void setFcLnLength(Integer fcLnLength) {
-        this.fcLnLength = fcLnLength;
-    }
+  public void setFcLnLength(Integer fcLnLength) {
+    this.fcLnLength = fcLnLength;
+  }
 
-    public Integer getFcLnPrecision() {
-        return fcLnPrecision;
-    }
+  public Integer getFcLnPrecision() {
+    return fcLnPrecision;
+  }
 
-    public void setFcLnPrecision(Integer fcLnPrecision) {
-        this.fcLnPrecision = fcLnPrecision;
-    }
+  public void setFcLnPrecision(Integer fcLnPrecision) {
+    this.fcLnPrecision = fcLnPrecision;
+  }
 
-    public Integer getFcLnScale() {
-        return fcLnScale;
-    }
+  public Integer getFcLnScale() {
+    return fcLnScale;
+  }
 
-    public void setFcLnScale(Integer fcLnScale) {
-        this.fcLnScale = fcLnScale;
-    }
+  public void setFcLnScale(Integer fcLnScale) {
+    this.fcLnScale = fcLnScale;
+  }
 
-    public Boolean getFcBoFilterLike() {
-        return fcBoFilterLike;
-    }
+  public Boolean getFcBoFilterLike() {
+    return fcBoFilterLike;
+  }
 
-    public void setFcBoFilterLike(Boolean fcBoFilterLike) {
-        this.fcBoFilterLike = fcBoFilterLike;
-    }
+  public void setFcBoFilterLike(Boolean fcBoFilterLike) {
+    this.fcBoFilterLike = fcBoFilterLike;
+  }
 
-    public String getFcTxFieldType() {
-        return fcTxFieldType;
-    }
+  public String getFcTxFieldType() {
+    return fcTxFieldType;
+  }
 
-    public void setFcTxFieldType(String fcTxFieldType) {
-        this.fcTxFieldType = fcTxFieldType;
-    }
+  public void setFcTxFieldType(String fcTxFieldType) {
+    this.fcTxFieldType = fcTxFieldType;
+  }
 
-    public String getFicTxSqlFieldDefinition() {
-        return ficTxSqlFieldDefinition;
-    }
+  public String getFicTxSqlFieldDefinition() {
+    return ficTxSqlFieldDefinition;
+  }
 
-    public void setFicTxSqlFieldDefinition(String ficTxSqlFieldDefinition) {
-        this.ficTxSqlFieldDefinition = ficTxSqlFieldDefinition;
-    }
+  public void setFicTxSqlFieldDefinition(String ficTxSqlFieldDefinition) {
+    this.ficTxSqlFieldDefinition = ficTxSqlFieldDefinition;
+  }
 
-    public String getFcTxEntityName() {
-        return fcTxEntityName;
-    }
+  public String getFcTxEntityName() {
+    return fcTxEntityName;
+  }
 
-    public void setFcTxEntityName(String fcTxEntityName) {
-        this.fcTxEntityName = fcTxEntityName;
-    }
+  public void setFcTxEntityName(String fcTxEntityName) {
+    this.fcTxEntityName = fcTxEntityName;
+  }
 
-    public String getTxClassNameSimple() {
-        return txClassNameSimple;
-    }
+  public String getTxClassNameSimple() {
+    return txClassNameSimple;
+  }
 
-    public void setTxClassNameSimple(String txClassNameSimple) {
-        this.txClassNameSimple = txClassNameSimple;
-    }
+  public void setTxClassNameSimple(String txClassNameSimple) {
+    this.txClassNameSimple = txClassNameSimple;
+  }
 
-    public String getFcTxColDefinition() {
-        return fcTxColDefinition;
-    }
+  public String getFcTxColDefinition() {
+    return fcTxColDefinition;
+  }
 
-    public void setFcTxColDefinition(String fcTxColDefinition) {
-        this.fcTxColDefinition = fcTxColDefinition;
-    }
+  public void setFcTxColDefinition(String fcTxColDefinition) {
+    this.fcTxColDefinition = fcTxColDefinition;
+  }
 
-    public Boolean getBoRemFilterable() {
-        return boRemFilterable;
-    }
+  public Boolean getBoRemFilterable() {
+    return boRemFilterable;
+  }
 
-    public void setBoRemFilterable(Boolean boRemFilterable) {
-        this.boRemFilterable = boRemFilterable;
-    }
+  public void setBoRemFilterable(Boolean boRemFilterable) {
+    this.boRemFilterable = boRemFilterable;
+  }
 
-    public IFiNode getIFiNodeEditor() {
-        return IFiNodeEditor;
-    }
+  public IFiNode getIFiNodeEditor() {
+    return IFiNodeEditor;
+  }
 
-    public void setIFiNodeEditor(IFiNode IFiNodeEditor) {
-        this.IFiNodeEditor = IFiNodeEditor;
-    }
+  public void setIFiNodeEditor(IFiNode IFiNodeEditor) {
+    this.IFiNodeEditor = IFiNodeEditor;
+  }
 
-    public String getFcTxFieldDesc() {
-        return fcTxFieldDesc;
-    }
+  public String getFcTxFieldDesc() {
+    return fcTxFieldDesc;
+  }
 
-    public void setFcTxFieldDesc(String fcTxFieldDesc) {
-        this.fcTxFieldDesc = fcTxFieldDesc;
-    }
+  public void setFcTxFieldDesc(String fcTxFieldDesc) {
+    this.fcTxFieldDesc = fcTxFieldDesc;
+  }
 
-    public String getTxFilterType() {
-        return txFilterType;
-    }
+  public String getTxFilterType() {
+    return txFilterType;
+  }
 
-    public void setTxFilterType(String txFilterType) {
-        this.txFilterType = txFilterType;
-    }
+  public void setTxFilterType(String txFilterType) {
+    this.txFilterType = txFilterType;
+  }
 
-    public Boolean getFcBoWhereField() {
-        return fcBoWhereField;
-    }
+  public Boolean getFcBoWhereField() {
+    return fcBoWhereField;
+  }
 
-    public void setFcBoWhereField(Boolean fcBoWhereField) {
-        this.fcBoWhereField = fcBoWhereField;
-    }
+  public void setFcBoWhereField(Boolean fcBoWhereField) {
+    this.fcBoWhereField = fcBoWhereField;
+  }
 
-    public Boolean getFcBoCountField() {
-        return fcBoCountField;
-    }
+  public Boolean getFcBoCountField() {
+    return fcBoCountField;
+  }
 
-    public void setFcBoCountField(Boolean fcBoCountField) {
-        this.fcBoCountField = fcBoCountField;
-    }
+  public void setFcBoCountField(Boolean fcBoCountField) {
+    this.fcBoCountField = fcBoCountField;
+  }
 }
 
 

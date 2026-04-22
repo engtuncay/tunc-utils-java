@@ -1,4 +1,4 @@
-package ozpasyazilim.utils.gui.fxcomponents;
+    package ozpasyazilim.utils.gui.fxcomponents;
 
 import javafx.beans.value.ChangeListener;
 import javafx.scene.Node;
@@ -127,12 +127,8 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> implement
 
             //FxEditorFactory.setAutoColEditorClassByColType2(fiCol);
 
-            if (FiString.isEmpty(fiCol.getColEditorClass())) {
-                fiCol.setColEditorClass(FxTextField.class.getName());
-            }
-
             // Tek satır label göstermek için
-            if (fiCol.getColEditorClass().equals(EnumColNodeType.FxLabelRowComment.toString())) {
+            if (fiCol.getColEditorClassNtn().equals(EnumColNodeType.FxLabelRowComment.toString())) {
                 FxLabel fxLabelComment = new FxLabel(fiCol.getFcTxHeader());
                 add(fxLabelComment, "span,pushx,growx");
                 continue;

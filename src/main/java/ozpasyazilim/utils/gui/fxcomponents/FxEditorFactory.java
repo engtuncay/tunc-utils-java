@@ -48,9 +48,10 @@ public class FxEditorFactory {
   /**
    * UBOM Component Node'u oluşturmak için kullanılır (Örneğin FxFormMig'de kullanılır)
    * <p>
+   * txClassName'e göre comp belirlenir. Verilmemişse, kriterlere göre belirlenir.
+   * <p>
    * FiCol'dan extra özellikler alması için eklendi (length vs)
    * <p>
-   * txClassName verilmemişse, OzColType'a göre component class belirlenir
    *
    * @param txClassName
    * @param fiCol
@@ -60,16 +61,14 @@ public class FxEditorFactory {
   public static Node genNodeCompByClassNameMain(String txClassName, FiCol fiCol, OzColType ozColType) {
     //, Object compValue çıkarıldı
 
+    if (fiCol == null) fiCol = new FiCol();
+
     Loghelper.get(FxEditorFactory.class).debug("OzColType:" + ozColType);
-    Loghelper.get(FxEditorFactory.class).debug("txClassName:" + txClassName );
-
-
-
+    Loghelper.get(FxEditorFactory.class).debug("txClassName:" + txClassName);
+    Loghelper.get(FxEditorFactory.class).debug("ficol-fn:" + fiCol.getFcTxFieldName());
 
     //Loghelper.getInstance(FxEditorFactory.class).debug(" Ozcoltype:"+ozColType.toString());
     //Loghelper.getInstance(FxEditorFactory.class).debug(" Prm Comp Class:"+txClassName);
-
-    if (fiCol == null) fiCol = new FiCol();
 
     // txClassName yoksa - belirleleme süreci
     if (txClassName == null) {
@@ -95,8 +94,8 @@ public class FxEditorFactory {
         //Loghelper.get(FxEditorFactory.class).debug("fcTxFieldType:"+fcTxFieldType);
 
         // 26-04-21
-        if(FiString.equalsAny(fcTxFieldType
-            ,FimOcFieldType.fbool().getValue())
+        if (FiString.equalsAny(fcTxFieldType
+            , FimOcFieldType.fbool().getValue())
         ) {
           txClassName = FxCheckBox.class.getName();
         }
