@@ -311,7 +311,7 @@ public class FxFormMigaGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
             Object entityForNode = getRefFormEntity();
 
             // Editor comp (node) oluşturulur, lifecycle metodları çalıştırılır
-            Node node = FxEditorFactory.generateEditorNodeFullLifeCycle(fiCol, entityForNode);
+            Node node = FxEditorFactory.genEditorNodeFullLifeCycle(fiCol, entityForNode);
 
             if (FiBool.isTrue(getBoReadOnlyFormNtn()) || FiBool.isFalse(fiCol.getBoEditable())
                     || FiBool.isTrue(fiCol.getBoNonEditableForForm())) {

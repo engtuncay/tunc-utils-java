@@ -142,7 +142,7 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> implement
             add(lblForm, "width 30%,wmax 150,wmin 120");
 
             // Editor comp (node) oluşturulur
-            Node node = FxEditorFactory.generateEditorNodeFullLifeCycle(fiCol, getFormEntity());
+            Node node = FxEditorFactory.genEditorNodeFullLifeCycle(fiCol, getFormEntity());
 
             if (FiBool.isTrue(getFxFormConfigInit().getBoReadOnlyForm()) || FiBool.isFalse(fiCol.getBoEditable())) {
                 node.setDisable(true);

@@ -350,7 +350,7 @@ public class FxFormMigDep<EntClazz> extends FxMigPaneGenView<EntClazz> implement
 			Object entityForNode = getFormEntity();
 
 			// Editor comp (node) oluşturulur
-			Node node = FxEditorFactory.generateEditorNodeFullLifeCycle(fiCol, entityForNode);
+			Node node = FxEditorFactory.genEditorNodeFullLifeCycle(fiCol, entityForNode);
 
 			if (FiBool.isFalse(getBoEditableForm())) {
 				node.setDisable(true);

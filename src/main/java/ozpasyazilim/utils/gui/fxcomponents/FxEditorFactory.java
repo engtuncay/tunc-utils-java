@@ -827,7 +827,7 @@ public class FxEditorFactory {
    * @param entity
    * @return
    */
-  public static Node generateEditorNodeFullLifeCycle(FiCol fiCol, Object entity) {
+  public static Node genEditorNodeFullLifeCycle(FiCol fiCol, Object entity) {
 
     Node comp = genNodeCompByClassNameMain(fiCol.getColType(), fiCol.getColEditorClass(), fiCol);
 
