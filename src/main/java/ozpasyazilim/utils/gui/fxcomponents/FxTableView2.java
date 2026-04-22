@@ -23,7 +23,7 @@ import ozpasyazilim.utils.fxwindow.FiArbFormWindowDiaCont;
 import ozpasyazilim.utils.gui.components.TableValueFactoryForFkb;
 import ozpasyazilim.utils.gui.fxTableViewExtra.NestedPropertyValueFactory;
 import ozpasyazilim.utils.log.Loghelper;
-import ozpasyazilim.utils.metadata.FiCol.FimFicTxFilterType;
+import ozpasyazilim.utils.metadata.fimOther.FimFicTxFilterType;
 import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.mvc.IFxTableCont;
 import ozpasyazilim.utils.mvc.IFxTableSelectionCont;

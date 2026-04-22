@@ -11,6 +11,7 @@ import ozpasyazilim.utils.fidborm.IFiTableMeta;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.table.FiCol;
+import ozpasyazilim.utils.table.FicList;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -32,7 +33,7 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
   /**
    * FiCol olarak eklenenleri saklamak için
    */
-  List<FiCol> listFiCol;
+  FicList listFic;
 
   /**
    * sorgular için alanların ilgili olduğu tabloyu gösterir
@@ -317,12 +318,24 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
     return FiNumber.orMinusOne(getFicAsInt(fiCol));
   }
 
+  public Integer getFimAsIntOrMinusOne(FiMeta fiMeta) {
+    return FiNumber.orMinusOne(getFimAsInt(fiMeta));
+  }
+
   public Integer getFicAsInt(FiCol fiCol) {
 
     if (fiCol == null) return null;
 
     return getAsInt(fiCol.getFcTxFieldName());
   }
+
+  public Integer getFimAsInt(FiMeta fiMeta) {
+
+    if (fiMeta == null) return null;
+
+    return getAsInt(fiMeta.getKey());
+  }
+
 
   public Integer getAsInt(String txKey) {
 
@@ -390,10 +403,6 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
 
     return null;
   }
-
-
-
-
 
 
   public Date getFicAsDate(FiCol fiCol) {
@@ -569,19 +578,19 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
 
   }
 
-  public List<FiCol> getListFiCol() {
-    return listFiCol;
+  public List<FiCol> getListFic() {
+    return listFic;
   }
 
-  public List<FiCol> getListFiColInit() {
-    if (listFiCol == null) {
-      listFiCol = new ArrayList<>();
+  public FicList getListFiColInit() {
+    if (listFic == null) {
+      listFic = new FicList();
     }
-    return listFiCol;
+    return listFic;
   }
 
-  public void setListFiCol(List<FiCol> listFiCol) {
-    this.listFiCol = listFiCol;
+  public void setListFic(FicList listFic) {
+    this.listFic = listFic;
   }
 
   public String getCombineTireByFiCol(FiCol fiCol, FiCol fiCol2) {
@@ -697,6 +706,17 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
 
   public void addFic(FiCol fiCol, Object value) {
     addField(fiCol.getFcTxFieldName(), value);
+  }
+
+  /**
+   * Hem params olarak ekler hem de FicList'e ekler
+   *
+   * @param fiCol
+   * @param value
+   */
+  public void putFic(FiCol fiCol, Object value) {
+    getListFiColInit().add(fiCol);
+    addFic(fiCol, value);
   }
 
   public void addField(String txKey, Object value) {

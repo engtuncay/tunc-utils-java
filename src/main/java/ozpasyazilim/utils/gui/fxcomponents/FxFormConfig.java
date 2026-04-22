@@ -9,102 +9,102 @@ import java.util.function.Function;
 
 public class FxFormConfig<EntClazz> {
 
-    private List<FiCol> listFormElements;
-    private FormType formType;
-    private EntClazz formEntity; // 21-10-30 eklendi
+  private List<FiCol> listFormElements;
+  private FormType formType;
+  private EntClazz formEntity; // 21-10-30 eklendi
 
-    /**
-     * Form güncellemek amacıyla açıldığını belirtir
-     */
-    private Boolean boUpdateForm; // 21-10-30 eklendi
+  /**
+   * Form güncellemek amacıyla açıldığını belirtir
+   */
+  private Boolean boUpdateForm; // 21-10-30 eklendi
 
-    private Boolean boReadOnlyForm;
+  private Boolean boReadOnlyForm;
 
-    private Function<FxFormMigGen, Fdr> fnValidateForm;
+  private Function<FxFormMigGen, Fdr> fnValidateForm;
 
-    // Miggen için yapılmış
-    private Function<FxFormMigaGen, Fdr> fnValidateFormForFormMigGen;
+  // Miggen için yapılmış
+  private Function<FxFormMigaGen, Fdr> fnValidateFormForFormMigaGen;
 
-    public FxFormConfig() {
+  public FxFormConfig() {
+  }
+
+  public FxFormConfig(List<FiCol> fiCols) {
+    this.listFormElements = fiCols;
+  }
+
+  public List<FiCol> getListFormElements() {
+    return listFormElements;
+  }
+
+  public List<FiCol> getListFormElementsInit() {
+    if (listFormElements == null) {
+      listFormElements = new ArrayList<>();
     }
+    return listFormElements;
+  }
 
-    public FxFormConfig(List<FiCol> fiCols) {
-        this.listFormElements = fiCols;
-    }
+  public void setListFormElements(List<FiCol> listFormElements) {
+    this.listFormElements = listFormElements;
+  }
 
-    public List<FiCol> getListFormElements() {
-        return listFormElements;
-    }
+  public FormType getFormType() {
+    return formType;
+  }
 
-    public List<FiCol> getListFormElementsInit() {
-        if (listFormElements == null) {
-            listFormElements = new ArrayList<>();
-        }
-        return listFormElements;
+  public FormType getFormTypeOrDef() {
+    if (formType == null) {
+      return FormType.PlainFormV1;
     }
+    return formType;
+  }
 
-    public void setListFormElements(List<FiCol> listFormElements) {
-        this.listFormElements = listFormElements;
-    }
+  public void setFormType(FormType formType) {
+    this.formType = formType;
+  }
 
-    public FormType getFormType() {
-        return formType;
-    }
+  public Boolean getBoUpdateForm() {
+    return boUpdateForm;
+  }
 
-    public FormType getFormTypeOrDef() {
-        if (formType == null) {
-            return FormType.PlainFormV1;
-        }
-        return formType;
-    }
+  public void setBoUpdateForm(Boolean boUpdateForm) {
+    this.boUpdateForm = boUpdateForm;
+  }
 
-    public void setFormType(FormType formType) {
-        this.formType = formType;
-    }
+  public EntClazz getFormEntity() {
+    return formEntity;
+  }
 
-    public Boolean getBoUpdateForm() {
-        return boUpdateForm;
-    }
+  public void setFormEntity(EntClazz formEntity) {
+    this.formEntity = formEntity;
+  }
 
-    public void setBoUpdateForm(Boolean boUpdateForm) {
-        this.boUpdateForm = boUpdateForm;
-    }
+  public Boolean getBoUpdateFormInit() {
+    if (boUpdateForm == null) return false;
+    return boUpdateForm;
+  }
 
-    public EntClazz getFormEntity() {
-        return formEntity;
-    }
+  public Boolean getBoReadOnlyForm() {
+    return boReadOnlyForm;
+  }
 
-    public void setFormEntity(EntClazz formEntity) {
-        this.formEntity = formEntity;
-    }
+  public void setBoReadOnlyForm(Boolean boReadOnlyForm) {
+    this.boReadOnlyForm = boReadOnlyForm;
+  }
 
-    public Boolean getBoUpdateFormInit() {
-        if (boUpdateForm == null) return false;
-        return boUpdateForm;
-    }
+  public Function<FxFormMigGen, Fdr> getFnValidateForm() {
+    return fnValidateForm;
+  }
 
-    public Boolean getBoReadOnlyForm() {
-        return boReadOnlyForm;
-    }
+  public void setFnValidateForm(Function<FxFormMigGen, Fdr> fnValidateForm) {
+    this.fnValidateForm = fnValidateForm;
+  }
 
-    public void setBoReadOnlyForm(Boolean boReadOnlyForm) {
-        this.boReadOnlyForm = boReadOnlyForm;
-    }
+  public Function<FxFormMigaGen, Fdr> getFnValidateFormForFormMigaGen() {
+    return fnValidateFormForFormMigaGen;
+  }
 
-    public Function<FxFormMigGen, Fdr> getFnValidateForm() {
-        return fnValidateForm;
-    }
-
-    public void setFnValidateForm(Function<FxFormMigGen, Fdr> fnValidateForm) {
-        this.fnValidateForm = fnValidateForm;
-    }
-
-    public Function<FxFormMigaGen, Fdr> getFnValidateFormForFormMigGen() {
-        return fnValidateFormForFormMigGen;
-    }
-
-    public void setFnValidateFormForFormMigGen(Function<FxFormMigaGen, Fdr> fnValidateFormForFormMigGen) {
-        this.fnValidateFormForFormMigGen = fnValidateFormForFormMigGen;
-    }
+  public void setFnValidateFormForFormMigaGen(Function<FxFormMigaGen, Fdr> fnValidateFormForFormMigaGen) {
+    this.fnValidateFormForFormMigaGen = fnValidateFormForFormMigaGen;
+  }
 
 }

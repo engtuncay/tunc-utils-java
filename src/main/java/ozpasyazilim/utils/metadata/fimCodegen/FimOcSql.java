@@ -1,10 +1,10 @@
-package ozpasyazilim.utils.metas.ocg;
+package ozpasyazilim.utils.metadata.fimCodegen;
 
 // Java FiMeta Class Generation (By Dml) - v0.4
 
 import ozpasyazilim.utils.datatypes.FiMeta;
 
-public class FimOcgSql {
+public class FimOcSql {
 
 
   public static FiMeta sfTableName() {
@@ -49,8 +49,14 @@ public class FimOcgSql {
     return fimeta;
   }
 
-  public static FiMeta sfTxSet() {
-    FiMeta fimeta = new FiMeta("sfTxSet");
+  public static FiMeta sfTxUpSet() {
+    FiMeta fimeta = new FiMeta("sfTxUpSet");
+
+    return fimeta;
+  }
+
+  public static FiMeta sfLnCount() {
+    FiMeta fimeta = new FiMeta("sfLnCount");
 
     return fimeta;
   }

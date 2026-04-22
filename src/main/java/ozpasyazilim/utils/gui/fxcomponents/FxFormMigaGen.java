@@ -220,7 +220,7 @@ public class FxFormMigaGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
         setFormTypeSelected(fxFormConfig.getFormType());
         setRefFormEntity(fxFormConfig.getFormEntity());
         setBoUpdateForm(fxFormConfig.getBoUpdateForm());
-        setFnValidateForm(fxFormConfig.getFnValidateFormForFormMigGen());
+        setFnValidateForm(fxFormConfig.getFnValidateFormForFormMigaGen());
     }
 
 

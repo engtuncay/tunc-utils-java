@@ -68,13 +68,13 @@ public class FxEditorFactory {
     Loghelper.get(FxEditorFactory.class).debug("txClassName:" + txClassName);
     Loghelper.get(FxEditorFactory.class).debug("ficol-fn:" + fiCol.getFcTxFieldName());
 
-    //Loghelper.getInstance(FxEditorFactory.class).debug(" Ozcoltype:"+ozColType.toString());
-    //Loghelper.getInstance(FxEditorFactory.class).debug(" Prm Comp Class:"+txClassName);
+    // Loghelper.getInstance(FxEditorFactory.class).debug("Ozcoltype:"+ozColType.toString());
+    // Loghelper.getInstance(FxEditorFactory.class).debug("Prm Comp Class:"+txClassName);
 
     // txClassName yoksa - belirleme süreci
     if (txClassName == null) txClassName = calcTxClassNameMain(fiCol, ozColType);
 
-    //Loghelper.getInstance(FxEditorFactory.class).debug("Comp Class:"+txClassName);
+    // Loghelper.getInstance(FxEditorFactory.class).debug("Comp Class:"+txClassName);
 
     // txClassName belirlendikten comp oluşturma süreci
 

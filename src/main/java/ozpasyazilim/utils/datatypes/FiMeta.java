@@ -105,6 +105,10 @@ public class FiMeta {
     return ftTxKey;
   }
 
+  public String getKey() {
+    return ftTxKey;
+  }
+
   public void setFtTxKey(String ftTxKey) {
     this.ftTxKey = ftTxKey;
   }

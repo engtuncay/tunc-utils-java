@@ -1,4 +1,4 @@
-package ozpasyazilim.utils.metadata.FiCol;
+package ozpasyazilim.utils.metadata.fimOther;
 
 import ozpasyazilim.utils.datatypes.FiMeta;
 

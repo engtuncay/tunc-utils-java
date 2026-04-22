@@ -1671,4 +1671,14 @@ public class FiCollection {
   }
 
 
+  public static <XEntity> List<String> collectToList(List<XEntity> listValue, Function<XEntity, String> fnToString) {
+
+    List<String> list = new ArrayList<>();
+    for (XEntity o : listValue) {
+      list.add(fnToString.apply(o));
+    }
+    return list;
+
+  }
+
 }
