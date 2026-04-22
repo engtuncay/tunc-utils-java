@@ -3,15 +3,15 @@ package ozpasyazilim.utils.fidborm;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.statement.SqlStatements;
 import org.jdbi.v3.sqlobject.SqlObjectPlugin;
-import ozpasyazilim.utils.configmisc.ServerConfig;
+import ozpasyazilim.utils.configmisc.FiConnConfig;
 import ozpasyazilim.utils.core.FiException;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.returntypes.Fdr;
 
 public class FiJdbiFactory {
 
-  public static Jdbi createJdbi(ServerConfig serverConfig) {
-    return createJdbi(serverConfig.getServer(), serverConfig.getServerDb(), serverConfig.getServerUser(), serverConfig.getServerKey());
+  public static Jdbi createJdbi(FiConnConfig fiConnConfig) {
+    return createJdbi(fiConnConfig.getServer(), fiConnConfig.getServerDb(), fiConnConfig.getServerUser(), fiConnConfig.getServerKey());
   }
 
   public static Jdbi createJdbi(String server, String dbName, String user, String pass) {
@@ -50,6 +50,16 @@ public class FiJdbiFactory {
   }
 
   public static Fdr<Jdbi> createJdbiAsFdr(String server, String dbName, String user, String pass) {
+    FiConnConfig fiConnConfig = new FiConnConfig();
+    fiConnConfig.setServer(server);
+    fiConnConfig.setServerDb(dbName);
+    fiConnConfig.setServerUser(user);
+    fiConnConfig.setServerKey(pass);
+
+    return createJdbiAsFdr(fiConnConfig);
+  }
+
+  public static Fdr<Jdbi> createJdbiAsFdr(FiConnConfig fiConnConfig)  {
 
     Fdr<Jdbi> fdrMain = new Fdr<>();
 
@@ -65,12 +75,12 @@ public class FiJdbiFactory {
       return fdrMain;
     }
 
-    String url = FiDbUrlHelper.getUrlMicrosoftJdbcSqlServer(server, dbName);
+    String url = FiDbUrlHelper.getUrlMicrosoftJdbcSqlServer(fiConnConfig.getServer(), fiConnConfig.getServerDb());
 
     Jdbi jdbi = null;
     try {
       //Loghelper.get(FiJdbiFactory.class).debug("Jdbi.Create Method");
-      jdbi = Jdbi.create(url, user, pass);
+      jdbi = Jdbi.create(url, fiConnConfig.getServerUser(), fiConnConfig.getServerKey());
       jdbi.installPlugin(new SqlObjectPlugin());
       jdbi.getConfig(SqlStatements.class).setUnusedBindingAllowed(true);
       Loghelper.get(getClassi()).debug("Successfully jdbi is created.");
@@ -80,19 +90,14 @@ public class FiJdbiFactory {
     } catch (Exception ex) {
       Loghelper.get(getClassi()).error(FiException.exTosMain(ex));
       fdrMain.setBoResult(false);
+      // exception'da hassas bilgiler olabilir
       //fdrMain.setException(ex);
       return fdrMain;
     }
 
-//    if (jdbi == null) {
-//      String message = String.format("Server: %s Db: %s için bağlantı bilgilerinde hata var.", (server == null ? "" : server), (dbName == null ? "" : dbName));
-//      Loghelper.get(getClassi()).error(message);
-//
-//    }
-//
-//    Loghelper.get(getClassi()).debug("createJdbi End - null return");
-//    return null;
   }
+
+
 
   private static Class<FiJdbiFactory> getClassi() {
     return FiJdbiFactory.class;

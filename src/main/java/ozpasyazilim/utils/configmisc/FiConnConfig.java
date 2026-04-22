@@ -1,6 +1,6 @@
 package ozpasyazilim.utils.configmisc;
 
-public class ServerConfig {
+public class FiConnConfig {
 
 	private String server;
 	private String name;

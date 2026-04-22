@@ -824,21 +824,21 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
   private void setupHeader1ForTableCol(FxTableCol2 fxcol) {
 
     //if (fxcol.getOzTableCol().getFiPaneHeader() != null) return;
-    FxLabel label = new FxLabel(fxcol.getRefFiCol().getFcTxHeader());
-    label.setStyle("-fx-padding: 2px;");
-    label.setWrapText(false); // true idi
-    label.setAlignment(Pos.CENTER);
-    label.setTextAlignment(TextAlignment.CENTER);
+    FxLabel lblHeader = new FxLabel(fxcol.getRefFiCol().getFcTxHeader());
+    lblHeader.setStyle("-fx-padding: 2px;");
+    lblHeader.setWrapText(false); // true idi
+    lblHeader.setAlignment(Pos.CENTER);
+    lblHeader.setTextAlignment(TextAlignment.CENTER);
 
     //StackPane stack = new StackPane();
     FxMigPane migColHeader = new FxMigPane("insets 0,gap 0 0");
     //migColHeader.setAlignment(Pos.TOP_LEFT);
 
-    //migColHeader.getChildren().add(label);
-    migColHeader.add(label, "span");
+    //migColHeader.getChildren().add(lblHeader);
+    migColHeader.add(lblHeader, "span");
 
     migColHeader.prefWidthProperty().bind(fxcol.widthProperty().subtract(5));
-    label.prefWidthProperty().bind(migColHeader.prefWidthProperty());
+    lblHeader.prefWidthProperty().bind(migColHeader.prefWidthProperty());
 
     //fxcol.setFiHeaderAsVbox(migColHeader, fxcol);
     fxcol.getRefFiCol().setPaneHeader(migColHeader);
@@ -1959,7 +1959,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 //		}));
   }
 
-  public void initFilteredListIfNullFi() {
+  public void initFilteredListIfNull() {
     if (getFilteredList() == null) {
       setItemsAsFilteredList(new ArrayList());
     }
