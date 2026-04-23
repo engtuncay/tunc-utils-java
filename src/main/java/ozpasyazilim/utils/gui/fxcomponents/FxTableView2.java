@@ -46,9 +46,17 @@ import java.util.*;
 import java.util.function.*;
 import java.util.stream.Collectors;
 
-// Notlar :
-// CellFactory : hücre üretim fabrikası TableColumn input alır, output olarak TableCell verir.
-// (Callback lambda bir fonksiyondur.) Callback<TableColumn<S, T>, TableCell<S, T>>
+/**
+ * CellFactory : hücre üretim fabrikası TableColumn input alır, output olarak TableCell verir.
+ * <p>
+ * setupCellValueAndEditorFactory metodunda setup edilir.
+ *
+ * Fkb için setupCellValueAndEditorFactoryAsFkb kullanılır
+ * <p>
+ * (Callback bir fonksiyondur.) Callback < TableColumn<S, T>, TableCell<S, T> >
+ *
+ * @param <EntClazz>
+ */
 public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxComp {
 
   //private static final Logger log = LoggerFactory.getLogger(FxTableView2.class);
@@ -564,11 +572,9 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
   }
 
   /**
-   * !!!
+   * Value Factory : Hücreye değerini atar (!!!)
    * <p>
-   * Value Factory : Hücreye değerini atar
-   * <p>
-   * Editor Factory : Hücreye konulacak componenti hazırlar
+   * Cell (Editor) Factory : Hücreye konulacak componenti hazırlar
    *
    * @param fxTableCol FxTableCol2
    */
@@ -584,7 +590,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
       fxTableCol.setCellValueFactory(new PropertyValueFactory<>(fxTableCol.getRefFiCol().getFcTxFieldName()));
     }
 
-    //bydefault idi
+    //bydefault
     FxTableViewCellFactoryModal.setupCellFactoryGeneral(fxTableCol, getEntityClass());
     fxTableCol.setId(fxTableCol.getRefFiCol().getFcTxFieldName());
 

@@ -17,11 +17,11 @@ import java.text.Format;
  *            (Tablo satırının entity türü)
  * @param <T> The type of the item contained within the Cell. (Hücrenin içindeki değer tipi)
  */
-public class CellFactoryFormatter<S, T> implements Callback<TableColumn<S, T>, TableCell<S, T>> {
+public class CellFactoryLabelWitFormat<S, T> implements Callback<TableColumn<S, T>, TableCell<S, T>> {
 
 	private Format format;
 
-	public CellFactoryFormatter(Format format) {
+	public CellFactoryLabelWitFormat(Format format) {
 		super();
 		this.format = format;
 	}

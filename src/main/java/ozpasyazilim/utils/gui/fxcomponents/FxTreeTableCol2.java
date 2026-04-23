@@ -92,7 +92,7 @@ public class FxTreeTableCol2<EntClazz> extends TreeTableColumn implements IFxTab
 
 		if ( getRefFiCol().getColType() == OzColType.Date) {
 			SimpleDateFormat f = new SimpleDateFormat("dd.MM.yy");
-			setCellFactory(new CellFactoryFormatter<S, Date>(f));
+			setCellFactory(new CellFactoryLabelWitFormat<S, Date>(f));
 		}
 
 

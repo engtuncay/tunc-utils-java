@@ -212,16 +212,57 @@ public class FxEditorFactory {
   /**
    * TxClassName belirleme süreci - bir comp türü belirlenir
    *
+   * Burada className olarak - fullName kullanılmış
+   *
    * @param fiCol
    * @param ozColType
    * @return
    */
   @Nonnull
-  private static String calcTxClassNameMain(FiCol fiCol, OzColType ozColType) {
+  public static String calcTxClassNameMain(FiCol fiCol, OzColType ozColType) {
 
     String txClassName;
     //iFiCol.setColFxNodeClass(FxTextField.class.getName());
     txClassName = FxTextField.class.getName();
+
+    // 14-12 eklendi
+    if (ozColType == OzColType.Boolean) {
+      txClassName = FxCheckBox.class.getName();
+    }
+
+    if (fiCol.getColType() == OzColType.Date) {
+      txClassName = FxDatePicker.class.getName();
+    }
+
+    if (ozColType == OzColType.CommaSeperatedStr) {
+      txClassName = FxTextFieldBtnCsv.class.getName();
+    }
+
+    if (!FiString.isEmpty(fiCol.getFcTxFieldType())) {
+
+      String fcTxFieldType = fiCol.getFcTxFieldType();
+      //Loghelper.get(FxEditorFactory.class).debug("fcTxFieldType:"+fcTxFieldType);
+
+      // 26-04-21
+      if (FiString.equalsAny(fcTxFieldType
+          , FimOcFieldType.fbool().getValue())
+      ) {
+        txClassName = FxCheckBox.class.getName();
+      }
+
+    }
+
+    return txClassName;
+  }
+
+
+  public static String calcTxClassNameMain2(FiCol fiCol, OzColType ozColType) {
+
+    String txClassName = null;
+
+    if(!FiString.isEmpty(fiCol.getColEditorClass())) return fiCol.getColEditorClass();
+    //iFiCol.setColFxNodeClass(FxTextField.class.getName());
+    //txClassName = FxTextField.class.getName();
 
     // 14-12 eklendi
     if (ozColType == OzColType.Boolean) {
@@ -736,6 +777,34 @@ public class FxEditorFactory {
     }
 
     return null;
+  }
+
+  public static void assignFieldTypeByOzColType(FiCol refFiCol) {
+
+    if(!FiString.isEmpty(refFiCol.getFcTxFieldType())) return;
+
+    OzColType colType = refFiCol.getColType();
+
+    if (colType == OzColType.Double) {
+      refFiCol.setFcTxFieldType(FimOcFieldType.fdouble().getValue());
+      return;
+    }
+
+    if (colType == OzColType.Integer) {
+      refFiCol.setFcTxFieldType(FimOcFieldType.fint().getValue());
+      return;
+    }
+
+    if (colType == OzColType.Date) {
+      refFiCol.setFcTxFieldType(FimOcFieldType.fdate().getValue());
+      return;
+    }
+
+    if (colType == OzColType.Boolean) {
+      refFiCol.setFcTxFieldType(FimOcFieldType.fbool().getValue());
+      return;
+    }
+
   }
 
   public String convertSimpleTypeToCompClass(String typeSimpleName) {

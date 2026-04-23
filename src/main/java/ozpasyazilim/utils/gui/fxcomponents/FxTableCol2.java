@@ -120,7 +120,7 @@ public class FxTableCol2<EntClazz> extends TableColumn implements IFxTableCol<En
 			DecimalFormat decimalFormatter = new DecimalFormat("###,###,###,##0.00", otherSymbols);
 			//String strnumber = decimalFormatter.format(number);
 
-			setCellFactory(new CellFactoryFormatter<S, Double>(decimalFormatter));
+			setCellFactory(new CellFactoryLabelWitFormat<S, Double>(decimalFormatter));
 			setStyle("-fx-alignment: CENTER-RIGHT;");
 
 		}
@@ -143,7 +143,7 @@ public class FxTableCol2<EntClazz> extends TableColumn implements IFxTableCol<En
 
 		if (getRefFiCol().getColType() == OzColType.Date) {
 			SimpleDateFormat f = new SimpleDateFormat("dd.MM.yy");
-			setCellFactory(new CellFactoryFormatter<S, Date>(f));
+			setCellFactory(new CellFactoryLabelWitFormat<S, Date>(f));
 		}
 
 

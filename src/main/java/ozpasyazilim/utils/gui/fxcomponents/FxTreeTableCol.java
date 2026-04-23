@@ -93,7 +93,7 @@ public class FxTreeTableCol<E> extends TreeTableColumn implements IFxTableCol<E>
 
 		if (colType == OzColType.Date) {
 			SimpleDateFormat f = new SimpleDateFormat("dd.MM.yy");
-			setCellFactory(new CellFactoryFormatter<S, Date>(f));
+			setCellFactory(new CellFactoryLabelWitFormat<S, Date>(f));
 		}
 
 

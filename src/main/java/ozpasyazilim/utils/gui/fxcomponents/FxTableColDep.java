@@ -290,7 +290,7 @@ public class FxTableColDep<Clazz> extends TableColumn implements IFiCol<Clazz> {
 			DecimalFormat decimalFormatter = new DecimalFormat("###,###,###,##0.00", otherSymbols);
 			//String strnumber = decimalFormatter.format(number);
 
-			setCellFactory(new CellFactoryFormatter<S, Double>(decimalFormatter));
+			setCellFactory(new CellFactoryLabelWitFormat<S, Double>(decimalFormatter));
 			setStyle("-fx-alignment: CENTER-RIGHT;");
 
 		}
@@ -313,7 +313,7 @@ public class FxTableColDep<Clazz> extends TableColumn implements IFiCol<Clazz> {
 
 		if (getColType() == OzColType.Date) {
 			SimpleDateFormat f = new SimpleDateFormat("dd.MM.yy");
-			setCellFactory(new CellFactoryFormatter<S, Date>(f));
+			setCellFactory(new CellFactoryLabelWitFormat<S, Date>(f));
 		}
 
 
