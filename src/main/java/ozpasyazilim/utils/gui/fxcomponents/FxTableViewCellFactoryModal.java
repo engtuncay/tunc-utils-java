@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.util.Callback;
 import ozpasyazilim.utils.core.FiBool;
+import ozpasyazilim.utils.core.FiConsole;
 import ozpasyazilim.utils.core.FiString;
 import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.gui.fxTableViewExtra.EnumColNodeType;
@@ -274,22 +275,19 @@ public class FxTableViewCellFactoryModal {
               setText(null);
             } else { // empty false ise, boş degilse
 
-              //S entity = getTableView().getItems().get(getIndex());
+              Object entityTest = getTableView().getItems().get(getIndex());
+              Loghelper.get(getClass()).debug(FiConsole.textObjectFieldsNtn(entityTest));
+              Loghelper.get(getClass()).debug(FiConsole.textObjectFieldsNtn(item));
               //FiConsole.printObjectDefiniton(item, fxTableCol.getFieldName());
 
-              if (item == null) {
-                node.setIndeterminate(true); // Üçüncü durum
-                //setGraphic(node);
-              } else {
+              if (item != null) {
                 node.setSelected((Boolean) item);
-                //setGraphic(node);
+                node.setIndeterminate(false);
+              } else {
+                //node.setSelected(false);
+                // indeterminate
+                node.setIndeterminate(true);
               }
-
-//              if (item != null) {
-//                node.setSelected((Boolean) item);
-//              } else {
-//                node.setSelected(false);
-//              }
 
               if (FiBool.isTrue(fxTableCol.getRefFiCol().getBoEditable())) {
 
