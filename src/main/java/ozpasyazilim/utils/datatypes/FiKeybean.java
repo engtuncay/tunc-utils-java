@@ -601,7 +601,7 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
     return getFieldValue(fiCol.getFtTxKey());
   }
 
-  public String getFimValueAsString(FiMeta fiCol) {
+  public String getFimAsString(FiMeta fiCol) {
     return getValueAsString(fiCol.getFtTxKey());
   }
 
@@ -749,7 +749,7 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
    * @return
    */
   public String getFnm() {
-    return getFimValueAsString(FimFiCol.fcTxFieldName());
+    return getFimAsString(FimFiCol.fcTxFieldName());
   }
 
   public String getFicAsString(FiCol fiCol) {
