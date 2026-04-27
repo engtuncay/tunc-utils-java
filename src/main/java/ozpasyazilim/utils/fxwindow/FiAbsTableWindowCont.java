@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-public abstract class FiArbAbsTableWindowCont<EntClazz> extends FiArbWindowCont {
+public abstract class FiAbsTableWindowCont<EntClazz> extends FiWindowCont {
 
     String txSelected;
     List<EntClazz> listEntitySelected;
@@ -32,7 +32,7 @@ public abstract class FiArbAbsTableWindowCont<EntClazz> extends FiArbWindowCont 
 
     private FxTableMig2<EntClazz> fxTableMig;
 
-    public FiArbAbsTableWindowCont() {
+    public FiAbsTableWindowCont() {
         super();
         super.moduleLabel = "FiArbTableWindow";
         //super.moduleCode =

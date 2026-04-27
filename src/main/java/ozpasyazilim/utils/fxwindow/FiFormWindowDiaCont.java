@@ -2,11 +2,11 @@ package ozpasyazilim.utils.fxwindow;
 
 import ozpasyazilim.utils.gui.fxcomponents.FxFormMiga;
 
-public class FiArbFormWindowDiaCont extends FiArbCrudWindowDiaCont {
+public class FiFormWindowDiaCont extends FiCrudWindowDiaCont {
 
     private FxFormMiga formMain;
 
-    public FiArbFormWindowDiaCont(String connProfile) {
+    public FiFormWindowDiaCont(String connProfile) {
         super(connProfile);
     }
 

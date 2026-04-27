@@ -4,26 +4,22 @@ import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import ozpasyazilim.utils.gui.fxcomponents.FxButton;
-import ozpasyazilim.utils.gui.fxcomponents.FxTableView2;
 import ozpasyazilim.utils.mvc.AbsFiModBaseCont;
-import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.mvc.IFiModCont;
-
-import java.util.List;
 
 /**
  * Common Window
  */
-public class FiArbWindowCont extends AbsFiModBaseCont implements IFiModCont {
+public class FiWindowCont extends AbsFiModBaseCont implements IFiModCont {
 
 	FiArbWindowView modView;
 
-	public FiArbWindowCont() {
+	public FiWindowCont() {
 		//super.moduleAciklama = "Mos-Shared Form Window";
 		//super.moduleCode = EntegreModules.ModContGen.getModuleCode();
 	}
 
-	public FiArbWindowCont(String connProfile) {
+	public FiWindowCont(String connProfile) {
 		super(connProfile);
 	}
 
@@ -34,7 +30,7 @@ public class FiArbWindowCont extends AbsFiModBaseCont implements IFiModCont {
 		//afterInit();
 	}
 
-	public FiArbWindowCont buildInit() {
+	public FiWindowCont buildInit() {
 		initCont();
 		return this;
 	}

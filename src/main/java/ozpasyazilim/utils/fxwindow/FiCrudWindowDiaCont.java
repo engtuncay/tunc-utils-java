@@ -5,16 +5,24 @@ import javafx.scene.input.KeyCode;
 import ozpasyazilim.utils.gui.fxcomponents.FxButton;
 import ozpasyazilim.utils.metadata.metaOther.MetaCrudConstant;
 import ozpasyazilim.utils.mvc.IFiModCont;
+import ozpasyazilim.utils.returntypes.Fdr;
+
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  *
  */
-public abstract class FiArbAbsCrudWindowCont extends FiArbWindowCont implements IFiModCont {
+public class FiCrudWindowDiaCont extends FiWindowCont implements IFiModCont {
 
 	protected FxButton btnCrudAdd;
 	protected FxButton btnCrudEdit;
 	protected FxButton btnCrudDelete;
 	protected FxButton btnCrudSaveAndClose;
+
+	Function<Boolean,Fdr> fnAddEdit;
+	Supplier<Fdr> fnDelete;
+	Supplier<Fdr> fnSaveClose;
 
 	/**
 	 * Seçim Düğmesi
@@ -27,7 +35,8 @@ public abstract class FiArbAbsCrudWindowCont extends FiArbWindowCont implements 
 	protected FxButton btnCrudReport;
 	protected FxButton btnCrudRefresh;
 
-	public FiArbAbsCrudWindowCont() {
+	public FiCrudWindowDiaCont(String connProfile) {
+		super(connProfile);
 	}
 
 	@Override
@@ -38,30 +47,41 @@ public abstract class FiArbAbsCrudWindowCont extends FiArbWindowCont implements 
 
 
 
-	protected void addCrudSaveButtonByCw() {
+	public void addCrudSaveButtonAndAction() {
 		btnCrudSaveAndClose = new FxButton("Kaydet", Icons525.MAIL_SEND);
 		//btnCrudSaveAndNew = new FxButton("Kaydet ve Yeni", Icons525.DATABASE);
 
 		getModView().getMigToolbar().add(btnCrudSaveAndClose);
+
+		btnCrudSaveAndClose.setOnAction(event -> {
+			if (getFnSaveClose()!=null) {
+				Fdr fdrSaveClose = getFnSaveClose().get();
+
+				if(fdrSaveClose.isTrueBoResult()){
+				    closeStageWithDoneReason();
+				}
+
+			}
+		});
 		//getModView().getFxMigToolbar().add(btnCrudSaveAndNew);
 	}
 
-	protected void addCrudDeleteButtonOnly() {
+	public void addCrudDeleteButtonOnly() {
 		btnCrudDelete = new FxButton("Sil", Icons525.CIRCLEDELETE);
 		getModView().getMigToolbar().add(btnCrudDelete);
 	}
 
-	protected void activateCrudSaveAndCloseWithInsert() {
+	public void activateCrudSaveAndCloseWithInsert() {
 		if (getBtnCrudSaveAndClose() == null) return;
 		registerBtnWitInsert(getBtnCrudSaveAndClose());
 	}
 
-	protected void activateCrudDeleteWithDelKey() {
+	public void activateCrudDeleteWithDelKey() {
 		if (getBtnCrudDelete() == null) return;
 		registerBtnWitDelete(getBtnCrudDelete());
 	}
 
-	protected void activateCrudShortcutsOnRootPane() {
+	public void activateCrudShortcutsOnRootPane() {
 		getModView().getRootPane().setOnKeyReleased(event -> {
 
 			if (event.getCode() == KeyCode.INSERT) {
@@ -101,7 +121,7 @@ public abstract class FiArbAbsCrudWindowCont extends FiArbWindowCont implements 
 		});
 	}
 
-	protected void addSelectAndRefreshButton() {
+	public void addSelectAndRefreshButton() {
 		btnCrudSelect = FiButtons.genBtnSecim();
 		btnCrudRefresh = FiButtons.genBtnRefresh();
 		// Add Layout
@@ -163,7 +183,9 @@ public abstract class FiArbAbsCrudWindowCont extends FiArbWindowCont implements 
 		btnCrudRefresh.setOnActionWithThread(this::actCrudRefresh);
 	}
 
-	public abstract void actCrudRefresh();
+	public void actCrudRefresh(){
+
+	}
 
 	/**
 	 *
@@ -221,11 +243,44 @@ public abstract class FiArbAbsCrudWindowCont extends FiArbWindowCont implements 
 	 * @param txAction
 	 */
 	@Deprecated
-	public abstract void actBtnCrudAddEdit(String txAction);
+	public void actBtnCrudAddEdit(String txAction){
+
+	}
 
 
-	public abstract void actBtnCrudDelete();
+	public void actBtnCrudDelete(){
+		if (getFnDelete()!=null) {
+			Fdr fdr = getFnDelete().get();
+		}
+	}
 
-	public abstract void actBtnCrudAddEdit(Boolean boEdit);
+	public void actBtnCrudAddEdit(Boolean boEdit){
+		if (getFnAddEdit()!=null) {
+			Fdr apply = getFnAddEdit().apply(boEdit);
+		}
+	}
 
+	public Function<Boolean, Fdr> getFnAddEdit() {
+		return fnAddEdit;
+	}
+
+	public void setFnAddEdit(Function<Boolean, Fdr> fnAddEdit) {
+		this.fnAddEdit = fnAddEdit;
+	}
+
+	public Supplier<Fdr> getFnDelete() {
+		return fnDelete;
+	}
+
+	public void setFnDelete(Supplier<Fdr> fnDelete) {
+		this.fnDelete = fnDelete;
+	}
+
+	public Supplier<Fdr> getFnSaveClose() {
+		return fnSaveClose;
+	}
+
+	public void setFnSaveClose(Supplier<Fdr> fnSaveClose) {
+		this.fnSaveClose = fnSaveClose;
+	}
 }
