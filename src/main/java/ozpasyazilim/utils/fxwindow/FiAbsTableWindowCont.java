@@ -11,6 +11,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
+/**
+ * Fi(Util sınıfında olduğunu gösterir)
+ *
+ * @param <EntClazz>
+ */
 public abstract class FiAbsTableWindowCont<EntClazz> extends FiWindowCont {
 
     String txSelected;
