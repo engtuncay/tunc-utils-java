@@ -68,8 +68,8 @@ public class FxEditorFactory {
 //    Loghelper.get(FxEditorFactory.class).debug("txClassName:" + txClassName);
 //    Loghelper.get(FxEditorFactory.class).debug("ficol-fn:" + fiCol.getFcTxFieldName());
 
-    // txClassName yoksa - belirleme süreci
-    if (txClassName == null) txClassName = calcTxClassNameMain(fiCol, ozColType);
+    // txClassName yoksa , belirleme süreci
+    if (FiString.isEmpty(txClassName)) txClassName = calcTxClassNameMain(fiCol, ozColType);
 
     // Loghelper.getInstance(FxEditorFactory.class).debug("Comp Class:"+txClassName);
 
@@ -78,79 +78,78 @@ public class FxEditorFactory {
     if (txClassName.equals(FxTextField.class.getSimpleName())
         || txClassName.equals(FxTextField.class.getName())) {
 
-      FxTextField comp = new FxTextField();
+      FxTextField txfComp = new FxTextField();
 
       if (ozColType == OzColType.Double) {
-        comp.setupNumberDoubleTextField1();
+        txfComp.setupNumberDoubleFormatV1();
         // Loghelper.get(FxEditorFactory.class).debug("Double Text Field Üretildi:"+ iFiCol.getHeaderName());
-
-        //comp.setAlignment(Pos.BASELINE_RIGHT);
+        //txfComp.setAlignment(Pos.BASELINE_RIGHT);
       }
 
       if (ozColType == OzColType.Integer) {
-        comp.setupNumberDoubleTextField1();
-        //comp.setAlignment(Pos.BASELINE_RIGHT);
+        txfComp.setupNumberDoubleFormatV1();
+        //txfComp.setAlignment(Pos.BASELINE_RIGHT);
       }
 
       if (FiBool.isTrue(fiCol.getBoEditorOnlyNumber())) {
-        comp.setupNumberDoubleTextField1();
+        txfComp.setupNumberDoubleFormatV1();
       }
 
       if (ozColType == OzColType.String) {
         if (fiCol.getFcLnLength() != null) {
           Loghelper.get(FxEditorFactory.class).debug("Text Limiti Tanımlandı.");
-          comp.setupTextFieldAsLimitLength(fiCol);
+          txfComp.setupTextLimitLength(fiCol);
         }
-        //comp.setAlignment(Pos.BASELINE_RIGHT);
+        //txfComp.setAlignment(Pos.BASELINE_RIGHT);
       }
 
-      //if (iFiCol.getColFilterKeyEvent() != null) comp.setOnKeyReleased(iFiCol.getColFilterKeyEvent());
-      //iFiCol.setColFxNode(comp);
-      return comp;
+      //if (iFiCol.getColFilterKeyEvent() != null) txfComp.setOnKeyReleased(iFiCol.getColFilterKeyEvent());
+      //iFiCol.setColFxNode(txfComp);
+      return txfComp;
     }
 
     if (txClassName.equals(FxTextFieldBtn.class.getName())) {
 
-      FxTextFieldBtn comp = new FxTextFieldBtn();
+      FxTextFieldBtn txfBtn = new FxTextFieldBtn();
 
       if (ozColType == OzColType.Double) {
-        comp.getFxTextField().setupNumberDoubleTextField1();
-        comp.getFxTextField().setAlignment(Pos.BASELINE_RIGHT);
+        txfBtn.getFxTextField().setupNumberDoubleFormatV1();
+        txfBtn.getFxTextField().setAlignment(Pos.BASELINE_RIGHT);
       }
-      //iFiCol.setColFxNode(comp);
-      return comp;
+      //iFiCol.setColFxNode(txfBtn);
+      return txfBtn;
     }
 
     if (txClassName.equals(FxTextFieldBtnCsv.class.getName())) {
 
-      FxTextFieldBtnCsv comp = new FxTextFieldBtnCsv();
+      FxTextFieldBtnCsv txfBtnCsv = new FxTextFieldBtnCsv();
 
       if (ozColType == OzColType.Double) {
-        comp.getFxTextField().setupNumberDoubleTextField1();
+        txfBtnCsv.getFxTextField().setupNumberDoubleFormatV1();
+        txfBtnCsv.getFxTextField().setAlignment(Pos.BASELINE_RIGHT);
+      }
+      //iFiCol.setColFxNode(txfBtnCsv);
+      return txfBtnCsv;
+    }
+
+    if (txClassName.equals(FxTextFieldBtnWitLblV3.class.getName())) {
+
+      FxTextFieldBtnWitLblV3 comp = new FxTextFieldBtnWitLblV3();
+
+      if (ozColType == OzColType.Double) {
+        comp.getFxTextField().setupNumberDoubleFormatV1();
         comp.getFxTextField().setAlignment(Pos.BASELINE_RIGHT);
       }
       //iFiCol.setColFxNode(comp);
       return comp;
     }
 
-    if (txClassName.equals(FxTextFieldBtnWitLbl3.class.getName())) {
+    if (txClassName.equals(FxTextFieldBtnWitLblV2.class.getName())) {
 
-      FxTextFieldBtnWitLbl3 comp = new FxTextFieldBtnWitLbl3();
-
-      if (ozColType == OzColType.Double) {
-        comp.getFxTextField().setupNumberDoubleTextField1();
-        comp.getFxTextField().setAlignment(Pos.BASELINE_RIGHT);
-      }
-      //iFiCol.setColFxNode(comp);
-      return comp;
-    }
-
-    if (txClassName.equals(FxTextFieldBtnWitLbl2.class.getName())) {
-
-      FxTextFieldBtnWitLbl2 comp = new FxTextFieldBtnWitLbl2();
+      FxTextFieldBtnWitLblV2 comp = new FxTextFieldBtnWitLblV2();
 
       if (ozColType == OzColType.Double) {
-        comp.getFxTextField().setupNumberDoubleTextField1();
+        comp.getFxTextField().setupNumberDoubleFormatV1();
         comp.getFxTextField().setAlignment(Pos.BASELINE_RIGHT);
       }
       //iFiCol.setColFxNode(comp);
@@ -159,51 +158,51 @@ public class FxEditorFactory {
 
     if (txClassName.equals(DatePicker.class.getName())
         || txClassName.equals(FxDatePicker.class.getName())) {
-      FxDatePicker comp = new FxDatePicker();
-      //if (iFiCol.getColFilterKeyEvent() != null) comp.setOnKeyReleased(iFiCol.getColFilterKeyEvent());
-      return comp;
+      FxDatePicker dtpComp = new FxDatePicker();
+      //if (iFiCol.getColFilterKeyEvent() != null) dtpComp.setOnKeyReleased(iFiCol.getColFilterKeyEvent());
+      return dtpComp;
     }
 
     if (txClassName.equals(FxLabel.class.getName())) {
-      FxLabel comp = new FxLabel("");
-      return comp;
+      FxLabel lblComp = new FxLabel("");
+      return lblComp;
     }
 
     if (txClassName.equals(FxLabelData.class.getName())) {
-      FxLabelData comp = new FxLabelData("");
-      return comp;
+      FxLabelData lblDataComp = new FxLabelData("");
+      return lblDataComp;
     }
 
     if (txClassName.equals(TextField.class.getName())) {
-      FxTextField comp = new FxTextField();
-      //if (iFiCol.getColFilterKeyEvent() != null) comp.setOnKeyReleased(iFiCol.getColFilterKeyEvent());
-      return comp;
+      FxTextField txfComp = new FxTextField();
+      //if (iFiCol.getColFilterKeyEvent() != null) txfComp.setOnKeyReleased(iFiCol.getColFilterKeyEvent());
+      return txfComp;
     }
 
     if (txClassName.equals(FxComboBox.class.getName())) {
-      FxComboBox<ComboItemText> comp = new FxComboBox<>();
-      return comp;
+      FxComboBox<ComboItemText> cmbComp = new FxComboBox<>();
+      return cmbComp;
     }
 
     if (txClassName.equals(FxComboBoxSimple.class.getName())) {
-      FxComboBoxSimple comp = new FxComboBoxSimple();
-      return comp;
+      FxComboBoxSimple cmbsComp = new FxComboBoxSimple();
+      return cmbsComp;
     }
 
     if (txClassName.equals(FxComboBoxObj.class.getName())) {
-      FxComboBoxObj comp = new FxComboBoxObj();
-      return comp;
+      FxComboBoxObj cmboComp = new FxComboBoxObj();
+      return cmboComp;
     }
 
     if (txClassName.equals(FxCheckBox.class.getName())) {
-      FxCheckBox comp = new FxCheckBox();
-      return comp;
+      FxCheckBox chbComp = new FxCheckBox();
+      return chbComp;
     }
 
     if (txClassName.equals(FxChoiceBoxSimple.class.getName())) {
-      FxChoiceBoxSimple comp = new FxChoiceBoxSimple();
-      comp.activateBackSpaceClearSelection();
-      return comp;
+      FxChoiceBoxSimple chbComp = new FxChoiceBoxSimple();
+      chbComp.activateBackSpaceClearSelection();
+      return chbComp;
     }
 
     return null;
@@ -342,7 +341,7 @@ public class FxEditorFactory {
         || txNodeClassName.equals(FxTextFieldBtn.class.getName())
         || txNodeClassName.equals(FxLabel.class.getName())
         || txNodeClassName.equals(FxLabelData.class.getName())
-        || txNodeClassName.equals(FxTextFieldBtnWitLbl3.class.getName())) {
+        || txNodeClassName.equals(FxTextFieldBtnWitLblV3.class.getName())) {
 
       String textValue = null;
 
@@ -358,14 +357,14 @@ public class FxEditorFactory {
         //Loghelperr.debug(FxEditorFactory.class,"txVal:"+comp.getTxValue());
       }
 
-      if (txNodeClassName.equals(FxTextFieldBtnWitLbl3.class.getName())) {
-        FxTextFieldBtnWitLbl3 comp = (FxTextFieldBtnWitLbl3) nodeComp;
+      if (txNodeClassName.equals(FxTextFieldBtnWitLblV3.class.getName())) {
+        FxTextFieldBtnWitLblV3 comp = (FxTextFieldBtnWitLblV3) nodeComp;
         //textValue = comp.getFxTextField().getText();
         textValue = comp.getTxValue();
         //Loghelperr.debug(FxEditorFactory.class,"txVal:"+comp.getTxValue());
       }
 
-      if (txNodeClassName.equals(FxTextFieldBtnWitLbl2.class.getName())) {
+      if (txNodeClassName.equals(FxTextFieldBtnWitLblV2.class.getName())) {
         FxTextFieldWithButtonLabelCustom comp = (FxTextFieldWithButtonLabelCustom) nodeComp;
         //textValue = comp.getFxTextField().getText();
         textValue = comp.getTxValue();
@@ -530,9 +529,9 @@ public class FxEditorFactory {
 
     }
 
-    if (colNodeClass.equals(FxTextFieldBtnWitLbl3.class.getName())) {
+    if (colNodeClass.equals(FxTextFieldBtnWitLblV3.class.getName())) {
 
-      FxTextFieldBtnWitLbl3 comp = (FxTextFieldBtnWitLbl3) colNode;
+      FxTextFieldBtnWitLblV3 comp = (FxTextFieldBtnWitLblV3) colNode;
       // Gerçek değeri txvalue da tutulur.
       comp.setTxValue(compValue.toString());
       if (iFiCol.getFnEditorNodeValueFormmatter() != null) {
@@ -1806,9 +1805,9 @@ public class FxEditorFactory {
 
     }
 
-    if (colNodeClass.equals(FxTextFieldBtnWitLbl3.class.getName())) {
+    if (colNodeClass.equals(FxTextFieldBtnWitLblV3.class.getName())) {
 
-      FxTextFieldBtnWitLbl3 comp = (FxTextFieldBtnWitLbl3) colNode;
+      FxTextFieldBtnWitLblV3 comp = (FxTextFieldBtnWitLblV3) colNode;
       // Gerçek değeri txvalue da tutulur.
       comp.setTxValue("");
       comp.getFxTextField().setText("");

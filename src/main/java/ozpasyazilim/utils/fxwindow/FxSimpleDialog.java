@@ -518,7 +518,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFiModBaseCont {
 
         FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().getLcg());
         FxTextField fxTextField = new FxTextField();
-        fxTextField.setupNumberDoubleTextField1();
+        fxTextField.setupNumberDoubleFormatV1();
         setOzColType(OzColType.Double);
         txValueProperty().bindBidirectional(fxTextField.textProperty());
         fxContent.add(fxTextField, "wrap");

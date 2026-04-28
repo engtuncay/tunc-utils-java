@@ -123,7 +123,7 @@ public class FxTextField<EntClazz> extends TextField {
 		return this;
 	}
 
-	public FxTextField setupNumberDoubleTextField1() {
+	public FxTextField setupNumberDoubleFormatV1() {
 
 		UnaryOperator<TextFormatter.Change> filter = change -> {
 
@@ -148,7 +148,7 @@ public class FxTextField<EntClazz> extends TextField {
 		return this;
 	}
 
-	public void setupTextFieldAsLimitLength(FiCol fiCol) {
+	public void setupTextLimitLength(FiCol fiCol) {
 
 		UnaryOperator<TextFormatter.Change> filter = change -> {
 

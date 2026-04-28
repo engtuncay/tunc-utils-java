@@ -276,8 +276,8 @@ public class FxTableViewCellFactoryModal {
             } else { // empty false ise, boş degilse
 
               Object entityTest = getTableView().getItems().get(getIndex());
-              Loghelper.get(getClass()).debug(FiConsole.textObjectFieldsNtn(entityTest));
-              Loghelper.get(getClass()).debug(FiConsole.textObjectFieldsNtn(item));
+              //Loghelper.get(getClass()).debug(FiConsole.textObjectFieldsNtn(entityTest));
+              //Loghelper.get(getClass()).debug(FiConsole.textObjectFieldsNtn(item));
               //FiConsole.printObjectDefiniton(item, fxTableCol.getFieldName());
 
               if (item != null) {

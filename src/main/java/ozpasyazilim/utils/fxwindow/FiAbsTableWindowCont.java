@@ -149,7 +149,7 @@ public abstract class FiAbsTableWindowCont<EntClazz> extends FiWindowCont {
         });
     }
 
-    public FxButton getBtnMotReport() {
+    public FxButton getBtnCrudReport() {
         return btnCrudReport;
     }
 

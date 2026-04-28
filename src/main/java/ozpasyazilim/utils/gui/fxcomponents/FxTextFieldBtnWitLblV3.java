@@ -9,9 +9,9 @@ import java.time.Duration;
  *
  * @param <EntClazz>
  */
-public class FxTextFieldBtnWitLbl3<EntClazz> extends FxTextFieldBtn<EntClazz> {
+public class FxTextFieldBtnWitLblV3<EntClazz> extends FxTextFieldBtn<EntClazz> {
 
-    public FxTextFieldBtnWitLbl3() {
+    public FxTextFieldBtnWitLblV3() {
         lblAciklama = new FxLabel("");
         wrapFi();
         add(lblAciklama, "growx,pushx,span");

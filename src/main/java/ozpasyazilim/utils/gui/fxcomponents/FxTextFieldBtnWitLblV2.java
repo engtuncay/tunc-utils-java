@@ -2,15 +2,15 @@ package ozpasyazilim.utils.gui.fxcomponents;
 
 import ozpasyazilim.utils.table.OzColType;
 
-public class FxTextFieldBtnWitLbl2<EntClazz> extends FxTextFieldBtn<EntClazz> implements IFiNode {
+public class FxTextFieldBtnWitLblV2<EntClazz> extends FxTextFieldBtn<EntClazz> implements IFiNode {
 
 	OzColType compValueType;
 
-	public FxTextFieldBtnWitLbl2() {
+	public FxTextFieldBtnWitLblV2() {
 		setup(null);
 	}
 
-	public FxTextFieldBtnWitLbl2(Long lnDurationChange){
+	public FxTextFieldBtnWitLblV2(Long lnDurationChange){
 		setup(lnDurationChange);
 	}
 

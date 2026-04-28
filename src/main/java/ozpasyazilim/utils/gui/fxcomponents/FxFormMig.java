@@ -21,6 +21,11 @@ public class FxFormMig extends FxFormMigGen<Object> {
     super(listFormElements, boInit);
   }
 
+  /**
+   * super'de initCont otomatik çalıştırılır
+   *
+   * @param fxFormConfig
+   */
   public FxFormMig(FxFormConfig<Object> fxFormConfig) {
     super(fxFormConfig);
   }

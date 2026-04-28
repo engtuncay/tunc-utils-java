@@ -196,7 +196,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
   public void actiSelectionToSingleCell() {
     // set selection mode to only 1 row
-    //getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+    // getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     getSelectionModel().setCellSelectionEnabled(true);
   }
 
