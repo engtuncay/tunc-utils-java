@@ -16,7 +16,7 @@ import java.util.function.Function;
  *
  * @param <EntClazz>
  */
-public abstract class FiAbsTableWindowCont<EntClazz> extends FiWindowCont {
+public abstract class FiAbsTableWindowCont<EntClazz> extends FiArbWindowCont {
 
     String txSelected;
     List<EntClazz> listEntitySelected;

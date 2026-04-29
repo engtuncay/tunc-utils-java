@@ -3,6 +3,9 @@ package ozpasyazilim.utils.fxwindow;
 import de.jensd.fx.glyphs.icons525.Icons525;
 import javafx.scene.input.KeyCode;
 import ozpasyazilim.utils.gui.fxcomponents.FxButton;
+import ozpasyazilim.utils.gui.fxcomponents.FxFormMig;
+import ozpasyazilim.utils.gui.fxcomponents.FxFormMigGen;
+import ozpasyazilim.utils.javafx.FiIconPack;
 import ozpasyazilim.utils.metadata.metaOther.MetaCrudConstant;
 import ozpasyazilim.utils.mvc.IFiModCont;
 import ozpasyazilim.utils.returntypes.Fdr;
@@ -13,16 +16,17 @@ import java.util.function.Supplier;
 /**
  *
  */
-public class FiCrudWindowDiaCont extends FiWindowCont implements IFiModCont {
+public class FiArbCrudWindowCont extends FiArbWindowCont implements IFiModCont {
 
-	protected FxButton btnCrudAdd;
-	protected FxButton btnCrudEdit;
-	protected FxButton btnCrudDelete;
-	protected FxButton btnCrudSaveAndClose;
+	private FxButton btnCrudAdd;
+	private FxButton btnCrudEdit;
+	private FxButton btnCrudDelete;
+	private FxButton btnCrudSaveAndClose;
 
 	Function<Boolean,Fdr> fnAddEdit;
 	Supplier<Fdr> fnDelete;
 	Supplier<Fdr> fnSaveClose;
+	private FxFormMigGen crudForm;
 
 	/**
 	 * Seçim Düğmesi
@@ -35,14 +39,13 @@ public class FiCrudWindowDiaCont extends FiWindowCont implements IFiModCont {
 	protected FxButton btnCrudReport;
 	protected FxButton btnCrudRefresh;
 
-	public FiCrudWindowDiaCont(String connProfile) {
+	public FiArbCrudWindowCont(String connProfile) {
 		super(connProfile);
 	}
 
 	@Override
 	public void initCont() {
 		super.initCont();
-
 	}
 
 
@@ -66,8 +69,13 @@ public class FiCrudWindowDiaCont extends FiWindowCont implements IFiModCont {
 		//getModView().getFxMigToolbar().add(btnCrudSaveAndNew);
 	}
 
+	public void addCrudSaveButton() {
+		btnCrudSaveAndClose = new FxButton("Kaydet", FiIconPack.getSaveCloseIcon());
+		getModView().getMigToolbar().add(btnCrudSaveAndClose);
+	}
+
 	public void addCrudDeleteButtonOnly() {
-		btnCrudDelete = new FxButton("Sil", Icons525.CIRCLEDELETE);
+		btnCrudDelete = new FxButton("Sil", FiIconPack.getDeleteIcon());
 		getModView().getMigToolbar().add(btnCrudDelete);
 	}
 
@@ -283,4 +291,19 @@ public class FiCrudWindowDiaCont extends FiWindowCont implements IFiModCont {
 	public void setFnSaveClose(Supplier<Fdr> fnSaveClose) {
 		this.fnSaveClose = fnSaveClose;
 	}
+
+	public FxFormMigGen getCrudForm() {
+		return crudForm;
+	}
+
+	public void setCrudForm(FxFormMigGen crudForm) {
+		this.crudForm = crudForm;
+	}
+
+	public void addCrudFormToMigContent() {
+		if (getCrudForm() != null) {
+			getModView().getMigContent().addGrowPushSpan(getCrudForm());
+		}
+	}
+
 }

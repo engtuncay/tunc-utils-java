@@ -10,16 +10,16 @@ import ozpasyazilim.utils.mvc.IFiModCont;
 /**
  * Common Window
  */
-public class FiWindowCont extends AbsFiModBaseCont implements IFiModCont {
+public class FiArbWindowCont extends AbsFiModBaseCont implements IFiModCont {
 
 	FiArbWindowView modView;
 
-	public FiWindowCont() {
+	public FiArbWindowCont() {
 		//super.moduleAciklama = "Mos-Shared Form Window";
 		//super.moduleCode = EntegreModules.ModContGen.getModuleCode();
 	}
 
-	public FiWindowCont(String connProfile) {
+	public FiArbWindowCont(String connProfile) {
 		super(connProfile);
 	}
 
@@ -30,7 +30,7 @@ public class FiWindowCont extends AbsFiModBaseCont implements IFiModCont {
 		//afterInit();
 	}
 
-	public FiWindowCont buildInit() {
+	public FiArbWindowCont buildInit() {
 		initCont();
 		return this;
 	}

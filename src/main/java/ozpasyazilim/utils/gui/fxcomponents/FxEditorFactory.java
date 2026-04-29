@@ -509,11 +509,11 @@ public class FxEditorFactory {
    * @param colNode      component'in Node objesi
    * @param entity       değerin alındığı Entity. İşlevi ???
    */
-  private static void setValueNodeCompMain(IFiCol iFiCol, Object compValue, String colNodeClass, Node colNode, Object entity) {
-
+  private static void setValueToNodeCompMain(IFiCol iFiCol, Object compValue, String colNodeClass, Node colNode, Object entity) {
+    // URFIX buradaki entity , fikeybean olarak gelebilir (complex componentlerde entity kullanılmış)
     //String colNodeClass = iFiCol.getColFilterNodeClass();
 
-    // IfxNode türünde ise CompValue metoduyla kendisine değer atamasını kendisi yapar
+    // IfxNode türünde ise CompValue metoduyla kendisi comp olarak değer atama işini yapar
     if (colNode instanceof IFiNode) {
       //Loghelper.get(FxEditorFactory.class).debug("IfxNode Set CompValue :" + iFiCol.getHeaderName());
       IFiNode IFiNode = (IFiNode) colNode;
@@ -620,7 +620,7 @@ public class FxEditorFactory {
 
     if (colByFieldName == null) return false;
 
-    setValueNodeCompMain(colByFieldName, value, colByFieldName.getColEditorClass(), colByFieldName.getColEditorNode(), entity);
+    setValueToNodeCompMain(colByFieldName, value, colByFieldName.getColEditorClass(), colByFieldName.getColEditorNode(), entity);
 
     return true;
   }
@@ -1152,7 +1152,7 @@ public class FxEditorFactory {
         continue;
       }
 
-      setValueNodeCompMain(fiCol, cellvalue, fiCol.getFilterNodeClass(), fiCol.getColFilterNode(), entity);
+      setValueToNodeCompMain(fiCol, cellvalue, fiCol.getFilterNodeClass(), fiCol.getColFilterNode(), entity);
 
       // Form Node özellikleri buradan atanır
       if (fiCol.getColFilterNode() != null) {
@@ -1185,7 +1185,15 @@ public class FxEditorFactory {
 
       if (fiCol.getFcTxFieldName() == null) continue;
 
-      Object cellvalue = FiReflection.getProperty(entity, fiCol.getFcTxFieldName());
+      Object cellvalue = null;
+
+      if (entity instanceof FiKeybean) {
+        FiKeybean fkbEntity = (FiKeybean) entity;
+        cellvalue = fkbEntity.get(fiCol.getFcTxFieldName());
+      } else {
+        cellvalue = FiReflection.getProperty(entity, fiCol.getFcTxFieldName());
+      }
+
       //Loghelperr.getInstance(getClass()).debug("Entity to Editor: Col:"+ fiCol.getFieldName());
 
       if (cellvalue == null) continue;
@@ -1199,7 +1207,7 @@ public class FxEditorFactory {
       }
 
       //FiConsole.printFieldsNotNull(fiCol);
-      setValueNodeCompMain(fiCol, cellvalue, fiCol.getColEditorClass(), fiCol.getColEditorNode(), entity);
+      setValueToNodeCompMain(fiCol, cellvalue, fiCol.getColEditorClass(), fiCol.getColEditorNode(), entity);
 
       // Form Node özellikleri buradan atanır
       if (fiCol.getColEditorNode() != null) {
@@ -1237,7 +1245,7 @@ public class FxEditorFactory {
       }
 
       //FiConsole.printFieldsNotNull(fiCol);
-      setValueNodeCompMain(fiCol, cellvalue, fiCol.getColEditorClass(), fiCol.getColEditorNode(), null);
+      setValueToNodeCompMain(fiCol, cellvalue, fiCol.getColEditorClass(), fiCol.getColEditorNode(), null);
 
       // Form Node özellikleri buradan atanır
       if (fiCol.getColEditorNode() != null) {

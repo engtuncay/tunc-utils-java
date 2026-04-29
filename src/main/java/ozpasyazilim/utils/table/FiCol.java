@@ -864,6 +864,11 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     return this;
   }
 
+  public FiCol<EntClazz> buiBoWhereField(Boolean boWhereField) {
+    setFcBoWhereField(boWhereField);
+    return this;
+  }
+
   public enum ColStyle {alignment;}
 
   public void setupFiCol() {
@@ -1215,10 +1220,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     return this;
   }
 
-  public FiCol<EntClazz> buiBoWhereField(Boolean boWhereField) {
-    setFcBoWhereField(boWhereField);
-    return this;
-  }
+
 
   public FiCol<EntClazz> buiBoCountField(Boolean boCountField) {
     setFcBoCountField(boCountField);

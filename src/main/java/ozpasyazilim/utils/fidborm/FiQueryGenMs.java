@@ -29,7 +29,7 @@ public class FiQueryGenMs {
 
     // arguments
     IFiTableMeta iFiTableMeta = fiQueryConfig.getiFiTableMeta();
-    FicList ficFields = fiQueryConfig.getFclFields();
+    FicList ficFields = fiQueryConfig.getFicList();
 
 //    FimOcSql.sfTableName();
 //    FimOcSql.sfTxWhere();
@@ -82,7 +82,7 @@ public class FiQueryGenMs {
 
     // arguments
     IFiTableMeta iFiTableMeta = fiQueryConfig.getiFiTableMeta();
-    FicList ficUpFields = fiQueryConfig.getFclFields();
+    FicList ficUpFields = fiQueryConfig.getFicList();
 
     //FimOcgSql.sfTableName();
     //FimOcgSql.sfTxWhere();
@@ -146,7 +146,7 @@ public class FiQueryGenMs {
 
     // arguments
     IFiTableMeta iFiTableMeta = fiQueryConfig.getiFiTableMeta();
-    FicList ficUpFields = fiQueryConfig.getFclFields();
+    FicList ficUpFields = fiQueryConfig.getFicList();
 
     //FimOcgSql.sfTableName();
     //FimOcgSql.sfTxWhere();
@@ -216,7 +216,7 @@ public class FiQueryGenMs {
 
     // arguments
     IFiTableMeta iFiTableMeta = fiQueryConfig.getiFiTableMeta();
-    FicList ficUpFields = fiQueryConfig.getFclFields();
+    FicList ficUpFields = fiQueryConfig.getFicList();
 
 //    FimOcSql.sfTableName();
 //    FimOcSql.sfTxWhere();

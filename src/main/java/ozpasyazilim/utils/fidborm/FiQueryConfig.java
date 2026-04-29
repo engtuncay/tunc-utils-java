@@ -8,7 +8,7 @@ import ozpasyazilim.utils.table.FicList;
 public class FiQueryConfig {
 
   IFiTableMeta iFiTableMeta;
-  FicList fclFields;
+  FicList ficList;
   Boolean boUpdateFieldsOnly;
 
   //FicList ficWhereFields;
@@ -24,12 +24,12 @@ public class FiQueryConfig {
     this.iFiTableMeta = iFiTableMeta;
   }
 
-  public FicList getFclFields() {
-    return fclFields;
+  public FicList getFicList() {
+    return ficList;
   }
 
-  public void setFclFields(FicList fclFields) {
-    this.fclFields = fclFields;
+  public void setFicList(FicList ficList) {
+    this.ficList = ficList;
   }
 
   public Boolean getBoUpdateFieldsOnly() {

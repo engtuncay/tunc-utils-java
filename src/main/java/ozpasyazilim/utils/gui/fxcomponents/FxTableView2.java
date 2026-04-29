@@ -19,7 +19,7 @@ import ozpasyazilim.utils.annotations.FiDraft;
 import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.datatypes.FiKeybean;
 import ozpasyazilim.utils.datatypes.FiListString;
-import ozpasyazilim.utils.fxwindow.FiFormWindowDiaCont;
+import ozpasyazilim.utils.fxwindow.FiArbFormWindowCont;
 import ozpasyazilim.utils.gui.components.TableValueFactoryForFkb;
 import ozpasyazilim.utils.gui.fxTableViewExtra.NestedPropertyValueFactory;
 import ozpasyazilim.utils.log.Loghelper;
@@ -2583,7 +2583,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     btnExtraFilter.setOnAction(event -> {
 
-      FiFormWindowDiaCont emmFormWindowCont = new FiFormWindowDiaCont(null);
+      FiArbFormWindowCont emmFormWindowCont = new FiArbFormWindowCont(null);
       emmFormWindowCont.initCont();
       emmFormWindowCont.addCrudSaveButtonAndAction();
 

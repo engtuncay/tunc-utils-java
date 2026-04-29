@@ -8,12 +8,13 @@ import ozpasyazilim.utils.core.FiCollection;
 import ozpasyazilim.utils.core.FiConsole;
 import ozpasyazilim.utils.core.FiString;
 import ozpasyazilim.utils.datatypes.FiKeybean;
+import ozpasyazilim.utils.fxwindow.*;
 import ozpasyazilim.utils.gui.fxTableViewExtra.EnumColNodeType;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.mvc.IFiComp;
+import ozpasyazilim.utils.returntypes.Fdr;
 import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.FiColsUtil;
-import ozpasyazilim.utils.fxwindow.FxSimpleDialog;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
@@ -107,6 +108,10 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> implement
 
     if (getFormEntity() != null) {
       FxEditorFactory.updateFiColsCompsWitFormEntityByEditorValue(getListFormElementsInit(), getFormEntity());
+    }
+
+    if (getFormFkbEntity() != null) {
+      FxEditorFactory.updateFiColsCompsWitFormEntityByEditorValue(getListFormElementsInit(), getFormFkbEntity());
     }
 
     // Form Değerleri Yüklendikten sonraki Lifecycle metodu çalıştırılır
@@ -379,6 +384,10 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> implement
     return getFxFormConfigInit().getFormEntity();
   }
 
+  public FiKeybean getFormFkbEntity() {
+    return getFxFormConfigInit().getFkbEntity();
+  }
+
   public void setFormEntity(EntClazz formEntity) {
     getFxFormConfigInit().setFormEntity(formEntity);
   }
@@ -409,8 +418,27 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> implement
     this.fnFocusedChangeListener = fnFocusedChangeListener;
   }
 
-  public void showAsDialog() {
-    FxSimpleDialog fxSimpleDialog = new FxSimpleDialog();
+  public void showAsDialog(String connProfile) {
+    FiArbCrudWindowCont fiCrudWindow = new FiArbCrudWindowCont(connProfile);
+    fiCrudWindow.initCont();
+
+    fiCrudWindow.addCrudSaveButtonAndAction();
+
+    fiCrudWindow.getBtnCrudSaveAndClose().setOnAction(event -> {
+      Fdr fdrResult = getFxFormConfigInit().getFnFormSave().apply(this);
+
+      if (fdrResult.isTrueBoResult()) {
+        fiCrudWindow.closeStageWithDoneReason();
+      } else {
+        FxDialogShow.showPopWarn("Hata var");
+      }
+    });
+
+    fiCrudWindow.setCrudForm(this);
+    fiCrudWindow.addCrudFormToMigContent();
+    fiCrudWindow.openAsNonModal();
+
+
   }
 
   public void setupForm(List<FiCol> listFormElements, FormType formType) {
