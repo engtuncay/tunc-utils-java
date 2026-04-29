@@ -210,7 +210,7 @@ public class FxEditorFactory {
 
   /**
    * TxClassName belirleme süreci - bir comp türü belirlenir
-   *
+   * <p>
    * Burada className olarak - fullName kullanılmış
    *
    * @param fiCol
@@ -259,7 +259,7 @@ public class FxEditorFactory {
 
     String txClassName = null;
 
-    if(!FiString.isEmpty(fiCol.getColEditorClass())) return fiCol.getColEditorClass();
+    if (!FiString.isEmpty(fiCol.getColEditorClass())) return fiCol.getColEditorClass();
     //iFiCol.setColFxNodeClass(FxTextField.class.getName());
     //txClassName = FxTextField.class.getName();
 
@@ -293,6 +293,17 @@ public class FxEditorFactory {
     return txClassName;
   }
 
+  public static Object getValueNodeCompMain(OzColType ozColType, String txNodeClassName, Node nodeComp, Object nodeValueDefault) {
+
+    NodeConfig nodeConfig = new NodeConfig();
+    nodeConfig.setOzColType(ozColType);
+    nodeConfig.setTxColEditorClass(txNodeClassName);
+    nodeConfig.setNodeComp(nodeComp);
+    nodeConfig.setObjCompValue(nodeValueDefault);
+
+    return getValueNodeCompMain(nodeConfig);
+  }
+
   /**
    * Fx Node Component'inden değeri alır ve ozcoltype'a ilgili türe çevirir.
    * <p>
@@ -311,7 +322,13 @@ public class FxEditorFactory {
    * @param
    * @return
    */
-  public static Object getValueNodeCompMain(OzColType ozColType, String txNodeClassName, Node nodeComp, Object nodeValueDefault) {
+  public static Object getValueNodeCompMain(NodeConfig nodeConfig) {
+
+    OzColType ozColType = nodeConfig.getOzColType();
+    String txNodeClassName = nodeConfig.getTxColEditorClass();
+    Node nodeComp = nodeConfig.getNodeComp();
+    Object nodeValueDefault = nodeConfig.getObjCompValue();
+
     // Parametre olarak çıkarılanlar : IFiCol iFiCol , IFxNode ifxNode
 
     // Loghelper.getInstance(FxEditorFactory.class).debug("Col Node Class:"+ txNodeClassName);
@@ -780,7 +797,7 @@ public class FxEditorFactory {
 
   public static void assignFieldTypeByOzColType(FiCol refFiCol) {
 
-    if(!FiString.isEmpty(refFiCol.getFcTxFieldType())) return;
+    if (!FiString.isEmpty(refFiCol.getFcTxFieldType())) return;
 
     OzColType colType = refFiCol.getColType();
 

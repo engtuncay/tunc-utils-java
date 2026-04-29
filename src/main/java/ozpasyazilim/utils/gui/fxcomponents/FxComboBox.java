@@ -29,12 +29,11 @@ import java.util.function.Predicate;
 public class FxComboBox<T> extends ComboBox<T> {
 
     // Componentin Ekrandan görünen değerden(txLabel) farklı olarak arka planda tutulan değeri
-    private StringProperty txValue; // = new SimpleStringProperty();
+    private StringProperty txValue;
     private ObjectProperty objValue;
     private FilteredList<T> filteredList;
     private StringProperty txFilter;
     private Tooltip filterTooltip;
-    //OzColType comboBoxValueType;
 
     public FxComboBox() {
         super();
