@@ -3,7 +3,7 @@ package ozpasyazilim.utils.fidborm;
 import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.datatypes.FiKeybean;
 //import ozpasyazilim.utils.ficRfcCoding;
-import ozpasyazilim.utils.metadata.fimCodegen.FimOcSql;
+import ozpasyazilim.utils.metadata.fimCodegen.FimQcSql;
 import ozpasyazilim.utils.returntypes.Fdr;
 import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.FicList;
@@ -63,9 +63,9 @@ public class FiQueryGenMs {
     FiString.rtrimSb(sbTxSetBlock, getTxAnd());
 
     FiKeybean fkbParams = new FiKeybean();
-    fkbParams.addFieldBy(FimOcSql.sfTableName(), iFiTableMeta.getITxTableName());
-    fkbParams.addFieldBy(FimOcSql.sfTxUpSet(), sbTxSetBlock.toString());
-    fkbParams.addFieldBy(FimOcSql.sfTxWhere(), sbTxWhereBlock.toString());
+    fkbParams.addFieldBy(FimQcSql.sfTableName(), iFiTableMeta.getITxTableName());
+    fkbParams.addFieldBy(FimQcSql.sfTxUpSet(), sbTxSetBlock.toString());
+    fkbParams.addFieldBy(FimQcSql.sfTxWhere(), sbTxWhereBlock.toString());
 
     String sql = FiString.substitutor(template, fkbParams);
 
@@ -117,9 +117,9 @@ public class FiQueryGenMs {
     FiString.rtrimSb(sbTxFieldsBlock, getTxComma());
 
     FiKeybean fkbParams = new FiKeybean();
-    fkbParams.addFieldBy(FimOcSql.sfTableName(), iFiTableMeta.getITxTableName());
-    fkbParams.addFieldBy(FimOcSql.sfTxFields(), sbTxFieldsBlock.toString());
-    fkbParams.addFieldBy(FimOcSql.sfTxWhere(), sbTxWhereBlock.toString());
+    fkbParams.addFieldBy(FimQcSql.sfTableName(), iFiTableMeta.getITxTableName());
+    fkbParams.addFieldBy(FimQcSql.sfTxFields(), sbTxFieldsBlock.toString());
+    fkbParams.addFieldBy(FimQcSql.sfTxWhere(), sbTxWhereBlock.toString());
 
     String sql = FiString.substitutor(template, fkbParams);
 
@@ -190,10 +190,10 @@ public class FiQueryGenMs {
     FiString.rtrimSb(sbTxFieldsVar, getTxComma());
 
     FiKeybean fkbParams = new FiKeybean();
-    fkbParams.addFieldBy(FimOcSql.sfTableName(), iFiTableMeta.getITxTableName());
-    fkbParams.addFieldBy(FimOcSql.sfTxFields(), sbTxFieldsBlock.toString());
-    fkbParams.addFieldBy(FimOcSql.sfTxWhere(), sbTxWhereBlock.toString());
-    fkbParams.addFieldBy(FimOcSql.sfTxFieldsVar(), sbTxFieldsVar.toString());
+    fkbParams.addFieldBy(FimQcSql.sfTableName(), iFiTableMeta.getITxTableName());
+    fkbParams.addFieldBy(FimQcSql.sfTxFields(), sbTxFieldsBlock.toString());
+    fkbParams.addFieldBy(FimQcSql.sfTxWhere(), sbTxWhereBlock.toString());
+    fkbParams.addFieldBy(FimQcSql.sfTxFieldsVar(), sbTxFieldsVar.toString());
 
     String sql = FiString.substitutor(template, fkbParams);
 
@@ -272,11 +272,11 @@ public class FiQueryGenMs {
     FiString.rtrimSb(sbTxUpSet, getTxComma());
 
     FiKeybean fkbParams = new FiKeybean();
-    fkbParams.addFim(FimOcSql.sfTableName(), iFiTableMeta.getITxTableName());
-    fkbParams.addFim(FimOcSql.sfTxFields(), sbTxFieldsBlock.toString());
-    fkbParams.addFim(FimOcSql.sfTxWhere(), sbTxWhereBlock.toString());
-    fkbParams.addFim(FimOcSql.sfTxFieldsVar(), sbTxFieldsVar.toString());
-    fkbParams.addFim(FimOcSql.sfTxUpSet(), sbTxUpSet.toString());
+    fkbParams.addFim(FimQcSql.sfTableName(), iFiTableMeta.getITxTableName());
+    fkbParams.addFim(FimQcSql.sfTxFields(), sbTxFieldsBlock.toString());
+    fkbParams.addFim(FimQcSql.sfTxWhere(), sbTxWhereBlock.toString());
+    fkbParams.addFim(FimQcSql.sfTxFieldsVar(), sbTxFieldsVar.toString());
+    fkbParams.addFim(FimQcSql.sfTxUpSet(), sbTxUpSet.toString());
 
     String sql = FiString.substitutor(template, fkbParams);
 

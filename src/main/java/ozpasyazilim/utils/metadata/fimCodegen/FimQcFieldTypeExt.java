@@ -3,31 +3,31 @@ package ozpasyazilim.utils.metadata.fimCodegen;
 import ozpasyazilim.utils.core.FiString;
 
 /**
- * {@link FimOcFieldType} için yardımcı metodlar
+ * {@link FimQcFieldType} için yardımcı metodlar
  */
-public class FimOcFieldTypeExt {
+public class FimQcFieldTypeExt {
 
 
   public static boolean isDouble(String txFieldType) {
     return FiString.equalsAny(txFieldType
-        , FimOcFieldType.fdouble().getValue()
-        , FimOcFieldType.fdecimal().getValue());
+        , FimQcFieldType.fdouble().getValue()
+        , FimQcFieldType.fdecimal().getValue());
   }
 
   public static boolean isInteger(String txFieldType) {
     return FiString.equalsAny(txFieldType
-        , FimOcFieldType.fint().getValue()
-        , FimOcFieldType.ftinyint().getValue());
+        , FimQcFieldType.fint().getValue()
+        , FimQcFieldType.ftinyint().getValue());
   }
 
   public static boolean isDate(String txFieldType) {
     return FiString.equalsAny(txFieldType
-        , FimOcFieldType.fdate().getValue()
+        , FimQcFieldType.fdate().getValue()
     );
   }
 
   public static boolean isBool(String txFieldType) {
     return FiString.equalsAny(txFieldType
-        , FimOcFieldType.fbool().getValue());
+        , FimQcFieldType.fbool().getValue());
   }
 }

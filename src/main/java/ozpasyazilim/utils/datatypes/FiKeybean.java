@@ -601,6 +601,11 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
     return getFieldValue(fiCol.getFtTxKey());
   }
 
+  public Object getFimValueOrEmpty(FiMeta fiCol) {
+    Object fieldValue = getFieldValue(fiCol.getFtTxKey());
+    return fieldValue != null ? fieldValue : "";
+  }
+
   public String getFimAsString(FiMeta fiCol) {
     return getValueAsString(fiCol.getFtTxKey());
   }

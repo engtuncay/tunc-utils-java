@@ -7,13 +7,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.util.Callback;
 import ozpasyazilim.utils.core.FiBool;
-import ozpasyazilim.utils.core.FiConsole;
 import ozpasyazilim.utils.core.FiString;
 import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.gui.fxTableViewExtra.EnumColNodeType;
 import ozpasyazilim.utils.core.FiReflection;
-import ozpasyazilim.utils.log.Loghelper;
-import ozpasyazilim.utils.metadata.fimCodegen.FimOcFieldTypeExt;
+import ozpasyazilim.utils.metadata.fimCodegen.FimQcFieldTypeExt;
 import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.OzColType;
 
@@ -141,22 +139,22 @@ public class FxTableViewCellFactoryModal {
 
     if (!FiString.isEmpty(txFieldType)) {
 
-      if (FimOcFieldTypeExt.isDouble(txFieldType)) {
+      if (FimQcFieldTypeExt.isDouble(txFieldType)) {
         assignCellFactoryLabelForDoubleTypes(fxTableCol);
         return;
       }
 
-      if (FimOcFieldTypeExt.isInteger(txFieldType)) {
+      if (FimQcFieldTypeExt.isInteger(txFieldType)) {
         assignStyleToFxColForRightAlign(fxTableCol);
         return;
       }
 
-      if (FimOcFieldTypeExt.isDate(txFieldType)) {
+      if (FimQcFieldTypeExt.isDate(txFieldType)) {
         assignCellFactoryDateType(fxTableCol);
         return;
       }
 
-      if (FimOcFieldTypeExt.isBool(txFieldType)) {
+      if (FimQcFieldTypeExt.isBool(txFieldType)) {
         assignCellFactoryBooleanType(fxTableCol);
         return;
       }

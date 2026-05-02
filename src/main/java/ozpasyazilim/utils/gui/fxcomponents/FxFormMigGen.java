@@ -215,6 +215,12 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> implement
     return formEntity;
   }
 
+  public <PrmEntClazz> PrmEntClazz bindFormToEntity(Class<PrmEntClazz> entClazz) {
+    if (entClazz == null) return null;
+    PrmEntClazz formEntity = FxEditorFactory.bindFormToEntityByEditorNode(getListFormElementsInit(), entClazz);
+    return formEntity;
+  }
+
   public void clearFormFields() {
     FxEditorFactory.clearValuesOfFormFields(getListFormElementsInit());
   }
