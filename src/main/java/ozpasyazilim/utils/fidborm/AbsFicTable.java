@@ -6,6 +6,8 @@ import ozpasyazilim.utils.table.FicList;
 
 public abstract class AbsFicTable {
 
+  // IFxTable sorun çıkarmaması için eklendi - sonradan çıkarılacak (2026-05-06)
+
   public static String getTxTableName() {
     return "";
   }
@@ -26,17 +28,6 @@ public abstract class AbsFicTable {
     return new FicList();
   }
 
-//  public static FiCol sqTableName()
-//  {
-//    FiCol fiCol = new FiCol();
-//    return fiCol;
-//  }
-//
-//  public static FiKeybean genFkbFields()
-//  {
-//    FiKeybean fkbCol = new FiKeybean();
-//    return fkbCol;
-//  }
-
+  // --- end IFxTable...
 
 }
