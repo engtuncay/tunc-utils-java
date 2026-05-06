@@ -3,6 +3,8 @@ package ozpasyazilim.utils.fidborm;
 import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.datatypes.FiKeybean;
 //import ozpasyazilim.utils.ficRfcCoding;
+import ozpasyazilim.utils.datatypes.Fkfic;
+import ozpasyazilim.utils.metadata.fimCodegen.FimQcSpecFields;
 import ozpasyazilim.utils.metadata.fimCodegen.FimQcSql;
 import ozpasyazilim.utils.returntypes.Fdr;
 import ozpasyazilim.utils.table.FiCol;
@@ -52,7 +54,8 @@ public class FiQueryGenMs {
       if (FiBool.isTrue(fiCol.getFcBoWhereField())) {
         indexWhereBlock++;
         //Loghelper.get(FiSqlGenMs.class).debug("where field: " + fiCol.getFcTxFieldName());
-        sbTxWhereBlock.append(fiCol.getFcTxFieldName()).append(" = @").append(fiCol.getFcTxFieldName()).append(getTxAnd());
+        //fiCol.getFcTxFieldName()).append(" = @").append(fiCol.getFcTxFieldName()).append(getTxAnd()
+        sbTxWhereBlock.append(FiQueryGenUtil.formSqlAssignTemp(fiCol.getFcTxFieldName()));
       } else {
         sbTxSetBlock.append(fiCol.getFcTxFieldName()).append(" = @").append(fiCol.getFcTxFieldName()).append(getTxAnd());
       }
@@ -69,7 +72,7 @@ public class FiQueryGenMs {
 
     String sql = FiString.substitutor(template, fkbParams);
 
-    if (indexWhereBlock==0) sql = "no where fields";
+    if (indexWhereBlock == 0) sql = "no where fields";
 
     //UPDATE EnmCariEvrakEk SET ceveLnNormalFatura = @ceveLnNormalFatura
     // WHERE ceveEvrakSeri = @ceveEvrakSeri AND ceveEvrakSira = @ceveEvrakSira AND ceveEvrakTip = @ceveEvrakTip
@@ -77,16 +80,18 @@ public class FiQueryGenMs {
     return sql;
   }
 
+  /**
+   * IFiTableMeta ve FicList'ten Select Query Generation
+   *
+   * @param fiQueryConfig
+   * @return
+   */
   public static Fdr selQuery(FiQueryConfig fiQueryConfig) {
-// Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
+    // Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
 
     // arguments
     IFiTableMeta iFiTableMeta = fiQueryConfig.getiFiTableMeta();
     FicList ficUpFields = fiQueryConfig.getFicList();
-
-    //FimOcgSql.sfTableName();
-    //FimOcgSql.sfTxWhere();
-    //FimOcgSql.sfTxFields();
 
     String template = "SELECT {{sfTxFields}}\n" +
         "FROM {{sfTableName}}\n"
@@ -106,15 +111,15 @@ public class FiQueryGenMs {
       if (FiBool.isTrue(fiCol.getFcBoWhereField())) {
         indexWhereBlock++;
         //Loghelper.get(FiSqlGenMs.class).debug("where field: " + fiCol.getFcTxFieldName());
-        sbTxWhereBlock.append(fiCol.getFcTxFieldName()).append(" = @").append(fiCol.getFcTxFieldName()).append(getTxAnd());
+        sbTxWhereBlock.append(FiQueryGenUtil.formSqlAssignTemp(fiCol.getFcTxFieldName()));
       } else {
-        sbTxFieldsBlock.append(fiCol.getFcTxFieldName()).append(getTxComma());
+        sbTxFieldsBlock.append(FiQueryGenUtil.formSqlVarComma(fiCol.getFcTxFieldName()));
       }
 
     }
 
-    FiString.rtrimSb(sbTxWhereBlock, getTxAnd());
-    FiString.rtrimSb(sbTxFieldsBlock, getTxComma());
+    FiString.rtrimSb(sbTxWhereBlock, FiQueryGenUtil.getTxAnd());
+    FiString.rtrimSb(sbTxFieldsBlock, FiQueryGenUtil.getTxComma());
 
     FiKeybean fkbParams = new FiKeybean();
     fkbParams.addFieldBy(FimQcSql.sfTableName(), iFiTableMeta.getITxTableName());
@@ -126,7 +131,7 @@ public class FiQueryGenMs {
     Fdr fdrResult = new Fdr();
     fdrResult.setFdTxValue(sql);
 
-    if (indexWhereBlock==0) {
+    if (indexWhereBlock == 0) {
       fdrResult.setFdTxValue("no where fields");
       fdrResult.setBoResult(false);
       fdrResult.setFdTxMessage("no where fields");
@@ -153,7 +158,7 @@ public class FiQueryGenMs {
     //FimOcgSql.sfTxFields();
     //FimOcgSql.sfTxFieldsVar();
 
-    String template= "DECLARE @__count AS int = 0\n" +
+    String template = "DECLARE @__count AS int = 0\n" +
         "\n" +
         "SELECT @__count = count(*) FROM {{sfTableName}}\n" +
         "WHERE {{sfTxWhere}}\n" +
@@ -179,9 +184,9 @@ public class FiQueryGenMs {
       if (FiBool.isTrue(fiCol.getFcBoWhereField())) {
         indexWhereBlock++;
         //Loghelper.get(FiSqlGenMs.class).debug("where field: " + fiCol.getFcTxFieldName());
-        sbTxWhereBlock.append(fiCol.getFcTxFieldName()).append(" = @").append(fiCol.getFcTxFieldName()).append(getTxAnd());
-        sbTxFieldsBlock.append(fiCol.getFcTxFieldName()).append(getTxComma());
-        sbTxFieldsVar.append(" @").append(fiCol.getFcTxFieldName()).append(getTxComma());
+        sbTxWhereBlock.append(FiQueryGenUtil.formSqlAssignTemp(fiCol.getFcTxFieldName()));
+        sbTxFieldsBlock.append(FiQueryGenUtil.formSqlFieldComma(fiCol.getFcTxFieldName()));
+        sbTxFieldsVar.append(FiQueryGenUtil.formSqlVarComma(fiCol.getFcTxFieldName()));
       }
     }
 
@@ -200,7 +205,7 @@ public class FiQueryGenMs {
     Fdr fdrResult = new Fdr();
     fdrResult.setFdTxValue(sql);
 
-    if (indexWhereBlock==0) {
+    if (indexWhereBlock == 0) {
       fdrResult.setFdTxValue("no where fields");
       fdrResult.setBoResult(false);
       fdrResult.setFdTxMessage("no where fields");
@@ -224,7 +229,7 @@ public class FiQueryGenMs {
 //    FimOcSql.sfTxFieldsVar();
 //    FimOcSql.sfTxUpSet();
 
-    String template= "--sq202604221135 v1\n" +
+    String template = "--sq202604221135 v1\n" +
         "DECLARE @__count AS int = 0\n" +
         "\n" +
         "SELECT @__count = count(*) FROM {{sfTableName}}\n" +
@@ -260,7 +265,7 @@ public class FiQueryGenMs {
         sbTxWhereBlock.append(fiCol.getFcTxFieldName()).append(" = @").append(fiCol.getFcTxFieldName()).append(getTxAnd());
         sbTxFieldsBlock.append(fiCol.getFcTxFieldName()).append(getTxComma());
         sbTxFieldsVar.append(" @").append(fiCol.getFcTxFieldName()).append(getTxComma());
-      }else {
+      } else {
         sbTxUpSet.append(String.format("%s = @%s ", fiCol.getFcTxFieldName(), fiCol.getFcTxFieldName())).append(getTxComma());
       }
 
@@ -283,10 +288,71 @@ public class FiQueryGenMs {
     Fdr fdrResult = new Fdr();
     fdrResult.setFdTxValue(sql);
 
-    if (indexWhereBlock==0) {
+    if (indexWhereBlock == 0) {
       fdrResult.setFdTxValue("no where fields");
       fdrResult.setBoResult(false);
       fdrResult.setFdTxMessage("no where fields");
+      return fdrResult;
+    }
+
+    fdrResult.setBoResult(true);
+    return fdrResult;
+  }
+
+  public static Fdr insert(FiQueryConfig fiQueryConfig) {
+    // Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
+
+    // arguments
+    FicList ficInsFields = fiQueryConfig.getFicList();
+    Fkfic fkficDataDef = fiQueryConfig.getFkbDataDef();
+
+    //FimQcSql.sfTableName();
+
+    String template = "INSERT INTO {{sfTableName}} ({{sfTxFields}})\n" +
+        "  VALUES ({{sfTxFieldsVar}})";
+
+    StringBuilder sbTxFieldsBlock = new StringBuilder();
+    StringBuilder sbTxFieldsVar = new StringBuilder();
+
+    int indexCol = 0;
+
+    for (FiCol fiCol : ficInsFields) {
+
+      if (FiBool.isTrue(fiCol.getFcBoTransient())) {
+        continue;
+      }
+
+      // URFIX (user-assign tipi olursa insert'e eklenmeli)
+      if (!FiString.isEmpty(fiCol.getFcTxIdType())) {
+        continue;
+      }
+
+      indexCol++;
+      sbTxFieldsBlock.append(fiCol.getFcTxFieldName()).append(getTxComma());
+      sbTxFieldsVar.append(" @").append(fiCol.getFcTxFieldName()).append(getTxComma());
+
+    }
+
+    FiString.rtrimSb(sbTxFieldsBlock, getTxComma());
+    FiString.rtrimSb(sbTxFieldsVar, getTxComma());
+
+    String txTableName = fkficDataDef.getFimHevalNtn(FimQcSpecFields.qcfTxSqTableName());
+
+    FiKeybean fkbParams = new FiKeybean();
+    fkbParams.addFieldBy(FimQcSql.sfTableName(), txTableName);
+    fkbParams.addFieldBy(FimQcSql.sfTxFields(), sbTxFieldsBlock.toString());
+    //fkbParams.addFieldBy(FimQcSql.sfTxWhere(), sbTxWhereBlock.toString());
+    fkbParams.addFieldBy(FimQcSql.sfTxFieldsVar(), sbTxFieldsVar.toString());
+
+    String sql = FiString.substitutor(template, fkbParams);
+
+    Fdr fdrResult = new Fdr();
+    fdrResult.setFdTxValue(sql);
+
+    if (indexCol == 0) {
+      fdrResult.setBoResult(false);
+      fdrResult.setFdTxValue("no insert fields");
+      fdrResult.setFdTxMessage("no insert fields");
       return fdrResult;
     }
 

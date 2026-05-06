@@ -27,6 +27,8 @@ public class FiMeta {
    */
   private Integer ftLnKey;
 
+  private String ftTxUid;
+
   /**
    * Açıklama (Description) gibi düşünebiliriz
    */
@@ -152,4 +154,13 @@ public class FiMeta {
     }
     return super.equals(obj);
   }
+
+  public String getFtTxUid() {
+    return ftTxUid;
+  }
+
+  public void setFtTxUid(String ftTxUid) {
+    this.ftTxUid = ftTxUid;
+  }
+
 }

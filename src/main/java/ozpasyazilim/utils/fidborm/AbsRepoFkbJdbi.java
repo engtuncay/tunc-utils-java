@@ -112,6 +112,35 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
     return fdr;
   }
 
+  public Fdr jdSelFirstAsFkb(FiQuery fiQuery) {
+
+    Fdr fdr = new Fdr();
+    fdr.setValue(new FkbList());
+
+    try {
+      List<FiKeybean> result = getJdbi().withHandle(handle -> {
+        return handle.createQuery(Fiqt.stoj(fiQuery.getTxQuery()))
+            .bindMap(fiQuery.getMapParams())
+            .map(new FiKeyBeanMapper(false))
+            .list();
+      });
+
+      //FkbList fkbList = new FkbList(result);
+      fdr.setFdBoResult(true);
+
+      if(!result.isEmpty()){
+        //Loghelper.get(getClass()).debug("fkb val set edildi");
+        fdr.setFdFkbVal(result.get(0));
+      }
+      //fdr.setRowsAffected(1);
+    } catch (Exception ex) {
+      Loghelper.get(getClass()).error("Query Problem. Hata (Exception):\n" + FiException.exTosMain(ex));
+      fdr.setBoResult(false, ex);
+    }
+
+    return fdr;
+  }
+
   public Fdr<FkbList> jdSelectListFkb1BindMapMain(String sqlQuery, Map<String, Object> mapBind) {
 
     Fdr<FkbList> fdr = new Fdr<>();

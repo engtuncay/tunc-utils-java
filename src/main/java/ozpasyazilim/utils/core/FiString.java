@@ -1024,5 +1024,27 @@ public class FiString {
         return txValue;
     }
 
+    public static String normalizePhoneNumber(String phone) {
+        if (phone == null) return null;
+
+        // Sadece rakamları al
+        String digits = phone.replaceAll("\\D", "");
+        // 10 haneli ise başına 90 ekle
+        if (digits.length() == 10) {
+            return "90" + digits;
+        }
+        // 11 haneli ve 0 ile başlıyorsa 0'ı kaldırıp başına 90 ekle
+        if (digits.length() == 11 && digits.startsWith("0")) {
+            return "90" + digits.substring(1);
+        }
+
+        // Zaten 12 haneli ve 90 ile başlıyorsa olduğu gibi bırak
+        if (digits.length() == 12 && digits.startsWith("90")) {
+            return digits;
+        }
+        // Diğer durumlarda olduğu gibi döndür
+        return digits;
+    }
+
 
 }

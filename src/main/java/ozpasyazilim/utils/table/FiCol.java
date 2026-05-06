@@ -58,9 +58,9 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
   private String fcTxDbField;
 
   /**
-   * Col Id olması için konuldu - tekil kodu
+   * col veya meta id olması için konuldu
    */
-  private String txGuid;
+  private String fcTxUid;
 
   private ObjectProperty<Double> prefSize;
 
@@ -141,6 +141,14 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
    * Alan için hangi tür filter node kullanılacaksa sınıfın ismi tutulur
    */
   String filterNodeClass;
+
+  /**
+   * Alana karşılık gelen , diger alan ismi
+   * <p>
+   * insert (alan_isimleri) values (refFieldDynamic) şeklinde sorgu oluşturulabilir
+   */
+  String fcTxRefFieldDyn;
+
 
   // experimental
   private Function<Object, String> funcFormatter;
@@ -1221,7 +1229,6 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
   }
 
 
-
   public FiCol<EntClazz> buiBoCountField(Boolean boCountField) {
     setFcBoCountField(boCountField);
     return this;
@@ -1612,12 +1619,12 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     this.fcTxDbField = fcTxDbField;
   }
 
-  public String getTxGuid() {
-    return txGuid;
+  public String getFcTxUid() {
+    return fcTxUid;
   }
 
-  public void setTxGuid(String txGuid) {
-    this.txGuid = txGuid;
+  public void setFcTxUid(String fcTxUid) {
+    this.fcTxUid = fcTxUid;
   }
 
   public Boolean getBoParamStatus() {
@@ -1880,6 +1887,22 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
 
   public void setFcBoCountField(Boolean fcBoCountField) {
     this.fcBoCountField = fcBoCountField;
+  }
+
+  public String getFcTxRefFieldDyn() {
+    return fcTxRefFieldDyn;
+  }
+
+  public void setFcTxRefFieldDyn(String fcTxRefFieldDyn) {
+    this.fcTxRefFieldDyn = fcTxRefFieldDyn;
+  }
+
+  public Boolean getBoWhereField() {
+    return boWhereField;
+  }
+
+  public void setBoWhereField(Boolean boWhereField) {
+    this.boWhereField = boWhereField;
   }
 }
 

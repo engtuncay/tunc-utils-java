@@ -571,6 +571,8 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
    * İşlemlerden bir tanesi true ise, genel sonuç true olur.
    * <p>
    * Tüm İşlemlerde Birleştirilen Alanlar : Log, Message, Exception
+   * <p>
+   * İşlemlerde başarısız olan varsa fdBoErrorExist true yapılır. sonuç true olsa, başarısız işlemlerde var demektir.
    *
    * @param fdrSubWork
    */
@@ -1164,7 +1166,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
       sb.append(oreLog.getOrlTxMessage()).append("\n");
       //index++;
     }
-    FiString.rtrimSb(sb,"\n");
+    FiString.rtrimSb(sb, "\n");
 
     return sb.toString();
   }
@@ -1344,6 +1346,13 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
   }
 
   public FiKeybean getFdFkbVal() {
+    return fdFkbVal;
+  }
+
+  public FiKeybean getFdFkbValNtn() {
+    if (fdFkbVal == null) {
+      return new FiKeybean();
+    }
     return fdFkbVal;
   }
 

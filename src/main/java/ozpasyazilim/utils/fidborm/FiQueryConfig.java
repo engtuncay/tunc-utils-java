@@ -1,5 +1,6 @@
 package ozpasyazilim.utils.fidborm;
 
+import ozpasyazilim.utils.datatypes.Fkfic;
 import ozpasyazilim.utils.table.FicList;
 
 /**
@@ -10,6 +11,7 @@ public class FiQueryConfig {
   IFiTableMeta iFiTableMeta;
   FicList ficList;
   Boolean boUpdateFieldsOnly;
+  Fkfic fkbDataDef;
 
   //FicList ficWhereFields;
 
@@ -40,11 +42,12 @@ public class FiQueryConfig {
     this.boUpdateFieldsOnly = boUpdateFieldsOnly;
   }
 
-//  public FicList getFicWhereFields() {
-//    return ficWhereFields;
-//  }
-//
-//  public void setFicWhereFields(FicList ficWhereFields) {
-//    this.ficWhereFields = ficWhereFields;
-//  }
+  public Fkfic getFkbDataDef() {
+    return fkbDataDef;
+  }
+
+  public void setFkbDataDef(Fkfic fkbDataDef) {
+    this.fkbDataDef = fkbDataDef;
+  }
+
 }
