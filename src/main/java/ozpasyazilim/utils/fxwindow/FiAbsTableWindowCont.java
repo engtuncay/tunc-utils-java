@@ -56,7 +56,7 @@ public abstract class FiAbsTableWindowCont<EntClazz> extends FiArbWindowCont {
 
     abstract protected void pullTableData();
 
-    abstract protected void pullTableDataThreadBody();
+    abstract protected void pullTableDataThread();
 
     public EntClazz getSelectedItemInTable() {
         return (EntClazz) getFxTableView().getSelectedItemFi();

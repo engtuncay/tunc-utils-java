@@ -22,7 +22,7 @@ public class FxFormMig extends FxFormMigGen<Object> {
   }
 
   /**
-   * super'de initCont otomatik çalıştırılır
+   * super'de initCont(!) otomatik çalıştırılır
    *
    * @param fxFormConfig
    */
