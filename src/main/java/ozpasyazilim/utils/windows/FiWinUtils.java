@@ -60,7 +60,7 @@ public class FiWinUtils {
 		System.out.println("Desktop directory : "+ getUserDirOrDesktopDir());
 	}
 
-	static class StreamReader extends Thread {
+	public static class StreamReader extends Thread {
 		private InputStream is;
 		private StringWriter sw;
 
