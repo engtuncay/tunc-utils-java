@@ -1,6 +1,7 @@
 package ozpasyazilim.utils.mvc;
 
 import javafx.stage.Stage;
+import ozpasyazilim.utils.datatypes.FiKeybean;
 import ozpasyazilim.utils.entity.FiModule;
 import ozpasyazilim.utils.gui.fxcomponents.DialogConf;
 import ozpasyazilim.utils.gui.fxcomponents.FxStage;
@@ -15,6 +16,11 @@ public abstract class AbsFiModBaseCont implements IFiModCont {
     protected String moduleCode;
     protected String moduleLabel;
     protected String closeReason;
+
+    /**
+     * FicEnaModules
+     */
+    private FiKeybean fkbModule;
 
     /**
      * Modulun connProfil bilgisini içerir
@@ -162,5 +168,13 @@ public abstract class AbsFiModBaseCont implements IFiModCont {
     protected void setModule(FiModule fiModule) {
         setModuleLabel(fiModule.getTxModuleLabel());
         setModuleCode(fiModule.getTxModuleCode());
+    }
+
+    public FiKeybean getFkbModule() {
+        return fkbModule;
+    }
+
+    public void setFkbModule(FiKeybean fkbModule) {
+        this.fkbModule = fkbModule;
     }
 }

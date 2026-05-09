@@ -107,5 +107,17 @@ public class FimFiCol {
     return fimeta;
   }
 
+  public static FiMeta fcLnId() {
+    FiMeta fimeta = new FiMeta("fcLnId");
+
+    return fimeta;
+  }
+
+  public static FiMeta fcTxUid() {
+    FiMeta fimeta = new FiMeta("fcTxUid");
+
+    return fimeta;
+  }
+
 
 }
