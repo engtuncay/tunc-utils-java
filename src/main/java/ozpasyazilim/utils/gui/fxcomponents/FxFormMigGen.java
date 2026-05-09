@@ -6,8 +6,7 @@ import javafx.scene.control.Label;
 import ozpasyazilim.utils.core.FiBool;
 import ozpasyazilim.utils.core.FiCollection;
 import ozpasyazilim.utils.core.FiConsole;
-import ozpasyazilim.utils.core.FiString;
-import ozpasyazilim.utils.datatypes.FiKeybean;
+import ozpasyazilim.utils.datatypes.Fkb;
 import ozpasyazilim.utils.fxwindow.*;
 import ozpasyazilim.utils.gui.fxTableViewExtra.EnumColNodeType;
 import ozpasyazilim.utils.log.Loghelper;
@@ -200,7 +199,7 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> implement
     FxEditorFactory.updateFiColsCompsWitFormEntityByEditorValue(getListFormElementsInit(), formMikroKodDegistir);
   }
 
-  public FiKeybean getFormAsFkb() {
+  public Fkb getFormAsFkb() {
     return FxEditorFactory.bindFormToFkbByEditorNode(getListFormElementsInit());
   }
 
@@ -390,7 +389,7 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> implement
     return getFxFormConfigInit().getFormEntity();
   }
 
-  public FiKeybean getFormFkbEntity() {
+  public Fkb getFormFkbEntity() {
     return getFxFormConfigInit().getFkbEntity();
   }
 

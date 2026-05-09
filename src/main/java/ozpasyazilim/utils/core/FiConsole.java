@@ -2,7 +2,7 @@ package ozpasyazilim.utils.core;
 
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
-import ozpasyazilim.utils.datatypes.FiKeybean;
+import ozpasyazilim.utils.datatypes.Fkb;
 import ozpasyazilim.utils.datatypes.FkbList;
 import ozpasyazilim.utils.datatypes.FiListKeyString;
 import ozpasyazilim.utils.datatypes.FiKeytext;
@@ -766,7 +766,7 @@ public class FiConsole {
         System.out.println(textMapStringObject(mapData));
     }
 
-    public static void printMapFi(FiKeybean mapData) {
+    public static void printMapFi(Fkb mapData) {
         System.out.println(textFiKeyBean(mapData));
     }
 
@@ -794,7 +794,7 @@ public class FiConsole {
     }
 
 
-    public static String textFiKeyBean(FiKeybean fiKeyBean) {
+    public static String textFiKeyBean(Fkb fiKeyBean) {
         StringBuilder log = new StringBuilder("FiKeyBean İçeriği:");
         log.append("\n");
         for (Map.Entry<String, Object> entry : fiKeyBean.entrySet()) {
@@ -821,25 +821,25 @@ public class FiConsole {
     public static String textFkbList(FkbList fkbList) {
         if(fkbList == null) return "FkbList is null";
         StringBuilder sbOutput = new StringBuilder();
-        for (FiKeybean fiKeyBean : fkbList) {
+        for (Fkb fiKeyBean : fkbList) {
             sbOutput.append(textFiKeyBean(fiKeyBean)).append("\n");
         }
         return sbOutput.toString();
     }
 
-    public static void debugListFkb(List<FiKeybean> listFkb) {
+    public static void debugListFkb(List<Fkb> listFkb) {
         if (listFkb == null) {
             Loghelper.get(FiConsole.class).debug("List Fkb null");
             return;
 
         }
 
-        for (FiKeybean fiKeyBean : listFkb) {
+        for (Fkb fiKeyBean : listFkb) {
             debugFkb(fiKeyBean);
         }
     }
 
-    public static void debugFkb(FiKeybean fiKeyBean) {
+    public static void debugFkb(Fkb fiKeyBean) {
 
         StringBuilder sb = new StringBuilder();
 
@@ -854,7 +854,7 @@ public class FiConsole {
 
     }
 
-    public static void logTextFiKeyBean(FiKeybean fkb) {
+    public static void logTextFiKeyBean(Fkb fkb) {
         Loghelper.get(FiConsole.class).debug(FiConsole.textFiKeyBean(fkb));
     }
 

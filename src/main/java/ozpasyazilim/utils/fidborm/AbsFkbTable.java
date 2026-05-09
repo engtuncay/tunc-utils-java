@@ -1,16 +1,16 @@
 package ozpasyazilim.utils.fidborm;
 
-import ozpasyazilim.utils.datatypes.FiKeybean;
+import ozpasyazilim.utils.datatypes.Fkb;
 
 public abstract class AbsFkbTable {
 
-  public static FiKeybean sqTableName() {
-    FiKeybean fkbCol = new FiKeybean();
+  public static Fkb sqTableName() {
+    Fkb fkbCol = new Fkb();
     return fkbCol;
   }
 
-  public static FiKeybean genFkbFields() {
-    FiKeybean fkbCol = new FiKeybean();
+  public static Fkb genFkbFields() {
+    Fkb fkbCol = new Fkb();
     return fkbCol;
   }
 

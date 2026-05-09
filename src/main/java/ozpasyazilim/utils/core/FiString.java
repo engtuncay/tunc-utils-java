@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.text.StrSubstitutor;
 import ozpasyazilim.utils.annotations.FiDraft;
-import ozpasyazilim.utils.datatypes.FiKeybean;
+import ozpasyazilim.utils.datatypes.Fkb;
 import ozpasyazilim.utils.log.Loghelper;
 
 public class FiString {
@@ -927,7 +927,7 @@ public class FiString {
      * @param fiKeyBean
      * @return
      */
-    public static String substitutor(String txTemplate, FiKeybean fiKeyBean) {
+    public static String substitutor(String txTemplate, Fkb fiKeyBean) {
         StrSubstitutor sub = new StrSubstitutor(fiKeyBean, "{{", "}}");
         return sub.replace(txTemplate);
     }

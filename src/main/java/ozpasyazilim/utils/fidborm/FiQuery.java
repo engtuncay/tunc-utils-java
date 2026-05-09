@@ -3,7 +3,7 @@ package ozpasyazilim.utils.fidborm;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import ozpasyazilim.utils.core.*;
-import ozpasyazilim.utils.datatypes.FiKeybean;
+import ozpasyazilim.utils.datatypes.Fkb;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.table.FicList;
 
@@ -21,7 +21,7 @@ import java.util.*;
 public class FiQuery {
 
   String txQuery;
-  FiKeybean mapParams; // Map<String,Object>
+  Fkb mapParams; // Map<String,Object>
   String txCandIdFieldName;
   String txPrimaryKeyFieldName;
 
@@ -42,9 +42,9 @@ public class FiQuery {
     this.txQuery = sql;
   }
 
-  public FiQuery(String sql, FiKeybean fkbParams) {
+  public FiQuery(String sql, Fkb fkbParams) {
     this.txQuery = sql;
-    this.mapParams = new FiKeybean(fkbParams);
+    this.mapParams = new Fkb(fkbParams);
   }
 
   public static FiQuery bui() {
@@ -55,7 +55,7 @@ public class FiQuery {
     return new FiQuery(sql);
   }
 
-  public static FiQuery bui(String sql, FiKeybean fkbParams) {
+  public static FiQuery bui(String sql, Fkb fkbParams) {
     return new FiQuery(sql, fkbParams);
   }
 
@@ -100,7 +100,7 @@ public class FiQuery {
    *
    * @param mapBind
    */
-  public void convertListParamsToMultiParams(FiKeybean mapBind) {
+  public void convertListParamsToMultiParams(Fkb mapBind) {
     setMapParams(mapBind);
     convertListParamsToMultiParams();
   }
@@ -117,18 +117,18 @@ public class FiQuery {
     setTxQuery(Fiqt.convertSingleParamToMultiParam2(getTxQuery(), getMapParams(), txParamName, collParams, false, txCombineSeperator));
   }
 
-  public FiKeybean getMapParams() {
+  public Fkb getMapParams() {
     return mapParams;
   }
 
-  public FiKeybean getMapParamsInit() {
+  public Fkb getMapParamsInit() {
     if (mapParams == null) {
-      mapParams = new FiKeybean();
+      mapParams = new Fkb();
     }
     return mapParams;
   }
 
-  public FiQuery setMapParams(FiKeybean mapParams) {
+  public FiQuery setMapParams(Fkb mapParams) {
     this.mapParams = mapParams;
     return this;
   }

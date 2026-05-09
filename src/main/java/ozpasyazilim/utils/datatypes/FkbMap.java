@@ -19,7 +19,7 @@ import java.util.*;
  * <p>
  * Bir nevi key-object tipinde array dir.
  */
-public class FkbMap extends LinkedHashMap<String, FiKeybean> {
+public class FkbMap extends LinkedHashMap<String, Fkb> {
 
   /**
    * FiCol olarak eklenenleri saklamak için
@@ -39,7 +39,7 @@ public class FkbMap extends LinkedHashMap<String, FiKeybean> {
   public FkbMap() {
   }
 
-  public FkbMap(Map<? extends String, FiKeybean> m) {
+  public FkbMap(Map<? extends String, Fkb> m) {
     super(m);
   }
 
@@ -60,14 +60,14 @@ public class FkbMap extends LinkedHashMap<String, FiKeybean> {
   }
 
   // üst sınıftan alamaz, üst sınıf FiKeyBean dönüyor
-  public FkbMap buiPut(Object fieldName, FiKeybean value) {
+  public FkbMap buiPut(Object fieldName, Fkb value) {
     if (fieldName == null) return this;
 
     this.put(fieldName.toString(), value);
     return this;
   }
 
-  public FkbMap buildPutIfNotNull(Object fieldName, FiKeybean value) {
+  public FkbMap buildPutIfNotNull(Object fieldName, Fkb value) {
     if (fieldName == null) return this;
     if (value == null) return this;
 
@@ -75,7 +75,7 @@ public class FkbMap extends LinkedHashMap<String, FiKeybean> {
     return this;
   }
 
-  public FkbMap bind(Object key, FiKeybean value) {
+  public FkbMap bind(Object key, Fkb value) {
     if (key == null) return this;
     put(key.toString(), value);
     return this;
@@ -104,19 +104,19 @@ public class FkbMap extends LinkedHashMap<String, FiKeybean> {
    * @param value
    * @return
    */
-  public FkbMap putKeyTos(Object key, FiKeybean value) {
+  public FkbMap putKeyTos(Object key, Fkb value) {
     this.put(key.toString(), value);
     return this;
   }
 
-  public FkbMap addFiCol(FiCol fiCol, FiKeybean value) {
+  public FkbMap addFiCol(FiCol fiCol, Fkb value) {
     this.put(fiCol.toString(), value);
     getListFiColInit().add(fiCol);
     getMapFiColInit().put(fiCol.getFcTxFieldName(), fiCol);
     return this;
   }
 
-  public FkbMap putField(FiCol fiCol, FiKeybean value) {
+  public FkbMap putField(FiCol fiCol, Fkb value) {
     this.put(fiCol.getFcTxFieldName(), value);
     return this;
   }
@@ -130,7 +130,7 @@ public class FkbMap extends LinkedHashMap<String, FiKeybean> {
 //    return lnCount;
 //  }
 
-  public void add(Object field, FiKeybean value) {
+  public void add(Object field, Fkb value) {
     this.put(field.toString(), value);
   }
 
@@ -427,7 +427,7 @@ public class FkbMap extends LinkedHashMap<String, FiKeybean> {
   }
 
   @Override
-  public FiKeybean get(Object key) {
+  public Fkb get(Object key) {
     return super.get(key);
   }
 
@@ -476,37 +476,37 @@ public class FkbMap extends LinkedHashMap<String, FiKeybean> {
 //    return fiListString;
 //  }
 
-  public void addFieldDb(FiCol fiCol, FiKeybean value) {
+  public void addFieldDb(FiCol fiCol, Fkb value) {
     addField(fiCol.getTxDbFieldNameOrFieldName(), value);
   }
 
-  public void addFieldBy(FiCol fiCol, FiKeybean value) {
+  public void addFieldBy(FiCol fiCol, Fkb value) {
     addField(fiCol.getFcTxFieldName(), value);
   }
 
-  public void addFieldBy(FiMeta fiMeta, FiKeybean value) {
+  public void addFieldBy(FiMeta fiMeta, Fkb value) {
     addField(fiMeta.getFtTxKey(), value);
   }
 
-  public void addFieldFic(FiCol fiCol, FiKeybean value) {
+  public void addFieldFic(FiCol fiCol, Fkb value) {
     addField(fiCol.getFcTxFieldName(), value);
   }
 
-  public void addFic(FiCol fiCol, FiKeybean value) {
+  public void addFic(FiCol fiCol, Fkb value) {
     addField(fiCol.getFcTxFieldName(), value);
   }
 
-  public void addField(String txKey, FiKeybean value) {
+  public void addField(String txKey, Fkb value) {
     add(txKey, value);
   }
 
-  public void addFicIfNotExist(FiCol fiCol, FiKeybean value) {
+  public void addFicIfNotExist(FiCol fiCol, Fkb value) {
     if (fiCol == null || FiString.isEmpty(fiCol.getFcTxFieldName())) return;
 
     addFieldIfNotExist(fiCol.getFcTxFieldName(), value);
   }
 
-  public void addFieldIfNotExist(String txKey, FiKeybean value) {
+  public void addFieldIfNotExist(String txKey, Fkb value) {
     if (!containsKey(txKey)) {
       add(txKey, value);
     }
@@ -516,7 +516,7 @@ public class FkbMap extends LinkedHashMap<String, FiKeybean> {
 //    addField(fiMeta.getTxKey(), value);
 //  }
 
-  public void addFim(FiMeta fiMeta, FiKeybean value) {
+  public void addFim(FiMeta fiMeta, Fkb value) {
     addField(fiMeta.getTxKey(), value);
   }
 

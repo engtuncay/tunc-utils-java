@@ -1,7 +1,7 @@
 package ozpasyazilim.utils.returntypes;
 
 import ozpasyazilim.utils.core.FiConsole;
-import ozpasyazilim.utils.datatypes.FiKeybean;
+import ozpasyazilim.utils.datatypes.Fkb;
 import ozpasyazilim.utils.datatypes.FkbList;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.log.MetaLogType;
@@ -63,7 +63,7 @@ public class FdrFkbList extends Fdr<FkbList> {
     Loghelper.get(getClass()).debug("Log FkbList Output");
 
     for (int i = 0; i < getValue().size(); i++) {
-      FiKeybean fkb = getValue().get(i);
+      Fkb fkb = getValue().get(i);
       Loghelper.get(getClass()).debug("index:" + i);
       Loghelper.get(getClass()).debug(FiConsole.textFiKeyBean(fkb));
     }

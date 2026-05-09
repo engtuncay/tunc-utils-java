@@ -4,7 +4,7 @@ import javafx.util.Pair;
 import ozpasyazilim.utils.annotations.FiReview;
 import ozpasyazilim.utils.core.*;
 
-import ozpasyazilim.utils.datatypes.FiKeybean;
+import ozpasyazilim.utils.datatypes.Fkb;
 import ozpasyazilim.utils.datatypes.FkbList;
 import ozpasyazilim.utils.fidbanno.FiTable;
 import ozpasyazilim.utils.log.OreLog;
@@ -161,7 +161,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
 
   private FkbList fdFkbListVal;
 
-  private FiKeybean fdFkbVal;
+  private Fkb fdFkbVal;
 
   private Integer fdrLnValue;
   /**
@@ -1345,18 +1345,18 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     this.fdFkbListVal = fdFkbListVal;
   }
 
-  public FiKeybean getFdFkbVal() {
+  public Fkb getFdFkbVal() {
     return fdFkbVal;
   }
 
-  public FiKeybean getFdFkbValNtn() {
+  public Fkb getFdFkbValNtn() {
     if (fdFkbVal == null) {
-      return new FiKeybean();
+      return new Fkb();
     }
     return fdFkbVal;
   }
 
-  public void setFdFkbVal(FiKeybean fdFkbVal) {
+  public void setFdFkbVal(Fkb fdFkbVal) {
     this.fdFkbVal = fdFkbVal;
   }
 }

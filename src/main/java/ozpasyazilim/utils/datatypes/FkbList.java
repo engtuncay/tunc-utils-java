@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Fkl : FkbList
  */
-public class FkbList extends ArrayList<FiKeybean> {
+public class FkbList extends ArrayList<Fkb> {
 
 	/**
 	 * FiKeybean listesi ile birlikte kullanılacak kolon bilgilerini tutar.
@@ -22,7 +22,7 @@ public class FkbList extends ArrayList<FiKeybean> {
 		super();
 	}
 
-	public FkbList(Collection<? extends FiKeybean> c) {
+	public FkbList(Collection<? extends Fkb> c) {
 		super(c);
 	}
 
@@ -34,9 +34,9 @@ public class FkbList extends ArrayList<FiKeybean> {
 		this.ficColList = ficColList;
 	}
 
-	public FiKeybean getNtn(int index) {
+	public Fkb getNtn(int index) {
 		if(index < 0 || (index+1) > size()) {
-			return new FiKeybean();
+			return new Fkb();
 		}
 		//rangeCheck(index);
 		return get(index);

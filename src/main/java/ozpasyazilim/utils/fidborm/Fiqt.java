@@ -3,7 +3,7 @@ package ozpasyazilim.utils.fidborm;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import ozpasyazilim.utils.core.*;
-import ozpasyazilim.utils.datatypes.FiKeybean;
+import ozpasyazilim.utils.datatypes.Fkb;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -302,7 +302,7 @@ public class Fiqt {
      * <p>
      * Diger türler için null olmamalı
      */
-    public static String activateParamsMain(String txQuery, FiKeybean mapParams, Boolean boActivateOnlyFullParams) {
+    public static String activateParamsMain(String txQuery, Fkb mapParams, Boolean boActivateOnlyFullParams) {
 
         List<String> listParamsDeActivated = new ArrayList<>();
         StringProperty spQuery = new SimpleStringProperty(txQuery);
@@ -340,7 +340,7 @@ public class Fiqt {
      * @param mapParams
      * @return
      */
-    public static String deActivateOptParamsNotUsed(String txQuery, FiKeybean mapParams) {
+    public static String deActivateOptParamsNotUsed(String txQuery, Fkb mapParams) {
 
         //List<String> listParamsWillDeActivate = new ArrayList<>();
         StringProperty spQuery = new SimpleStringProperty(txQuery);
@@ -359,7 +359,7 @@ public class Fiqt {
         return spQuery.get();
     }
 
-    public static String convertListParamsToMultiParams(String txQuery, FiKeybean mapParams, Boolean boKeepListParamInFkb) {
+    public static String convertListParamsToMultiParams(String txQuery, Fkb mapParams, Boolean boKeepListParamInFkb) {
 
         if (mapParams == null) return txQuery;
 
@@ -399,10 +399,10 @@ public class Fiqt {
      * @param collParamData
      * @param boKeepOldParam
      */
-    private static String convertSingleParamToMultiParamWithComma(String txQuery, FiKeybean mapParams, String param, Collection collParamData, Boolean boKeepOldParam) {
+    private static String convertSingleParamToMultiParamWithComma(String txQuery, Fkb mapParams, String param, Collection collParamData, Boolean boKeepOldParam) {
 
         // (1) şablona göre yeni eklenecek parametre listesi
-        FiKeybean paramsNew = new FiKeybean();
+        Fkb paramsNew = new Fkb();
         StringBuilder sbNewParamsForQuery = new StringBuilder();
 
         int index = 0;
@@ -441,7 +441,7 @@ public class Fiqt {
      * @param txCombineSeperator
      * @return
      */
-    public static String convertSingleParamToMultiParam2(String txQuery, FiKeybean mapParams, String param, Collection collParamData, Boolean boKeepOldParam, String txCombineSeperator) {
+    public static String convertSingleParamToMultiParam2(String txQuery, Fkb mapParams, String param, Collection collParamData, Boolean boKeepOldParam, String txCombineSeperator) {
 
         // (1) şablona göre yeni eklenecek parametre listesi
         //FiKeyBean paramsNew = new FiKeyBean();
@@ -516,7 +516,7 @@ public class Fiqt {
      * <p>
      * Bu parametreler eğer mapParams'da var ise, değeri yer değiştirir.
      */
-    public static String convertUserParamsToValue(String txQuery, FiKeybean mapParams) {
+    public static String convertUserParamsToValue(String txQuery, Fkb mapParams) {
         // String txUserParamPrefix
         if (mapParams.isEmpty()) return txQuery;
 

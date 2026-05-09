@@ -1,7 +1,7 @@
 package ozpasyazilim.utils.core;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ozpasyazilim.utils.datatypes.FiKeybean;
+import ozpasyazilim.utils.datatypes.Fkb;
 import ozpasyazilim.utils.datatypes.FiKeytext;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.returntypes.Fdr;
@@ -157,7 +157,7 @@ public class FiRest {
     Fdr fdrMain = new Fdr();
     if (json == null || json.trim().isEmpty()) {
       fdrMain.setFdBoResult(false);
-      fdrMain.setFdFkbVal(new FiKeybean());
+      fdrMain.setFdFkbVal(new Fkb());
       return fdrMain;
     }
     try {
@@ -165,14 +165,14 @@ public class FiRest {
       ObjectMapper mapper = new ObjectMapper();
       Map<String, Object> map = mapper.readValue(json, Map.class);
       fdrMain.setFdBoResult(true);
-      fdrMain.setFdFkbVal(new FiKeybean(map));
+      fdrMain.setFdFkbVal(new Fkb(map));
       return fdrMain;
     } catch (Exception ex) {
       // Loghelper ile loglanabilir
       Loghelper.get(getClassi()).error("FiKeybean parse error: " + ex.getMessage());
       Loghelper.get(getClassi()).error(FiException.exToErrorLog(ex));
       fdrMain.setFdBoResult(false);
-      fdrMain.setFdFkbVal(new FiKeybean());
+      fdrMain.setFdFkbVal(new Fkb());
       return fdrMain;
     }
   }

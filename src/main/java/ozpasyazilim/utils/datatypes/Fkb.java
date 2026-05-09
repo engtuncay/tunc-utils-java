@@ -28,7 +28,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * <p>
  * Bir nevi key-object tipinde array dir.
  */
-public class FiKeybean extends LinkedHashMap<String, Object> {
+public class Fkb extends LinkedHashMap<String, Object> {
 
   /**
    * FiCol olarak eklenenleri saklamak için
@@ -45,38 +45,38 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
   HashMap<String, FiCol> mapFiCol;
 
 
-  public FiKeybean() {
+  public Fkb() {
   }
 
-  public FiKeybean(Map<? extends String, ?> m) {
+  public Fkb(Map<? extends String, ?> m) {
     super(m);
   }
 
-  public FiKeybean(int initialCapacity, float loadFactor) {
+  public Fkb(int initialCapacity, float loadFactor) {
     super(initialCapacity, loadFactor);
   }
 
-  public FiKeybean(int initialCapacity) {
+  public Fkb(int initialCapacity) {
     super(initialCapacity);
   }
 
-  public FiKeybean(int initialCapacity, float loadFactor, boolean accessOrder) {
+  public Fkb(int initialCapacity, float loadFactor, boolean accessOrder) {
     super(initialCapacity, loadFactor, accessOrder);
   }
 
-  public static FiKeybean bui() {
-    return new FiKeybean();
+  public static Fkb bui() {
+    return new Fkb();
   }
 
   // üst sınıftan alamaz, üst sınıf FiKeyBean dönüyor
-  public FiKeybean buiPut(Object fieldName, Object value) {
+  public Fkb buiPut(Object fieldName, Object value) {
     if (fieldName == null) return this;
 
     this.put(fieldName.toString(), value);
     return this;
   }
 
-  public FiKeybean buildPutIfNotNull(Object fieldName, Object value) {
+  public Fkb buildPutIfNotNull(Object fieldName, Object value) {
     if (fieldName == null) return this;
     if (value == null) return this;
 
@@ -84,13 +84,13 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
     return this;
   }
 
-  public FiKeybean bind(Object key, Object value) {
+  public Fkb bind(Object key, Object value) {
     if (key == null) return this;
     put(key.toString(), value);
     return this;
   }
 
-  public FiKeybean putIfNotEmpty(Object fieldName, Object value, Boolean addPercentage) {
+  public Fkb putIfNotEmpty(Object fieldName, Object value, Boolean addPercentage) {
     if (fieldName == null) return this;
     if (FiType.isEmptyObj(value)) return this;
 
@@ -113,19 +113,19 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
    * @param value
    * @return
    */
-  public FiKeybean putKeyTos(Object key, Object value) {
+  public Fkb putKeyTos(Object key, Object value) {
     this.put(key.toString(), value);
     return this;
   }
 
-  public FiKeybean addFiCol(FiCol fiCol, Object value) {
+  public Fkb addFiCol(FiCol fiCol, Object value) {
     this.put(fiCol.toString(), value);
     getListFiColInit().add(fiCol);
     getMapFiColInit().put(fiCol.getFcTxFieldName(), fiCol);
     return this;
   }
 
-  public FiKeybean putField(FiCol fiCol, Object value) {
+  public Fkb putField(FiCol fiCol, Object value) {
     this.put(fiCol.getFcTxFieldName(), value);
     return this;
   }
@@ -146,7 +146,7 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
    * @return
    */
   @Deprecated
-  public FiKeybean bindAndActivateIfNotEmpty(Object objKey, Object value, StringProperty sql) {
+  public Fkb bindAndActivateIfNotEmpty(Object objKey, Object value, StringProperty sql) {
     bindAndActivateIfNotEmpty(objKey, value, sql, null);
     return this;
   }
@@ -181,7 +181,7 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
    * @param addPercentage
    */
   @Deprecated
-  public FiKeybean bindAndActivateIfNotEmpty(Object objKey, Object value, StringProperty sqlProp, Boolean addPercentage) {
+  public Fkb bindAndActivateIfNotEmpty(Object objKey, Object value, StringProperty sqlProp, Boolean addPercentage) {
     if (value != null) {
       if (value instanceof String) {
         if (FiString.isEmpty((String) value)) {
@@ -212,9 +212,9 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
    * @param clazz
    * @return
    */
-  public FiKeybean genFkbFromEntity(Object entity, Class clazz) {
+  public Fkb genFkbFromEntity(Object entity, Class clazz) {
 
-    FiKeybean fiKeyBean = new FiKeybean();
+    Fkb fiKeyBean = new Fkb();
     Field[] fields = clazz.getDeclaredFields(); // returns all members including private members but not inherited members.
 
     for (Field field : fields) {
@@ -610,7 +610,7 @@ public class FiKeybean extends LinkedHashMap<String, Object> {
     return getValueAsString(fiCol.getFtTxKey());
   }
 
-  public String getFkcValueAsString(FiKeybean fkbCol) {
+  public String getFkcValueAsString(Fkb fkbCol) {
     return getValueAsString(fkbCol.getFnm());
   }
 

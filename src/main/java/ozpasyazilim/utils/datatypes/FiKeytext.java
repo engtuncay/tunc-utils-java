@@ -334,7 +334,7 @@ public class FiKeytext extends HashMap<String, String> {
     return getValueAsString(fiCol.getFtTxKey());
   }
 
-  public String getFkcValueAsString(FiKeybean fkbCol) {
+  public String getFkcValueAsString(Fkb fkbCol) {
     return getValueAsString(fkbCol.getFnm());
   }
 

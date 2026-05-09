@@ -2,7 +2,7 @@ package ozpasyazilim.utils.core;
 
 import org.apache.commons.lang3.text.StrSubstitutor;
 import org.w3c.dom.Document;
-import ozpasyazilim.utils.datatypes.FiKeybean;
+import ozpasyazilim.utils.datatypes.Fkb;
 
 import java.io.*;
 import java.util.Properties;
@@ -18,7 +18,7 @@ public class FiXml2 {
 	 * xml'in ilk haline, değişkenler dönüştürülmemiş hali
 	 */
 	private String txXmlTemplate;
-	private FiKeybean fkbParams;
+	private Fkb fkbParams;
 
 	public FiXml2() {
 	}
@@ -152,14 +152,14 @@ public class FiXml2 {
 		this.txXmlTemplate = txXmlTemplate;
 	}
 
-	public FiKeybean getMapParamsInit() {
+	public Fkb getMapParamsInit() {
 		if (fkbParams == null) {
-			fkbParams = new FiKeybean();
+			fkbParams = new Fkb();
 		}
 		return fkbParams;
 	}
 
-	public void setFkbParams(FiKeybean fkbParams) {
+	public void setFkbParams(Fkb fkbParams) {
 		this.fkbParams = fkbParams;
 	}
 
@@ -219,7 +219,7 @@ public class FiXml2 {
 		return getFiDoc().getElementValueByTagName(txTagName);
 	}
 
-	public FiKeybean getFkbParams() {
+	public Fkb getFkbParams() {
 		return fkbParams;
 	}
 

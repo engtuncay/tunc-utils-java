@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
 
-import ozpasyazilim.utils.datatypes.FiKeybean;
+import ozpasyazilim.utils.datatypes.Fkb;
 import ozpasyazilim.utils.datatypes.FkbList;
 import ozpasyazilim.utils.gui.fxcomponents.FxTableModal;
 import ozpasyazilim.utils.table.FiCol;
@@ -283,7 +283,7 @@ public class FiHtmlReport {
     }
 
     // satırlar bastırılır
-    for (FiKeybean t : listData) {
+    for (Fkb t : listData) {
       if (t == null) continue;
 
       htmlContent.append("<tr>\r\n");

@@ -7,7 +7,7 @@ import javafx.scene.layout.Pane;
 import ozpasyazilim.utils.core.FiBool;
 import ozpasyazilim.utils.core.FiCollection;
 import ozpasyazilim.utils.core.FiString;
-import ozpasyazilim.utils.datatypes.FiKeybean;
+import ozpasyazilim.utils.datatypes.Fkb;
 import ozpasyazilim.utils.gui.fxTableViewExtra.EnumColNodeType;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.mvc.IFiModViewEnt;
@@ -142,11 +142,11 @@ public class FxFormMigDep<EntClazz> extends FxMigPaneGenView<EntClazz> implement
 		FxEditorFactory.updateFiColsCompsWitFormEntityByEditorValue(getListFormElements(), formMikroKodDegistir);
 	}
 
-	public FiKeybean getFormAsFiKeyBean() {
+	public Fkb getFormAsFiKeyBean() {
 		return FxEditorFactory.bindFormToFkbByEditorNode(getListFormElements());
 	}
 
-	public FiKeybean getFormAsKeyBean() {
+	public Fkb getFormAsKeyBean() {
 		return FxEditorFactory.bindFormToFkbByEditorNode(getListFormElements());
 	}
 

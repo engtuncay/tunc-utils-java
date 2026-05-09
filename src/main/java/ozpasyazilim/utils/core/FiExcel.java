@@ -1150,7 +1150,7 @@ public class FiExcel {
 
       Map<String, String> map = (Map<String, String>) iterator.next();
 
-      FiKeybean entity = new FiKeybean();
+      Fkb entity = new Fkb();
 
       //Map<String, FiField> fieldsAsMap = FiReflection.getFieldsAsMap(entityclass);
 

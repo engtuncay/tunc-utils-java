@@ -1,7 +1,5 @@
 package ozpasyazilim.utils.fidborm;
 
-import ozpasyazilim.utils.datatypes.FiKeybean;
-import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.FicList;
 
 public abstract class AbsFicTable {

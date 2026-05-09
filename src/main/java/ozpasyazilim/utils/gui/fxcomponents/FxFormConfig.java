@@ -1,6 +1,6 @@
 package ozpasyazilim.utils.gui.fxcomponents;
 
-import ozpasyazilim.utils.datatypes.FiKeybean;
+import ozpasyazilim.utils.datatypes.Fkb;
 import ozpasyazilim.utils.returntypes.Fdr;
 import ozpasyazilim.utils.table.FiCol;
 
@@ -13,7 +13,7 @@ public class FxFormConfig<EntClazz> {
   private List<FiCol> listFormElements;
   private FormType formType;
   private EntClazz formEntity; // 21-10-30 eklendi
-  private FiKeybean fkbEntity; // 26-04-29
+  private Fkb fkbEntity; // 26-04-29
   private Function<FxFormMigGen,Fdr> fnFormSave;
 
   /**
@@ -118,11 +118,11 @@ public class FxFormConfig<EntClazz> {
     this.fnFormSave = fnFormSave;
   }
 
-  public FiKeybean getFkbEntity() {
+  public Fkb getFkbEntity() {
     return fkbEntity;
   }
 
-  public void setFkbEntity(FiKeybean fkbEntity) {
+  public void setFkbEntity(Fkb fkbEntity) {
     this.fkbEntity = fkbEntity;
   }
 }

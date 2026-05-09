@@ -14,7 +14,7 @@ import java.util.Properties;
 
 import com.github.underscore.lodash.U;
 import ozpasyazilim.utils.annotations.FiDraft;
-import ozpasyazilim.utils.datatypes.FiKeybean;
+import ozpasyazilim.utils.datatypes.Fkb;
 
 /**
  * Xml alanlarını okumamızı sağlar ve
@@ -38,7 +38,7 @@ public class FiXml {
     /**
      * Xml kullanılan String Interpolation değişkenlerin değerleri tutulur
      */
-    private FiKeybean fkbParams;
+    private Fkb fkbParams;
 
     public FiXml() {
     }
@@ -199,9 +199,9 @@ public class FiXml {
         this.txXmlTemplate = txXmlTemplate;
     }
 
-    public FiKeybean getMapParamsInit() {
+    public Fkb getMapParamsInit() {
         if (fkbParams == null) {
-            fkbParams = new FiKeybean();
+            fkbParams = new Fkb();
         }
         return fkbParams;
     }
@@ -214,7 +214,7 @@ public class FiXml {
 
     }
 
-    public void setFkbParams(FiKeybean fkbParams) {
+    public void setFkbParams(Fkb fkbParams) {
         this.fkbParams = fkbParams;
     }
 

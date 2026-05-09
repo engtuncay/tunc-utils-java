@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 import ozpasyazilim.utils.core.FiBool;
 import ozpasyazilim.utils.core.FiCollection;
 import ozpasyazilim.utils.core.FiString;
-import ozpasyazilim.utils.datatypes.FiKeybean;
+import ozpasyazilim.utils.datatypes.Fkb;
 import ozpasyazilim.utils.fxwindow.FiDialogMetaType;
 import ozpasyazilim.utils.gui.fxTableViewExtra.EnumColNodeType;
 import ozpasyazilim.utils.log.Loghelper;
@@ -45,7 +45,7 @@ public class FxFormMigaGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
     /**
      * form objesi fikeybean türünde ise, fikeybean den alınır veriler
      */
-    private FiKeybean refFormFkb;
+    private Fkb refFormFkb;
 
     /**
      * Form güncellemek amacıyla açıldığını belirtir
@@ -154,13 +154,13 @@ public class FxFormMigaGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
      *
      * @return
      */
-    public FiKeybean getFormAsFkb() {
+    public Fkb getFormAsFkb() {
         return FxEditorFactory.getFkbColsByEditorNodeForFiCols(getListFormElements());
     }
 
-    public FiKeybean getFormAsFkbNotNullKeys() {
+    public Fkb getFormAsFkbNotNullKeys() {
 
-        FiKeybean formAsFkb = FxEditorFactory.getFkbColsByEditorNodeForFiCols(getListFormElements());
+        Fkb formAsFkb = FxEditorFactory.getFkbColsByEditorNodeForFiCols(getListFormElements());
 
         List<Object> listDeletedKey = new ArrayList<>();
 
@@ -514,15 +514,15 @@ public class FxFormMigaGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
         this.fnValidateForm = fnValidateForm;
     }
 
-    public FiKeybean getRefFormFkb() {
+    public Fkb getRefFormFkb() {
         return refFormFkb;
     }
 
-    public void setRefFormFkb(FiKeybean refFormFkb) {
+    public void setRefFormFkb(Fkb refFormFkb) {
         this.refFormFkb = refFormFkb;
     }
 
-    public void updateFormWitFkb(FiKeybean fkbParams) {
+    public void updateFormWitFkb(Fkb fkbParams) {
         setRefFormFkb(fkbParams);
         FxEditorFactory.updateFiColsCompsWitFkbEntityByEditorValue(getListFormElements(), fkbParams);
         trigEventsAfterFormLoaded();

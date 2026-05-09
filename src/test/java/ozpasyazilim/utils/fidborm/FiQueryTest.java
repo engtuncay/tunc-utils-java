@@ -2,7 +2,7 @@ package ozpasyazilim.utils.fidborm;
 
 import org.junit.jupiter.api.Test;
 import ozpasyazilim.utils.core.FiConsole;
-import ozpasyazilim.utils.datatypes.FiKeybean;
+import ozpasyazilim.utils.datatypes.Fkb;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ class FiQueryTest {
 				"--AND chh.cha_evrak_tip IN(@cha_evrak_tip)\n" +
 				"ORDER BY chh.cha_RECno DESC\n";
 //
-		FiKeybean fiKeyBean = new FiKeybean();
+		Fkb fiKeyBean = new Fkb();
 
 		List<Integer> listEvraklar = new ArrayList<>();
 		listEvraklar.add(30);
