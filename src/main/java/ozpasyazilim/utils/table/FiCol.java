@@ -12,6 +12,7 @@ import javafx.scene.input.KeyEvent;
 import org.reactfx.util.TriConsumer;
 import ozpasyazilim.utils.core.FiBool;
 import ozpasyazilim.utils.datatypes.FiMeta;
+import ozpasyazilim.utils.datatypes.Fkb;
 import ozpasyazilim.utils.fidbanno.FiTable;
 import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.fidborm.IFiField;
@@ -472,6 +473,11 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
    * Code Generator tarafından kullanılır.
    */
   private String ficTxSqlFieldDefinition;
+
+  /**
+   * obje elemanı dışında alan kaydetmek için eklendi
+   */
+  private Fkb fkbData;
 
 
   // ***** Constructors
@@ -1904,6 +1910,11 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
   public void setBoWhereField(Boolean boWhereField) {
     this.boWhereField = boWhereField;
   }
+
+  public Fkb getFkbData() {return fkbData;}
+
+  public void setFkbData(Fkb fkbData) {this.fkbData = fkbData;}
+
 }
 
 
