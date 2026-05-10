@@ -12,10 +12,10 @@ import ozpasyazilim.utils.gui.fxcomponents.FxWindow;
  */
 public abstract class AbsFiModBaseCont implements IFiModCont {
 
-    protected Stage fxStage;
-    protected String moduleCode;
-    protected String moduleLabel;
-    protected String closeReason;
+    private Stage fxStage;
+    private String moduleCode;
+    private String moduleLabel;
+    private String closeReason;
 
     /**
      * FicEnaModules
@@ -27,7 +27,7 @@ public abstract class AbsFiModBaseCont implements IFiModCont {
      * <p>
      * 8-12-2022 eklendi
      */
-    protected String connProfile;
+    private String connProfile;
 
     public AbsFiModBaseCont() {
     }

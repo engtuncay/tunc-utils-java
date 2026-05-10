@@ -39,7 +39,7 @@ public abstract class FiAbsTableWindowCont<EntClazz> extends FiArbWindowCont {
 
     public FiAbsTableWindowCont() {
         super();
-        super.moduleLabel = "FiArbTableWindow";
+        setModuleLabel("FiArbTableWindow");
         //super.moduleCode =
     }
 
