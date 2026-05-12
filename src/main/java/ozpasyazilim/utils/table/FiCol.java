@@ -795,6 +795,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
 
 
   /**
+   *
    * @param fnEditorNodeRendererAfterLoad
    * @return
    */
@@ -873,7 +874,12 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     return this;
   }
 
-  public FiCol buiWhereField(Boolean boValue) {
+  /**
+   * URFIX fcBoWhereField'e çevrilmeli
+   * @param boValue
+   * @return
+   */
+  public FiCol buiXxWhereField(Boolean boValue) {
     this.boWhereField = boValue;
     return this;
   }

@@ -39,4 +39,8 @@ public interface IFiModCont {
 
     void setCloseReason(String closeReason);
 
+    public String getConnProfile();
+
+    public void setConnProfile(String connProfile);
+
 }

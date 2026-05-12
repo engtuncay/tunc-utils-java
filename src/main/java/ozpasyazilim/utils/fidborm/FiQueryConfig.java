@@ -13,6 +13,13 @@ public class FiQueryConfig {
   Boolean boUpdateFieldsOnly;
   Fkfic fkbDataDef;
 
+  public FiQueryConfig() {
+  }
+
+  public FiQueryConfig(FicList ficList) {
+    setFicList(ficList);
+  }
+
   //FicList ficWhereFields;
 
 

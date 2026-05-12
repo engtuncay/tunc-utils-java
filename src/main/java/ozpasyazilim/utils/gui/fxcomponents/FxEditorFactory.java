@@ -69,7 +69,7 @@ public class FxEditorFactory {
 //    Loghelper.get(FxEditorFactory.class).debug("ficol-fn:" + fiCol.getFcTxFieldName());
 
     // txClassName yoksa , belirleme süreci
-    if (FiString.isEmpty(txClassName)) txClassName = calcTxClassNameMain(fiCol, ozColType);
+    if (FiString.isEmpty(txClassName)) txClassName = prepTxClassNameMain(fiCol, ozColType);
 
     // Loghelper.getInstance(FxEditorFactory.class).debug("Comp Class:"+txClassName);
 
@@ -205,6 +205,11 @@ public class FxEditorFactory {
       return chbComp;
     }
 
+    if (txClassName.equals(FxTextArea.class.getName())) {
+      FxTextArea txaComp = new FxTextArea();
+      return txaComp;
+    }
+
     return null;
   }
 
@@ -218,7 +223,7 @@ public class FxEditorFactory {
    * @return
    */
   @Nonnull
-  public static String calcTxClassNameMain(FiCol fiCol, OzColType ozColType) {
+  public static String prepTxClassNameMain(FiCol fiCol, OzColType ozColType) {
 
     String txClassName;
     //iFiCol.setColFxNodeClass(FxTextField.class.getName());
@@ -358,7 +363,9 @@ public class FxEditorFactory {
         || txNodeClassName.equals(FxTextFieldBtn.class.getName())
         || txNodeClassName.equals(FxLabel.class.getName())
         || txNodeClassName.equals(FxLabelData.class.getName())
-        || txNodeClassName.equals(FxTextFieldBtnWitLblV3.class.getName())) {
+        || txNodeClassName.equals(FxTextFieldBtnWitLblV3.class.getName())
+        || txNodeClassName.equals(FxTextArea.class.getName())
+    ) {
 
       String textValue = null;
 
@@ -372,6 +379,11 @@ public class FxEditorFactory {
         //textValue = comp.getFxTextField().getText();
         textValue = comp.getTxValue();
         //Loghelperr.debug(FxEditorFactory.class,"txVal:"+comp.getTxValue());
+      }
+
+      if (txNodeClassName.equals(FxTextArea.class.getName())) {
+        FxTextArea comp = (FxTextArea) nodeComp;
+        textValue = comp.getText();
       }
 
       if (txNodeClassName.equals(FxTextFieldBtnWitLblV3.class.getName())) {
@@ -513,7 +525,7 @@ public class FxEditorFactory {
     // URFIX buradaki entity , fikeybean olarak gelebilir (complex componentlerde entity kullanılmış)
     //String colNodeClass = iFiCol.getColFilterNodeClass();
 
-    // IfxNode türünde ise CompValue metoduyla kendisi comp olarak değer atama işini yapar
+    // IFiNode türünde ise CompValue metoduyla kendisi comp olarak değer atama işini yapar
     if (colNode instanceof IFiNode) {
       //Loghelper.get(FxEditorFactory.class).debug("IfxNode Set CompValue :" + iFiCol.getHeaderName());
       IFiNode IFiNode = (IFiNode) colNode;
@@ -530,6 +542,12 @@ public class FxEditorFactory {
     if (colNodeClass.equals(FxTextField.class.getName())) {
       //FiConsole.debug(iFiCol);
       FxTextField comp = (FxTextField) colNode;
+      comp.setText(compValue.toString());
+    }
+
+    if (colNodeClass.equals(FxTextArea.class.getName())) {
+      //FiConsole.debug(iFiCol);
+      FxTextArea comp = (FxTextArea) colNode;
       comp.setText(compValue.toString());
     }
 

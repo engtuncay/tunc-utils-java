@@ -266,7 +266,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
     Fdr fdrMain = new Fdr();
     try {
       Integer rowCountUpdate = getJdbi().withHandle(handle -> {
-        return handle.createUpdate(Fiqt.stoj(updateQuery))
+        return handle.createUpdate(Fiqt.stojExcludable1(updateQuery))
             .bindMap(fiMapParams)
             .execute(); // returns row count updated
       });

@@ -4,6 +4,7 @@ import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.datatypes.Fkb;
 //import ozpasyazilim.utils.ficRfcCoding;
 import ozpasyazilim.utils.datatypes.Fkfic;
+import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.metadata.fimCodegen.FimQcSpecFields;
 import ozpasyazilim.utils.metadata.fimCodegen.FimQcSql;
 import ozpasyazilim.utils.returntypes.Fdr;
@@ -91,7 +92,13 @@ public class FiQueryGenMs {
 
     // arguments
     IFiTableMeta iFiTableMeta = fiQueryConfig.getiFiTableMeta();
-    FicList ficUpFields = fiQueryConfig.getFicList();
+    FicList ficList = fiQueryConfig.getFicList();
+
+    String txTableName = null;
+
+    if (iFiTableMeta != null) {
+      txTableName = iFiTableMeta.getITxTableName();
+    }
 
     String template = "SELECT {{sfTxFields}}\n" +
         "FROM {{sfTableName}}\n"
@@ -102,7 +109,14 @@ public class FiQueryGenMs {
 
     int indexWhereBlock = 0;
 
-    for (FiCol fiCol : ficUpFields) {
+    for (FiCol fiCol : ficList) {
+
+      Loghelper.get(getClassi()).debug("fiCol: " + fiCol.getFcTxFieldName() + " - BoWhereField " + fiCol.getFcBoWhereField());
+
+      if(fiCol.getFcTxFieldName().equals(FimQcSpecFields.qcfTxSqTableName().getKey())) {
+        txTableName = fiCol.getFcTxHeader();
+        continue;
+      }
 
       if (FiBool.isTrue(fiCol.getFcBoTransient())) {
         continue;
@@ -113,7 +127,7 @@ public class FiQueryGenMs {
         //Loghelper.get(FiSqlGenMs.class).debug("where field: " + fiCol.getFcTxFieldName());
         sbTxWhereBlock.append(FiQueryGenUtil.formSqlAssignTemp(fiCol.getFcTxFieldName()));
       } else {
-        sbTxFieldsBlock.append(FiQueryGenUtil.formSqlVarComma(fiCol.getFcTxFieldName()));
+        sbTxFieldsBlock.append(FiQueryGenUtil.formSqlFieldComma(fiCol.getFcTxFieldName()));
       }
 
     }
@@ -122,7 +136,8 @@ public class FiQueryGenMs {
     FiString.rtrimSb(sbTxFieldsBlock, FiQueryGenUtil.getTxComma());
 
     Fkb fkbParams = new Fkb();
-    fkbParams.addFieldBy(FimQcSql.sfTableName(), iFiTableMeta.getITxTableName());
+
+    fkbParams.addFieldBy(FimQcSql.sfTableName(), txTableName);
     fkbParams.addFieldBy(FimQcSql.sfTxFields(), sbTxFieldsBlock.toString());
     fkbParams.addFieldBy(FimQcSql.sfTxWhere(), sbTxWhereBlock.toString());
 
@@ -144,6 +159,10 @@ public class FiQueryGenMs {
 
     fdrResult.setBoResult(true);
     return fdrResult;
+  }
+
+  private static Class<FiQueryGenMs> getClassi() {
+    return FiQueryGenMs.class;
   }
 
   public static Fdr insIfNot(FiQueryConfig fiQueryConfig) {
@@ -223,6 +242,12 @@ public class FiQueryGenMs {
     IFiTableMeta iFiTableMeta = fiQueryConfig.getiFiTableMeta();
     FicList ficUpFields = fiQueryConfig.getFicList();
 
+    String txTableName = null;
+
+    if (iFiTableMeta != null) {
+      txTableName = iFiTableMeta.getITxTableName();
+    }
+
 //    FimOcSql.sfTableName();
 //    FimOcSql.sfTxWhere();
 //    FimOcSql.sfTxFields();
@@ -254,6 +279,13 @@ public class FiQueryGenMs {
 
     for (FiCol fiCol : ficUpFields) {
 
+      Loghelper.get(getClassi()).debug("fiCol: " + fiCol.getFcTxFieldName() + " - BoWhereField " + fiCol.getFcBoWhereField());
+
+      if(fiCol.getFcTxFieldName().equals(FimQcSpecFields.qcfTxSqTableName().getKey())) {
+        txTableName = fiCol.getFcTxHeader();
+        continue;
+      }
+
       // transient alanlar atlanmalı
       if (FiBool.isTrue(fiCol.getFcBoTransient())) {
         continue;
@@ -277,7 +309,7 @@ public class FiQueryGenMs {
     FiString.rtrimSb(sbTxUpSet, getTxComma());
 
     Fkb fkbParams = new Fkb();
-    fkbParams.addFim(FimQcSql.sfTableName(), iFiTableMeta.getITxTableName());
+    fkbParams.addFim(FimQcSql.sfTableName(), txTableName);
     fkbParams.addFim(FimQcSql.sfTxFields(), sbTxFieldsBlock.toString());
     fkbParams.addFim(FimQcSql.sfTxWhere(), sbTxWhereBlock.toString());
     fkbParams.addFim(FimQcSql.sfTxFieldsVar(), sbTxFieldsVar.toString());
@@ -368,5 +400,12 @@ public class FiQueryGenMs {
   @Nonnull
   private static String getTxAnd() {
     return " AND ";
+  }
+
+  public static Fdr selQuery(FicList ficList) {
+    FiQueryConfig fiQueryConfig = new FiQueryConfig();
+    fiQueryConfig.setFicList(ficList);
+
+    return selQuery(fiQueryConfig);
   }
 }
