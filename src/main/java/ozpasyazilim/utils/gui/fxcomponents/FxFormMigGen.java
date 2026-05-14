@@ -135,7 +135,7 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> implement
 
     for (FiCol fiCol : listFormElements) {
       //Loghelper.get(getClass()).debug("FiCol in Form" + fiCol.getFieldName());
-      Loghelper.get(getClass()).debug(FiConsole.textObjectFieldsNtn(fiCol));
+      //Loghelper.get(getClass()).debug(FiConsole.textObjectFieldsNtn(fiCol));
 
       // hidden olanlar için formda hiç bir şey gösterilmez, node oluşturulmaz
       if (FiBool.isTrue(fiCol.getBoHidden())) {

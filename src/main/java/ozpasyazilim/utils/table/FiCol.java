@@ -1721,6 +1721,13 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     return fcTxIdType;
   }
 
+  public String getFcTxIdTypeNtn() {
+    if (fcTxIdType == null) {
+      return "undefined";
+    }
+    return fcTxIdType;
+  }
+
   public void setFcTxIdType(String fcTxIdType) {
     this.fcTxIdType = fcTxIdType;
   }

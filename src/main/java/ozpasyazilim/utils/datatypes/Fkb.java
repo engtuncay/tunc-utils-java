@@ -278,18 +278,10 @@ public class Fkb extends LinkedHashMap<String, Object> {
    * @param fiCol
    * @return
    */
-  public String getAsString(FiCol fiCol) {
+  public String getFicAsString(FiCol fiCol) {
     if (fiCol == null || FiString.isEmpty(fiCol.getFcTxFieldName())) return null;
 
-    if (containsKey(fiCol.getFcTxFieldName())) {
-      Object objValue = get(fiCol.getFcTxFieldName());
-
-      if (objValue == null) return null;
-
-      return (String) objValue;
-    }
-
-    return null;
+    return getValueAsString(fiCol.getFcTxFieldName());
   }
 
   public String getValueAsString(String txKey) {
@@ -757,7 +749,5 @@ public class Fkb extends LinkedHashMap<String, Object> {
     return getFimAsString(FimFiCol.fcTxFieldName());
   }
 
-  public String getFicAsString(FiCol fiCol) {
-    return getValueAsString(fiCol.getFcTxFieldName());
-  }
+
 }

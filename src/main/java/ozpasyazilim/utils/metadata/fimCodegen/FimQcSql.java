@@ -1,6 +1,5 @@
 package ozpasyazilim.utils.metadata.fimCodegen;
-
-// Java FiMeta Class Generation (By Dml) - v0.4
+// Java FiMeta Class Generation - v0.4
 
 import ozpasyazilim.utils.datatypes.FiMeta;
 
@@ -8,58 +7,101 @@ public class FimQcSql {
 
 
   public static FiMeta sfTableName() {
-    FiMeta fimeta = new FiMeta("sfTableName");
+    FiMeta fim = new FiMeta("sfTableName");
 
-    return fimeta;
+    return fim;
   }
 
   public static FiMeta sfTableFields() {
-    FiMeta fimeta = new FiMeta("sfTableFields");
+    FiMeta fim = new FiMeta("sfTableFields");
 
-    return fimeta;
+    return fim;
   }
 
   public static FiMeta sfTxFields() {
-    FiMeta fimeta = new FiMeta("sfTxFields");
+    FiMeta fim = new FiMeta("sfTxFields");
 
-    return fimeta;
-  }
-
-  public static FiMeta sfTxFieldsVar() {
-    FiMeta fimeta = new FiMeta("sfTxFieldsVar");
-
-    return fimeta;
+    return fim;
   }
 
   public static FiMeta sfCsvFields() {
-    FiMeta fimeta = new FiMeta("sfCsvFields");
+    FiMeta fim = new FiMeta("sfCsvFields");
 
-    return fimeta;
+    return fim;
   }
 
   public static FiMeta sfTxWhere() {
-    FiMeta fimeta = new FiMeta("sfTxWhere");
+    FiMeta fim = new FiMeta("sfTxWhere");
 
-    return fimeta;
+    return fim;
   }
 
   public static FiMeta sfTxFieldName() {
-    FiMeta fimeta = new FiMeta("sfTxFieldName");
+    FiMeta fim = new FiMeta("sfTxFieldName");
 
-    return fimeta;
+    return fim;
   }
 
-  public static FiMeta sfTxUpSet() {
-    FiMeta fimeta = new FiMeta("sfTxUpSet");
+  public static FiMeta sfTxUpSetBlock() {
+    FiMeta fim = new FiMeta("sfTxUpSetBlock");
 
-    return fimeta;
+    return fim;
   }
 
   public static FiMeta sfLnCount() {
-    FiMeta fimeta = new FiMeta("sfLnCount");
+    FiMeta fim = new FiMeta("sfLnCount");
 
-    return fimeta;
+    return fim;
+  }
+
+  public static FiMeta sfTxIdentifName() {
+    FiMeta fim = new FiMeta("sfTxIdentifName");
+
+    return fim;
+  }
+
+  public static FiMeta sfTxFieldsVar() {
+    FiMeta fim = new FiMeta("sfTxFieldsVar");
+
+    return fim;
+  }
+
+  public static FiMeta sfTxFieldsVarIns() {
+    FiMeta fim = new FiMeta("sfTxFieldsVarIns");
+
+    return fim;
+  }
+
+  public static FiMeta sfTxFieldsVarUp() {
+    FiMeta fim = new FiMeta("sfTxFieldsVarUp");
+
+    return fim;
+  }
+
+  public static FiMeta sfTxFieldsIns() {
+    FiMeta fim = new FiMeta("sfTxFieldsIns");
+
+    return fim;
+  }
+
+  public static FiMeta sfTxFieldsUp() {
+    FiMeta fim = new FiMeta("sfTxFieldsUp");
+
+    return fim;
+  }
+
+  public static FiMeta sfTxWhereIns() {
+    FiMeta fim = new FiMeta("sfTxWhereIns");
+
+    return fim;
+  }
+
+  public static FiMeta sfTxWhereUp() {
+    FiMeta fim = new FiMeta("sfTxWhereUp");
+
+    return fim;
   }
 
 
 }
+

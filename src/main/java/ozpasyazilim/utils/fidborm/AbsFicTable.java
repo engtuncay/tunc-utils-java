@@ -1,5 +1,6 @@
 package ozpasyazilim.utils.fidborm;
 
+import ozpasyazilim.utils.datatypes.Fkfic;
 import ozpasyazilim.utils.table.FicList;
 
 public abstract class AbsFicTable {
@@ -25,6 +26,7 @@ public abstract class AbsFicTable {
   public FicList genITableColsTrans() {
     return new FicList();
   }
+
 
   // --- end IFxTable...
 

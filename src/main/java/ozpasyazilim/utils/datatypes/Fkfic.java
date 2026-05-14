@@ -30,7 +30,15 @@ public class Fkfic extends LinkedHashMap<String, FiCol> {
     return getFieldValue(fiCol.getFtTxKey());
   }
 
-  public String getFimHevalNtn(FiMeta fiCol) {
+  public FiCol getFicValue(FiCol fiCol) {
+    return getFieldValue(fiCol.getFcTxFieldName());
+  }
+
+  public FiCol getFic(String txKey) {
+    return getFieldValue(txKey);
+  }
+
+  public String getFimHeaderValNtn(FiMeta fiCol) {
     FiCol fieldValue = getFieldValue(fiCol.getFtTxKey());
     if (fieldValue != null) {
       return fieldValue.getFcTxHeader();
