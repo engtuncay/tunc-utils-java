@@ -22,10 +22,10 @@ import java.util.function.Function;
 public abstract class FiAbsTableFkbWindowCont extends FiFxWindowCont {
 
   private String txSelected;
-  private List<Fkb> listEntitySelected;
-  private List<Fkb> listAll;
-  private Fkb entitySelected;
-  private Fkb entityLastSaved;
+  private List<Fkb> listFkbSelected;
+  private List<Fkb> listFkbAll;
+  private Fkb fkbSelected;
+  private Fkb fkbLastSaved;
 
   /**
    * Seçim Düğmesi
@@ -91,20 +91,20 @@ public abstract class FiAbsTableFkbWindowCont extends FiFxWindowCont {
 
   // Getters Setters
 
-  public List<Fkb> getListAll() {
-    return listAll;
+  public List<Fkb> getListFkbAll() {
+    return listFkbAll;
   }
 
-  public void setListAll(List<Fkb> listAll) {
-    this.listAll = listAll;
+  public void setListFkbAll(List<Fkb> listFkbAll) {
+    this.listFkbAll = listFkbAll;
   }
 
-  public Fkb getEntityLastSaved() {
-    return entityLastSaved;
+  public Fkb getFkbLastSaved() {
+    return fkbLastSaved;
   }
 
-  public void setEntityLastSaved(Fkb entityLastSaved) {
-    this.entityLastSaved = entityLastSaved;
+  public void setFkbLastSaved(Fkb fkbLastSaved) {
+    this.fkbLastSaved = fkbLastSaved;
   }
 
   public FxTableView2<Fkb> getFxTableView() {
@@ -120,12 +120,12 @@ public abstract class FiAbsTableFkbWindowCont extends FiFxWindowCont {
     this.txSelected = txSelected;
   }
 
-  public List<Fkb> getListEntitySelected() {
-    return listEntitySelected;
+  public List<Fkb> getListFkbSelected() {
+    return listFkbSelected;
   }
 
-  public void setListEntitySelected(List<Fkb> listEntitySelected) {
-    this.listEntitySelected = listEntitySelected;
+  public void setListFkbSelected(List<Fkb> listFkbSelected) {
+    this.listFkbSelected = listFkbSelected;
   }
 
   public FxMigPane getMigToolbar() {
@@ -170,12 +170,12 @@ public abstract class FiAbsTableFkbWindowCont extends FiFxWindowCont {
     this.fxTableMig = fxTableMig;
   }
 
-  public Fkb getEntitySelected() {
-    return entitySelected;
+  public Fkb getFkbSelected() {
+    return fkbSelected;
   }
 
-  public void setEntitySelected(Fkb entitySelected) {
-    this.entitySelected = entitySelected;
+  public void setFkbSelected(Fkb fkbSelected) {
+    this.fkbSelected = fkbSelected;
   }
 
   public void actCrudRefresh() {
