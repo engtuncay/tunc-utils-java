@@ -10,31 +10,30 @@ import ozpasyazilim.utils.mvc.IFiModCont;
 /**
  * Common Window
  */
-public class FiArbWindowCont extends AbsFiModBaseCont implements IFiModCont {
+public class FiFxWindowCont extends AbsFiModBaseCont implements IFiModCont {
 
-	FiArbWindowView modView;
+	FiFxWindowView modView;
 
-	public FiArbWindowCont() {
+	public FiFxWindowCont() {
 		//super.moduleAciklama = "Mos-Shared Form Window";
 		//super.moduleCode = EntegreModules.ModContGen.getModuleCode();
 	}
 
-	public FiArbWindowCont(String connProfile) {
+	public FiFxWindowCont(String connProfile) {
 		super(connProfile);
 	}
 
 	@Override
 	public void initCont() {
-		modView = new FiArbWindowView();
+		modView = new FiFxWindowView();
 		modView.initGui();
-		//afterInit();
 	}
 
-	public FiArbWindowCont buildInit() {
+	public FiFxWindowCont buiInit() {
 		initCont();
 		return this;
 	}
-	public FiArbWindowView getModView() {
+	public FiFxWindowView getModView() {
 		return modView;
 	}
 
@@ -54,7 +53,7 @@ public class FiArbWindowCont extends AbsFiModBaseCont implements IFiModCont {
 		});
 	}
 
-	public void registerRunWitCtrlAndCusKeyCode(KeyCode keyCode,Runnable runnable){
+	public void registerRunWitCtrlAndKey(KeyCode keyCode, Runnable runnable){
 		getModView().getRootPane().addEventHandler(KeyEvent.KEY_RELEASED, event -> {
 			if(event.isControlDown() && event.getCode() == keyCode){
 				runnable.run();

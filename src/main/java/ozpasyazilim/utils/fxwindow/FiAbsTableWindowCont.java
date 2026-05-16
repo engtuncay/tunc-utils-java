@@ -16,13 +16,13 @@ import java.util.function.Function;
  *
  * @param <EntClazz>
  */
-public abstract class FiAbsTableWindowCont<EntClazz> extends FiArbWindowCont {
+public abstract class FiAbsTableWindowCont<EntClazz> extends FiFxWindowCont {
 
-    String txSelected;
-    List<EntClazz> listEntitySelected;
-    List<EntClazz> listAll;
-    EntClazz entitySelected;
-    EntClazz entityLastSaved;
+    private String txSelected;
+    private List<EntClazz> listEntitySelected;
+    private List<EntClazz> listAll;
+    private EntClazz entitySelected;
+    private EntClazz entityLastSaved;
 
     /**
      * Seçim Düğmesi
@@ -39,7 +39,7 @@ public abstract class FiAbsTableWindowCont<EntClazz> extends FiArbWindowCont {
 
     public FiAbsTableWindowCont() {
         super();
-        setModuleLabel("FiArbTableWindow");
+        setModuleLabel("FiTableWindow");
         //super.moduleCode =
     }
 

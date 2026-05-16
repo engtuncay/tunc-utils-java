@@ -3,7 +3,6 @@ package ozpasyazilim.utils.fxwindow;
 import de.jensd.fx.glyphs.icons525.Icons525;
 import javafx.scene.input.KeyCode;
 import ozpasyazilim.utils.gui.fxcomponents.FxButton;
-import ozpasyazilim.utils.gui.fxcomponents.FxFormMig;
 import ozpasyazilim.utils.gui.fxcomponents.FxFormMigGen;
 import ozpasyazilim.utils.javafx.FiIconPack;
 import ozpasyazilim.utils.metadata.metaOther.MetaCrudConstant;
@@ -16,7 +15,7 @@ import java.util.function.Supplier;
 /**
  *
  */
-public class FiArbCrudWindowCont extends FiArbWindowCont implements IFiModCont {
+public class FiFxCrudWindowCont extends FiFxWindowCont implements IFiModCont {
 
 	private FxButton btnCrudAdd;
 	private FxButton btnCrudEdit;
@@ -39,7 +38,7 @@ public class FiArbCrudWindowCont extends FiArbWindowCont implements IFiModCont {
 	protected FxButton btnCrudReport;
 	protected FxButton btnCrudRefresh;
 
-	public FiArbCrudWindowCont(String connProfile) {
+	public FiFxCrudWindowCont(String connProfile) {
 		super(connProfile);
 	}
 

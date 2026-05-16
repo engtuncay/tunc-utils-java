@@ -5,7 +5,7 @@ import ozpasyazilim.utils.gui.fxcomponents.FxMigHp;
 import ozpasyazilim.utils.gui.fxcomponents.FxMigPane;
 import ozpasyazilim.utils.mvc.IFiModView;
 
-public class FiArbWindowView implements IFiModView {
+public class FiFxWindowView implements IFiModView {
 
 	// Containers
 	private FxMigPane migRoot;
@@ -14,11 +14,11 @@ public class FiArbWindowView implements IFiModView {
 	private FxMigPane migFooter;
 	//private FxMigPane migFooter;
 
-	public FiArbWindowView() {
+	public FiFxWindowView() {
 
 	}
 
-	public FiArbWindowView(Boolean withInit) {
+	public FiFxWindowView(Boolean withInit) {
 		initGui();
 	}
 

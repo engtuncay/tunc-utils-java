@@ -5,7 +5,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import ozpasyazilim.utils.core.FiBool;
 import ozpasyazilim.utils.core.FiCollection;
-import ozpasyazilim.utils.core.FiConsole;
 import ozpasyazilim.utils.datatypes.Fkb;
 import ozpasyazilim.utils.fxwindow.*;
 import ozpasyazilim.utils.gui.fxTableViewExtra.EnumColNodeType;
@@ -424,7 +423,7 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> implement
   }
 
   public void showAsDialog(String connProfile) {
-    FiArbCrudWindowCont fiCrudWindow = new FiArbCrudWindowCont(connProfile);
+    FiFxCrudWindowCont fiCrudWindow = new FiFxCrudWindowCont(connProfile);
     fiCrudWindow.initCont();
 
     fiCrudWindow.addCrudSaveButtonAndAction();

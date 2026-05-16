@@ -9,7 +9,7 @@ import ozpasyazilim.utils.mvc.IFiModCont;
 /**
  *
  */
-public abstract class FiAbsCrudWindowCont extends FiArbWindowCont implements IFiModCont {
+public abstract class FiAbsCrudWindowCont extends FiFxWindowCont implements IFiModCont {
 
 	protected FxButton btnCrudAdd;
 	protected FxButton btnCrudEdit;
