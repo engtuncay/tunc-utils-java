@@ -12,169 +12,180 @@ import ozpasyazilim.utils.gui.fxcomponents.FxWindow;
  */
 public abstract class AbsFiModBaseCont implements IFiModCont {
 
-    private Stage fxStage;
-    private String moduleCode;
-    private String moduleLabel;
-    private String closeReason;
+  private Stage fxStage;
+  private String moduleCode;
+  private String moduleLabel;
+  private String closeReason;
 
-    /**
-     * FicEnaModules
-     */
-    private Fkb fkbModule;
+  /**
+   * FicEnaModules
+   */
+  private Fkb fkbModule;
 
-    /**
-     * Modulun connProfil bilgisini içerir
-     * <p>
-     * 8-12-2022 eklendi
-     */
-    private String connProfile;
+  private FiModule fiModule;
 
-    public AbsFiModBaseCont() {
+  /**
+   * Modulun connProfil bilgisini içerir
+   * <p>
+   * 8-12-2022 eklendi
+   */
+  private String connProfile;
+
+  public AbsFiModBaseCont() {
+  }
+
+  public AbsFiModBaseCont(String connProfile) {
+    this.connProfile = connProfile;
+  }
+
+  @Override
+  public abstract void initCont();
+
+  @Override
+  public abstract IFiModView getModView();
+
+  public Stage getFxStageInit() {
+    if (fxStage == null) {
+      fxStage = new FxStage();
+    }
+    return fxStage;
+  }
+
+  public Stage getFxStage() {
+    return fxStage;
+  }
+
+  public void setFxStage(Stage fxStage) {
+    this.fxStage = fxStage;
+  }
+
+  public String getModuleCode() {
+    if (moduleCode == null) {
+      return "";
     }
 
-    public AbsFiModBaseCont(String connProfile) {
-        this.connProfile = connProfile;
+    return moduleCode;
+  }
+
+  public void setModuleCode(String moduleCode) {
+    this.moduleCode = moduleCode;
+  }
+
+  public String getModuleLabel() {
+    if (moduleCode == null) {
+      return "";
+    }
+    return moduleLabel;
+  }
+
+  public void setModuleLabel(String moduleLabel) {
+    this.moduleLabel = moduleLabel;
+  }
+
+  public String getCloseReason() {
+    if (closeReason == null) {
+      return "";
+    }
+    return closeReason;
+  }
+
+  public void setCloseReason(String closeReason) {
+    this.closeReason = closeReason;
+  }
+
+  public void setCloseReasonDone() {
+    setCloseReason(getDoneText());
+  }
+
+  public void closeStageWithDoneReason() {
+    closeStage(getDoneText());
+  }
+
+  public static String getDoneText() {
+    return "done";
+  }
+
+  public static String getCancelText() {
+    return "cancel";
+  }
+
+  public void closeStageWithCancelReason() {
+    closeStage(getCancelText());
+  }
+
+  protected void closeStage(String closeReason) {
+    if (getFxStageInit() != null) {
+      if (closeReason != null) {
+        setCloseReason(closeReason);
+      }
+      getFxStageInit().close();
+    }
+  }
+
+  public Boolean checkClosedWithDone() {
+    return getCloseReason().equals(getDoneText());
+  }
+
+  public void openAsNonModal() {
+    openAsNonModalMain(null);
+  }
+
+  public void openAsNonModalMain(DialogConf dialogConf) {
+
+    if (dialogConf == null) {
+      dialogConf = new DialogConf();
+    }
+    dialogConf.setBoNonModal(true);
+    openAsWindowMain(dialogConf);
+
+  }
+
+  public void openAsModalMain(DialogConf dialogConf) {
+    if (dialogConf == null) {
+      dialogConf = new DialogConf();
+    }
+    dialogConf.setBoNonModal(false);
+    openAsWindowMain(dialogConf);
+  }
+
+  public void openAsWindowMain(DialogConf dialogConf) {
+
+    if (getModView() == null || getModView().getRootPane() == null) {
+      //Loghelper.debug(getClass(), "init çalıştırıldı openas den");
+      initCont();
     }
 
-    @Override
-    public abstract void initCont();
+    dialogConf.setCssFileName("main.css");
+    FxWindow.creNodeWindow(this, dialogConf);
+  }
 
-    @Override
-    public abstract IFiModView getModView();
+  public String getConnProfile() {
+    return connProfile;
+  }
 
-    public Stage getFxStageInit() {
-        if (fxStage == null) {
-            fxStage = new FxStage();
-        }
-        return fxStage;
-    }
+  public void setConnProfile(String connProfile) {
+    this.connProfile = connProfile;
+  }
 
-    public Stage getFxStage() {
-        return fxStage;
-    }
+  protected void setModule(FiModule fiModule) {
+    setModuleLabel(fiModule.getTxModuleLabel());
+    setModuleCode(fiModule.getTxModuleCode());
+  }
 
-    public void setFxStage(Stage fxStage) {
-        this.fxStage = fxStage;
-    }
+  public Fkb getFkbModule() {
+    return fkbModule;
+  }
 
-    public String getModuleCode() {
-        if (moduleCode == null) {
-            return "";
-        }
+  public void setFkbModule(Fkb fkbModule) {
+    this.fkbModule = fkbModule;
+  }
 
-        return moduleCode;
-    }
+  public void setFiModule(FiModule fiModule) {
+    this.fiModule = fiModule;
+  }
 
-    public void setModuleCode(String moduleCode) {
-        this.moduleCode = moduleCode;
-    }
+  public FiModule getFiModule() {
+    return fiModule;
+  }
 
-    public String getModuleLabel() {
-        if (moduleCode == null) {
-            return "";
-        }
-        return moduleLabel;
-    }
-
-    public void setModuleLabel(String moduleLabel) {
-        this.moduleLabel = moduleLabel;
-    }
-
-    public String getCloseReason() {
-        if (closeReason == null) {
-            return "";
-        }
-        return closeReason;
-    }
-
-    public void setCloseReason(String closeReason) {
-        this.closeReason = closeReason;
-    }
-
-    public void setCloseReasonDone() {
-        setCloseReason(getDoneText());
-    }
-
-    public void closeStageWithDoneReason() {
-        closeStage(getDoneText());
-    }
-
-    public static String getDoneText() {
-        return "done";
-    }
-
-    public static String getCancelText() {
-        return "cancel";
-    }
-
-    public void closeStageWithCancelReason() {
-        closeStage(getCancelText());
-    }
-
-    protected void closeStage(String closeReason) {
-        if (getFxStageInit() != null) {
-            if (closeReason != null) {
-                setCloseReason(closeReason);
-            }
-            getFxStageInit().close();
-        }
-    }
-
-    public Boolean checkClosedWithDone() {
-        return getCloseReason().equals(getDoneText());
-    }
-
-    public void openAsNonModal() {
-        openAsNonModalMain(null);
-    }
-
-    public void openAsNonModalMain(DialogConf dialogConf) {
-
-        if (dialogConf == null) {
-            dialogConf = new DialogConf();
-        }
-        dialogConf.setBoNonModal(true);
-        openAsWindowMain(dialogConf);
-
-    }
-
-    public void openAsModalMain(DialogConf dialogConf) {
-        if (dialogConf == null) {
-            dialogConf = new DialogConf();
-        }
-        dialogConf.setBoNonModal(false);
-        openAsWindowMain(dialogConf);
-    }
-
-    public void openAsWindowMain(DialogConf dialogConf) {
-
-        if (getModView() == null || getModView().getRootPane() == null) {
-            //Loghelper.debug(getClass(), "init çalıştırıldı openas den");
-            initCont();
-        }
-
-        dialogConf.setCssFileName("main.css");
-        FxWindow.creNodeWindow(this, dialogConf);
-    }
-
-    public String getConnProfile() {
-        return connProfile;
-    }
-
-    public void setConnProfile(String connProfile) {
-        this.connProfile = connProfile;
-    }
-
-    protected void setModule(FiModule fiModule) {
-        setModuleLabel(fiModule.getTxModuleLabel());
-        setModuleCode(fiModule.getTxModuleCode());
-    }
-
-    public Fkb getFkbModule() {
-        return fkbModule;
-    }
-
-    public void setFkbModule(Fkb fkbModule) {
-        this.fkbModule = fkbModule;
-    }
 }
