@@ -5,6 +5,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import ozpasyazilim.utils.core.FiCollection;
 import ozpasyazilim.utils.core.FiReflection;
+import ozpasyazilim.utils.datatypes.Fkb;
 import ozpasyazilim.utils.gui.fxcomponents.*;
 
 import java.util.List;
@@ -16,15 +17,15 @@ import java.util.function.Function;
  * <p>
  * pullTable metodları implemente edilmesi gerektiği için Abstract yapıldı
  *
- * @param <EntClazz>
+ * @param
  */
-public abstract class FiAbsTableWindowCont<EntClazz> extends FiFxWindowCont {
+public abstract class FiAbsTableFkbWindowCont extends FiFxWindowCont {
 
   private String txSelected;
-  private List<EntClazz> listEntitySelected;
-  private List<EntClazz> listAll;
-  private EntClazz entitySelected;
-  private EntClazz entityLastSaved;
+  private List<Fkb> listEntitySelected;
+  private List<Fkb> listAll;
+  private Fkb entitySelected;
+  private Fkb entityLastSaved;
 
   /**
    * Seçim Düğmesi
@@ -37,9 +38,9 @@ public abstract class FiAbsTableWindowCont<EntClazz> extends FiFxWindowCont {
   protected FxButton btnCrudReport;
   protected FxButton btnCrudRefresh;
 
-  private FxTableMig2<EntClazz> fxTableMig;
+  private FxTableMig2<Fkb> fxTableMig;
 
-  public FiAbsTableWindowCont() {
+  public FiAbsTableFkbWindowCont() {
     super();
     setModuleLabel("FiTableWindow");
     //super.moduleCode =
@@ -66,8 +67,8 @@ public abstract class FiAbsTableWindowCont<EntClazz> extends FiFxWindowCont {
    */
   abstract protected void pullTableDataThread();
 
-  public EntClazz getSelectedItemInTable() {
-    return (EntClazz) getFxTableView().getSelectedItemFi();
+  public Fkb getSelectedItemInTable() {
+    return (Fkb) getFxTableView().getSelectedItemFi();
   }
 
   public <EntClazz, B> void assignBoSecim(FxTextFieldBtn fxTextFieldBtn, Function<EntClazz, B> fnKeyValue) {
@@ -90,23 +91,23 @@ public abstract class FiAbsTableWindowCont<EntClazz> extends FiFxWindowCont {
 
   // Getters Setters
 
-  public List<EntClazz> getListAll() {
+  public List<Fkb> getListAll() {
     return listAll;
   }
 
-  public void setListAll(List<EntClazz> listAll) {
+  public void setListAll(List<Fkb> listAll) {
     this.listAll = listAll;
   }
 
-  public EntClazz getEntityLastSaved() {
+  public Fkb getEntityLastSaved() {
     return entityLastSaved;
   }
 
-  public void setEntityLastSaved(EntClazz entityLastSaved) {
+  public void setEntityLastSaved(Fkb entityLastSaved) {
     this.entityLastSaved = entityLastSaved;
   }
 
-  public FxTableView2<EntClazz> getFxTableView() {
+  public FxTableView2<Fkb> getFxTableView() {
     //return getModView().getFxTableMig().getFxTableView();
     return getFxTableMig().getFxTableView();
   }
@@ -119,11 +120,11 @@ public abstract class FiAbsTableWindowCont<EntClazz> extends FiFxWindowCont {
     this.txSelected = txSelected;
   }
 
-  public List<EntClazz> getListEntitySelected() {
+  public List<Fkb> getListEntitySelected() {
     return listEntitySelected;
   }
 
-  public void setListEntitySelected(List<EntClazz> listEntitySelected) {
+  public void setListEntitySelected(List<Fkb> listEntitySelected) {
     this.listEntitySelected = listEntitySelected;
   }
 
@@ -161,23 +162,19 @@ public abstract class FiAbsTableWindowCont<EntClazz> extends FiFxWindowCont {
     return btnCrudReport;
   }
 
-//    protected void pullTableDataAsyn() {
-//        Platform.runLater(this::pullTableData);
-//    }
-
-  public FxTableMig2<EntClazz> getFxTableMig() {
+  public FxTableMig2<Fkb> getFxTableMig() {
     return fxTableMig;
   }
 
-  public void setFxTableMig(FxTableMig2<EntClazz> fxTableMig) {
+  public void setFxTableMig(FxTableMig2<Fkb> fxTableMig) {
     this.fxTableMig = fxTableMig;
   }
 
-  public EntClazz getEntitySelected() {
+  public Fkb getEntitySelected() {
     return entitySelected;
   }
 
-  public void setEntitySelected(EntClazz entitySelected) {
+  public void setEntitySelected(Fkb entitySelected) {
     this.entitySelected = entitySelected;
   }
 
