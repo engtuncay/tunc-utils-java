@@ -198,6 +198,11 @@ public abstract class FiAbsTableWindowCont<EntClazz> extends FiFxWindowCont {
     getModView().getMigToolbar().add(btnCrudRefresh);
   }
 
+  protected void addRefreshButtonWitActionPullTable() {
+    addRefreshButton();
+    getBtnCrudRefresh().setOnAction((event) -> pullTableData());
+  }
+
   protected void actBtnRefreshFire() {
     getBtnCrudRefresh().fire();
   }

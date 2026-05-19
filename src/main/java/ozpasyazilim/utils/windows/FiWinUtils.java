@@ -10,10 +10,9 @@ public class FiWinUtils {
 	// URFIX static get method çevir
 	private static final String REGQUERY_UTIL = "reg query ";
 	private static final String REGSTR_TOKEN = "REG_SZ";
-	private static final String DESKTOP_FOLDER_CMD = REGQUERY_UTIL
-			+ "\"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\"
-			+ "Explorer\\Shell Folders\" /v DESKTOP";
-
+	private static final String DESKTOP_FOLDER_CMD = REGQUERY_UTIL +
+			"\"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\" +
+			"Explorer\\Shell Folders\" /v DESKTOP";
 
 	private static String userDirectory;
 
@@ -56,9 +55,7 @@ public class FiWinUtils {
 	/**
 	 * TEST
 	 */
-	public static void main(String[] args) {
-		System.out.println("Desktop directory : "+ getUserDirOrDesktopDir());
-	}
+
 
 	public static class StreamReader extends Thread {
 		private InputStream is;
