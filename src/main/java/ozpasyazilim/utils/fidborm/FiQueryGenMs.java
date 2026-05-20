@@ -32,7 +32,7 @@ public class FiQueryGenMs {
 
     // arguments
     IFiTableMeta iFiTableMeta = fqc.getiFiTableMeta();
-    FicList ficFields = fqc.getFicList();
+    FicList ficFields = fqc.getFclTable();
 
     // FimOcSql.sfTableName();
     // FimOcSql.sfTxWhere();
@@ -93,8 +93,8 @@ public class FiQueryGenMs {
     Fdr fdr = new Fdr();
 
     // arguments
-    FicList ficFields = fqc.getFicList();
-    Fkfic fkbDataDef = fqc.getFkbDataDef();
+    FicList ficFields = fqc.getFclTable();
+    Fkfic fkbDataDef = fqc.getFkbDdFields();
 
     // FimOcSql.sfTableName();
     // FimOcSql.sfTxWhere();
@@ -172,7 +172,7 @@ public class FiQueryGenMs {
 
     // arguments
     IFiTableMeta iFiTableMeta = fqc.getiFiTableMeta();
-    FicList ficList = fqc.getFicList();
+    FicList ficList = fqc.getFclTable();
 
     String txTableName = null;
 
@@ -250,7 +250,7 @@ public class FiQueryGenMs {
 
     // arguments
     IFiTableMeta iFiTableMeta = fqc.getiFiTableMeta();
-    FicList ficUpFields = fqc.getFicList();
+    FicList ficUpFields = fqc.getFclTable();
 
     //FimOcgSql.sfTableName();
     //FimOcgSql.sfTxWhere();
@@ -330,7 +330,7 @@ public class FiQueryGenMs {
 
     // arguments
     IFiTableMeta iFiTableMeta = fqc.getiFiTableMeta();
-    FicList ficList = fqc.getFicList();
+    FicList ficList = fqc.getFclTable();
 
     String txTableName = null;
 
@@ -459,7 +459,7 @@ public class FiQueryGenMs {
 
     // arguments
     IFiTableMeta iFiTableMeta = fqc.getiFiTableMeta();
-    FicList ficList = fqc.getFicList();
+    FicList ficList = fqc.getFclTable();
 
     String txTableName = null;
 
@@ -574,8 +574,8 @@ public class FiQueryGenMs {
     // Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
 
     // arguments
-    FicList ficInsFields = fqc.getFicList();
-    Fkfic fkbDataDef = fqc.getFkbDataDef();
+    FicList ficInsFields = fqc.getFclTable();
+    Fkfic fkbDataDef = fqc.getFkbDdFields();
 
     //FimQcSql.sfTableName();
 
@@ -653,7 +653,7 @@ public class FiQueryGenMs {
 
   public static Fdr selQuery(FicList ficList) {
     Fqc fqc = new Fqc();
-    fqc.setFicList(ficList);
+    fqc.setFclTable(ficList);
 
     return selQuery(fqc);
   }

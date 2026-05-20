@@ -1,6 +1,7 @@
 package ozpasyazilim.utils.fidborm;
 
 import ozpasyazilim.utils.datatypes.Fkfic;
+import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.FicList;
 
 /**
@@ -9,15 +10,17 @@ import ozpasyazilim.utils.table.FicList;
 public class Fqc {
 
   IFiTableMeta iFiTableMeta;
-  FicList ficList;
+  FicList fclTable;
   Boolean boUpdateFieldsOnly;
-  Fkfic fkbDataDef;
+  Fkfic fkbDdFields;
+  Fkfic fkbFieldsAll;
+  FiCol ficIdAuto;
 
   public Fqc() {
   }
 
-  public Fqc(FicList ficList) {
-    setFicList(ficList);
+  public Fqc(FicList fclTable) {
+    setFclTable(fclTable);
   }
 
   public static Fqc bui(FicList ficList) {
@@ -37,12 +40,12 @@ public class Fqc {
     this.iFiTableMeta = iFiTableMeta;
   }
 
-  public FicList getFicList() {
-    return ficList;
+  public FicList getFclTable() {
+    return fclTable;
   }
 
-  public void setFicList(FicList ficList) {
-    this.ficList = ficList;
+  public void setFclTable(FicList fclTable) {
+    this.fclTable = fclTable;
   }
 
   public Boolean getBoUpdateFieldsOnly() {
@@ -53,12 +56,27 @@ public class Fqc {
     this.boUpdateFieldsOnly = boUpdateFieldsOnly;
   }
 
-  public Fkfic getFkbDataDef() {
-    return fkbDataDef;
+  public Fkfic getFkbDdFields() {
+    return fkbDdFields;
   }
 
-  public void setFkbDataDef(Fkfic fkbDataDef) {
-    this.fkbDataDef = fkbDataDef;
+  public void setFkbDdFields(Fkfic fkbDdFields) {
+    this.fkbDdFields = fkbDdFields;
   }
 
+  public Fkfic getFkbFieldsAll() {
+    return fkbFieldsAll;
+  }
+
+  public void setFkbFieldsAll(Fkfic fkbFieldsAll) {
+    this.fkbFieldsAll = fkbFieldsAll;
+  }
+
+  public FiCol getFicIdAuto() {
+    return ficIdAuto;
+  }
+
+  public void setFicIdAuto(FiCol ficIdAuto) {
+    this.ficIdAuto = ficIdAuto;
+  }
 }

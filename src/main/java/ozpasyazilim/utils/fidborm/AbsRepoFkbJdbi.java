@@ -5,19 +5,26 @@ import org.jdbi.v3.core.Jdbi;
 import ozpasyazilim.utils.core.FiException;
 import ozpasyazilim.utils.datatypes.Fkb;
 import ozpasyazilim.utils.datatypes.FkbList;
+import ozpasyazilim.utils.datatypes.Fkfic;
 import ozpasyazilim.utils.jdbi.FiKeyBeanMapper;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.returntypes.Fdr;
 import ozpasyazilim.utils.returntypes.FdrFkbList;
 import ozpasyazilim.utils.table.FiCol;
+import ozpasyazilim.utils.table.FicList;
 
 import java.util.*;
 
 public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRepoJdbi
 
-  protected Handle handleRepo;
+  private Handle handleRepo;
 
-  protected IFiTableMeta iFiTableMeta;
+  private IFiTableMeta iFiTableMeta;
+
+  private Fkfic fkbDdFields;
+  private   Fkfic fkbFieldsAll;
+  private FicList fclTable;
+  private FiCol ficIdAuto;
 
   public AbsRepoFkbJdbi(Jdbi jdbi) {
     setJdbi(jdbi);
@@ -441,5 +448,37 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
       fdrMain.combineAnd(fdrDelete);
     }
     return fdrMain;
+  }
+
+  public Fkfic getFkbDdFields() {
+    return fkbDdFields;
+  }
+
+  public void setFkbDdFields(Fkfic fkbDdFields) {
+    this.fkbDdFields = fkbDdFields;
+  }
+
+  public Fkfic getFkbFieldsAll() {
+    return fkbFieldsAll;
+  }
+
+  public void setFkbFieldsAll(Fkfic fkbFieldsAll) {
+    this.fkbFieldsAll = fkbFieldsAll;
+  }
+
+  public FicList getFclTable() {
+    return fclTable;
+  }
+
+  public void setFclTable(FicList fclTable) {
+    this.fclTable = fclTable;
+  }
+
+  public FiCol getFicIdAuto() {
+    return ficIdAuto;
+  }
+
+  public void setFicIdAuto(FiCol ficIdAuto) {
+    this.ficIdAuto = ficIdAuto;
   }
 }
