@@ -115,6 +115,8 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
   // For Forms, entity is edit value for the field
   private EntClazz entity;
 
+  // ---- Filter Node ile ilgili Alanlar
+
   // Filter Component tutulur
   Node colFilterNode;
 
@@ -125,7 +127,6 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
   // FxTable'da header pane (başlık componenti)
   FxMigPane paneHeader;
 
-  // ---- Filter Node ile ilgili Alanlar
   private Object filterValue;
 
   /**

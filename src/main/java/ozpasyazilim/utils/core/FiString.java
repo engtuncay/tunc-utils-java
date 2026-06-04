@@ -689,6 +689,33 @@ public class FiString {
         return false;
     }
 
+    /**
+     *
+     * contains any of txValueArray (case-insensitive)
+     *
+     * @param txCheckValue
+     * @param txValueArr
+     * @return
+     */
+    public static boolean containsAnyCi(String txCheckValue, String... txValueArr) {
+
+        if (txCheckValue == null) return false;
+
+        String lcTxCheckValue = txCheckValue.toLowerCase(locale);
+
+        for (String val : txValueArr) {
+
+            if (val == null) continue;
+
+            String lcVal = val.toLowerCase(locale);
+
+            if (lcTxCheckValue.contains(lcVal)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static boolean equalsAny(String txCheckValue, Object... txtValueArr) {
         if (txCheckValue == null) return false;
         for (Object val : txtValueArr) {
