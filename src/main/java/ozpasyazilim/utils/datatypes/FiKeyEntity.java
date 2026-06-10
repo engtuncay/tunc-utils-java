@@ -4,7 +4,7 @@ package ozpasyazilim.utils.datatypes;
 import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.fidborm.FiReflectClass;
-import ozpasyazilim.utils.fidborm.Fiqt;
+import ozpasyazilim.utils.fidborm.FiQueTools;
 import ozpasyazilim.utils.fidborm.IFiTableMeta;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.mvc.IFiCol;
@@ -153,7 +153,7 @@ public class FiKeyEntity<E> extends LinkedHashMap<String, E> {
     public void bindAndActivateIfNotEmpty(Object objKey, E value, AtomicReference<String> sql) {
         if (value != null) {
             this.put(objKey.toString(), value);
-            sql.set(Fiqt.activateOptParamMain(sql.get(), objKey.toString()));
+            sql.set(FiQueTools.activateOptParamMain(sql.get(), objKey.toString()));
         }
     }
 

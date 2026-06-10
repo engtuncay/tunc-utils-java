@@ -82,7 +82,7 @@ public abstract class AbsRepoRawJdbi extends AbsRepoJdbiCore { //implements IRep
 
 		for (Map.Entry<String, List> entry : mapParamMulti.entrySet()) {
 			//System.out.println(entry.getKey() + "/" + entry.getValue());
-			sqlQuery = Fiqt.convertSqlForMultiParamByTemplate2(sqlQuery, entry.getKey(), entry.getValue().size());
+			sqlQuery = FiQueTools.convertSqlForMultiParamByTemplate2(sqlQuery, entry.getKey(), entry.getValue().size());
 			mapBind.remove(entry.getKey());
 		}
 
@@ -97,7 +97,7 @@ public abstract class AbsRepoRawJdbi extends AbsRepoJdbiCore { //implements IRep
 
 		try {
 			Optional<Integer> result = jdbi.withHandle(handle -> {
-				return handle.select(Fiqt.stoj(sqlQuery))
+				return handle.select(FiQueTools.stoj(sqlQuery))
 						.bindMap(map)
 						.mapTo(Integer.class)
 						.findFirst();
@@ -178,7 +178,7 @@ public abstract class AbsRepoRawJdbi extends AbsRepoJdbiCore { //implements IRep
 
 				for (String query : queryList) {
 					if (FiString.isEmpty(query.trim())) continue;
-					Integer rowAffected = handle.createUpdate(Fiqt.stoj(query)).bindMap(mapParams).execute();
+					Integer rowAffected = handle.createUpdate(FiQueTools.stoj(query)).bindMap(mapParams).execute();
 					fdr.appendRowsAffected(rowAffected);
 				}
 				//Loghelperr.getInstance(getClass()).debug("Affected:"+ rowAffectedLast);
@@ -200,7 +200,7 @@ public abstract class AbsRepoRawJdbi extends AbsRepoJdbiCore { //implements IRep
 
 		try {
 			Integer rowCountUpdate = jdbi.withHandle(handle -> {
-				return handle.createUpdate(Fiqt.stoj(updateQuery))
+				return handle.createUpdate(FiQueTools.stoj(updateQuery))
 						.bindMap(fiMapParams)
 						.execute(); // returns row count updated
 			});
@@ -222,7 +222,7 @@ public abstract class AbsRepoRawJdbi extends AbsRepoJdbiCore { //implements IRep
 
 		try {
 			jdbi.useHandle(handle -> {
-				handle.createUpdate(Fiqt.stoj(updateQuery))
+				handle.createUpdate(FiQueTools.stoj(updateQuery))
 						.bindMap(fiMapParams)
 						.execute(); // returns row count updated
 			});
@@ -293,7 +293,7 @@ public abstract class AbsRepoRawJdbi extends AbsRepoJdbiCore { //implements IRep
 		//Loghelper.get(getClass()).debug("Sql:" + FiQuery.stoj(sql));
 		try {
 			Optional<Integer> result = jdbi.withHandle(handle -> {
-				return handle.select(Fiqt.stoj(sql))
+				return handle.select(FiQueTools.stoj(sql))
 						.bindMap(mapParam)
 						.mapTo(Integer.class)
 						.findFirst();
@@ -320,7 +320,7 @@ public abstract class AbsRepoRawJdbi extends AbsRepoJdbiCore { //implements IRep
 		//Loghelper.get(getClass()).debug("Sql:" + FiQuery.stoj(sql));
 		try {
 			List<Map<String,Integer>> result = getJdbi().withHandle(handle ->
-					handle.select(Fiqt.stoj(sql))
+					handle.select(FiQueTools.stoj(sql))
 					.bindMap(mapParam)
 					.mapToMap(Integer.class)
 					.list());
@@ -352,7 +352,7 @@ public abstract class AbsRepoRawJdbi extends AbsRepoJdbiCore { //implements IRep
 
 		try {
 			Optional<PrmEnt> result = jdbi.withHandle(handle -> {
-				return handle.select(Fiqt.stoj(sql))
+				return handle.select(FiQueTools.stoj(sql))
 						.bindMap(mapParam)
 						.mapTo(resultClazz)
 						.findFirst();

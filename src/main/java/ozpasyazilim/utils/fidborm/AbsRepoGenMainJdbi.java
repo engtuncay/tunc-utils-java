@@ -73,7 +73,7 @@ public class AbsRepoGenMainJdbi<EntClazz> extends AbsRepoJdbiCore {
 
         try {
             List<EntClazz> result = getJdbi().withHandle(handle -> {
-                return handle.createQuery(Fiqt.stoj(sqlQuery))
+                return handle.createQuery(FiQueTools.stoj(sqlQuery))
                         .bindMap(mapBind)
                         .mapToBean(getEntityClass())
                         .list();
@@ -101,7 +101,7 @@ public class AbsRepoGenMainJdbi<EntClazz> extends AbsRepoJdbiCore {
 
         try {
             List<PrmEnt> result = getJdbi().withHandle(handle -> {
-                return handle.createQuery(Fiqt.stoj(sqlQuery))
+                return handle.createQuery(FiQueTools.stoj(sqlQuery))
                         .bindMap(mapBind)
                         .mapToBean(clazz)
                         .list();
@@ -126,7 +126,7 @@ public class AbsRepoGenMainJdbi<EntClazz> extends AbsRepoJdbiCore {
 
         try {
             result = jdbi.withHandle(handle -> {
-                return handle.createQuery(Fiqt.stoj(sqlQuery))
+                return handle.createQuery(FiQueTools.stoj(sqlQuery))
                         .bindMap(mapBind)
                         .mapToBean(getEntityClass())
                         .list();
@@ -151,7 +151,7 @@ public class AbsRepoGenMainJdbi<EntClazz> extends AbsRepoJdbiCore {
 
         try {
             List<EntClazz> result = getJdbi().withHandle(handle -> {
-                return handle.createQuery(Fiqt.stoj(sqlQuery))
+                return handle.createQuery(FiQueTools.stoj(sqlQuery))
                         .bindBean(entClazz)
                         .mapToBean(getEntityClass())
                         .list();
@@ -178,7 +178,7 @@ public class AbsRepoGenMainJdbi<EntClazz> extends AbsRepoJdbiCore {
 
         try {
             List<EntClazz> result = getJdbi().withHandle(handle -> {
-                return handle.createQuery(Fiqt.stoj(sqlQuery))
+                return handle.createQuery(FiQueTools.stoj(sqlQuery))
                         .bindMap(mapParams)
                         .bindBean(entClazz)
                         .mapToBean(getEntityClass())
@@ -203,7 +203,7 @@ public class AbsRepoGenMainJdbi<EntClazz> extends AbsRepoJdbiCore {
         List<EntClazz> result = null;
         try {
             result = jdbi.withHandle(handle -> {
-                return handle.createQuery(Fiqt.fimSqlQueryWithDeActType1(sqlQuery))
+                return handle.createQuery(FiQueTools.fimSqlQueryWithDeActType1(sqlQuery))
                         .bindMap(mapBind)
                         .mapToBean(getEntityClass())
                         .list();
@@ -225,7 +225,7 @@ public class AbsRepoGenMainJdbi<EntClazz> extends AbsRepoJdbiCore {
 
         try {
             List<EntClazz> result = getJdbi().withHandle(handle -> {
-                return handle.createQuery(Fiqt.fimSqlQueryWithDeActType1(sqlQuery))
+                return handle.createQuery(FiQueTools.fimSqlQueryWithDeActType1(sqlQuery))
                         .bindMap(mapBind)
                         .mapToBean(getEntityClass())
                         .list();
@@ -247,7 +247,7 @@ public class AbsRepoGenMainJdbi<EntClazz> extends AbsRepoJdbiCore {
 
         try {
             List<Fkb> result = getJdbi().withHandle(handle -> {
-                return handle.createQuery(Fiqt.stoj(sqlQuery))
+                return handle.createQuery(FiQueTools.stoj(sqlQuery))
                         .bindMap(mapBind)
                         .map(new FiKeyBeanMapper(false))
                         .list();
@@ -269,7 +269,7 @@ public class AbsRepoGenMainJdbi<EntClazz> extends AbsRepoJdbiCore {
 
         try {
             List<String> result = getJdbi().withHandle(handle -> {
-                return handle.select(Fiqt.stoj(sql))
+                return handle.select(FiQueTools.stoj(sql))
                         .bindMap(fiKeyBean)
                         .mapTo(String.class)
                         .collect(Collectors.toList());
