@@ -189,13 +189,13 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
   /**
    * Değer ataması öncesinde Node comp'ine özel renderer yapacaksak bu fonksiyonu kulanırız. (formlarda alanlar için, tabloda editor için)
    */
-  private BiConsumer<Object, Node> fnEditorNodeRendererBeforeSettingValue;
+  private BiConsumer<Object, Node> fnEditorNodeLfcBeforeSettingValue;
 
   /**
    * Değer ataması sonrasında bileşene(comp) yapılacak işlemler. Genellikle Object olarak entity gönderilir.
    */
-  private BiConsumer<Object, Node> fnEditorNodeRendererAfterInitialValue1;
-  private BiConsumer<Object, Node> fnEditorNodeRendererAfterInitialValue2;
+  private BiConsumer<Object, Node> fnEditorNodeLfcAfterInitialValue1;
+  private BiConsumer<Object, Node> fnEditorNodeLfcAfterInitialValue2;
 
   /**
    * Form yüklendikten (After Setup) sonra çalıştırılacak
@@ -832,19 +832,19 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
    * @param comp
    */
   public void lifeCycleNodeOperationsBeforeSettingValue(Object entity, Node comp) {
-    if (getFnEditorNodeRendererBeforeSettingValue() != null) {
-      getFnEditorNodeRendererBeforeSettingValue().accept(entity, comp);
+    if (getFnEditorNodeLfcBeforeSettingValue() != null) {
+      getFnEditorNodeLfcBeforeSettingValue().accept(entity, comp);
     }
   }
 
   public void lifeCycleNodeOperationsAfterInitialValue(Object entity, Node comp) {
 
-    if (getFnEditorNodeRendererAfterInitialValue1() != null) {
-      getFnEditorNodeRendererAfterInitialValue1().accept(entity, comp);
+    if (getFnEditorNodeLfcAfterInitialValue1() != null) {
+      getFnEditorNodeLfcAfterInitialValue1().accept(entity, comp);
     }
 
-    if (getFnEditorNodeRendererAfterInitialValue2() != null) {
-      getFnEditorNodeRendererAfterInitialValue2().accept(entity, comp);
+    if (getFnEditorNodeLfcAfterInitialValue2() != null) {
+      getFnEditorNodeLfcAfterInitialValue2().accept(entity, comp);
     }
 
   }
@@ -1273,12 +1273,12 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     this.colEditorNode = colEditorNode;
   }
 
-  public BiConsumer<Object, Node> getFnEditorNodeRendererBeforeSettingValue() {
-    return fnEditorNodeRendererBeforeSettingValue;
+  public BiConsumer<Object, Node> getFnEditorNodeLfcBeforeSettingValue() {
+    return fnEditorNodeLfcBeforeSettingValue;
   }
 
   public void setFnEditorNodeRendererOnLoad(BiConsumer<Object, Node> fnEditorNodeRendererOnLoad) {
-    this.fnEditorNodeRendererBeforeSettingValue = fnEditorNodeRendererOnLoad;
+    this.fnEditorNodeLfcBeforeSettingValue = fnEditorNodeRendererOnLoad;
   }
 
   @Override
@@ -1491,30 +1491,30 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     this.fnEditorNodeAfterChangeForForm = fnEditorNodeAfterChangeForForm;
   }
 
-  public void setFnEditorNodeRendererBeforeSettingValue(BiConsumer<Object, Node> fnEditorNodeRendererBeforeSettingValue) {
-    this.fnEditorNodeRendererBeforeSettingValue = fnEditorNodeRendererBeforeSettingValue;
+  public void setFnEditorNodeLfcBeforeSettingValue(BiConsumer<Object, Node> fnEditorNodeLfcBeforeSettingValue) {
+    this.fnEditorNodeLfcBeforeSettingValue = fnEditorNodeLfcBeforeSettingValue;
   }
 
-  public FiCol buiFnEditorNodeRendererBeforeSettingValue(BiConsumer<Object, Node> fnEditorNodeRendererBeforeSettingValue) {
-    this.fnEditorNodeRendererBeforeSettingValue = fnEditorNodeRendererBeforeSettingValue;
+  public FiCol buiFnEditorNodeLfcBeforeSettingValue(BiConsumer<Object, Node> fnEditorNodeRendererBeforeSettingValue) {
+    this.fnEditorNodeLfcBeforeSettingValue = fnEditorNodeRendererBeforeSettingValue;
     return this;
   }
 
-  public BiConsumer<Object, Node> getFnEditorNodeRendererAfterInitialValue1() {
-    return fnEditorNodeRendererAfterInitialValue1;
+  public BiConsumer<Object, Node> getFnEditorNodeLfcAfterInitialValue1() {
+    return fnEditorNodeLfcAfterInitialValue1;
   }
 
-  public FiCol setFnEditorNodeRendererAfterInitialValue1(BiConsumer<Object, Node> fnEditorNodeRendererAfterInitialValue1) {
-    this.fnEditorNodeRendererAfterInitialValue1 = fnEditorNodeRendererAfterInitialValue1;
+  public FiCol setFnEditorNodeLfcAfterInitialValue1(BiConsumer<Object, Node> fnEditorNodeLfcAfterInitialValue1) {
+    this.fnEditorNodeLfcAfterInitialValue1 = fnEditorNodeLfcAfterInitialValue1;
     return this;
   }
 
-  public BiConsumer<Object, Node> getFnEditorNodeRendererAfterInitialValue2() {
-    return fnEditorNodeRendererAfterInitialValue2;
+  public BiConsumer<Object, Node> getFnEditorNodeLfcAfterInitialValue2() {
+    return fnEditorNodeLfcAfterInitialValue2;
   }
 
-  public FiCol setFnEditorNodeRendererAfterInitialValue2(BiConsumer<Object, Node> fnEditorNodeRendererAfterInitialValue2) {
-    this.fnEditorNodeRendererAfterInitialValue2 = fnEditorNodeRendererAfterInitialValue2;
+  public FiCol setFnEditorNodeLfcAfterInitialValue2(BiConsumer<Object, Node> fnEditorNodeLfcAfterInitialValue2) {
+    this.fnEditorNodeLfcAfterInitialValue2 = fnEditorNodeLfcAfterInitialValue2;
     return this;
   }
 

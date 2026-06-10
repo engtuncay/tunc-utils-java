@@ -815,7 +815,7 @@ public class FxTableColDep<Clazz> extends TableColumn implements IFiCol<Clazz> {
 		this.fnEditorSetOnAction = fnEditorSetOnAction;
 	}
 
-	public BiConsumer<Object, Node> getFnEditorNodeRendererBeforeSettingValue() {
+	public BiConsumer<Object, Node> getFnEditorNodeLfcBeforeSettingValue() {
 		return fnEditorNodeRenderer;
 	}
 

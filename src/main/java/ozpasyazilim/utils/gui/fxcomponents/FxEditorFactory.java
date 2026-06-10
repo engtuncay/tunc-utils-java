@@ -916,8 +916,8 @@ public class FxEditorFactory {
 
     Node comp = genNodeCompByClassNameMain(ifiCol.getColEditorClass(), null, ifiCol.getColType());
 
-    if (ifiCol.getFnEditorNodeRendererBeforeSettingValue() != null) {
-      ifiCol.getFnEditorNodeRendererBeforeSettingValue().accept(entity, comp);
+    if (ifiCol.getFnEditorNodeLfcBeforeSettingValue() != null) {
+      ifiCol.getFnEditorNodeLfcBeforeSettingValue().accept(entity, comp);
     }
 
     if (ifiCol.getColEditorClass() == null) ifiCol.setColEditorClass(comp.getClass().getName());

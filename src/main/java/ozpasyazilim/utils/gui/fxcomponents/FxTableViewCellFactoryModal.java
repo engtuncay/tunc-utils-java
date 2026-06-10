@@ -309,8 +309,8 @@ public class FxTableViewCellFactoryModal {
                   }
                 });
 
-                if (fxTableCol.getRefFiCol().getFnEditorNodeRendererBeforeSettingValue() != null) {
-                  fxTableCol.getRefFiCol().getFnEditorNodeRendererBeforeSettingValue().accept(entity, node);
+                if (fxTableCol.getRefFiCol().getFnEditorNodeLfcBeforeSettingValue() != null) {
+                  fxTableCol.getRefFiCol().getFnEditorNodeLfcBeforeSettingValue().accept(entity, node);
                 }
 
               } else {
@@ -356,8 +356,8 @@ public class FxTableViewCellFactoryModal {
 
                   EntClazz entity = getTableView().getItems().get(getIndex());
 
-                  if (fxTableCol.getRefFiCol().getFnEditorNodeRendererBeforeSettingValue() != null) {
-                    fxTableCol.getRefFiCol().getFnEditorNodeRendererBeforeSettingValue().accept(entity, btn);
+                  if (fxTableCol.getRefFiCol().getFnEditorNodeLfcBeforeSettingValue() != null) {
+                    fxTableCol.getRefFiCol().getFnEditorNodeLfcBeforeSettingValue().accept(entity, btn);
                   }
 
                   btn.setOnAction(event -> {
@@ -368,8 +368,8 @@ public class FxTableViewCellFactoryModal {
                     if (fxTableCol.getRefFiCol().getFnEditorSetOnAction() != null)
                       fxTableCol.getRefFiCol().getFnEditorSetOnAction().accept(entity, btn);
 
-                    if (fxTableCol.getRefFiCol().getFnEditorNodeRendererBeforeSettingValue() != null)
-                      fxTableCol.getRefFiCol().getFnEditorNodeRendererBeforeSettingValue().accept(entity, btn);
+                    if (fxTableCol.getRefFiCol().getFnEditorNodeLfcBeforeSettingValue() != null)
+                      fxTableCol.getRefFiCol().getFnEditorNodeLfcBeforeSettingValue().accept(entity, btn);
 
                     //new FiProperty().setter(entity,fxTableCol.getFieldName(),true);
 
@@ -413,8 +413,8 @@ public class FxTableViewCellFactoryModal {
 
                   EntClazz entity = getTableView().getItems().get(getIndex());
 
-                  if (fxTableCol.getRefFiCol().getFnEditorNodeRendererBeforeSettingValue() != null) {
-                    fxTableCol.getRefFiCol().getFnEditorNodeRendererBeforeSettingValue().accept(entity, nodeComp);
+                  if (fxTableCol.getRefFiCol().getFnEditorNodeLfcBeforeSettingValue() != null) {
+                    fxTableCol.getRefFiCol().getFnEditorNodeLfcBeforeSettingValue().accept(entity, nodeComp);
                   }
 
                   //ikonların ayarlanması
@@ -468,8 +468,8 @@ public class FxTableViewCellFactoryModal {
 
                   EntClazz entity = getTableView().getItems().get(getIndex());
 
-                  if (fxTableCol.getRefFiCol().getFnEditorNodeRendererBeforeSettingValue() != null) {
-                    fxTableCol.getRefFiCol().getFnEditorNodeRendererBeforeSettingValue().accept(entity, btn);
+                  if (fxTableCol.getRefFiCol().getFnEditorNodeLfcBeforeSettingValue() != null) {
+                    fxTableCol.getRefFiCol().getFnEditorNodeLfcBeforeSettingValue().accept(entity, btn);
                   }
 
                   btn.setOnAction(event -> {
@@ -522,8 +522,8 @@ public class FxTableViewCellFactoryModal {
 
                   EntClazz entity = getTableView().getItems().get(getIndex());
 
-                  if (fxTableCol.getRefFiCol().getFnEditorNodeRendererBeforeSettingValue() != null) {
-                    fxTableCol.getRefFiCol().getFnEditorNodeRendererBeforeSettingValue().accept(entity, btn);
+                  if (fxTableCol.getRefFiCol().getFnEditorNodeLfcBeforeSettingValue() != null) {
+                    fxTableCol.getRefFiCol().getFnEditorNodeLfcBeforeSettingValue().accept(entity, btn);
                   }
 
                   btn.setOnAction(event -> {
@@ -535,8 +535,8 @@ public class FxTableViewCellFactoryModal {
                     // Action gerçekleştirilir, daha sonra renderer işlemleri yapılır
                     fxTableCol.getRefFiCol().getFnEditorSetOnAction().accept(entity, btn);
 
-                    if (fxTableCol.getRefFiCol().getFnEditorNodeRendererBeforeSettingValue() != null)
-                      fxTableCol.getRefFiCol().getFnEditorNodeRendererBeforeSettingValue().accept(entity, btn);
+                    if (fxTableCol.getRefFiCol().getFnEditorNodeLfcBeforeSettingValue() != null)
+                      fxTableCol.getRefFiCol().getFnEditorNodeLfcBeforeSettingValue().accept(entity, btn);
 
                     //new FiProperty().setter(entity,fxTableCol.getFieldName(),true);
                     //fxTableCol.getCellFactoryNodeBiAction().accept(entity,btn);
@@ -678,9 +678,9 @@ public class FxTableViewCellFactoryModal {
                   setText(null);
                 } else { // empty false ise
 
-                  if (fxTableCol.getRefFiCol().getFnEditorNodeRendererBeforeSettingValue() != null) {
+                  if (fxTableCol.getRefFiCol().getFnEditorNodeLfcBeforeSettingValue() != null) {
                     EntClazz entity = getTableView().getItems().get(getIndex());
-                    fxTableCol.getRefFiCol().getFnEditorNodeRendererBeforeSettingValue().accept(entity, nodeComp);
+                    fxTableCol.getRefFiCol().getFnEditorNodeLfcBeforeSettingValue().accept(entity, nodeComp);
                   }
 
                   if (fxTableCol.getRefFiCol().getFnEditorNodeRendererWithCol() != null) {
@@ -704,8 +704,8 @@ public class FxTableViewCellFactoryModal {
                       fxTableCol.getRefFiCol().getFnEditorSetOnAction().accept(entity, nodeComp);
 
 
-                      if (fxTableCol.getRefFiCol().getFnEditorNodeRendererBeforeSettingValue() != null) {
-                        fxTableCol.getRefFiCol().getFnEditorNodeRendererBeforeSettingValue().accept(entity, nodeComp);
+                      if (fxTableCol.getRefFiCol().getFnEditorNodeLfcBeforeSettingValue() != null) {
+                        fxTableCol.getRefFiCol().getFnEditorNodeLfcBeforeSettingValue().accept(entity, nodeComp);
                       }
 
 
@@ -783,8 +783,8 @@ public class FxTableViewCellFactoryModal {
                 } else { // empty false ise
 
                   EntClazz entity = getTableView().getItems().get(getIndex());
-                  if (fxTableCol.getRefFiCol().getFnEditorNodeRendererBeforeSettingValue() != null) {
-                    fxTableCol.getRefFiCol().getFnEditorNodeRendererBeforeSettingValue().accept(entity, nodeComp);
+                  if (fxTableCol.getRefFiCol().getFnEditorNodeLfcBeforeSettingValue() != null) {
+                    fxTableCol.getRefFiCol().getFnEditorNodeLfcBeforeSettingValue().accept(entity, nodeComp);
                   }
 
                   setGraphic(nodeComp);

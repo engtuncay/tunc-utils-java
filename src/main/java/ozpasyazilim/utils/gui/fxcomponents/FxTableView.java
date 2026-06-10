@@ -424,8 +424,8 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 									} else { // empty false ise
 
 										EntClazz entity = getTableView().getItems().get(getIndex());
-										if (fxTableColDep.getFnEditorNodeRendererBeforeSettingValue() != null) {
-											fxTableColDep.getFnEditorNodeRendererBeforeSettingValue().accept(entity, nodeComp);
+										if (fxTableColDep.getFnEditorNodeLfcBeforeSettingValue() != null) {
+											fxTableColDep.getFnEditorNodeLfcBeforeSettingValue().accept(entity, nodeComp);
 										}
 
 										setGraphic(nodeComp);
@@ -466,9 +466,9 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 										setText(null);
 									} else { // empty false ise
 
-										if (fxTableColDep.getFnEditorNodeRendererBeforeSettingValue() != null) {
+										if (fxTableColDep.getFnEditorNodeLfcBeforeSettingValue() != null) {
 											EntClazz entity = getTableView().getItems().get(getIndex());
-											fxTableColDep.getFnEditorNodeRendererBeforeSettingValue().accept(entity, nodeComp);
+											fxTableColDep.getFnEditorNodeLfcBeforeSettingValue().accept(entity, nodeComp);
 										}
 
 										if (fxTableColDep.getFnEditorNodeRendererWithCol() != null) {
@@ -492,8 +492,8 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 												fxTableColDep.getFnEditorSetOnAction().accept(entity, nodeComp);
 
 
-												if (fxTableColDep.getFnEditorNodeRendererBeforeSettingValue() != null) {
-													fxTableColDep.getFnEditorNodeRendererBeforeSettingValue().accept(entity, nodeComp);
+												if (fxTableColDep.getFnEditorNodeLfcBeforeSettingValue() != null) {
+													fxTableColDep.getFnEditorNodeLfcBeforeSettingValue().accept(entity, nodeComp);
 												}
 
 
@@ -683,8 +683,8 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 										EntClazz entity = getTableView().getItems().get(getIndex());
 
-										if (fxTableColDep.getFnEditorNodeRendererBeforeSettingValue() != null) {
-											fxTableColDep.getFnEditorNodeRendererBeforeSettingValue().accept(entity, btn);
+										if (fxTableColDep.getFnEditorNodeLfcBeforeSettingValue() != null) {
+											fxTableColDep.getFnEditorNodeLfcBeforeSettingValue().accept(entity, btn);
 										}
 
 										btn.setOnAction(event -> {
@@ -696,8 +696,8 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 											// Action gerçekleştirilir, daha sonra renderer işlemleri yapılır
 											fxTableColDep.getFnEditorSetOnAction().accept(entity, btn);
 
-											if (fxTableColDep.getFnEditorNodeRendererBeforeSettingValue() != null)
-												fxTableColDep.getFnEditorNodeRendererBeforeSettingValue().accept(entity, btn);
+											if (fxTableColDep.getFnEditorNodeLfcBeforeSettingValue() != null)
+												fxTableColDep.getFnEditorNodeLfcBeforeSettingValue().accept(entity, btn);
 
 											//new FiProperty().setter(entity,fxTableCol.getFieldName(),true);
 											//fxTableCol.getCellFactoryNodeBiAction().accept(entity,btn);
@@ -743,8 +743,8 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 										EntClazz entity = getTableView().getItems().get(getIndex());
 
-										if (fxTableColDep.getFnEditorNodeRendererBeforeSettingValue() != null) {
-											fxTableColDep.getFnEditorNodeRendererBeforeSettingValue().accept(entity, btn);
+										if (fxTableColDep.getFnEditorNodeLfcBeforeSettingValue() != null) {
+											fxTableColDep.getFnEditorNodeLfcBeforeSettingValue().accept(entity, btn);
 										}
 
 										btn.setOnAction(event -> {
@@ -801,8 +801,8 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 										EntClazz entity = getTableView().getItems().get(getIndex());
 
-										if (fxTableColDep.getFnEditorNodeRendererBeforeSettingValue() != null) {
-											fxTableColDep.getFnEditorNodeRendererBeforeSettingValue().accept(entity, btn);
+										if (fxTableColDep.getFnEditorNodeLfcBeforeSettingValue() != null) {
+											fxTableColDep.getFnEditorNodeLfcBeforeSettingValue().accept(entity, btn);
 										}
 
 										btn.setOnAction(event -> {
@@ -813,8 +813,8 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 											if (fxTableColDep.getFnEditorSetOnAction() != null)
 												fxTableColDep.getFnEditorSetOnAction().accept(entity, btn);
 
-											if (fxTableColDep.getFnEditorNodeRendererBeforeSettingValue() != null)
-												fxTableColDep.getFnEditorNodeRendererBeforeSettingValue().accept(entity, btn);
+											if (fxTableColDep.getFnEditorNodeLfcBeforeSettingValue() != null)
+												fxTableColDep.getFnEditorNodeLfcBeforeSettingValue().accept(entity, btn);
 
 											//new FiProperty().setter(entity,fxTableCol.getFieldName(),true);
 

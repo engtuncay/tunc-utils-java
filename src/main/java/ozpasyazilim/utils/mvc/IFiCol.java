@@ -202,7 +202,7 @@ public interface IFiCol<N> {
 
 	public void setColEditorNode(Node colEditorNode);
 
-	public BiConsumer<Object, Node> getFnEditorNodeRendererBeforeSettingValue();
+	public BiConsumer<Object, Node> getFnEditorNodeLfcBeforeSettingValue();
 
 	public void setFnEditorNodeRendererOnLoad(BiConsumer<Object, Node> fnEditorNodeRendererOnLoad);
 
