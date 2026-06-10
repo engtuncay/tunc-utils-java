@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
  * <p>
  * Fiqt -> FiQueryTools kısaltması
  */
-public class Fiqt {
+public class FiQueTools {
 
     /**
      * Tüm optional parametreleri ( --!optParam ) deaktif eder. (alt satır yoruma alınmasa bile deaktif olur)
@@ -312,17 +312,17 @@ public class Fiqt {
             if (FiBool.isTrue(boActivateOnlyFullParams)) {
 
                 // Dolu olanları aktif edecek, boş olanları deaktif edecek
-                Boolean boCheckParamsEmpty = Fiqt.checkParamsEmpty(value);
+                Boolean boCheckParamsEmpty = FiQueTools.checkParamsEmpty(value);
 
                 if (FiBool.isFalse(boCheckParamsEmpty)) {
                     spQuery.set(activateOptParamMain(spQuery.get(), key));
                 } else {
-                    spQuery.set(Fiqt.deActivateOptParamMain(spQuery.get(), key));
+                    spQuery.set(FiQueTools.deActivateOptParamMain(spQuery.get(), key));
                     listParamsDeActivated.add(key);
                 }
 
             } else { // boActivateOnlyFullParams false veya null ise, tüm parametreleri aktif eder
-                spQuery.set(Fiqt.activateOptParamMain(spQuery.get(), key));
+                spQuery.set(FiQueTools.activateOptParamMain(spQuery.get(), key));
             }
         });
 
@@ -350,7 +350,7 @@ public class Fiqt {
 
             if (!mapParams.containsKey(optParam)) {
                 //listParamsWillDeActivate.add(optParam);
-                spQuery.set(Fiqt.deActivateOptParamMain(spQuery.get(), optParam));
+                spQuery.set(FiQueTools.deActivateOptParamMain(spQuery.get(), optParam));
                 //mapParams.remove(deActivatedParam);
             }
 
@@ -407,7 +407,7 @@ public class Fiqt {
 
         int index = 0;
         for (Object listDatum : collParamData) {
-            String sablonParam = Fiqt.makeMultiParamTemplate(param, index);
+            String sablonParam = FiQueTools.makeMultiParamTemplate(param, index);
             if (index != 0) sbNewParamsForQuery.append(",");
             sbNewParamsForQuery.append("@").append(sablonParam);
             paramsNew.put(sablonParam, listDatum);
@@ -449,7 +449,7 @@ public class Fiqt {
 
         int index = 0;
         for (Object listDatum : collParamData) {
-            String sablonParam = Fiqt.makeMultiParamTemplate(param, index);
+            String sablonParam = FiQueTools.makeMultiParamTemplate(param, index);
             if (index != 0) sbNewParamsForQuery.append(txCombineSeperator);
             sbNewParamsForQuery.append("@").append(sablonParam);
             //paramsNew.put(sablonParam, listDatum);
@@ -563,7 +563,7 @@ public class Fiqt {
             // "--sqlCount" altındaki ilk satırı yakala
             String result = matcher.group(1).trim(); // Altındaki satır (-- ile başlıyor)
             result = result.replaceFirst("--SELECT", "SELECT");
-            result = Fiqt.deActivateForSqlCount(result);
+            result = FiQueTools.deActivateForSqlCount(result);
             return result;
         } else {
             return null;
