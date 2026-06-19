@@ -225,8 +225,7 @@ public class FiSoap {
       fdrRequest = requestRawHttp(endPoint, soapRequestXml, mapHeaders);
     }
 
-    //fdrXmlDoc.addLogInfo("Request Raw Yapıldı Cuid:cmkw8sl9o0002d452va6iebgd");
-
+    //fdrXmlDoc.addLogInfo("Request Raw Yapıldı");
     //Loghelper.get(FiSoap.class).debug("Response:" + fdrRequest.getValue());
 
     if (fdrRequest.isTrueBoResult()) {

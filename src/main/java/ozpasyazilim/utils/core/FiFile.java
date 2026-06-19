@@ -575,7 +575,7 @@ public class FiFile {
         try {
             Process process = new ProcessBuilder("cmd", "/c", txPath).start();
         } catch (IOException e) {
-            FxDialogShow.showPopError("Pdf dosya açılırken hata oluştu.");
+            FxDialogShow.showPopError("Dosya açılırken hata oluştu.");
             Loghelper.get(FiFile.class).error(FiException.exTosMain(e));
         }
 

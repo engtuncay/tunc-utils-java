@@ -116,7 +116,10 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
    */
   private Integer lnSuccessOpCount;
 
-  private Integer lnFailureOpCount;
+  /**
+   * Fail Operation Count (Başarısız işlem sayısı)
+   */
+  private Integer lnFailOprCount;
 
   private String txQueryType;
 
@@ -250,7 +253,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
 //		fdrNew.setRowsAffectedExtraWorks(fdrOld.getRowsAffectedExtraWorks());
 //		fdrNew.setRowsAffectedExtraByEntity(fdrOld.getRowsAffectedExtraByEntity());
     fdrNew.setLnSuccessOpCount(fdrOld.getLnSuccessOpCountInit());
-    fdrNew.setLnFailureOpCount(fdrOld.getLnFailureOpCountInit());
+    fdrNew.setLnFailOprCount(fdrOld.getLnFailOprCountInit());
   }
 
   public static Fdr creBoResult(Boolean boResult) {
@@ -446,7 +449,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
 
   public void appendLnFalseResult(Integer lnFailureCount) {
     if (lnFailureCount == null) return;
-    setLnFailureOpCount(getLnFailureOpCountInit() + lnFailureCount);
+    setLnFailOprCount(getLnFailOprCountInit() + lnFailureCount);
   }
 
   public void appendLnInserted(Integer lnInsertedRows) {
@@ -520,7 +523,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     // And işlemi olduğu false sonuç, boResult false yapar
     if (FiBool.isFalse(fdrSubWork.getFdBoResult())) {
       setFdBoResult(false);
-      setLnFailureOpCount(getLnFailureOpCountInit() + 1);
+      setLnFailOprCount(getLnFailOprCountInit() + 1);
     }
 
     if (FiBool.isTrue(fdrSubWork.getFdBoResult())) {
@@ -657,15 +660,15 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     this.lnSuccessOpCount = lnSuccessOpCount;
   }
 
-  public Integer getLnFailureOpCountInit() {
-    if (lnFailureOpCount == null) {
-      lnFailureOpCount = 0;
+  public Integer getLnFailOprCountInit() {
+    if (lnFailOprCount == null) {
+      lnFailOprCount = 0;
     }
-    return lnFailureOpCount;
+    return lnFailOprCount;
   }
 
-  public void setLnFailureOpCount(Integer lnFailureOpCount) {
-    this.lnFailureOpCount = lnFailureOpCount;
+  public void setLnFailOprCount(Integer lnFailOprCount) {
+    this.lnFailOprCount = lnFailOprCount;
   }
 
   public Boolean getBoResultInit() {
@@ -699,7 +702,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
   }
 
   public Boolean getBoPartialSuccces2() {
-    if (getLnSuccessOpCountInit() > 0 && getLnFailureOpCountInit() > 0) {
+    if (getLnSuccessOpCountInit() > 0 && getLnFailOprCountInit() > 0) {
       return true;
     }
     return false;
@@ -1274,8 +1277,8 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     this.lnStatus = lnStatus;
   }
 
-  public Integer getLnFailureOpCount() {
-    return lnFailureOpCount;
+  public Integer getLnFailOprCount() {
+    return lnFailOprCount;
   }
 
   public Boolean getBoOpResult() {
