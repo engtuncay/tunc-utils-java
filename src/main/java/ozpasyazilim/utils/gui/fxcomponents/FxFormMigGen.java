@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * FxForm -> FxForm with FxFormConfig
+ * FxForm with FxFormConfig
  * <p>
  * Form config bilgileri, FxFormConfig objesinde tutulur.
  *

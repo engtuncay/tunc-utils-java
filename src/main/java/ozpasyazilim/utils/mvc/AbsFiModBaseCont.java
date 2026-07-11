@@ -132,12 +132,10 @@ public abstract class AbsFiModBaseCont implements IFiModCont {
 
   public void openAsNonModalMain(DialogConf dialogConf) {
 
-    if (dialogConf == null) {
-      dialogConf = new DialogConf();
-    }
+    if (dialogConf == null) dialogConf = new DialogConf();
+
     dialogConf.setBoNonModal(true);
     openAsWindowMain(dialogConf);
-
   }
 
   public void openAsModalMain(DialogConf dialogConf) {
