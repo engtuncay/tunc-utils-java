@@ -2,7 +2,7 @@ package ozpasyazilim.utils.core;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ozpasyazilim.utils.datatypes.Fkb;
-import ozpasyazilim.utils.datatypes.FiKeytext;
+import ozpasyazilim.utils.datatypes.Fks;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.returntypes.Fdr;
 
@@ -15,14 +15,14 @@ import java.util.Map;
 
 public class FiRest {
 
-  FiKeytext mapHeaders;
+  Fks mapHeaders;
 
   private static Class<FiRest> getClassi() {
     return FiRest.class;
   }
 
   // Convenience overloads for HTTPS and defaults
-  public static Fdr requestRest(String endPoint, String body, FiKeytext headers, String httpMethod, String contentType) {
+  public static Fdr requestRest(String endPoint, String body, Fks headers, String httpMethod, String contentType) {
     Fdr fdrMain = new Fdr();
 
     try {
@@ -139,11 +139,11 @@ public class FiRest {
   }
 
 
-  public FiKeytext getMapHeaders() {
+  public Fks getMapHeaders() {
     return mapHeaders;
   }
 
-  public void setMapHeaders(FiKeytext mapHeaders) {
+  public void setMapHeaders(Fks mapHeaders) {
     this.mapHeaders = mapHeaders;
   }
 

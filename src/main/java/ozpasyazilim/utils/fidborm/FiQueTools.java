@@ -563,6 +563,7 @@ public class FiQueTools {
             // "--sqlCount" altındaki ilk satırı yakala
             String result = matcher.group(1).trim(); // Altındaki satır (-- ile başlıyor)
             result = result.replaceFirst("--SELECT", "SELECT");
+            // bazı satırlar sql count sorgusunda kaldırılması gerekiyor
             result = FiQueTools.deActivateForSqlCount(result);
             return result;
         } else {

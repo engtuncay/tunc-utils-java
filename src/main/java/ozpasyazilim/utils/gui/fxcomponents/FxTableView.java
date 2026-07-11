@@ -163,19 +163,19 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 			if (!blDefined && ozTableColumn.getColType() == OzColType.String || ozTableColumn.getColType() == OzColType.Double
 					|| ozTableColumn.getColType() == OzColType.Integer) {
 				ozTableColumn.setFilterNodeClass(FxTextField.class.getName());
-				nodeGenerated = new FxEditorFactory().generateAndSetFilterNode(ozTableColumn);
+				nodeGenerated = FxEditorFactory.generateAndSetFilterNode(ozTableColumn);
 				blDefined = true;
 			}
 
 			if (!blDefined && ozTableColumn.getColType() == OzColType.Date) {
 				ozTableColumn.setFilterNodeClass(FxDatePicker.class.getName());
-				nodeGenerated = new FxEditorFactory().generateAndSetFilterNode(ozTableColumn);
+				nodeGenerated = FxEditorFactory.generateAndSetFilterNode(ozTableColumn);
 				blDefined = true;
 			}
 
 			if (!blDefined) {
 				ozTableColumn.setFilterNodeClass(FxTextField.class.getName());
-				nodeGenerated = new FxEditorFactory().generateAndSetFilterNode(ozTableColumn);
+				nodeGenerated = FxEditorFactory.generateAndSetFilterNode(ozTableColumn);
 				blDefined = true;
 			}
 

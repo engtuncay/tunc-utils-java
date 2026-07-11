@@ -12,13 +12,13 @@ import java.util.*;
 /**
  * Map [String,String] türünde özel tip
  */
-public class FiKeytext extends HashMap<String, String> {
+public class Fks extends HashMap<String, String> {
 
-  public FiKeytext() {
+  public Fks() {
   }
 
-  public static FiKeytext build() {
-    return new FiKeytext();
+  public static Fks build() {
+    return new Fks();
   }
 
   public void clearEmptyKeys() {
@@ -53,14 +53,14 @@ public class FiKeytext extends HashMap<String, String> {
     return FiString.orEmpty(get(txKey.toString()));
   }
 
-  public FiKeytext buiPut(Object fieldName, String value) {
+  public Fks buiPut(Object fieldName, String value) {
     if (fieldName == null) return this;
 
     this.put(fieldName.toString(), value);
     return this;
   }
 
-  public FiKeytext buiPutIfNotNull(Object fieldName, String value) {
+  public Fks buiPutIfNotNull(Object fieldName, String value) {
     if (fieldName == null) return this;
     if (value == null) return this;
 
@@ -68,13 +68,13 @@ public class FiKeytext extends HashMap<String, String> {
     return this;
   }
 
-  public FiKeytext bind(Object key, String value) {
+  public Fks bind(Object key, String value) {
     if (key == null) return this;
     put(key.toString(), value);
     return this;
   }
 
-  public FiKeytext putIfNotEmpty(Object fieldName, String value, Boolean addPercentage) {
+  public Fks putIfNotEmpty(Object fieldName, String value, Boolean addPercentage) {
     if (fieldName == null) return this;
     if (FiType.isEmptyObj(value)) return this;
 
@@ -93,7 +93,7 @@ public class FiKeytext extends HashMap<String, String> {
    * @param value
    * @return
    */
-  public FiKeytext putKeyTos(Object key, String value) {
+  public Fks putKeyTos(Object key, String value) {
     this.put(key.toString(), value);
     return this;
   }
@@ -105,7 +105,7 @@ public class FiKeytext extends HashMap<String, String> {
 //    return this;
 //  }
 
-  public FiKeytext putField(FiCol fiCol, String value) {
+  public Fks putField(FiCol fiCol, String value) {
     this.put(fiCol.getFcTxFieldName(), value);
     return this;
   }

@@ -480,7 +480,13 @@ public class Fkb extends LinkedHashMap<String, Object> {
     return -1;
   }
 
-  public int getValAsBoolBitV2(String txKey) {
+  /**
+   * boşsa -1, true ise 1, false ise 0 döner
+   *
+   * @param txKey
+   * @return bool bit value
+   */
+  public int getValAsBit(String txKey) {
     if (FiString.isEmpty(txKey)) return -1;
 
     Boolean valueAsBoolV2 = getValueAsBoolV2(txKey);

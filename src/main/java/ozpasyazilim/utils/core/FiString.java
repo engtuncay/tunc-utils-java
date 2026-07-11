@@ -613,7 +613,7 @@ public class FiString {
      * @param txtVal
      * @return
      */
-    public static boolean isFullAllWithTrim(String... txtVal) {
+    public static boolean isFullAll(String... txtVal) {
         boolean boFull = true;
         for (String val : txtVal) {
             if (isEmptyTrim(val)) {

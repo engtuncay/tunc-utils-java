@@ -5,7 +5,7 @@ import javafx.geometry.Point2D;
 import ozpasyazilim.utils.datatypes.Fkb;
 import ozpasyazilim.utils.datatypes.FkbList;
 import ozpasyazilim.utils.datatypes.FiListKeyString;
-import ozpasyazilim.utils.datatypes.FiKeytext;
+import ozpasyazilim.utils.datatypes.Fks;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.table.FiCol;
 
@@ -113,11 +113,11 @@ public class FiConsole {
             Loghelper.debugLog(clazz, String.format("Map Null"));
             return;
         }
-        for (FiKeytext fiKeytext : listMap) {
+        for (Fks fks : listMap) {
             if (FiBool.isTrue(boShowNulls)) {
-                Loghelper.debugLog(clazz, String.format("Map Detail (Not Null)\n\n%s", textFiKeytext(fiKeytext)));
+                Loghelper.debugLog(clazz, String.format("Map Detail (Not Null)\n\n%s", textFiKeytext(fks)));
             } else {
-                Loghelper.debugLog(clazz, String.format("Map Detail (Not Null)\n\n%s", textMapNotNull(fiKeytext)));
+                Loghelper.debugLog(clazz, String.format("Map Detail (Not Null)\n\n%s", textMapNotNull(fks)));
             }
 
         }
@@ -868,8 +868,8 @@ public class FiConsole {
 
         sbLog.append("FiListKeyString Content\n\n");
 
-        for (FiKeytext fiKeytext : fiListKeyString) {
-            sbLog.append(FiConsole.textFiKeytext(fiKeytext)).append("\n");
+        for (Fks fks : fiListKeyString) {
+            sbLog.append(FiConsole.textFiKeytext(fks)).append("\n");
         }
 
         Loghelper.get(FiConsole.class).debug(sbLog.toString());

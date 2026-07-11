@@ -1,6 +1,6 @@
 package ozpasyazilim.utils.core;
 
-import ozpasyazilim.utils.datatypes.FiKeytext;
+import ozpasyazilim.utils.datatypes.Fks;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.returntypes.Fdr;
 
@@ -15,15 +15,15 @@ import java.util.stream.Stream;
 
 public class FiPropertyFile {
 
-  public static Fdr<FiKeytext> readPropFile(String fileName) {
+  public static Fdr<Fks> readPropFile(String fileName) {
 
-    Fdr<FiKeytext> fdrMain = new Fdr<>();
+    Fdr<Fks> fdrMain = new Fdr<>();
 
     Path path = Paths.get(fileName);
     System.out.println("Prop File Path:" + path.toAbsolutePath());
     //Loghelper.get(getClassi()).debug("Prop File Path:"+path.toAbsolutePath());
 
-    FiKeytext propMap = new FiKeytext();
+    Fks propMap = new Fks();
 
     try (Stream<String> propFileContentStream = Files.lines(path, StandardCharsets.UTF_8)) {
       List<String> listContent = propFileContentStream.collect(Collectors.toList());
@@ -46,7 +46,7 @@ public class FiPropertyFile {
     } catch (IOException exception) {
       System.out.println("Prop File Okunurken Hata oluştu.");
       fdrMain.setMessageForAppend("Prop File Okunurken Hata Oluştu :" + fileName);
-      fdrMain.setValue(new FiKeytext());
+      fdrMain.setValue(new Fks());
       fdrMain.setBoResult(false);
       return fdrMain;
     }

@@ -18,6 +18,8 @@ public enum MetaLogType {
    * Development - Arka Plan için Mesajlar (Debug türü)
    */
   , DEV
+  , INFO_IMP
+  , WARN_IMP
 }
 
 
