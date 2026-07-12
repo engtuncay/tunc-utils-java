@@ -212,7 +212,7 @@ public class Fkb extends LinkedHashMap<String, Object> {
    * @param clazz
    * @return
    */
-  public Fkb genFkbFromEntity(Object entity, Class clazz) {
+  public Fkb convertEntityToFkb(Object entity, Class clazz) {
 
     Fkb fiKeyBean = new Fkb();
     Field[] fields = clazz.getDeclaredFields(); // returns all members including private members but not inherited members.

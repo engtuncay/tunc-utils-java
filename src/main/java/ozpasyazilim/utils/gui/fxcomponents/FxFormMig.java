@@ -32,7 +32,12 @@ public class FxFormMig extends FxFormMigGen<Object> {
     super(fxFormConfig);
   }
 
-  public Fkb getFormAsFkbNotNullKeys() {
+  /**
+   * Formda null olanlar hariç şekilde Fkb döner
+   *
+   * @return
+   */
+  public Fkb getFormAsFkbNotNullFields() {
 
     Fkb formAsFkb = FxEditorFactory.getFkbColsByEditorNodeForFiCols(getListFiColWithFormValue());
 

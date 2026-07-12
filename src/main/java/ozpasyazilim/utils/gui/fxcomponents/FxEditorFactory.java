@@ -254,6 +254,12 @@ public class FxEditorFactory {
         txClassName = FxCheckBox.class.getName();
       }
 
+      if (FiString.equalsAny(fcTxFieldType
+          , FimQcFieldType.fdate().getValue())
+      ) {
+        txClassName = FxDatePicker.class.getName();
+      }
+
     }
 
     return txClassName;
