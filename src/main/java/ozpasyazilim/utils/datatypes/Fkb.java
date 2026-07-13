@@ -331,6 +331,12 @@ public class Fkb extends LinkedHashMap<String, Object> {
   }
 
 
+  /**
+   *
+   * @param txKey key genelde fieldName'e karşılık gelen alan
+   *
+   * @return
+   */
   public Integer getAsInt(String txKey) {
 
     //Loghelper.get(getClass()).debug("getAsInt: " + txKey);

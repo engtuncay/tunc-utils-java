@@ -50,7 +50,7 @@ import java.util.stream.Collectors;
  * CellFactory : hücre üretim fabrikası TableColumn input alır, output olarak TableCell verir.
  * <p>
  * setupCellValueAndEditorFactory metodunda setup edilir.
- *
+ * <p>
  * Fkb için setupCellValueAndEditorFactoryAsFkb kullanılır
  * <p>
  * (Callback bir fonksiyondur.) Callback < TableColumn<S, T>, TableCell<S, T> >
@@ -2858,6 +2858,25 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
       return null;
     } else if (checkedByBoSelect.size() > 1) {
       //FxDialogShow.showPopWarn("Lütfen tablodan sadece bir kayıt seçiniz.");
+      return null;
+    }
+
+    return checkedByBoSelect.get(0);
+  }
+
+  public EntClazz getItemsCheckedOneOrSelectedItemWitWarn() {
+    FilteredList<EntClazz> checkedByBoSelect = getItemsCurrentFiCheckedAsSourceList();
+
+    if (checkedByBoSelect.isEmpty()) {
+
+      if (getSelectedItemFiGen() != null) {
+        return getSelectedItemFiGen();
+      }
+
+      FxDialogShow.showPopWarn("Lütfen tablodan bir kayıdı seçiniz.");
+      return null;
+    } else if (checkedByBoSelect.size() > 1) {
+      FxDialogShow.showPopWarn("Lütfen tablodan sadece bir kayıt seçiniz.");
       return null;
     }
 
