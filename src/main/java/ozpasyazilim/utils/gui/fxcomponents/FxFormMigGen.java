@@ -199,7 +199,7 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> implement
   }
 
   public Fkb getFormAsFkb() {
-    return FxEditorFactory.bindFormToFkbByEditorNode(getListFormElementsInit());
+    return FxEditorFactory.bindFormToFkbByEditorNodeV2(getListFormElementsInit());
   }
 
   public List<FiCol> getListFiColWithFormValue() {

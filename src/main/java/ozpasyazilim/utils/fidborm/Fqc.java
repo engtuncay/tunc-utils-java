@@ -12,8 +12,8 @@ public class Fqc {
   IFiTableMeta iFiTableMeta;
   FicList fclTable;
   Boolean boUpdateFieldsOnly;
-  Fkfic fkbDdFields;
-  Fkfic fkbFieldsAll;
+  Fkfic fkbDataDefs;
+  Fkfic fkficFieldsAll;
   FiCol ficIdAuto;
 
   public Fqc() {
@@ -56,20 +56,20 @@ public class Fqc {
     this.boUpdateFieldsOnly = boUpdateFieldsOnly;
   }
 
-  public Fkfic getFkbDdFields() {
-    return fkbDdFields;
+  public Fkfic getFkbDataDefs() {
+    return fkbDataDefs;
   }
 
-  public void setFkbDdFields(Fkfic fkbDdFields) {
-    this.fkbDdFields = fkbDdFields;
+  public void setFkbDataDefs(Fkfic fkbDataDefs) {
+    this.fkbDataDefs = fkbDataDefs;
   }
 
-  public Fkfic getFkbFieldsAll() {
-    return fkbFieldsAll;
+  public Fkfic getFkficFieldsAll() {
+    return fkficFieldsAll;
   }
 
-  public void setFkbFieldsAll(Fkfic fkbFieldsAll) {
-    this.fkbFieldsAll = fkbFieldsAll;
+  public void setFkficFieldsAll(Fkfic fkficFieldsAll) {
+    this.fkficFieldsAll = fkficFieldsAll;
   }
 
   public FiCol getFicIdAuto() {

@@ -1362,4 +1362,18 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
   public void setFdFkbVal(Fkb fdFkbVal) {
     this.fdFkbVal = fdFkbVal;
   }
+
+  public void logFdr() {
+
+    if(getFdTxValue()!=null) {
+      Loghelper.get(getClass()).debug("FdTxValue:" + getFdTxValue());
+    }
+
+    if(getFdFkbVal()!=null) {
+      Loghelper.get(getClass()).debug("FdFkbVal:" + getFdFkbVal());
+    }
+
+
+
+  }
 }

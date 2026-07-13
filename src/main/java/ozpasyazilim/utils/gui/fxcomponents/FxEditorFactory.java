@@ -1310,6 +1310,17 @@ public class FxEditorFactory {
     return fiKeyBean;
   }
 
+  public static Fkb bindFormToFkbByEditorNodeV2(List<FiCol> listColumns) {
+    Fkb fiKeyBean = new Fkb();
+    for (int i = 0; i < listColumns.size(); i++) {
+      FiCol fiCol = listColumns.get(i);
+      Object cellvalue = getNodeObjValue(fiCol, fiCol.getColEditorClass());    // map.get(fiCol.getHeader());
+      //Loghelperr.getInstance(getClass()).debug(" map param cell value :" + cellvalue.toString() + " class:" + cellvalue.getClass().getSimpleName());
+      fiKeyBean.put(fiCol.getFcTxFieldName().trim(), cellvalue);
+    }
+    return fiKeyBean;
+  }
+
   /**
    * putFiCol metodu kullanıldı, FiCol eklendi FiKeybean'e
    *
@@ -1365,7 +1376,41 @@ public class FxEditorFactory {
   }
 
   public static Object getNodeObjValue(FiCol fiCol, String txEditorClass) {
+
+    if (fiCol.getColType() == null) {
+      //fiCol.getFcTxFieldType();
+      Loghelper.get(FxEditorFactory.class).debug("getNodeObjValu-getColType null");
+      convertFcTxFieldTypeToOzColType(fiCol);
+    }
+
     return getValueNodeCompMain(fiCol.getColType(), txEditorClass, fiCol.getColEditorNode(), fiCol.getColValue());
+  }
+
+  /**
+   * getFcTxFieldType'a göre ColType Alanını doldurur
+   * <p>
+   * URFIX eksik tipler eklenecek
+   *
+   * @param fiCol
+   */
+  private static void convertFcTxFieldTypeToOzColType(FiCol fiCol) {
+
+    String fcTxFieldType = fiCol.getFcTxFieldType();
+
+    if (FiString.equalsAny(fcTxFieldType, FimQcFieldType.fint().getValue())) {
+      fiCol.setColType(OzColType.Integer);
+    }
+
+    if (FiString.equalsAny(fcTxFieldType, FimQcFieldType.fdate().getValue())) {
+      fiCol.setColType(OzColType.Date);
+    }
+
+    if (FiString.equalsAny(fcTxFieldType, FimQcFieldType.fdouble().getValue())) {
+      fiCol.setColType(OzColType.Double);
+    }
+
+
+
   }
 
   public static Object getNodeObjValue(FiCol fiCol) {

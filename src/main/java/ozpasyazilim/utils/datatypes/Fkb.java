@@ -215,12 +215,14 @@ public class Fkb extends LinkedHashMap<String, Object> {
   public Fkb convertEntityToFkb(Object entity, Class clazz) {
 
     Fkb fiKeyBean = new Fkb();
-    Field[] fields = clazz.getDeclaredFields(); // returns all members including private members but not inherited members.
+    // returns all members including private members but not inherited members.
+    Field[] fields = clazz.getDeclaredFields();
 
     for (Field field : fields) {
 
-//			if (field.isAnnotationPresent(Transient.class)) continue;
-//			if (field.isAnnotationPresent(FiTransient.class)) continue;
+      //	if (field.isAnnotationPresent(Transient.class)) continue;
+      // if (field.isAnnotationPresent(FiTransient.class)) continue;
+
       // Static alanlar alınmaz
       if (Modifier.isStatic(field.getModifiers())) continue;
 
@@ -330,6 +332,8 @@ public class Fkb extends LinkedHashMap<String, Object> {
 
 
   public Integer getAsInt(String txKey) {
+
+    //Loghelper.get(getClass()).debug("getAsInt: " + txKey);
 
     if (FiString.isEmpty(txKey)) return null;
 

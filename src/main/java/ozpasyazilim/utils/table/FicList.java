@@ -111,7 +111,9 @@ public class FicList extends ArrayList<FiCol>{
 		this.fkbParams = fkbParams;
 	}
 
-	//	public void equalsKey(String txKey, Object value) {
+
+
+  //	public void equalsKey(String txKey, Object value) {
 //
 //		Map<String, FiCol> fiColMap = formMapCols();
 //

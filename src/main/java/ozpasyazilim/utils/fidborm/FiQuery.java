@@ -149,6 +149,15 @@ public class FiQuery {
   }
 
   /**
+   * FiMapde olan parametreleri aktif eder
+   * <p>
+   * Sorguda yoruma alınmamış(!) satır aynı şekilde kalır. DeAktivite yapılmaz.
+   */
+  public void activateParams() {
+    activateParamsMain(false);
+  }
+
+  /**
    * activateParamsMain(boActiOnlyFullParams);
    * <p>
    * deActivateAllOptParams();
