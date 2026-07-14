@@ -318,6 +318,34 @@ public class FiCollection {
 
   }
 
+  /**
+   *
+   * Without Null Key
+   *
+   * @param listtum
+   * @param fnGetId
+   * @return
+   * @param <T>
+   */
+  public static <T> FiKeyList<T> listToMapMultiFklWion(Collection<T> listtum, Function<T, String> fnGetId) {
+
+    FiKeyList<T> mapList = new FiKeyList<>();
+
+    for (Iterator iterator = listtum.iterator(); iterator.hasNext(); ) {
+      T t = (T) iterator.next();
+
+      String keyValValue = fnGetId.apply(t);
+
+      if (keyValValue == null) continue;
+
+      if (!mapList.containsKey(keyValValue)) mapList.put(keyValValue, new ArrayList<>());
+
+      mapList.get(keyValValue).add(t);
+    }
+
+    return mapList;
+  }
+
   public static <T, KeyVal> Map<KeyVal, List<T>> listToLinkedMapMulti(Collection<T> listtum, Function<T, KeyVal> fnGetId) {
 
     Map<KeyVal, List<T>> mapList = new LinkedHashMap<>();
@@ -380,11 +408,11 @@ public class FiCollection {
   /**
    * nullKey null verilirse, null anahtara eşit olan değerler toplanmaz.
    *
-   * @param listtum
-   * @param fnGetId
-   * @param nullKey
-   * @param <T>
-   * @return
+   * @param listtum Toplanacak koleksiyon
+   * @param fnGetId Key değerini döndüren fonksiyon
+   * @param nullKey Null değerleri yerine kullanılacak key
+   * @param <T> Entity tipi
+   * @return Map
    */
   public static <T> FiKeyList<T> listToMapMulti2(List<T> listtum, Function<T, String> fnGetId, String nullKey) {
 
@@ -400,7 +428,7 @@ public class FiCollection {
 
       if (keyValValue == null) continue;
 
-      if (!mapList.containsKey(keyValValue)) mapList.put(keyValValue, new ArrayList());
+      if (!mapList.containsKey(keyValValue)) mapList.put(keyValValue, new ArrayList<>());
 
       mapList.get(keyValValue).add(t);
 
