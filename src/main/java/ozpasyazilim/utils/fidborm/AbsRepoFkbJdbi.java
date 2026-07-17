@@ -2,6 +2,7 @@ package ozpasyazilim.utils.fidborm;
 
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
+import ozpasyazilim.utils.core.FiBool;
 import ozpasyazilim.utils.core.FiException;
 import ozpasyazilim.utils.datatypes.Fkb;
 import ozpasyazilim.utils.datatypes.FkbList;
@@ -14,6 +15,7 @@ import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.FicList;
 
 import java.util.*;
+import java.util.function.Function;
 
 public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRepoJdbi
 
@@ -481,4 +483,108 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
   public void setFicIdAuto(FiCol ficIdAuto) {
     this.ficIdAuto = ficIdAuto;
   }
+
+  /**
+   * Transactionlar AbsRepoJdbi ve Handle ile yönetilir.
+   * <p>
+   * Transaction Catch'i dışarıda yakalanıyor.
+   *
+   * @param fnTransaction
+   * @return
+   */
+  public Fdr jdExecuteTransByUse(Function<Handle, Fdr> fnTransaction) {
+    // BiFunction<AbsRepoJdbi<EntClazz>, Handle, Fdr>
+
+    Fdr fdrMain = new Fdr();
+
+    try {
+      // Use Transaction kullanılıyor ****
+      getJdbi().useTransaction(handle -> {
+        //handle.begin();
+        handle.getConnection().setAutoCommit(false);
+
+        Fdr fdr = fnTransaction.apply(handle);
+        fdrMain.combineAnd(fdr);
+
+        if (fdr.getException() != null) {
+          throw fdr.getException();
+        }
+
+        handle.commit();
+        //Loghelper.get(getClass()).debug("handle commit edildi");
+      });
+
+    } catch (Exception ex) {
+      Loghelper.get(getClass()).debug(FiException.exTosMain(ex));
+      //Loghelper.get(getClass()).debug("Genel Catch de Yakalandı");
+      fdrMain.setBoResult(false, ex);
+    }
+
+    return fdrMain;
+  }
+
+  public Fdr<Optional<Integer>> jdhSelectSingleIntOptBindMap(Handle handle, String sqlQuery, Fkb map) {
+
+    Fdr<Optional<Integer>> fdr = new Fdr<>();
+
+    try {
+      Optional<Integer> result = handle.select(FiQueTools.stoj(sqlQuery))
+          .bindMap(map)
+          .mapTo(Integer.class)
+          .findFirst();
+      fdr.setBoResultAndValue(true, result, 1);
+    } catch (Exception ex) {
+      Loghelper.errorLog(getClass(), "Query Problem");
+      Loghelper.errorException(getClass(), ex);
+      fdr.setBoResult(false, ex);
+      fdr.setValue(Optional.empty());
+    }
+
+    return fdr;
+  }
+
+  /**
+   * Insert Entity Wout Id Fields
+   *
+   * @param handle
+   * @param entity
+   * @return
+   */
+  public Fdr jdhInsertEntity(Handle handle, Fkb entity, Fqueconf fqueconf) {
+    return jdhInsertEntityMain(handle, entity, false, fqueconf);
+  }
+
+  public Fdr jdhInsertEntityMain(Handle handle, Fkb entity, Boolean boIncludeIdFields, Fqueconf fqueconf) {
+
+    entity.logParams();
+
+    Fdr fdrMain = new Fdr();
+
+    try {
+
+      String sql; //= FiQueryTools.stoj(FiQueryGenerator.insertQueryWoutId(getEntityClass()));
+
+      if (FiBool.isTrue(boIncludeIdFields)) {
+        //sql = FiQueTools.stoj(FiQugen.insertQueryWithId(getEntityClass()));
+        Fdr fdrInsertSql = FiQueryGenMs.insertV2(fqueconf);
+        sql = FiQueTools.stoj(fdrInsertSql.getFdTxValue());
+      } else {
+        Fdr insert = FiQueryGenMs.insertV2(fqueconf);
+        //insert.logFdr();
+        sql = FiQueTools.stoj(insert.getFdTxValue());
+      }
+
+      Integer rowCountUpdate = handle.createUpdate(sql)
+          .bindMap(entity)
+          .execute(); // returns row count updated
+      fdrMain.setFdBoResult(true);
+      fdrMain.setRowsAffected(rowCountUpdate);
+    } catch (Exception ex) {
+      Loghelper.get(getClass()).error(FiException.exTosMain(ex));
+      fdrMain.setBoResult(false, ex);
+    }
+
+    return fdrMain;
+  }
+
 }

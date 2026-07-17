@@ -65,7 +65,7 @@ public class FdrFkbList extends Fdr<FkbList> {
     for (int i = 0; i < getValue().size(); i++) {
       Fkb fkb = getValue().get(i);
       Loghelper.get(getClass()).debug("index:" + i);
-      Loghelper.get(getClass()).debug(FiConsole.textFiKeyBean(fkb));
+      Loghelper.get(getClass()).debug(FiConsole.textFkb(fkb));
     }
 
   }

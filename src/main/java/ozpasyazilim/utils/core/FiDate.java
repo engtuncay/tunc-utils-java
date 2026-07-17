@@ -182,6 +182,11 @@ public class FiDate {
 		return formatter.format(date);
 	}
 
+	public static String toStringAsYmdtire(Date date) {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		return formatter.format(date);
+	}
+
 	public static String dateToStrGlobalDateTimeFormat(Date date) {
 		//SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS");

@@ -5,26 +5,26 @@ import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.FicList;
 
 /**
- * {@link Fqc} : FiSqlGen Query Generation Configuration Class
+ * {@link Fqueconf} : FiSqlGen Query Generation Configuration Class
  */
-public class Fqc {
+public class Fqueconf {
 
   IFiTableMeta iFiTableMeta;
   FicList fclTable;
   Boolean boUpdateFieldsOnly;
-  Fkfic fkbDataDefs;
-  Fkfic fkficFieldsAll;
+  Fkfic fkficDataDefs;
+  Fkfic fkcFieldsAll;
   FiCol ficIdAuto;
 
-  public Fqc() {
+  public Fqueconf() {
   }
 
-  public Fqc(FicList fclTable) {
+  public Fqueconf(FicList fclTable) {
     setFclTable(fclTable);
   }
 
-  public static Fqc bui(FicList ficList) {
-    return new Fqc(ficList);
+  public static Fqueconf bui(FicList ficList) {
+    return new Fqueconf(ficList);
   }
 
   //FicList ficWhereFields;
@@ -56,20 +56,20 @@ public class Fqc {
     this.boUpdateFieldsOnly = boUpdateFieldsOnly;
   }
 
-  public Fkfic getFkbDataDefs() {
-    return fkbDataDefs;
+  public Fkfic getFkficDataDefs() {
+    return fkficDataDefs;
   }
 
-  public void setFkbDataDefs(Fkfic fkbDataDefs) {
-    this.fkbDataDefs = fkbDataDefs;
+  public void setFkficDataDefs(Fkfic fkficDataDefs) {
+    this.fkficDataDefs = fkficDataDefs;
   }
 
-  public Fkfic getFkficFieldsAll() {
-    return fkficFieldsAll;
+  public Fkfic getFkcFieldsAll() {
+    return fkcFieldsAll;
   }
 
-  public void setFkficFieldsAll(Fkfic fkficFieldsAll) {
-    this.fkficFieldsAll = fkficFieldsAll;
+  public void setFkcFieldsAll(Fkfic fkcFieldsAll) {
+    this.fkcFieldsAll = fkcFieldsAll;
   }
 
   public FiCol getFicIdAuto() {

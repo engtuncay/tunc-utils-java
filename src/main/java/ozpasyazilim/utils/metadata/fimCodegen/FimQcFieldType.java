@@ -153,5 +153,12 @@ public class FimQcFieldType {
     return fim;
   }
 
+  public static FiMeta fdatetime() {
+    FiMeta fim = new FiMeta("fdatetime");
+    fim.setFtTxValue("datetime");
+
+    return fim;
+  }
+
 
 }

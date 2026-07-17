@@ -242,6 +242,7 @@ public class FxEditorFactory {
       txClassName = FxTextFieldBtnCsv.class.getName();
     }
 
+    // FcTxFieldType Göre
     if (!FiString.isEmpty(fiCol.getFcTxFieldType())) {
 
       String fcTxFieldType = fiCol.getFcTxFieldType();
@@ -255,7 +256,8 @@ public class FxEditorFactory {
       }
 
       if (FiString.equalsAny(fcTxFieldType
-          , FimQcFieldType.fdate().getValue())
+          , FimQcFieldType.fdate().getValue()
+          , FimQcFieldType.fdatetime().getValue())
       ) {
         txClassName = FxDatePicker.class.getName();
       }
@@ -1408,7 +1410,6 @@ public class FxEditorFactory {
     if (FiString.equalsAny(fcTxFieldType, FimQcFieldType.fdouble().getValue())) {
       fiCol.setColType(OzColType.Double);
     }
-
 
 
   }

@@ -42,7 +42,7 @@ public class FkbList extends ArrayList<Fkb> {
 		return get(index);
 	}
 
-  public void logContent() {
-		Loghelper.get(getClass()).debug(FiConsole.textFkbList(this));
+  public void logContentNtn(String txDesc) {
+		Loghelper.get(getClass()).debug(txDesc + "\n" + FiConsole.textFkbListNtn(this));
 	}
 }

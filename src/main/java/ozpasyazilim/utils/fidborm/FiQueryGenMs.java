@@ -23,16 +23,16 @@ public class FiQueryGenMs {
    * <p>
    * FiSqlGenConfig Fields Used : iFiTableMeta, ficUpFields, ficWhereFields
    *
-   * @param fqc
+   * @param fqueconf
    * @return
    */
-  public static String upQuery(Fqc fqc) {
+  public static String upQuery(Fqueconf fqueconf) {
 
     // Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
 
     // arguments
-    IFiTableMeta iFiTableMeta = fqc.getiFiTableMeta();
-    FicList ficFields = fqc.getFclTable();
+    IFiTableMeta iFiTableMeta = fqueconf.getiFiTableMeta();
+    FicList ficFields = fqueconf.getFclTable();
 
     // FimOcSql.sfTableName();
     // FimOcSql.sfTxWhere();
@@ -84,17 +84,17 @@ public class FiQueryGenMs {
    * <p>
    * FiSqlGenConfig Fields Used : iFiTableMeta, ficUpFields, ficWhereFields
    *
-   * @param fqc
+   * @param fqueconf
    * @return
    */
-  public static Fdr upQuery2(Fqc fqc) {
+  public static Fdr upQuery2(Fqueconf fqueconf) {
 
     // Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
     Fdr fdr = new Fdr();
 
     // arguments
-    FicList ficFields = fqc.getFclTable();
-    Fkfic fkbDataDef = fqc.getFkbDataDefs();
+    FicList ficFields = fqueconf.getFclTable();
+    Fkfic fkbDataDef = fqueconf.getFkficDataDefs();
 
     // FimOcSql.sfTableName();
     // FimOcSql.sfTxWhere();
@@ -164,15 +164,15 @@ public class FiQueryGenMs {
   /**
    * IFiTableMeta ve FicList'ten Select Query Generation
    *
-   * @param fqc
+   * @param fqueconf
    * @return
    */
-  public static Fdr selQuery(Fqc fqc) {
+  public static Fdr selQuery(Fqueconf fqueconf) {
     // Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
 
     // arguments
-    IFiTableMeta iFiTableMeta = fqc.getiFiTableMeta();
-    FicList ficList = fqc.getFclTable();
+    IFiTableMeta iFiTableMeta = fqueconf.getiFiTableMeta();
+    FicList ficList = fqueconf.getFclTable();
 
     String txTableName = null;
 
@@ -245,12 +245,12 @@ public class FiQueryGenMs {
     return FiQueryGenMs.class;
   }
 
-  public static Fdr insIfNot(Fqc fqc) {
+  public static Fdr insIfNot(Fqueconf fqueconf) {
     // Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
 
     // arguments
-    IFiTableMeta iFiTableMeta = fqc.getiFiTableMeta();
-    FicList ficUpFields = fqc.getFclTable();
+    IFiTableMeta iFiTableMeta = fqueconf.getiFiTableMeta();
+    FicList ficUpFields = fqueconf.getFclTable();
 
     //FimOcgSql.sfTableName();
     //FimOcgSql.sfTxWhere();
@@ -322,15 +322,15 @@ public class FiQueryGenMs {
    * <p>
    * Varsa, Güncelleme sorgusu çalışır: Where içine girmeyen diğer alanları günceller
    *
-   * @param fqc
+   * @param fqueconf
    * @return
    */
-  public static Fdr insUpdateByCandId(Fqc fqc) {
+  public static Fdr insUpdateByCandId(Fqueconf fqueconf) {
     // Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
 
     // arguments
-    IFiTableMeta iFiTableMeta = fqc.getiFiTableMeta();
-    FicList ficList = fqc.getFclTable();
+    IFiTableMeta iFiTableMeta = fqueconf.getiFiTableMeta();
+    FicList ficList = fqueconf.getFclTable();
 
     String txTableName = null;
 
@@ -451,15 +451,15 @@ public class FiQueryGenMs {
    * <p>
    * Varsa, Güncelleme sorgusu çalışır: Where içine girmeyen diğer alanları günceller
    *
-   * @param fqc
+   * @param fqueconf
    * @return
    */
-  public static Fdr insUpdateByIdIdentity(Fqc fqc) {
+  public static Fdr insUpdateByIdIdentity(Fqueconf fqueconf) {
     // Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
 
     // arguments
-    IFiTableMeta iFiTableMeta = fqc.getiFiTableMeta();
-    FicList ficList = fqc.getFclTable();
+    IFiTableMeta iFiTableMeta = fqueconf.getiFiTableMeta();
+    FicList ficList = fqueconf.getFclTable();
 
     String txTableName = null;
 
@@ -570,12 +570,19 @@ public class FiQueryGenMs {
     return fdrResult;
   }
 
-  public static Fdr insert(Fqc fqc) {
+  /**
+   *
+   * sql başarılı olursa fdTxValue kaydedilir
+   *
+   * @param fqueconf
+   * @return
+   */
+  public static Fdr insert(Fqueconf fqueconf) {
     // Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
 
     // arguments
-    FicList ficInsFields = fqc.getFclTable();
-    Fkfic fkbDataDef = fqc.getFkbDataDefs();
+    FicList ficInsFields = fqueconf.getFclTable();
+    Fkfic fkbDataDef = fqueconf.getFkficDataDefs();
 
     //FimQcSql.sfTableName();
 
@@ -639,12 +646,12 @@ public class FiQueryGenMs {
     return fdrResult;
   }
 
-  public static Fdr insertV2(Fqc fqc) {
+  public static Fdr insertV2(Fqueconf fqueconf) {
     // Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
 
     // arguments
-    Fkfic fkficAllFields = fqc.getFkficFieldsAll();
-    Fkfic fkbDataDefs = fqc.getFkbDataDefs();
+    Fkfic fkficAllFields = fqueconf.getFkcFieldsAll();
+    Fkfic fkbDataDefs = fqueconf.getFkficDataDefs();
 
     //FimQcSql.sfTableName();
 
@@ -719,10 +726,10 @@ public class FiQueryGenMs {
   }
 
   public static Fdr selQuery(FicList ficList) {
-    Fqc fqc = new Fqc();
-    fqc.setFclTable(ficList);
+    Fqueconf fqueconf = new Fqueconf();
+    fqueconf.setFclTable(ficList);
 
-    return selQuery(fqc);
+    return selQuery(fqueconf);
   }
 
 }

@@ -2231,6 +2231,29 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
     return fdr;
   }
 
+  public Fdr jdSelectSingleStringBindMap(String sql, Map<String, Object> mapParam) {
+
+    Fdr fdr = new Fdr<>();
+
+    try {
+      Optional<String> result = getJdbi().withHandle(handle -> {
+        return handle.select(FiQueTools.stoj(sql))
+            .bindMap(mapParam)
+            .mapTo(String.class)
+            .findFirst(); // if returns null or zero rows, then return Optional.empty()
+      });
+
+      result.ifPresent(fdr::setFdTxValue);
+      fdr.setFdBoResult(true);
+    } catch (Exception ex) {
+      Loghelper.get(getClass()).debug(FiException.exToErrorLog(ex));
+      fdr.setFdBoResult(false);
+      fdr.setValue(null);
+    }
+
+    return fdr;
+  }
+
   /**
    * Not Null Return
    *

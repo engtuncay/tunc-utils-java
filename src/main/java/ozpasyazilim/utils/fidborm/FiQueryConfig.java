@@ -2,7 +2,7 @@ package ozpasyazilim.utils.fidborm;
 
 import ozpasyazilim.utils.table.FicList;
 
-public class FiQueryConfig extends Fqc {
+public class FiQueryConfig extends Fqueconf {
 
   public FiQueryConfig() {
   }

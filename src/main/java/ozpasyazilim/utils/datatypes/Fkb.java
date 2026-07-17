@@ -334,7 +334,6 @@ public class Fkb extends LinkedHashMap<String, Object> {
   /**
    *
    * @param txKey key genelde fieldName'e karşılık gelen alan
-   *
    * @return
    */
   public Integer getAsInt(String txKey) {
@@ -405,6 +404,31 @@ public class Fkb extends LinkedHashMap<String, Object> {
 
     return null;
   }
+
+  public double getAsDoubleOrZero(String txKey) {
+
+    if (FiString.isEmpty(txKey)) return 0.0d;
+
+    if (containsKey(txKey)) {
+      Object objValue = get(txKey);
+
+      if (objValue == null) return 0.0d;
+
+      //Loghelper.get(getClass()).debug("Class:"+objValue.getClass().getSimpleName());
+
+      if (objValue instanceof Double) {
+        return (Double) objValue;
+      }
+
+      if (objValue instanceof BigDecimal) {
+        return ((BigDecimal) objValue).doubleValue();
+      }
+
+    }
+
+    return 0.0d;
+  }
+
 
 
   public Date getFicAsDate(FiCol fiCol) {
@@ -574,7 +598,7 @@ public class Fkb extends LinkedHashMap<String, Object> {
 
   public void logParams() {
     Loghelper.get(getClass()).debug("FiKeyBean.logParams called");
-    Loghelper.get(getClass()).debug(FiConsole.textFiKeyBean(this));
+    Loghelper.get(getClass()).debug(FiConsole.textFkb(this));
   }
 
   public void logFiCols() {
@@ -766,4 +790,56 @@ public class Fkb extends LinkedHashMap<String, Object> {
   }
 
 
+  public FkbList getFicAsFkbList(FiCol fiCol) {
+    return getAsFkbList(fiCol.getFcTxFieldName());
+  }
+
+  public FkbList getFicAsFkbListNtn(FiCol fiCol) {
+    return getAsFkbListNtn(fiCol.getFcTxFieldName());
+  }
+
+  public FkbList getAsFkbList(String fcTxFieldName) {
+
+    if (FiString.isEmpty(fcTxFieldName)) return null;
+
+    if (containsKey(fcTxFieldName)) {
+      Object objValue = get(fcTxFieldName);
+
+      //Loghelper.get(getClass()).debug("Obje Türü" + objValue.getClass().getName());
+
+      if (objValue == null) return null;
+
+      if (objValue instanceof FkbList) {
+        return (FkbList) objValue;
+      }
+
+    }
+
+    return null;
+  }
+
+  public FkbList getAsFkbListNtn(String fcTxFieldName) {
+    FkbList asFkbList = getAsFkbList(fcTxFieldName);
+    return asFkbList!=null?asFkbList:new FkbList();
+  }
+
+
+  public Fkb getFicAsFkb(FiCol fiCol) {
+    if (FiString.isEmpty(fiCol.getFcTxFieldName())) return null;
+
+    if (containsKey(fiCol.getFcTxFieldName())) {
+      Object objValue = get(fiCol.getFcTxFieldName());
+
+      //Loghelper.get(getClass()).debug("Obje Türü" + objValue.getClass().getName());
+
+      if (objValue == null) return null;
+
+      if (objValue instanceof Fkb) {
+        return (Fkb) objValue;
+      }
+
+    }
+
+    return null;
+  }
 }
