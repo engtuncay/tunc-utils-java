@@ -94,7 +94,7 @@ public class FiQueryGenMs {
 
     // arguments
     FicList ficFields = fqueconf.getFclTable();
-    Fkfic fkbDataDef = fqueconf.getFkficDataDefs();
+    Fkfic fkbDataDef = fqueconf.getFkcDmFields();
 
     // FimOcSql.sfTableName();
     // FimOcSql.sfTxWhere();
@@ -582,7 +582,7 @@ public class FiQueryGenMs {
 
     // arguments
     FicList ficInsFields = fqueconf.getFclTable();
-    Fkfic fkbDataDef = fqueconf.getFkficDataDefs();
+    Fkfic fkbDataDef = fqueconf.getFkcDmFields();
 
     //FimQcSql.sfTableName();
 
@@ -651,7 +651,7 @@ public class FiQueryGenMs {
 
     // arguments
     Fkfic fkficAllFields = fqueconf.getFkcFieldsAll();
-    Fkfic fkbDataDefs = fqueconf.getFkficDataDefs();
+    Fkfic fkbDataDefs = fqueconf.getFkcDmFields();
 
     //FimQcSql.sfTableName();
 

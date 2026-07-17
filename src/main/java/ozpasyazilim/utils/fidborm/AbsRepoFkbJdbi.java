@@ -23,8 +23,8 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
 
   private IFiTableMeta iFiTableMeta;
 
-  private Fkfic fkbDdFields;
-  private   Fkfic fkbFieldsAll;
+  private Fkfic fkcDmFields;
+  private Fkfic fkcFieldsAll;
   private FicList fclTable;
   private FiCol ficIdAuto;
 
@@ -137,7 +137,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
       //FkbList fkbList = new FkbList(result);
       fdr.setFdBoResult(true);
 
-      if(!result.isEmpty()){
+      if (!result.isEmpty()) {
         //Loghelper.get(getClass()).debug("fkb val set edildi");
         fdr.setFdFkbVal(result.get(0));
       }
@@ -452,20 +452,20 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
     return fdrMain;
   }
 
-  public Fkfic getFkbDdFields() {
-    return fkbDdFields;
+  public Fkfic getFkcDmFields() {
+    return fkcDmFields;
   }
 
-  public void setFkbDdFields(Fkfic fkbDdFields) {
-    this.fkbDdFields = fkbDdFields;
+  public void setFkcDmFields(Fkfic fkcDmFields) {
+    this.fkcDmFields = fkcDmFields;
   }
 
-  public Fkfic getFkbFieldsAll() {
-    return fkbFieldsAll;
+  public Fkfic getFkcFieldsAll() {
+    return fkcFieldsAll;
   }
 
-  public void setFkbFieldsAll(Fkfic fkbFieldsAll) {
-    this.fkbFieldsAll = fkbFieldsAll;
+  public void setFkcFieldsAll(Fkfic fkcFieldsAll) {
+    this.fkcFieldsAll = fkcFieldsAll;
   }
 
   public FicList getFclTable() {
@@ -489,7 +489,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
    * <p>
    * Transaction Catch'i dışarıda yakalanıyor.
    *
-   * @param fnTransaction
+   * @param fnTransaction (handle)->(fdr)
    * @return
    */
   public Fdr jdExecuteTransByUse(Function<Handle, Fdr> fnTransaction) {
@@ -544,38 +544,38 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
   }
 
   /**
-   * Insert Entity Wout Id Fields
+   * Insert Fkb Entity Without Id Fields
    *
    * @param handle
-   * @param entity
+   * @param fkbEntity
+   * @param fqueconf
    * @return
    */
-  public Fdr jdhInsertEntity(Handle handle, Fkb entity, Fqueconf fqueconf) {
-    return jdhInsertEntityMain(handle, entity, false, fqueconf);
+  public Fdr jdhInsertFkb(Handle handle, Fkb fkbEntity, Fqueconf fqueconf) {
+    return jdhInsertFkbMain(handle, fkbEntity, false, fqueconf);
   }
 
-  public Fdr jdhInsertEntityMain(Handle handle, Fkb entity, Boolean boIncludeIdFields, Fqueconf fqueconf) {
-
-    entity.logParams();
+  public Fdr jdhInsertFkbMain(Handle handle, Fkb fkbEntity, Boolean boIncludeIdFields, Fqueconf fqueconf) {
 
     Fdr fdrMain = new Fdr();
-
+    //fkbEntity.logParams();
     try {
-
-      String sql; //= FiQueryTools.stoj(FiQueryGenerator.insertQueryWoutId(getEntityClass()));
+      String sql;
 
       if (FiBool.isTrue(boIncludeIdFields)) {
-        //sql = FiQueTools.stoj(FiQugen.insertQueryWithId(getEntityClass()));
-        Fdr fdrInsertSql = FiQueryGenMs.insertV2(fqueconf);
-        sql = FiQueTools.stoj(fdrInsertSql.getFdTxValue());
-      } else {
-        Fdr insert = FiQueryGenMs.insertV2(fqueconf);
-        //insert.logFdr();
-        sql = FiQueTools.stoj(insert.getFdTxValue());
+        // includeId Fields
+        // fqueconf
+
+        Fdr fdrQueryIns = FiQueryGenMs.insertV2(fqueconf);
+        sql = FiQueTools.stoj(fdrQueryIns.getFdTxValue());
+      } else { // fdrQueryIns query without id fields
+        Fdr fdrQueryIns = FiQueryGenMs.insertV2(fqueconf);
+        //fdrQueryIns.logFdr();
+        sql = FiQueTools.stoj(fdrQueryIns.getFdTxValue());
       }
 
       Integer rowCountUpdate = handle.createUpdate(sql)
-          .bindMap(entity)
+          .bindMap(fkbEntity)
           .execute(); // returns row count updated
       fdrMain.setFdBoResult(true);
       fdrMain.setRowsAffected(rowCountUpdate);
@@ -586,5 +586,6 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
 
     return fdrMain;
   }
+
 
 }

@@ -5,16 +5,20 @@ import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.FicList;
 
 /**
- * {@link Fqueconf} : FiSqlGen Query Generation Configuration Class
+ * {@link Fqueconf} : Fi-Query-Config : (For Query Generation)
  */
 public class Fqueconf {
 
-  IFiTableMeta iFiTableMeta;
-  FicList fclTable;
-  Boolean boUpdateFieldsOnly;
-  Fkfic fkficDataDefs;
+  // Main
   Fkfic fkcFieldsAll;
+
+  // Alt-1
+  Fkfic fkcDmFields;
+  // Alt-2
+  IFiTableMeta iFiTableMeta;
+  Boolean boUpdateFieldsOnly;
   FiCol ficIdAuto;
+  FicList fclTable;
 
   public Fqueconf() {
   }
@@ -27,8 +31,7 @@ public class Fqueconf {
     return new Fqueconf(ficList);
   }
 
-  //FicList ficWhereFields;
-
+  // FicList ficWhereFields;
 
   // Getters and Setters
 
@@ -56,12 +59,12 @@ public class Fqueconf {
     this.boUpdateFieldsOnly = boUpdateFieldsOnly;
   }
 
-  public Fkfic getFkficDataDefs() {
-    return fkficDataDefs;
+  public Fkfic getFkcDmFields() {
+    return fkcDmFields;
   }
 
-  public void setFkficDataDefs(Fkfic fkficDataDefs) {
-    this.fkficDataDefs = fkficDataDefs;
+  public void setFkcDmFields(Fkfic fkcDmFields) {
+    this.fkcDmFields = fkcDmFields;
   }
 
   public Fkfic getFkcFieldsAll() {
