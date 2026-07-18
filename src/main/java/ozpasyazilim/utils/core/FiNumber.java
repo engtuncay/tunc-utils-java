@@ -328,7 +328,7 @@ public class FiNumber {
     return formatlaPara(dblnumber, 2);
   }
 
-  public static String formatlaPara(Double dblnumber, Integer nOndalikKisim) {
+  public static String formatlaPara(Double dblnumber, Integer lnOndalikUzunluk) {
 
     if (dblnumber == null) {
       dblnumber = 0.0d;
@@ -336,17 +336,17 @@ public class FiNumber {
 
     String ondalikpattern = "";
 
-    if (nOndalikKisim == null) nOndalikKisim = 2;
+    if (lnOndalikUzunluk == null) lnOndalikUzunluk = 2;
 
-    for (int i = 1; i <= nOndalikKisim; i++) ondalikpattern += "0";
+    for (int i = 1; i <= lnOndalikUzunluk; i++) ondalikpattern += "0";
 
     DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(FiString.locale);
     otherSymbols.setDecimalSeparator('.');
     otherSymbols.setGroupingSeparator(',');
     DecimalFormat decimalpattern = new DecimalFormat("#,###,##0." + ondalikpattern, otherSymbols);
 
-    String strdblnumber = decimalpattern.format(dblnumber);
-    return strdblnumber;
+    String txDbNumber = decimalpattern.format(dblnumber);
+    return txDbNumber;
 
   }
 

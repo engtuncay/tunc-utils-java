@@ -1486,7 +1486,6 @@ public class FiCollection {
    */
   public static <E> List<E> sort(List<E> listData, Comparator<E> comparator) {
     return listData.stream().sorted(comparator).collect(Collectors.toList());
-
   }
 
   public static List orValue(List value, List orValue) {
