@@ -69,7 +69,7 @@ public class FxEditorFactory {
 //    Loghelper.get(FxEditorFactory.class).debug("ficol-fn:" + fiCol.getFcTxFieldName());
 
     // txClassName yoksa , belirleme süreci
-    if (FiString.isEmpty(txClassName)) txClassName = prepTxClassNameMain(fiCol, ozColType);
+    if (FiString.isEmpty(txClassName)) txClassName = prepTxCompClassNameMain(fiCol, ozColType);
 
     // Loghelper.getInstance(FxEditorFactory.class).debug("Comp Class:"+txClassName);
 
@@ -223,7 +223,7 @@ public class FxEditorFactory {
    * @return
    */
   @Nonnull
-  public static String prepTxClassNameMain(FiCol fiCol, OzColType ozColType) {
+  public static String prepTxCompClassNameMain(FiCol fiCol, OzColType ozColType) {
 
     String txClassName;
     //iFiCol.setColFxNodeClass(FxTextField.class.getName());
