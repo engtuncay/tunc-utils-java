@@ -92,6 +92,16 @@ public class FxMigPane extends MigPane {
 		add(node, appendExtra("growx,pushx,span", extra));
 	}
 
+	/**
+	 * {@link FxMigHp} cc (cell constraint) yardımcı sınıfı kullan
+	 *
+	 * @param node
+	 * @param txCustomConstraints
+	 */
+	public void addCustom(Node node, String txCustomConstraints) {
+		add(node, txCustomConstraints);
+	}
+
 	public void addGrowXPushXSpan(Node node, String extra) {
 		add(node, appendExtra("growx,pushx,span", extra));
 	}

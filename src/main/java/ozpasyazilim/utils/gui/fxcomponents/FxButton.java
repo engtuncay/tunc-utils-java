@@ -154,7 +154,8 @@ public class FxButton extends Button implements IFxSecureNode {
 	}
 
 	public void setFxIcon(Icons525 icon) {
-		new FxAwesomeIcon().loadIcon525ToFxButton(this, icon, 10, "white", null);
+		//new FxAwesomeIcon().loadIcon525ToFxButton(this, icon, 10, "white", null);
+		new FxAwesomeIcon().loadIcon525ToFxButton(this, icon, 10, null, null);
 	}
 
 	public String getModuleCode() {
