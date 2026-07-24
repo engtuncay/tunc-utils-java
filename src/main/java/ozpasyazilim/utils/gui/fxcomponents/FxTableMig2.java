@@ -80,7 +80,7 @@ public class FxTableMig2<EntClazz> extends MigPane {
 
 //		FxSimpleCont fxSimpleCont = new FxSimpleCont();
 //		fxSimpleCont.openAsDialogSync(null,true);
-		FxDialogShow.showPopWarn("Ayarlar Henüz Aktif Degil.Yakında aktif olacak.");
+		FxDialogShow.showPopWarn("Ayarlar Henüz Aktif Degil.");
 
 	}
 
