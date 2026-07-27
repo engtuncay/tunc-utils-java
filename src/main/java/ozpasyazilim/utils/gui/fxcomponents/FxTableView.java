@@ -156,26 +156,26 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 		for (int i = 0; i < listColumn.size(); i++) {
 
-			IFiCol ozTableColumn = listColumn.get(i);
-			//ozTableColumn.setColFilterable(true);
+			IFiCol iFiCol = listColumn.get(i);
+			//iFiCol.setColFilterable(true);
 			boolean blDefined = false;
 
-			if (!blDefined && ozTableColumn.getColType() == OzColType.String || ozTableColumn.getColType() == OzColType.Double
-					|| ozTableColumn.getColType() == OzColType.Integer) {
-				ozTableColumn.setFilterNodeClass(FxTextField.class.getName());
-				nodeGenerated = FxEditorFactory.generateAndSetFilterNode(ozTableColumn);
+			if (!blDefined && iFiCol.getColType() == OzColType.String || iFiCol.getColType() == OzColType.Double
+					|| iFiCol.getColType() == OzColType.Integer) {
+				iFiCol.setFilterNodeClass(FxTextField.class.getName());
+				nodeGenerated = FxEditorFactory.generateAndSetFilterNode(iFiCol);
 				blDefined = true;
 			}
 
-			if (!blDefined && ozTableColumn.getColType() == OzColType.Date) {
-				ozTableColumn.setFilterNodeClass(FxDatePicker.class.getName());
-				nodeGenerated = FxEditorFactory.generateAndSetFilterNode(ozTableColumn);
+			if (!blDefined && iFiCol.getColType() == OzColType.Date) {
+				iFiCol.setFilterNodeClass(FxDatePicker.class.getName());
+				nodeGenerated = FxEditorFactory.generateAndSetFilterNode(iFiCol);
 				blDefined = true;
 			}
 
 			if (!blDefined) {
-				ozTableColumn.setFilterNodeClass(FxTextField.class.getName());
-				nodeGenerated = FxEditorFactory.generateAndSetFilterNode(ozTableColumn);
+				iFiCol.setFilterNodeClass(FxTextField.class.getName());
+				nodeGenerated = FxEditorFactory.generateAndSetFilterNode(iFiCol);
 				blDefined = true;
 			}
 

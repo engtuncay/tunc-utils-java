@@ -6,7 +6,7 @@ import ozpasyazilim.utils.datatypes.FiMeta;
 
 public class FimQcFieldType {
 
-  public static FiMeta fdouble() {
+  public static FiMeta fDouble() {
     FiMeta fim = new FiMeta("fdouble");
     fim.setFtTxValue("double");
 
@@ -76,7 +76,7 @@ public class FimQcFieldType {
     return fim;
   }
 
-  public static FiMeta fdecimal() {
+  public static FiMeta fDecimal() {
     FiMeta fim = new FiMeta("fdecimal");
     fim.setFtTxValue("decimal");
 
@@ -161,4 +161,10 @@ public class FimQcFieldType {
   }
 
 
+  public static FiMeta fFloat() {
+    FiMeta fim = new FiMeta("fFloat");
+    fim.setFtTxValue("float");
+
+    return fim;
+  }
 }

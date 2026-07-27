@@ -88,7 +88,7 @@ public class FxTableCol2<EntClazz> extends TableColumn implements IFxTableCol<En
 	public FiCol getRefFiCol() {
 		if (refFiCol.get() == null) {
 			//fiTableCol = new SimpleObjectProperty<>();
-			refFiCol.set(new FiCol<>());
+			refFiCol.set(new FiCol());
 			refFiCol.get().setTableColumnFx(this);
 		}
 		return refFiCol.get();

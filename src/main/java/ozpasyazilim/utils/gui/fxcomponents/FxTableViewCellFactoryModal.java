@@ -11,7 +11,7 @@ import ozpasyazilim.utils.core.FiString;
 import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.gui.fxTableViewExtra.EnumColNodeType;
 import ozpasyazilim.utils.core.FiReflection;
-import ozpasyazilim.utils.metadata.fimCodegen.FimQcFieldTypeExt;
+import ozpasyazilim.utils.metadata.fimCodegen.FimQcFieldTypeSpec;
 import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.OzColType;
 
@@ -139,22 +139,22 @@ public class FxTableViewCellFactoryModal {
 
     if (!FiString.isEmpty(txFieldType)) {
 
-      if (FimQcFieldTypeExt.isDouble(txFieldType)) {
+      if (FimQcFieldTypeSpec.isDouble(txFieldType)) {
         assignCellFactoryLabelForDoubleTypes(fxTableCol);
         return;
       }
 
-      if (FimQcFieldTypeExt.isInteger(txFieldType)) {
+      if (FimQcFieldTypeSpec.isInteger(txFieldType)) {
         assignStyleToFxColForRightAlign(fxTableCol);
         return;
       }
 
-      if (FimQcFieldTypeExt.isDate(txFieldType)) {
+      if (FimQcFieldTypeSpec.isDate(txFieldType)) {
         assignCellFactoryDateType(fxTableCol);
         return;
       }
 
-      if (FimQcFieldTypeExt.isBool(txFieldType)) {
+      if (FimQcFieldTypeSpec.isBool(txFieldType)) {
         assignCellFactoryBooleanType(fxTableCol);
         return;
       }
