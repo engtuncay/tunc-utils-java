@@ -182,15 +182,11 @@ public class FiReflection {
 
 			PropertyUtils.setProperty(objectt, fiTableCol.getFcTxFieldName(), cellvalue == null ? strCellvalue : cellvalue);
 			return true;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
+		} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+			Loghelper.get(FiReflection.class).error(FiException.exTosMain(e));
 		}
 
-		return false;
+    return false;
 
 	}
 
@@ -219,15 +215,11 @@ public class FiReflection {
 		try {
 			PropertyUtils.setProperty(objectt, ozTableCol.getFcTxFieldName(), value);
 			return true;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
+		} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+			Loghelper.get(FiReflection.class).error(FiException.exTosMain(e));
 		}
 
-		return false;
+    return false;
 
 	}
 
@@ -236,16 +228,10 @@ public class FiReflection {
 		try {
 			PropertyUtils.setProperty(objectt, fieldName, value);
 			return true;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
+		} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+			Loghelper.get(FiReflection.class).error(FiException.exTosMain(e));
 		}
-
-		return false;
-
+    return false;
 	}
 
 	public static <E> List<E> bindEntity(List<Map<String, String>> listDataMap, List<FiCol> listColumns, Class<E> entityclass) {
@@ -259,14 +245,12 @@ public class FiReflection {
 			E entity = null;
 			try {
 				entity = entityclass.newInstance();
-			} catch (InstantiationException e) {
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
+			} catch (InstantiationException | IllegalAccessException e) {
+				Loghelper.get(FiReflection.class).error(FiException.exTosMain(e));
 			}
 
 
-			for (int i = 0; i < listColumns.size(); i++) {
+      for (int i = 0; i < listColumns.size(); i++) {
 
 				FiCol fiTableCol = listColumns.get(i);
 
@@ -300,14 +284,10 @@ public class FiReflection {
 
 					PropertyUtils.setProperty(entity, fiTableCol.getFcTxFieldName().trim(), cellvalue);
 
-				} catch (IllegalAccessException e) {
-					e.printStackTrace();
-				} catch (InvocationTargetException e) {
-					e.printStackTrace();
-				} catch (NoSuchMethodException e) {
-					e.printStackTrace();
+				} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+					Loghelper.get(FiReflection.class).error(FiException.exTosMain(e));
 				}
-			}
+      }
 
 			if (entity != null) list.add(entity);
 
@@ -332,9 +312,7 @@ public class FiReflection {
 				Object cellvalue = value;
 				PropertyUtils.setProperty(finalEntity, key, cellvalue);
 
-			} catch (IllegalAccessException e) {
-				Loghelper.get(FiReflection.class).debug(FiException.exceptionIfToString(e));
-			} catch (InvocationTargetException e) {
+			} catch (IllegalAccessException | InvocationTargetException e) {
 				Loghelper.get(FiReflection.class).debug(FiException.exceptionIfToString(e));
 			} catch (NoSuchMethodException e) {
 				if (!FiBool.isTrue(boDoNotShowNotSuchMethodException)) {
@@ -351,12 +329,10 @@ public class FiReflection {
 		E entity = null;
 		try {
 			entity = entityclass.newInstance();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+		} catch (InstantiationException | IllegalAccessException e) {
+			Loghelper.get(FiReflection.class).error(FiException.exTosMain(e));
 		}
-		return entity;
+    return entity;
 	}
 
 	/**
@@ -476,7 +452,7 @@ public class FiReflection {
 			}
 
 		} catch (NoSuchFieldException e) {
-			e.printStackTrace();
+			Loghelper.get(FiReflection.class).error(FiException.exceptionIfToString(e));
 		}
 		return null;
 	}
@@ -512,17 +488,11 @@ public class FiReflection {
 
 		try {
 			PropertyUtils.setNestedProperty(bean, fieldName, value);
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-			return false;
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-			return false;
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
+		} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+			Loghelper.get(FiReflection.class).error(FiException.exToErrorLog(e));
 			return false;
 		}
-		return true;
+    return true;
 	}
 
 	public static <T> T cloneObject(T t) { //throws InstantiationException, IllegalAccessException, NoSuchFieldException
@@ -533,13 +503,11 @@ public class FiReflection {
 
 		try {
 			newInstance = clazzRoot.newInstance();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+		} catch (InstantiationException | IllegalAccessException e) {
+			Loghelper.get(FiReflection.class).error(FiException.exToErrorLog(e));
 		}
 
-		Field[] fieldsClone = newInstance.getClass().getDeclaredFields();
+    Field[] fieldsClone = newInstance.getClass().getDeclaredFields();
 
 		for (Field fieldClone : fieldsClone) {
 			fieldClone.setAccessible(true);
@@ -570,13 +538,11 @@ public class FiReflection {
 
 		try {
 			newInstance = clazzRoot.newInstance();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+		} catch (InstantiationException | IllegalAccessException e) {
+			Loghelper.get(FiReflection.class).error(FiException.exToErrorLog(e));
 		}
 
-		Field[] fieldsClone = clazz.getDeclaredFields();
+    Field[] fieldsClone = clazz.getDeclaredFields();
 
 		for (Field fieldClone : fieldsClone) {
 			fieldClone.setAccessible(true);
@@ -589,7 +555,7 @@ public class FiReflection {
 			try {
 				fieldClone.set(newInstance, getProperty(t, fieldClone.getName()));
 			} catch (IllegalAccessException e) {
-				e.printStackTrace();
+				Loghelper.get(FiReflection.class).error(FiException.exToErrorLog(e));
 			}
 
 		}

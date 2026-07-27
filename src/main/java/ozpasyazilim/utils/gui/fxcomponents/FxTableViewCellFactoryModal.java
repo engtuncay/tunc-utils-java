@@ -294,6 +294,7 @@ public class FxTableViewCellFactoryModal {
                 }
 
                 node.setOnAction(actionEvent -> {
+                  // setter, obje olursa alanına , map olursa put ile tanımlar
                   Boolean result = FiReflection.setter(entity, fxTableCol.getRefFiCol().getFcTxFieldName(), node.isSelected());
                   if (!result) {
                     FxDialogShow.showPopWarn("Yazılımsal Hata!!! Seçilemedi.");
