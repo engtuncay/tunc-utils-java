@@ -35,7 +35,7 @@ import ozpasyazilim.utils.gui.components.TableCellrendererCheckBox;
 import ozpasyazilim.utils.gui.components.TableeditorCheckbox;
 import ozpasyazilim.utils.datacontainers.OzTableColumn;
 
-public class UtilozMix {
+public class FiSwingHelper {
 
 	public static <E> void initColumnSizes(JTable table, CustomTablemodelList2<E> model) {
 
