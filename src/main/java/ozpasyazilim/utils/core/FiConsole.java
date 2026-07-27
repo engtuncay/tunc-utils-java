@@ -929,6 +929,16 @@ public class FiConsole {
     return sbOutput.toString();
   }
 
+  public static String textFkbListNtnV2(List<Fkb> fkbList) {
+    if (fkbList == null) return "FkbList is null";
+    StringBuilder sbOutput = new StringBuilder();
+
+    for (Fkb fiKeyBean : fkbList) {
+      sbOutput.append(textFkbNtn(fiKeyBean)).append("\n");
+    }
+    return sbOutput.toString();
+  }
+
   public static void debugListFkb(List<Fkb> listFkb) {
     if (listFkb == null) {
       Loghelper.get(FiConsole.class).debug("List Fkb null");

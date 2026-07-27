@@ -132,11 +132,6 @@ public class FxTableViewCellFactoryModal {
 
     String txFieldType = refFiCol.getFcTxFieldType();
 
-    /**
-     * OzColType göre Cell Factory Oluşturma
-     */
-    //OzColType ozColType = refFiCol.getColType();
-
     if (!FiString.isEmpty(txFieldType)) {
 
       if (FimQcFieldTypeSpec.isDouble(txFieldType)) {
@@ -254,6 +249,7 @@ public class FxTableViewCellFactoryModal {
 
   private static Callback<TableColumn, TableCell> getCellFactoryForCheckBox(FxTableCol2 fxTableCol) {
 
+    // call(TableColumn) : TableCell
     return new Callback<TableColumn, TableCell>() {
 
       @Override
@@ -282,9 +278,9 @@ public class FxTableViewCellFactoryModal {
                 node.setSelected((Boolean) item);
                 node.setIndeterminate(false);
               } else {
-                //node.setSelected(false);
-                // indeterminate
-                node.setIndeterminate(true);
+                node.setSelected(false);
+                //indeterminate
+                //node.setIndeterminate(true);
               }
 
               if (FiBool.isTrue(fxTableCol.getRefFiCol().getBoEditable())) {
@@ -323,8 +319,8 @@ public class FxTableViewCellFactoryModal {
             }
           }
         };
-        return cell;
 
+        return cell;
       }
     };
   }

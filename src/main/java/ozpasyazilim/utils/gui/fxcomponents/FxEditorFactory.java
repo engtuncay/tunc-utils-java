@@ -823,6 +823,7 @@ public class FxEditorFactory {
 
   public static void assignFieldTypeByOzColType(FiCol refFiCol) {
 
+    // getFcTxFieldType tipi belirlenmişse işlem yapma
     if (!FiString.isEmpty(refFiCol.getFcTxFieldType())) return;
 
     OzColType colType = refFiCol.getColType();
