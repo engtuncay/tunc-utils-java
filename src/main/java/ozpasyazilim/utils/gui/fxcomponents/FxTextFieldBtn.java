@@ -115,7 +115,7 @@ public class FxTextFieldBtn<EntClazz> extends FxMigPane implements IFiNode {
 		if (getLblAciklama() == null) {
 			setLblAciklama(new FxLabel(""));
 			wrapFi();
-			addGrowXSpan(getLblAciklama());
+			addGrowXPushXSpan(getLblAciklama());
 		}
 	}
 

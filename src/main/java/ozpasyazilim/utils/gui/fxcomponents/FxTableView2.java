@@ -931,7 +931,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     node.getStyleClass().add(getHeaderFilterNodeStyleClass());
 
-    migHeader.addGrowXSpan(node);
+    migHeader.addGrowXPushXSpan(node);
     fxTableCol.getRefFiCol().setColFilterNode(node);
     //FxEditorFactory.registerKeyEventForNode(node,fxTableCol.getFiTableCol().getColFilterNodeClass(),getColFilterKeyDownEvent());
     node.addEventHandler(KeyEvent.KEY_PRESSED, getColFilterNodeKeyDownEvent());

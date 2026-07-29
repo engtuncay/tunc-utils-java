@@ -68,24 +68,32 @@ public class FxMigPane extends MigPane {
   }
 
   public static FxMigPane buiStandard() {
-    return new FxMigPane(FxMigHp.lcgStandard1InsetZeroGap00);
+    return new FxMigPane(FxMigHp.getLcgStd1InsetGap0());
   }
 
   public void wrapFi() {
     add(new FxLabel(""), "span,wrap");
   }
 
-  public void addGrowXSpan(Node node) {
+  public void addGrowXPushXSpan(Node node) {
     add(node, "growx,pushx,span");
+  }
+
+//  public void addGrowXPushXSpan(Node node) {
+//    addGrowXPushXSpan(node, "growx,pushx,span");
+//  }
+
+  public void addGrowXPushXSpan(Node node, String extra) {
+    add(node, appendExtra("growx,pushx,span", extra));
   }
 
   public void addSpanWrap(Node node) {
     add(node, "span,wrap");
   }
 
-  public void addGrowXSpan(Node node, String extra) {
-    add(node, appendExtra("growx,pushx,span", extra));
-  }
+//  public void addGrowXPushXSpan(Node node, String extra) {
+//    add(node, appendExtra("growx,pushx,span", extra));
+//  }
 
   /**
    * {@link FxMigHp} cc (cell constraint) yardımcı sınıfı kullan
@@ -95,10 +103,6 @@ public class FxMigPane extends MigPane {
    */
   public void addCustom(Node node, String txCustomConstraints) {
     add(node, txCustomConstraints);
-  }
-
-  public void addGrowXPushXSpan(Node node, String extra) {
-    add(node, appendExtra("growx,pushx,span", extra));
   }
 
   private String appendExtra(String constraint, String extra) {
@@ -135,9 +139,7 @@ public class FxMigPane extends MigPane {
     add(node, appendExtra("span", extra));
   }
 
-  public void addGrowXPushXSpan(Node node) {
-    addGrowXPushXSpan(node, "growx,pushx,span");
-  }
+
 
   /**
    * Yatay çizgi ekler
@@ -146,7 +148,7 @@ public class FxMigPane extends MigPane {
    */
   public Separator addSeparatorLineHor() {
     Separator separator = new Separator(Orientation.HORIZONTAL);
-    addGrowXSpan(separator);
+    addGrowXPushXSpan(separator);
     return separator;
   }
 

@@ -4,6 +4,8 @@ import ozpasyazilim.utils.core.FiString;
 import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.OzColType;
 
+import javax.annotation.Nonnull;
+
 /**
  * layout constraints - 3'e ayrılır (lcg,lcc,lrc), fakat tek lcg tanımlanması yeterli olur.
  * <p>
@@ -18,9 +20,6 @@ import ozpasyazilim.utils.table.OzColType;
  * bui metodu ile instance oluşturulup kullanılır (wrapping system)
  */
 public class FxMigHp {
-
-  //public static String lcStandardInset0Gap55 = "insets 0,gap 5 5"; // gap x y : x yatatya boşluk : y dikeyde boşluk
-  //public static String lcDebug = ",debug";
 
   /**
    * Layout Constraits General (constructor based)
@@ -41,12 +40,17 @@ public class FxMigHp {
 
   public static Boolean debugMode = false;
 
-  // Statik degil get ile yapalım.
   // gap x y : x yatatya boşluk : y dikeyde boşluk
-  @Deprecated
-  public static String lcgStandard1InsetZeroGap50 = "insets 0,gap 5 0";
-  @Deprecated
-  public static String lcgStandard1InsetZeroGap00 = "insets 0,gap 0 0";
+  @Nonnull
+  public static String getLcgStd2Inset0Gap50() {
+    return "insets 0,gap 5 0";
+  }
+
+
+  @Nonnull
+  public static String getLcgStd1InsetGap0() {
+    return "insets 0,gap 0 0";
+  }
 
   public static FxMigHp bui() {
     return new FxMigHp();

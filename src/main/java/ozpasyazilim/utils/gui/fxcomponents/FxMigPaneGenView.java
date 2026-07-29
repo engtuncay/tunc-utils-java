@@ -45,7 +45,7 @@ public class FxMigPaneGenView<EntClazz> extends FxMigPane implements IFiModViewE
 	}
 
 	public static FxMigPaneGenView buiStandard() {
-		return new FxMigPaneGenView(FxMigHp.lcgStandard1InsetZeroGap00);
+		return new FxMigPaneGenView(FxMigHp.getLcgStd1InsetGap0());
 	}
 
 	@Override

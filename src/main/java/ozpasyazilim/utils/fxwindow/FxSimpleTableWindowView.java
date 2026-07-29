@@ -38,7 +38,7 @@ public class FxSimpleTableWindowView<EntClazz> implements IFiModViewEnt, IFiModV
 		// Comp Init
 		fxTableMig = new FxTableMig2<>();
 		fxMigToolbar = new FxMigPane(FxMigHp.bui().lcgInset3Gap33().lcgNoGrid().getLcg()); // lcStandard2WithInset3
-		fxMigContent = new FxMigPane(FxMigHp.lcgStandard1InsetZeroGap50);
+		fxMigContent = new FxMigPane(FxMigHp.getLcgStd2Inset0Gap50());
 
 		this.fxMigContent.add(fxTableMig, "span,grow,push");
 
