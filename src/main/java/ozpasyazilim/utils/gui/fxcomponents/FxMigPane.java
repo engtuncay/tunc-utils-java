@@ -164,4 +164,12 @@ public class FxMigPane extends MigPane {
     add(node, "alignx right,span"); //alignx right,span
   }
 
+  public void clearNodes() {
+    getChildren().clear();
+
+    // Gerekirse layout string'i de yeniden set edebilirsin
+    //setLayoutConstraints(new LC());   // ana layout constraint
+    // setColumnConstraints(new AC());
+    // setRowConstraints(new AC());
+  }
 }

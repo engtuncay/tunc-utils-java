@@ -21,7 +21,7 @@ import java.util.*;
 public class FiQuery {
 
   String txQuery;
-  Fkb mapParams; // Map<String,Object>
+  Fkb mapParams;
   String txCandIdFieldName;
   String txPrimaryKeyFieldName;
 
@@ -502,4 +502,5 @@ public class FiQuery {
   public void setFiCols(FicList fiCols) {
     this.fiCols = fiCols;
   }
+
 }
