@@ -426,6 +426,8 @@
       <version>1.69</version>
     </dependency>
 
+    <!-- Joda Time -->
+
     <dependency>
       <groupId>joda-time</groupId>
       <artifactId>joda-time</artifactId>
@@ -433,11 +435,13 @@
     </dependency>
 
     <!-- ikonli -->
+
     <dependency>
       <groupId>org.kordamp.ikonli</groupId>
       <artifactId>ikonli-javafx</artifactId>
       <version>2.6.0</version>
     </dependency>
+
     <dependency>
       <groupId>org.kordamp.ikonli</groupId>
       <artifactId>ikonli-typicons-pack</artifactId>
@@ -456,11 +460,15 @@
       <version>2.6.0</version>
     </dependency>
 
+    <!-- Guava -->
+
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
       <version>23.0</version>
     </dependency>
+
+    <!-- Jdbc Sqlserver -->
 
     <dependency>
       <groupId>com.microsoft.sqlserver</groupId>
@@ -468,13 +476,15 @@
       <version>6.4.0.jre8</version>
     </dependency>
 
+    <!-- Jtds Jdbc -->
+
     <dependency>
       <groupId>net.sourceforge.jtds</groupId>
       <artifactId>jtds</artifactId>
       <version>1.3.1</version>
     </dependency>
 
-    <!--pdf birleştirmek için -->
+    <!-- Pdf birleştirmek için -->
 
     <dependency>
       <groupId>org.apache.pdfbox</groupId>
@@ -483,6 +493,7 @@
     </dependency>
 
     <!-- Apache Commons CLI for command-line argument parsing -->
+
     <dependency>
       <groupId>commons-cli</groupId>
       <artifactId>commons-cli</artifactId>
