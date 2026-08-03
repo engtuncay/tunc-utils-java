@@ -353,6 +353,18 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     return new ArrayList<>(getItemsCurrentFiCheckedAsSourceList());
   }
 
+  public List<EntClazz> getItemsCheckedCurrentWitWarn() {
+    List<EntClazz> arrayList = new ArrayList<>(getItemsCurrentFiCheckedAsSourceList());
+
+    if(arrayList.isEmpty()) {
+      Platform.runLater( ()->{
+       FxDialogShow.showPopWarn("Lütfen tablodan seçim yapınız.");
+      });
+    }
+
+    return arrayList;
+  }
+
   /**
    * SourceList içinde satır silinince  tomatik filtered list etkilenip
    * <p>
@@ -3009,5 +3021,11 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
   public void setBtnExtraFilter(FxButton btnExtraFilter) {
     this.btnExtraFilter = btnExtraFilter;
+  }
+
+  public void warnSelectItems() {
+    Platform.runLater( ()-> {
+      FxDialogShow.showPopWarn("Lütfen tablodan seçim yapınız.");
+    });
   }
 }

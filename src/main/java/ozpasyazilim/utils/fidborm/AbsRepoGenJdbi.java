@@ -1651,7 +1651,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
   public Fdr jdUpdateFiTableColsBindEntityByCandId1(List<? extends IFiCol> listFields, EntClazz entity) {
 
-    String sqlQuery = FiQugen.updateQueryWithFiTableColByCandId(getEntityClass(), listFields);
+    String sqlQuery = FiQugen.updateQueryWithFiColByCandId(getEntityClass(), listFields);
 
     return jdUpdateBindEntityMain(sqlQuery, entity);
 
@@ -2126,7 +2126,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
       , BiFunction<Handle, EntClazz, Fdr> extraWorksForEntity
       , Function<Handle, Fdr> extraWorksGeneral) {
 
-    String sqlUpdate = FiQugen.updateQueryWithFiTableColByCandId(getEntityClass(), listUpdateCols);
+    String sqlUpdate = FiQugen.updateQueryWithFiColByCandId(getEntityClass(), listUpdateCols);
 
     // list içinde id null kontrolü yapmak istenirse (iter ile çıkarmak gerekir) // birleştirmeden önce yapılmıştı
     // Boolean boIdNull = FiEntityHelper.checkIdFieldsNullOrFull(ent, getEntityClass());

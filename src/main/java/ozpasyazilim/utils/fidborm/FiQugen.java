@@ -2201,7 +2201,7 @@ public class FiQugen {
    * @param listFields
    * @return
    */
-  public static String updateQueryWithFiTableColByCandId(Class clazz, List<? extends IFiCol> listFields) {
+  public static String updateQueryWithFiColByCandId(Class clazz, List<? extends IFiCol> listFields) {
 
     List<FiField> listClassFields = FiReflectClass.getListFieldsShortWithId(clazz);
 

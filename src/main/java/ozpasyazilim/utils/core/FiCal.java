@@ -29,6 +29,10 @@ public class FiCal {
     return new FiCal(new Date());
   }
 
+  public static Date now() {
+    return new Date();
+  }
+
   public FiCal(Date dateBuffer) {
     setDateBuffer(dateBuffer);
   }
