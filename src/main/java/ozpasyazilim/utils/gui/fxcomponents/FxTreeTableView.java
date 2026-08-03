@@ -13,80 +13,79 @@ import java.util.function.Consumer;
 
 public class FxTreeTableView<EntClazz> extends TreeTableView<EntClazz> {
 
-	List<FxTreeTableCol> fxTreeTableColumnList;
-	Map<String,Object> styleMap;
+  List<FxTreeTableCol> fxTreeTableColumnList;
+  Map<String, Object> styleMap;
 
-	private Map<FxTableRowActions, Consumer<TreeTableRow>> mapTableRowEvents;
-	private Map<FxTableRowActions, Consumer<EntClazz>> mapTableRowEventsByEntity;
+  private Map<FxTableRowActions, Consumer<TreeTableRow>> mapTableRowEvents;
+  private Map<FxTableRowActions, Consumer<EntClazz>> mapTableRowEventsByEntity;
 
-	public FxTreeTableView() {
-		super();
-	}
+  public FxTreeTableView() {
+    super();
+  }
 
-	public void setColumnsFxTableColumn(List<FxTreeTableCol> tableColumns) {
+  public void setColumnsFxTableColumn(List<FxTreeTableCol> tableColumns) {
 
-		for (int i = 0; i < tableColumns.size(); i++) {
-			FxTreeTableCol fxTableColumn = tableColumns.get(i);
-			this.getColumns().add(fxTableColumn);
-			getFxTreeTableColumnList().add(fxTableColumn);
-		}
-
-
-	}
-
-	public void onRowDoubleClickEventFi(Consumer<TreeTableRow> doubleClickEvent) {
-
-		if (doubleClickEvent == null) return;
-		//getMapTableRowEvents().remove(TableRowActions.DoubleClick);
-
-		getMapTableRowEvents().put(FxTableRowActions.DoubleClick, doubleClickEvent);
-
-	}
-
-	public void onRowDoubleClickEventByEntityFi(Consumer<EntClazz> doubleClickEvent) {
-
-		if (doubleClickEvent == null) return;
-		//getMapTableRowEvents().remove(TableRowActions.DoubleClick);
-		getMapTableRowEventsByEntity().put(FxTableRowActions.DoubleClick, doubleClickEvent);
-
-	}
+    for (int i = 0; i < tableColumns.size(); i++) {
+      FxTreeTableCol fxTableColumn = tableColumns.get(i);
+      this.getColumns().add(fxTableColumn);
+      getFxTreeTableColumnList().add(fxTableColumn);
+    }
 
 
+  }
 
-	public void setColumnsByFiColList(List<FiCol> fiColList) {
+  public void onRowDoubleClickEventFi(Consumer<TreeTableRow> doubleClickEvent) {
 
-		this.getColumns().clear();
+    if (doubleClickEvent == null) return;
+    //getMapTableRowEvents().remove(TableRowActions.DoubleClick);
 
-		for (int colIndex = 0; colIndex < fiColList.size(); colIndex++) {
-			FiCol fiCol = fiColList.get(colIndex);
+    getMapTableRowEvents().put(FxTableRowActions.DoubleClick, doubleClickEvent);
 
-			// Column geçerli değilse eklenmez
-			if (fiCol.getBoEnabled()!=null && !fiCol.getBoEnabled()) continue;
+  }
 
-			FxTreeTableCol fxTableColumn = new FxTreeTableCol();
-			fxTableColumn.setRefFiCol(fiCol);
+  public void onRowDoubleClickEventByEntityFi(Consumer<EntClazz> doubleClickEvent) {
+
+    if (doubleClickEvent == null) return;
+    //getMapTableRowEvents().remove(TableRowActions.DoubleClick);
+    getMapTableRowEventsByEntity().put(FxTableRowActions.DoubleClick, doubleClickEvent);
+
+  }
+
+
+  public void setColumnsByFiColList(List<FiCol> fiColList) {
+
+    this.getColumns().clear();
+
+    for (int colIndex = 0; colIndex < fiColList.size(); colIndex++) {
+      FiCol fiCol = fiColList.get(colIndex);
+
+      // Column geçerli değilse eklenmez
+      if (fiCol.getBoEnabled() != null && !fiCol.getBoEnabled()) continue;
+
+      FxTreeTableCol fxTableColumn = new FxTreeTableCol();
+      fxTableColumn.setRefFiCol(fiCol);
 //			fxTableColumn.setHeader(fiCol.getHeaderName());
 //			fxTableColumn.setFieldName(fiCol.getFieldName());
-			fxTableColumn.setId(fiCol.getFcTxFieldName());
-			if(fiCol.getColType()==null) fiCol.setColType(OzColType.String);
-			//fxTableColumn.setColType(fiCol.getColType().toString());
-			if(fiCol.getPrefSize()!=null){
-				fxTableColumn.setPrefWidth(fiCol.getPrefSize());
-			}
+      fxTableColumn.setId(fiCol.getFcTxFieldName());
+      if (fiCol.getColType() == null) fiCol.setColType(OzColType.String);
+      //fxTableColumn.setColType(fiCol.getColType().toString());
+      if (fiCol.getPrefSize() != null) {
+        fxTableColumn.setPrefWidth(fiCol.getPrefSize());
+      }
 			/*if(ozTableCol.getEditable()!=null && ozTableCol.getEditable()){
 				fxTableColumn.setEditable(true);
 				fxTableColumn.setAutoEditor();
 			}*/
 
-			fxTableColumn.setAutoColumnDefaultByFiCol();
+      fxTableColumn.setAutoColumnDefaultByFiCol();
 
-			//Loghelperr.getInstance(getClass()).debug(" Fx TableView col id:"+fxTableColumn.getId());
+      //Loghelperr.getInstance(getClass()).debug(" Fx TableView col id:"+fxTableColumn.getId());
 
-			this.getColumns().add(fxTableColumn);
-			getFxTreeTableColumnList().add(fxTableColumn);
-		}
+      this.getColumns().add(fxTableColumn);
+      getFxTreeTableColumnList().add(fxTableColumn);
+    }
 
-	}
+  }
 
 /*	private int countHeaderClick = -1 ;
 
@@ -106,11 +105,11 @@ public class FxTreeTableView<EntClazz> extends TreeTableView<EntClazz> {
 		}
 	}*/
 
-	/**
-	 * sıralama daha düzgün oluyor , unsorted çalışıyor
-	 *
-	 * @param //listTable
-	 */
+  /**
+   * sıralama daha düzgün oluyor , unsorted çalışıyor
+   *
+   * @param //listTable
+   */
 //	public void setItemsAsSortedList(List listTable) {
 //
 //		SortedList sortedList = new SortedList(FXCollections.observableArrayList(listTable));
@@ -130,56 +129,57 @@ public class FxTreeTableView<EntClazz> extends TreeTableView<EntClazz> {
 //		//filteredList.comparatorProperty().bind(comparatorProperty());
 //
 //	}
+  public FxTreeTableCol getColumnByID(String colID) {
+
+    ObservableList<TreeTableColumn<EntClazz, ?>> columns = getColumns();
+    for (FxTreeTableCol fxTableColumn : getFxTreeTableColumnList()) {
+      if (fxTableColumn.getId().equals(colID)) {
+        System.out.println("fx table col bulundu");
+        return fxTableColumn;
+
+      }
+
+    }
+    return null;
+  }
+
+  public List<FxTreeTableCol> getFxTreeTableColumnList() {
+    if (fxTreeTableColumnList == null) {
+      fxTreeTableColumnList = new ArrayList<>();
+    }
+    return fxTreeTableColumnList;
+  }
+
+  public void setFxTreeTableColumnList(List<FxTreeTableCol> fxTreeTableColumnList) {
+    this.fxTreeTableColumnList = fxTreeTableColumnList;
+  }
 
 
-	public FxTreeTableCol getColumnByID(String colID) {
+  public void setItemMapList(Map<EntClazz, List<EntClazz>> dataMap) {
 
-		ObservableList<TreeTableColumn<EntClazz, ?>> columns = getColumns();
-		for (FxTreeTableCol fxTableColumn : getFxTreeTableColumnList()) {
-			if (fxTableColumn.getId().equals(colID)) {
-				System.out.println("fx table col bulundu");
-				return fxTableColumn;
+    TreeItem rootTreeItem = new TreeItem();
+    rootTreeItem.setExpanded(true);
 
-			}
+    dataMap.keySet().forEach(entClazz -> {
 
-		}
-		return null;
-	}
+      List listSubData = dataMap.get(entClazz);
 
-	public List<FxTreeTableCol> getFxTreeTableColumnList() {
-		if (fxTreeTableColumnList == null) {
-			fxTreeTableColumnList = new ArrayList<>();
-		}
-		return fxTreeTableColumnList;
-	}
+      TreeItem subRoot = new TreeItem(entClazz);
+      subRoot.setExpanded(true);
+      //subRoot.getChildren().addAll(FXCollections.observableArrayList(listSubData));
+      listSubData.forEach(entData -> {
+        TreeItem treeItem = new TreeItem(entData);
+        treeItem.setExpanded(true);
+        subRoot.getChildren().add(treeItem);
+      });
 
-	public void setFxTreeTableColumnList(List<FxTreeTableCol> fxTreeTableColumnList) {
-		this.fxTreeTableColumnList = fxTreeTableColumnList;
-	}
+      rootTreeItem.getChildren().add(subRoot);
 
+    });
 
-	public void setItemMapList(Map<EntClazz,List<EntClazz>> dataMap){
+    setRoot(rootTreeItem);
 
-		TreeItem rootTreeItem = new TreeItem();
-
-		dataMap.keySet().forEach(entClazz -> {
-
-			List listSubData = dataMap.get(entClazz);
-
-			TreeItem subRoot= new TreeItem(entClazz);
-			//subRoot.getChildren().addAll(FXCollections.observableArrayList(listSubData));
-			listSubData.forEach(entData -> {
-				TreeItem treeItem = new TreeItem(entData);
-				subRoot.getChildren().add(treeItem);
-			});
-
-			rootTreeItem.getChildren().add(subRoot);
-
-		});
-
-		setRoot(rootTreeItem);
-
-	}
+  }
 
 //	public void setItemsAsList2(List<EntClazz> listRapor, Callback<EntClazz,String> callback) {
 //
@@ -211,60 +211,68 @@ public class FxTreeTableView<EntClazz> extends TreeTableView<EntClazz> {
 //
 //	}
 
-	public Map<String, Object> getStyleMap() {
-		if(this.styleMap==null)styleMap=new HashMap<>();
-		return styleMap;
-	}
+  public Map<String, Object> getStyleMap() {
+    if (this.styleMap == null) styleMap = new HashMap<>();
+    return styleMap;
+  }
 
-	public void setStyleMap(Map<String, Object> styleMap) {
-		this.styleMap = styleMap;
-	}
+  public void setStyleMap(Map<String, Object> styleMap) {
+    this.styleMap = styleMap;
+  }
 
-	public Map<FxTableRowActions, Consumer<TreeTableRow>> getMapTableRowEvents() {
-		if (this.mapTableRowEvents == null) {
-			setupRowFactory();
-		}
-		return mapTableRowEvents;
-	}
+  public Map<FxTableRowActions, Consumer<TreeTableRow>> getMapTableRowEvents() {
+    if (this.mapTableRowEvents == null) {
+      setupRowFactory();
+    }
+    return mapTableRowEvents;
+  }
 
-	public void setupRowFactory() {
+  public void setupRowFactory() {
 
-		if (this.mapTableRowEvents == null) {
-			this.mapTableRowEvents = new HashMap<>();
-			this.mapTableRowEventsByEntity = new HashMap<>();
-		}
+    if (this.mapTableRowEvents == null) {
+      this.mapTableRowEvents = new HashMap<>();
+      this.mapTableRowEventsByEntity = new HashMap<>();
+    }
 
-		setRowFactory(tv -> {
+    setRowFactory(tv -> {
 
-			TreeTableRow tableRow = new TreeTableRow();  // TableRow<Entity>
+      TreeTableRow tableRow = new TreeTableRow();  // TableRow<Entity>
 
-			tableRow.setOnMouseClicked(event -> {
+      tableRow.setOnMouseClicked(event -> {
 
-				if (event.getClickCount() == 2 && (!tableRow.isEmpty())) {
-					if (this.mapTableRowEvents.containsKey(FxTableRowActions.DoubleClick)) {
-						this.mapTableRowEvents.get(FxTableRowActions.DoubleClick).accept(tableRow);
-					}
+        if (event.getClickCount() == 2 && (!tableRow.isEmpty())) {
+          if (this.mapTableRowEvents.containsKey(FxTableRowActions.DoubleClick)) {
+            this.mapTableRowEvents.get(FxTableRowActions.DoubleClick).accept(tableRow);
+          }
 
-					if (this.mapTableRowEventsByEntity.containsKey(FxTableRowActions.DoubleClick)) {
-						EntClazz entClazz = (EntClazz) tableRow.getItem();
-						this.mapTableRowEventsByEntity.get(FxTableRowActions.DoubleClick).accept(entClazz);
-					}
-				}
+          if (this.mapTableRowEventsByEntity.containsKey(FxTableRowActions.DoubleClick)) {
+            EntClazz entClazz = (EntClazz) tableRow.getItem();
+            this.mapTableRowEventsByEntity.get(FxTableRowActions.DoubleClick).accept(entClazz);
+          }
+        }
 
-			});
+      });
 
-			return tableRow;
+      return tableRow;
 
-		});
+    });
 
-	}
+  }
 
-	public Map<FxTableRowActions, Consumer<EntClazz>> getMapTableRowEventsByEntity() {
-		if (this.mapTableRowEventsByEntity == null) {
-			setupRowFactory();
-		}
-		return mapTableRowEventsByEntity;
-	}
+  public Map<FxTableRowActions, Consumer<EntClazz>> getMapTableRowEventsByEntity() {
+    if (this.mapTableRowEventsByEntity == null) {
+      setupRowFactory();
+    }
+    return mapTableRowEventsByEntity;
+  }
 
+  public void expandAll(TreeItem<?> item) {
+    if (item != null && !item.isLeaf()) {
+      item.setExpanded(true);
+      for (TreeItem<?> child : item.getChildren()) {
+        expandAll(child);
+      }
+    }
+  }
 
 }

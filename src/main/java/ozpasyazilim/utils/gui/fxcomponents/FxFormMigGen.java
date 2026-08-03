@@ -108,8 +108,8 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> implement
       FxEditorFactory.updateFiColsCompsWitFormEntityByEditorValue(getListFormElementsInit(), getFormEntity());
     }
 
-    if (getFormFkbEntity() != null) {
-      FxEditorFactory.updateFiColsCompsWitFormEntityByEditorValue(getListFormElementsInit(), getFormFkbEntity());
+    if (getFormConfigFkbEntity() != null) {
+      FxEditorFactory.updateFiColsCompsWitFormEntityByEditorValue(getListFormElementsInit(), getFormConfigFkbEntity());
     }
 
     // Form Değerleri Yüklendikten sonraki Lifecycle metodu çalıştırılır
@@ -369,7 +369,7 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> implement
   }
 
   public void loadEntityToForm(EntClazz formEntity) {
-    setFormEntity(formEntity);
+    setFormConfigEntity(formEntity);
 
 //		for (FiCol fiCol : getListFormElements()) {
 //
@@ -388,17 +388,17 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> implement
     return getFxFormConfigInit().getFormEntity();
   }
 
-  public Fkb getFormFkbEntity() {
+  public Fkb getFormConfigFkbEntity() {
     return getFxFormConfigInit().getFkbEntity();
   }
 
-  public void setFormEntity(EntClazz formEntity) {
+  public void setFormConfigEntity(EntClazz formEntity) {
     getFxFormConfigInit().setFormEntity(formEntity);
   }
 
   public void setFormEntityForEdit(EntClazz formEntityForEdit) {
     setBoUpdateForm(true);
-    setFormEntity(formEntityForEdit);
+    setFormConfigEntity(formEntityForEdit);
   }
 
   public void formFocusListener(ChangeListener<Boolean> fnFocusedChangeListener) {
@@ -454,4 +454,7 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> implement
   }
 
 
+  public void refreshData(Fkb formFkbEntity) {
+    FxEditorFactory.updateFiColsCompsWitFkbEntityByEditorValue(getListFormElementsInit(), formFkbEntity);
+  }
 }

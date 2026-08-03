@@ -6,7 +6,7 @@ public class FxFormMiga extends FxFormMigaGen<Object> {
 
 	public FxFormMiga() {
 		super();
-//		Loghelper.get(getClass()).debug("fxformig initialized");
+		// Loghelper.get(getClass()).debug("fxformig initialized");
 	}
 
 	public FxFormMiga(Class entityClazz) {
