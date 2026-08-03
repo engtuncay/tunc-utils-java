@@ -14,15 +14,7 @@ public class FiQuGenUtil {
     return formSqlAssignAnd(fiCol.getFcTxFieldName());
   }
 
-  /**
-   * "fieldName = @fieldName , " template oluşturur
-   *
-   * @param fcTxFieldName
-   * @return
-   */
-  public static String formSqlAssignComma(String fcTxFieldName) {
-    return fcTxFieldName + " = @" + fcTxFieldName + getTxComma();
-  }
+
 
   /**
    * "fieldName = @fieldName , " template oluşturur
@@ -30,8 +22,18 @@ public class FiQuGenUtil {
    * @param fiCol
    * @return
    */
-  public static String formSqlAssignCommaByFic(FiCol fiCol) {
-    return formSqlAssignComma(fiCol.getFcTxFieldName());
+  public static String formSqlAssignVarAndCommaByFic(FiCol fiCol) {
+    return formSqlAssignVarAndComma(fiCol.getFcTxFieldName());
+  }
+
+  /**
+   * "fieldName = @fieldName , " template oluşturur
+   *
+   * @param fcTxFieldName
+   * @return
+   */
+  public static String formSqlAssignVarAndComma(String fcTxFieldName) {
+    return fcTxFieldName + " = @" + fcTxFieldName + getTxComma();
   }
 
   /**

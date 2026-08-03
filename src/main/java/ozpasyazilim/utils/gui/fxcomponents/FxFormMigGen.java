@@ -29,6 +29,10 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> implement
 
   private Class<EntClazz> entityClazz;
   private String uid;
+
+  /**
+   * Form konfigurasyonları burada tutulur
+   */
   private FxFormConfig<EntClazz> fxFormConfig; // added 27-01-21
   private Boolean boFormInitialized;
 

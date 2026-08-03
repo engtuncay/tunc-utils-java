@@ -57,7 +57,7 @@ public class FiQueryGenMs {
         //Loghelper.get(FiSqlGenMs.class).debug("where field: " + fiCol.getFcTxFieldName());
         sbTxWhereBlock.append(FiQuGenUtil.formSqlAssignAndByFic(fiCol));
       } else {
-        sbTxSetBlock.append(FiQuGenUtil.formSqlAssignCommaByFic(fiCol));
+        sbTxSetBlock.append(FiQuGenUtil.formSqlAssignVarAndCommaByFic(fiCol));
       }
     }
 
@@ -131,7 +131,7 @@ public class FiQueryGenMs {
         //fiCol.getFcTxFieldName()).append(" = @").append(fiCol.getFcTxFieldName()).append(getTxAnd()
         sbTxWhereBlock.append(FiQuGenUtil.formSqlAssignAnd(fiCol.getFcTxFieldName()));
       } else {
-        sbTxUpSetBlock.append(FiQuGenUtil.formSqlAssignCommaByFic(fiCol));
+        sbTxUpSetBlock.append(FiQuGenUtil.formSqlAssignVarAndCommaByFic(fiCol));
       }
 
     }
@@ -155,6 +155,66 @@ public class FiQueryGenMs {
 
     //UPDATE EnmCariEvrakEk SET ceveLnNormalFatura = @ceveLnNormalFatura
     // WHERE ceveEvrakSeri = @ceveEvrakSeri AND ceveEvrakSira = @ceveEvrakSira AND ceveEvrakTip = @ceveEvrakTip
+    fdr.setBoResult(true);
+    fdr.setFdTxValue(sql);
+
+    return fdr;
+  }
+
+  public static Fdr upQueryMain(FiCol qcfTxSqTableName, FicList ficUpFields, FicList ficWhereFields) {
+
+    // Oluşturulan update sorgu formatı
+    // UPDATE EnmCariEvrakEk SET ceveLnNormalFatura = @ceveLnNormalFatura
+    // WHERE ceveEvrakSeri = @ceveEvrakSeri AND ceveEvrakSira = @ceveEvrakSira AND ceveEvrakTip = @ceveEvrakTip
+
+    // Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
+    Fdr fdr = new Fdr();
+
+    // FimOcSql.sfTableName();
+    // FimOcSql.sfTxWhere();
+    // FimQcSql.sfTxUpSetBlock();
+
+    String template = "UPDATE {{sfTableName}} SET {{sfTxUpSetBlock}} \n"
+        + " WHERE {{sfTxWhere}} ";
+
+    StringBuilder sbUpSetBlock = new StringBuilder();
+    StringBuilder sbWhereBlock = new StringBuilder();
+
+    String txTableName = qcfTxSqTableName.getFcTxHeader();
+    int indexWhereBlock = 0;
+
+    for (FiCol fiCol : ficUpFields) {
+       if (FiBool.isTrue(fiCol.getFcBoTransient())) {
+         continue;
+       }
+      sbUpSetBlock.append(FiQuGenUtil.formSqlAssignVarAndCommaByFic(fiCol));
+    }
+
+    for (FiCol ficWhereField : ficWhereFields) {
+      if (FiBool.isTrue(ficWhereField.getFcBoTransient())) {
+        continue;
+      }
+      indexWhereBlock++;
+      sbWhereBlock.append(FiQuGenUtil.formSqlAssignAnd(ficWhereField.getFcTxFieldName()));
+    }
+
+    FiString.rtrimSb(sbWhereBlock, getTxAnd());
+    FiString.rtrimSb(sbUpSetBlock, getTxComma());
+
+    Fkb fkbParams = new Fkb();
+    fkbParams.addFieldBy(FimQcSql.sfTableName(), txTableName);
+    fkbParams.addFieldBy(FimQcSql.sfTxUpSetBlock(), sbUpSetBlock.toString());
+    fkbParams.addFieldBy(FimQcSql.sfTxWhere(), sbWhereBlock.toString());
+
+    String sql = FiString.substitutor(template, fkbParams);
+
+    if (indexWhereBlock == 0 || FiString.isEmptyTrim(txTableName) ) {
+      sql = "no where fields or tablename";
+      fdr.setFdTxValue(sql);
+      fdr.setBoResult(false);
+      return fdr;
+    }
+
     fdr.setBoResult(true);
     fdr.setFdTxValue(sql);
 
@@ -405,7 +465,7 @@ public class FiQueryGenMs {
         if (fiCol.getFcTxIdTypeNtn().equals("auto")) {
           continue;
         }
-        sbTxFieldsVarUp.append(FiQuGenUtil.formSqlAssignCommaByFic(fiCol));
+        sbTxFieldsVarUp.append(FiQuGenUtil.formSqlAssignVarAndCommaByFic(fiCol));
       }
 
     }
@@ -534,7 +594,7 @@ public class FiQueryGenMs {
         if (fiCol.getFcTxIdTypeNtn().equals("auto")) {
           continue;
         }
-        sbTxFieldsVarUp.append(FiQuGenUtil.formSqlAssignCommaByFic(fiCol));
+        sbTxFieldsVarUp.append(FiQuGenUtil.formSqlAssignVarAndCommaByFic(fiCol));
       }
 
     }
