@@ -14,7 +14,7 @@ import ozpasyazilim.utils.table.FicList;
 import javax.annotation.Nonnull;
 
 /**
- * FiSql Query Generation Class for MS SQL Server
+ * FiSql Query Generation Class for Ms-sql
  */
 public class FiQueryGenMs {
 
