@@ -10,7 +10,7 @@ import ozpasyazilim.utils.table.FicList;
 public class FiQuconf {
 
   // Main
-  Fkfic fkcFieldsAll;
+  Fkfic fkficAll;
 
   // Alt-1
   Fkfic fkcDmFields;
@@ -67,12 +67,12 @@ public class FiQuconf {
     this.fkcDmFields = fkcDmFields;
   }
 
-  public Fkfic getFkcFieldsAll() {
-    return fkcFieldsAll;
+  public Fkfic getFkficAll() {
+    return fkficAll;
   }
 
-  public void setFkcFieldsAll(Fkfic fkcFieldsAll) {
-    this.fkcFieldsAll = fkcFieldsAll;
+  public void setFkficAll(Fkfic fkficAll) {
+    this.fkficAll = fkficAll;
   }
 
   public FiCol getFicIdAuto() {

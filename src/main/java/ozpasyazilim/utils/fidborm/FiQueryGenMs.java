@@ -710,7 +710,7 @@ public class FiQueryGenMs {
     // Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
 
     // arguments
-    Fkfic fkficAllFields = fiQuconf.getFkcFieldsAll();
+    Fkfic fkficAllFields = fiQuconf.getFkficAll();
     Fkfic fkbDataDefs = fiQuconf.getFkcDmFields();
 
     //FimQcSql.sfTableName();
