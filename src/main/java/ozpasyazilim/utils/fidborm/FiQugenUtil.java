@@ -1,10 +1,14 @@
 package ozpasyazilim.utils.fidborm;
 
+import ozpasyazilim.utils.core.FiString;
 import ozpasyazilim.utils.table.FiCol;
 
 import javax.annotation.Nonnull;
 
-public class FiQuGenUtil {
+/**
+ * Query Generation Util Methods
+ */
+public class FiQugenUtil {
 
   public static String formSqlAssignAnd(String fcTxFieldName) {
     return fcTxFieldName + " = @" + fcTxFieldName + getTxAnd();
@@ -23,6 +27,10 @@ public class FiQuGenUtil {
    * @return
    */
   public static String formSqlAssignVarAndCommaByFic(FiCol fiCol) {
+    // dbField tanımlanmışsa, dbFieldAlan ismi kullanılır
+    if(!FiString.isEmptyTrim(fiCol.getFcTxDbField())) {
+      return formSqlAssignVarAndComma(fiCol.getFcTxDbField());
+    }
     return formSqlAssignVarAndComma(fiCol.getFcTxFieldName());
   }
 

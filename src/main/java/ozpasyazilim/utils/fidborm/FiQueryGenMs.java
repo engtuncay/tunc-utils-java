@@ -26,13 +26,13 @@ public class FiQueryGenMs {
    * @param fqueconf
    * @return
    */
-  public static String upQuery(Fqueconf fqueconf) {
+  public static String upQueryV2(Fqueconf fqueconf) {
 
     // Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
 
     // arguments
     IFiTableMeta iFiTableMeta = fqueconf.getiFiTableMeta();
-    FicList ficFields = fqueconf.getFclTable();
+    FicList ficFields = fqueconf.getFicListTable();
 
     // FimOcSql.sfTableName();
     // FimOcSql.sfTxWhere();
@@ -55,9 +55,9 @@ public class FiQueryGenMs {
       if (FiBool.isTrue(fiCol.getFcBoWhereField())) {
         indexWhereBlock++;
         //Loghelper.get(FiSqlGenMs.class).debug("where field: " + fiCol.getFcTxFieldName());
-        sbTxWhereBlock.append(FiQuGenUtil.formSqlAssignAndByFic(fiCol));
+        sbTxWhereBlock.append(FiQugenUtil.formSqlAssignAndByFic(fiCol));
       } else {
-        sbTxSetBlock.append(FiQuGenUtil.formSqlAssignVarAndCommaByFic(fiCol));
+        sbTxSetBlock.append(FiQugenUtil.formSqlAssignVarAndCommaByFic(fiCol));
       }
     }
 
@@ -87,13 +87,13 @@ public class FiQueryGenMs {
    * @param fqueconf
    * @return
    */
-  public static Fdr upQuery2(Fqueconf fqueconf) {
+  public static Fdr upQueryV3(Fqueconf fqueconf) {
 
     // Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
     Fdr fdr = new Fdr();
 
     // arguments
-    FicList ficFields = fqueconf.getFclTable();
+    FicList ficFields = fqueconf.getFicListTable();
     Fkfic fkbDataDef = fqueconf.getFkcDmFields();
 
     // FimOcSql.sfTableName();
@@ -110,7 +110,7 @@ public class FiQueryGenMs {
     String txTableName = null;
     int indexWhereBlock = 0;
 
-    if(fkbDataDef != null) {
+    if (fkbDataDef != null) {
       txTableName = fkbDataDef.getFimHeaderValNtn(FimQcSpecFields.qcfTxSqTableName());
     }
 
@@ -120,7 +120,7 @@ public class FiQueryGenMs {
       // if (FiBool.isTrue(boUpdateFieldsOnly)) {
       // if (FiBool.isTrue(fiCol.getBoUpdateFieldForQuery())) {
 
-      if (txTableName==null && fiCol.getFcTxFieldName().equals(FimQcSpecFields.qcfTxSqTableName().getKey())) {
+      if (txTableName == null && fiCol.getFcTxFieldName().equals(FimQcSpecFields.qcfTxSqTableName().getKey())) {
         txTableName = fiCol.getFcTxHeader();
         continue;
       }
@@ -129,9 +129,9 @@ public class FiQueryGenMs {
         indexWhereBlock++;
         //Loghelper.get(FiSqlGenMs.class).debug("where field: " + fiCol.getFcTxFieldName());
         //fiCol.getFcTxFieldName()).append(" = @").append(fiCol.getFcTxFieldName()).append(getTxAnd()
-        sbTxWhereBlock.append(FiQuGenUtil.formSqlAssignAnd(fiCol.getFcTxFieldName()));
+        sbTxWhereBlock.append(FiQugenUtil.formSqlAssignAnd(fiCol.getFcTxFieldName()));
       } else {
-        sbTxUpSetBlock.append(FiQuGenUtil.formSqlAssignVarAndCommaByFic(fiCol));
+        sbTxUpSetBlock.append(FiQugenUtil.formSqlAssignVarAndCommaByFic(fiCol));
       }
 
     }
@@ -161,7 +161,7 @@ public class FiQueryGenMs {
     return fdr;
   }
 
-  public static Fdr upQueryMain(FiCol qcfTxSqTableName, FicList ficUpFields, FicList ficWhereFields) {
+  public static Fdr upQueryV1(FiCol qcfTxSqTableName, FicList ficUpFields, FicList ficWhereFields) {
 
     // Oluşturulan update sorgu formatı
     // UPDATE EnmCariEvrakEk SET ceveLnNormalFatura = @ceveLnNormalFatura
@@ -184,10 +184,10 @@ public class FiQueryGenMs {
     int indexWhereBlock = 0;
 
     for (FiCol fiCol : ficUpFields) {
-       if (FiBool.isTrue(fiCol.getFcBoTransient())) {
-         continue;
-       }
-      sbUpSetBlock.append(FiQuGenUtil.formSqlAssignVarAndCommaByFic(fiCol));
+      if (FiBool.isTrue(fiCol.getFcBoTransient())) {
+        continue;
+      }
+      sbUpSetBlock.append(FiQugenUtil.formSqlAssignVarAndCommaByFic(fiCol));
     }
 
     for (FiCol ficWhereField : ficWhereFields) {
@@ -195,7 +195,7 @@ public class FiQueryGenMs {
         continue;
       }
       indexWhereBlock++;
-      sbWhereBlock.append(FiQuGenUtil.formSqlAssignAnd(ficWhereField.getFcTxFieldName()));
+      sbWhereBlock.append(FiQugenUtil.formSqlAssignAnd(ficWhereField.getFcTxFieldName()));
     }
 
     FiString.rtrimSb(sbWhereBlock, getTxAnd());
@@ -208,7 +208,7 @@ public class FiQueryGenMs {
 
     String sql = FiString.substitutor(template, fkbParams);
 
-    if (indexWhereBlock == 0 || FiString.isEmptyTrim(txTableName) ) {
+    if (indexWhereBlock == 0 || FiString.isEmptyTrim(txTableName)) {
       sql = "no where fields or tablename";
       fdr.setFdTxValue(sql);
       fdr.setBoResult(false);
@@ -232,7 +232,7 @@ public class FiQueryGenMs {
 
     // arguments
     IFiTableMeta iFiTableMeta = fqueconf.getiFiTableMeta();
-    FicList ficList = fqueconf.getFclTable();
+    FicList ficList = fqueconf.getFicListTable();
 
     String txTableName = null;
 
@@ -265,15 +265,15 @@ public class FiQueryGenMs {
       if (FiBool.isTrue(fiCol.getFcBoWhereField())) {
         indexWhereBlock++;
         //Loghelper.get(FiSqlGenMs.class).debug("where field: " + fiCol.getFcTxFieldName());
-        sbTxWhereBlock.append(FiQuGenUtil.formSqlAssignAnd(fiCol.getFcTxFieldName()));
+        sbTxWhereBlock.append(FiQugenUtil.formSqlAssignAnd(fiCol.getFcTxFieldName()));
       } else {
-        sbTxFieldsBlock.append(FiQuGenUtil.formSqlFieldComma(fiCol.getFcTxFieldName()));
+        sbTxFieldsBlock.append(FiQugenUtil.formSqlFieldComma(fiCol.getFcTxFieldName()));
       }
 
     }
 
-    FiString.rtrimSb(sbTxWhereBlock, FiQuGenUtil.getTxAnd());
-    FiString.rtrimSb(sbTxFieldsBlock, FiQuGenUtil.getTxComma());
+    FiString.rtrimSb(sbTxWhereBlock, FiQugenUtil.getTxAnd());
+    FiString.rtrimSb(sbTxFieldsBlock, FiQugenUtil.getTxComma());
 
     Fkb fkbParams = new Fkb();
 
@@ -310,7 +310,7 @@ public class FiQueryGenMs {
 
     // arguments
     IFiTableMeta iFiTableMeta = fqueconf.getiFiTableMeta();
-    FicList ficUpFields = fqueconf.getFclTable();
+    FicList ficUpFields = fqueconf.getFicListTable();
 
     //FimOcgSql.sfTableName();
     //FimOcgSql.sfTxWhere();
@@ -343,9 +343,9 @@ public class FiQueryGenMs {
       if (FiBool.isTrue(fiCol.getFcBoWhereField())) {
         indexWhereBlock++;
         //Loghelper.get(FiSqlGenMs.class).debug("where field: " + fiCol.getFcTxFieldName());
-        sbTxWhereBlock.append(FiQuGenUtil.formSqlAssignAnd(fiCol.getFcTxFieldName()));
-        sbTxFieldsBlock.append(FiQuGenUtil.formSqlFieldComma(fiCol.getFcTxFieldName()));
-        sbTxFieldsVar.append(FiQuGenUtil.formSqlVarComma(fiCol.getFcTxFieldName()));
+        sbTxWhereBlock.append(FiQugenUtil.formSqlAssignAnd(fiCol.getFcTxFieldName()));
+        sbTxFieldsBlock.append(FiQugenUtil.formSqlFieldComma(fiCol.getFcTxFieldName()));
+        sbTxFieldsVar.append(FiQugenUtil.formSqlVarComma(fiCol.getFcTxFieldName()));
       }
     }
 
@@ -390,7 +390,7 @@ public class FiQueryGenMs {
 
     // arguments
     IFiTableMeta iFiTableMeta = fqueconf.getiFiTableMeta();
-    FicList ficList = fqueconf.getFclTable();
+    FicList ficList = fqueconf.getFicListTable();
 
     String txTableName = null;
 
@@ -451,21 +451,21 @@ public class FiQueryGenMs {
       if (FiBool.isTrue(fiCol.getFcBoWhereField())) {
         indexWhereBlock++;
         //Loghelper.get(FiSqlGenMs.class).debug("where field: " + fiCol.getFcTxFieldName());
-        sbTxWhereBlock.append(FiQuGenUtil.formSqlAssignAndByFic(fiCol));
+        sbTxWhereBlock.append(FiQugenUtil.formSqlAssignAndByFic(fiCol));
 
         // MEDFIX auto fimE eklenmeli
         // identity alan inserte eklenemez
         if (fiCol.getFcTxIdTypeNtn().equals("auto")) {
           continue;
         }
-        sbTxFieldsIns.append(FiQuGenUtil.formSqlFieldCommaByFic(fiCol));
-        sbTxFieldsVarIns.append(FiQuGenUtil.formSqlVarCommaByFic(fiCol));
+        sbTxFieldsIns.append(FiQugenUtil.formSqlFieldCommaByFic(fiCol));
+        sbTxFieldsVarIns.append(FiQugenUtil.formSqlVarCommaByFic(fiCol));
       } else {
         // auto identity alan update'e eklenemez
         if (fiCol.getFcTxIdTypeNtn().equals("auto")) {
           continue;
         }
-        sbTxFieldsVarUp.append(FiQuGenUtil.formSqlAssignVarAndCommaByFic(fiCol));
+        sbTxFieldsVarUp.append(FiQugenUtil.formSqlAssignVarAndCommaByFic(fiCol));
       }
 
     }
@@ -519,7 +519,7 @@ public class FiQueryGenMs {
 
     // arguments
     IFiTableMeta iFiTableMeta = fqueconf.getiFiTableMeta();
-    FicList ficList = fqueconf.getFclTable();
+    FicList ficList = fqueconf.getFicListTable();
 
     String txTableName = null;
 
@@ -580,21 +580,21 @@ public class FiQueryGenMs {
       if (FiBool.isTrue(fiCol.getFcBoWhereField())) {
         indexWhereBlock++;
         //Loghelper.get(FiSqlGenMs.class).debug("where field: " + fiCol.getFcTxFieldName());
-        sbTxWhereBlock.append(FiQuGenUtil.formSqlAssignAndByFic(fiCol));
+        sbTxWhereBlock.append(FiQugenUtil.formSqlAssignAndByFic(fiCol));
 
         // MEDFIX auto fimE eklenmeli
         // identity alan inserte eklenemez
         if (fiCol.getFcTxIdTypeNtn().equals("auto")) {
           continue;
         }
-        sbTxFieldsIns.append(FiQuGenUtil.formSqlFieldCommaByFic(fiCol));
-        sbTxFieldsVarIns.append(FiQuGenUtil.formSqlVarCommaByFic(fiCol));
+        sbTxFieldsIns.append(FiQugenUtil.formSqlFieldCommaByFic(fiCol));
+        sbTxFieldsVarIns.append(FiQugenUtil.formSqlVarCommaByFic(fiCol));
       } else {
         // auto identity alan update'e eklenemez
         if (fiCol.getFcTxIdTypeNtn().equals("auto")) {
           continue;
         }
-        sbTxFieldsVarUp.append(FiQuGenUtil.formSqlAssignVarAndCommaByFic(fiCol));
+        sbTxFieldsVarUp.append(FiQugenUtil.formSqlAssignVarAndCommaByFic(fiCol));
       }
 
     }
@@ -641,7 +641,7 @@ public class FiQueryGenMs {
     // Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
 
     // arguments
-    FicList ficInsFields = fqueconf.getFclTable();
+    FicList ficInsFields = fqueconf.getFicListTable();
     Fkfic fkbDataDef = fqueconf.getFkcDmFields();
 
     //FimQcSql.sfTableName();
@@ -655,13 +655,13 @@ public class FiQueryGenMs {
     String txTableName = null;
     int indexCol = 0;
 
-    if(fkbDataDef != null) {
+    if (fkbDataDef != null) {
       txTableName = fkbDataDef.getFimHeaderValNtn(FimQcSpecFields.qcfTxSqTableName());
     }
 
     for (FiCol ficItem : ficInsFields) {
 
-      if (txTableName==null && ficItem.getFcTxFieldName().equals(FimQcSpecFields.qcfTxSqTableName().getKey())) {
+      if (txTableName == null && ficItem.getFcTxFieldName().equals(FimQcSpecFields.qcfTxSqTableName().getKey())) {
         txTableName = ficItem.getFcTxHeader();
         continue;
       }
@@ -676,8 +676,8 @@ public class FiQueryGenMs {
       }
 
       indexCol++;
-      sbTxFieldsBlock.append(FiQuGenUtil.formSqlFieldCommaByFic(ficItem));
-      sbTxFieldsVar.append(FiQuGenUtil.formSqlVarCommaByFic(ficItem));
+      sbTxFieldsBlock.append(FiQugenUtil.formSqlFieldCommaByFic(ficItem));
+      sbTxFieldsVar.append(FiQugenUtil.formSqlVarCommaByFic(ficItem));
 
     }
 
@@ -724,13 +724,13 @@ public class FiQueryGenMs {
     String txTableName = null;
     int indexCol = 0;
 
-    if(fkbDataDefs != null) {
+    if (fkbDataDefs != null) {
       txTableName = fkbDataDefs.getFimHeaderValNtn(FimQcSpecFields.qcfTxSqTableName());
     }
 
     for (FiCol ficItem : fkficAllFields.values()) {
 
-      if (txTableName==null && ficItem.getFcTxFieldName().equals(FimQcSpecFields.qcfTxSqTableName().getKey())) {
+      if (txTableName == null && ficItem.getFcTxFieldName().equals(FimQcSpecFields.qcfTxSqTableName().getKey())) {
         txTableName = ficItem.getFcTxHeader();
         continue;
       }
@@ -745,8 +745,8 @@ public class FiQueryGenMs {
       }
 
       indexCol++;
-      sbTxFieldsBlock.append(FiQuGenUtil.formSqlFieldCommaByFic(ficItem));
-      sbTxFieldsVar.append(FiQuGenUtil.formSqlVarCommaByFic(ficItem));
+      sbTxFieldsBlock.append(FiQugenUtil.formSqlFieldCommaByFic(ficItem));
+      sbTxFieldsVar.append(FiQugenUtil.formSqlVarCommaByFic(ficItem));
 
     }
 
@@ -787,7 +787,7 @@ public class FiQueryGenMs {
 
   public static Fdr selQuery(FicList ficList) {
     Fqueconf fqueconf = new Fqueconf();
-    fqueconf.setFclTable(ficList);
+    fqueconf.setFicListTable(ficList);
 
     return selQuery(fqueconf);
   }

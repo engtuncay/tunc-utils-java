@@ -18,13 +18,13 @@ public class Fqueconf {
   IFiTableMeta iFiTableMeta;
   Boolean boUpdateFieldsOnly;
   FiCol ficIdAuto;
-  FicList fclTable;
+  FicList ficListTable;
 
   public Fqueconf() {
   }
 
-  public Fqueconf(FicList fclTable) {
-    setFclTable(fclTable);
+  public Fqueconf(FicList ficListTable) {
+    setFicListTable(ficListTable);
   }
 
   public static Fqueconf bui(FicList ficList) {
@@ -43,12 +43,12 @@ public class Fqueconf {
     this.iFiTableMeta = iFiTableMeta;
   }
 
-  public FicList getFclTable() {
-    return fclTable;
+  public FicList getFicListTable() {
+    return ficListTable;
   }
 
-  public void setFclTable(FicList fclTable) {
-    this.fclTable = fclTable;
+  public void setFicListTable(FicList ficListTable) {
+    this.ficListTable = ficListTable;
   }
 
   public Boolean getBoUpdateFieldsOnly() {
