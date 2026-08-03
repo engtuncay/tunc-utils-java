@@ -13,7 +13,7 @@ public class FiQuconf {
   Fkfic fkficAll;
 
   // Alt-1
-  Fkfic fkcDmFields;
+  Fkfic fkficDataDef;
   // Alt-2
   IFiTableMeta iFiTableMeta;
   Boolean boUpdateFieldsOnly;
@@ -59,12 +59,12 @@ public class FiQuconf {
     this.boUpdateFieldsOnly = boUpdateFieldsOnly;
   }
 
-  public Fkfic getFkcDmFields() {
-    return fkcDmFields;
+  public Fkfic getFkficDataDef() {
+    return fkficDataDef;
   }
 
-  public void setFkcDmFields(Fkfic fkcDmFields) {
-    this.fkcDmFields = fkcDmFields;
+  public void setFkficDataDef(Fkfic fkficDataDef) {
+    this.fkficDataDef = fkficDataDef;
   }
 
   public Fkfic getFkficAll() {

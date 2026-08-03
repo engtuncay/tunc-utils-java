@@ -94,7 +94,7 @@ public class FiQueryGenMs {
 
     // arguments
     FicList ficFields = fiQuconf.getFicListTable();
-    Fkfic fkbDataDef = fiQuconf.getFkcDmFields();
+    Fkfic fkbDataDef = fiQuconf.getFkficDataDef();
 
     // FimOcSql.sfTableName();
     // FimOcSql.sfTxWhere();
@@ -153,7 +153,7 @@ public class FiQueryGenMs {
       return fdr;
     }
 
-    //UPDATE EnmCariEvrakEk SET ceveLnNormalFatura = @ceveLnNormalFatura
+    // UPDATE EnmCariEvrakEk SET ceveLnNormalFatura = @ceveLnNormalFatura
     // WHERE ceveEvrakSeri = @ceveEvrakSeri AND ceveEvrakSira = @ceveEvrakSira AND ceveEvrakTip = @ceveEvrakTip
     fdr.setBoResult(true);
     fdr.setFdTxValue(sql);
@@ -642,7 +642,7 @@ public class FiQueryGenMs {
 
     // arguments
     FicList ficInsFields = fiQuconf.getFicListTable();
-    Fkfic fkbDataDef = fiQuconf.getFkcDmFields();
+    Fkfic fkbDataDef = fiQuconf.getFkficDataDef();
 
     //FimQcSql.sfTableName();
 
@@ -711,7 +711,7 @@ public class FiQueryGenMs {
 
     // arguments
     Fkfic fkficAllFields = fiQuconf.getFkficAll();
-    Fkfic fkbDataDefs = fiQuconf.getFkcDmFields();
+    Fkfic fkbDataDefs = fiQuconf.getFkficDataDef();
 
     //FimQcSql.sfTableName();
 
