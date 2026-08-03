@@ -5,9 +5,9 @@ import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.FicList;
 
 /**
- * {@link Fqueconf} : Fi-Query-Config : (For Query Generation)
+ * {@link FiQuconf} : Fi-Query-Config : (For Query Generation)
  */
-public class Fqueconf {
+public class FiQuconf {
 
   // Main
   Fkfic fkcFieldsAll;
@@ -20,15 +20,15 @@ public class Fqueconf {
   FiCol ficIdAuto;
   FicList ficListTable;
 
-  public Fqueconf() {
+  public FiQuconf() {
   }
 
-  public Fqueconf(FicList ficListTable) {
+  public FiQuconf(FicList ficListTable) {
     setFicListTable(ficListTable);
   }
 
-  public static Fqueconf bui(FicList ficList) {
-    return new Fqueconf(ficList);
+  public static FiQuconf bui(FicList ficList) {
+    return new FiQuconf(ficList);
   }
 
   // FicList ficWhereFields;
