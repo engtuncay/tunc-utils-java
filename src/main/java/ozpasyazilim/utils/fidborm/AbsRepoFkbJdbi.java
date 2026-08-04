@@ -270,17 +270,26 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
     return jdUpdateBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
   }
 
-  public Fdr jdUpdateBindMapMain(String updateQuery, Map<String, Object> fiMapParams) {
+  /**
+   *
+   * Başarılı olursa Fdr objesine boResult ve rowsAffected (Update sorgusunda önemli olabilir) kaydediyor
+   * <p>
+   * Başarısız olursa boResult ve exception'ı kaydediyor, error log'u yazdırıyor
+   *
+   * @param txUpdateQuery
+   * @param fiMapParams
+   * @return
+   */
+  public Fdr jdUpdateBindMapMain(String txUpdateQuery, Map<String, Object> fiMapParams) {
 
     Fdr fdrMain = new Fdr();
     try {
       Integer rowCountUpdate = getJdbi().withHandle(handle -> {
-        return handle.createUpdate(FiQueTools.stojExcludable1(updateQuery))
+        return handle.createUpdate(FiQueTools.stojExcludable1(txUpdateQuery))
             .bindMap(fiMapParams)
             .execute(); // returns row count updated
       });
       //Loghelperr.getInstance(getClass()).debug("Row Count Update:"+rowCountUpdate);
-      //fiDbResult.setLnSuccessWithUpBoResult(1, rowCountUpdate);
       fdrMain.setBoResultAndRowsAff(true, rowCountUpdate);
     } catch (Exception ex) {
       fdrMain.setBoResult(false, ex);

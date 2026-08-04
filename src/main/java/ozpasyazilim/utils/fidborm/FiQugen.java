@@ -3869,7 +3869,7 @@ public class FiQugen {
     Fdr<List<String>> fdrAlter = new Fdr<>();
 
     if (jdbi == null) {
-      return fdrAlter.buiMessage("Veritabanı bağlantısı ayarlanmamış.");
+      return fdrAlter.buiMessageWitLogV1("Veritabanı bağlantısı ayarlanmamış.");
     }
 
     Map<String, FiField> mapDbFields = getMapDbFieldsSql(clazz, jdbi);

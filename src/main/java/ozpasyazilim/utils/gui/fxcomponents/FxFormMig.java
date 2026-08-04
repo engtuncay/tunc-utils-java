@@ -32,28 +32,6 @@ public class FxFormMig extends FxFormMigGen<Object> {
     super(fxFormConfig);
   }
 
-  /**
-   * Formda null olanlar hariç şekilde Fkb döner
-   *
-   * @return
-   */
-  public Fkb getFormAsFkbNotNullFields() {
 
-    Fkb formAsFkb = FxEditorFactory.getFkbColsByEditorNodeForFiCols(getListFiColWithFormValue());
-
-    List<Object> listDeletedKey = new ArrayList<>();
-
-    formAsFkb.forEach((key, value) -> {
-      if (value == null) {
-        listDeletedKey.add(key);
-      }
-    });
-
-    for (Object key : listDeletedKey) {
-      formAsFkb.remove(key);
-    }
-
-    return formAsFkb;
-  }
 
 }

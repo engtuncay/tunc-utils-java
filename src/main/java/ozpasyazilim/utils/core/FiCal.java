@@ -237,7 +237,7 @@ public class FiCal {
    * @return
    */
   public static Long dateDiffxByDay(Date dtX, Date dtY) {
-    return dateDiffByDay2(dtY, dtX);
+    return dateDiffByDayV2(dtY, dtX);
   }
 
   /**
@@ -247,7 +247,7 @@ public class FiCal {
    * @param endDate
    * @return
    */
-  public static Long dateDiffByDay2(Date startDate, Date endDate) {
+  public static Long dateDiffByDayV2(Date startDate, Date endDate) {
     LocalDate lcStart = FiCal.convertLocalDate(startDate);
     LocalDate lcEnd = FiCal.convertLocalDate(endDate);
     long daysBetween = ChronoUnit.DAYS.between(lcStart, lcEnd);

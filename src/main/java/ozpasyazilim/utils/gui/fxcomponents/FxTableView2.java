@@ -3028,4 +3028,10 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
       FxDialogShow.showPopWarn("Lütfen tablodan seçim yapınız.");
     });
   }
+
+  public void warnSelectValidItems() {
+    Platform.runLater( ()-> {
+      FxDialogShow.showPopWarn("Lütfen tablodan geçerli kayıtlar seçiniz.");
+    });
+  }
 }

@@ -496,8 +496,13 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     return this;
   }
 
-  public Fdr<EntClazz> buiMessage(String message) {
+  public Fdr<EntClazz> buiMessageWitLogV1(String message) {
     this.setFdrTxMessageWitAddLog(message);
+    return this;
+  }
+
+  public Fdr<EntClazz> buiMessOnly(String message) {
+    this.setFdTxMessage(message);
     return this;
   }
 

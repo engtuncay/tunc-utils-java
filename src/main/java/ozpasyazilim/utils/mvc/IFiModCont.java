@@ -3,13 +3,12 @@ package ozpasyazilim.utils.mvc;
 import javafx.stage.Stage;
 
 /**
- * IFiModCont - Module Pencerelerinin interface
+ * IFiModCont - Module Pencerelerinin interface tanımı
  * <p>
  * IFiModCont (eski adı IFxSimpleCont) Interface : void initCont(),IFiModView getModView(),Stage getFxStage(),void setFxStage(..)
  * <p>
  * String getModuleCode(),String getModuleLabel(),String getCloseReason(),void setCloseReason(..);
- * <p>
- * Review : Pane getRootPane(); eklenebilir
+ *
  */
 public interface IFiModCont {
 
@@ -17,9 +16,10 @@ public interface IFiModCont {
 
     IFiModView getModView();
 
+    // IFiModView üzerinden çalışmayacaksa düşünülebilir, gerekli değil gibi, review yapılmalı
     //Pane getRootPane();
 
-    // Stage tanımı controller üzerinden kullanılacak
+    // Stage objesi, controller üzerinden kullanılması için
     Stage getFxStageInit();
 
     Stage getFxStage();

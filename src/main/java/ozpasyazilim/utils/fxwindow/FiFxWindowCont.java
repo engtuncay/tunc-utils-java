@@ -10,7 +10,7 @@ import ozpasyazilim.utils.mvc.IFiModCont;
 /**
  * Common Window
  */
-public class FiFxWindowCont extends AbsFiModBaseCont implements IFiModCont {
+public class FiFxWindowCont extends AbsFiModBaseCont {
 
 	FiFxWindowView modView;
 

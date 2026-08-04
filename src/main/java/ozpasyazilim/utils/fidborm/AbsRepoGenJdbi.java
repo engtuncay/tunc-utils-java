@@ -2461,7 +2461,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
   private Fdr checkJdbi() {
     if (getJdbi() == null) {
-      return Fdr.creBoResult(false).buiMessage("Jdbi Tanımlı Değil :" + getDatabaseName());
+      return Fdr.creBoResult(false).buiMessageWitLogV1("Jdbi Tanımlı Değil :" + getDatabaseName());
     }
     return Fdr.creBoResult(true);
   }

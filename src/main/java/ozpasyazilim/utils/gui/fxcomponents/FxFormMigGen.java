@@ -15,6 +15,7 @@ import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.FiColsUtil;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -457,8 +458,32 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> implement
     initCont();
   }
 
-
   public void refreshData(Fkb formFkbEntity) {
     FxEditorFactory.updateFiColsCompsWitFkbEntityByEditorValue(getListFormElementsInit(), formFkbEntity);
   }
+
+  /**
+   * Formda null olanlar hariç şekilde Fkb döner
+   *
+   * @return
+   */
+  public Fkb getFormAsFkbNotNullFields() {
+
+    Fkb formAsFkb = FxEditorFactory.getFkbColsByEditorNodeForFiCols(getListFiColWithFormValue());
+
+    List<Object> listDeletedKey = new ArrayList<>();
+
+    formAsFkb.forEach((key, value) -> {
+      if (value == null) {
+        listDeletedKey.add(key);
+      }
+    });
+
+    for (Object key : listDeletedKey) {
+      formAsFkb.remove(key);
+    }
+
+    return formAsFkb;
+  }
+
 }
