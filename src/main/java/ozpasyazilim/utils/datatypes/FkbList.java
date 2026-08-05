@@ -5,6 +5,7 @@ import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.table.FiCol;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -25,6 +26,12 @@ public class FkbList extends ArrayList<Fkb> {
 	public FkbList(Collection<? extends Fkb> c) {
 		super(c);
 	}
+
+  public static List<Fkb> bui(Fkb ...selectedItemFiGen) {
+		FkbList fkbList = new FkbList();
+		fkbList.addAll(Arrays.asList(selectedItemFiGen));
+		return fkbList;
+  }
 
 	public List<FiCol> getFicColList() {
 		return ficColList;

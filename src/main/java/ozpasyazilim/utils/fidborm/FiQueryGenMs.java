@@ -162,6 +162,14 @@ public class FiQueryGenMs {
   }
 
   public static Fdr upQueryV1(FiCol qcfTxSqTableName, FicList ficUpFields, FicList ficWhereFields) {
+    return upQueryV1(FiQuconf.buiUpV1(qcfTxSqTableName, ficUpFields, ficWhereFields));
+  }
+
+  public static Fdr upQueryV1(FiQuconf fiQuconf) {
+
+    FiCol qcfTxSqTableName = fiQuconf.getQcfTxSqTableName();
+    FicList ficUpFields  = fiQuconf.getFicListUp();
+    FicList ficWhereFields =  fiQuconf.getFicListWhere();
 
     // Oluşturulan update sorgu formatı
     // UPDATE EnmCariEvrakEk SET ceveLnNormalFatura = @ceveLnNormalFatura

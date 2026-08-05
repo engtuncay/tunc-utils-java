@@ -77,7 +77,7 @@ public abstract class FiAbsTableFkbWindowCont extends FiFxWindowCont {
 
     List<EntClazz> listData = (List<EntClazz>) fxTextFieldBtn.getObjValue();
 
-    FilteredList<EntClazz> itemsCurrent = (FilteredList<EntClazz>) getFxTableView().getItemsCurrentFi();
+    FilteredList<EntClazz> itemsCurrent = (FilteredList<EntClazz>) getFxTableView().getItemsSourceCurrentFi();
     Map<B, EntClazz> mapKeyToObject = FiCollection.listToMapSingle(listData, fnKeyValue);
 
     itemsCurrent.forEach(entity -> {

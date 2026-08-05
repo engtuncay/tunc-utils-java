@@ -20,6 +20,25 @@ public class FiQuconf {
   FiCol ficIdAuto;
   FicList ficListTable;
 
+  // Update Query V1 de kullanıldı: qcfTxSqTableName,ficListUp,ficListWhere
+
+  /**
+   * Tablo ismi buranın header alanından alınır
+   */
+  FiCol qcfTxSqTableName;
+
+  /**
+   * Update Sorgusunda Set Alanı (Güncellenecek Alanlar)
+   */
+  FicList ficListUp;
+
+  /**
+   * Update Sorgusunda Where Alanı
+   */
+  FicList ficListWhere;
+
+  //FicMkCariHar.qcfTxSqTableName(), ficListUp, ficListCandId
+
   public FiQuconf() {
   }
 
@@ -29,6 +48,14 @@ public class FiQuconf {
 
   public static FiQuconf bui(FicList ficList) {
     return new FiQuconf(ficList);
+  }
+
+  public static FiQuconf buiUpV1(FiCol qcfTxSqTableName, FicList ficUpFields, FicList ficWhereFields) {
+    FiQuconf fiQuconf = new FiQuconf();
+    fiQuconf.setQcfTxSqTableName(qcfTxSqTableName);
+    fiQuconf.setFicListUp(ficUpFields);
+    fiQuconf.setFicListWhere(ficWhereFields);
+    return fiQuconf;
   }
 
   // FicList ficWhereFields;
@@ -81,5 +108,29 @@ public class FiQuconf {
 
   public void setFicIdAuto(FiCol ficIdAuto) {
     this.ficIdAuto = ficIdAuto;
+  }
+
+  public FiCol getQcfTxSqTableName() {
+    return qcfTxSqTableName;
+  }
+
+  public void setQcfTxSqTableName(FiCol qcfTxSqTableName) {
+    this.qcfTxSqTableName = qcfTxSqTableName;
+  }
+
+  public FicList getFicListUp() {
+    return ficListUp;
+  }
+
+  public void setFicListUp(FicList ficListUp) {
+    this.ficListUp = ficListUp;
+  }
+
+  public FicList getFicListWhere() {
+    return ficListWhere;
+  }
+
+  public void setFicListWhere(FicList ficListWhere) {
+    this.ficListWhere = ficListWhere;
   }
 }
