@@ -549,7 +549,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     }
 
     // Tüm işlemlerde mesaj birleştirilir.
-    if (!FiString.isEmptyTrim(fdrSubWork.getFdTxMessage())) appendMessageLn(fdrSubWork.getFdTxMessage());
+    if (!FiString.isEmptyTrim(fdrSubWork.getFdTxMessage())) appendMessageLnOnly(fdrSubWork.getFdTxMessage());
 
     // Loglar birleştirilir.
     if (!FiCollection.isEmpty(fdrSubWork.getFdrListLog())) getLogListInit().addAll(fdrSubWork.getFdrListLog());
@@ -570,6 +570,11 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
   public void appendMessageLn(String message) {
     if (message == null) return;
     addLogInfo(message);
+    setMessageForAppend(FiString.orEmpty(getFdTxMessage()) + FiString.addNewLineToBeginIfNotEmpty(message));
+  }
+
+  public void appendMessageLnOnly(String message) {
+    if (message == null) return;
     setMessageForAppend(FiString.orEmpty(getFdTxMessage()) + FiString.addNewLineToBeginIfNotEmpty(message));
   }
 
