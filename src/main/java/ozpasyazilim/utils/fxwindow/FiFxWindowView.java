@@ -33,15 +33,15 @@ public class FiFxWindowView implements IFiModView {
   public void initGui() {
 
     // Container Initial.
-    migRoot = new FxMigPane(FxMigHp.bui().lcgInset5Gap05().getLcg());
+    migRoot = new FxMigPane(FxMigHp.bui().lcgInset5Gap00().getLcg());
     migToolbar = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().lcgNoGrid().getLcg());
     migContent = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().getLcg());
     migFooter = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().lcgNoGrid().getLcg());
 
     // Container Setup
-    getMigRoot().addGrowXPushXSpan(migToolbar);
-    getMigRoot().addGrowPushSpan(migContent);
-    getMigRoot().addGrowXPushXSpan(migFooter);
+    getMigRoot().addGrowXPushXSpan(migToolbar, FxMigHp.bui().ccGapAfter("5").getCc());
+    getMigRoot().addGrowPushSpan(migContent, FxMigHp.bui().ccGapAfter("5").getCc());
+    getMigRoot().addGrowXPushXSpan(migFooter, FxMigHp.bui().getCc());
 
   }
 
