@@ -229,6 +229,7 @@ public class FiXmlParser {
 			String text = elementChild.text();
 			FiReflection.setter(fiColParent, entity, text);
 		}
+
 		return entity;
 	}
 

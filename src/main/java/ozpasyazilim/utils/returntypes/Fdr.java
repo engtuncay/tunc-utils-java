@@ -73,6 +73,8 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
    */
   List<OreLog> fdrListLog;
 
+  List fdListVal;
+
   // *********************************** Ek Alanlar *****************************************
 
   private Integer rowsAffected;
@@ -1373,6 +1375,14 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     this.fdFkbVal = fdFkbVal;
   }
 
+  public List getFdListVal() {
+    return fdListVal;
+  }
+
+  public void setFdListVal(List fdListVal) {
+    this.fdListVal = fdListVal;
+  }
+
   public void logFdr() {
 
     if(getFdTxValue()!=null) {
@@ -1382,6 +1392,8 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     if(getFdFkbVal()!=null) {
       Loghelper.get(getClass()).debug("FdFkbVal:" + getFdFkbVal());
     }
+
+
 
 
 

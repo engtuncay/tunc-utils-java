@@ -1588,6 +1588,13 @@ public class FiCollection {
 
   }
 
+  /**
+   * Liste elemanlarının tipini kontrol etme
+   *
+   * @param edmInvoiceStatusList
+   * @param emsEdmInvoiceStatusClass
+   * @return
+   */
   public static boolean isListOfType(Object edmInvoiceStatusList, Class emsEdmInvoiceStatusClass) {
     if (edmInvoiceStatusList instanceof List<?>) {
       List<?> tempList = (List<?>) edmInvoiceStatusList;
