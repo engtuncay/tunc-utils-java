@@ -8,6 +8,8 @@ import org.joox.Match;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
+import ozpasyazilim.utils.datatypes.Fkb;
+import ozpasyazilim.utils.datatypes.FkbList;
 import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.returntypes.Fdr;
@@ -22,7 +24,8 @@ import java.util.List;
 import static org.joox.JOOX.$;
 
 /**
- * URTODO FkbList'e parse edecek method yazılacak
+ * v1 Entity'e parse eklendi
+ * v2 2026-08-07 FkbList'e parse eklendi. XmlChild gibi türlerin testi yapılmadı (parseMatchToEntityWithOneChildFkb metodunda)
  */
 public class FiXmlParser {
 
@@ -117,7 +120,6 @@ public class FiXmlParser {
 		return null;
 	}
 
-
 	public static Match openXmlFile(File file) {
 
 		Match $xmldom = null;
@@ -146,7 +148,6 @@ public class FiXmlParser {
 
         return null;
 	}
-
 
 	public <T> void parseXmlElementToList(Match xmldom, List<IFiCol> listColumn, List<T> listData, String elementName, Class<T> clazz) {
 
@@ -233,7 +234,6 @@ public class FiXmlParser {
 		return entity;
 	}
 
-
 	public static <EntClazz> Fdr<List<EntClazz>> parseXmlFileToEntityListWithChild(File fileXml, String txSelectorTag, List<FiCol> listColumn, Class<EntClazz> clazz) {
 
 		//Loghelper.get(FiXmlParser.class).debug("parseXmlToEntityListWithChild");
@@ -279,6 +279,91 @@ public class FiXmlParser {
 		}
 
 		return dataList;
+	}
+
+	/**
+	 * @param txXml xml
+	 * @param fiColList xml alanları ( fieldName (tag değerinin yazılacağı alan), header : Xml Tag Alanı )
+	 * @param boWriteChildToParent çocuk elementi parent entity'i üzerine yazılsın mı
+	 * @return FkbList
+	 */
+	public static FkbList parseXmlToFkbList(String txXml, String txSelectorTag, List<FiCol> fiColList, Boolean boWriteChildToParent) {
+		return parseMatchElementToFkbList(openXml(txXml), txSelectorTag, fiColList, boWriteChildToParent);
+	}
+
+	/**
+	 * @param xmlMatch
+	 * @param ficList xml alanları ( fieldName (tag değerinin yazılacağı alan), header : Xml Tag Alanı )
+	 * @param boWriteChildToParent çocuk elementi parent entity'i üzerine yazılsın mı
+	 * @return
+	 */
+	private static FkbList parseMatchElementToFkbList(Match xmlMatch, String txSelectorTag, List<FiCol> ficList, Boolean boWriteChildToParent) {
+
+		if (xmlMatch == null) return new FkbList();
+
+		FkbList fkbList = new FkbList();
+
+		for (Element xmlElement : xmlMatch.find(txSelectorTag)) {
+			Fkb entity = FiXmlParser.parseMatchToEntityWithOneChildFkb($(xmlElement), ficList, boWriteChildToParent, null);
+			//Loghelper.get(FiXmlParser.class).debug(FiConsole.textFkb(entity));
+			fkbList.add(entity);
+		}
+
+		return fkbList;
+	}
+
+	/**
+	 * @param xmlMatch
+	 * @param listColumn xml alanları ( fieldName (tag değerinin yazılacağı alan), header : Xml Tag Alanı )
+	 * @param boWriteChildToParent çocuk elementi parent entity'i üzerine yazılsın mı
+	 * @param fkbEntity
+	 * @return
+	 */
+	public static Fkb parseMatchToEntityWithOneChildFkb(Match xmlMatch, List<FiCol> listColumn, Boolean boWriteChildToParent, Fkb fkbEntity) {
+
+		if (fkbEntity == null) fkbEntity = new Fkb();
+
+		for (int colidx = 0; colidx < listColumn.size(); colidx++) {
+
+			// L1 means Layer1 or Parent
+			FiCol ficL1 = listColumn.get(colidx);
+
+			if (ficL1.getColTypeNtn() == OzColType.XmlChildList) {
+				FkbList listChildren = parseMatchElementToFkbList(xmlMatch, ficL1.getFcTxHeader(), ficL1.getListChildCol(), false);
+				FiReflection.setProperty(fkbEntity, ficL1.getFcTxFieldName(), listChildren);
+				continue;
+			}
+
+			if (ficL1.getColTypeNtn() == OzColType.XmlChild) {
+
+				Match elementChild = xmlMatch.find(ficL1.getFcTxHeader());
+
+				if (FiBool.isTrue(boWriteChildToParent)) {
+					parseMatchToEntityWithOneChildFkb(elementChild, ficL1.getListChildCol(), boWriteChildToParent, fkbEntity);
+				} else {
+					Fkb fkbChild = parseMatchToEntityWithOneChildFkb(elementChild, ficL1.getListChildCol(), boWriteChildToParent, null);
+					FiReflection.setProperty(fkbEntity, ficL1.getFcTxFieldName(), fkbChild);
+				}
+
+				continue;
+			}
+
+			if (ficL1.getColGenTypeNtn().equals(OzColType.XmlAttribute)) {
+				String text = xmlMatch.attr(ficL1.getFcTxHeader());
+				FiReflection.setter(ficL1, fkbEntity, text);
+//			Loghelper.get(FiXmlParser.class).debug("Attr HeaderName:"+ ficL1.getHeaderName());
+//			Loghelper.get(FiXmlParser.class).debug("Attr Value:" + text);
+				continue;
+			}
+
+			//Loghelper.get(FiXmlParser.class).debug("HeaderName:"+ ficL1.getHeaderName());
+
+			Match elementChild = xmlMatch.find(ficL1.getFcTxHeader());
+			String text = elementChild.text();
+			FiReflection.setter(ficL1, fkbEntity, text);
+		}
+
+		return fkbEntity;
 	}
 
 }
