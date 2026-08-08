@@ -1,4 +1,4 @@
-package ozpasyazilim.utils.core.fihtmls;
+package ozpasyazilim.utils.fihtmls;
 
 public class FiHtmlTag2 {
 

@@ -8,9 +8,9 @@ import java.io.IOException;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
-public class ExcelExporter {
+public class ExcelCsvExporter {
 
-    public ExcelExporter() {
+    public ExcelCsvExporter() {
     }
 
     public void exportTable(JTable table, File file) throws IOException {

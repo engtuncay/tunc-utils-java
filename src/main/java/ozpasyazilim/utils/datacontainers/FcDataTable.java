@@ -9,7 +9,10 @@ import java.util.function.Function;
 
 import ozpasyazilim.utils.core.FiString;
 
-public class DataTableOz {
+/**
+ * Fc: Fi-Container
+ */
+public class FcDataTable {
 
 	List<String> listcolname;
 	List<List<String>> listrows;
@@ -111,11 +114,11 @@ public class DataTableOz {
 		return getMapColtoIndex().get(colname);
 	}
 
-	public static void printDataTable(DataTableOz dataTableOz) {
+	public static void printDataTable(FcDataTable fcDataTable) {
 
 		// print column names
 
-		for (Iterator iterator = dataTableOz.getListcolname().iterator(); iterator.hasNext();) {
+		for (Iterator iterator = fcDataTable.getListcolname().iterator(); iterator.hasNext();) {
 			String colname = (String) iterator.next();
 			System.out.print(colname + " - ");
 		}
@@ -123,10 +126,10 @@ public class DataTableOz {
 		System.out.println("");
 
 
-		for (Iterator iterator = dataTableOz.getListMapColNametoVal().iterator(); iterator.hasNext();) {
+		for (Iterator iterator = fcDataTable.getListMapColNametoVal().iterator(); iterator.hasNext();) {
 			Map<String, String> mapcolnametoval = (Map<String, String>) iterator.next();
 
-			for (Iterator iterator2 = dataTableOz.getListcolname().iterator(); iterator2.hasNext();) {
+			for (Iterator iterator2 = fcDataTable.getListcolname().iterator(); iterator2.hasNext();) {
 				String colname = (String) iterator2.next();
 				String value = mapcolnametoval.get(colname);
 				System.out.print(colname + ":" + value + " - ");
@@ -182,7 +185,7 @@ public class DataTableOz {
 
 	}
 
-	public static void printDataTableCols(DataTableOz myDataTable) {
+	public static void printDataTableCols(FcDataTable myDataTable) {
 
 		for (Iterator iterator = myDataTable.getListcolname().iterator(); iterator.hasNext();) {
 			String colname = (String) iterator.next();
@@ -197,7 +200,7 @@ public class DataTableOz {
 
 	}
 
-	public static <E> List<E> bindEntity(DataTableOz datatable, Function<Map<String, String>, E> fnBindMaptoEntity) {
+	public static <E> List<E> bindEntity(FcDataTable datatable, Function<Map<String, String>, E> fnBindMaptoEntity) {
 
 		List<E> list = new ArrayList<>();
 

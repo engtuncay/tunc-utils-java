@@ -14,7 +14,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import ozpasyazilim.utils.datacontainers.DataTableOz;
+import ozpasyazilim.utils.datacontainers.FcDataTable;
 import ozpasyazilim.utils.gui.fxcomponents.FxEditorFactory;
 import ozpasyazilim.utils.table.FiCol;
 
@@ -29,9 +29,9 @@ public class FiHtmlParserJsoup {
 	 *            examples ISO-8859-9 , UTF-8
 	 * @return
 	 */
-	public static DataTableOz parseHtmlTable(String tableid, File file, String charsetName) {
+	public static FcDataTable parseHtmlTable(String tableid, File file, String charsetName) {
 
-		DataTableOz dataTable = new DataTableOz();
+		FcDataTable dataTable = new FcDataTable();
 
 		Document doc = null;
 		try {
@@ -122,9 +122,9 @@ public class FiHtmlParserJsoup {
 	 */
 	public static <P> List<P> parseHtmlTableBindList(String tableid, File file, String charsetName, List<FiCol> fiTableColList, Class<P> aClass) {
 
-		DataTableOz dataTableOz = parseHtmlTable(tableid, file, charsetName);
+		FcDataTable fcDataTable = parseHtmlTable(tableid, file, charsetName);
 
-		List<Map<String, String>> listMapColNametoVal = dataTableOz.getListMapColNametoVal();
+		List<Map<String, String>> listMapColNametoVal = fcDataTable.getListMapColNametoVal();
 
 		List<P> list = new ArrayList<>();
 

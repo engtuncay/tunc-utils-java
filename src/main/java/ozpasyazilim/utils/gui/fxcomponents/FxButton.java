@@ -9,9 +9,8 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
 import org.kordamp.ikonli.javafx.FontIcon;
-import ozpasyazilim.utils.core.FiModObserver;
+import ozpasyazilim.utils.core.FiObserver;
 import ozpasyazilim.utils.core.FiThread;
-import ozpasyazilim.utils.core.RunnableFdr;
 import ozpasyazilim.utils.security.SecurityRight;
 
 import java.util.ArrayList;
@@ -261,8 +260,8 @@ public class FxButton extends Button implements IFxSecureNode {
     setOnAction(event -> runnable.run() );
   }
 
-	public void setOnActionWithThread(Runnable runnable, FiModObserver fiModObserver) {
-		setOnAction(event -> FiThread.startThread(runnable, fiModObserver, this));
+	public void setOnActionWithThread(Runnable runnable, FiObserver fiObserver) {
+		setOnAction(event -> FiThread.startThread(runnable, fiObserver, this));
 	}
 
 	/**

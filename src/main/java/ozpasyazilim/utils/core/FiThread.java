@@ -22,8 +22,8 @@ public class FiThread {
         return startThread(runnable, btnArray, null);
     }
 
-    public static Thread startThread(Runnable runnable, FiModObserver fiModObserver, FxButton... btnArray) {
-        return startThread(runnable, btnArray, null, fiModObserver);
+    public static Thread startThread(Runnable runnable, FiObserver fiObserver, FxButton... btnArray) {
+        return startThread(runnable, btnArray, null, fiObserver);
     }
 
 
@@ -134,7 +134,7 @@ public class FiThread {
         return thread;
     }
 
-    public static Thread startThread(Runnable custRunnableMain, FxButton[] arrButtons, Runnable custRunnableEnd, FiModObserver fiModObserver) {
+    public static Thread startThread(Runnable custRunnableMain, FxButton[] arrButtons, Runnable custRunnableEnd, FiObserver fiObserver) {
 
         StringBuilder sbTxOld = new StringBuilder();
 
@@ -177,7 +177,7 @@ public class FiThread {
 
         };
 
-        fiModObserver.getObsMethodFinished().add(runnable2);
+        fiObserver.getObservers().add(runnable2);
 
         if (custRunnableEnd == null) custRunnableEnd = () -> {
         };

@@ -1580,7 +1580,7 @@ public class FiExcel2 {
 
         } catch (Exception e) {
             e.printStackTrace();
-            new FxDialogShow().showModalWarningAlert("hata oluştu.\nDetay:" + FiException.exTosMain(e));
+            FxDialogShow.showModalWarningAlert("hata oluştu.\nDetay:" + FiException.exTosMain(e));
         }
 
         return newFile;
@@ -1616,7 +1616,7 @@ public class FiExcel2 {
             // Set the row to the next one in the sequence
             row = sheet.createRow((rows + 2));
         }
-        wb.write(new FileOutputStream(path.toString()));// Save the file
+        wb.write(Files.newOutputStream(Paths.get(path.toString())));// Save the file
     }
 
 

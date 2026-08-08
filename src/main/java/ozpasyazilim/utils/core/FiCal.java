@@ -594,10 +594,10 @@ public class FiCal {
     Calendar aCalendar = Calendar.getInstance();
     clearTime(aCalendar);
     // Calendar.Date günü belirtiyor
-    if(lndayDifference!=0) {
+    if (lndayDifference != 0) {
       aCalendar.add(Calendar.DATE, lndayDifference);
     }
-    if(lnMonthDiff!=0) {
+    if (lnMonthDiff != 0) {
       aCalendar.add(Calendar.MONTH, lnMonthDiff);
     }
     Date result = aCalendar.getTime();

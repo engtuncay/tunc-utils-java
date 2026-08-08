@@ -1,7 +1,8 @@
 package ozpasyazilim.utils.core;
 
 /**
- * bunun yerine funtion T,String kullanalabilir
+ * bunun yerine function<T,String> kullanalabilir
+ *
  * @param <E>
  */
 @Deprecated

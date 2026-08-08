@@ -4,50 +4,54 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class FiCalw {
+/**
+ * Fi-Date-Wrapper Object
+ */
+public class FiDatew {
 
-	private Date dateStored;
+  private Date dateStored;
 
-	public FiCalw() {}
+  public FiDatew() {
+  }
 
-	public FiCalw(Date dateStored) {
-		setDateStored(dateStored);
-	}
+  public FiDatew(Date dateStored) {
+    setDateStored(dateStored);
+  }
 
-	public static FiCalw build(){
-		return new FiCalw();
-	}
+  public static FiDatew build() {
+    return new FiDatew();
+  }
 
-	public static FiCalw buildNow(){
-		return new FiCalw(new Date());
-	}
+  public static FiDatew buildNow() {
+    return new FiDatew(new Date());
+  }
 
-	public static FiCalw buildNowOnlyDate(){
-		return new FiCalw(new Date()).clearTime();
-	}
+  public static FiDatew buildNowOnlyDate() {
+    return new FiDatew(new Date()).clearTime();
+  }
 
-	public Date getDateStored() {
-		return dateStored;
-	}
+  public Date getDateStored() {
+    return dateStored;
+  }
 
-	public void setDateStored(Date dateStored) {
-		this.dateStored = dateStored;
-	}
+  public void setDateStored(Date dateStored) {
+    this.dateStored = dateStored;
+  }
 
-	// bitirici metodlar
+  // bitirici metodlar
 
-	public String dateToString_yyyymmdd() {
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
-		return formatter.format(getDateStored());
-	}
+  public String dateToString_yyyymmdd() {
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+    return formatter.format(getDateStored());
+  }
 
-	// wrap methods ve eski metodlar
+  // wrap methods ve eski metodlar
 
 //	public static Integer getYear() {
 //		return Calendar.getInstance().get(Calendar.YEAR);
 //	}
 
-//	public Date getYearBeginning() {
+  //	public Date getYearBeginning() {
 //
 //		Calendar cal = Calendar.getInstance(); // new GregorianCalendar();
 //		cal.set(Calendar.DAY_OF_YEAR, 1);
@@ -102,34 +106,34 @@ public class FiCalw {
 //
 //	}
 //
-	public FiCalw addDayIgnoreTime(Date date, Integer countDay) {
+  public FiDatew addDayIgnoreTime(Date date, Integer countDay) {
 
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
-		calendar.set(Calendar.HOUR, 0);
-		calendar.set(Calendar.MINUTE, 0);
-		calendar.set(Calendar.SECOND, 0);
-		calendar.set(Calendar.HOUR_OF_DAY, 0);
-		calendar.set(Calendar.MILLISECOND, 0);
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTime(date);
+    calendar.set(Calendar.HOUR, 0);
+    calendar.set(Calendar.MINUTE, 0);
+    calendar.set(Calendar.SECOND, 0);
+    calendar.set(Calendar.HOUR_OF_DAY, 0);
+    calendar.set(Calendar.MILLISECOND, 0);
 
-		calendar.add(Calendar.DATE, countDay);
+    calendar.add(Calendar.DATE, countDay);
 
-		return new FiCalw(calendar.getTime());
-	}
+    return new FiDatew(calendar.getTime());
+  }
 
-	public FiCalw clearTime() {  //Calendar calendar
+  public FiDatew clearTime() {  //Calendar calendar
 
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(getDateStored());
-		calendar.set(Calendar.HOUR, 0);
-		calendar.set(Calendar.MINUTE, 0);
-		calendar.set(Calendar.SECOND, 0);
-		calendar.set(Calendar.MILLISECOND, 0);
-		calendar.set(Calendar.HOUR_OF_DAY, 0);
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTime(getDateStored());
+    calendar.set(Calendar.HOUR, 0);
+    calendar.set(Calendar.MINUTE, 0);
+    calendar.set(Calendar.SECOND, 0);
+    calendar.set(Calendar.MILLISECOND, 0);
+    calendar.set(Calendar.HOUR_OF_DAY, 0);
 
-		setDateStored(calendar.getTime());
-		return this;
-	}
+    setDateStored(calendar.getTime());
+    return this;
+  }
 
 //
 //	public Date getDateGecenAySonu() {

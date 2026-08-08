@@ -11,10 +11,6 @@ import java.util.StringTokenizer;
 
 public class FiHash
 {
-  public FiHash()
-  {
-  }
-
 
   private static String getString(byte[] bytes)
   {
@@ -57,4 +53,5 @@ public class FiHash
       throw new RuntimeException(e);
     }
   }
+
 }
