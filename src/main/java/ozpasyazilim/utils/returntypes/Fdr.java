@@ -24,7 +24,7 @@ import java.util.*;
  * <p>
  * EntClazz value alanının tipi
  */
-@FiTable
+//@FiTable
 public class Fdr<EntClazz> implements IFdr<EntClazz> {
 
   /**
