@@ -43,6 +43,14 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
 
   private String fdTxMessage;
 
+  private String fdTxVal;
+
+  private FkbList fdFkbListVal;
+
+  private Fkb fdFkbVal;
+
+  private Integer fdLnVal;
+
   /**
    * 1- Db'ye kayıt edilirken id atamasının değeri buraya yazılır
    */
@@ -70,9 +78,9 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
   /**
    * İşlemlerden alınan loglar
    */
-  List<FieLog> fdrListLog;
+  private List<FieLog> fdListLog;
 
-  List fdListVal;
+  private List fdListVal;
 
   // *********************************** Ek Alanlar *****************************************
 
@@ -130,7 +138,9 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
   private Integer lnDeletedRows;
 
   /**
-   * Kafa karışıklığı oluşturabilir,incelenecek, dikatli kullanılır
+   * Kafa karışıklığı oluşturabilir, kullanılmaması tavsiye
+   * <p>
+   * incelenecek, dikatli kullanılır
    * <p>
    * Operasyon sonucu nedir , true işlem sonucu pozitif, false işlem sonucu negatif olur.
    * <p>
@@ -161,15 +171,11 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
    */
   private Boolean boLockAddLog;
 
-  private String fdTxValue;
 
-  private FkbList fdFkbListVal;
-
-  private Fkb fdFkbVal;
-
-  private Integer fdrLnValue;
   /**
-   * Fdr ile tetiklemek istediğimiz işlemleri buraya kaydedilebilir
+   * Fdr ile tetiklemek istediğimiz işlemleri buraya kaydedilebilir ???
+   * <p>
+   * Fdr kullanım amacına ters ( fdr işlem sonucunda dönen obje )
    */
   List<Runnable> obsMethodFinished;
 
@@ -553,7 +559,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     if (!FiString.isEmptyTrim(fdrSubWork.getFdTxMessage())) appendMessageLnOnly(fdrSubWork.getFdTxMessage());
 
     // Loglar birleştirilir.
-    if (!FiCollection.isEmpty(fdrSubWork.getFdrListLog())) getLogListInit().addAll(fdrSubWork.getFdrListLog());
+    if (!FiCollection.isEmpty(fdrSubWork.getFdListLog())) getLogListInit().addAll(fdrSubWork.getFdListLog());
 
     appendRowsAffected(fdrSubWork.getRowsAffectedOrEmpty());
     appendLnUpdated(fdrSubWork.getLnUpdatedRows());
@@ -615,7 +621,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     // Tüm işlemlerde mesaj birleştirilir.
     appendMessageLn(fdrSubWork.getFdTxMessage());
     // Loglar birleştirilir
-    if (!FiCollection.isEmpty(fdrSubWork.getFdrListLog())) getLogListInit().addAll(fdrSubWork.getFdrListLog());
+    if (!FiCollection.isEmpty(fdrSubWork.getFdListLog())) getLogListInit().addAll(fdrSubWork.getFdListLog());
     // Parametre Fdr'nin logları aktarıldığı tekrar üstüne log eklenmemeli
     fdrSubWork.setBoLockAddLog(true);
 
@@ -636,7 +642,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
 
     // Tüm işlemlerde mesaj birleştirilir.
     appendMessageLn(fdrAppend.getFdTxMessage());
-    if (!FiCollection.isEmpty(fdrAppend.getFdrListLog())) getLogListInit().addAll(fdrAppend.getFdrListLog());
+    if (!FiCollection.isEmpty(fdrAppend.getFdListLog())) getLogListInit().addAll(fdrAppend.getFdListLog());
     fdrAppend.setBoLockAddLog(true);
   }
 
@@ -1004,19 +1010,19 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     this.listFdr = listFdr;
   }
 
-  public List<FieLog> getFdrListLog() {
-    return fdrListLog;
+  public List<FieLog> getFdListLog() {
+    return fdListLog;
   }
 
   public List<FieLog> getLogListInit() {
-    if (fdrListLog == null) {
-      fdrListLog = new ArrayList<>();
+    if (fdListLog == null) {
+      fdListLog = new ArrayList<>();
     }
-    return fdrListLog;
+    return fdListLog;
   }
 
-  public void setFdrListLog(List<FieLog> fdrListLog) {
-    this.fdrListLog = fdrListLog;
+  public void setFdListLog(List<FieLog> fdListLog) {
+    this.fdListLog = fdListLog;
   }
 
   public Boolean getBoMultiFdr() {
@@ -1292,25 +1298,6 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     return lnFailOprCount;
   }
 
-  public Boolean getBoOpResult() {
-    return boOpResult;
-  }
-
-//    public Fdr getRefFdrMethod() {
-//        return refFdrMethod.get();
-//    }
-//
-//    public ObjectProperty<Fdr<EntClazz>> refFdrMethodProperty() {
-//        if (refFdrMethod == null) {
-//            refFdrMethod = new SimpleObjectProperty<>();
-//        }
-//        return refFdrMethod;
-//    }
-//
-//    public void setRefFdrMethod(Fdr refFdrMethod) {
-//        this.refFdrMethod.set(refFdrMethod);
-//    }
-
   public List<Runnable> getObsMethodFinished() {
     if (obsMethodFinished == null) {
       obsMethodFinished = new ArrayList<>();
@@ -1328,20 +1315,20 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     }
   }
 
-  public String getFdTxValue() {
-    return fdTxValue;
+  public String getFdTxVal() {
+    return fdTxVal;
   }
 
-  public void setFdTxValue(String fdTxValue) {
-    this.fdTxValue = fdTxValue;
+  public void setFdTxVal(String fdTxVal) {
+    this.fdTxVal = fdTxVal;
   }
 
-  public Integer getFdrLnValue() {
-    return fdrLnValue;
+  public Integer getFdLnVal() {
+    return fdLnVal;
   }
 
-  public void setFdrLnValue(Integer fdrLnValue) {
-    this.fdrLnValue = fdrLnValue;
+  public void setFdLnVal(Integer fdLnVal) {
+    this.fdLnVal = fdLnVal;
   }
 
   public FkbList getFdFkbListVal() {
@@ -1384,16 +1371,13 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
 
   public void logFdr() {
 
-    if(getFdTxValue()!=null) {
-      Loghelper.get(getClass()).debug("FdTxValue:" + getFdTxValue());
+    if (getFdTxVal() != null) {
+      Loghelper.get(getClass()).debug("FdTxValue:" + getFdTxVal());
     }
 
-    if(getFdFkbVal()!=null) {
+    if (getFdFkbVal() != null) {
       Loghelper.get(getClass()).debug("FdFkbVal:" + getFdFkbVal());
     }
-
-
-
 
 
   }

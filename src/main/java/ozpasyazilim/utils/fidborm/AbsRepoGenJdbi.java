@@ -2243,7 +2243,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
             .findFirst(); // if returns null or zero rows, then return Optional.empty()
       });
 
-      result.ifPresent(fdr::setFdTxValue);
+      result.ifPresent(fdr::setFdTxVal);
       fdr.setFdBoResult(true);
     } catch (Exception ex) {
       Loghelper.get(getClass()).debug(FiException.exToErrorLog(ex));

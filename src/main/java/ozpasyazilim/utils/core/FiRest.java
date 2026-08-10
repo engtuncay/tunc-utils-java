@@ -113,7 +113,7 @@ public class FiRest {
             stbOutput.append(responseString).append(System.lineSeparator());
           }
         }
-        fdrMain.setFdTxValue(stbOutput.toString());
+        fdrMain.setFdTxVal(stbOutput.toString());
         Fdr fdrParse = parseJsonToFiKeybean(stbOutput.toString());
         fdrMain.setFdFkbVal(fdrParse.getFdFkbVal());
       } else {

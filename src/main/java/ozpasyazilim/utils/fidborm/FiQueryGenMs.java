@@ -148,7 +148,7 @@ public class FiQueryGenMs {
 
     if (indexWhereBlock == 0 || txTableName == null) {
       sql = "no where fields or tablename";
-      fdr.setFdTxValue(sql);
+      fdr.setFdTxVal(sql);
       fdr.setBoResult(false);
       return fdr;
     }
@@ -156,7 +156,7 @@ public class FiQueryGenMs {
     // UPDATE EnmCariEvrakEk SET ceveLnNormalFatura = @ceveLnNormalFatura
     // WHERE ceveEvrakSeri = @ceveEvrakSeri AND ceveEvrakSira = @ceveEvrakSira AND ceveEvrakTip = @ceveEvrakTip
     fdr.setBoResult(true);
-    fdr.setFdTxValue(sql);
+    fdr.setFdTxVal(sql);
 
     return fdr;
   }
@@ -218,13 +218,13 @@ public class FiQueryGenMs {
 
     if (indexWhereBlock == 0 || FiString.isEmptyTrim(txTableName)) {
       sql = "no where fields or tablename";
-      fdr.setFdTxValue(sql);
+      fdr.setFdTxVal(sql);
       fdr.setBoResult(false);
       return fdr;
     }
 
     fdr.setBoResult(true);
-    fdr.setFdTxValue(sql);
+    fdr.setFdTxVal(sql);
 
     return fdr;
   }
@@ -292,10 +292,10 @@ public class FiQueryGenMs {
     String sql = FiString.substitutor(template, fkbParams);
 
     Fdr fdrResult = new Fdr();
-    fdrResult.setFdTxValue(sql);
+    fdrResult.setFdTxVal(sql);
 
     if (indexWhereBlock == 0) {
-      fdrResult.setFdTxValue("no where fields");
+      fdrResult.setFdTxVal("no where fields");
       fdrResult.setBoResult(false);
       fdrResult.setFdTxMessage("no where fields");
       return fdrResult;
@@ -370,10 +370,10 @@ public class FiQueryGenMs {
     String sql = FiString.substitutor(template, fkbParams);
 
     Fdr fdrResult = new Fdr();
-    fdrResult.setFdTxValue(sql);
+    fdrResult.setFdTxVal(sql);
 
     if (indexWhereBlock == 0) {
-      fdrResult.setFdTxValue("no where fields");
+      fdrResult.setFdTxVal("no where fields");
       fdrResult.setBoResult(false);
       fdrResult.setFdTxMessage("no where fields");
       return fdrResult;
@@ -496,10 +496,10 @@ public class FiQueryGenMs {
     String sql = FiString.substitutor(template, fkbParams);
 
     Fdr fdrResult = new Fdr();
-    fdrResult.setFdTxValue(sql);
+    fdrResult.setFdTxVal(sql);
 
     if (indexWhereBlock == 0) {
-      fdrResult.setFdTxValue("no where fields");
+      fdrResult.setFdTxVal("no where fields");
       fdrResult.setBoResult(false);
       fdrResult.setFdTxMessage("no where fields");
       return fdrResult;
@@ -625,10 +625,10 @@ public class FiQueryGenMs {
     String sql = FiString.substitutor(template, fkbParams);
 
     Fdr fdrResult = new Fdr();
-    fdrResult.setFdTxValue(sql);
+    fdrResult.setFdTxVal(sql);
 
     if (indexWhereBlock == 0) {
-      fdrResult.setFdTxValue("no where fields");
+      fdrResult.setFdTxVal("no where fields");
       fdrResult.setBoResult(false);
       fdrResult.setFdTxMessage("no where fields");
       return fdrResult;
@@ -701,11 +701,11 @@ public class FiQueryGenMs {
     String sql = FiString.substitutor(template, fkbParams);
 
     Fdr fdrResult = new Fdr();
-    fdrResult.setFdTxValue(sql);
+    fdrResult.setFdTxVal(sql);
 
     if (indexCol == 0) {
       fdrResult.setBoResult(false);
-      fdrResult.setFdTxValue("no insert fields");
+      fdrResult.setFdTxVal("no insert fields");
       fdrResult.setFdTxMessage("no insert fields");
       return fdrResult;
     }
@@ -770,11 +770,11 @@ public class FiQueryGenMs {
     String sql = FiString.substitutor(template, fkbParams);
 
     Fdr fdrResult = new Fdr();
-    fdrResult.setFdTxValue(sql);
+    fdrResult.setFdTxVal(sql);
 
     if (indexCol == 0) {
       fdrResult.setBoResult(false);
-      fdrResult.setFdTxValue("no insert fields");
+      fdrResult.setFdTxVal("no insert fields");
       fdrResult.setFdTxMessage("no insert fields");
       return fdrResult;
     }

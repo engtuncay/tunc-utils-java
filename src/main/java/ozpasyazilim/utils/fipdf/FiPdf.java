@@ -42,7 +42,7 @@ public class FiPdf {
 
             pdfMergerUtility.setDestinationFileName(yeniFileName);
             pdfMergerUtility.mergeDocuments(MemoryUsageSetting.setupMainMemoryOnly());
-            fdrMain.setFdTxValue(yeniFileName);
+            fdrMain.setFdTxVal(yeniFileName);
             //System.out.println("PDF dosyaları başarıyla birleştirildi.");
         } catch (IOException e) {
             //e.printStackTrace();
