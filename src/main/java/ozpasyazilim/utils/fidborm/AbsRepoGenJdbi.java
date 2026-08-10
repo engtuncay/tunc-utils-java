@@ -3345,8 +3345,8 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
         Fdr fdr = fnTransactions.apply(handle);
         fdrMain.combineAnd(fdr);
 
-        if (!fdr.getListExceptionNtn().isEmpty()) {
-          List<Exception> listException = fdr.getListException();
+        if (!fdr.getFdListExceptionNtn().isEmpty()) {
+          List<Exception> listException = fdr.getFdListException();
           //handle.rollback();
           throw listException.get(0);
         }

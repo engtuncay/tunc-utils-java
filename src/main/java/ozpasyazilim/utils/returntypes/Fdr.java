@@ -96,7 +96,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
   /**
    * Tekil ve Çoklu işlemlerde exception burada biriktirilir.
    */
-  List<Exception> listException;
+  List<Exception> fdListException;
 
   /**
    * Sonuç Durumu : ilgili işlem hangi durum ile sonuçlandığı gösterir,
@@ -546,7 +546,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     if (fdrSubWork.getFdException() != null) {
       setFdException(fdrSubWork.getFdException());
       // exception birden fazla olma ihtimali var.
-      getListExceptionInit().add(fdrSubWork.getFdException());
+      getFdListExceptionInit().add(fdrSubWork.getFdException());
     }
 
     // Tüm işlemlerde mesaj birleştirilir.
@@ -608,7 +608,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     if (fdrSubWork.getFdException() != null) {
       setFdException(fdrSubWork.getFdException());
       // exception birden fazla olma ihtimali var.
-      getListExceptionInit().add(fdrSubWork.getFdException());
+      getFdListExceptionInit().add(fdrSubWork.getFdException());
     }
 
     appendRowsAffected(fdrSubWork.getRowsAffectedOrEmpty());
@@ -632,7 +632,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
   public void combineLogs(Fdr fdrAppend) {
 
     //setException(fdrAppend.getException());
-    if (fdrAppend.getFdException() != null) getListExceptionInit().add(fdrAppend.getFdException());
+    if (fdrAppend.getFdException() != null) getFdListExceptionInit().add(fdrAppend.getFdException());
 
     // Tüm işlemlerde mesaj birleştirilir.
     appendMessageLn(fdrAppend.getFdTxMessage());
@@ -952,26 +952,26 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     return this;
   }
 
-  public List<Exception> getListException() {
-    return listException;
+  public List<Exception> getFdListException() {
+    return fdListException;
   }
 
-  public List<Exception> getListExceptionInit() {
-    if (listException == null) {
-      listException = new ArrayList<>();
+  public List<Exception> getFdListExceptionInit() {
+    if (fdListException == null) {
+      fdListException = new ArrayList<>();
     }
-    return listException;
+    return fdListException;
   }
 
-  public List<Exception> getListExceptionNtn() {
-    if (listException == null) {
+  public List<Exception> getFdListExceptionNtn() {
+    if (fdListException == null) {
       return new ArrayList<>();
     }
-    return listException;
+    return fdListException;
   }
 
-  public void setListException(List<Exception> listException) {
-    this.listException = listException;
+  public void setFdListException(List<Exception> fdListException) {
+    this.fdListException = fdListException;
   }
 
   public Integer getLnResponseCode() {
