@@ -12,81 +12,82 @@ import ozpasyazilim.utils.mvc.IFiModCont;
  */
 public class FiFxWindowCont extends AbsFiModBaseCont {
 
-	FiFxWindowView modView;
+  FiFxWindowView modView;
 
-	public FiFxWindowCont() {
-		//super.moduleAciklama = "Mos-Shared Form Window";
-		//super.moduleCode = EntegreModules.ModContGen.getModuleCode();
-	}
+  public FiFxWindowCont() {
+    //super.moduleAciklama = "Mos-Shared Form Window";
+    //super.moduleCode = EntegreModules.ModContGen.getModuleCode();
+  }
 
-	public FiFxWindowCont(String connProfile) {
-		super(connProfile);
-	}
+  public FiFxWindowCont(String connProfile) {
+    super(connProfile);
+  }
 
-	@Override
-	public void initCont() {
-		modView = new FiFxWindowView();
-		modView.initGui();
-	}
+  @Override
+  public void initCont() {
+    modView = new FiFxWindowView();
+    modView.initGui();
+  }
 
-	public FiFxWindowCont buiInit() {
-		initCont();
-		return this;
-	}
-	public FiFxWindowView getModView() {
-		return modView;
-	}
+  public FiFxWindowCont buiInit() {
+    initCont();
+    return this;
+  }
 
-	public void registerDeleteKeyOnNode(Node node, FxButton btn) {
-		node.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
-			if (event.getCode() == KeyCode.DELETE) {
-				btn.fire();
-			}
-		});
-	}
+  public FiFxWindowView getModView() {
+    return modView;
+  }
 
-	public void registerBtnWitCtrlS(FxButton btn){
-		getModView().getRootPane().addEventHandler(KeyEvent.KEY_RELEASED, event -> {
-			if(event.isControlDown() && event.getCode() == KeyCode.S){
-				btn.fire();
-			}
-		});
-	}
+  public void registerDeleteKeyOnNode(Node node, FxButton btn) {
+    node.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
+      if (event.getCode() == KeyCode.DELETE) {
+        btn.fire();
+      }
+    });
+  }
 
-	public void registerRunWitCtrlAndKey(KeyCode keyCode, Runnable runnable){
-		getModView().getRootPane().addEventHandler(KeyEvent.KEY_RELEASED, event -> {
-			if(event.isControlDown() && event.getCode() == keyCode){
-				runnable.run();
-			}
-		});
-	}
+  public void registerBtnWitCtrlS(FxButton btn) {
+    getModView().getRootPane().addEventHandler(KeyEvent.KEY_RELEASED, event -> {
+      if (event.isControlDown() && event.getCode() == KeyCode.S) {
+        btn.fire();
+      }
+    });
+  }
 
-	public void registerBtnWitInsert(FxButton btn){
-		registerKeyWithButtonFire(btn, KeyCode.INSERT);
-	}
+  public void registerRunWitCtrlAndKey(KeyCode keyCode, Runnable runnable) {
+    getModView().getRootPane().addEventHandler(KeyEvent.KEY_RELEASED, event -> {
+      if (event.isControlDown() && event.getCode() == keyCode) {
+        runnable.run();
+      }
+    });
+  }
 
-	public void registerBtnWitF10(FxButton btn){
-		registerKeyWithButtonFire(btn, KeyCode.F10);
-	}
+  public void registerBtnWitInsert(FxButton btn) {
+    registerKeyWithButtonFire(btn, KeyCode.INSERT);
+  }
 
-	public void registerBtnWitDelete(FxButton btn){
-		registerKeyWithButtonFire(btn, KeyCode.DELETE);
-	}
+  public void registerBtnWitF10(FxButton btn) {
+    registerKeyWithButtonFire(btn, KeyCode.F10);
+  }
 
-	public void registerEscWithCloseWindow() {
-		getModView().getRootPane().addEventHandler(KeyEvent.KEY_RELEASED, event -> {
-			if (event.getCode() == KeyCode.ESCAPE) {
-				//closeFxStage();
-			}
-		});
-	}
+  public void registerBtnWitDelete(FxButton btn) {
+    registerKeyWithButtonFire(btn, KeyCode.DELETE);
+  }
 
-	public void registerKeyWithButtonFire(FxButton btn, KeyCode keyCode) {
-		getModView().getRootPane().addEventHandler(KeyEvent.KEY_RELEASED, event -> {
-			if (event.getCode() == keyCode) {
-				btn.fire();
-			}
-		});
-	}
+  public void registerEscWithCloseWindow() {
+    getModView().getRootPane().addEventHandler(KeyEvent.KEY_RELEASED, event -> {
+      if (event.getCode() == KeyCode.ESCAPE) {
+        //closeFxStage();
+      }
+    });
+  }
+
+  public void registerKeyWithButtonFire(FxButton btn, KeyCode keyCode) {
+    getModView().getRootPane().addEventHandler(KeyEvent.KEY_RELEASED, event -> {
+      if (event.getCode() == keyCode) {
+        btn.fire();
+      }
+    });
+  }
 
 }
