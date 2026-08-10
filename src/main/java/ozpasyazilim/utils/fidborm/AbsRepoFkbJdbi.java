@@ -515,8 +515,8 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
         Fdr fdr = fnTransaction.apply(handle);
         fdrMain.combineAnd(fdr);
 
-        if (fdr.getException() != null) {
-          throw fdr.getException();
+        if (fdr.getFdException() != null) {
+          throw fdr.getFdException();
         }
 
         handle.commit();

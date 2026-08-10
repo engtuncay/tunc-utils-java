@@ -106,7 +106,7 @@ public class FiSoap {
     } catch (IOException exception) {
       Loghelper.get(getClassi()).error(FiException.exceptionIfToString(exception));
       fdrMain.setFdBoResult(false);
-      fdrMain.setException(exception);
+      fdrMain.setFdException(exception);
       fdrMain.setFdrTxMessageWitAddLog("Soap isteği gerçekleşirken hata oluştu. Detay için Exception inceleyiniz.");
     }
     return fdrMain;
@@ -200,7 +200,7 @@ public class FiSoap {
       Loghelper.get(FiSoap.class).debug(FiException.exToErrorLog(exception));
       fdr.setFdBoResult(false);
       fdr.setFdrTxMessageWitAddLog("Soap isteği gerçekleşirken hata oluştu. Detay için Exception inceleyiniz.");
-      fdr.setException(exception);
+      fdr.setFdException(exception);
     }
 
     return fdr;
@@ -245,7 +245,7 @@ public class FiSoap {
     } else {
       fdrXmlDoc.setFdBoResult(false);
       fdrXmlDoc.setFdrTxMessageWitAddLog("Soap isteği gerçekleşirken hata oluştu. Detay için Exception inceleyiniz.");
-      fdrXmlDoc.setException(fdrRequest.getException());
+      fdrXmlDoc.setFdException(fdrRequest.getFdException());
     }
     return fdrXmlDoc;
   }

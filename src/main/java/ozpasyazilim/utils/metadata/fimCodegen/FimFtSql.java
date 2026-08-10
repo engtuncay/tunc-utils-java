@@ -3,7 +3,7 @@ package ozpasyazilim.utils.metadata.fimCodegen;
 
 import ozpasyazilim.utils.datatypes.FiMeta;
 
-public class FimQcSql {
+public class FimFtSql {
 
 
   public static FiMeta sfTableName() {

@@ -1731,7 +1731,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
     for (EntClazz entity : listEntity) {
       Fdr fdr = jdhUpdateBindEntityMain(handle, sqlUpdate, entity);
 
-      if (fdr.getException() != null) {
+      if (fdr.getFdException() != null) {
         break;
       }
 
@@ -2557,7 +2557,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
     } catch (Exception ex) {
       Loghelper.errorLog(getClass(), "Query Problem");
       Loghelper.errorException(getClass(), ex);
-      fdr.setException(ex);
+      fdr.setFdException(ex);
       fdr.setFdBoResult(false);
     }
 
@@ -2583,7 +2583,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
     } catch (Exception ex) {
       Loghelper.get(getClass()).debug("Query Problem");
       Loghelper.get(getClass()).debug(FiException.exTosMain(ex));
-      fdrMain.setException(ex);
+      fdrMain.setFdException(ex);
       fdrMain.setFdBoResult(false);
     }
     return fdrMain;
@@ -2637,8 +2637,8 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
         handle.begin();
         if (beforeMainGeneral != null) {
           Fdr fdrBeforeMainGeneral = beforeMainGeneral.apply(handle);
-          if (fdrBeforeMainGeneral != null && fdrBeforeMainGeneral.getException() != null) {
-            throw fdrBeforeMainGeneral.getException();
+          if (fdrBeforeMainGeneral != null && fdrBeforeMainGeneral.getFdException() != null) {
+            throw fdrBeforeMainGeneral.getFdException();
           }
           fdrBatch.combineAnd(fdrBeforeMainGeneral);
         }
@@ -2652,8 +2652,8 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
         if (afterMainGeneral != null) {
           Fdr fdrExtraWorks = afterMainGeneral.apply(handle);
 
-          if (fdrExtraWorks != null && fdrExtraWorks.getException() != null) {
-            throw fdrExtraWorks.getException();
+          if (fdrExtraWorks != null && fdrExtraWorks.getFdException() != null) {
+            throw fdrExtraWorks.getFdException();
           }
 
           //fiDbResultBatch.combine(fdrExtraWorks);
@@ -2672,7 +2672,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
       Loghelper.debugException(getClass(), ex);
       Loghelper.get(getClass()).debug("Genel Catch de Yakalandı");
       fdrBatch.setFdBoResult(false);
-      fdrBatch.setException(ex);
+      fdrBatch.setFdException(ex);
       return fdrBatch;
     }
     //fiDbResultBatch.setBoResult(boResult);
@@ -2695,8 +2695,8 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
         if (beforeMainGeneral != null) {
           Fdr fdrBeforeMainGeneral = beforeMainGeneral.apply(handle);
 
-          if (fdrBeforeMainGeneral != null && fdrBeforeMainGeneral.getException() != null) {
-            throw fdrBeforeMainGeneral.getException();
+          if (fdrBeforeMainGeneral != null && fdrBeforeMainGeneral.getFdException() != null) {
+            throw fdrBeforeMainGeneral.getFdException();
           }
 
           fdrBatch.combineAnd(fdrBeforeMainGeneral);
@@ -2709,8 +2709,8 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
             Fdr fdrEntityWorks = entityMain.apply(handle, ent);
 
             // entity lerden birinde exception fırlatınca işlem kesilir
-            if (fdrEntityWorks != null && fdrEntityWorks.getException() != null) {
-              throw fdrEntityWorks.getException();
+            if (fdrEntityWorks != null && fdrEntityWorks.getFdException() != null) {
+              throw fdrEntityWorks.getFdException();
             }
 
             fdrBatch.combineAnd(fdrEntityWorks);
@@ -2721,8 +2721,8 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
         if (afterMainGeneral != null) {
           Fdr fdrAfterMain = afterMainGeneral.apply(handle);
 
-          if (fdrAfterMain != null && fdrAfterMain.getException() != null) {
-            throw fdrAfterMain.getException();
+          if (fdrAfterMain != null && fdrAfterMain.getFdException() != null) {
+            throw fdrAfterMain.getFdException();
           }
 
           fdrBatch.combineAnd(fdrAfterMain);
@@ -2745,7 +2745,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
       Loghelper.debugException(getClass(), ex);
       Loghelper.get(getClass()).debug("Genel Catch de Yakalandı");
       fdrBatch.setFdBoResult(false);
-      fdrBatch.setException(ex);
+      fdrBatch.setFdException(ex);
     }
 
     return fdrBatch;
@@ -2771,8 +2771,8 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
         if (beforeMainGeneral != null) {
           Fdr fdrBeforeMainGeneral = beforeMainGeneral.apply(handle);
 
-          if (fdrBeforeMainGeneral != null && fdrBeforeMainGeneral.getException() != null) {
-            throw fdrBeforeMainGeneral.getException();
+          if (fdrBeforeMainGeneral != null && fdrBeforeMainGeneral.getFdException() != null) {
+            throw fdrBeforeMainGeneral.getFdException();
           }
 
           fdrBatch.combineAnd(fdrBeforeMainGeneral);
@@ -2785,8 +2785,8 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
             Fdr fdrEntityWorks = entityMain.apply(handle, ent);
 
             // entity lerden birinde exception fırlatınca işlem kesilir
-            if (fdrEntityWorks != null && fdrEntityWorks.getException() != null) {
-              throw fdrEntityWorks.getException();
+            if (fdrEntityWorks != null && fdrEntityWorks.getFdException() != null) {
+              throw fdrEntityWorks.getFdException();
             }
 
             fdrBatch.combineAnd(fdrEntityWorks);
@@ -2797,8 +2797,8 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
         if (afterMainGeneral != null) {
           Fdr fdrAfterMain = afterMainGeneral.apply(handle);
 
-          if (fdrAfterMain != null && fdrAfterMain.getException() != null) {
-            throw fdrAfterMain.getException();
+          if (fdrAfterMain != null && fdrAfterMain.getFdException() != null) {
+            throw fdrAfterMain.getFdException();
           }
 
           fdrBatch.combineAnd(fdrAfterMain);
@@ -2821,7 +2821,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
       Loghelper.debugException(getClass(), ex);
       Loghelper.get(getClass()).debug("Genel Catch de Yakalandı");
       fdrBatch.setFdBoResult(false);
-      fdrBatch.setException(ex);
+      fdrBatch.setFdException(ex);
     }
 
     return fdrBatch;
@@ -2846,8 +2846,8 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
     if (beforeMainByEntity != null) {
       Fdr fdrBeforeMainByEntity = beforeMainByEntity.apply(handle, ent);
 
-      if (fdrBeforeMainByEntity != null && fdrBeforeMainByEntity.getException() != null) {
-        throw fdrBeforeMainByEntity.getException();
+      if (fdrBeforeMainByEntity != null && fdrBeforeMainByEntity.getFdException() != null) {
+        throw fdrBeforeMainByEntity.getFdException();
       }
 
       fdrBatch.combineAnd(fdrBeforeMainByEntity);
@@ -2880,8 +2880,8 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
     if (afterMainByEntity != null) {
       Fdr fdrAfterMainByEntity = afterMainByEntity.apply(handle, ent);
 
-      if (fdrAfterMainByEntity != null && fdrAfterMainByEntity.getException() != null) {
-        throw fdrAfterMainByEntity.getException();
+      if (fdrAfterMainByEntity != null && fdrAfterMainByEntity.getFdException() != null) {
+        throw fdrAfterMainByEntity.getFdException();
       }
 
       fdrBatch.combineAnd(fdrAfterMainByEntity);
@@ -2912,7 +2912,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
         fdrMain.setFdBoResult(true);
       } catch (Exception ex) {
         fdrMain.setFdBoResult(false);
-        fdrMain.setException(ex);
+        fdrMain.setFdException(ex);
       }
       return fdrMain;
     } else { // generated keyler alınmasına gerek yoksa
@@ -2924,7 +2924,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
         fdrMain.setFdBoResult(true);
       } catch (Exception ex) {
         fdrMain.setFdBoResult(false);
-        fdrMain.setException(ex);
+        fdrMain.setFdException(ex);
       }
       return fdrMain;
     }
@@ -2984,7 +2984,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
     } catch (Exception ex) {
       Loghelper.get(getClass()).debug(FiException.exTosMain(ex));
       fdrMain.setFdBoResult(false);
-      fdrMain.setException(ex);
+      fdrMain.setFdException(ex);
     }
 
     return fdrMain;
@@ -3019,7 +3019,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
     } catch (Exception ex) {
       Loghelper.get(getClass()).debug(FiException.exTosMain(ex));
       fdrMain.setFdBoResult(false);
-      fdrMain.setException(ex);
+      fdrMain.setFdException(ex);
     }
     return fdrMain;
 
@@ -3070,8 +3070,8 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
         if (beforeWorks != null) {
           Fdr fdrBeforeWorksGeneral = beforeWorks.apply(handle);
 
-          if (fdrBeforeWorksGeneral != null && fdrBeforeWorksGeneral.getException() != null) {
-            throw fdrBeforeWorksGeneral.getException();
+          if (fdrBeforeWorksGeneral != null && fdrBeforeWorksGeneral.getFdException() != null) {
+            throw fdrBeforeWorksGeneral.getFdException();
           }
           fdrBatch.combineAnd(fdrBeforeWorksGeneral);
         }
@@ -3122,8 +3122,8 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
         if (afterWorks != null) {
           Fdr fdrExtraWorks = afterWorks.apply(handle);
 
-          if (fdrExtraWorks != null && fdrExtraWorks.getException() != null) {
-            throw fdrExtraWorks.getException();
+          if (fdrExtraWorks != null && fdrExtraWorks.getFdException() != null) {
+            throw fdrExtraWorks.getFdException();
           }
           fdrBatch.combineAnd(fdrExtraWorks);
         }
@@ -3191,7 +3191,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
         fdrMain.setFdBoResult(true);
 
       } catch (Exception ex) {
-        fdrMain.setException(ex);
+        fdrMain.setFdException(ex);
         fdrMain.setFdBoResult(false);
         return fdrMain;
       }
@@ -3213,7 +3213,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
         fdrMain.appendRowsAffected(execute);
         fdrMain.setFdBoResult(true);
       } catch (Exception ex) {
-        fdrMain.setException(ex);
+        fdrMain.setFdException(ex);
         fdrMain.setFdBoResult(false);
         return fdrMain;
       }
@@ -3351,9 +3351,9 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
           throw listException.get(0);
         }
 
-        if (fdr.getException() != null) {
+        if (fdr.getFdException() != null) {
           //handle.rollback();
-          throw fdr.getException();
+          throw fdr.getFdException();
         }
 
         handle.commit();
@@ -3392,8 +3392,8 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
         Fdr fdr = fnTransaction.apply(handle);
         fdrMain.combineAnd(fdr);
 
-        if (fdr.getException() != null) {
-          throw fdr.getException();
+        if (fdr.getFdException() != null) {
+          throw fdr.getFdException();
         }
 
         handle.commit();
@@ -3427,8 +3427,8 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
         Fdr fdrTrans = fnTransactions.apply(this, handle);
         // fdrMain.combineAnd(fdrTrans);
 
-        if (fdrTrans.getException() != null) {
-          throw fdrTrans.getException();
+        if (fdrTrans.getFdException() != null) {
+          throw fdrTrans.getFdException();
         }
         handle.commit();
         return fdrTrans;

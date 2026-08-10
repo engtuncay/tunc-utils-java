@@ -863,8 +863,8 @@ public class FxDialogShow {
         Platform.runLater(() -> {
             String message = fdr.getFdTxMessage();
 
-            if (fdr.getException() != null) {
-                message += "\n Exception Tanımı \n\n" + FiException.exceptionIfToString(fdr.getException());
+            if (fdr.getFdException() != null) {
+                message += "\n Exception Tanımı \n\n" + FiException.exceptionIfToString(fdr.getFdException());
             }
 
             FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FiDialogMetaType.DialogError, message, messageHeader);
@@ -884,8 +884,8 @@ public class FxDialogShow {
                 message += "\n" + fdr.getFdTxMessage();
             }
 
-            if (fdr.getException() != null) {
-                message += "\nException Tanımı : " + FiException.TosSummary(fdr.getException());
+            if (fdr.getFdException() != null) {
+                message += "\nException Tanımı : " + FiException.TosSummary(fdr.getFdException());
             }
 
             FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FiDialogMetaType.DialogError, message, messageHeader);
@@ -1273,7 +1273,7 @@ public class FxDialogShow {
         } else {
 
             if (dbResult.isEmptyMessage()) {
-                dbResult.setFdrTxMessageWitAddLog("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getException()));
+                dbResult.setFdrTxMessageWitAddLog("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getFdException()));
             }
 
             showModalWarningAlert(dbResult.getFdTxMessage());
@@ -1297,7 +1297,7 @@ public class FxDialogShow {
 
             if (dbResult.isFalseBoResult()) {
                 if (dbResult.getFdTxMessage() == null) {
-                    dbResult.setFdrTxMessageWitAddLog("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getException()));
+                    dbResult.setFdrTxMessageWitAddLog("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getFdException()));
                 }
             }
 
@@ -1326,7 +1326,7 @@ public class FxDialogShow {
         } else {
 
             if (dbResult.getFdTxMessage() == null) {
-                dbResult.setFdrTxMessageWitAddLog("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getException()));
+                dbResult.setFdrTxMessageWitAddLog("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getFdException()));
             }
 
             showModalWarningAlert(dbResult.getFdTxMessage());
@@ -1355,7 +1355,7 @@ public class FxDialogShow {
         } else {
 
             if (dbResult.getFdTxMessage() == null) {
-                dbResult.setFdrTxMessageWitAddLog("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getException()));
+                dbResult.setFdrTxMessageWitAddLog("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getFdException()));
             }
             showModalWarningAlert(dbResult.getFdTxMessage());
 

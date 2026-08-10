@@ -2,7 +2,7 @@ package ozpasyazilim.utils.metadata.fimCodegen;// Java FiMeta Class Generation -
 
 import ozpasyazilim.utils.datatypes.FiMeta;
 
-public class FimQcSpecFields {
+public class FimFtSpecFields {
 
 
   public static FiMeta qcfTxRelMod() {

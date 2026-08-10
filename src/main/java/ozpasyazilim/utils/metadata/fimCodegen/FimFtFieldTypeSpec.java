@@ -3,32 +3,32 @@ package ozpasyazilim.utils.metadata.fimCodegen;
 import ozpasyazilim.utils.core.FiString;
 
 /**
- * {@link FimQcFieldType} için yardımcı metodlar
+ * {@link FimFtFieldType} için yardımcı metodlar
  */
-public class FimQcFieldTypeSpec {
+public class FimFtFieldTypeSpec {
 
 
   public static boolean isDouble(String txFieldType) {
     return FiString.equalsAny(txFieldType
-        , FimQcFieldType.fDouble().getValue()
-        , FimQcFieldType.fDecimal().getValue()
-        , FimQcFieldType.fFloat().getValue());
+        , FimFtFieldType.fDouble().getValue()
+        , FimFtFieldType.fDecimal().getValue()
+        , FimFtFieldType.fFloat().getValue());
   }
 
   public static boolean isInteger(String txFieldType) {
     return FiString.equalsAny(txFieldType
-        , FimQcFieldType.fint().getValue()
-        , FimQcFieldType.ftinyint().getValue());
+        , FimFtFieldType.fint().getValue()
+        , FimFtFieldType.ftinyint().getValue());
   }
 
   public static boolean isDate(String txFieldType) {
     return FiString.equalsAny(txFieldType
-        , FimQcFieldType.fdate().getValue()
+        , FimFtFieldType.fdate().getValue()
     );
   }
 
   public static boolean isBool(String txFieldType) {
     return FiString.equalsAny(txFieldType
-        , FimQcFieldType.fbool().getValue());
+        , FimFtFieldType.fbool().getValue());
   }
 }
