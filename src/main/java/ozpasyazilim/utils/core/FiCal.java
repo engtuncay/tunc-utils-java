@@ -75,6 +75,10 @@ public class FiCal {
 
   }
 
+  public static Date getNow() {
+    return new Date();
+  }
+
   public FiCal buildDateDiffNow(int dayDifference) {
     Calendar cal = Calendar.getInstance();
     clearTime(cal);

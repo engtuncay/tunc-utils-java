@@ -2,10 +2,7 @@ package ozpasyazilim.utils.table;
 
 import ozpasyazilim.utils.datatypes.Fkb;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class FicList extends ArrayList<FiCol>{
 
@@ -24,7 +21,13 @@ public class FicList extends ArrayList<FiCol>{
 		return ficList;
 	}
 
-	public FicList addField(Object field) {
+  public static FicList bui(FiCol ...fiCols) {
+    FicList ficList = new FicList();
+    ficList.addAll(Arrays.asList(fiCols));
+    return ficList;
+  }
+
+  public FicList addField(Object field) {
 		FiCol fiTableCol = new FiCol(field.toString());
 		add(fiTableCol);
 		return this;

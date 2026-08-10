@@ -58,6 +58,13 @@ public class FiQuconf {
     return fiQuconf;
   }
 
+  public static FiQuconf buiDelV1(FiCol qcfTxSqTableName, FicList ficWhereFields) {
+    FiQuconf fiQuconf = new FiQuconf();
+    fiQuconf.setQcfTxSqTableName(qcfTxSqTableName);
+    fiQuconf.setFicListWhere(ficWhereFields);
+    return fiQuconf;
+  }
+
   // FicList ficWhereFields;
 
   // Getters and Setters

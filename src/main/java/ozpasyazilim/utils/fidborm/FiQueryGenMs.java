@@ -229,6 +229,60 @@ public class FiQueryGenMs {
     return fdr;
   }
 
+  public static Fdr delQueryV1(FiQuconf fiQuconf) {
+
+    FiCol qcfTxSqTableName = fiQuconf.getQcfTxSqTableName();
+    //FicList ficUpFields  = fiQuconf.getFicListUp();
+    FicList ficWhereFields =  fiQuconf.getFicListWhere();
+
+    // Oluşturulan update sorgu formatı
+    // DELETE EnmCariEvrakEk
+    // WHERE ceveEvrakSeri = @ceveEvrakSeri AND ceveEvrakSira = @ceveEvrakSira AND ceveEvrakTip = @ceveEvrakTip
+
+    // Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
+    Fdr fdr = new Fdr();
+
+    // FimOcSql.sfTableName();
+    // FimOcSql.sfTxWhere();
+    // FimQcSql.sfTxUpSetBlock();
+
+    String template = "DELETE {{sfTableName}} \n"
+        + " WHERE {{sfTxWhere}} ";
+
+    StringBuilder sbWhereBlock = new StringBuilder();
+
+    String txTableName = qcfTxSqTableName.getFcTxHeader();
+    int indexWhereBlock = 0;
+
+    for (FiCol ficWhereField : ficWhereFields) {
+      if (FiBool.isTrue(ficWhereField.getFcBoTransient())) {
+        continue;
+      }
+      indexWhereBlock++;
+      sbWhereBlock.append(FiQugenUtil.formSqlAssignAnd(ficWhereField.getFcTxFieldName()));
+    }
+
+    FiString.rtrimSb(sbWhereBlock, getTxAnd());
+
+    Fkb fkbParams = new Fkb();
+    fkbParams.addFieldBy(FimFtSql.sfTableName(), txTableName);
+    fkbParams.addFieldBy(FimFtSql.sfTxWhere(), sbWhereBlock.toString());
+
+    String sql = FiString.substitutor(template, fkbParams);
+
+    if (indexWhereBlock == 0 || FiString.isEmptyTrim(txTableName)) {
+      sql = "no where fields or tablename";
+      fdr.setFdTxVal(sql);
+      fdr.setBoResult(false);
+      return fdr;
+    }
+
+    fdr.setBoResult(true);
+    fdr.setFdTxVal(sql);
+
+    return fdr;
+  }
+
   /**
    * IFiTableMeta ve FicList'ten Select Query Generation
    *

@@ -1,7 +1,13 @@
 package ozpasyazilim.utils.log;
 
 public enum MetaLogType {
-  INFO, INFOBACK, LOG, WARN, WARNBACK, ERROR, ERRBACK, ALERT
+  INFO, INFOBACK, LOG, WARN, WARNBACK, ERROR
+  , ERRBACK
+  , ALERT
+  /**
+   * Front-End'e uyarı verir - {@link ozpasyazilim.entegrefx.entMocs.MocErrorDialogV2} 'da modal olarak açar
+   */
+  , WARNF
   /**
    * Ntn metodlar için
    */

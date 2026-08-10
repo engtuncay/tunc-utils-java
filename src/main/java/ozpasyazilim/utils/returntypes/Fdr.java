@@ -559,7 +559,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     if (!FiString.isEmptyTrim(fdrSubWork.getFdTxMessage())) appendMessageLnOnly(fdrSubWork.getFdTxMessage());
 
     // Loglar birleştirilir.
-    if (!FiCollection.isEmpty(fdrSubWork.getFdListLog())) getLogListInit().addAll(fdrSubWork.getFdListLog());
+    if (!FiCollection.isEmpty(fdrSubWork.getFdListLog())) getFdLogListInit().addAll(fdrSubWork.getFdListLog());
 
     appendRowsAffected(fdrSubWork.getRowsAffectedOrEmpty());
     appendLnUpdated(fdrSubWork.getLnUpdatedRows());
@@ -621,7 +621,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     // Tüm işlemlerde mesaj birleştirilir.
     appendMessageLn(fdrSubWork.getFdTxMessage());
     // Loglar birleştirilir
-    if (!FiCollection.isEmpty(fdrSubWork.getFdListLog())) getLogListInit().addAll(fdrSubWork.getFdListLog());
+    if (!FiCollection.isEmpty(fdrSubWork.getFdListLog())) getFdLogListInit().addAll(fdrSubWork.getFdListLog());
     // Parametre Fdr'nin logları aktarıldığı tekrar üstüne log eklenmemeli
     fdrSubWork.setBoLockAddLog(true);
 
@@ -642,7 +642,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
 
     // Tüm işlemlerde mesaj birleştirilir.
     appendMessageLn(fdrAppend.getFdTxMessage());
-    if (!FiCollection.isEmpty(fdrAppend.getFdListLog())) getLogListInit().addAll(fdrAppend.getFdListLog());
+    if (!FiCollection.isEmpty(fdrAppend.getFdListLog())) getFdLogListInit().addAll(fdrAppend.getFdListLog());
     fdrAppend.setBoLockAddLog(true);
   }
 
@@ -1014,7 +1014,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     return fdListLog;
   }
 
-  public List<FieLog> getLogListInit() {
+  public List<FieLog> getFdLogListInit() {
     if (fdListLog == null) {
       fdListLog = new ArrayList<>();
     }
@@ -1042,14 +1042,14 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
 
   public void addLog(FieLog log) {
     if (getBoLockAddLogNtn()) Loghelper.get(getClass()).debug("Error: Added Log to Blocked Fdr !!!!!!!!");
-    getLogListInit().add(log);
+    getFdLogListInit().add(log);
   }
 
   public void addLog(String txMessage, MetaLogType metaLogType) {
     if (getBoLockAddLogNtn()) {
       Loghelper.get(getClass()).debug("Error: Added Log to Blocked Fdr !!!!!!!!");
     }
-    getLogListInit().add(new FieLog(txMessage, metaLogType));
+    getFdLogListInit().add(new FieLog(txMessage, metaLogType));
   }
 
   public Fdr addLogInfo(String txMessage) {
@@ -1057,7 +1057,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
       Loghelper.get(getClass()).debug("Error: Added Log to Blocked Fdr !!!!!!!!");
     }
     //if(getBoLockAddLogNtn()) throw new RuntimeException("Error: Added Log to Blocked Fdr !!!!!!!!");
-    getLogListInit().add(new FieLog(txMessage, MetaLogType.INFO));
+    getFdLogListInit().add(new FieLog(txMessage, MetaLogType.INFO));
     return this;
   }
 
@@ -1066,46 +1066,46 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
       Loghelper.get(getClass()).debug("Error: Added Log to Blocked Fdr !!!!!!!!");
     }
     //if(getBoLockAddLogNtn()) throw new RuntimeException("Error: Added Log to Blocked Fdr !!!!!!!!");
-    getLogListInit().add(new FieLog(txMessage, MetaLogType.INFOBACK));
+    getFdLogListInit().add(new FieLog(txMessage, MetaLogType.INFOBACK));
     return this;
   }
 
   public Fdr addLogStep(String txMessage) {
     if (getBoLockAddLogNtn()) Loghelper.get(getClass()).debug("Error: Added Log to Blocked Fdr !!!!!!!!");
     //if(getBoLockAddLogNtn()) throw new RuntimeException("Error: Added Log to Blocked Fdr !!!!!!!!");
-    getLogListInit().add(new FieLog(txMessage, MetaLogType.STEP));
+    getFdLogListInit().add(new FieLog(txMessage, MetaLogType.STEP));
     return this;
   }
 
   public Fdr<EntClazz> addLogError(String txMessage) {
     if (getBoLockAddLogNtn()) Loghelper.get(getClass()).debug("Error: Added Log to Blocked Fdr !!!!!!!!");
-    getLogListInit().add(new FieLog(txMessage, MetaLogType.ERROR));
+    getFdLogListInit().add(new FieLog(txMessage, MetaLogType.ERROR));
     return this;
   }
 
   public Fdr<EntClazz> addLogErrorBack(String txMessage) {
     if (getBoLockAddLogNtn()) Loghelper.get(getClass()).debug("Error: Added Log to Blocked Fdr !!!!!!!!");
-    getLogListInit().add(new FieLog(txMessage, MetaLogType.ERRBACK));
+    getFdLogListInit().add(new FieLog(txMessage, MetaLogType.ERRBACK));
     return this;
   }
 
   public void addLogWarn(String txMessage) {
     if (getBoLockAddLogNtn()) Loghelper.get(getClass()).debug("Error: Added Log to Blocked Fdr !!!!!!!!");
-    getLogListInit().add(new FieLog(txMessage, MetaLogType.WARN));
+    getFdLogListInit().add(new FieLog(txMessage, MetaLogType.WARN));
   }
 
   public void addLogWarnBack(String txMessage) {
     if (getBoLockAddLogNtn()) Loghelper.get(getClass()).debug("Error: Added Log to Blocked Fdr !!!!!!!!");
-    getLogListInit().add(new FieLog(txMessage, MetaLogType.WARNBACK));
+    getFdLogListInit().add(new FieLog(txMessage, MetaLogType.WARNBACK));
   }
 
   public void addLogAlert(String txMessage) {
     if (getBoLockAddLogNtn()) Loghelper.get(getClass()).debug("Error: Added Log to Blocked Fdr !!!!!!!!");
-    getLogListInit().add(new FieLog(txMessage, MetaLogType.ALERT));
+    getFdLogListInit().add(new FieLog(txMessage, MetaLogType.ALERT));
   }
 
   public void addLogTypeLog(String txMessage) {
-    getLogListInit().add(new FieLog(txMessage, MetaLogType.LOG));
+    getFdLogListInit().add(new FieLog(txMessage, MetaLogType.LOG));
   }
 
   public String getLogAndMessageWitErrorInfo() {
@@ -1116,7 +1116,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
 
     StringBuilder sb = new StringBuilder();
     int index = 0;
-    for (FieLog fieLog : getLogListInit()) {
+    for (FieLog fieLog : getFdLogListInit()) {
       if (index > 0) sb.append("\n");
       if (fieLog.getTxLogTypeNtn().equals(MetaLogType.ERROR.toString())) {
         sb.append("HATA !!! : ");
@@ -1131,7 +1131,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
   public String getLogErrorPlain() {
     StringBuilder sb = new StringBuilder();
     int index = 0;
-    for (FieLog fieLog : getLogListInit()) {
+    for (FieLog fieLog : getFdLogListInit()) {
       if (index > 0) sb.append("\n");
       if (fieLog.getTxLogTypeNtn().equals(MetaLogType.ERROR.toString())) {
         sb.append(fieLog.getFieTxMessage());
@@ -1144,7 +1144,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
   public String getLogPlain() {
     StringBuilder sb = new StringBuilder();
     int index = 0;
-    for (FieLog fieLog : getLogListInit()) {
+    for (FieLog fieLog : getFdLogListInit()) {
       if (index > 0) sb.append("\n");
       sb.append(fieLog.getFieTxMessage());
       index++;
@@ -1162,7 +1162,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
       index++;
     }
 
-    for (FieLog fieLog : getLogListInit()) {
+    for (FieLog fieLog : getFdLogListInit()) {
       if (index > 0) sb.append("\n");
       sb.append(fieLog.getFieTxMessage());
       index++;
@@ -1181,7 +1181,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
 //      index++;
 //    }
 
-    for (FieLog fieLog : getLogListInit()) {
+    for (FieLog fieLog : getFdLogListInit()) {
       //if (index > 0) sb.append("\n");
       sb.append(fieLog.getFieTxMessage()).append("\n");
       //index++;
@@ -1195,7 +1195,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     StringBuilder sb = new StringBuilder("");
     int index = 0;
     boolean boErrorExist = false;
-    for (FieLog fieLog : getLogListInit()) {
+    for (FieLog fieLog : getFdLogListInit()) {
       if (index > 0) sb.append("\n");
       if (fieLog.getFieTxMessage().equals(MetaLogType.ERROR.toString())) {
         boErrorExist = true;
@@ -1234,7 +1234,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
   public void combineAllLog() {
     for (Fdr fdr : getFdrListInit()) {
       addLogInfo(String.format("--- %s ---", fdr.getTxName()));
-      getLogListInit().addAll(fdr.getLogListInit());
+      getFdLogListInit().addAll(fdr.getFdLogListInit());
     }
   }
 
@@ -1270,7 +1270,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     if (getBoLockAddLogNtn()) Loghelper.get(getClass()).debug("Error: Added Log to Blocked Fdr !!!!!!!!");
     if (!listExceptionInit.isEmpty()) {
       for (Exception exception1 : listExceptionInit) {
-        getLogListInit().add(new FieLog(FiException.TosSummary(exception1), MetaLogType.ERROR));
+        getFdLogListInit().add(new FieLog(FiException.TosSummary(exception1), MetaLogType.ERROR));
       }
     }
   }
@@ -1380,5 +1380,14 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     }
 
 
+  }
+
+  public boolean hasLogType(MetaLogType metaLogType) {
+    for (FieLog fieLog : getFdLogListInit()) {
+      if (metaLogType.toString().equals(fieLog.getFieTxLogType())) {
+        return true;
+      }
+    }
+    return false;
   }
 }
