@@ -220,6 +220,30 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
     return fdr;
   }
 
+  public Fdr jdSelectFkbSingleBindMapMainV2(String sqlQuery, Map<String, Object> mapBind) {
+
+    Fdr fdr = new Fdr<>();
+    fdr.setValue(new Fkb());
+
+    try {
+      Optional<Fkb> result = getJdbi().withHandle(handle -> {
+        return handle.createQuery(FiQueTools.stoj(sqlQuery))
+            .bindMap(mapBind)
+            .map(new FiKeyBeanMapper(false))
+            .findOne();
+      });
+
+      result.ifPresent(fdr::setFdFkbVal);
+      fdr.setBoResultAndRowsAff(true, 1);
+    } catch (Exception ex) {
+      Loghelper.get(getClass()).error("Query Problem");
+      Loghelper.get(getClass()).error("Hata (Exception):\n" + FiException.exTosMain(ex));
+      fdr.setBoResult(false, ex);
+    }
+
+    return fdr;
+  }
+
   /**
    * Sorgu çalışır ve deger cekemezse degeri null olur
    * <p>

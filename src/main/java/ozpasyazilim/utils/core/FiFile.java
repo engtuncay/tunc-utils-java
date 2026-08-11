@@ -25,11 +25,11 @@ import java.net.InetAddress;
 
 public class FiFile {
 
-    public static void main(String[] args) {
+  public static void main(String[] args) {
 
-        Loghelper.installLogger(true);
+    Loghelper.installLogger(true);
 
-        checkHostName("SERVER");
+    checkHostName("SERVER");
 
 //        String pathfile = "Y:\\TEST\\PANSIS\\SatisFaturasi-04.12.2019-17.37-Lite.xml";
 //
@@ -75,512 +75,511 @@ public class FiFile {
 //            // -1 ile çarpınca büyükten küçüğe döner
 //        });
 
-        //FiConsole.debug(files.get(0));
+    //FiConsole.debug(files.get(0));
 
-    }
+  }
 
-    public static String getCurrentTimeStampForFile() {
-        Date date = new Date();
-        SimpleDateFormat formatter5 = new SimpleDateFormat("yyyyMMddhhmmss");
-        return formatter5.format(date);
-    }
+  public static String getCurrentTimeStampForFile() {
+    Date date = new Date();
+    SimpleDateFormat formatter5 = new SimpleDateFormat("yyyyMMddhhmmss");
+    return formatter5.format(date);
+  }
 
-    public static String removeFileExtension(String filename) {
-        return FilenameUtils.removeExtension(filename);
-    }
+  public static String removeFileExtension(String filename) {
+    return FilenameUtils.removeExtension(filename);
+  }
 
-    public static Boolean checkSaveFolder(File file) {
+  public static Boolean checkSaveFolder(File file) {
 
-        try {
+    try {
 
-            if (!file.exists()) {
-                if (file.mkdir()) {
-                    // Loghelper.getInstance(thisclass).info("Directory is created." +
-                    // file.getName());
-                    return true;
-                } else {
-                    // Loghelper.getInstance(thisclass).error("Failed to create directory !!!" +
-                    // file.getName());
-                    // System.out.println("Failed to create directory!");
-                    return false;
-                }
-            }
-
-        } catch (Exception e) {
-            // Loghelper.getInstance(thisclass).error("Hata :" +
-            // UtilModel.exceptiontostring(e));
-            return false;
+      if (!file.exists()) {
+        if (file.mkdir()) {
+          // Loghelper.getInstance(thisclass).info("Directory is created." +
+          // file.getName());
+          return true;
+        } else {
+          // Loghelper.getInstance(thisclass).error("Failed to create directory !!!" +
+          // file.getName());
+          // System.out.println("Failed to create directory!");
+          return false;
         }
+      }
 
-        return true;
+    } catch (Exception e) {
+      // Loghelper.getInstance(thisclass).error("Hata :" +
+      // UtilModel.exceptiontostring(e));
+      return false;
     }
 
-    public static Boolean existFileRelative(String filename) {
+    return true;
+  }
 
-        File fileRelative4 = new File("./" + filename);
-        return fileRelative4.exists();
+  public static Boolean existFileRelative(String filename) {
 
-    }
+    File fileRelative4 = new File("./" + filename);
+    return fileRelative4.exists();
 
-    public static Boolean existFileAbsolute(String fileWithAbsPath) {
+  }
 
-        File fileRelative4 = new File(fileWithAbsPath);
-        return fileRelative4.isAbsolute();
+  public static Boolean existFileAbsolute(String fileWithAbsPath) {
 
-    }
+    File fileRelative4 = new File(fileWithAbsPath);
+    return fileRelative4.isAbsolute();
 
-    public static File getFileRelativeToApplicationDir(String filename) {
+  }
 
-        File fileRelative = new File("./" + filename);
-        return fileRelative;
+  public static File getFileRelativeToApplicationDir(String filename) {
 
-    }
+    File fileRelative = new File("./" + filename);
+    return fileRelative;
 
-    public static Boolean copyFileWithIndexNo(File source, File destination) {
+  }
 
-        String fileNameAndExt = destination.getName();
-        String extension = getExtensionFromFilename(fileNameAndExt);
-        String filePathWoutExt = FiFile.getStrFilePathWoutExt(destination.getPath());
-        String folderPathFromFileName = FiFile.getFolderPathFromFileName(destination.getPath());
+  public static Boolean copyFileWithIndexNo(File source, File destination) {
 
-        //Loghelper.debug(FiFile.class, "filename and ext:"+fileNameAndExt);
+    String fileNameAndExt = destination.getName();
+    String extension = getExtensionFromFilename(fileNameAndExt);
+    String filePathWoutExt = FiFile.getStrFilePathWoutExt(destination.getPath());
+    String folderPathFromFileName = FiFile.getFolderPathFromFileName(destination.getPath());
+
+    //Loghelper.debug(FiFile.class, "filename and ext:"+fileNameAndExt);
 //		Loghelper.debug(FiFile.class, "file path wout ext:"+filePathWoutExt);
 //		Loghelper.debug(FiFile.class, "folder path:"+folderPathFromFileName);
 
-        File fileDest = new File(folderPathFromFileName); //destination.getParentFile();
+    File fileDest = new File(folderPathFromFileName); //destination.getParentFile();
 
 //		Loghelper.debug(FiFile.class, "Dosya null mi fileBParenet:"+ fileDest.getPath());
 
-        if (!fileDest.exists()) {
-            fileDest.mkdirs();
-        }
-
-        //FIXME util metod boş dosya adı oluştur
-        // aynı adda dosya var olup olmadığı kontrol edilir, varsa index atılır
-        int i = 1;
-        while (destination.exists()) {
-            destination = new File(filePathWoutExt + "(" + i + ")." + extension);
-            i++;
-        }
-
-        // Loghelper.getInstance(thisclass).info("Parent Path:" +
-        // fileDest.getPath());
-
-        InputStream inStream = null;
-        OutputStream outStream = null;
-
-        try {
-
-            // File source = new File("C:\\folderA\\Afile.txt");
-            // File destination = new File("C:\\folderB\\Afile.txt");
-
-            inStream = Files.newInputStream(source.toPath());
-            outStream = Files.newOutputStream(destination.toPath());
-
-            byte[] buffer = new byte[1024];
-
-            int length;
-            // copy the file content in bytes
-            while ((length = inStream.read(buffer)) > 0) {
-                outStream.write(buffer, 0, length);
-            }
-
-            inStream.close();
-            outStream.close();
-
-            // delete the original file
-            // source.delete();
-
-            System.out.println("File is copied successful!");
-            return true;
-
-        } catch (IOException ex) {
-            Loghelper.get(getClassi()).error(FiException.exTosMain(ex));
-            return false;
-        }
+    if (!fileDest.exists()) {
+      fileDest.mkdirs();
     }
 
-    /**
-     * Source File'ı, Destination File üzerine yazar
-     *
-     * @param source
-     * @param destination
-     * @return
-     */
-    public static Boolean copyFileOverWrite(File source, File destination) {
+    //FIXME util metod boş dosya adı oluştur
+    // aynı adda dosya var olup olmadığı kontrol edilir, varsa index atılır
+    int i = 1;
+    while (destination.exists()) {
+      destination = new File(filePathWoutExt + "(" + i + ")." + extension);
+      i++;
+    }
 
-        String fileNameAndExt = destination.getName();
-        String extension = getExtensionFromFilename(fileNameAndExt);
-        String filePathWoutExt = FiFile.getStrFilePathWoutExt(destination.getPath());
-        String folderPathFromFileName = FiFile.getFolderPathFromFileName(destination.getPath());
+    // Loghelper.getInstance(thisclass).info("Parent Path:" +
+    // fileDest.getPath());
 
-        //Loghelper.debug(FiFile.class, "filename and ext:"+fileNameAndExt);
+    InputStream inStream = null;
+    OutputStream outStream = null;
+
+    try {
+
+      // File source = new File("C:\\folderA\\Afile.txt");
+      // File destination = new File("C:\\folderB\\Afile.txt");
+
+      inStream = Files.newInputStream(source.toPath());
+      outStream = Files.newOutputStream(destination.toPath());
+
+      byte[] buffer = new byte[1024];
+
+      int length;
+      // copy the file content in bytes
+      while ((length = inStream.read(buffer)) > 0) {
+        outStream.write(buffer, 0, length);
+      }
+
+      inStream.close();
+      outStream.close();
+
+      // delete the original file
+      // source.delete();
+
+      System.out.println("File is copied successful!");
+      return true;
+
+    } catch (IOException ex) {
+      Loghelper.get(getClassi()).error(FiException.exTosMain(ex));
+      return false;
+    }
+  }
+
+  /**
+   * Source File'ı, Destination File üzerine yazar
+   *
+   * @param source
+   * @param destination
+   * @return
+   */
+  public static Boolean copyFileOverWrite(File source, File destination) {
+
+    String fileNameAndExt = destination.getName();
+    String extension = getExtensionFromFilename(fileNameAndExt);
+    String filePathWoutExt = FiFile.getStrFilePathWoutExt(destination.getPath());
+    String folderPathFromFileName = FiFile.getFolderPathFromFileName(destination.getPath());
+
+    //Loghelper.debug(FiFile.class, "filename and ext:"+fileNameAndExt);
 //		Loghelper.debug(FiFile.class, "file path wout ext:"+filePathWoutExt);
 //		Loghelper.debug(FiFile.class, "folder path:"+folderPathFromFileName);
 
-        File fileDest = new File(folderPathFromFileName); //destination.getParentFile();
+    File fileDest = new File(folderPathFromFileName); //destination.getParentFile();
 
-        //Loghelper.debug(FiFile.class, "Dosya null mi fileBParenet:"+ fileDest.getPath());
+    //Loghelper.debug(FiFile.class, "Dosya null mi fileBParenet:"+ fileDest.getPath());
 
-        if (!fileDest.exists()) {
-            fileDest.mkdirs();
-        }
-
-        //if (destination.exists()) {}
-
-        InputStream inStream = null;
-        OutputStream outStream = null;
-
-        try {
-            inStream = Files.newInputStream(source.toPath());
-            outStream = Files.newOutputStream(destination.toPath());
-
-            byte[] buffer = new byte[1024];
-
-            int length;
-            // copy the file content in bytes
-            while ((length = inStream.read(buffer)) > 0) {
-                outStream.write(buffer, 0, length);
-            }
-
-            inStream.close();
-            outStream.close();
-
-            // delete the original file
-            // source.delete();
-
-            System.out.println("File is copied successful!");
-            return true;
-
-        } catch (IOException ex) {
-            Loghelper.get(getClassi()).error(FiException.exTosMain(ex));
-            return false;
-        }
+    if (!fileDest.exists()) {
+      fileDest.mkdirs();
     }
 
-    public static Fdr copyFileOverWriteFdr(File source, File destination) {
+    //if (destination.exists()) {}
 
-        String fileNameAndExt = destination.getName();
-        String extension = getExtensionFromFilename(fileNameAndExt);
-        String filePathWoutExt = FiFile.getStrFilePathWoutExt(destination.getPath());
-        String folderPathFromFileName = FiFile.getFolderPathFromFileName(destination.getPath());
+    InputStream inStream = null;
+    OutputStream outStream = null;
 
-        //Loghelper.debug(FiFile.class, "filename and ext:"+fileNameAndExt);
+    try {
+      inStream = Files.newInputStream(source.toPath());
+      outStream = Files.newOutputStream(destination.toPath());
+
+      byte[] buffer = new byte[1024];
+
+      int length;
+      // copy the file content in bytes
+      while ((length = inStream.read(buffer)) > 0) {
+        outStream.write(buffer, 0, length);
+      }
+
+      inStream.close();
+      outStream.close();
+
+      // delete the original file
+      // source.delete();
+
+      System.out.println("File is copied successful!");
+      return true;
+
+    } catch (IOException ex) {
+      Loghelper.get(getClassi()).error(FiException.exTosMain(ex));
+      return false;
+    }
+  }
+
+  public static Fdr copyFileOverWriteFdr(File source, File destination) {
+
+    String fileNameAndExt = destination.getName();
+    String extension = getExtensionFromFilename(fileNameAndExt);
+    String filePathWoutExt = FiFile.getStrFilePathWoutExt(destination.getPath());
+    String folderPathFromFileName = FiFile.getFolderPathFromFileName(destination.getPath());
+
+    //Loghelper.debug(FiFile.class, "filename and ext:"+fileNameAndExt);
 //		Loghelper.debug(FiFile.class, "file path wout ext:"+filePathWoutExt);
 //		Loghelper.debug(FiFile.class, "folder path:"+folderPathFromFileName);
 
-        File fileDest = new File(folderPathFromFileName); //destination.getParentFile();
+    File fileDest = new File(folderPathFromFileName); //destination.getParentFile();
 
-        //Loghelper.debug(FiFile.class, "Dosya null mi fileBParenet:"+ fileDest.getPath());
+    //Loghelper.debug(FiFile.class, "Dosya null mi fileBParenet:"+ fileDest.getPath());
 
-        if (!fileDest.exists()) {
-            fileDest.mkdirs();
+    if (!fileDest.exists()) {
+      fileDest.mkdirs();
+    }
+
+    //if (destination.exists()) {}
+
+    InputStream inStream = null;
+    OutputStream outStream = null;
+
+    try {
+      inStream = Files.newInputStream(source.toPath());
+      outStream = Files.newOutputStream(destination.toPath());
+
+      byte[] buffer = new byte[1024];
+
+      int length;
+      // copy the file content in bytes
+      while ((length = inStream.read(buffer)) > 0) {
+        outStream.write(buffer, 0, length);
+      }
+
+      inStream.close();
+      outStream.close();
+
+      // delete the original file
+      // source.delete();
+
+      System.out.println("File is copied successful!");
+      return Fdr.creBoResult(true);
+
+    } catch (IOException ex) {
+      Loghelper.get(getClassi()).error(FiException.exTosMain(ex));
+      return Fdr.creBoResult(false);
+    }
+  }
+
+  private static String getFolderPathFromFileName(String filename) {
+    Pattern pattern = Pattern.compile("^(.+)\\\\([^\\\\]+)$");
+    Matcher matcher = pattern.matcher(filename);
+
+    if (matcher.find()) {
+      return matcher.group(1);
+    } else {
+      return "-1";
+    }
+  }
+
+  public static File checkGenerateFilename(File file) {
+
+    int i = 1;
+    while (file.exists()) {
+      String filenameandext = file.getName();
+      String extension = getExtensionFromFilename(filenameandext);
+      String filename_wo_ext = getStrFilePathWoutExt(filenameandext);
+      file = new File(filename_wo_ext + "(" + i + ")." + extension);
+      i++;
+    }
+
+    return file;
+
+  }
+
+  public static void saveHtmlContentToFile(String content) {
+
+    String timestamp = FiDate.datetoString_timestampt3(new Date());
+
+    // File file = new File("y:\\ornekhtml-" + timestamp + ".html");
+
+    // Get the file reference
+    Path path = Paths.get("y://ornekthtml-" + timestamp + ".html");
+
+    // Use try-with-resource to get auto-closeable writer instance
+    try (BufferedWriter writer = Files.newBufferedWriter(path)) {
+      writer.write(content);
+    } catch (IOException e) {
+      e.printStackTrace();
+      Loghelper.get(FiFile.class).info("the file is not saved");
+      return;
+    }
+
+    Loghelper.get(FiFile.class).info("the file is saved");
+
+    // try {
+    // Files.write(Paths.get("d://ornekthtml-" + timestamp + ".html"),
+    // content.getBytes());
+    // } catch (IOException e) {
+    // e.printStackTrace();
+    // }
+
+    // BufferedWriter bw = null;
+    // try {
+    // bw = new BufferedWriter(new FileWriter(file));
+    // bw.write(content);
+    // bw.close();
+    // } catch (IOException e) {
+    // e.printStackTrace();
+    // }
+
+  }
+
+
+  public static File selectFileDialogSwing(String title, String extension) {
+
+    JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setAcceptAllFileFilterUsed(false);
+    fileChooser.setApproveButtonText("Seç");
+    fileChooser.setDialogTitle(title);
+    fileChooser.setFileFilter(new FileFilter() {
+      @Override
+      public boolean accept(File file) {
+
+        // null gelirse hepsini seçebilir
+        if (extension == null) {
+          return true;
         }
 
-        //if (destination.exists()) {}
-
-        InputStream inStream = null;
-        OutputStream outStream = null;
-
-        try {
-            inStream = Files.newInputStream(source.toPath());
-            outStream = Files.newOutputStream(destination.toPath());
-
-            byte[] buffer = new byte[1024];
-
-            int length;
-            // copy the file content in bytes
-            while ((length = inStream.read(buffer)) > 0) {
-                outStream.write(buffer, 0, length);
-            }
-
-            inStream.close();
-            outStream.close();
-
-            // delete the original file
-            // source.delete();
-
-            System.out.println("File is copied successful!");
-            return Fdr.creBoResult(true);
-
-        } catch (IOException ex) {
-            Loghelper.get(getClassi()).error(FiException.exTosMain(ex));
-            return Fdr.creBoResult(false);
+        String fileextension = "";
+        int i = file.getPath().lastIndexOf('.');
+        if (i >= 0) {
+          fileextension = file.getPath().substring(i + 1);
         }
+        return (fileextension.equals(extension)) || (file.isDirectory());
+      }
+
+      @Override
+      public String getDescription() {
+        return extension;
+      }
+    });
+
+    int j = fileChooser.showOpenDialog(null);
+
+    if (j == 0) {
+      // file selected do the works
+      File file = fileChooser.getSelectedFile();
+      return file;
     }
 
-    private static String getFolderPathFromFileName(String filename) {
-        Pattern pattern = Pattern.compile("^(.+)\\\\([^\\\\]+)$");
-        Matcher matcher = pattern.matcher(filename);
+    return null;
 
-        if (matcher.find()) {
-            return matcher.group(1);
-        } else {
-            return "-1";
-        }
+  }
+
+  /**
+   * Reads given resource file as a String.
+   *
+   * @param resourceFileName the path to the resource file
+   * @return the file's contents
+   */
+  public static String getResourceFileAsString(String resourceFileName) {
+    InputStream is = FiFile.class.getClassLoader().getResourceAsStream(resourceFileName);
+    BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+    return reader.lines().collect(Collectors.joining("\n"));
+  }
+
+  public static String getContent1OfRelativeFile(String fileName) {
+    String filePath = "./" + fileName;
+    try {
+      String result = new String(Files.readAllBytes(Paths.get(filePath)), StandardCharsets.UTF_8);
+      return result;
+    } catch (IOException e) {
+      Loghelper.get(getClassi()).error(FiException.exceptionIfToString(e));
+      e.printStackTrace();
+      return null;
     }
+  }
 
-    public static File checkGenerateFilename(File file) {
-
-        int i = 1;
-        while (file.exists()) {
-            String filenameandext = file.getName();
-            String extension = getExtensionFromFilename(filenameandext);
-            String filename_wo_ext = getStrFilePathWoutExt(filenameandext);
-            file = new File(filename_wo_ext + "(" + i + ")." + extension);
-            i++;
-        }
-
-        return file;
-
+  public static String getContent1OfFile(File file) {
+    try {
+      String result = new String(Files.readAllBytes(Paths.get(file.getAbsolutePath())), StandardCharsets.UTF_8);
+      return result;
+    } catch (IOException e) {
+      Loghelper.get(getClassi()).error(FiException.exceptionIfToString(e));
+      return null;
     }
+  }
 
-    public static void saveHtmlContentToFile(String content) {
-
-        String timestamp = FiDate.datetoString_timestampt3(new Date());
-
-        // File file = new File("y:\\ornekhtml-" + timestamp + ".html");
-
-        // Get the file reference
-        Path path = Paths.get("y://ornekthtml-" + timestamp + ".html");
-
-        // Use try-with-resource to get auto-closeable writer instance
-        try (BufferedWriter writer = Files.newBufferedWriter(path)) {
-            writer.write(content);
-        } catch (IOException e) {
-            e.printStackTrace();
-            Loghelper.get(FiFile.class).info("the file is not saved");
-            return;
-        }
-
-        Loghelper.get(FiFile.class).info("the file is saved");
-
-        // try {
-        // Files.write(Paths.get("d://ornekthtml-" + timestamp + ".html"),
-        // content.getBytes());
-        // } catch (IOException e) {
-        // e.printStackTrace();
-        // }
-
-        // BufferedWriter bw = null;
-        // try {
-        // bw = new BufferedWriter(new FileWriter(file));
-        // bw.write(content);
-        // bw.close();
-        // } catch (IOException e) {
-        // e.printStackTrace();
-        // }
-
+  public static String getContent1OfAbsoluteFile(String fileName) {
+    String filePath = fileName;
+    try {
+      String result = new String(Files.readAllBytes(Paths.get(filePath)), StandardCharsets.UTF_8);
+      return result;
+    } catch (IOException e) {
+      Loghelper.get(getClassi()).error(FiException.exceptionIfToString(e));
+      e.printStackTrace();
+      return null;
     }
+  }
 
+  private static Class<FiFile> getClassi() {
+    return FiFile.class;
+  }
 
-    public static File selectFileDialogSwing(String title, String extension) {
+  public static List<File> findFiles(String strFilestartswith, String sExtension, String path, Boolean trCharacterException) {
+    return findFiles(strFilestartswith, sExtension, path);
+  }
 
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setAcceptAllFileFilterUsed(false);
-        fileChooser.setApproveButtonText("Seç");
-        fileChooser.setDialogTitle(title);
-        fileChooser.setFileFilter(new FileFilter() {
-            @Override
-            public boolean accept(File file) {
+  /**
+   * CI case insensitive arama yapar
+   *
+   * @param txFileStartWith
+   * @param txExtension
+   * @param path
+   * @return
+   */
+  public static List<File> findFilesCI(String txFileStartWith, String txExtension, String path) {
+    return findFiles(FiString.regexChangePatternCaseInsensitive(txFileStartWith), txExtension, path);
+  }
 
-                // null gelirse hepsini seçebilir
-                if (extension == null) {
-                    return true;
-                }
+  public static List<File> findFiles(String txFileStartWith, String txExtension, String path) {
 
-                String fileextension = "";
-                int i = file.getPath().lastIndexOf('.');
-                if (i >= 0) {
-                    fileextension = file.getPath().substring(i + 1);
-                }
-                return (fileextension.equals(extension)) || (file.isDirectory());
-            }
+    //if(!path.matches(".*\\$")) path = path + "\\"; // sonuna tire koymaya gerek yok
+    //Loghelper.getInstance(FiFile.class).debug("Path:"+path);
 
-            @Override
-            public String getDescription() {
-                return extension;
-            }
-        });
+    String searchingPath = path;
 
-        int j = fileChooser.showOpenDialog(null);
+    if (searchingPath == null) searchingPath = "";
 
-        if (j == 0) {
-            // file selected do the works
-            File file = fileChooser.getSelectedFile();
-            return file;
-        }
+    String pathescaped = FiString.escapePathString(searchingPath);
 
-        return null;
+    File folder = new File(pathescaped);
+    // gets you the list of files at this folder
+    File[] arrFiles = folder.listFiles();
+
+    List<File> listFiles = new ArrayList<>();
+    if (arrFiles == null) return listFiles;
+
+    // loop through each of the files looking for filenames that match
+    for (int i = 0; i < arrFiles.length; i++) {
+
+      String filename = arrFiles[i].getName();
+      //Loghelper.getInstance(FiFile.class).debug("file:"+filename);
+
+      if (filename.matches(String.format("(?i)%s.*\\.%s$", txFileStartWith, txExtension))) { // (?i) case insensitive yapar.
+        //Loghelper.getInstance(FiFile.class).info("Dosya bulundu :" + arrFiles[i].getPath());
+        listFiles.add(arrFiles[i]);
+      }
 
     }
+    return listFiles;
+  }
 
-    /**
-     * Reads given resource file as a String.
-     *
-     * @param resourceFileName the path to the resource file
-     * @return the file's contents
-     */
-    public static String getResourceFileAsString(String resourceFileName) {
-        InputStream is = FiFile.class.getClassLoader().getResourceAsStream(resourceFileName);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        return reader.lines().collect(Collectors.joining("\n"));
+
+  public static String getExtensionFromFilename(String filename) {
+
+    Pattern pattern = Pattern.compile("^.*\\.(.*)");
+    Matcher matcher = pattern.matcher(filename);
+
+    if (matcher.find()) {
+      return matcher.group(1);
+    } else {
+      return "-1";
     }
 
-    public static String getContent1OfRelativeFile(String fileName) {
-        String filePath = "./" + fileName;
-        try {
-            String result = new String(Files.readAllBytes(Paths.get(filePath)), StandardCharsets.UTF_8);
-            return result;
-        } catch (IOException e) {
-            Loghelper.get(getClassi()).error(FiException.exceptionIfToString(e));
-            e.printStackTrace();
-            return null;
-        }
+  }
+
+  public static String getStrFilePathWoutExt(String filename) {
+
+    Pattern pattern = Pattern.compile("(.+)\\\\([^\\\\]+)\\.(.*)$"); //
+    Matcher matcher = pattern.matcher(filename);
+
+    if (matcher.find() && matcher.groupCount() > 1 && matcher.group(1) != null && matcher.group(2) != null) {
+      return matcher.group(1) + "\\" + matcher.group(2);
+    } else {
+      return "-1";
     }
 
-    public static String getContent1OfFile(File file) {
-        try {
-            String result = new String(Files.readAllBytes(Paths.get(file.getAbsolutePath())), StandardCharsets.UTF_8);
-            return result;
-        } catch (IOException e) {
-            Loghelper.get(getClassi()).error(FiException.exceptionIfToString(e));
-            return null;
-        }
+  }
+
+  public static String getWorkingDirectory() {
+    return System.getProperty("user.dir");
+  }
+
+
+  public static boolean checkHostName(String txHostName) {
+
+    try {
+      InetAddress target = InetAddress.getByName(txHostName);
+      boolean reachable = target.isReachable(5000); // 5 saniye boyunca yanıt bekleyin
+      if (reachable) {
+        //System.out.println("Bilgisayar erişilebilir durumda.");
+      } else {
+        //System.out.println("Bilgisayar erişilemez durumda.");
+      }
+      return reachable;
+    } catch (IOException e) {
+      //Loghelper.get(getClassi()).error(FiException.exceptionToStrMain(e));
+      return false;
     }
 
-    public static String getContent1OfAbsoluteFile(String fileName) {
-        String filePath = fileName;
-        try {
-            String result = new String(Files.readAllBytes(Paths.get(filePath)), StandardCharsets.UTF_8);
-            return result;
-        } catch (IOException e) {
-            Loghelper.get(getClassi()).error(FiException.exceptionIfToString(e));
-            e.printStackTrace();
-            return null;
-        }
+  }
+
+
+  public static void openFile(String txPath) {
+
+    if (FiString.isEmptyTrim(txPath)) {
+      FxDialogShow.showPopWarn("Açılacak dosya yok.");
+      return;
+    }
+    // PDF dosyasını aç
+    try {
+      Process process = new ProcessBuilder("cmd", "/c", txPath).start();
+    } catch (IOException e) {
+      FxDialogShow.showPopError("Dosya açılırken hata oluştu.");
+      Loghelper.get(FiFile.class).error(FiException.exTosMain(e));
     }
 
-    private static Class<FiFile> getClassi() {
-        return FiFile.class;
-    }
-
-    public static List<File> findFiles(String strFilestartswith, String sExtension, String path, Boolean trCharacterException) {
-        return findFiles(strFilestartswith, sExtension, path);
-    }
-
-    /**
-     * CI case insensitive arama yapar
-     *
-     * @param txFileStartWith
-     * @param txExtension
-     * @param path
-     * @return
-     */
-    public static List<File> findFilesCI(String txFileStartWith, String txExtension, String path) {
-        return findFiles(FiString.regexChangePatternCaseInsensitive(txFileStartWith), txExtension, path);
-    }
-
-    public static List<File> findFiles(String txFileStartWith, String txExtension, String path) {
-
-        //if(!path.matches(".*\\$")) path = path + "\\"; // sonuna tire koymaya gerek yok
-        //Loghelper.getInstance(FiFile.class).debug("Path:"+path);
-
-        String searchingPath = path;
-
-        if (searchingPath == null) searchingPath = "";
-
-        String pathescaped = FiString.escapePathString(searchingPath);
-
-        File folder = new File(pathescaped);
-        // gets you the list of files at this folder
-        File[] arrFiles = folder.listFiles();
-
-        List<File> listFiles = new ArrayList<>();
-        if (arrFiles == null) return listFiles;
-
-        // loop through each of the files looking for filenames that match
-        for (int i = 0; i < arrFiles.length; i++) {
-
-            String filename = arrFiles[i].getName();
-            //Loghelper.getInstance(FiFile.class).debug("file:"+filename);
-
-            if (filename.matches(String.format("(?i)%s.*\\.%s$", txFileStartWith, txExtension))) { // (?i) case insensitive yapar.
-                //Loghelper.getInstance(FiFile.class).info("Dosya bulundu :" + arrFiles[i].getPath());
-                listFiles.add(arrFiles[i]);
-            }
-
-        }
-        return listFiles;
-    }
-
-
-    public static String getExtensionFromFilename(String filename) {
-
-        Pattern pattern = Pattern.compile("^.*\\.(.*)");
-        Matcher matcher = pattern.matcher(filename);
-
-        if (matcher.find()) {
-            return matcher.group(1);
-        } else {
-            return "-1";
-        }
-
-    }
-
-    public static String getStrFilePathWoutExt(String filename) {
-
-        Pattern pattern = Pattern.compile("(.+)\\\\([^\\\\]+)\\.(.*)$"); //
-        Matcher matcher = pattern.matcher(filename);
-
-        if (matcher.find() && matcher.groupCount() > 1 && matcher.group(1) != null && matcher.group(2) != null) {
-            return matcher.group(1) + "\\" + matcher.group(2);
-        } else {
-            return "-1";
-        }
-
-    }
-
-    public static String getWorkingDirectory() {
-        return System.getProperty("user.dir");
-    }
-
-
-    public static boolean checkHostName(String txHostName) {
-
-        try {
-            InetAddress target = InetAddress.getByName(txHostName);
-            boolean reachable = target.isReachable(5000); // 5 saniye boyunca yanıt bekleyin
-            if (reachable) {
-                //System.out.println("Bilgisayar erişilebilir durumda.");
-            } else {
-                //System.out.println("Bilgisayar erişilemez durumda.");
-            }
-            return reachable;
-        } catch (IOException e) {
-            //Loghelper.get(getClassi()).error(FiException.exceptionToStrMain(e));
-            return false;
-        }
-
-    }
-
-
-    public static void openFile(String txPath) {
-
-        if(FiString.isEmptyTrim(txPath)) {
-            FxDialogShow.showPopWarn("Açılacak dosya yok.");
-            return;
-        }
-        // PDF dosyasını aç
-        try {
-            Process process = new ProcessBuilder("cmd", "/c", txPath).start();
-        } catch (IOException e) {
-            FxDialogShow.showPopError("Dosya açılırken hata oluştu.");
-            Loghelper.get(FiFile.class).error(FiException.exTosMain(e));
-        }
-
-
-    }
+  }
 
 
 }

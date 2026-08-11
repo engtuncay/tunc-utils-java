@@ -366,6 +366,27 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
   }
 
   /**
+   * Sadece current listedeki seçilenleri verir
+   *
+   * @param boEnableWarn
+   * @return
+   */
+  public List<EntClazz> getItemsCheckedOrSelItemAsList(Boolean boEnableWarn) {
+    List<EntClazz> arrayList = new ArrayList<>(getItemsSourceCheckedCurrentFi());
+
+    if(arrayList.isEmpty()) arrayList = getSelectedItemGenAsListFi();
+
+
+    if(FiBool.isTrue(boEnableWarn) && arrayList.isEmpty()) {
+      Platform.runLater( ()->{
+        FxDialogShow.showPopWarn("Lütfen tablodan seçim yapınız.");
+      });
+    }
+
+    return arrayList;
+  }
+
+  /**
    * SourceList içinde satır silinince  tomatik filtered list etkilenip
    * <p>
    * filt.list'den de çıkartılıyor,dinamik olarak.

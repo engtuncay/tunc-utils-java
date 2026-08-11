@@ -11,11 +11,9 @@ import java.util.function.Supplier;
 public class FiThread {
 
     public static Thread startThread(Runnable runnable) {
-
         Thread thread = new Thread(runnable);
         thread.start();
         return thread;
-
     }
 
     public static Thread startThread(Runnable runnable, FxButton... btnArray) {
