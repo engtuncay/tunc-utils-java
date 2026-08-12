@@ -179,6 +179,11 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
    */
   List<Runnable> obsMethodFinished;
 
+  /**
+   * Or ile birleştirilmiş Fdr sonucu
+   */
+  Boolean fdBoOrCombined;
+
   // --------------- Methods
 
   public Fdr() {
@@ -1389,5 +1394,25 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
       }
     }
     return false;
+  }
+
+  public Boolean getFdBoOrCombined() {
+    return fdBoOrCombined;
+  }
+
+  /**
+   * Fdr sonucu Or ile birleştirilmiş
+   *
+   * @return
+   */
+  public Boolean getFdBoOrCombinedNtn() {
+    if (fdBoResult == null) {
+      return false;
+    }
+    return fdBoOrCombined;
+  }
+
+  public void setFdBoOrCombined(Boolean fdBoOrCombined) {
+    this.fdBoOrCombined = fdBoOrCombined;
   }
 }
