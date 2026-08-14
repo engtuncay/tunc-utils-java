@@ -21,267 +21,266 @@ import java.util.stream.Collectors;
  */
 public class AbsRepoGenMainJdbi<EntClazz> extends AbsRepoJdbiCore {
 
-    // Taslak olduğunu belirtmek için deprecated anno kullanılabilir. Depraceted For Draft
+  // Taslak olduğunu belirtmek için deprecated anno kullanılabilir. Depraceted For Draft
 
-    protected Class<EntClazz> entityClass;
-    protected Handle handleRepo;
+  protected Class<EntClazz> entityClass;
+  protected Handle handleRepo;
 
-    // Getter and Setter
+  // Getter and Setter
 
-    public Class<EntClazz> getEntityClass() {
-        return entityClass;
+  public Class<EntClazz> getEntityClass() {
+    return entityClass;
+  }
+
+  public void setEntityClass(Class<EntClazz> entityClass) {
+    this.entityClass = entityClass;
+  }
+
+  public Handle getHandleRepo() {
+    return handleRepo;
+  }
+
+  public void setHandleRepo(Handle handleRepo) {
+    this.handleRepo = handleRepo;
+  }
+
+  public void setAutoClass() {
+    if (getEntityClass() == null) {
+      this.entityClass = (Class<EntClazz>) ((ParameterizedType) this.getClass().getGenericSuperclass())
+          .getActualTypeArguments()[0];
+    }
+  }
+
+  public Fdr<List<EntClazz>> jdSelectListBindMapNtn(FiQuery fiQuery) {
+    return jdSelectListBindMapMainNtn(fiQuery.getTxQuery(), fiQuery.getMapParams());
+  }
+
+  // Sorgu Metodları
+
+  /**
+   * Fdr Value (Not Null) (Default ArrayList)
+   *
+   * @param sqlQuery
+   * @param mapBind
+   * @return Fdr<List < EntClazz>>
+   */
+  public Fdr<List<EntClazz>> jdSelectListBindMapMainNtn(String sqlQuery, Map<String, Object> mapBind) {
+
+    if (entityClass == null) setAutoClass();
+
+    Fdr<List<EntClazz>> fdrMain = new Fdr<>();
+
+    try {
+      List<EntClazz> result = getJdbi().withHandle(handle -> {
+        return handle.createQuery(FiQueTools.stoj(sqlQuery))
+            .bindMap(mapBind)
+            .mapToBean(getEntityClass())
+            .list();
+      });
+      fdrMain.setBoResultAndValue(true, result, 1);
+
+    } catch (Exception ex) {
+      Loghelper.get(getClass()).error("Query Problem. Hata (Exception):\n" + FiException.exTosMain(ex));
+      fdrMain.setBoResult(false, ex);
     }
 
-    public void setEntityClass(Class<EntClazz> entityClass) {
-        this.entityClass = entityClass;
+    // Ntn (not null dönüş)
+    if (fdrMain.getValue() == null) fdrMain.setValue(new ArrayList<>());
+
+    return fdrMain;
+  }
+
+  public <PrmEnt> Fdr<List<PrmEnt>> jdcSelectList(FiQuery fiQuery, Class<PrmEnt> clazz) {
+    return jdcSelectListBindMapMainNtn(fiQuery.getTxQuery(), fiQuery.getMapParams(), clazz);
+  }
+
+  public <PrmEnt> Fdr<List<PrmEnt>> jdcSelectListBindMapMainNtn(String sqlQuery, Map<String, Object> mapBind, Class<PrmEnt> clazz) {
+
+    Fdr<List<PrmEnt>> fdrMain = new Fdr<>();
+
+    try {
+      List<PrmEnt> result = getJdbi().withHandle(handle -> {
+        return handle.createQuery(FiQueTools.stoj(sqlQuery))
+            .bindMap(mapBind)
+            .mapToBean(clazz)
+            .list();
+      });
+      fdrMain.setBoResultAndValue(true, result, 1);
+
+    } catch (Exception ex) {
+      Loghelper.get(getClass()).error("Query Problem. Hata (Exception):\n" + FiException.exTosMain(ex));
+      fdrMain.setBoResult(false, ex);
     }
 
-    public Handle getHandleRepo() {
-        return handleRepo;
+    // Ntn (not null dönüş)
+    if (fdrMain.getValue() == null) fdrMain.setValue(new ArrayList<>());
+
+    return fdrMain;
+  }
+
+  public List<EntClazz> jdSelectListBindMapRaw(String sqlQuery, Map<String, Object> mapBind) {
+
+    Jdbi jdbi = getJdbi();
+    List<EntClazz> result = null;
+
+    try {
+      result = jdbi.withHandle(handle -> {
+        return handle.createQuery(FiQueTools.stoj(sqlQuery))
+            .bindMap(mapBind)
+            .mapToBean(getEntityClass())
+            .list();
+      });
+
+    } catch (Exception ex) {
+      Loghelper.errorLog(getClass(), "Query Problem");
+      Loghelper.errorException(getClass(), ex);
     }
 
-    public void setHandleRepo(Handle handleRepo) {
-        this.handleRepo = handleRepo;
+    return result;
+  }
+
+  public Fdr<List<EntClazz>> jdSelectListBindObjectMain(String sqlQuery, Object entClazz) {
+
+    if (entityClass == null) setAutoClass();
+
+    //String sqlNew = convertMapAndSqlMultiParam(sqlQuery, mapBind);
+
+    Fdr<List<EntClazz>> fdr = new Fdr<>();
+    fdr.setValue(new ArrayList<>());
+
+    try {
+      List<EntClazz> result = getJdbi().withHandle(handle -> {
+        return handle.createQuery(FiQueTools.stoj(sqlQuery))
+            .bindBean(entClazz)
+            .mapToBean(getEntityClass())
+            .list();
+      });
+      fdr.setFdBoResult(true);
+      fdr.setValue(result);
+    } catch (Exception ex) {
+      Loghelper.errorLog(getClass(), "Query Problem");
+      Loghelper.errorException(getClass(), ex);
+      fdr.setBoResult(false, ex);
+    }
+    return fdr;
+
+  }
+
+  public Fdr<List<EntClazz>> jdSelectListBindObjectMain(String sqlQuery, Object entClazz, Fkb mapParams) {
+
+    if (entityClass == null) setAutoClass();
+
+    //String sqlNew = convertMapAndSqlMultiParam(sqlQuery, mapBind);
+
+    Fdr<List<EntClazz>> fdr = new Fdr<>();
+    fdr.setValue(new ArrayList<>());
+
+    try {
+      List<EntClazz> result = getJdbi().withHandle(handle -> {
+        return handle.createQuery(FiQueTools.stoj(sqlQuery))
+            .bindMap(mapParams)
+            .bindBean(entClazz)
+            .mapToBean(getEntityClass())
+            .list();
+      });
+      fdr.setFdBoResult(true);
+      fdr.setValue(result);
+    } catch (Exception ex) {
+      Loghelper.errorLog(getClass(), "Query Problem");
+      Loghelper.errorException(getClass(), ex);
+      fdr.setBoResult(false, ex);
+    }
+    return fdr;
+
+  }
+
+  public List<EntClazz> jdSelectListBindMapRawWithDeAct(String sqlQuery, Map<String, Object> mapBind) {
+
+    Jdbi jdbi = getJdbi();
+    //Loghelperr.getInstance(getClass()).debug(fimSqlAt3WithDeActivation(sqlQuery));
+
+    List<EntClazz> result = null;
+    try {
+      result = jdbi.withHandle(handle -> {
+        return handle.createQuery(FiQueTools.fimSqlQueryWithDeActType1(sqlQuery))
+            .bindMap(mapBind)
+            .mapToBean(getEntityClass())
+            .list();
+      });
+    } catch (Exception ex) {
+      Loghelper.errorLog(getClass(), "Query Problem");
+      Loghelper.errorException(getClass(), ex);
     }
 
-    public void setAutoClass() {
-        if (getEntityClass() == null) {
-            this.entityClass = (Class<EntClazz>) ((ParameterizedType) this.getClass().getGenericSuperclass())
-                    .getActualTypeArguments()[0];
-        }
+    return result;
+  }
 
+  public Fdr<List<EntClazz>> jdSelectListBindMapMainWithDeAct(String sqlQuery, Map<String, Object> mapBind) {
+
+    //Loghelper.getInstance(getClass()).debug(sqlQuery);
+
+    Fdr<List<EntClazz>> fdr = new Fdr<>();
+    fdr.setValue(new ArrayList<>());
+
+    try {
+      List<EntClazz> result = getJdbi().withHandle(handle -> {
+        return handle.createQuery(FiQueTools.fimSqlQueryWithDeActType1(sqlQuery))
+            .bindMap(mapBind)
+            .mapToBean(getEntityClass())
+            .list();
+      });
+      fdr.setBoResultAndValue(true, result);
+    } catch (Exception ex) {
+      Loghelper.errorLog(getClass(), "Query Problem");
+      Loghelper.errorException(getClass(), ex);
+      fdr.setBoResult(false, ex);
     }
 
-    public Fdr<List<EntClazz>> jdSelectListBindMapNtn(FiQuery fiQuery) {
-        return jdSelectListBindMapMainNtn(fiQuery.getTxQuery(), fiQuery.getMapParams());
+    return fdr;
+  }
+
+  public Fdr<List<Fkb>> jdSelectFkbListBindMapMain(String sqlQuery, Map<String, Object> mapBind) {
+
+    Fdr<List<Fkb>> fdr = new Fdr<>();
+    fdr.setValue(new ArrayList<>());
+
+    try {
+      List<Fkb> result = getJdbi().withHandle(handle -> {
+        return handle.createQuery(FiQueTools.stoj(sqlQuery))
+            .bindMap(mapBind)
+            .map(new FiKeyBeanMapper(false))
+            .list();
+      });
+      fdr.setBoResultAndValue(true, result, 1);
+
+    } catch (Exception ex) {
+      Loghelper.get(getClass()).error("Query Problem");
+      Loghelper.get(getClass()).error("Hata (Exception):\n" + FiException.exTosMain(ex));
+      fdr.setBoResult(false, ex);
     }
 
-    // Sorgu Metodları
+    return fdr;
+  }
 
-    /**
-     * Fdr Value (Not Null) (Default ArrayList)
-     *
-     * @param sqlQuery
-     * @param mapBind
-     * @return Fdr<List < EntClazz>>
-     */
-    public Fdr<List<EntClazz>> jdSelectListBindMapMainNtn(String sqlQuery, Map<String, Object> mapBind) {
+  public Fdr<List<String>> jdSelectListStringMain(String sql, Fkb fiKeyBean) {
+    Fdr<List<String>> fdr = new Fdr<>();
+    fdr.setValue(new ArrayList<>());
 
-        if (entityClass == null) setAutoClass();
-
-        Fdr<List<EntClazz>> fdrMain = new Fdr<>();
-
-        try {
-            List<EntClazz> result = getJdbi().withHandle(handle -> {
-                return handle.createQuery(FiQueTools.stoj(sqlQuery))
-                        .bindMap(mapBind)
-                        .mapToBean(getEntityClass())
-                        .list();
-            });
-            fdrMain.setBoResultAndValue(true, result, 1);
-
-        } catch (Exception ex) {
-            Loghelper.get(getClass()).error("Query Problem. Hata (Exception):\n" + FiException.exTosMain(ex));
-            fdrMain.setBoResult(false, ex);
-        }
-
-        // Ntn (not null dönüş)
-        if (fdrMain.getValue() == null) fdrMain.setValue(new ArrayList<>());
-
-        return fdrMain;
+    try {
+      List<String> result = getJdbi().withHandle(handle -> {
+        return handle.select(FiQueTools.stoj(sql))
+            .bindMap(fiKeyBean)
+            .mapTo(String.class)
+            .collect(Collectors.toList());
+      });
+      fdr.setFdBoResult(true);
+      fdr.setValue(result);
+    } catch (Exception ex) {
+      Loghelper.get(getClass()).error(FiException.exToErrorLog(ex));
+      fdr.setFdBoResult(false);
     }
-
-    public <PrmEnt> Fdr<List<PrmEnt>> jdcSelectList(FiQuery fiQuery, Class<PrmEnt> clazz) {
-        return jdcSelectListBindMapMainNtn(fiQuery.getTxQuery(), fiQuery.getMapParams(), clazz);
-    }
-
-    public <PrmEnt> Fdr<List<PrmEnt>> jdcSelectListBindMapMainNtn(String sqlQuery, Map<String, Object> mapBind, Class<PrmEnt> clazz) {
-
-        Fdr<List<PrmEnt>> fdrMain = new Fdr<>();
-
-        try {
-            List<PrmEnt> result = getJdbi().withHandle(handle -> {
-                return handle.createQuery(FiQueTools.stoj(sqlQuery))
-                        .bindMap(mapBind)
-                        .mapToBean(clazz)
-                        .list();
-            });
-            fdrMain.setBoResultAndValue(true, result, 1);
-
-        } catch (Exception ex) {
-            Loghelper.get(getClass()).error("Query Problem. Hata (Exception):\n" + FiException.exTosMain(ex));
-            fdrMain.setBoResult(false, ex);
-        }
-
-        // Ntn (not null dönüş)
-        if (fdrMain.getValue() == null) fdrMain.setValue(new ArrayList<>());
-
-        return fdrMain;
-    }
-
-    public List<EntClazz> jdSelectListBindMapRaw(String sqlQuery, Map<String, Object> mapBind) {
-
-        Jdbi jdbi = getJdbi();
-        List<EntClazz> result = null;
-
-        try {
-            result = jdbi.withHandle(handle -> {
-                return handle.createQuery(FiQueTools.stoj(sqlQuery))
-                        .bindMap(mapBind)
-                        .mapToBean(getEntityClass())
-                        .list();
-            });
-
-        } catch (Exception ex) {
-            Loghelper.errorLog(getClass(), "Query Problem");
-            Loghelper.errorException(getClass(), ex);
-        }
-
-        return result;
-    }
-
-    public Fdr<List<EntClazz>> jdSelectListBindObjectMain(String sqlQuery, Object entClazz) {
-
-        if (entityClass == null) setAutoClass();
-
-        //String sqlNew = convertMapAndSqlMultiParam(sqlQuery, mapBind);
-
-        Fdr<List<EntClazz>> fdr = new Fdr<>();
-        fdr.setValue(new ArrayList<>());
-
-        try {
-            List<EntClazz> result = getJdbi().withHandle(handle -> {
-                return handle.createQuery(FiQueTools.stoj(sqlQuery))
-                        .bindBean(entClazz)
-                        .mapToBean(getEntityClass())
-                        .list();
-            });
-            fdr.setFdBoResult(true);
-            fdr.setValue(result);
-        } catch (Exception ex) {
-            Loghelper.errorLog(getClass(), "Query Problem");
-            Loghelper.errorException(getClass(), ex);
-            fdr.setBoResult(false, ex);
-        }
-        return fdr;
-
-    }
-
-    public Fdr<List<EntClazz>> jdSelectListBindObjectMain(String sqlQuery, Object entClazz, Fkb mapParams) {
-
-        if (entityClass == null) setAutoClass();
-
-        //String sqlNew = convertMapAndSqlMultiParam(sqlQuery, mapBind);
-
-        Fdr<List<EntClazz>> fdr = new Fdr<>();
-        fdr.setValue(new ArrayList<>());
-
-        try {
-            List<EntClazz> result = getJdbi().withHandle(handle -> {
-                return handle.createQuery(FiQueTools.stoj(sqlQuery))
-                        .bindMap(mapParams)
-                        .bindBean(entClazz)
-                        .mapToBean(getEntityClass())
-                        .list();
-            });
-            fdr.setFdBoResult(true);
-            fdr.setValue(result);
-        } catch (Exception ex) {
-            Loghelper.errorLog(getClass(), "Query Problem");
-            Loghelper.errorException(getClass(), ex);
-            fdr.setBoResult(false, ex);
-        }
-        return fdr;
-
-    }
-
-    public List<EntClazz> jdSelectListBindMapRawWithDeAct(String sqlQuery, Map<String, Object> mapBind) {
-
-        Jdbi jdbi = getJdbi();
-        //Loghelperr.getInstance(getClass()).debug(fimSqlAt3WithDeActivation(sqlQuery));
-
-        List<EntClazz> result = null;
-        try {
-            result = jdbi.withHandle(handle -> {
-                return handle.createQuery(FiQueTools.fimSqlQueryWithDeActType1(sqlQuery))
-                        .bindMap(mapBind)
-                        .mapToBean(getEntityClass())
-                        .list();
-            });
-        } catch (Exception ex) {
-            Loghelper.errorLog(getClass(), "Query Problem");
-            Loghelper.errorException(getClass(), ex);
-        }
-
-        return result;
-    }
-
-    public Fdr<List<EntClazz>> jdSelectListBindMapMainWithDeAct(String sqlQuery, Map<String, Object> mapBind) {
-
-        //Loghelper.getInstance(getClass()).debug(sqlQuery);
-
-        Fdr<List<EntClazz>> fdr = new Fdr<>();
-        fdr.setValue(new ArrayList<>());
-
-        try {
-            List<EntClazz> result = getJdbi().withHandle(handle -> {
-                return handle.createQuery(FiQueTools.fimSqlQueryWithDeActType1(sqlQuery))
-                        .bindMap(mapBind)
-                        .mapToBean(getEntityClass())
-                        .list();
-            });
-            fdr.setBoResultAndValue(true, result);
-        } catch (Exception ex) {
-            Loghelper.errorLog(getClass(), "Query Problem");
-            Loghelper.errorException(getClass(), ex);
-            fdr.setBoResult(false, ex);
-        }
-
-        return fdr;
-    }
-
-    public Fdr<List<Fkb>> jdSelectFkbListBindMapMain(String sqlQuery, Map<String, Object> mapBind) {
-
-        Fdr<List<Fkb>> fdr = new Fdr<>();
-        fdr.setValue(new ArrayList<>());
-
-        try {
-            List<Fkb> result = getJdbi().withHandle(handle -> {
-                return handle.createQuery(FiQueTools.stoj(sqlQuery))
-                        .bindMap(mapBind)
-                        .map(new FiKeyBeanMapper(false))
-                        .list();
-            });
-            fdr.setBoResultAndValue(true, result, 1);
-
-        } catch (Exception ex) {
-            Loghelper.get(getClass()).error("Query Problem");
-            Loghelper.get(getClass()).error("Hata (Exception):\n" + FiException.exTosMain(ex));
-            fdr.setBoResult(false, ex);
-        }
-
-        return fdr;
-    }
-
-    public Fdr<List<String>> jdSelectListStringMain(String sql, Fkb fiKeyBean) {
-        Fdr<List<String>> fdr = new Fdr<>();
-        fdr.setValue(new ArrayList<>());
-
-        try {
-            List<String> result = getJdbi().withHandle(handle -> {
-                return handle.select(FiQueTools.stoj(sql))
-                        .bindMap(fiKeyBean)
-                        .mapTo(String.class)
-                        .collect(Collectors.toList());
-            });
-            fdr.setFdBoResult(true);
-            fdr.setValue(result);
-        } catch (Exception ex) {
-            Loghelper.get(getClass()).error(FiException.exToErrorLog(ex));
-            fdr.setFdBoResult(false);
-        }
-        return fdr;
-    }
+    return fdr;
+  }
 
 
 }

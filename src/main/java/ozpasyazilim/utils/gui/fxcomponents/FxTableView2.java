@@ -19,6 +19,7 @@ import ozpasyazilim.utils.annotations.FiDraft;
 import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.datatypes.Fkb;
 import ozpasyazilim.utils.datatypes.FiListString;
+import ozpasyazilim.utils.fimetas.FicFtQuery;
 import ozpasyazilim.utils.fxwindow.FiFxFormWindowCont;
 import ozpasyazilim.utils.gui.components.TableValueFactoryForFkb;
 import ozpasyazilim.utils.gui.fxTableViewExtra.NestedPropertyValueFactory;
@@ -66,8 +67,13 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
   private List<FxTableCol2> listFxTableCol;
   private FilteredList<EntClazz> filteredList;
 
+  /**
+   * Tv:TableView LnId
+   */
+  private Integer tvLnId;
+
   // gereksiz çıkartılabilir
-  private Boolean filteredListActive;
+  private Boolean boFilteredListActive;
 
   /**
    * Dataların FiKeybean olarak yüklendiği durumu gösterir
@@ -75,10 +81,10 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
   private Boolean boFkbEnabled;
 
   // Filter Editor Lokal false olanlar hariç lokal filtreleme enable edilir (ve Remote çıkarıldı)
-  private Boolean enableLocalFilterEditor;
+  private Boolean boEnableLocalFilterEditor;
   // Remote Filter enable edilir, filter comp de enter action enable yapılır
-  private Boolean enableRemoteFilterEditor;
-  private Boolean enableSummaryHeader;
+  private Boolean boEnableRemoteFilterEditor;
+  private Boolean boEnableSummaryHeader;
 
   private List<Consumer<FiCol>> listenerBoSelection;
 
@@ -161,7 +167,9 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
   // ctrl c basılınca key event için yapıldı , yerine addeventhandler eklendi
   //private ObjectProperty<KeyEvent> propTblKeyEvent = new SimpleObjectProperty<>();
 
-  // FxTable comp i , fxtable mig içerisinde ise buraya set edilir.
+  /**
+   * FxTable comp'i , fxtableMig (parent reference) içerisinde ise buraya set edilir.
+   */
   private FxTableMig2 fxTableMig;
 
   /**
@@ -170,9 +178,10 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
   private Fkb fkbHeaderFilterExtra;
   private FicList ficsFormElemsHeaderFilterExtra;
 
-  IFxTableCont iFxTableCont;
+  IFxTableCont iFxTableInfc;
 
   private FxButton btnExtraFilter;
+  private Fkb fkbPaging;
 
   // ******* constructors
 
@@ -356,9 +365,9 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
   public List<EntClazz> getItemsCheckedCurrentWitWarn() {
     List<EntClazz> arrayList = new ArrayList<>(getItemsSourceCheckedCurrentFi());
 
-    if(arrayList.isEmpty()) {
-      Platform.runLater( ()->{
-       FxDialogShow.showPopWarn("Lütfen tablodan seçim yapınız.");
+    if (arrayList.isEmpty()) {
+      Platform.runLater(() -> {
+        FxDialogShow.showPopWarn("Lütfen tablodan seçim yapınız.");
       });
     }
 
@@ -374,11 +383,11 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
   public List<EntClazz> getItemsCheckedOrSelItemAsList(Boolean boEnableWarn) {
     List<EntClazz> arrayList = new ArrayList<>(getItemsSourceCheckedCurrentFi());
 
-    if(arrayList.isEmpty()) arrayList = getSelectedItemGenAsListFi();
+    if (arrayList.isEmpty()) arrayList = getSelectedItemGenAsListFi();
 
 
-    if(FiBool.isTrue(boEnableWarn) && arrayList.isEmpty()) {
-      Platform.runLater( ()->{
+    if (FiBool.isTrue(boEnableWarn) && arrayList.isEmpty()) {
+      Platform.runLater(() -> {
         FxDialogShow.showPopWarn("Lütfen tablodan seçim yapınız.");
       });
     }
@@ -668,7 +677,6 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
   private void setupCellValueAndEditorFactoryAsFkb(FxTableCol2 fxTableCol) {
     //Loghelperr.getInstance(getClass()).debug("added "+ fxTableCol.getFieldName());
     fxTableCol.setText(fxTableCol.getRefFiCol().getFcTxHeader());
-
     fxTableCol.setCellValueFactory(new TableValueFactoryForFkb<>(fxTableCol.getRefFiCol().getFcTxFieldName()));
 
     //bydefault idi
@@ -696,7 +704,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     EntClazz selectedItem = getSelectionModel().getSelectedItem();
 
     List<EntClazz> list = new ArrayList<>();
-    if(selectedItem!=null)list.add(selectedItem);
+    if (selectedItem != null) list.add(selectedItem);
 
     return list;
   }
@@ -705,7 +713,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     getListFxTableCol().forEach(fxTableCol -> {
       if (fxTableCol.getRefFiCol().getBoLocFilterable() == null) fxTableCol.getRefFiCol().setBoLocFilterable(true);
     });
-    setEnableLocalFilterEditor(true);
+    setBoEnableLocalFilterEditor(true);
     activateFilters();
   }
 
@@ -874,7 +882,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     }
 
     // Aşağıda şartlar olursa Filtreleme etkin oluyor, Header Eklenmemişse eklenir.
-    if (getEnableLocalFilterEditorNtn() || getEnableRemoteFilterEditorNtn() || FiType.isTrue(fxTableCol.getRefFiCol().getBoLocFilterable()) || FiType.isTrue(fxTableCol.getRefFiCol().getBoRemFilterable())) {
+    if (getEnableLocalFilterEditorNtn() || getEnableRemoteFilterEditorNtn() || FiType.isTrue(fxTableCol.getRefFiCol().getBoLocFilterable()) || FiType.isTrue(fxTableCol.getRefFiCol().getBoRemoteFilterable())) {
       // filter Node eklenmemişse Header Setup edilir.
       if (fxTableCol.getRefFiCol().getColFilterNode() == null) {
         setupHeader1ForTableCol(fxTableCol);
@@ -977,6 +985,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     migHeader.addGrowXPushXSpan(node);
     fxTableCol.getRefFiCol().setColFilterNode(node);
     //FxEditorFactory.registerKeyEventForNode(node,fxTableCol.getFiTableCol().getColFilterNodeClass(),getColFilterKeyDownEvent());
+    // UBOM header componetlerde event triggers
     node.addEventHandler(KeyEvent.KEY_PRESSED, getColFilterNodeKeyDownEvent());
     node.addEventHandler(KeyEvent.KEY_PRESSED, getColFilterNodeEnterEventWrapper());
 
@@ -1007,7 +1016,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
       return;
     }
 
-    // Filtre editor eklenmemiş eklensin
+    // Filtre editor node eklenmemişse, eklensin
     if (fxcol.getRefFiCol().getColFilterNode() == null) setupHeader2ForFilterNode(fxcol);
 
     if (fxcol.getRefFiCol().getSummaryType() == OzColSummaryType.CheckBox) {
@@ -1023,9 +1032,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
         Boolean boStatus = fxCheckBox.isSelected();
 
-
         getItemsSourceAllFi().forEach(ent -> {
-
 
           Boolean disabledSelection = false;
 
@@ -1124,6 +1131,12 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     setItemsAsFilteredList(listTable);
   }
 
+  public void setItemsAsFilteredCollectionAsyn(Collection listTable) {
+    Platform.runLater(() -> {
+      setItemsAsFilteredCollection(listTable);
+    });
+  }
+
   public void setItemsAsFilteredCollection(Collection listTable) {
 
     if (listTable == null) listTable = new ArrayList<>();
@@ -1135,7 +1148,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     setItems(sortableData);
     sortableData.comparatorProperty().bind(this.comparatorProperty());
 
-    if (getBoConfigAutoScrollToLast()) scrollToLastForFilteredList();
+    if (getBoConfigAutoScrollToLastNtn()) scrollToLastForFilteredList();
 
     eventsAfterTableViewDataChange();
 
@@ -1737,12 +1750,12 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     this.styleMap = styleMap;
   }
 
-  public Boolean getFilteredListActive() {
-    return filteredListActive;
+  public Boolean getBoFilteredListActive() {
+    return boFilteredListActive;
   }
 
-  public void setFilteredListActive(Boolean filteredListActive) {
-    this.filteredListActive = filteredListActive;
+  public void setBoFilteredListActive(Boolean boFilteredListActive) {
+    this.boFilteredListActive = boFilteredListActive;
   }
 
   public FilteredList getFilteredList() {
@@ -1975,21 +1988,21 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
   }
 
   public Boolean getEnableLocalFilterEditorNtn() {
-    if (this.enableLocalFilterEditor == null) return false;
-    return enableLocalFilterEditor;
+    if (this.boEnableLocalFilterEditor == null) return false;
+    return boEnableLocalFilterEditor;
   }
 
-  public void setEnableLocalFilterEditor(Boolean enableLocalFilterEditor) {
-    this.enableLocalFilterEditor = enableLocalFilterEditor;
+  public void setBoEnableLocalFilterEditor(Boolean boEnableLocalFilterEditor) {
+    this.boEnableLocalFilterEditor = boEnableLocalFilterEditor;
   }
 
   public Boolean getEnableRemoteFilterEditorNtn() {
-    if (this.enableRemoteFilterEditor == null) return false;
-    return enableRemoteFilterEditor;
+    if (this.boEnableRemoteFilterEditor == null) return false;
+    return boEnableRemoteFilterEditor;
   }
 
-  public void setEnableRemoteFilterEditor(Boolean enableRemoteFilterEditor) {
-    this.enableRemoteFilterEditor = enableRemoteFilterEditor;
+  public void setBoEnableRemoteFilterEditor(Boolean boEnableRemoteFilterEditor) {
+    this.boEnableRemoteFilterEditor = boEnableRemoteFilterEditor;
   }
 
   public static void autoFilterEventToAllCol(List<? extends IFiCol> listCol, EventHandler<KeyEvent> eventFilter) {
@@ -2110,7 +2123,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
   private void eventsAfterTableViewDataChange() {
 
     Platform.runLater(() -> {
-      if (getBoConfigAutoScrollToLast()) scrollToLastForFilteredList();
+      if (getBoConfigAutoScrollToLastNtn()) scrollToLastForFilteredList();
     });
 
     updateSummary();
@@ -2193,16 +2206,16 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
   }
 
   public Boolean getEnableSummaryHeaderNtn() {
-    if (enableSummaryHeader == null) return false;
-    return enableSummaryHeader;
+    if (boEnableSummaryHeader == null) return false;
+    return boEnableSummaryHeader;
   }
 
-  public Boolean getEnableSummaryHeader() {
-    return enableSummaryHeader;
+  public Boolean getBoEnableSummaryHeader() {
+    return boEnableSummaryHeader;
   }
 
-  public void setEnableSummaryHeader(Boolean value) {
-    this.enableSummaryHeader = value;
+  public void setBoEnableSummaryHeader(Boolean value) {
+    this.boEnableSummaryHeader = value;
     activateHeaderSummary();
   }
 
@@ -2218,8 +2231,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
    * <br>Entity myEntity = (Entity) row.getItem();
    * <p>
    */
-
-  public Boolean getBoConfigAutoScrollToLast() {
+  public Boolean getBoConfigAutoScrollToLastNtn() {
     if (boConfigAutoScrollToLast == null) return false;
     return boConfigAutoScrollToLast;
   }
@@ -2511,31 +2523,32 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     if (colFilterNodeEnterEventWrapper == null) {
       colFilterNodeEnterEventWrapper = (keyEvent) -> {
+
         if (keyEvent.getCode() == KeyCode.ENTER) {
 
           if (getColRemoteFilterEnterEvent() != null) {
             Fkb fkbFilter = getHeaderFilterAsFkb();
 
-            FiListString fullKeyList = fkbFilter.getFullKeys();
+            FiListString flsFilterFieldsFull = fkbFilter.getFullKeys();
 
-            boolean boRemoFilterable = false;
+            boolean boExistRemoteFilterableCol = false;
 
-            if (!fullKeyList.isEmpty()) {
+            if (!flsFilterFieldsFull.isEmpty()) {
 
               FicList fiCols = new FicList(getFiColList());
 
-              for (String key : fullKeyList) {
-                FiCol fiColByField = fiCols.getFiColByField(key);
+              for (String key : flsFilterFieldsFull) {
+                FiCol fiCol = fiCols.getFiColByField(key);
 
-                if (fiColByField == null) continue;
+                if (fiCol == null) continue;
 
-                if (FiBool.isNullOrTrue(fiColByField.getBoRemFilterable())) {
-                  boRemoFilterable = true;
+                if (FiBool.isNullOrTrue(fiCol.getBoRemoteFilterable())) {
+                  boExistRemoteFilterableCol = true;
                 }
               }
             }
 
-            if (!boRemoFilterable && !fullKeyList.isEmpty()) {
+            if (!boExistRemoteFilterableCol && !flsFilterFieldsFull.isEmpty()) {
               getFiLblFooterMessage().setText("Bu sütun henüz veri çekimine müsait değil");
               return;
             }
@@ -2686,8 +2699,8 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
       emmFormWindowCont.openAsNonModal();
 
       if (emmFormWindowCont.checkClosedWithDone()) {
-        if (getiFxTableCont() != null) {
-          getiFxTableCont().pullTableData();
+        if (getiFxTableInfc() != null) {
+          getiFxTableInfc().pullTableData();
         }
       }
 
@@ -2910,8 +2923,8 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
    * @param fiCols
    */
   public void standardSetup1(List<FiCol> fiCols) {
-    setEnableLocalFilterEditor(true);
-    setEnableSummaryHeader(true);
+    setBoEnableLocalFilterEditor(true);
+    setBoEnableSummaryHeader(true);
     addAllFiColsAuto(fiCols);
   }
 
@@ -3033,17 +3046,17 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     this.boFkbEnabled = boFkbEnabled;
   }
 
-  public IFxTableCont getiFxTableCont() {
-    return iFxTableCont;
+  public IFxTableCont getiFxTableInfc() {
+    return iFxTableInfc;
   }
 
   /**
    * Table için Controller Metodlarını içeren interface
    *
-   * @param iFxTableCont
+   * @param iFxTableInfc
    */
-  public void setiFxTableCont(IFxTableCont iFxTableCont) {
-    this.iFxTableCont = iFxTableCont;
+  public void setiFxTableInfc(IFxTableCont iFxTableInfc) {
+    this.iFxTableInfc = iFxTableInfc;
   }
 
   public FxButton getBtnExtraFilter() {
@@ -3055,14 +3068,69 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
   }
 
   public void warnSelectItems() {
-    Platform.runLater( ()-> {
+    Platform.runLater(() -> {
       FxDialogShow.showPopWarn("Lütfen tablodan seçim yapınız.");
     });
   }
 
   public void warnSelectValidItems() {
-    Platform.runLater( ()-> {
+    Platform.runLater(() -> {
       FxDialogShow.showPopWarn("Lütfen tablodan geçerli kayıtlar seçiniz.");
     });
+  }
+
+  public Fkb getFkbPagingAsCreate() {
+    // Integer lnBeginIndex = getFxTableView().getLnPageStartIndexInit() - 1;
+    // Integer lnPageSize = getFxTableView().getLnPageSizeInit();
+    getFkbPagingInit().addFiCol(FicFtQuery.fqpLnPageOffset(), getLnPageStartIndexInit() - 1);
+    getFkbPagingInit().addFiCol(FicFtQuery.fqpLnPageLength(), getLnPageSizeInit());
+    return getFkbPagingInit();
+  }
+
+  public Fkb getFkbPagingInit() {
+    if (fkbPaging == null) {
+      fkbPaging = new Fkb();
+    }
+    return fkbPaging;
+  }
+
+  public void setFkbPaging(Fkb fkbPaging) {
+    this.fkbPaging = fkbPaging;
+  }
+
+  public void setFiColsAsFkbAsync(List<FiCol> colsTable) {
+    Platform.runLater(() -> {
+      removeItemsAllFi();
+      removeColsAllFi();
+      addAllFiColsAutoAsFkb(colsTable);
+      refresh();
+      // tekrar datayı eklemek istersek
+      //ObservableList<MyData> data = tableView.getItems();
+      //
+      //tableView.getItems().clear();
+      //tableView.getColumns().clear();
+      //
+      //// sütunları oluştur
+      //
+      //tableView.getItems().setAll(data);
+    });
+  }
+
+  public void setFiColsAsFkbAsyncByTvLnId(List<FiCol> colsTable, Integer tvLnId) {
+    if(tvLnId==null || getTvLnIdNtn()!= tvLnId){
+      setFiColsAsFkbAsync(colsTable);
+      setTvLnId(tvLnId);
+    }
+  }
+
+  public Integer getTvLnIdNtn() {
+    if (tvLnId == null) {
+      return -1;
+    }
+    return tvLnId;
+  }
+
+  public void setTvLnId(Integer tvLnId) {
+    this.tvLnId = tvLnId;
   }
 }

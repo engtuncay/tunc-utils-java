@@ -418,11 +418,7 @@ public class FiThread {
         return thread;
     }
 
-    public static Thread startThreadForPaging(Runnable runnableStart, FxTableView2 fxTableView2) {
-
-        //FxToastPopup2 fxToastPopup2 = new FxToastPopup2();
-        //		if(message==null) message = "";
-        //		String finalMessage = message;
+    public static Thread startThreadForFxTable(Runnable runnableStart, FxTableView2 fxTableView2) {
 
         FxLabel lblFooterMsg = fxTableView2.getFiLblFooterMessage();
 
@@ -430,8 +426,10 @@ public class FiThread {
 
         Platform.runLater(() -> {
             //fxToastPopup2.show(finalMessage+ " Hazırlanıyor...",atomicReference.get());
-            lblFooterMsg.setText("Veriler alınıyor.");
-            lblFooterMsg.setFxTextColor(Color.RED);
+            if(lblFooterMsg!=null) {
+                lblFooterMsg.setText("Veriler alınıyor.");
+                lblFooterMsg.setFxTextColor(Color.RED);
+            }
             fxTableView2.setPagingButtonsDisable(true);
         });
 

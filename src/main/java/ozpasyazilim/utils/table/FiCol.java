@@ -137,7 +137,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
   /**
    * Tablodaki sütunun remote filterable olduğunu gösterir. default true kabul edilir
    */
-  private Boolean boRemFilterable;
+  private Boolean boRemoteFilterable;
 
   /**
    * Alan için hangi tür filter node kullanılacaksa sınıfın ismi tutulur
@@ -322,6 +322,8 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
    * False olursa Pasif Edilmesini gösterir
    */
   private Boolean boParamStatus;
+
+  private Integer fcLnId;
 
   // ------ End - Sorgular için --------------
 
@@ -866,7 +868,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
   }
 
   public FiCol buiBoRemoteFilterable(Boolean boValue) {
-    setBoRemFilterable(boValue);
+    setBoRemoteFilterable(boValue);
     return this;
   }
 
@@ -1868,12 +1870,12 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     this.fcTxColDefinition = fcTxColDefinition;
   }
 
-  public Boolean getBoRemFilterable() {
-    return boRemFilterable;
+  public Boolean getBoRemoteFilterable() {
+    return boRemoteFilterable;
   }
 
-  public void setBoRemFilterable(Boolean boRemFilterable) {
-    this.boRemFilterable = boRemFilterable;
+  public void setBoRemoteFilterable(Boolean boRemoteFilterable) {
+    this.boRemoteFilterable = boRemoteFilterable;
   }
 
   public IFiNode getIFiNodeEditor() {
@@ -1935,6 +1937,10 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
   public Fkb getFkbData() {return fkbData;}
 
   public void setFkbData(Fkb fkbData) {this.fkbData = fkbData;}
+
+  public Integer getFcLnId() {return fcLnId;}
+
+  public void setFcLnId(Integer fcLnId) {this.fcLnId = fcLnId;}
 
 }
 
