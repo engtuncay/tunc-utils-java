@@ -529,6 +529,8 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
    * <p>
    * hepsi true olursa sonuç true olur, bir tane false varsa sonuç false olur.
    * <p>
+   * Transaction mantığında işlemler için: ya hepsi ya hiç
+   * <p>
    * Tüm İşlemlerde Birleştirilen Alanlar (!!!) : Log, Message, Exception
    * <p>
    * Değerlerde birleştirme vs yapmaz.

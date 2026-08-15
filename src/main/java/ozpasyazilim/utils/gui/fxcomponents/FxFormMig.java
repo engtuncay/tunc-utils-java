@@ -1,9 +1,6 @@
 package ozpasyazilim.utils.gui.fxcomponents;
 
-import ozpasyazilim.utils.datatypes.Fkb;
 import ozpasyazilim.utils.table.FiCol;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class FxFormMig extends FxFormMigGen<Object> {
