@@ -531,7 +531,7 @@ public class FxEditorFactory {
    */
   private static void setValueToNodeCompMain(IFiCol iFiCol, Object compValue, String colNodeClass, Node colNode, Object entity) {
     // URFIX buradaki entity , fikeybean olarak gelebilir (complex componentlerde entity kullanılmış)
-    //String colNodeClass = iFiCol.getColFilterNodeClass();
+    // String colNodeClass = iFiCol.getColFilterNodeClass();
 
     // IFiNode türünde ise CompValue metoduyla kendisi comp olarak değer atama işini yapar
     if (colNode instanceof IFiNode) {
@@ -1212,21 +1212,21 @@ public class FxEditorFactory {
 
       if (fiCol.getFcTxFieldName() == null) continue;
 
-      Object cellvalue = null;
+      Object fieldVal = null;
 
       if (entity instanceof Fkb) {
         Fkb fkbEntity = (Fkb) entity;
-        cellvalue = fkbEntity.get(fiCol.getFcTxFieldName());
+        fieldVal = fkbEntity.get(fiCol.getFcTxFieldName());
       } else {
-        cellvalue = FiReflection.getProperty(entity, fiCol.getFcTxFieldName());
+        fieldVal = FiReflection.getProperty(entity, fiCol.getFcTxFieldName());
       }
 
       //Loghelperr.getInstance(getClass()).debug("Entity to Editor: Col:"+ fiCol.getFieldName());
 
-      if (cellvalue == null) continue;
+      if (fieldVal == null) continue;
 
       // Bütün alanlar için de atanabilir , eski değer tutulmuş olur.
-      fiCol.setColValue(cellvalue);
+      fiCol.setColValue(fieldVal);
 
       // Hidden ise, node comp üretilmediği için değer ataması yapılmaz.
       if (FiBool.isTrue(fiCol.getBoHidden())) {
@@ -1234,7 +1234,7 @@ public class FxEditorFactory {
       }
 
       //FiConsole.printFieldsNotNull(fiCol);
-      setValueToNodeCompMain(fiCol, cellvalue, fiCol.getColEditorClass(), fiCol.getColEditorNode(), entity);
+      setValueToNodeCompMain(fiCol, fieldVal, fiCol.getColEditorClass(), fiCol.getColEditorNode(), entity);
 
       // Form Node özellikleri buradan atanır
       if (fiCol.getColEditorNode() != null) {

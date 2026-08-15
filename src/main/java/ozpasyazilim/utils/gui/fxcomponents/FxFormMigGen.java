@@ -87,7 +87,7 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> implement
    * ancak boFormInitialized false yapılırsa, tekrar init yapılır
    */
   public void initCont() {
-    //
+    // Form bir kere initialize edilir
     if (FiBool.isTrue(getBoFormInitialized())) return;
 
     // form initialized edildiğini belirtir
