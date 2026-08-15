@@ -8,9 +8,11 @@ import java.util.List;
 /**
  * Bir liste içerisinde aynı id li kaç entity var , onu hesaplamak için yardımcı obje
  *
+ * Obje istatistiklerini tutar
+ *
  * @param <T>
  */
-public class FiInspect<T> {
+public class FiObjectStats<T> {
 
     private String txId;
 

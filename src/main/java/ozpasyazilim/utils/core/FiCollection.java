@@ -4,7 +4,7 @@ import javafx.util.Pair;
 
 import mark.utils.collections.filter.Filter;
 import org.apache.commons.beanutils.PropertyUtils;
-import ozpasyazilim.utils.datatypes.FiInspect;
+import ozpasyazilim.utils.datatypes.FiObjectStats;
 import ozpasyazilim.utils.datatypes.FiKeyList;
 import ozpasyazilim.utils.datatypes.FiMeta;
 import ozpasyazilim.utils.log.Loghelper;
@@ -1571,19 +1571,27 @@ public class FiCollection {
     return collection.size();
   }
 
-  public static <Mt> void addInspect(String txKey, Mt object, Map<String, FiInspect<Mt>> mapBelgeler) {
+  /**
+   * txKey karşılık kaç tane nesne var
+   *
+   * @param txKey
+   * @param object
+   * @param mapBelgeler
+   * @param <Mt>
+   */
+  public static <Mt> void addInspect(String txKey, Mt object, Map<String, FiObjectStats<Mt>> mapBelgeler) {
 
-    FiInspect<Mt> fiInspect = null;
+    FiObjectStats<Mt> fiObjectStats = null;
 
     if (mapBelgeler.containsKey(txKey)) {
-      fiInspect = mapBelgeler.get(txKey);
-      fiInspect.incCount1();
-      fiInspect.getListEntityInit().add(object);
+      fiObjectStats = mapBelgeler.get(txKey);
+      fiObjectStats.incCount1();
+      fiObjectStats.getListEntityInit().add(object);
     } else {
-      fiInspect = new FiInspect();
-      fiInspect.incCount1();
-      fiInspect.getListEntityInit().add(object);
-      mapBelgeler.put(txKey, fiInspect);
+      fiObjectStats = new FiObjectStats();
+      fiObjectStats.incCount1();
+      fiObjectStats.getListEntityInit().add(object);
+      mapBelgeler.put(txKey, fiObjectStats);
     }
 
   }
