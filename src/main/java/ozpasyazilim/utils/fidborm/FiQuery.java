@@ -158,9 +158,9 @@ public class FiQuery {
   }
 
   /**
-   * activateParamsMain(boActiOnlyFullParams);
+   * (1) activateParamsMain(boActiOnlyFullParams);
    * <p>
-   * deActivateAllOptParams();
+   * (2) deActivateAllOptParams();
    */
   public void processAllParams(Boolean boActiOnlyFullParams) {
     activateParamsMain(boActiOnlyFullParams);

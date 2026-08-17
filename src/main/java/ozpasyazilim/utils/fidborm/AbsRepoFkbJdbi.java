@@ -280,6 +280,66 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
     return fdr;
   }
 
+  /**
+   * Sorgudan gelen sonuç FdLnVal alanına değeri girer
+   *
+   * @param sql
+   * @param mapParam
+   * @return
+   */
+  public Fdr jdSelectLnValBindMap(String sql, Map<String, Object> mapParam) {
+
+    Fdr fdr = new Fdr<>();
+
+    try {
+      Optional<Integer> result = getJdbi().withHandle(handle -> {
+        return handle.select(FiQueTools.stoj(sql))
+            .bindMap(mapParam)
+            .mapTo(Integer.class)
+            .findFirst();
+      });
+
+      result.ifPresent(fdr::setFdLnVal);
+      fdr.setFdBoResult(true);
+    } catch (Exception ex) {
+      Loghelper.get(getClass()).error(FiException.exTosMain(ex));
+      fdr.setFdBoResult(false);
+    }
+
+    return fdr;
+  }
+
+  /**
+   * Sorgudan gelen sonuç FdTxVal alanına değeri girer
+   *
+   * @param sql
+   * @param mapParam
+   * @return
+   */
+  public Fdr jdSelectTxValBindMap(String sql, Map<String, Object> mapParam) {
+
+    Fdr fdr = new Fdr<>();
+
+    try {
+      Optional<String> result = getJdbi().withHandle(handle -> {
+        return handle.select(FiQueTools.stoj(sql))
+            .bindMap(mapParam)
+            .mapTo(String.class)
+            .findFirst();
+      });
+
+      result.ifPresent(fdr::setFdTxVal);
+      fdr.setFdBoResult(true);
+    } catch (Exception ex) {
+      Loghelper.get(getClass()).error(FiException.exTosMain(ex));
+      fdr.setFdBoResult(false);
+    }
+
+    return fdr;
+  }
+
+
+
   public Fdr jdUpdateBindMapMain(FiQuery fiQuery) {
     return jdUpdateBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
   }
