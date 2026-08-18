@@ -281,6 +281,13 @@ public class FiCal {
     return daysBetween > 0;
   }
 
+  /**
+   * returns (Date1>Date2)
+   *
+   * @param date1
+   * @param date2
+   * @return
+   */
   public static Boolean dateGreaterThan(Date date1, Date date2) {
     return date1.getTime() > date2.getTime();
   }
