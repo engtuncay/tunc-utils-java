@@ -2276,10 +2276,12 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
   /**
    * Get table selection and copy it to the clipboard.
    */
-  public void copySelectionToClipboard2() {
+  public void copySelectionToClipboardV2() {
 
     StringBuilder sbClipboardText = new StringBuilder();
+
     ObservableList<TablePosition> positionList = getSelectionModel().getSelectedCells();
+
     int prevRow = -1;
 
     for (TablePosition position : positionList) {
@@ -2300,7 +2302,6 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
       // create string from cell
       String text = "";
 
-      // java.util.ArrayList.get(ArrayList.java:435)
       // Exception in thread "JavaFX Application Thread" java.lang.ArrayIndexOutOfBoundsException: -1
       Object observableValue = (Object) getColumns().get(col).getCellObservableValue(row);
 
@@ -2316,6 +2317,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
         text = NumberFormat.getNumberInstance().format(((IntegerProperty) observableValue).get());
 
       } else if (observableValue instanceof StringProperty) {
+
         text = ((StringProperty) observableValue).get();
 
       } else { // observableValue!=null and instanceof Something
@@ -2343,15 +2345,83 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     Clipboard.getSystemClipboard().setContent(clipboardContent);
   }
 
+  public void copySelectionToClipboardV3() {
+
+    StringBuilder sbClipboardText = new StringBuilder();
+
+    ObservableList<TablePosition> positionList = getSelectionModel().getSelectedCells();
+
+    int prevRow = -1;
+
+    for (TablePosition position : positionList) {
+
+      int row = position.getRow();
+      int col = position.getColumn();
+
+      if (col < 0) continue;
+
+      // determine whether we advance in a row (tab) or a column
+      // (newline).
+      if (prevRow == row) {
+        sbClipboardText.append('\t');
+      } else if (prevRow != -1) {
+        sbClipboardText.append('\n');
+      }
+
+      // create string from cell
+      String text = "";
+
+      // Exception in thread "JavaFX Application Thread" java.lang.ArrayIndexOutOfBoundsException: -1
+      Object observableValue = (Object) getColumns().get(col).getCellObservableValue(row);
+
+      // null-check: provide empty string for nulls
+      if (observableValue == null) {
+        text = "";
+      } else if (observableValue instanceof DoubleProperty) { // TODO: handle boolean etc
+
+        text = NumberFormat.getNumberInstance().format(((DoubleProperty) observableValue).get());
+
+      } else if (observableValue instanceof IntegerProperty) {
+
+        text = NumberFormat.getNumberInstance().format(((IntegerProperty) observableValue).get());
+
+      } else if (observableValue instanceof StringProperty) {
+
+        text = ((StringProperty) observableValue).get();
+
+      } else { // observableValue!=null and instanceof Something
+        //System.out.println("Unsupported observable value: " + observableValue);
+
+        Object value = ((ObjectProperty) observableValue).getValue();
+        if (value != null) {
+          text = value.toString();
+        } else {
+          text = "";
+        }
+
+      }
+      // add new item to clipboard
+      sbClipboardText.append(text);
+      // remember previous
+      prevRow = row;
+    }
+
+    // create clipboard content
+    final ClipboardContent clipboardContent = new ClipboardContent();
+    clipboardContent.putString(sbClipboardText.toString());
+
+    // set clipboard content
+    Clipboard.getSystemClipboard().setContent(clipboardContent);
+  }
 
   public void setupCopySelectionToClipboard() {
 
-    final KeyCodeCombination keyCodeCopy = new KeyCodeCombination(KeyCode.C, KeyCombination.CONTROL_ANY);
+    final KeyCodeCombination keyCtrlAndC = new KeyCodeCombination(KeyCode.C, KeyCombination.CONTROL_ANY);
 
     addEventHandler(KeyEvent.KEY_RELEASED, event -> {
-      if (keyCodeCopy.match(event)) { // || event.getCode() == KeyCode.ESCAPE
+      if (keyCtrlAndC.match(event)) { // || event.getCode() == KeyCode.ESCAPE
         //Loghelperr.getInstance(getClass()).debug("copy c pressed");
-        copySelectionToClipboard2();
+        copySelectionToClipboardV2();
       }
     });
 

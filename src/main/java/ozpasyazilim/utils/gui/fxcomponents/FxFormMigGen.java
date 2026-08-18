@@ -169,9 +169,13 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> implement
       }
 
       if (fiCol.getPrefSize() != null) {
-        add(node, String.format("width %s,wrap", fiCol.getPrefSize().toString()));
+        String txCc = String.format("width %s,wrap", fiCol.getPrefSize().toString());
+        add(node, txCc);
+        //Loghelper.get(getClass()).debug("Field: " + fiCol.getFcTxFieldName() + " cc:" + txCc);
       } else {
-        add(node, FxMigHp.bcc("growx,pushx,wrap").addCcCompMaxWidthSizeByColTypeForFxForm(fiCol).genCc());
+        String txCc = FxMigHp.bcc("growx,pushx,wrap").addCcCompMaxWidthSizeByColTypeForFxForm(fiCol).genCc();
+        add(node, txCc);
+        //Loghelper.get(getClass()).debug("Field: " + fiCol.getFcTxFieldName() + " cc:" + txCc);
       }
 
     } // tblCol for döngüsü sonu

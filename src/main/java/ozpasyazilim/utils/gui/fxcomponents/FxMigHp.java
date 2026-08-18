@@ -1,6 +1,8 @@
 package ozpasyazilim.utils.gui.fxcomponents;
 
 import ozpasyazilim.utils.core.FiString;
+import ozpasyazilim.utils.metadata.fimCodegen.FimFtFieldType;
+import ozpasyazilim.utils.metadata.fimCodegen.FimFtFieldTypeSpec;
 import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.OzColType;
 
@@ -272,16 +274,21 @@ public class FxMigHp {
 
   public FxMigHp addCcCompMaxWidthSizeByColTypeForFxForm(FiCol fiCol) {
 
-    if (fiCol.getColType() == OzColType.Date || fiCol.getColEditorClass().equals(FxDatePicker.class.getName())) {
-      appendCc("wmax 150");
-    }
-
-    if (fiCol.getColType() == OzColType.Double) {
+    if (fiCol.getColType() == OzColType.Date || fiCol.getColEditorClass().equals(FxDatePicker.class.getName())
+        || FimFtFieldTypeSpec.isDate(fiCol.getFcTxFieldType())
+    ) {
       appendCc("wmax 200");
     }
 
-    if (fiCol.getColType() == OzColType.Integer) {
-      appendCc("wmax 150");
+    if (fiCol.getColType() == OzColType.Double
+        || FimFtFieldTypeSpec.isDouble(fiCol.getFcTxFieldType())
+    ) {
+      appendCc("wmax 200");
+    }
+
+    if (fiCol.getColType() == OzColType.Integer
+        || FimFtFieldTypeSpec.isInteger(fiCol.getFcTxFieldType())) {
+      appendCc("wmax 200");
     }
 
     return this;
