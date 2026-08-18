@@ -324,8 +324,8 @@ public class FiCollection {
    *
    * @param listtum
    * @param fnGetId
-   * @return
    * @param <T>
+   * @return
    */
   public static <T> FiKeyList<T> listToMapMultiFklWion(Collection<T> listtum, Function<T, String> fnGetId) {
 
@@ -411,7 +411,7 @@ public class FiCollection {
    * @param listtum Toplanacak koleksiyon
    * @param fnGetId Key değerini döndüren fonksiyon
    * @param nullKey Null değerleri yerine kullanılacak key
-   * @param <T> Entity tipi
+   * @param <T>     Entity tipi
    * @return Map
    */
   public static <T> FiKeyList<T> listToMapMulti2(List<T> listtum, Function<T, String> fnGetId, String nullKey) {
