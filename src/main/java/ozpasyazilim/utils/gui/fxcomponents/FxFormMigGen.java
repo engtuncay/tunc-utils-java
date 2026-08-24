@@ -173,7 +173,7 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> implement
         add(node, txCc);
         //Loghelper.get(getClass()).debug("Field: " + fiCol.getFcTxFieldName() + " cc:" + txCc);
       } else {
-        String txCc = FxMigHp.bcc("growx,pushx,wrap").addCcCompMaxWidthSizeByColTypeForFxForm(fiCol).genCc();
+        String txCc = FxMigHp.bcc("growx,pushx,wrap").addCcByColTypeForFxForm(fiCol).genCc();
         add(node, txCc);
         //Loghelper.get(getClass()).debug("Field: " + fiCol.getFcTxFieldName() + " cc:" + txCc);
       }

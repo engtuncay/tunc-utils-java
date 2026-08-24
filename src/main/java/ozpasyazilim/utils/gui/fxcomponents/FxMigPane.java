@@ -48,7 +48,7 @@ public class FxMigPane extends MigPane {
   }
 
   public FxMigPane(FxMigHp fxMigHp) {
-    super(fxMigHp.getLcgPrep2(), fxMigHp.getLayColConst(), fxMigHp.getLayRowConst());
+    super(fxMigHp.getLcgPrepOnly(), fxMigHp.getLayColConst(), fxMigHp.getLayRowConst());
   }
 
   public static String ccHeight(int height) {
@@ -69,6 +69,10 @@ public class FxMigPane extends MigPane {
 
   public static FxMigPane buiStandard() {
     return new FxMigPane(FxMigHp.getLcgStd1InsetGap0());
+  }
+
+  public static FxMigPane buiStandard2() {
+    return new FxMigPane(FxMigHp.getLcgStd2Inset0Gap50());
   }
 
   public void wrapFi() {

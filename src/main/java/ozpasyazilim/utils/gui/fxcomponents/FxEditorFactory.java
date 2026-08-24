@@ -1713,7 +1713,7 @@ public class FxEditorFactory {
 
       EventStreams.valuesOf(comp.textProperty())
           .successionEnds(Duration.ofMillis(durationMilis))
-          .subscribe(s -> consumerStrProp.accept(s));
+          .subscribe(consumerStrProp);
 
       //comp.textProperty().addListener(consumerStrProp);
     }
@@ -1724,7 +1724,8 @@ public class FxEditorFactory {
 
       EventStreams.valuesOf(comp.getFxTextField().textProperty())
           .successionEnds(Duration.ofMillis(durationMilis))
-          .subscribe(s -> consumerStrProp.accept(s));
+          .subscribe(consumerStrProp);
+      //.subscribe(s -> consumerStrProp.accept(s));
     }
 
     if (colNodeClass.equals(FxDatePicker.class.getName())) {
@@ -1734,7 +1735,7 @@ public class FxEditorFactory {
 
       EventStreams.valuesOf(comp.getEditor().textProperty())
           .successionEnds(Duration.ofMillis(durationMilis))
-          .subscribe(s -> consumerStrProp.accept(s));
+          .subscribe(consumerStrProp);
 
     }
 
@@ -1745,7 +1746,7 @@ public class FxEditorFactory {
 
       EventStreams.valuesOf(comp.getEditor().textProperty())
           .successionEnds(Duration.ofMillis(durationMilis))
-          .subscribe(s -> consumerStrProp.accept(s));
+          .subscribe(consumerStrProp);
     }
 
     if (colNodeClass.equals(TextField.class.getName())) {
@@ -1754,7 +1755,7 @@ public class FxEditorFactory {
 
       EventStreams.valuesOf(comp.textProperty())
           .successionEnds(Duration.ofMillis(durationMilis))
-          .subscribe(s -> consumerStrProp.accept(s));
+          .subscribe(consumerStrProp);
 
     }
   }

@@ -35,13 +35,13 @@ public class FxGenWindowView implements IFiModView {
 	public void initGui() {
 
 		// root init
-		fxRootMigPane = new FxMigPane(FxMigHp.bui().lcgInset3Gap33().getLcgPrep2());
+		fxRootMigPane = new FxMigPane(FxMigHp.bui().lcgInset3Gap33().getLcgPrepOnly());
 
 		// Container Initial.
 		fxFormMig = new FxFormMigDep();
-		fxMigToolbar = new FxMigPane(FxMigHp.bui().lcgInset3Gap33().getLcgPrep2());
+		fxMigToolbar = new FxMigPane(FxMigHp.bui().lcgInset3Gap33().getLcgPrepOnly());
 		fxTableMig = new FxTableMig2();
-		fxContent = new FxMigPane(FxMigHp.bui().lcgInset0Gap50().getLcgPrep2());
+		fxContent = new FxMigPane(FxMigHp.bui().lcgInset0Gap50().getLcgPrepOnly());
 
 		// Comp Init
 

@@ -7,7 +7,6 @@ import ozpasyazilim.utils.core.FiBool;
 import ozpasyazilim.utils.core.FiCollection;
 import ozpasyazilim.utils.core.FiString;
 import ozpasyazilim.utils.datatypes.Fkb;
-import ozpasyazilim.utils.fxwindow.FiDialogMetaType;
 import ozpasyazilim.utils.fxwindow.FxSimpleDialog;
 import ozpasyazilim.utils.gui.fxTableViewExtra.EnumColNodeType;
 import ozpasyazilim.utils.log.Loghelper;
@@ -330,7 +329,7 @@ public class FxFormFkb extends FxMigPaneGenView {
       if (fiCol.getPrefSize() != null) {
         add(node, String.format("width %s,wrap", fiCol.getPrefSize().toString()));
       } else {
-        add(node, FxMigHp.bcc("growx,pushx,wrap").addCcCompMaxWidthSizeByColTypeForFxForm(fiCol).getCcInit());
+        add(node, FxMigHp.bcc("growx,pushx,wrap").addCcByColTypeForFxForm(fiCol).getCcInit());
       }
 
     } // tblCol for döngüsü sonu

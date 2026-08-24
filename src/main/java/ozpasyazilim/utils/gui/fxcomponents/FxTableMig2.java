@@ -29,6 +29,7 @@ public class FxTableMig2<EntClazz> extends MigPane {
 	 *
 	 */
 	private IFiModCont iFiModCont;
+	private FxMigPane migFooterMain;
 
 
 	public FxTableMig2() {
@@ -53,27 +54,33 @@ public class FxTableMig2<EntClazz> extends MigPane {
 		lblFooterVer = new FxLabel("V2");
 
 		btnExcel = new FxButton(Icons525.EXCEL,"Excel");
-		btnExcel.setPrefHeight(15d);
-		btnExcel.setMaxHeight(15d);
+		// btnExcel.setPrefHeight(15d);
+		// btnExcel.setMaxHeight(15d);
 		btnExcel.setOnAction(event -> actBtnExcel());
 
-		btnSettings = new FxButton(Icons525.CIRCLE,"Ayarlar");
-		btnSettings.setPrefHeight(15d);
-		btnSettings.setMaxHeight(15d);
-		btnSettings.setOnAction(event -> actBtnSettings());
+//		btnSettings = new FxButton(Icons525.CIRCLE,"Ayarlar");
+//		btnSettings.setPrefHeight(15d);
+//		btnSettings.setMaxHeight(15d);
+//		btnSettings.setOnAction(event -> actBtnSettings());
 
 		paneFooter.add(lblFooterVer);
 		paneFooter.add(btnExcel,"ay bottom");
-		paneFooter.add(btnSettings,"ay bottom");
+		//paneFooter.add(btnSettings,"ay bottom");
 		paneFooter.add(lblFooterRowCount);
 		paneFooter.add(lblFooterMsg);
 		paneFooter.add(lblFooterMessageSelection);
 
 		paneTablePagingHeader = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().lcgNoGrid().getLcg());
 
-		this.add(paneTablePagingHeader, "span");
+		migFooterMain = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().lcgNoGrid().getLcg());
+		migFooterMain.add(paneTablePagingHeader, "");
+		migFooterMain.add(paneFooter, FxMigHp.bui().ccGapBefore("20").genCc());
+
 		this.add(fxTableView, "span,grow,push");
-		this.add(paneFooter, "span");
+		this.add(migFooterMain, "span");
+
+//		this.add(paneTablePagingHeader, "span");
+//		this.add(paneFooter, "span");
 	}
 
 	private void actBtnSettings() {
@@ -174,4 +181,11 @@ public class FxTableMig2<EntClazz> extends MigPane {
 
 	public void setBtnSettings(FxButton btnSettings) {this.btnSettings = btnSettings;}
 
+	public FxMigPane getMigFooterMain() {
+		return migFooterMain;
+	}
+
+	public void setMigFooterMain(FxMigPane migFooterMain) {
+		this.migFooterMain = migFooterMain;
+	}
 }

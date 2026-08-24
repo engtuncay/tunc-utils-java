@@ -27,12 +27,12 @@ public class FxSimpleWindowView implements IFiModViewEnt, IFiModView {
 	@Override
 	public void initGui() {
 		// Root Container
-		this.migRoot = new FxMigPane(FxMigHp.bui().lcgInset3Gap33().getLcgPrep2());
+		this.migRoot = new FxMigPane(FxMigHp.bui().lcgInset3Gap33().getLcgPrepOnly());
 		//setRootMigPane(fxMigPane);
 
 		migToolbar = new FxMigPane(FxMigHp.bui().lcgInset3Gap33().lcgNoGrid().getLcg()); // lcStandard2WithInset3
 		migContent = new FxMigPane(FxMigHp.getLcgStd2Inset0Gap50());
-		migFooter = new FxMigPane(FxMigHp.bui().lcgInset0Gap00().getLcgPrep2());
+		migFooter = new FxMigPane(FxMigHp.bui().lcgInset0Gap00().getLcgPrepOnly());
 
 		// Container Setup
 		this.migRoot.add(migToolbar, "span,growx,pushx");

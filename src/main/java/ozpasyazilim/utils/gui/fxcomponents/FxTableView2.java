@@ -39,6 +39,7 @@ import ozpasyazilim.utils.table.FiCol;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -890,7 +891,11 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     }
 
-    if (checkColFilterableLocal(fxTableCol)) {
+    boolean boColFilterableLocal = checkColFilterableLocal(fxTableCol);
+
+    Loghelper.get(getClass()).debug("Col: " + fxTableCol.getRefFiColNtn().getFcTxFieldName() + " boColFilterableLocal:" + boColFilterableLocal);
+
+    if (boColFilterableLocal) {
       //Loghelperr.getInstance(getClass()).debug("Local Filter enabled");
 
       // Filter Node içindeki değer filterLocal fonk'a verilerek tabloda filtreleme yapılır.
@@ -1232,20 +1237,24 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
           //Loghelperr.getInstance(getClass()).debug(" field"+ fxTableCol.getFieldName());
           Object objFilterValue = FxEditorFactory.getNodeObjValueByFilterNode(refFiCol);
           // fxTableCol.getTxfFilter().getText();
-//                    Loghelper.get(getClass()).debug(String.format("Filter Lokal %s : %s (objFilterValue) ", fxTableColumn.getRefFiCol().getOfcTxFieldName(), objFilterValue));
+          Loghelper.get(getClass()).debug(String.format("Filter Lokal %s.objFilterValue = %s ", fxTableColumn.getRefFiColNtn().getFcTxFieldName(), objFilterValue));
 
-          // Tablonun içinde hücre değeri
-          Object objCellValue = null;
+          // Tablonun içinde hücre değeri (getProperty Fkb'de de çalışıyor)
+          Object objCellValue = FiReflection.getProperty(ent, refFiCol.getFcTxFieldName()); // null;
 
-          if (FiBool.isTrue(getBoFkbEnabled())) {
-            if (ent instanceof Fkb) {
-              //Loghelper.get(getClass()).debug("FiKeybean Row Instance");
-              Fkb fkbEnd = (Fkb) ent;
-              objCellValue = fkbEnd.getAsObj(refFiCol.getFcTxFieldName());
-            }
-          } else {
-            objCellValue = FiReflection.getProperty(ent, refFiCol.getFcTxFieldName());
-          }
+          Loghelper.get(getClass()).debug("Col objCellValue:"+ fxTableColumn.getRefFiColNtn().getFcTxFieldName() +"="+objCellValue);
+
+          Loghelper.get(getClass()).debug("Col Type:"+ fxTableColumn.getRefFiColNtn().getFcTxFieldName() +"="+objCellValue.getClass().getSimpleName());
+
+//          if (FiBool.isTrue(getBoFkbEnabled())) {
+//            if (ent instanceof Fkb) {
+//              //Loghelper.get(getClass()).debug("FiKeybean Row Instance");
+//              Fkb fkbEnd = (Fkb) ent;
+//              objCellValue = fkbEnd.getAsObj(refFiCol.getFcTxFieldName());
+//            }
+//          } else {
+//            objCellValue = FiReflection.getProperty(ent, refFiCol.getFcTxFieldName());
+//          }
 
 //                    if (objCellValue != null) {
 //                        Loghelper.get(getClass()).debug("Filter CellValue:" + objCellValue + objCellValue.getClass().getSimpleName());
@@ -1299,6 +1308,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
 
           if (objCellValue instanceof String) {
+            Loghelper.get(getClass()).debug("string filter check");
 
             Boolean filterStringCheck = filterCheckForString(objCellValue, objFilterValue);
             //Loghelper.get(getClass()).debug("Filter String Check Result:" + filterStringCheck);
@@ -1342,23 +1352,31 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
           }
 
+          // BigDecimal, Double çevrilir
+          if (objCellValue instanceof BigDecimal) {
+            BigDecimal bdCellValue = (BigDecimal) objCellValue;
+            objCellValue = bdCellValue.doubleValue();
+          }
 
           // Double değer kontrolü
           // Not : instanceof olduğu için objCellValue null gelmez
-          if (objCellValue instanceof Double) {
+          if (objCellValue instanceof Double
+          || objCellValue instanceof Float) {
+
+            //Loghelper.get(getClass()).debug("Double-Float filter check");
 
             // objCellValue dolu gelip, objFilterValue yoksa kontrol edilemez, sonuca dahil edilir
             if (objFilterValue == null) continue;
 
-            Double valueCol = (Double) objCellValue;
-            String txValueCol = FiNumber.formatNumberPlain(valueCol);
-            txValueCol = txValueCol.replace("-", "");
+            Double dbCellValue = (Double) objCellValue;
+            String txDbCellValue = FiNumber.formatNumberPlain(dbCellValue);
+            txDbCellValue = txDbCellValue.replace("-", "");
 
             if (!FiString.isEmptyTrim(refFiCol.getTxFilterType())) {
               //Loghelper.get(getClass()).debug("! filter ına girdi");
               //txFilterValue.charAt(0) == '>'
               if (refFiCol.getTxFilterType().equals(FimFicTxFilterType.greaterThan().getTxKey())) {
-                if (valueCol >= (Double) objFilterValue) {
+                if (dbCellValue >= (Double) objFilterValue) {
                   //return filterCheckResult;
                   continue;
                 } else {
@@ -1370,7 +1388,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
               }
 
 //                            if (txFilterValue.charAt(0) == '<') {
-//                                if (valueCol <= (Double) objFilterValue) {
+//                                if (dbCellValue <= (Double) objFilterValue) {
 //                                    //return filterCheckResult;
 //                                    continue;
 //                                } else {
@@ -1386,7 +1404,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
             if (txFilterValue.matches("^![0-9]*")) {
               //Loghelper.get(getClass()).debug("! filter ına girdi");
               if ((Double) objFilterValue == 0d) {
-                if (Math.abs(valueCol - (Double) objFilterValue) < 0.10) {
+                if (Math.abs(dbCellValue - (Double) objFilterValue) < 0.10) {
                   //return false;
                   predAllCols = predAllCols.and(entTmp -> false);
                   break;
@@ -1395,7 +1413,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
               }
 
               // değeri eşit olanlar dahil edilmeyecek
-              if (valueCol == objFilterValue) {
+              if (dbCellValue == objFilterValue) {
                 predAllCols = predAllCols.and(entTmp -> false);
                 break;
               }
@@ -1405,7 +1423,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
             if (txFilterValue.matches("^[><][1-9]?[0-9]*")) {
               //Loghelper.get(getClass()).debug("! filter ına girdi");
               if (txFilterValue.charAt(0) == '>') {
-                if (valueCol >= (Double) objFilterValue) {
+                if (dbCellValue >= (Double) objFilterValue) {
                   //return filterCheckResult;
                   continue;
                 } else {
@@ -1417,7 +1435,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
               }
 
               if (txFilterValue.charAt(0) == '<') {
-                if (valueCol <= (Double) objFilterValue) {
+                if (dbCellValue <= (Double) objFilterValue) {
                   //return filterCheckResult;
                   continue;
                 } else {
@@ -1444,8 +1462,8 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
             // W2 Expo Number To String
             String txFilter = FiNumber.formatStringExpoNumber(objFilterValue.toString());
 
-            //Loghelperr.getInstance(getClass()).debug(String.format("Double Obj Value : %s , Filter Value: %s",txValueCol,txFilter));
-            if (!txValueCol.toString().matches(txFilter + ".*")) {
+            //Loghelperr.getInstance(getClass()).debug(String.format("Double Obj Value : %s , Filter Value: %s",txDbCellValue,txFilter));
+            if (!txDbCellValue.toString().matches(txFilter + ".*")) {
               //filterCheckResult = false;
               predAllCols = predAllCols.and(entTmp -> false);
               //continue;
@@ -3187,7 +3205,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
   }
 
   public void setFiColsAsFkbAsyncByTvLnId(List<FiCol> colsTable, Integer tvLnId) {
-    if(tvLnId==null || getTvLnIdNtn()!= tvLnId){
+    if (tvLnId == null || getTvLnIdNtn() != tvLnId) {
       setFiColsAsFkbAsync(colsTable);
       setTvLnId(tvLnId);
     }

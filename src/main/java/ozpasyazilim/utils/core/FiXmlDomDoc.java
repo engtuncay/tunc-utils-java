@@ -20,6 +20,7 @@ public class FiXmlDomDoc {
 	String txXmlRaw;
 
 	public static FiXmlDomDoc buiWitRaw(String txXmlContent){
+		//txXmlContent = txXmlContent.replaceAll("&(?!amp;|lt;|gt;|quot;|apos;|#\\d+;|#x[0-9a-fA-F]+;)", "&amp;");
 		Document document = convertXmlContentToDoc(txXmlContent);
 		FiXmlDomDoc fiXmlDomDoc = new FiXmlDomDoc(document);
 		fiXmlDomDoc.setTxXmlRaw(txXmlContent);

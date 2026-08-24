@@ -94,7 +94,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
   /**
    * Çoklu işlemlerde error (boResult=false) sonuç olduğunu gösterir (or birleştirmeleri için)
    */
-  private Boolean fdBoErrorExist;
+  private Boolean fdBoFailExist;
 
   /**
    * listException olduğu için exception property çıkarılabilir
@@ -113,6 +113,17 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
    */
   private Integer lnStatus;
 
+  /**
+   * Fdr türünü gösterir (email warn gibi)
+   */
+  private String fdTxFdrType;
+
+  /**
+   * Bazı fdr sonuçları haricen tutmak için
+   * <p>
+   * (sonuca dahil edilmeyip, bilgi olarak)
+   */
+  private List<Fdr> fdListFdrExcept;
 
   // Advanced Configurations
 
@@ -562,6 +573,10 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
       getFdListExceptionInit().add(fdrSubWork.getFdException());
     }
 
+    if (fdrSubWork.getFdListFdrExcept() != null) {
+      getFdListFdrExceptInit().addAll(fdrSubWork.getFdListFdrExceptInit());
+    }
+
     // Tüm işlemlerde mesaj birleştirilir.
     if (!FiString.isEmptyTrim(fdrSubWork.getFdTxMessage())) appendMessageLnOnly(fdrSubWork.getFdTxMessage());
 
@@ -606,11 +621,13 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
   public void combineOr(Fdr fdrSubWork) {
 
     // false sonuç gelirse, boResult null ise false çevirir, yoksa değiştirmez
+    // Başarısız işlemin olduğunu belirtmek için - fdBoFailExist true yapılır
     if (FiBool.isFalse(fdrSubWork.getFdBoResult())) {
       appendLnFalseResult(1);
       if (getFdBoResult() == null) setFdBoResult(false);
-      setFdBoErrorExist(true);
+      setFdBoFailExist(true);
     }
+
 
     if (FiBool.isTrue(fdrSubWork.getFdBoResult())) {
       setFdBoResult(true);
@@ -624,6 +641,10 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
       getFdListExceptionInit().add(fdrSubWork.getFdException());
     }
 
+    if (fdrSubWork.getFdListFdrExcept() != null) {
+      getFdListFdrExceptInit().addAll(fdrSubWork.getFdListFdrExceptInit());
+    }
+
     appendRowsAffected(fdrSubWork.getRowsAffectedOrEmpty());
     // Tüm işlemlerde mesaj birleştirilir.
     appendMessageLn(fdrSubWork.getFdTxMessage());
@@ -635,6 +656,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     if (FiBool.isTrue(getBoMultiFdr())) {
       getFdrListInit().add(fdrSubWork);
     }
+
   }
 
   /**
@@ -1060,6 +1082,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
   }
 
   public Fdr addLogInfo(String txMessage) {
+
     if (getBoLockAddLogNtn()) {
       Loghelper.get(getClass()).debug("Error: Added Log to Blocked Fdr !!!!!!!!");
     }
@@ -1099,6 +1122,11 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
   public void addLogWarn(String txMessage) {
     if (getBoLockAddLogNtn()) Loghelper.get(getClass()).debug("Error: Added Log to Blocked Fdr !!!!!!!!");
     getFdLogListInit().add(new FieLog(txMessage, MetaLogType.WARN));
+  }
+
+  public void addLogWarnFe(String txMessage) {
+    if (getBoLockAddLogNtn()) Loghelper.get(getClass()).debug("Error: Added Log to Blocked Fdr !!!!!!!!");
+    getFdLogListInit().add(new FieLog(txMessage, MetaLogType.WARNFE));
   }
 
   public void addLogWarnBack(String txMessage) {
@@ -1249,18 +1277,18 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     if (getFdBoResult() == null) setFdBoResult(boResult);
   }
 
-  public Boolean getFdBoErrorExist() {
-    return fdBoErrorExist;
+  public Boolean getFdBoFailExist() {
+    return fdBoFailExist;
   }
 
-  public void setFdBoErrorExist(Boolean fdBoErrorExist) {
-    this.fdBoErrorExist = fdBoErrorExist;
+  public void setFdBoFailExist(Boolean fdBoFailExist) {
+    this.fdBoFailExist = fdBoFailExist;
   }
 
   public String convertBoResultToMessage() {
     if (getFdBoResult() == null) return "Sonuçsuz (!!!)";
     if (getFdBoResult()) {
-      if (FiBool.isTrue(getFdBoErrorExist())) {
+      if (FiBool.isTrue(getFdBoFailExist())) {
         return "Kısmı Başarılı";
       }
       return "Başarılı";
@@ -1270,7 +1298,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
   }
 
   public boolean getIsFalseExist() {
-    return FiBool.isTrue(getFdBoErrorExist());
+    return FiBool.isTrue(getFdBoFailExist());
   }
 
   public void addLogErrorException(List<Exception> listExceptionInit) {
@@ -1416,5 +1444,33 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
 
   public void setFdBoOrCombined(Boolean fdBoOrCombined) {
     this.fdBoOrCombined = fdBoOrCombined;
+  }
+
+
+  public void logAllLogs() {
+    Loghelper.get(getClass()).debug(getLogsAllTos());
+  }
+
+  public List<Fdr> getFdListFdrExcept() {
+    return fdListFdrExcept;
+  }
+
+  public List<Fdr> getFdListFdrExceptInit() {
+    if (fdListFdrExcept == null) {
+      fdListFdrExcept = new ArrayList<>();
+    }
+    return fdListFdrExcept;
+  }
+
+  public void setFdListFdrExcept(List<Fdr> fdListFdrExcept) {
+    this.fdListFdrExcept = fdListFdrExcept;
+  }
+
+  public String getFdTxFdrType() {
+    return fdTxFdrType;
+  }
+
+  public void setFdTxFdrType(String fdTxFdrType) {
+    this.fdTxFdrType = fdTxFdrType;
   }
 }

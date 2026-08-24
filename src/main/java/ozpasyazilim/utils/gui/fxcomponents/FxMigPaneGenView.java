@@ -41,7 +41,7 @@ public class FxMigPaneGenView<EntClazz> extends FxMigPane implements IFiModViewE
 	}
 
 	public FxMigPaneGenView(FxMigHp fxMigHp) {
-		super(fxMigHp.getLcgPrep2(), fxMigHp.getLayColConst(), fxMigHp.getLayRowConst());
+		super(fxMigHp.getLcgPrepOnly(), fxMigHp.getLayColConst(), fxMigHp.getLayRowConst());
 	}
 
 	public static FxMigPaneGenView buiStandard() {

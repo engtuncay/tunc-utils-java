@@ -30,10 +30,10 @@ public class FxSimpleTableWindowView<EntClazz> implements IFiModViewEnt, IFiModV
 	@Override
 	public void initGui() {
 		// Container Initial.
-		this.fxMigPane = new FxMigPane(FxMigHp.bui().lcgInset3Gap33().getLcgPrep2());
+		this.fxMigPane = new FxMigPane(FxMigHp.bui().lcgInset3Gap33().getLcgPrepOnly());
 //		setRootMigPane(fxMigPane);
 
-		fxMigHeader = new FxMigPane(FxMigHp.bui().lcgInset0Gap00().getLcgPrep2());
+		fxMigHeader = new FxMigPane(FxMigHp.bui().lcgInset0Gap00().getLcgPrepOnly());
 
 		// Comp Init
 		fxTableMig = new FxTableMig2<>();

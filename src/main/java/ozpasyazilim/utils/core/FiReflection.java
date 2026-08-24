@@ -3,6 +3,7 @@ package ozpasyazilim.utils.core;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.util.ReflectionUtils;
 import ozpasyazilim.utils.datatypes.Fkb;
+import ozpasyazilim.utils.datatypes.PersonEntityTest;
 import ozpasyazilim.utils.fidborm.FiReflectClass;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.mvc.IFiCol;
@@ -20,7 +21,7 @@ public class FiReflection {
 
 	public static void main(String[] args) {
 
-//		PersonEntityTest personEntityTest = new PersonEntityTest("Ali", "Kaya");
+		PersonEntityTest personEntityTest = new PersonEntityTest("Ali", "Kaya");
 //
 //		PersonEntityTest personEntityTest3 = new PersonEntityTest("Mehmet", "Kaya");
 //
@@ -702,5 +703,56 @@ public class FiReflection {
 		}
 
 	} // end-bindKeyBeanToEntity
+
+	public static <E> Fkb convertToFkb(E entity, Class<E> clazz, Boolean boAddOnlyNtnFields) {
+
+		Fkb fkb = new Fkb();
+
+		Field[] fields = clazz.getDeclaredFields();
+
+		for (Field field : fields) {
+			Object property = FiReflection.getProperty(entity, field.getName());
+
+			if (FiBool.isTrue(boAddOnlyNtnFields)) {
+				if (property != null) {
+					fkb.put(field.getName(), property);
+				}
+			} else {
+				fkb.put(field.getName(), property);
+			}
+		}
+
+		return fkb;
+	}
+
+	public static <E> E convertToEntity(Fkb fkb, Class<E> clazz, Boolean boAddOnlyNtnFields) {
+
+		E entity = null;
+
+		try {
+			entity = clazz.newInstance();
+		} catch (InstantiationException | IllegalAccessException e) {
+			Loghelper.get(FiReflection.class).error(FiException.exTosMain(e));
+		}
+
+		if(entity==null) return null;
+
+		E finalEntity = entity;
+
+		fkb.forEach((key, value) -> {
+			// Process each key-value pair in the Fkb
+			if (FiBool.isTrue(boAddOnlyNtnFields)) {
+				if (fkb.get(key) != null) {
+					FiReflection.setProperty(finalEntity, key, fkb.get(key));
+				}
+			} else {
+				FiReflection.setProperty(finalEntity, key, fkb.get(key));
+			}
+		});
+
+		return finalEntity;
+	}
+
+
 
 }

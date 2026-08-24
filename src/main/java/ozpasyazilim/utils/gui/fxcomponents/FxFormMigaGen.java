@@ -330,7 +330,7 @@ public class FxFormMigaGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
             if (fiCol.getPrefSize() != null) {
                 add(node, String.format("width %s,wrap", fiCol.getPrefSize().toString()));
             } else {
-                add(node, FxMigHp.bcc("growx,pushx,wrap").addCcCompMaxWidthSizeByColTypeForFxForm(fiCol).getCcInit());
+                add(node, FxMigHp.bcc("growx,pushx,wrap").addCcByColTypeForFxForm(fiCol).getCcInit());
             }
 
         } // tblCol for döngüsü sonu

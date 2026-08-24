@@ -114,7 +114,7 @@ public class FiRest {
           }
         }
         fdrMain.setFdTxVal(stbOutput.toString());
-        Fdr fdrParse = parseJsonToFiKeybean(stbOutput.toString());
+        Fdr fdrParse = parseJsonToFkb(stbOutput.toString());
         fdrMain.setFdFkbVal(fdrParse.getFdFkbVal());
       } else {
         // include response headers in the debug message to help diagnose 403/other errors
@@ -148,12 +148,13 @@ public class FiRest {
   }
 
   /**
-   * JSON stringini FiKeybean nesnesine çevirir.
+   * JSON stringini Fkb nesnesine çevirir.
    *
    * @param json JSON string
    * @return FiKeybean veya null (parse hatası varsa)
    */
-  public static Fdr parseJsonToFiKeybean(String json) {
+  public static Fdr parseJsonToFkb(String json) {
+
     Fdr fdrMain = new Fdr();
     if (json == null || json.trim().isEmpty()) {
       fdrMain.setFdBoResult(false);
@@ -169,8 +170,8 @@ public class FiRest {
       return fdrMain;
     } catch (Exception ex) {
       // Loghelper ile loglanabilir
-      Loghelper.get(getClassi()).error("FiKeybean parse error: " + ex.getMessage());
-      Loghelper.get(getClassi()).error(FiException.exToErrorLog(ex));
+      //Loghelper.get(getClassi()).error("Fkb parse error: " + ex.getMessage());
+      Loghelper.get(getClassi()).error("Fkb parse error \n" + FiException.exToErrorLog(ex));
       fdrMain.setFdBoResult(false);
       fdrMain.setFdFkbVal(new Fkb());
       return fdrMain;

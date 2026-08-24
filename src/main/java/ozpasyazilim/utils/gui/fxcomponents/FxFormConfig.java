@@ -14,7 +14,10 @@ public class FxFormConfig<EntClazz> {
   private FormType formType;
   private EntClazz formEntity; // 21-10-30 eklendi
   private Fkb fkbEntity; // 26-04-29
+
   private Function<FxFormMigGen,Fdr> fnFormSave;
+
+  private Function<FxFormMig,Fdr> fnFormSave2;
 
   /**
    * Form güncellemek amacıyla açıldığını belirtir
@@ -124,5 +127,13 @@ public class FxFormConfig<EntClazz> {
 
   public void setFkbEntity(Fkb fkbEntity) {
     this.fkbEntity = fkbEntity;
+  }
+
+  public Function<FxFormMig, Fdr> getFnFormSave2() {
+    return fnFormSave2;
+  }
+
+  public void setFnFormSave2(Function<FxFormMig, Fdr> fnFormSave2) {
+    this.fnFormSave2 = fnFormSave2;
   }
 }

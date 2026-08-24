@@ -1373,10 +1373,10 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 					// false yakalarsa return yapılacak , sonuca dahil edilmeyecek
 
 					//Loghelperr.getInstance(getClass()).debug(" field"+ fxTableCol.getFieldName());
-					Object objFilterValue = new FxEditorFactory().getNodeObjValueByFilterNode(fxTableColumn); // fxTableCol.getTxfFilter().getText();
+					Object objFilterValue = FxEditorFactory.getNodeObjValueByFilterNode(fxTableColumn); // fxTableCol.getTxfFilter().getText();
 
 					// Filter editor boşluk olunca onu integer çevirdiğinde null olarak dönüş yapar
-					String txFilterValue = new FxEditorFactory().getValueOfFilterNodeAsString(fxTableColumn);
+					String txFilterValue = FxEditorFactory.getValueOfFilterNodeAsString(fxTableColumn);
 
 					//Loghelperr.getInstance(getClass()).debug(String.format("Filter Lokal %s : %s ",fxTableColumn.getFieldName(),objFilterValue));
 
@@ -1494,7 +1494,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 						}
 
 						Double valueCol = (Double) objCellValue;
-						String txValueCol = new FiNumber().formatNumberPlain(valueCol);
+						String txValueCol = FiNumber.formatNumberPlain(valueCol);
 
 						// Filter Value
 
@@ -1507,7 +1507,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 						// Loghelperr.logSingle("filter1",getClass(),"value filter :"+ valueFilter2);
 						// W2 Expo Number To String
-						String txFilter = new FiNumber().formatStringExpoNumber(objFilterValue.toString());
+						String txFilter = FiNumber.formatStringExpoNumber(objFilterValue.toString());
 
 						//Loghelperr.getInstance(getClass()).debug(String.format("Double Obj Value : %s , Filter Value: %s",txValueCol,txFilter));
 						if (!txValueCol.toString().matches(".*" + txFilter + ".*")) {

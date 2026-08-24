@@ -20,7 +20,7 @@ public class FxTextFieldBtns extends FxMigPane implements IFiNode {
 	//Boolean boFirstLoaded;
 
 	public FxTextFieldBtns() {
-		super(FxMigHp.bui().lcgInset0Gap00().getLcgPrep2());
+		super(FxMigHp.bui().lcgInset0Gap00().getLcgPrepOnly());
 		btnSearch = new FxButton("*");
 		fxTextField = new FxTextField<>();
 		//getFxTextField();

@@ -1,7 +1,6 @@
 package ozpasyazilim.utils.gui.fxcomponents;
 
 import ozpasyazilim.utils.core.FiString;
-import ozpasyazilim.utils.metadata.fimCodegen.FimFtFieldType;
 import ozpasyazilim.utils.metadata.fimCodegen.FimFtFieldTypeSpec;
 import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.OzColType;
@@ -9,6 +8,8 @@ import ozpasyazilim.utils.table.OzColType;
 import javax.annotation.Nonnull;
 
 /**
+ * Fx MigLayout Helper - Parametreleri için yardımcı metodlar
+ * <p>
  * layout constraints - 3'e ayrılır (lcg,lcc,lrc), fakat tek lcg tanımlanması yeterli olur.
  * <p>
  * new MigPane(String lcg) or new MigPane(String lcg, String lcc, String lrc)
@@ -42,8 +43,15 @@ public class FxMigHp {
 
   public static Boolean debugMode = false;
 
-  // gap x y : x yatatya boşluk : y dikeyde boşluk
-  @Nonnull
+  //
+
+  /**
+   * yatay 5 boşluk bırakır node'lar arası
+   * <p>
+   * "gap x y" : x yatatya boşluk : y dikeyde boşluk
+   *
+   * @return
+   */
   public static String getLcgStd2Inset0Gap50() {
     return "insets 0,gap 5 0";
   }
@@ -161,16 +169,15 @@ public class FxMigHp {
     this.layConstGen += ",";
   }
 
+  /**
+   * cc boş değilse sonuna virgül ekler
+   */
   private void addCommaToCc() {
     if (FiString.isEmptyTrim(getCcInit())) return;
     this.cellConst += ",";
   }
 
-  public String getLcgPrep2() {
-//		if (layConstGen == null) {
-//			layConstGen = "";
-//		}
-//		return layConstGen;
+  public String getLcgPrepOnly() {
     return getLcg();
   }
 
@@ -272,30 +279,50 @@ public class FxMigHp {
     this.cellConst = cellConst;
   }
 
-  public FxMigHp addCcCompMaxWidthSizeByColTypeForFxForm(FiCol fiCol) {
+  public FxMigHp addCcByColTypeForFxForm(FiCol fiCol) {
 
     if (fiCol.getColType() == OzColType.Date || fiCol.getColEditorClass().equals(FxDatePicker.class.getName())
         || FimFtFieldTypeSpec.isDate(fiCol.getFcTxFieldType())
     ) {
-      appendCc("wmax 200");
+      ccWmax(150);
+      ccWmin(100);
     }
 
     if (fiCol.getColType() == OzColType.Double
         || FimFtFieldTypeSpec.isDouble(fiCol.getFcTxFieldType())
     ) {
-      appendCc("wmax 200");
+      ccWmax(200);
     }
 
     if (fiCol.getColType() == OzColType.Integer
         || FimFtFieldTypeSpec.isInteger(fiCol.getFcTxFieldType())) {
-      appendCc("wmax 200");
+      ccWmax(200);
     }
 
     return this;
   }
 
-  public FxMigHp ccWmin(String txWminValue) {
-    appendCc("wmin " + txWminValue);
+  /**
+   * Sets Min Width Value
+   *
+   * @param lnWminValue
+   * @return
+   */
+  public FxMigHp ccWmin(Integer lnWminValue) {
+    if (lnWminValue == null) return this;
+    appendCc("wmin " + lnWminValue);
+    return this;
+  }
+
+  /**
+   * Sets Max Width Value
+   *
+   * @param lnWidthMaxValue
+   * @return
+   */
+  public FxMigHp ccWmax(Integer lnWidthMaxValue) {
+    if (lnWidthMaxValue == null) return this;
+    appendCc("wmax " + lnWidthMaxValue);
     return this;
   }
 
