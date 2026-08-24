@@ -1237,14 +1237,13 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
           //Loghelperr.getInstance(getClass()).debug(" field"+ fxTableCol.getFieldName());
           Object objFilterValue = FxEditorFactory.getNodeObjValueByFilterNode(refFiCol);
           // fxTableCol.getTxfFilter().getText();
-          Loghelper.get(getClass()).debug(String.format("Filter Lokal %s.objFilterValue = %s ", fxTableColumn.getRefFiColNtn().getFcTxFieldName(), objFilterValue));
 
           // Tablonun içinde hücre değeri (getProperty Fkb'de de çalışıyor)
           Object objCellValue = FiReflection.getProperty(ent, refFiCol.getFcTxFieldName()); // null;
 
-          Loghelper.get(getClass()).debug("Col objCellValue:"+ fxTableColumn.getRefFiColNtn().getFcTxFieldName() +"="+objCellValue);
-
-          Loghelper.get(getClass()).debug("Col Type:"+ fxTableColumn.getRefFiColNtn().getFcTxFieldName() +"="+objCellValue.getClass().getSimpleName());
+          //Loghelper.get(getClass()).debug(String.format("Filter Lokal %s.objFilterValue = %s ", fxTableColumn.getRefFiColNtn().getFcTxFieldName(), objFilterValue));
+          //Loghelper.get(getClass()).debug("Col objCellValue:"+ fxTableColumn.getRefFiColNtn().getFcTxFieldName() +"="+objCellValue);
+          //Loghelper.get(getClass()).debug("Col Type:"+ fxTableColumn.getRefFiColNtn().getFcTxFieldName() +"="+objCellValue.getClass().getSimpleName());
 
 //          if (FiBool.isTrue(getBoFkbEnabled())) {
 //            if (ent instanceof Fkb) {

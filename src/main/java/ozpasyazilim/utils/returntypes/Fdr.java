@@ -1209,17 +1209,8 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
   public String getLogsAllTos() {
     StringBuilder sb = new StringBuilder();
 
-    //int index = 0;
-
-//    if (!FiString.isEmpty(getFdTxMessage())) {
-//      sb.append(getFdTxMessage());
-//      index++;
-//    }
-
     for (FieLog fieLog : getFdLogListInit()) {
-      //if (index > 0) sb.append("\n");
       sb.append(fieLog.getFieTxMessage()).append("\n");
-      //index++;
     }
     FiString.rtrimSb(sb, "\n");
 
