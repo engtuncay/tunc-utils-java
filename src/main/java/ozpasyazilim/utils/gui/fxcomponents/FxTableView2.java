@@ -901,8 +901,9 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
       // Filter Node içindeki değer filterLocal fonk'a verilerek tabloda filtreleme yapılır.
       Consumer<String> fnFilterLocal = this::execFilterLocal;
 
+      // MEDFIX bu ayarlara çekilebilir milisaniye ayarı (tek seferlik ayarlar okumalı)
       // Filter node değişimi tetikleme
-      FxEditorFactory.registerTextPropertyWithDurationForFilterNode(fxTableCol.getRefFiCol(), fnFilterLocal, 250);
+      FxEditorFactory.registerTextPropertyWithDurationForFilterNode(fxTableCol.getRefFiCol(), fnFilterLocal, 1000);
     }
 
     // 20-02-2020 çıkarıldı enter event zaten setupHeaderFilterNode 'da set ediliyor
@@ -1307,7 +1308,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
 
           if (objCellValue instanceof String) {
-            Loghelper.get(getClass()).debug("string filter check");
+            // Loghelper.get(getClass()).debug("string filter check");
 
             Boolean filterStringCheck = filterCheckForString(objCellValue, objFilterValue);
             //Loghelper.get(getClass()).debug("Filter String Check Result:" + filterStringCheck);

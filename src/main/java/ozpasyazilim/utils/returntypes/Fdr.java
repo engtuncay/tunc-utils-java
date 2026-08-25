@@ -388,7 +388,12 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
 
   public Integer getValueAsInteger() {
     if (value == null) return null;
-    return (Integer) value;
+
+    if(value instanceof Integer){
+      return (Integer) value;
+    }
+
+    return null;
   }
 
   public EntClazz getValueOr(EntClazz entClazz) {
