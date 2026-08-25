@@ -229,6 +229,12 @@ public class FiDate {
 		return formatter.format(date);
 	}
 
+	/**
+	 * Format : dd.MM.yyyy kk:mm:ss
+	 *
+	 * @param date
+	 * @return
+	 */
 	public static String toStringDateTimeSecDotFormat(Date date) {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy kk:mm:ss");
 		return formatter.format(date);
