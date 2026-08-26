@@ -4,12 +4,9 @@ import javafx.util.Pair;
 
 import mark.utils.collections.filter.Filter;
 import org.apache.commons.beanutils.PropertyUtils;
-import ozpasyazilim.utils.datatypes.FiObjectStats;
-import ozpasyazilim.utils.datatypes.FiKeyList;
-import ozpasyazilim.utils.datatypes.FiMeta;
+import ozpasyazilim.utils.datatypes.*;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.mvc.IFiCol;
-import ozpasyazilim.utils.datatypes.PersonEntityTest;
 import ozpasyazilim.utils.table.OzColType;
 
 import java.util.*;
@@ -1486,6 +1483,10 @@ public class FiCollection {
    */
   public static <E> List<E> sort(List<E> listData, Comparator<E> comparator) {
     return listData.stream().sorted(comparator).collect(Collectors.toList());
+  }
+
+  public static FkbList sortFkbList(FkbList listData, Comparator<Fkb> comparator) {
+    return new FkbList(listData.stream().sorted(comparator).collect(Collectors.toList()));
   }
 
   public static List orValue(List value, List orValue) {
