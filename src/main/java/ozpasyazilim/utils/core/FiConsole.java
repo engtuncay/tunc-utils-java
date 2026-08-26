@@ -801,6 +801,10 @@ public class FiConsole {
       // circular oluşmaması için
       if (entry.getValue() instanceof Fkb) {
         sbLog.append(entry.getKey()).append(" : (Fkb)[").append(entry.getKey()).append("]\n");
+      } else if (entry.getValue() instanceof FkbList) {
+        sbLog.append(entry.getKey()).append(" : (FkbList)[").append(entry.getKey()).append("]\n");
+      } else if (entry.getValue() instanceof List) {
+        sbLog.append(entry.getKey()).append(" : (List)[").append(entry.getKey()).append("]\n");
       } else {
         sbLog.append(entry.getKey()).append(" : ").append(entry.getValue()).append("\n");
       }

@@ -250,6 +250,12 @@ public class FiField implements IFiField{
 
 	public String getFcTxFieldType() {return fcTxFieldType;}
 
+	public String getFcTxFieldTypeNtn() {
+		if (fcTxFieldType == null) {
+			return "";
+		}
+		return fcTxFieldType;}
+
 	public void setFcTxFieldType(String fcTxFieldType) {this.fcTxFieldType = fcTxFieldType;}
 
 	public Boolean getBoOnlyFirstInsert() {return boOnlyFirstInsert;}
@@ -336,10 +342,14 @@ public class FiField implements IFiField{
 
 	public void setBoGuidField(Boolean boGuidField) {this.boGuidField = boGuidField;}
 
-	public FiIdGenerationType getIdGenerationType() {
+	public FiIdGenerationType getIdGenerationTypeNtn() {
 		if (idGenerationType == null) {
 			return FiIdGenerationType.undefined;
 		}
+		return idGenerationType;
+	}
+
+	public FiIdGenerationType getIdGenerationType() {
 		return idGenerationType;
 	}
 

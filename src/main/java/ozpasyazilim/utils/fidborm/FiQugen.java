@@ -3366,7 +3366,7 @@ public class FiQugen {
       // Field Alanın özellikleri eklenir
 
       if (FiBool.isTrue(field.getBoKeyIdField())) {
-        if (field.getIdGenerationType() == FiIdGenerationType.identity) {
+        if (field.getIdGenerationTypeNtn() == FiIdGenerationType.identity) {
           fieldAttributes += " IDENTITY(1,1)";
         }
         fieldAttributes += "  NOT NULL PRIMARY KEY ";

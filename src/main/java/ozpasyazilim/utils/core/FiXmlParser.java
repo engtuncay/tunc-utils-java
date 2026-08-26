@@ -338,6 +338,7 @@ public class FiXmlParser {
 
 				Match elementChild = xmlMatch.find(ficL1.getFcTxHeader());
 
+				// çocuk elementleri - parent objesine yazılsın mı
 				if (FiBool.isTrue(boWriteChildToParent)) {
 					parseMatchToEntityWithOneChildFkb(elementChild, ficL1.getListChildCol(), boWriteChildToParent, fkbEntity);
 				} else {
@@ -356,8 +357,9 @@ public class FiXmlParser {
 				continue;
 			}
 
-			//Loghelper.get(FiXmlParser.class).debug("HeaderName:"+ ficL1.getHeaderName());
+			//Loghelper.get(FiXmlParser.class).debug("HeaderName-XmlElement:"+ ficL1.getHeaderName());
 
+			//Varsayılan olarak, header değerinde, xml elementin değeri okunur
 			Match elementChild = xmlMatch.find(ficL1.getFcTxHeader());
 			String text = elementChild.text();
 			FiReflection.setter(ficL1, fkbEntity, text);

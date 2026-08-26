@@ -25,623 +25,643 @@ import static java.util.stream.Collectors.toList;
  */
 public class FiReflectClass {
 
-    /**
-     * Transient alanlar dahil degil.
-     * <br>
-     * Dahil olan Alanlar (short) <br>
-     * Standar alan dahil edilir sadece <br>
-     * id,fiId,fieldName,nullable,fiCandId1,fiSelect,fiFirstInsert
-     *
-     * @param clazz
-     * @return
-     */
-    public static List<FiField> getListFieldsShortWithId(Class clazz) {
+  /**
+   * Transient alanlar dahil degil.
+   * <br>
+   * Dahil olan Alanlar (short) <br>
+   * Standar alan dahil edilir sadece <br>
+   * id,fiId,fieldName,nullable,fiCandId1,fiSelect,fiFirstInsert
+   *
+   * @param clazz
+   * @return
+   */
+  public static List<FiField> getListFieldsShortWithId(Class clazz) {
 
-        // returns all members including private members but not inherited members.
-        Field[] fields = clazz.getDeclaredFields();
+    // returns all members including private members but not inherited members.
+    Field[] fields = clazz.getDeclaredFields();
 
-        //To know the public fields :
-        //Modifier.isPublic(field.getModifiers())
+    //To know the public fields :
+    //Modifier.isPublic(field.getModifiers())
 
-        List<FiField> listFields = new ArrayList<>();
+    List<FiField> listFields = new ArrayList<>();
 
-        for (Field field : fields) {
+    for (Field field : fields) {
 
-            if (field.isAnnotationPresent(Transient.class)) continue;
-            if (field.isAnnotationPresent(FiTransient.class)) continue;
+      if (field.isAnnotationPresent(Transient.class)) continue;
+      if (field.isAnnotationPresent(FiTransient.class)) continue;
 
-            // Static alanlar alınmaz
-            if (Modifier.isStatic(field.getModifiers())) continue;
+      // Static alanlar alınmaz
+      if (Modifier.isStatic(field.getModifiers())) continue;
 
-            FiField fiField = new FiField();
-            listFields.add(setupFiFieldAll(field, fiField));
-        }
-
-        return listFields;
+      FiField fiField = new FiField();
+      listFields.add(setupFiFieldAll(field, fiField));
     }
 
-    /**
-     * Transient Dahil Edilmedi
-     *
-     * @param clazz
-     * @return
-     */
-    public static Map<String, FiField> getMapFieldsShort(Class clazz) {
-        return getMapFieldsShortMain(clazz, null);
-    }
+    return listFields;
+  }
 
-    /**
-     * Extra anno lar dahil edildi. Comment gibi
-     *
-     * @param clazz
-     * @return
-     */
-    public static Map<String, FiField> getMapFieldsExtra(Class clazz) {
-        return getMapFieldsShortMain(clazz, true);
-    }
+  /**
+   * Transient Dahil Edilmedi
+   *
+   * @param clazz
+   * @return
+   */
+  public static Map<String, FiField> getMapFieldsShort(Class clazz) {
+    return getMapFieldsShortMain(clazz, null);
+  }
 
-    /**
-     * Transient Dahil Edilmedi
-     *
-     * @param clazz
-     * @param includeExtra
-     * @return
-     */
-    public static Map<String, FiField> getMapFieldsShortMain(Class clazz, Boolean includeExtra) {
+  /**
+   * Extra anno lar dahil edildi. Comment gibi
+   *
+   * @param clazz
+   * @return
+   */
+  public static Map<String, FiField> getMapFieldsExtra(Class clazz) {
+    return getMapFieldsShortMain(clazz, true);
+  }
 
-        // returns all members including private members but not inherited members.
-        Field[] fields = clazz.getDeclaredFields();
+  /**
+   * Transient Dahil Edilmedi
+   *
+   * @param clazz
+   * @param includeExtra
+   * @return
+   */
+  public static Map<String, FiField> getMapFieldsShortMain(Class clazz, Boolean includeExtra) {
 
-        Map<String, FiField> mapFiFields = new HashMap<>();
+    // returns all members including private members but not inherited members.
+    Field[] fields = clazz.getDeclaredFields();
 
-        for (Field field : fields) {
+    Map<String, FiField> mapFiFields = new HashMap<>();
 
-            if (field.isAnnotationPresent(Transient.class)) continue;
-            if (field.isAnnotationPresent(FiTransient.class)) continue;
-            // Static alanlar alınmaz
-            if (Modifier.isStatic(field.getModifiers())) continue;
+    for (Field field : fields) {
 
-            FiField fiField = new FiField();
-            setupFiFieldAll(field, fiField);
+      if (field.isAnnotationPresent(Transient.class)) continue;
+      if (field.isAnnotationPresent(FiTransient.class)) continue;
+      // Static alanlar alınmaz
+      if (Modifier.isStatic(field.getModifiers())) continue;
 
-            if (FiBool.isTrue(includeExtra)) {
-                assignFiFieldExtraRelatedDb(field, fiField);
-            }
+      FiField fiField = new FiField();
+      setupFiFieldAll(field, fiField);
 
-            mapFiFields.put(fiField.getFcTxFieldName(), fiField);
+      if (FiBool.isTrue(includeExtra)) {
+        assignFiFieldExtraRelatedDb(field, fiField);
+      }
 
-        }
-
-        return mapFiFields;
+      mapFiFields.put(fiField.getFcTxFieldName(), fiField);
 
     }
 
-    public static List<FiField> getListFieldsShortWithNotID(Class clazz) {
+    return mapFiFields;
 
-        Field[] fields = clazz.getDeclaredFields();
+  }
 
-        List<FiField> listFields = new ArrayList<>();
+  public static List<FiField> getListFieldsShortWithNotID(Class clazz) {
 
-        for (Field field : fields) {
+    Field[] fields = clazz.getDeclaredFields();
 
-            if (field.isAnnotationPresent(Transient.class)) continue;
-            if (field.isAnnotationPresent(FiTransient.class)) continue;
-            if (field.isAnnotationPresent(Id.class)) continue;
-            if (field.isAnnotationPresent(FiId.class)) continue;
-            // Static alanlar alınmaz
-            if (Modifier.isStatic(field.getModifiers())) continue;
+    List<FiField> listFields = new ArrayList<>();
 
-            FiField fiField = new FiField();
-            listFields.add(setupFiFieldAll(field, fiField));
+    for (Field field : fields) {
 
-        }
+      if (field.isAnnotationPresent(Transient.class)) continue;
+      if (field.isAnnotationPresent(FiTransient.class)) continue;
+      if (field.isAnnotationPresent(Id.class)) continue;
+      if (field.isAnnotationPresent(FiId.class)) continue;
+      // Static alanlar alınmaz
+      if (Modifier.isStatic(field.getModifiers())) continue;
 
-        return listFields;
-
-    }
-
-    /**
-     * Not Include Transient Fields
-     *
-     * @param clazz
-     * @return
-     */
-    public static List<FiField> getListFieldsWoutStatic(Class clazz) {
-        return getListFieldsMain(clazz, null, null);
-    }
-
-    public static List<FiField> getListFieldsCandId(Class clazz) {
-        List<FiField> listFiFieldsSummary = getListFieldsMain(clazz, false, null);
-
-        List<FiField> fiFieldList = new ArrayList<>();
-
-        for (FiField fiField : listFiFieldsSummary) {
-            if (FiBool.isTrue(fiField.getBoCandidateId1())) {
-                fiFieldList.add(fiField);
-            }
-        }
-
-        return fiFieldList;
-    }
-
-    public static List<FiField> getListFieldsId(Class clazz) {
-        List<FiField> listFiFieldsSummary = getListFieldsMain(clazz, false, null);
-
-        List<FiField> fiFieldList = new ArrayList<>();
-
-        for (FiField fiField : listFiFieldsSummary) {
-            if (FiBool.isTrue(fiField.getBoKeyIdField())) {
-                fiFieldList.add(fiField);
-            }
-        }
-
-        return fiFieldList;
-    }
-
-    public static List<FiField> getListFieldsDateSeperatorField(Class clazz) {
-        List<FiField> listFiFieldsSummary = getListFieldsMain(clazz, false, null);
-
-        List<FiField> fiFieldList = new ArrayList<>();
-
-        for (FiField fiField : listFiFieldsSummary) {
-            if (FiBool.isTrue(fiField.getBoDateSeperatorField())) {
-                fiFieldList.add(fiField);
-            }
-        }
-
-        return fiFieldList;
-    }
-
-    /**
-     * @param clazz
-     * @param boIncTransient boIncludeTransient Fields
-     * @return
-     */
-    public static List<FiField> getListFieldsWoutStatic(Class clazz, Boolean boIncTransient) {
-        return getListFieldsMain(clazz, boIncTransient, null);
-    }
-
-    public static List<FiField> getListFieldsCandId2(Class clazz) {
-
-        List<FiField> listFiFieldsSummary = getListFieldsWoutStatic(clazz, false);
-        List<FiField> fiFieldList = new ArrayList<>();
-
-        for (FiField fiField : listFiFieldsSummary) {
-            if (FiBool.isTrue(fiField.getBoCandidateId2())) {
-                fiFieldList.add(fiField);
-            }
-        }
-
-        return fiFieldList;
-    }
-
-
-    /**
-     * Normal şartlarda transient alanlar eklenmez, özel olarak belirtmek lazım
-     * <p>
-     * WoutStatic
-     *
-     * @param clazz
-     * @return
-     */
-    public static List<FiField> getListFieldsMain(Class clazz, Boolean boIncTransients, Boolean boIncludeExtra) {
-
-        Field[] fields = clazz.getDeclaredFields();
-        List<FiField> listFields = new ArrayList<>();
-
-        for (Field field : fields) {
-
-            // transient dahil edilmemişse atlasın
-            if (!FiBool.isTrue(boIncTransients)) {
-                if (field.isAnnotationPresent(Transient.class)) continue;
-                if (field.isAnnotationPresent(FiTransient.class)) continue;
-            }
-
-            // Static alanlar alınmaz
-            if (Modifier.isStatic(field.getModifiers())) continue;
-
-            FiField fiField = new FiField();
-            setupFiFieldAll(field, fiField);
-
-            if (FiBool.isTrue(boIncludeExtra)) {
-                assignFiFieldExtraRelatedDb(field, fiField);
-            }
-
-            listFields.add(fiField);
-        }
-
-        return listFields;
-    }
-
-    public static List<FiCol> getListFieldsMainAsFiCol(Class clazz, Boolean boIncTransients, Boolean boIncludeExtra) {
-
-        Field[] fields = clazz.getDeclaredFields();
-        List<FiCol> listFields = new ArrayList<>();
-
-        for (Field field : fields) {
-
-            // transient dahil edilmemişse atlasın
-            if (!FiBool.isTrue(boIncTransients)) {
-                if (field.isAnnotationPresent(Transient.class)) continue;
-                if (field.isAnnotationPresent(FiTransient.class)) continue;
-            }
-
-            // Static alanlar alınmaz
-            if (Modifier.isStatic(field.getModifiers())) continue;
-
-            FiCol fiField = new FiCol();
-            setupFiColAll(field, fiField);
-
-            if (FiBool.isTrue(boIncludeExtra)) {
-                assignFiFieldExtraRelatedDb(field, fiField);
-            }
-
-            listFields.add(fiField);
-        }
-
-        return listFields;
-    }
-
-    public static List<FiField> getListFieldsWithFiColManualWoutStaticMain(Class clazz, Boolean includeTransient, Boolean includeExtra) {
-
-        Field[] fields = clazz.getDeclaredFields();
-        List<FiField> listFields = new ArrayList<>();
-
-        for (Field field : fields) {
-
-            // transient dahil edilmemişse atlasın
-            if (!field.isAnnotationPresent(FiColManual.class) && !FiBool.isTrue(includeTransient)) {
-                if (field.isAnnotationPresent(Transient.class)) continue;
-                if (field.isAnnotationPresent(FiTransient.class)) continue;
-            }
-
-            // Static alanlar alınmaz
-            if (Modifier.isStatic(field.getModifiers())) continue;
-
-            FiField fiField = new FiField();
-            setupFiFieldAll(field, fiField);
-
-            if (FiBool.isTrue(includeExtra)) {
-                assignFiFieldExtraRelatedDb(field, fiField);
-            }
-
-            listFields.add(fiField);
-        }
-
-        return listFields;
-    }
-
-
-    public static List<FiField> getListFieldsNotNullable(Class clazz, Boolean includeTransient) {
-
-        List<FiField> listFields = getListFieldsWoutStatic(clazz, includeTransient);
-
-        return listFields.stream().filter(fiField -> {
-            if (FiBool.isFalse(fiField.getFcBoNullable())) return true;
-            return false;
-        }).collect(toList());
+      FiField fiField = new FiField();
+      listFields.add(setupFiFieldAll(field, fiField));
 
     }
 
-    public static List<FiField> getListFieldsAll(Class clazz) {
+    return listFields;
 
-        Field[] fields = clazz.getDeclaredFields(); // returns all members including private members but not inherited members.
+  }
 
-        List<FiField> listFields = new ArrayList<>();
+  /**
+   * Not Include Transient Fields
+   *
+   * @param clazz
+   * @return
+   */
+  public static List<FiField> getListFieldsWoutStatic(Class clazz) {
+    return getListFieldsMain(clazz, null, null);
+  }
 
-        for (Field field : fields) {
+  public static List<FiField> getListFieldsCandId(Class clazz) {
+    List<FiField> listFiFieldsSummary = getListFieldsMain(clazz, false, null);
 
-            if (field.isAnnotationPresent(Transient.class) || field.isAnnotationPresent(FiTransient.class)) continue;
+    List<FiField> fiFieldList = new ArrayList<>();
 
-            FiField fiField = new FiField();
-            listFields.add(setupFiFieldAll(field, fiField));
-        }
+    for (FiField fiField : listFiFieldsSummary) {
+      if (FiBool.isTrue(fiField.getBoCandidateId1())) {
+        fiFieldList.add(fiField);
+      }
+    }
 
-        return listFields;
+    return fiFieldList;
+  }
+
+  public static List<FiField> getListFieldsId(Class clazz) {
+    List<FiField> listFiFieldsSummary = getListFieldsMain(clazz, false, null);
+
+    List<FiField> fiFieldList = new ArrayList<>();
+
+    for (FiField fiField : listFiFieldsSummary) {
+      if (FiBool.isTrue(fiField.getBoKeyIdField())) {
+        fiFieldList.add(fiField);
+      }
+    }
+
+    return fiFieldList;
+  }
+
+  public static List<FiField> getListFieldsDateSeperatorField(Class clazz) {
+    List<FiField> listFiFieldsSummary = getListFieldsMain(clazz, false, null);
+
+    List<FiField> fiFieldList = new ArrayList<>();
+
+    for (FiField fiField : listFiFieldsSummary) {
+      if (FiBool.isTrue(fiField.getBoDateSeperatorField())) {
+        fiFieldList.add(fiField);
+      }
+    }
+
+    return fiFieldList;
+  }
+
+  /**
+   * @param clazz
+   * @param boIncTransient boIncludeTransient Fields
+   * @return
+   */
+  public static List<FiField> getListFieldsWoutStatic(Class clazz, Boolean boIncTransient) {
+    return getListFieldsMain(clazz, boIncTransient, null);
+  }
+
+  public static List<FiField> getListFieldsCandId2(Class clazz) {
+
+    List<FiField> listFiFieldsSummary = getListFieldsWoutStatic(clazz, false);
+    List<FiField> fiFieldList = new ArrayList<>();
+
+    for (FiField fiField : listFiFieldsSummary) {
+      if (FiBool.isTrue(fiField.getBoCandidateId2())) {
+        fiFieldList.add(fiField);
+      }
+    }
+
+    return fiFieldList;
+  }
+
+
+  /**
+   * Normal şartlarda transient alanlar eklenmez, özel olarak belirtmek lazım
+   * <p>
+   * WoutStatic
+   *
+   * @param clazz
+   * @return
+   */
+  public static List<FiField> getListFieldsMain(Class clazz, Boolean boIncTransients, Boolean boIncludeExtra) {
+
+    Field[] fields = clazz.getDeclaredFields();
+    List<FiField> listFields = new ArrayList<>();
+
+    for (Field field : fields) {
+
+      // transient dahil edilmemişse atlasın
+      if (!FiBool.isTrue(boIncTransients)) {
+        if (field.isAnnotationPresent(Transient.class)) continue;
+        if (field.isAnnotationPresent(FiTransient.class)) continue;
+      }
+
+      // Static alanlar alınmaz
+      if (Modifier.isStatic(field.getModifiers())) continue;
+
+      FiField fiField = new FiField();
+      setupFiFieldAll(field, fiField);
+
+      if (FiBool.isTrue(boIncludeExtra)) {
+        assignFiFieldExtraRelatedDb(field, fiField);
+      }
+
+      listFields.add(fiField);
+    }
+
+    return listFields;
+  }
+
+  public static List<FiCol> getListFieldsMainAsFiCol(Class clazz, Boolean boIncTransients, Boolean boIncludeExtra) {
+
+    Field[] fields = clazz.getDeclaredFields();
+    List<FiCol> listFields = new ArrayList<>();
+
+    for (Field field : fields) {
+
+      // transient dahil edilmemişse atlasın
+      if (!FiBool.isTrue(boIncTransients)) {
+        if (field.isAnnotationPresent(Transient.class)) continue;
+        if (field.isAnnotationPresent(FiTransient.class)) continue;
+      }
+
+      // Static alanlar alınmaz
+      if (Modifier.isStatic(field.getModifiers())) continue;
+
+      FiCol fiField = new FiCol();
+      setupFiColAll(field, fiField);
+
+      if (FiBool.isTrue(boIncludeExtra)) {
+        assignFiFieldExtraRelatedDb(field, fiField);
+      }
+
+      listFields.add(fiField);
+    }
+
+    return listFields;
+  }
+
+  public static List<FiField> getListFieldsWithFiColManualWoutStaticMain(Class clazz, Boolean includeTransient, Boolean includeExtra) {
+
+    Field[] fields = clazz.getDeclaredFields();
+    List<FiField> listFields = new ArrayList<>();
+
+    for (Field field : fields) {
+
+      // transient dahil edilmemişse atlasın
+      if (!field.isAnnotationPresent(FiColManual.class) && !FiBool.isTrue(includeTransient)) {
+        if (field.isAnnotationPresent(Transient.class)) continue;
+        if (field.isAnnotationPresent(FiTransient.class)) continue;
+      }
+
+      // Static alanlar alınmaz
+      if (Modifier.isStatic(field.getModifiers())) continue;
+
+      FiField fiField = new FiField();
+      setupFiFieldAll(field, fiField);
+
+      if (FiBool.isTrue(includeExtra)) {
+        assignFiFieldExtraRelatedDb(field, fiField);
+      }
+
+      listFields.add(fiField);
+    }
+
+    return listFields;
+  }
+
+
+  public static List<FiField> getListFieldsNotNullable(Class clazz, Boolean includeTransient) {
+
+    List<FiField> listFields = getListFieldsWoutStatic(clazz, includeTransient);
+
+    return listFields.stream().filter(fiField -> {
+      if (FiBool.isFalse(fiField.getFcBoNullable())) return true;
+      return false;
+    }).collect(toList());
+
+  }
+
+  public static List<FiField> getListFieldsAll(Class clazz) {
+
+    Field[] fields = clazz.getDeclaredFields(); // returns all members including private members but not inherited members.
+
+    List<FiField> listFields = new ArrayList<>();
+
+    for (Field field : fields) {
+
+      if (field.isAnnotationPresent(Transient.class) || field.isAnnotationPresent(FiTransient.class)) continue;
+
+      FiField fiField = new FiField();
+      listFields.add(setupFiFieldAll(field, fiField));
+    }
+
+    return listFields;
+
+  }
+
+  public static List<FiField> getListFieldsAllWitTrans(Class clazz) {
+
+    Field[] fields = clazz.getDeclaredFields(); // returns all members including private members but not inherited members.
+
+    List<FiField> listFields = new ArrayList<>();
+
+    for (Field field : fields) {
+      FiField fiField = new FiField();
+      listFields.add(setupFiFieldAll(field, fiField));
+
+      if (field.isAnnotationPresent(Transient.class) || field.isAnnotationPresent(FiTransient.class)) {
+        fiField.setFcBoTransient(true);
+      }
 
     }
 
-    /**
-     * fieldName, dbFieldName, ClassNameSimple alanlarını doldurur.
-     *
-     * @param field
-     * @param fiField
-     */
-    public static void assignFiFieldBasic(Field field, FiField fiField) {
+    return listFields;
 
-        fiField.setFcTxFieldName(field.getName());
-        if (fiField.getFcTxDbField() == null) fiField.setFcTxDbField(field.getName());
-        fiField.setClassNameSimple(field.getType().getSimpleName());
+  }
 
-        if (field.isAnnotationPresent(FiColumn.class)) {
-            FiColumn annoFiColumn = field.getAnnotation(FiColumn.class);
-            if (!FiString.isEmptyTrim(annoFiColumn.name())) {
-                fiField.setFcTxDbField(annoFiColumn.name());
-            }
+  /**
+   * fieldName, dbFieldName, ClassNameSimple alanlarını doldurur.
+   *
+   * @param field
+   * @param fiField
+   */
+  public static void assignFiFieldBasic(Field field, FiField fiField) {
 
-            if (FiBool.isTrue(annoFiColumn.boFilterLike())) {
-                fiField.setFcBoFilterLike(true);
-            }
-        }
+    fiField.setFcTxFieldName(field.getName());
+    if (fiField.getFcTxDbField() == null) fiField.setFcTxDbField(field.getName());
+    fiField.setClassNameSimple(field.getType().getSimpleName());
 
+    if (field.isAnnotationPresent(FiColumn.class)) {
+      FiColumn annoFiColumn = field.getAnnotation(FiColumn.class);
+      if (!FiString.isEmptyTrim(annoFiColumn.name())) {
+        fiField.setFcTxDbField(annoFiColumn.name());
+      }
+
+      if (FiBool.isTrue(annoFiColumn.boFilterLike())) {
+        fiField.setFcBoFilterLike(true);
+      }
+    }
+
+
+  }
+
+  public static void assignFiFieldBasicForFiCol(Field field, FiCol fiCol) {
+
+    fiCol.setFcTxFieldName(field.getName());
+    if (fiCol.getFcTxDbField() == null) fiCol.setFcTxDbField(field.getName());
+    fiCol.setTxClassNameSimple(field.getType().getSimpleName());
+
+    if (field.isAnnotationPresent(FiColumn.class)) {
+      FiColumn annoFiColumn = field.getAnnotation(FiColumn.class);
+      if (!FiString.isEmptyTrim(annoFiColumn.name())) {
+        fiCol.setFcTxDbField(annoFiColumn.name());
+      }
+
+      if (FiBool.isTrue(annoFiColumn.boFilterLike())) {
+        fiCol.setFcBoFilterLike(true);
+      }
+    }
+
+
+  }
+
+  public static void assignFiFieldExtraRelatedDb(Field field, FiField fiField) {
+    if (field.isAnnotationPresent(FiComment.class)) {
+      FiComment column = field.getAnnotation(FiComment.class);
+      if (!FiString.isEmpty(column.txComment())) {
+        fiField.setTxComment(column.txComment());
+      }
+    }
+
+
+  }
+
+  public static void assignFiFieldExtraRelatedDb(Field field, FiCol fiField) {
+    if (field.isAnnotationPresent(FiComment.class)) {
+      FiComment column = field.getAnnotation(FiComment.class);
+      if (!FiString.isEmpty(column.txComment())) {
+        fiField.setColComment(column.txComment());
+      }
+    }
+
+
+  }
+
+  public static void assignFiFieldDatabase(Field field, FiField fiField) {
+
+    if (field.isAnnotationPresent(Column.class)) {
+      Column annoColumn = field.getAnnotation(Column.class);
+      fiField.setFcLnPrecision(annoColumn.precision());
+      fiField.setFcLnScale(annoColumn.scale());
+      fiField.setFcLnLength(annoColumn.length());
+      fiField.setFcBoUnique(annoColumn.unique());
+      fiField.setFcBoNullable(annoColumn.nullable()); // def:true (in interface)
+      fiField.setColCustomType(annoColumn.columnDefinition());
+
+      if (!FiString.isEmptyTrim(annoColumn.name())) {
+        fiField.setFcTxDbField(annoColumn.name());
+      } else {
+        fiField.setFcTxDbField(field.getName());
+      }
 
     }
 
-    public static void assignFiFieldBasicForFiCol(Field field, FiCol fiCol) {
+    if (field.isAnnotationPresent(FiColumn.class)) {
 
-        fiCol.setFcTxFieldName(field.getName());
-        if (fiCol.getFcTxDbField() == null) fiCol.setFcTxDbField(field.getName());
-        fiCol.setTxClassNameSimple(field.getType().getSimpleName());
+      FiColumn annoFiColumn = field.getAnnotation(FiColumn.class);
 
-        if (field.isAnnotationPresent(FiColumn.class)) {
-            FiColumn annoFiColumn = field.getAnnotation(FiColumn.class);
-            if (!FiString.isEmptyTrim(annoFiColumn.name())) {
-                fiCol.setFcTxDbField(annoFiColumn.name());
-            }
+      fiField.setFcLnPrecision(annoFiColumn.precision());
+      fiField.setFcLnScale(annoFiColumn.scale());
+      fiField.setFcLnLength(annoFiColumn.length());
+      fiField.setFcBoUnique(annoFiColumn.isUnique());
+      fiField.setFcBoNullable(annoFiColumn.isNullable());
+      //if (FiBoolean.isFalse(annoFiColumn.isNullable())) fiField.setNullable(false);
+      fiField.setColCustomType(annoFiColumn.colCustomTypeDefinition());
+      fiField.setFcTxDefValue(annoFiColumn.defaultValue());
+      fiField.setColDefinitionExtra(annoFiColumn.colDefinitionExtra());
+      fiField.setFcBoUtfSupport(annoFiColumn.isUnicodeSupport());
+      fiField.setBoExcludeFromAutoColList(annoFiColumn.boExcludeFromAutoColList());
 
-            if (FiBool.isTrue(annoFiColumn.boFilterLike())) {
-                fiCol.setFcBoFilterLike(true);
-            }
-        }
+      if (!FiString.isEmpty(annoFiColumn.label())) fiField.setFcTxHeader(annoFiColumn.label());
+      if (annoFiColumn.collation() != FiCollation.Default) fiField.setFiCollation(annoFiColumn.collation());
+      if (!FiString.isEmpty(annoFiColumn.typeName())) fiField.setFcTxTypeName(annoFiColumn.typeName());
+      if (annoFiColumn.defaultUpdateField()) fiField.setBoDefaultUpdateField(true);
 
-
-    }
-
-    public static void assignFiFieldExtraRelatedDb(Field field, FiField fiField) {
-        if (field.isAnnotationPresent(FiComment.class)) {
-            FiComment column = field.getAnnotation(FiComment.class);
-            if (!FiString.isEmpty(column.txComment())) {
-                fiField.setTxComment(column.txComment());
-            }
-        }
-
+      if (!FiString.isEmptyTrim(annoFiColumn.name())) {
+        fiField.setFcTxDbField(annoFiColumn.name());
+      } else {
+        fiField.setFcTxDbField(field.getName());
+      }
 
     }
 
-    public static void assignFiFieldExtraRelatedDb(Field field, FiCol fiField) {
-        if (field.isAnnotationPresent(FiComment.class)) {
-            FiComment column = field.getAnnotation(FiComment.class);
-            if (!FiString.isEmpty(column.txComment())) {
-                fiField.setColComment(column.txComment());
-            }
-        }
-
-
+    if (field.isAnnotationPresent(FiNotNull.class)) {
+      fiField.setFcBoNullable(false);
     }
 
-    public static void assignFiFieldDatabase(Field field, FiField fiField) {
+    if (field.isAnnotationPresent(FiWhere1.class)) {
+      fiField.setBoWhere1(true);
+    }
 
-        if (field.isAnnotationPresent(Column.class)) {
-            Column annoColumn = field.getAnnotation(Column.class);
-            fiField.setFcLnPrecision(annoColumn.precision());
-            fiField.setFcLnScale(annoColumn.scale());
-            fiField.setFcLnLength(annoColumn.length());
-            fiField.setFcBoUnique(annoColumn.unique());
-            fiField.setFcBoNullable(annoColumn.nullable()); // def:true (in interface)
-            fiField.setColCustomType(annoColumn.columnDefinition());
+    if (field.isAnnotationPresent(Temporal.class)) {
+      fiField.setTemporalType(field.getAnnotation(Temporal.class).value());
+    }
 
-            if (!FiString.isEmptyTrim(annoColumn.name())) {
-                fiField.setFcTxDbField(annoColumn.name());
-            } else {
-                fiField.setFcTxDbField(field.getName());
-            }
+    if (field.isAnnotationPresent(ColDefinitionExtra.class)) {
+      fiField.setColDefinitionExtra(field.getAnnotation(ColDefinitionExtra.class).value());
+    }
 
-        }
+    // other related db
 
-        if (field.isAnnotationPresent(FiColumn.class)) {
+    if (field.isAnnotationPresent(Transient.class) || field.isAnnotationPresent(FiTransient.class)) {
+      fiField.setFcBoTransient(true);
+    }
 
-            FiColumn annoFiColumn = field.getAnnotation(FiColumn.class);
+    // Id alanlar için ortak tanımlamalar
+    if (field.isAnnotationPresent(Id.class) || field.isAnnotationPresent(FiId.class)) {
+      fiField.setBoKeyIdField(true);
+      fiField.setBoDtoField(true);
+    }
 
-            fiField.setFcLnPrecision(annoFiColumn.precision());
-            fiField.setFcLnScale(annoFiColumn.scale());
-            fiField.setFcLnLength(annoFiColumn.length());
-            fiField.setFcBoUnique(annoFiColumn.isUnique());
-            fiField.setFcBoNullable(annoFiColumn.isNullable());
-            //if (FiBoolean.isFalse(annoFiColumn.isNullable())) fiField.setNullable(false);
-            fiField.setColCustomType(annoFiColumn.colCustomTypeDefinition());
-            fiField.setFcTxDefValue(annoFiColumn.defaultValue());
-            fiField.setColDefinitionExtra(annoFiColumn.colDefinitionExtra());
-            fiField.setFcBoUtfSupport(annoFiColumn.isUnicodeSupport());
-            fiField.setBoExcludeFromAutoColList(annoFiColumn.boExcludeFromAutoColList());
-
-            if (!FiString.isEmpty(annoFiColumn.label())) fiField.setFcTxHeader(annoFiColumn.label());
-            if (annoFiColumn.collation() != FiCollation.Default) fiField.setFiCollation(annoFiColumn.collation());
-            if (!FiString.isEmpty(annoFiColumn.typeName())) fiField.setFcTxTypeName(annoFiColumn.typeName());
-            if (annoFiColumn.defaultUpdateField()) fiField.setBoDefaultUpdateField(true);
-
-            if (!FiString.isEmptyTrim(annoFiColumn.name())) {
-                fiField.setFcTxDbField(annoFiColumn.name());
-            } else {
-                fiField.setFcTxDbField(field.getName());
-            }
-
-        }
-
-        if (field.isAnnotationPresent(FiNotNull.class)) {
-            fiField.setFcBoNullable(false);
-        }
-
-        if (field.isAnnotationPresent(FiWhere1.class)) {
-            fiField.setBoWhere1(true);
-        }
-
-        if (field.isAnnotationPresent(Temporal.class)) {
-            fiField.setTemporalType(field.getAnnotation(Temporal.class).value());
-        }
-
-        if (field.isAnnotationPresent(ColDefinitionExtra.class)) {
-            fiField.setColDefinitionExtra(field.getAnnotation(ColDefinitionExtra.class).value());
-        }
-
-        // other related db
-
-        if (field.isAnnotationPresent(Transient.class) || field.isAnnotationPresent(FiTransient.class)) {
-            fiField.setFcBoTransient(true);
-        }
-
-        // Id alanlar için ortak tanımlamalar
-        if (field.isAnnotationPresent(Id.class) || field.isAnnotationPresent(FiId.class)) {
-            fiField.setBoKeyIdField(true);
-            fiField.setBoDtoField(true);
-        }
-
-        // FiId ye özel bilgiler set edilir
-        if (field.isAnnotationPresent(FiId.class)) {
-            FiId anno = field.getAnnotation(FiId.class);
-            fiField.setIdGenerationType(anno.idGenerationType());
-        }
+    // FiId ye özel bilgiler set edilir
+    if (field.isAnnotationPresent(FiId.class)) {
+      FiId anno = field.getAnnotation(FiId.class);
+      fiField.setIdGenerationType(anno.idGenerationType());
+    }
 
 
-        if (field.isAnnotationPresent(FiCandId1.class)) {
-            fiField.setBoCandidateId1(true);
-            //FIXME nullable false olmayabilir , çoklu candid ise
-            fiField.setFcBoNullable(false);
-            fiField.setBoDtoField(true);
-        }
+    if (field.isAnnotationPresent(FiCandId1.class)) {
+      fiField.setBoCandidateId1(true);
+      //FIXME nullable false olmayabilir , çoklu candid ise
+      fiField.setFcBoNullable(false);
+      fiField.setBoDtoField(true);
+    }
 
-        if (field.isAnnotationPresent(FiCandId2.class)) {
-            fiField.setBoCandidateId2(true);
-            fiField.setBoDtoField(true);
-        }
+    if (field.isAnnotationPresent(FiCandId2.class)) {
+      fiField.setBoCandidateId2(true);
+      fiField.setBoDtoField(true);
+    }
 
-        if (field.isAnnotationPresent(FiSelect2.class)) {
-            fiField.setBoFiSelect(true);
-        }
+    if (field.isAnnotationPresent(FiSelect2.class)) {
+      fiField.setBoFiSelect(true);
+    }
 
-        if (field.isAnnotationPresent(FiSelect1.class)) {
-            fiField.setBoFiSelect1(true);
-        }
+    if (field.isAnnotationPresent(FiSelect1.class)) {
+      fiField.setBoFiSelect1(true);
+    }
 
-        if (field.isAnnotationPresent(FiWhere1.class)) {
-            fiField.setBoFiWhere1(true);
-        }
+    if (field.isAnnotationPresent(FiWhere1.class)) {
+      fiField.setBoFiWhere1(true);
+    }
 
-        if (field.isAnnotationPresent(FiOnlyFirstInsert.class)) {
-            fiField.setBoOnlyFirstInsert(true);
-        }
+    if (field.isAnnotationPresent(FiOnlyFirstInsert.class)) {
+      fiField.setBoOnlyFirstInsert(true);
+    }
 
-        if (field.isAnnotationPresent(FiScopeIdField.class)) {
-            fiField.setBoScopeIdField(true);
-        }
+    if (field.isAnnotationPresent(FiScopeIdField.class)) {
+      fiField.setBoScopeIdField(true);
+    }
 
-        if (field.isAnnotationPresent(FiDto.class)) {
-            fiField.setBoDtoField(true);
-        }
+    if (field.isAnnotationPresent(FiDto.class)) {
+      fiField.setBoDtoField(true);
+    }
 
 //		if (field.isAnnotationPresent(FiSeperatedField.class)) {
 //			fiField.setBoSeperatedField(true);
 //		}
 
-        if (field.isAnnotationPresent(FiFirmField.class)) {
-            fiField.setBoFirmField(true);
-        }
+    if (field.isAnnotationPresent(FiFirmField.class)) {
+      fiField.setBoFirmField(true);
+    }
 
-        if (field.isAnnotationPresent(FiDefaultUpdate.class)) {
-            fiField.setBoDefaultUpdateField(true);
+    if (field.isAnnotationPresent(FiDefaultUpdate.class)) {
+      fiField.setBoDefaultUpdateField(true);
 
-            FiDefaultUpdate anno = field.getAnnotation(FiDefaultUpdate.class);
+      FiDefaultUpdate anno = field.getAnnotation(FiDefaultUpdate.class);
 
 //			if (!FiString.isEmpty(anno.typeName())) {
 //				fiField.setTypeName(anno.typeName());
 //			}
-        }
+    }
 
-        if (field.isAnnotationPresent(FiCusFieldUserId.class)) {
-            fiField.setBoCusFieldUserId(true);
-            fiField.setBoDefaultUpdateField(true);
-        }
+    if (field.isAnnotationPresent(FiCusFieldUserId.class)) {
+      fiField.setBoCusFieldUserId(true);
+      fiField.setBoDefaultUpdateField(true);
+    }
 
-        if (field.isAnnotationPresent(FiCusFieldDtChange.class)) {
-            fiField.setBoCusFieldDtChange(true);
-            fiField.setBoDefaultUpdateField(true);
-        }
+    if (field.isAnnotationPresent(FiCusFieldDtChange.class)) {
+      fiField.setBoCusFieldDtChange(true);
+      fiField.setBoDefaultUpdateField(true);
+    }
 
-        if (field.isAnnotationPresent(FiCusFieldDtCreate.class)) {
-            fiField.setBoCusFieldDtCreate(true);
-            fiField.setBoOnlyFirstInsert(true);
-        }
+    if (field.isAnnotationPresent(FiCusFieldDtCreate.class)) {
+      fiField.setBoCusFieldDtCreate(true);
+      fiField.setBoOnlyFirstInsert(true);
+    }
 
-        if (field.isAnnotationPresent(FiCombo.class)) {
-            fiField.setBoComboField(true);
-        }
+    if (field.isAnnotationPresent(FiCombo.class)) {
+      fiField.setBoComboField(true);
+    }
 
-        if (field.isAnnotationPresent(FiInsertMaxPlus.class)) {
-            fiField.setBoInsertMaxPlus(true);
-        }
+    if (field.isAnnotationPresent(FiInsertMaxPlus.class)) {
+      fiField.setBoInsertMaxPlus(true);
+    }
 
-        if (field.isAnnotationPresent(FiGuid.class)) {
-            fiField.setBoGuidField(true);
-        }
+    if (field.isAnnotationPresent(FiGuid.class)) {
+      fiField.setBoGuidField(true);
+    }
 
-        if (field.isAnnotationPresent(FiDateSeperator.class)) {
-            fiField.setBoDateSeperatorField(true);
-        }
+    if (field.isAnnotationPresent(FiDateSeperator.class)) {
+      fiField.setBoDateSeperatorField(true);
+    }
 
-        if (field.isAnnotationPresent(FiUniqGroup1.class)) {
-            fiField.setFcBoUniqGro1(true);
+    if (field.isAnnotationPresent(FiUniqGroup1.class)) {
+      fiField.setFcBoUniqGro1(true);
 
-            FiUniqGroup1 anno = field.getAnnotation(FiUniqGroup1.class);
+      FiUniqGroup1 anno = field.getAnnotation(FiUniqGroup1.class);
 
-            if (!FiString.isEmpty(anno.name())) {
-                fiField.setTxUnique1Name(anno.name());
-            }
-
-        }
+      if (!FiString.isEmpty(anno.name())) {
+        fiField.setTxUnique1Name(anno.name());
+      }
 
     }
 
-    public static void assignFiFieldDatabaseForFiCol(Field field, FiCol fiField) {
+  }
 
-        if (field.isAnnotationPresent(Column.class)) {
-            Column annoColumn = field.getAnnotation(Column.class);
-            fiField.setFcLnPrecision(annoColumn.precision());
-            fiField.setFcLnScale(annoColumn.scale());
-            fiField.setFcLnLength(annoColumn.length());
-            fiField.setFcBoUnique(annoColumn.unique());
-            fiField.setFcBoNullable(annoColumn.nullable()); // def:true (in interface)
-            //ColCustomType
-            fiField.setFcTxColDefinition(annoColumn.columnDefinition());
+  public static void assignFiFieldDatabaseForFiCol(Field field, FiCol fiField) {
 
-            if (!FiString.isEmptyTrim(annoColumn.name())) {
-                fiField.setFcTxDbField(annoColumn.name());
-            } else {
-                fiField.setFcTxDbField(field.getName());
-            }
+    if (field.isAnnotationPresent(Column.class)) {
+      Column annoColumn = field.getAnnotation(Column.class);
+      fiField.setFcLnPrecision(annoColumn.precision());
+      fiField.setFcLnScale(annoColumn.scale());
+      fiField.setFcLnLength(annoColumn.length());
+      fiField.setFcBoUnique(annoColumn.unique());
+      fiField.setFcBoNullable(annoColumn.nullable()); // def:true (in interface)
+      //ColCustomType
+      fiField.setFcTxColDefinition(annoColumn.columnDefinition());
 
-        }
+      if (!FiString.isEmptyTrim(annoColumn.name())) {
+        fiField.setFcTxDbField(annoColumn.name());
+      } else {
+        fiField.setFcTxDbField(field.getName());
+      }
 
-        if (field.isAnnotationPresent(FiColumn.class)) {
+    }
 
-            FiColumn annoFiColumn = field.getAnnotation(FiColumn.class);
+    if (field.isAnnotationPresent(FiColumn.class)) {
 
-            fiField.setFcLnPrecision(annoFiColumn.precision());
-            fiField.setFcLnScale(annoFiColumn.scale());
-            fiField.setFcLnLength(annoFiColumn.length());
-            fiField.setFcBoUnique(annoFiColumn.isUnique());
-            fiField.setFcBoNullable(annoFiColumn.isNullable());
-            //if (FiBoolean.isFalse(annoFiColumn.isNullable())) fiField.setNullable(false);
-            fiField.setFcTxDefValue(annoFiColumn.colCustomTypeDefinition());
-            fiField.setFcTxDefValue(annoFiColumn.defaultValue());
-            fiField.setFcTxColDefinition(annoFiColumn.colDefinitionExtra());
-            fiField.setFcBoUtfSupport(annoFiColumn.isUnicodeSupport());
-            //fiField.setBoExcludeFromAutoColList(annoFiColumn.boExcludeFromAutoColList());
+      FiColumn annoFiColumn = field.getAnnotation(FiColumn.class);
 
-            if (!FiString.isEmpty(annoFiColumn.label())) fiField.setFcTxHeader(annoFiColumn.label());
-            //if (annoFiColumn.collation() != FiCollation.Default) fiField.setFiCollation(annoFiColumn.collation());
-            if (!FiString.isEmpty(annoFiColumn.typeName())) fiField.setFcTxTypeName(annoFiColumn.typeName());
-            //if (annoFiColumn.defaultUpdateField()) fiField.setBoDefaultUpdateField(true);
+      fiField.setFcLnPrecision(annoFiColumn.precision());
+      fiField.setFcLnScale(annoFiColumn.scale());
+      fiField.setFcLnLength(annoFiColumn.length());
+      fiField.setFcBoUnique(annoFiColumn.isUnique());
+      fiField.setFcBoNullable(annoFiColumn.isNullable());
+      //if (FiBoolean.isFalse(annoFiColumn.isNullable())) fiField.setNullable(false);
+      fiField.setFcTxDefValue(annoFiColumn.colCustomTypeDefinition());
+      fiField.setFcTxDefValue(annoFiColumn.defaultValue());
+      fiField.setFcTxColDefinition(annoFiColumn.colDefinitionExtra());
+      fiField.setFcBoUtfSupport(annoFiColumn.isUnicodeSupport());
+      //fiField.setBoExcludeFromAutoColList(annoFiColumn.boExcludeFromAutoColList());
 
-            if (!FiString.isEmptyTrim(annoFiColumn.name())) {
-                fiField.setFcTxDbField(annoFiColumn.name());
-            } else {
-                fiField.setFcTxDbField(field.getName());
-            }
+      if (!FiString.isEmpty(annoFiColumn.label())) fiField.setFcTxHeader(annoFiColumn.label());
+      //if (annoFiColumn.collation() != FiCollation.Default) fiField.setFiCollation(annoFiColumn.collation());
+      if (!FiString.isEmpty(annoFiColumn.typeName())) fiField.setFcTxTypeName(annoFiColumn.typeName());
+      //if (annoFiColumn.defaultUpdateField()) fiField.setBoDefaultUpdateField(true);
 
-        }
+      if (!FiString.isEmptyTrim(annoFiColumn.name())) {
+        fiField.setFcTxDbField(annoFiColumn.name());
+      } else {
+        fiField.setFcTxDbField(field.getName());
+      }
 
-        if (field.isAnnotationPresent(FiNotNull.class)) {
-            fiField.setFcBoNullable(false);
-        }
+    }
+
+    if (field.isAnnotationPresent(FiNotNull.class)) {
+      fiField.setFcBoNullable(false);
+    }
 
 //        if (field.isAnnotationPresent(FiWhere1.class)) {
 //            fiField.setBoWhere1(true);
@@ -655,13 +675,13 @@ public class FiReflectClass {
 //            fiField.setColDefinitionExtra(field.getAnnotation(ColDefinitionExtra.class).value());
 //        }
 
-        // other related db
+    // other related db
 
-        if (field.isAnnotationPresent(Transient.class) || field.isAnnotationPresent(FiTransient.class)) {
-            fiField.setFcBoTransient(true);
-        }
+    if (field.isAnnotationPresent(Transient.class) || field.isAnnotationPresent(FiTransient.class)) {
+      fiField.setFcBoTransient(true);
+    }
 
-        // Id alanlar için ortak tanımlamalar
+    // Id alanlar için ortak tanımlamalar
 //        if (field.isAnnotationPresent(Id.class) || field.isAnnotationPresent(FiId.class)) {
 //            fiField.setBoKeyIdField(true);
 //            fiField.setBoDtoField(true);
@@ -725,7 +745,7 @@ public class FiReflectClass {
 //
 ////			if (!FiString.isEmpty(anno.typeName())) {
 ////				fiField.setTypeName(anno.typeName());
-////			}
+////      }
 //        }
 
 //        if (field.isAnnotationPresent(FiCusFieldUserId.class)) {
@@ -770,252 +790,253 @@ public class FiReflectClass {
 //
 //        }
 
-    }
-    /**
-     * Field ile ilgili tüm alanlar (extra hariç) doldurulur.
-     *
-     * @param field
-     * @param fiField
-     * @return
-     */
-    public static FiField setupFiFieldAll(Field field, FiField fiField) {
-        if (fiField == null) fiField = new FiField();
-        assignFiFieldBasic(field, fiField);
-        assignFiFieldDatabase(field, fiField);
-        return fiField;
-    }
+  }
 
-    public static FiCol setupFiColAll(Field field, FiCol fiField) {
-        if (field == null) fiField = new FiCol();
-        assignFiFieldBasicForFiCol(field, fiField);
-        assignFiFieldDatabaseForFiCol(field, fiField);
-        return fiField;
-    }
+  /**
+   * Field ile ilgili tüm alanlar (extra hariç) doldurulur.
+   *
+   * @param field
+   * @param fiField
+   * @return
+   */
+  public static FiField setupFiFieldAll(Field field, FiField fiField) {
+    if (fiField == null) fiField = new FiField();
+    assignFiFieldBasic(field, fiField);
+    assignFiFieldDatabase(field, fiField);
+    return fiField;
+  }
 
-    public static FiField setupFiFieldBasic(Field field, FiField fiField) {
-        if (fiField == null) fiField = new FiField();
-        assignFiFieldBasic(field, fiField);
-        return fiField;
-    }
+  public static FiCol setupFiColAll(Field field, FiCol fiField) {
+    if (field == null) fiField = new FiCol();
+    assignFiFieldBasicForFiCol(field, fiField);
+    assignFiFieldDatabaseForFiCol(field, fiField);
+    return fiField;
+  }
 
-    public static List<FiField> getListFieldsNotNull(Class clazz, Object objectt) {
+  public static FiField setupFiFieldBasic(Field field, FiField fiField) {
+    if (fiField == null) fiField = new FiField();
+    assignFiFieldBasic(field, fiField);
+    return fiField;
+  }
 
-        Field[] fields = clazz.getDeclaredFields(); // returns all members including private members but not inherited members.
+  public static List<FiField> getListFieldsNotNull(Class clazz, Object objectt) {
 
-        List<FiField> listFields = new ArrayList<>();
+    Field[] fields = clazz.getDeclaredFields(); // returns all members including private members but not inherited members.
 
-        for (Field field : fields) {
+    List<FiField> listFields = new ArrayList<>();
 
-            if (field.isAnnotationPresent(Transient.class)) continue;
-            if (field.isAnnotationPresent(FiTransient.class)) continue;
-            // Static alanlar alınmaz
-            if (Modifier.isStatic(field.getModifiers())) continue;
+    for (Field field : fields) {
 
-            Object fieldValue = FiReflection.getProperty(objectt, field.getName());
+      if (field.isAnnotationPresent(Transient.class)) continue;
+      if (field.isAnnotationPresent(FiTransient.class)) continue;
+      // Static alanlar alınmaz
+      if (Modifier.isStatic(field.getModifiers())) continue;
 
-            if (fieldValue != null) {
-                FiField fiField = new FiField();
-                listFields.add(setupFiFieldAll(field, fiField));
-            }
+      Object fieldValue = FiReflection.getProperty(objectt, field.getName());
 
-        }
-
-        return listFields;
+      if (fieldValue != null) {
+        FiField fiField = new FiField();
+        listFields.add(setupFiFieldAll(field, fiField));
+      }
 
     }
 
-    public static List<FiField> getListFieldsNotNullWithId(Class clazz, Object objectt) {
+    return listFields;
 
-        Field[] fields = clazz.getDeclaredFields(); // returns all members including private members but not inherited members.
+  }
 
-        List<FiField> listFields = new ArrayList<>();
+  public static List<FiField> getListFieldsNotNullWithId(Class clazz, Object objectt) {
 
-        for (Field field : fields) {
+    Field[] fields = clazz.getDeclaredFields(); // returns all members including private members but not inherited members.
 
-            if (field.isAnnotationPresent(Transient.class)) continue;
-            if (field.isAnnotationPresent(FiTransient.class)) continue;
-            // Static alanlar alınmaz
-            if (Modifier.isStatic(field.getModifiers())) continue;
+    List<FiField> listFields = new ArrayList<>();
 
-            //if (field.isAnnotationPresent(Id.class)) continue;
+    for (Field field : fields) {
 
-            Object fieldValue = FiReflection.getProperty(objectt, field.getName());
+      if (field.isAnnotationPresent(Transient.class)) continue;
+      if (field.isAnnotationPresent(FiTransient.class)) continue;
+      // Static alanlar alınmaz
+      if (Modifier.isStatic(field.getModifiers())) continue;
 
-            if (fieldValue != null) {
-                FiField fiField = new FiField();
-                listFields.add(setupFiFieldAll(field, fiField));
-            }
+      //if (field.isAnnotationPresent(Id.class)) continue;
 
-        }
+      Object fieldValue = FiReflection.getProperty(objectt, field.getName());
 
-        return listFields;
-
-    }
-
-    public static List<FiField> getListFieldsNotNullWithCandId1(Class clazz, Object objectt) {
-
-        List<FiField> listFields = new ArrayList<>();
-
-        for (Field field : clazz.getDeclaredFields()) {
-
-            if (field.isAnnotationPresent(Transient.class)) continue;
-            if (field.isAnnotationPresent(FiTransient.class)) continue;
-            // Static alanlar alınmaz
-            if (Modifier.isStatic(field.getModifiers())) continue;
-
-            Object fieldValue = FiReflection.getProperty(objectt, field.getName());
-
-            if (fieldValue != null || field.isAnnotationPresent(FiCandId1.class)) {
-                listFields.add(setupFiFieldAll(field, null));
-            }
-        }
-
-        return listFields;
+      if (fieldValue != null) {
+        FiField fiField = new FiField();
+        listFields.add(setupFiFieldAll(field, fiField));
+      }
 
     }
 
-    /**
-     * Id alanlarının herhangi biri null olup olmadığını kontrol eder.
-     * <p>
-     * True ise id alanlarında herhangi biri null
-     * <p>
-     * False tüm id alanları null degil
-     *
-     * @param entity
-     * @param entityClass
-     * @param <T>
-     * @return
-     */
-    public static <T> Boolean checkIdFieldsAnyNull(T entity, Class<T> entityClass) {
+    return listFields;
 
-        List<FiField> listFiFieldsShort = getListFieldsShortWithId(entityClass);
+  }
 
-        Boolean isNull = null;
+  public static List<FiField> getListFieldsNotNullWithCandId1(Class clazz, Object objectt) {
 
-        //listIdFields.forEach(fiField -> {
-        for (FiField field : listFiFieldsShort) {
+    List<FiField> listFields = new ArrayList<>();
 
-            if (FiBool.isTrue(field.getBoKeyIdField())) {
-                //Loghelperr.staticLogDebug("Id Fiedl"+field.getName());
-                Object idValue = FiReflection.getPropertyNested(entity, field.getFcTxFieldName());
+    for (Field field : clazz.getDeclaredFields()) {
 
-                if (isNull == null && idValue != null) isNull = false;
-                if (idValue == null) isNull = true;
+      if (field.isAnnotationPresent(Transient.class)) continue;
+      if (field.isAnnotationPresent(FiTransient.class)) continue;
+      // Static alanlar alınmaz
+      if (Modifier.isStatic(field.getModifiers())) continue;
 
-            }
-        }
+      Object fieldValue = FiReflection.getProperty(objectt, field.getName());
 
-        return isNull;
+      if (fieldValue != null || field.isAnnotationPresent(FiCandId1.class)) {
+        listFields.add(setupFiFieldAll(field, null));
+      }
     }
 
-    public static <T> Boolean checkDtCreatedFieldsNull(T entity, Class<T> entityClass) {
+    return listFields;
 
-        List<FiField> listFiFieldsShort = getListFieldsShortWithId(entityClass);
+  }
 
-        Boolean isNull = null;
+  /**
+   * Id alanlarının herhangi biri null olup olmadığını kontrol eder.
+   * <p>
+   * True ise id alanlarında herhangi biri null
+   * <p>
+   * False tüm id alanları null degil
+   *
+   * @param entity
+   * @param entityClass
+   * @param <T>
+   * @return
+   */
+  public static <T> Boolean checkIdFieldsAnyNull(T entity, Class<T> entityClass) {
 
-        //listIdFields.forEach(fiField -> {
-        for (FiField field : listFiFieldsShort) {
+    List<FiField> listFiFieldsShort = getListFieldsShortWithId(entityClass);
 
-            if (FiBool.isTrue(field.getBoCusFieldDtCreate())) {
-                //Loghelperr.staticLogDebug("Id Fiedl"+field.getName());
-                Object idValue = FiReflection.getPropertyNested(entity, field.getFcTxFieldName());
+    Boolean isNull = null;
 
-                if (isNull == null && idValue != null) isNull = false;
-                if (idValue == null) isNull = true;
+    //listIdFields.forEach(fiField -> {
+    for (FiField field : listFiFieldsShort) {
 
-            }
-        }
+      if (FiBool.isTrue(field.getBoKeyIdField())) {
+        //Loghelperr.staticLogDebug("Id Fiedl"+field.getName());
+        Object idValue = FiReflection.getPropertyNested(entity, field.getFcTxFieldName());
 
-        return isNull;
+        if (isNull == null && idValue != null) isNull = false;
+        if (idValue == null) isNull = true;
+
+      }
     }
 
-    public static <T> Boolean assignIdFields(T fromEntity, T toEntity, Class<T> entityClass) {
+    return isNull;
+  }
 
-        List<FiField> listFiFieldsShort = getListFieldsShortWithId(entityClass);
+  public static <T> Boolean checkDtCreatedFieldsNull(T entity, Class<T> entityClass) {
 
-        //Stream<FiField> listIdFields = listFiFieldsShort.stream().filter(fiField -> FiBoolean.isTrue(fiField.getBoIdField()));
+    List<FiField> listFiFieldsShort = getListFieldsShortWithId(entityClass);
 
-        Boolean boResult = null;
+    Boolean isNull = null;
 
-        //listIdFields.forEach(fiField -> {
-        for (FiField field : listFiFieldsShort) {
+    //listIdFields.forEach(fiField -> {
+    for (FiField field : listFiFieldsShort) {
 
-            if (FiBool.isTrue(field.getBoKeyIdField())) {
-                Loghelper.get(FiReflectClass.class).debug("Id Field:" + field.getFcTxFieldName());
-                Object idValue = FiReflection.getPropertyNested(fromEntity, field.getFcTxFieldName());
-                boResult = FiReflection.setterNested(toEntity, field.getFcTxFieldName(), idValue);
-            }
-        }
+      if (FiBool.isTrue(field.getBoCusFieldDtCreate())) {
+        //Loghelperr.staticLogDebug("Id Fiedl"+field.getName());
+        Object idValue = FiReflection.getPropertyNested(entity, field.getFcTxFieldName());
 
-        return boResult;
+        if (isNull == null && idValue != null) isNull = false;
+        if (idValue == null) isNull = true;
+
+      }
+    }
+
+    return isNull;
+  }
+
+  public static <T> Boolean assignIdFields(T fromEntity, T toEntity, Class<T> entityClass) {
+
+    List<FiField> listFiFieldsShort = getListFieldsShortWithId(entityClass);
+
+    //Stream<FiField> listIdFields = listFiFieldsShort.stream().filter(fiField -> FiBoolean.isTrue(fiField.getBoIdField()));
+
+    Boolean boResult = null;
+
+    //listIdFields.forEach(fiField -> {
+    for (FiField field : listFiFieldsShort) {
+
+      if (FiBool.isTrue(field.getBoKeyIdField())) {
+        Loghelper.get(FiReflectClass.class).debug("Id Field:" + field.getFcTxFieldName());
+        Object idValue = FiReflection.getPropertyNested(fromEntity, field.getFcTxFieldName());
+        boResult = FiReflection.setterNested(toEntity, field.getFcTxFieldName(), idValue);
+      }
+    }
+
+    return boResult;
+
+  }
+
+  public static String[] getIdFields(Class clazz) {
+    List<String> listFiFieldsShort = getListIdFields(clazz);
+    return FiString.convertListToArray(listFiFieldsShort);
+  }
+
+  public static List<String> getListIdFields(Class entityClazz) {
+
+    List<String> listIdFields = new ArrayList<>();
+
+    for (FiField field : getListFieldsShortWithId(entityClazz)) {
+
+      if (FiBool.isTrue(field.getBoKeyIdField())) {
+        //Loghelperr.staticLogDebug("Id Field:"+field.getName());
+        listIdFields.add(field.getFcTxFieldName());
+      }
+    }
+
+    return listIdFields;
+  }
+
+  public static List<String> getListDbFieldName(List<FiField> fieldListFilterAnno) {
+    return fieldListFilterAnno.stream().map(fiField -> fiField.getFcTxDbField()).collect(toList());
+  }
+
+  public static List<String> getListFieldName(List<FiField> fieldListFilterAnno) {
+    return fieldListFilterAnno.stream().map(fiField -> fiField.getFcTxFieldName()).collect(toList());
+  }
+
+  public static String getIdFieldSingle(List<Field> fieldListFilterAnno) {
+
+    for (Field field : fieldListFilterAnno) {
+      if (field.isAnnotationPresent(Id.class)) {
+        return field.getName();
+      }
+    }
+    return null;
+  }
+
+  public static <NC> Boolean checkNullFields(NC entity, List<FiField> listNotNullFields) {
+
+    Boolean found = false;
+
+    for (FiField fiField : listNotNullFields) {
+
+      if (FiReflection.getProperty(entity, fiField.getFcTxFieldName()) == null) {
+        fiField.setNullCheck(true);
+        found = true;
+      }
 
     }
 
-    public static String[] getIdFields(Class clazz) {
-        List<String> listFiFieldsShort = getListIdFields(clazz);
-        return FiString.convertListToArray(listFiFieldsShort);
-    }
+    return found;
 
-    public static List<String> getListIdFields(Class entityClazz) {
+  }
 
-        List<String> listIdFields = new ArrayList<>();
+  public static List<FiCol> getListFiCol(Class entityClass) {
+    return FiCol.convertListFiField(getListFieldsWoutStatic(entityClass));
+  }
 
-        for (FiField field : getListFieldsShortWithId(entityClazz)) {
+  public static List<FiCol> getListFiColWithFiColManual(Class entityClass) {
+    return FiCol.convertListFiField(getListFieldsWithFiColManualWoutStaticMain(entityClass, false, null));
+  }
 
-            if (FiBool.isTrue(field.getBoKeyIdField())) {
-                //Loghelperr.staticLogDebug("Id Field:"+field.getName());
-                listIdFields.add(field.getFcTxFieldName());
-            }
-        }
-
-        return listIdFields;
-    }
-
-    public static List<String> getListDbFieldName(List<FiField> fieldListFilterAnno) {
-        return fieldListFilterAnno.stream().map(fiField -> fiField.getFcTxDbField()).collect(toList());
-    }
-
-    public static List<String> getListFieldName(List<FiField> fieldListFilterAnno) {
-        return fieldListFilterAnno.stream().map(fiField -> fiField.getFcTxFieldName()).collect(toList());
-    }
-
-    public static String getIdFieldSingle(List<Field> fieldListFilterAnno) {
-
-        for (Field field : fieldListFilterAnno) {
-            if (field.isAnnotationPresent(Id.class)) {
-                return field.getName();
-            }
-        }
-        return null;
-    }
-
-    public static <NC> Boolean checkNullFields(NC entity, List<FiField> listNotNullFields) {
-
-        Boolean found = false;
-
-        for (FiField fiField : listNotNullFields) {
-
-            if (FiReflection.getProperty(entity, fiField.getFcTxFieldName()) == null) {
-                fiField.setNullCheck(true);
-                found = true;
-            }
-
-        }
-
-        return found;
-
-    }
-
-    public static List<FiCol> getListFiCol(Class entityClass) {
-        return FiCol.convertListFiField(getListFieldsWoutStatic(entityClass));
-    }
-
-    public static List<FiCol> getListFiColWithFiColManual(Class entityClass) {
-        return FiCol.convertListFiField(getListFieldsWithFiColManualWoutStaticMain(entityClass, false, null));
-    }
-
-    public static List<FiCol> getListFiColWithTransient(Class entityClass) {
-        return FiCol.convertListFiField(getListFieldsWoutStatic(entityClass, true));
-    }
+  public static List<FiCol> getListFiColWithTransient(Class entityClass) {
+    return FiCol.convertListFiField(getListFieldsWoutStatic(entityClass, true));
+  }
 }

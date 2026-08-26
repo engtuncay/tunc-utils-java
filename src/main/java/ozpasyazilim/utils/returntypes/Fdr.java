@@ -1366,6 +1366,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     return fdFkbListVal;
   }
 
+
   public FkbList getFdFkbListValNtn() {
     if (fdFkbListVal == null) {
       fdFkbListVal = new FkbList();
@@ -1468,5 +1469,9 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
 
   public void setFdTxFdrType(String fdTxFdrType) {
     this.fdTxFdrType = fdTxFdrType;
+  }
+
+  public void combineFkbList(Fdr fdrSub) {
+    this.getFdFkbListValNtn().addAll(fdrSub.getFdFkbListValNtn());
   }
 }

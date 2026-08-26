@@ -273,6 +273,12 @@ public class FiDate {
 
 	}
 
+	/**
+	 * yyyy-MM-dd formatı
+	 *
+	 * @param date
+	 * @return
+	 */
 	public static Date strToDateByDash(String date) {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		try {
