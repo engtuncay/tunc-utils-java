@@ -592,7 +592,7 @@ public class Fkb extends LinkedHashMap<String, Object> {
     return false;
   }
 
-  public boolean containsFiColFn(FiCol fiCol) {
+  public boolean containsFic(FiCol fiCol) {
     return containsKey(fiCol.getFcTxFieldName());
   }
 
