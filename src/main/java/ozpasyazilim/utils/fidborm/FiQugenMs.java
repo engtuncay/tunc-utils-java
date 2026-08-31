@@ -16,7 +16,7 @@ import javax.annotation.Nonnull;
 /**
  * FiSql Query Generation Class for Ms-sql
  */
-public class FiQueryGenMs {
+public class FiQugenMs {
 
   /**
    * Update Query Generation
@@ -363,8 +363,8 @@ public class FiQueryGenMs {
     return fdrResult;
   }
 
-  private static Class<FiQueryGenMs> getClassi() {
-    return FiQueryGenMs.class;
+  private static Class<FiQugenMs> getClassi() {
+    return FiQugenMs.class;
   }
 
   public static Fdr insIfNot(FiQuconf fiQuconf) {

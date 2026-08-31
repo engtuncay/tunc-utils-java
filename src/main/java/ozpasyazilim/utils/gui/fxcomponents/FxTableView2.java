@@ -893,23 +893,23 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     boolean boColFilterableLocal = checkColFilterableLocal(fxTableCol);
 
-    Loghelper.get(getClass()).debug("Col: " + fxTableCol.getRefFiColNtn().getFcTxFieldName() + " boColFilterableLocal:" + boColFilterableLocal);
+    //Loghelper.get(getClass()).debug("Col: " + fxTableCol.getRefFiColNtn().getFcTxFieldName() + " boColFilterableLocal:" + boColFilterableLocal);
 
     if (boColFilterableLocal) {
-      //Loghelperr.getInstance(getClass()).debug("Local Filter enabled");
+      // Loghelperr.getInstance(getClass()).debug("Local Filter enabled");
 
       // Filter Node içindeki değer filterLocal fonk'a verilerek tabloda filtreleme yapılır.
       Consumer<String> fnFilterLocal = this::execFilterLocal;
 
       // MEDFIX bu ayarlara çekilebilir milisaniye ayarı (tek seferlik ayarlar okumalı)
       // Filter node değişimi tetikleme
-      FxEditorFactory.registerTextPropertyWithDurationForFilterNode(fxTableCol.getRefFiCol(), fnFilterLocal, 1000);
+      FxEditorFactory.registerTextPropertyWithDurationForFilterNode(fxTableCol.getRefFiCol(), fnFilterLocal, 750);
     }
 
     // 20-02-2020 çıkarıldı enter event zaten setupHeaderFilterNode 'da set ediliyor
-//        if (checkColFilterableRemote(fxTableCol)) {
-//            // new FxEditorFactory().registerEnterFnForFilterNode(fxTableCol.getFiTableCol(), getColFilterNodeEnterEvent());
-//        }
+    // if (checkColFilterableRemote(fxTableCol)) {
+    // // new FxEditorFactory().registerEnterFnForFilterNode(fxTableCol.getFiTableCol(), getColFilterNodeEnterEvent());
+    // }
 
   }
 
@@ -1361,7 +1361,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
           // Double değer kontrolü
           // Not : instanceof olduğu için objCellValue null gelmez
           if (objCellValue instanceof Double
-          || objCellValue instanceof Float) {
+              || objCellValue instanceof Float) {
 
             //Loghelper.get(getClass()).debug("Double-Float filter check");
 
