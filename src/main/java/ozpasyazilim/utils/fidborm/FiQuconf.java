@@ -1,6 +1,6 @@
 package ozpasyazilim.utils.fidborm;
 
-import ozpasyazilim.utils.datatypes.Fkfic;
+import ozpasyazilim.utils.datatypes.Fkf;
 import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.FicList;
 
@@ -10,10 +10,10 @@ import ozpasyazilim.utils.table.FicList;
 public class FiQuconf {
 
   // Main
-  Fkfic fkficAll;
+  Fkf fkfAll;
 
   // Alt-1
-  Fkfic fkficDataDef;
+  Fkf fkfDataDef;
   // Alt-2
   IFiTableMeta iFiTableMeta;
   Boolean boUpdateFieldsOnly;
@@ -93,20 +93,20 @@ public class FiQuconf {
     this.boUpdateFieldsOnly = boUpdateFieldsOnly;
   }
 
-  public Fkfic getFkficDataDef() {
-    return fkficDataDef;
+  public Fkf getFkficDataDef() {
+    return fkfDataDef;
   }
 
-  public void setFkficDataDef(Fkfic fkficDataDef) {
-    this.fkficDataDef = fkficDataDef;
+  public void setFkficDataDef(Fkf fkfDataDef) {
+    this.fkfDataDef = fkfDataDef;
   }
 
-  public Fkfic getFkficAll() {
-    return fkficAll;
+  public Fkf getFkficAll() {
+    return fkfAll;
   }
 
-  public void setFkficAll(Fkfic fkficAll) {
-    this.fkficAll = fkficAll;
+  public void setFkficAll(Fkf fkfAll) {
+    this.fkfAll = fkfAll;
   }
 
   public FiCol getFicIdAuto() {

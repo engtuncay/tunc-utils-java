@@ -8,13 +8,13 @@ import java.util.Map;
 /**
  * Key'e karşılık FiCol tutulduğu Obje. FiCol'da bir değeri tutan, gelişmiş bir objedir.
  */
-public class Fkfic extends LinkedHashMap<String, FiCol> {
+public class Fkf extends LinkedHashMap<String, FiCol> {
 
-  public Fkfic() {
+  public Fkf() {
     super();
   }
 
-  public Fkfic(Map<? extends String, ? extends FiCol> m) {
+  public Fkf(Map<? extends String, ? extends FiCol> m) {
     super(m);
   }
 

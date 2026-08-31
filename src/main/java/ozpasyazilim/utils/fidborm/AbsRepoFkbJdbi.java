@@ -6,7 +6,7 @@ import ozpasyazilim.utils.core.FiBool;
 import ozpasyazilim.utils.core.FiException;
 import ozpasyazilim.utils.datatypes.Fkb;
 import ozpasyazilim.utils.datatypes.FkbList;
-import ozpasyazilim.utils.datatypes.Fkfic;
+import ozpasyazilim.utils.datatypes.Fkf;
 import ozpasyazilim.utils.jdbi.FiKeyBeanMapper;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.returntypes.Fdr;
@@ -23,8 +23,8 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
 
   private IFiTableMeta iFiTableMeta;
 
-  private Fkfic fkcDmFields;
-  private Fkfic fkcFieldsAll;
+  private Fkf fkcDmFields;
+  private Fkf fkcFieldsAll;
   private FicList fclTable;
   private FiCol ficIdAuto;
 
@@ -545,19 +545,19 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
     return fdrMain;
   }
 
-  public Fkfic getFkcDmFields() {
+  public Fkf getFkcDmFields() {
     return fkcDmFields;
   }
 
-  public void setFkcDmFields(Fkfic fkcDmFields) {
+  public void setFkcDmFields(Fkf fkcDmFields) {
     this.fkcDmFields = fkcDmFields;
   }
 
-  public Fkfic getFkcFieldsAll() {
+  public Fkf getFkcFieldsAll() {
     return fkcFieldsAll;
   }
 
-  public void setFkcFieldsAll(Fkfic fkcFieldsAll) {
+  public void setFkcFieldsAll(Fkf fkcFieldsAll) {
     this.fkcFieldsAll = fkcFieldsAll;
   }
 

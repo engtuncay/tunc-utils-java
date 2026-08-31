@@ -3,7 +3,7 @@ package ozpasyazilim.utils.fidborm;
 import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.datatypes.Fkb;
 //import ozpasyazilim.utils.ficRfcCoding;
-import ozpasyazilim.utils.datatypes.Fkfic;
+import ozpasyazilim.utils.datatypes.Fkf;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.metadata.fimCodegen.FimFtSpecFields;
 import ozpasyazilim.utils.metadata.fimCodegen.FimFtSql;
@@ -94,7 +94,7 @@ public class FiQueryGenMs {
 
     // arguments
     FicList ficFields = fiQuconf.getFicListTable();
-    Fkfic fkbDataDef = fiQuconf.getFkficDataDef();
+    Fkf fkbDataDef = fiQuconf.getFkficDataDef();
 
     // FimOcSql.sfTableName();
     // FimOcSql.sfTxWhere();
@@ -704,7 +704,7 @@ public class FiQueryGenMs {
 
     // arguments
     FicList ficInsFields = fiQuconf.getFicListTable();
-    Fkfic fkbDataDef = fiQuconf.getFkficDataDef();
+    Fkf fkbDataDef = fiQuconf.getFkficDataDef();
 
     //FimQcSql.sfTableName();
 
@@ -772,8 +772,8 @@ public class FiQueryGenMs {
     // Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
 
     // arguments
-    Fkfic fkficAllFields = fiQuconf.getFkficAll();
-    Fkfic fkbDataDefs = fiQuconf.getFkficDataDef();
+    Fkf fkfAllFields = fiQuconf.getFkficAll();
+    Fkf fkbDataDefs = fiQuconf.getFkficDataDef();
 
     //FimQcSql.sfTableName();
 
@@ -790,7 +790,7 @@ public class FiQueryGenMs {
       txTableName = fkbDataDefs.getFimHeaderValNtn(FimFtSpecFields.qcfTxSqTableName());
     }
 
-    for (FiCol ficItem : fkficAllFields.values()) {
+    for (FiCol ficItem : fkfAllFields.values()) {
 
       if (txTableName == null && ficItem.getFcTxFieldName().equals(FimFtSpecFields.qcfTxSqTableName().getKey())) {
         txTableName = ficItem.getFcTxHeader();

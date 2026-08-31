@@ -2,7 +2,7 @@ package ozpasyazilim.utils.ficols;// Java FiCol Class Generation - v0.4
 
 import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.FicList;
-import ozpasyazilim.utils.datatypes.Fkfic;
+import ozpasyazilim.utils.datatypes.Fkf;
 import ozpasyazilim.utils.fidborm.AbsFicTable;
 
 public class FicFiCol extends AbsFicTable {
@@ -150,9 +150,9 @@ public class FicFiCol extends AbsFicTable {
   }
 
 
-  public static Fkfic getFkbFieldsAll() {
+  public static Fkf getFkbFieldsAll() {
 
-    Fkfic fkb = new Fkfic();
+    Fkf fkb = new Fkf();
 
     fkb.addFic(fcTxEntityName());
     fkb.addFic(fcTxFieldType());
@@ -176,9 +176,9 @@ public class FicFiCol extends AbsFicTable {
     return fkb;
   }
 
-  public static Fkfic getFkbDdFields() {
+  public static Fkf getFkbDdFields() {
 
-    Fkfic fkb = new Fkfic();
+    Fkf fkb = new Fkf();
 
 
     return fkb;

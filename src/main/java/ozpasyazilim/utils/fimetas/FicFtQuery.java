@@ -4,7 +4,7 @@ package ozpasyazilim.utils.fimetas;
 
 import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.FicList;
-import ozpasyazilim.utils.datatypes.Fkfic;
+import ozpasyazilim.utils.datatypes.Fkf;
 import ozpasyazilim.utils.fidborm.AbsFicTable;
 
 public class FicFtQuery extends AbsFicTable {
@@ -58,9 +58,9 @@ public class FicFtQuery extends AbsFicTable {
   }
 
 
-  public static Fkfic getFkbFieldsAll() {
+  public static Fkf getFkbFieldsAll() {
 
-    Fkfic fkb = new Fkfic();
+    Fkf fkb = new Fkf();
 
     fkb.addFic(fqpLnPageOffset());
     fkb.addFic(fqpLnPageLength());
@@ -70,9 +70,9 @@ public class FicFtQuery extends AbsFicTable {
     return fkb;
   }
 
-  public static Fkfic getFkbDdFields() {
+  public static Fkf getFkbDdFields() {
 
-    Fkfic fkb = new Fkfic();
+    Fkf fkb = new Fkf();
 
 
     return fkb;
