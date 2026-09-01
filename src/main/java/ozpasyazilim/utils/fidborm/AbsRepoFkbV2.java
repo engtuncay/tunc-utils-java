@@ -46,6 +46,29 @@ public abstract class AbsRepoFkbV2 extends AbsRepoFkbJdbi {
   }
 
   /**
+   * Sadece FicList'deki alanlara göre insert yapar (id dahil etmez)
+   *
+   * @param fkbEntity
+   * @param fclInsert
+   * @return
+   */
+  public Fdr fkInsert(Fkb fkbEntity, FicList fclInsert) {
+    Fdr fdrMain = new Fdr();
+
+    FiQuconf fiQuconf = new FiQuconf();
+    fiQuconf.setFkfAll(getRepoFkfAll());
+
+    Fdr fdrSorgu = FiQugenMs.insQueryV3Selected(fiQuconf, fclInsert);
+    fdrMain.combineAnd(fdrSorgu);
+
+    if (fdrMain.isFalseBoResult()) return fdrMain;
+
+    FiQuery fiQuery = new FiQuery(fdrSorgu.getFdTxVal(), fkbEntity);
+    fiQuery.logQueryAndParams();
+
+    return jdInsertFiQuery(fiQuery);
+  }
+  /**
    * Delete Entities By Where Params
    *
    * @param fkbEntity
