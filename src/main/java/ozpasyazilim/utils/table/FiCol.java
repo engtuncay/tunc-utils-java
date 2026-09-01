@@ -424,10 +424,12 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
    */
   private Boolean boWhereField;
 
-
   // Reflection Field Alanlar
 
   // FiId
+  /**
+   * auto or user
+   */
   private String fcTxIdType;
   // FiColumn
   private Boolean fcBoUniqGro1;
