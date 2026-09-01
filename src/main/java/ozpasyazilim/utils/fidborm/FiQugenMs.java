@@ -10,6 +10,7 @@ import ozpasyazilim.utils.metadata.fimCodegen.FimFtSql;
 import ozpasyazilim.utils.returntypes.Fdr;
 import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.FicList;
+import ozpasyazilim.utils.table.FicUtil;
 
 import javax.annotation.Nonnull;
 
@@ -168,8 +169,8 @@ public class FiQugenMs {
   public static Fdr upQueryV1(FiQuconf fiQuconf) {
 
     FiCol qcfTxSqTableName = fiQuconf.getQcfTxSqTableName();
-    FicList ficUpFields  = fiQuconf.getFicListUp();
-    FicList ficWhereFields =  fiQuconf.getFicListWhere();
+    FicList ficUpFields = fiQuconf.getFicListUp();
+    FicList ficWhereFields = fiQuconf.getFicListWhere();
 
     // Oluşturulan update sorgu formatı
     // UPDATE EnmCariEvrakEk SET ceveLnNormalFatura = @ceveLnNormalFatura
@@ -229,11 +230,17 @@ public class FiQugenMs {
     return fdr;
   }
 
+  /**
+   * Configs : getQcfTxSqTableName,getFicListWhere
+   *
+   * @param fiQuconf
+   * @return
+   */
   public static Fdr delQueryV1(FiQuconf fiQuconf) {
 
     FiCol qcfTxSqTableName = fiQuconf.getQcfTxSqTableName();
     //FicList ficUpFields  = fiQuconf.getFicListUp();
-    FicList ficWhereFields =  fiQuconf.getFicListWhere();
+    FicList fclWhereFields = fiQuconf.getFicListWhere();
 
     // Oluşturulan update sorgu formatı
     // DELETE EnmCariEvrakEk
@@ -254,7 +261,7 @@ public class FiQugenMs {
     String txTableName = qcfTxSqTableName.getFcTxHeader();
     int indexWhereBlock = 0;
 
-    for (FiCol ficWhereField : ficWhereFields) {
+    for (FiCol ficWhereField : fclWhereFields) {
       if (FiBool.isTrue(ficWhereField.getFcBoTransient())) {
         continue;
       }
@@ -281,6 +288,74 @@ public class FiQugenMs {
     fdr.setFdTxVal(sql);
 
     return fdr;
+  }
+
+  /**
+   * configs : getFkfAll,getFicListWhere
+   *
+   * @param fiQuconf
+   * @return
+   */
+  public static Fdr delQueryV2(FiQuconf fiQuconf) {
+
+    // Oluşturulan update sorgu formatı
+    // DELETE EnmCariEvrakEk
+    // WHERE ceveEvrakSeri = @ceveEvrakSeri AND ceveEvrakSira = @ceveEvrakSira AND ceveEvrakTip = @ceveEvrakTip
+
+    // Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
+
+    Fdr fdrMain = new Fdr();
+
+    Fkf fkfAllFields = fiQuconf.getFkfAll();
+    FicList fclWhereFields = fiQuconf.getFicListWhere();
+
+    if (fclWhereFields.isEmpty()) return fdrMain.buiBoResult(false, "Where alanları tanımlanmamış.");
+
+//     FimFtSql.sfTableName();
+//     FimFtSql.sfTxWhere();
+
+    String template = "DELETE {{sfTableName}} \n"
+        + " WHERE {{sfTxWhere}} ";
+
+    StringBuilder sbWhereBlock = new StringBuilder();
+
+    String txTableName = null; // qcfTxSqTableName.getFcTxHeader();
+
+    if (fkfAllFields.containsKey(FimFtSpecFields.qcfTxSqTableName().getKey())) {
+      txTableName = fkfAllFields.getFimValue(FimFtSpecFields.qcfTxSqTableName()).getFcTxHeader();
+    }
+
+    if (FiString.isEmptyTrim(txTableName)) return fdrMain.buiBoResult(false, "Tablo ismi tanımlanmamış.");
+
+    int indexWhereBlock = 0;
+
+    for (FiCol ficWhereField : fclWhereFields) {
+      if (FiBool.isTrue(ficWhereField.getFcBoTransient())) {
+        continue;
+      }
+      indexWhereBlock++;
+      sbWhereBlock.append(FiQugenUtil.formSqlAssignAnd(ficWhereField.getFcTxFieldName()));
+    }
+
+    FiString.rtrimSb(sbWhereBlock, getTxAnd());
+
+    Fkb fkbParams = new Fkb();
+    fkbParams.addFieldBy(FimFtSql.sfTableName(), txTableName);
+    fkbParams.addFieldBy(FimFtSql.sfTxWhere(), sbWhereBlock.toString());
+
+    String sql = FiString.substitutor(template, fkbParams);
+
+    if (indexWhereBlock == 0) {
+      sql = "no where fields";
+      fdrMain.setFdTxVal(sql);
+      fdrMain.setBoResult(false);
+      return fdrMain;
+    }
+
+    fdrMain.setBoResult(true);
+    fdrMain.setFdTxVal(sql);
+
+    return fdrMain;
   }
 
   /**
@@ -699,7 +774,7 @@ public class FiQugenMs {
    * @param fiQuconf
    * @return
    */
-  public static Fdr insert(FiQuconf fiQuconf) {
+  public static Fdr insQuery(FiQuconf fiQuconf) {
     // Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
 
     // arguments
@@ -768,11 +843,16 @@ public class FiQugenMs {
     return fdrResult;
   }
 
-  public static Fdr insertV2(FiQuconf fiQuconf) {
+  /**
+   *
+   * @param fiQuconf
+   * @return
+   */
+  public static Fdr insQueryV2(FiQuconf fiQuconf) {
     // Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
 
     // arguments
-    Fkf fkfAllFields = fiQuconf.getFkficAll();
+    Fkf fkfAllFields = fiQuconf.getFkfAll();
     Fkf fkbDataDefs = fiQuconf.getFkficDataDef();
 
     //FimQcSql.sfTableName();
@@ -835,6 +915,77 @@ public class FiQugenMs {
 
     fdrResult.setBoResult(true);
     return fdrResult;
+  }
+
+  /**
+   * fkfAll kullanarak Insert Sorgusu üretir
+   * <p>
+   * Params : fkfAll
+   *
+   * @param fiQuconf
+   * @return fdTxVal sorgu sonucu
+   */
+  public static Fdr insQueryV3(FiQuconf fiQuconf) {
+    // Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
+
+    Fdr fdrMain = new Fdr();
+
+    // arguments
+    Fkf fkfAllFields = fiQuconf.getFkfAll();
+
+    //FimQcSql.sfTableName();
+
+    String template = "INSERT INTO {{sfTableName}} ({{sfTxFields}})\n" +
+        " VALUES ( {{sfTxFieldsVar}} )";
+
+    StringBuilder sbTxFieldsBlock = new StringBuilder();
+    StringBuilder sbTxFieldsVar = new StringBuilder();
+
+    String txTableName = null;
+    int indexCol = 0;
+
+    if (fkfAllFields.containsKey(FimFtSpecFields.qcfTxSqTableName().getKey())) {
+      Loghelper.get(getClassi()).debug("tablo col mevcut");
+
+      txTableName = fkfAllFields.getFimValue(FimFtSpecFields.qcfTxSqTableName()).getFcTxHeader();
+    }
+
+    if (FiString.isEmpty(txTableName)) return fdrMain.buiBoResult(false, "Tablo ismi tanımlanmamış.");
+
+    for (FiCol ficItem : fkfAllFields.values()) {
+
+      if (FiBool.isTrue(ficItem.getFcBoTransient())) continue;
+      if (FicUtil.isIdAutoType(ficItem)) continue;
+      if (FicUtil.isDefField(ficItem)) continue;
+
+      indexCol++;
+      sbTxFieldsBlock.append(FiQugenUtil.formSqlFieldCommaByFic(ficItem));
+      sbTxFieldsVar.append(FiQugenUtil.formSqlVarCommaByFic(ficItem));
+
+    }
+
+    FiString.rtrimSb(sbTxFieldsBlock, getTxComma());
+    FiString.rtrimSb(sbTxFieldsVar, getTxComma());
+
+    Fkb fkbParams = new Fkb();
+    fkbParams.addFieldBy(FimFtSql.sfTableName(), txTableName);
+    fkbParams.addFieldBy(FimFtSql.sfTxFields(), sbTxFieldsBlock.toString());
+    //fkbParams.addFieldBy(FimQcSql.sfTxWhere(), sbTxWhereBlock.toString());
+    fkbParams.addFieldBy(FimFtSql.sfTxFieldsVar(), sbTxFieldsVar.toString());
+
+    String sql = FiString.substitutor(template, fkbParams);
+
+    fdrMain.setFdTxVal(sql);
+
+    if (indexCol == 0) {
+      fdrMain.setBoResult(false);
+      fdrMain.setFdTxVal("no insert fields");
+      fdrMain.setFdTxMessage("Sorgu oluştururken hata oluştu. (no insert fields)");
+      return fdrMain;
+    }
+
+    fdrMain.setBoResult(true);
+    return fdrMain;
   }
 
   @Nonnull

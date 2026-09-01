@@ -659,10 +659,10 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
         // includeId Fields
         // fqueconf
 
-        Fdr fdrQueryIns = FiQugenMs.insertV2(fiQuconf);
+        Fdr fdrQueryIns = FiQugenMs.insQueryV2(fiQuconf);
         sql = FiQueTools.stoj(fdrQueryIns.getFdTxVal());
       } else { // fdrQueryIns query without id fields
-        Fdr fdrQueryIns = FiQugenMs.insertV2(fiQuconf);
+        Fdr fdrQueryIns = FiQugenMs.insQueryV2(fiQuconf);
         //fdrQueryIns.logFdr();
         sql = FiQueTools.stoj(fdrQueryIns.getFdTxVal());
       }

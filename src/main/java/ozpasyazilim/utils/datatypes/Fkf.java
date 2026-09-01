@@ -26,8 +26,8 @@ public class Fkf extends LinkedHashMap<String, FiCol> {
     return get(txKey);
   }
 
-  public FiCol getFimValue(FiMeta fiCol) {
-    return getFieldValue(fiCol.getFtTxKey());
+  public FiCol getFimValue(FiMeta fim) {
+    return getFieldValue(fim.getFtTxKey());
   }
 
   public FiCol getFicValue(FiCol fiCol) {

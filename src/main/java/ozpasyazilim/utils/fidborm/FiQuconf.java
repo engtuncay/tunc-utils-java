@@ -101,11 +101,11 @@ public class FiQuconf {
     this.fkfDataDef = fkfDataDef;
   }
 
-  public Fkf getFkficAll() {
+  public Fkf getFkfAll() {
     return fkfAll;
   }
 
-  public void setFkficAll(Fkf fkfAll) {
+  public void setFkfAll(Fkf fkfAll) {
     this.fkfAll = fkfAll;
   }
 

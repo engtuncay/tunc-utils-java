@@ -389,7 +389,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
   public Integer getValueAsInteger() {
     if (value == null) return null;
 
-    if(value instanceof Integer){
+    if (value instanceof Integer) {
       return (Integer) value;
     }
 
@@ -1411,6 +1411,15 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
       Loghelper.get(getClass()).debug("FdFkbVal:" + getFdFkbVal());
     }
 
+    if (!FiString.isEmptyTrim(getFdTxMessage())) {
+      Loghelper.get(getClass()).debug("FdTxMessage:" + getFdTxMessage());
+    }
+
+    if (!FiString.isEmptyTrim(getLogsAllTos())) {
+      Loghelper.get(getClass()).debug("Logs:\n" + getLogsAllTos());
+    }
+
+    Loghelper.get(getClass()).debug("FdBoResult:" + getFdBoResult());
 
   }
 
@@ -1474,4 +1483,11 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
   public void combineFkbList(Fdr fdrSub) {
     this.getFdFkbListValNtn().addAll(fdrSub.getFdFkbListValNtn());
   }
+
+  public Fdr buiBoResult(Boolean boResult, String txMessage) {
+    setBoResult(boResult);
+    setFdTxMessage(txMessage);
+    return this;
+  }
+
 }
