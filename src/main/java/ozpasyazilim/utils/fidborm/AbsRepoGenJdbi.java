@@ -2231,7 +2231,16 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
     return fdr;
   }
 
-  public Fdr jdSelectSingleStringBindMap(String sql, Map<String, Object> mapParam) {
+  /**
+   * Select single string value.
+   * <p>
+   * Value is stored in fdTxVal
+   *
+   * @param sql
+   * @param mapParam
+   * @return
+   */
+  public Fdr jdSelectFdTxValBindMap(String sql, Map<String, Object> mapParam) {
 
     Fdr fdr = new Fdr<>();
 

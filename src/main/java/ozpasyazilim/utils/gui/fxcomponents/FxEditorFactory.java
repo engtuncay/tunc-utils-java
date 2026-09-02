@@ -1767,7 +1767,7 @@ public class FxEditorFactory {
 
     for (IFiCol iFiTableCol : listCol) {
 
-      if (FiBool.isTrue(iFiTableCol.getBoRequired()) || FiBool.isFalse(iFiTableCol.getBoNullable())) {
+      if (FiBool.isTrue(iFiTableCol.getFcBoRequired()) || FiBool.isFalse(iFiTableCol.getBoNullable())) {
 
         Object propertyNested = FiReflection.getPropertyNested(entity, iFiTableCol.getFcTxFieldName());
 
@@ -1819,7 +1819,7 @@ public class FxEditorFactory {
     for (FiCol fiTableCol : colsForm) {
 
       // boRequired True, BoNullable False yapılmışsa boş geçilemez.
-      if (FiBool.isTrue(fiTableCol.getBoRequired()) || FiBool.isFalse(fiTableCol.getBoNullable())) {
+      if (FiBool.isTrue(fiTableCol.getFcBoRequired()) || FiBool.isFalse(fiTableCol.getBoNullable())) {
 
         Object cellValue = fiTableCol.getColValue();
 
@@ -1847,7 +1847,7 @@ public class FxEditorFactory {
     for (FiCol fiTableCol : colsForm) {
 
       // boRequired True, BoNullable False yapılmışsa boş geçilemez.
-      if (FiBool.isTrue(fiTableCol.getBoRequired()) || FiBool.isFalse(fiTableCol.getBoNullable())) {
+      if (FiBool.isTrue(fiTableCol.getFcBoRequired()) || FiBool.isFalse(fiTableCol.getBoNullable())) {
 
         //Object cellValue = fiTableCol.getColEditorValue();
         Object cellValue = FxEditorFactory.getNodeObjValue(fiTableCol, fiTableCol.getColEditorClass());

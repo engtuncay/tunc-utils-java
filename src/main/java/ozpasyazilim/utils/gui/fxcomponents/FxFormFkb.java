@@ -501,7 +501,7 @@ public class FxFormFkb extends FxMigPaneGenView {
 
   public static void setFieldsAllToRequired(List<? extends IFiCol> listColumn) {
     listColumn.forEach(o -> {
-      o.setBoRequired(true);
+      o.setFcBoRequired(true);
     });
   }
 

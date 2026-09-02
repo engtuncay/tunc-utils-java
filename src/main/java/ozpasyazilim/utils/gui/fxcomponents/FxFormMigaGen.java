@@ -502,7 +502,7 @@ public class FxFormMigaGen<EntClazz> extends FxMigPaneGenView<EntClazz> {
 
     public static void setFieldsAllToRequired(List<? extends IFiCol> listColumn) {
         listColumn.forEach(o -> {
-            o.setBoRequired(true);
+            o.setFcBoRequired(true);
         });
     }
 

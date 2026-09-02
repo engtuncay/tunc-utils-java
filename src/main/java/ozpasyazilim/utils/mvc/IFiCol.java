@@ -19,28 +19,7 @@ import java.util.function.Function;
  * Use FiCol in all places
  * @param <N>
  */
-
 public interface IFiCol<N> {
-
-//	static void setAutoFieldName(List<IFiCol> listCol) {
-//		listCol.forEach(ent -> {
-//			if (ent.getFieldName() == null) {
-//				ent.setFieldName(FiString.trimFieldNameWithEngAccent(ent.getHeaderName()));
-//			}
-//		});
-//	}
-
-//	static Map<String, String> getMapColHeaderToFieldName(List<IFiCol> listCol) {
-//		Map<String, String> mapHeaderToField = new HashMap<>();
-//		listCol.forEach(ozTableCol -> mapHeaderToField.put(ozTableCol.getHeaderName(), ozTableCol.getFieldName()));
-//		return mapHeaderToField;
-//	}
-//
-//	static Map<String, String> getMapColFieldToHeaderName(List<IFiCol> listCol) {
-//		Map<String, String> mapFieldtoHeader = new HashMap<>();
-//		listCol.forEach(ozTableCol -> mapFieldtoHeader.put(ozTableCol.getFieldName(), ozTableCol.getHeaderName()));
-//		return mapFieldtoHeader;
-//	}
 
 	// <-- Build Methods
 
@@ -206,20 +185,9 @@ public interface IFiCol<N> {
 
 	public void setFnEditorNodeRendererOnLoad(BiConsumer<Object, Node> fnEditorNodeRendererOnLoad);
 
-//	/**
-//	 * use colValue
-//	 *
-//	 * @return
-//	 */
-//	@Deprecated
-//	public Object getColEditorValue();
-//
-//	@Deprecated
-//	public void setColEditorValue(Object colEditorValue);
+	public Boolean getFcBoRequired();
 
-	public Boolean getBoRequired();
-
-	public void setBoRequired(Boolean boRequired);
+	public void setFcBoRequired(Boolean fcBoRequired);
 
 	public EventHandler<KeyEvent> getColEditorKeyEvent();
 

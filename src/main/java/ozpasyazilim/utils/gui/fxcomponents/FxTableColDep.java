@@ -985,9 +985,9 @@ public class FxTableColDep<Clazz> extends TableColumn implements IFiCol<Clazz> {
 		this.fnEditorNodeRendererWitValue = fnEditorNodeRendererWitValue;
 	}
 
-	public Boolean getBoRequired() {return boIsRequired;}
+	public Boolean getFcBoRequired() {return boIsRequired;}
 
-	public void setBoRequired(Boolean boRequired) {this.boIsRequired = boRequired;}
+	public void setFcBoRequired(Boolean fcBoRequired) {this.boIsRequired = fcBoRequired;}
 
 	@Override
 	public EventHandler<KeyEvent> getColEditorKeyEvent() {return colEditorEnterFn;}

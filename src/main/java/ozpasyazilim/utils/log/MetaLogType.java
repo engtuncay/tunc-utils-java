@@ -5,7 +5,7 @@ package ozpasyazilim.utils.log;
  *
  */
 public enum MetaLogType {
-  INFO, INFOBACK, LOG, WARN, WARNBACK, ERROR
+  INFO, INFOBACK, LOG, WARN, WARNBACK, ERROR, ERRORFE
   , ERRBACK
   , ALERT
   /**

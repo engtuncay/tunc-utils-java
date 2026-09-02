@@ -105,7 +105,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
   private Boolean boExist;
 
   // Excel için true olursa sütunun olması gerektiğini gösterir
-  private Boolean boRequired;
+  private Boolean fcBoRequired;
 
   // For Excel Reading, the field shows whether or not column exists in the excel
   private Boolean boEnabled;
@@ -275,10 +275,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
   // ****** Sql Sorgular ile ilgili alanlar
 
 
-  /**
-   * Bu alanın null değer alıp alamayacağını gösterir.
-   */
-  private Boolean boNullable;
+
 
   /**
    * Alanlarda update query oluşturulurken dahil edilmeyecek alanlar
@@ -433,9 +430,15 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
   private String fcTxIdType;
   // FiColumn
   private Boolean fcBoUniqGro1;
+
+  /**
+   * Bu alanın null değer alıp alamayacağını gösterir.
+   */
   private Boolean fcBoNullable;
+
   private Boolean fcBoUnique;
   private Boolean fcBoUtfSupport;
+
   /**
    * Default Value
    */
@@ -589,12 +592,6 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
 
   public FiCol buiSynFieldToHeader() {
     this.setFcTxHeader(this.getFcTxFieldName());
-    return this;
-  }
-
-
-  public FiCol buildNullable(Boolean nullable) {
-    this.setBoNullable(nullable);
     return this;
   }
 
@@ -778,7 +775,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
    * @return
    */
   public FiCol buiBoIsRequired(Boolean boIsRequired) {
-    setBoRequired(boIsRequired);
+    setFcBoRequired(boIsRequired);
     return this;
   }
 
@@ -1220,11 +1217,11 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
   }
 
   public Boolean getBoNullable() {
-    return boNullable;
+    return fcBoNullable;
   }
 
-  public void setBoNullable(Boolean boNullable) {
-    this.boNullable = boNullable;
+  public void setBoNullable(Boolean fcBoNullable) {
+    this.fcBoNullable = fcBoNullable;
   }
 
   public Boolean getBoNonUpdatable() {
@@ -1286,13 +1283,13 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
   }
 
   @Override
-  public Boolean getBoRequired() {
-    return boRequired;
+  public Boolean getFcBoRequired() {
+    return fcBoRequired;
   }
 
   @Override
-  public void setBoRequired(Boolean boRequired) {
-    this.boRequired = boRequired;
+  public void setFcBoRequired(Boolean fcBoRequired) {
+    this.fcBoRequired = fcBoRequired;
   }
 
   public Predicate<EntClazz> getPredEditorDisable() {
