@@ -5,7 +5,7 @@ import ozpasyazilim.utils.core.FiBool;
 import ozpasyazilim.utils.gui.fxcomponents.FxDialogShow;
 import ozpasyazilim.utils.gui.fxcomponents.FxMigHp;
 import ozpasyazilim.utils.gui.fxcomponents.FxMigPaneView;
-import ozpasyazilim.utils.gui.fxcomponents.FxWindow;
+import ozpasyazilim.utils.gui.fxcomponents.FiFxWindow;
 import ozpasyazilim.utils.mvc.AbsFiModBaseCont;
 import ozpasyazilim.utils.mvc.IFxTableSelectionCont;
 
@@ -51,7 +51,7 @@ public class FxSimpleContGen<E> extends AbsFiModBaseCont implements IFxTableSele
 		}
 
 		getModView().getRootPane().getStylesheets().add("app.css");
-		FxWindow.creNodeWindow(nodeRelative, this, width, height, boNonModal);
+		FiFxWindow.creNodeWindow(nodeRelative, this, width, height, boNonModal);
 	}
 
 	@Override

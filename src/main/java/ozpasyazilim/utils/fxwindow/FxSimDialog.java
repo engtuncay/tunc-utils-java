@@ -149,7 +149,7 @@ public class FxSimDialog<EntClazz> extends AbsFiModBaseCont {
             initCont();
         }
         //getiFxModCont().getModView().getRootPane().getStylesheets().add("main.css");
-        FxWindow.creNodeWindow(null, this);
+        FiFxWindow.creNodeWindow(null, this);
     }
 
     public void openAsDialogASync() {
@@ -158,7 +158,7 @@ public class FxSimDialog<EntClazz> extends AbsFiModBaseCont {
         }
 
         Platform.runLater(()->{
-            FxWindow.creNodeWindow(null, this);
+            FiFxWindow.creNodeWindow(null, this);
         });
         //getiFxModCont().getModView().getRootPane().getStylesheets().add("main.css");
 

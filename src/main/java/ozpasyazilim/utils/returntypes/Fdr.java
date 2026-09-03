@@ -510,8 +510,9 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     return getFdException() != null;
   }
 
-  public void setFdException(Exception fdException) {
-    this.fdException = fdException;
+  public void setFdException(Exception exception) {
+    this.fdException = exception;
+    getFdListExceptionInit().add(exception);
   }
 
   public Fdr buildException(Exception e) {
@@ -789,6 +790,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
   public void setBoResult(Boolean boExec, Exception exError) {
     setFdBoResult(boExec);
     setFdException(exError);
+    getFdListExceptionInit().add(exError);
   }
 
   public void setBoResult(Boolean fdrBoResult) {

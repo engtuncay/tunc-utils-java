@@ -114,15 +114,17 @@ public class FiColsUtil {
       if (FiBool.isTrue(fiCol.getFcBoRequired()) || FiBool.isFalse(fiCol.getFcBoNullable())) {
 
         Object cellValue = fkbEntity.getFicVal(fiCol);
-
         String message = String.format("%s Alanı Zorunludur.Boş Geçilemez.", fiCol.getFcTxHeader());
+
         // Null ve Boş Alan Kontrolü
         if (cellValue == null) {
           fdrMain.buiBoResult(false, message);
+          return fdrMain;
         }
 
         if (cellValue instanceof String && FiString.isEmpty((String) cellValue)) {
           fdrMain.buiBoResult(false, message);
+          return fdrMain;
         }
 
       }

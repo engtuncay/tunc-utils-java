@@ -121,7 +121,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFiModBaseCont {
             initCont();
         }
         //getiFxModCont().getModView().getRootPane().getStylesheets().add("main.css");
-        FxWindow.creNodeWindow(null, this);
+        FiFxWindow.creNodeWindow(null, this);
     }
 
     public static FxSimpleDialog bui(FiDialogMetaType fiDialogMetaType, String message) {

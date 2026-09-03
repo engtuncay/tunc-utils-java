@@ -339,7 +339,6 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
   }
 
 
-
   public Fdr jdUpdateBindMapMain(FiQuery fiQuery) {
     return jdUpdateBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
   }
@@ -435,6 +434,87 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
     return fdrMain;
   }
 
+
+  /**
+   * default impl : bind map
+   *
+   * @param fiQuery
+   * @param handle
+   * @return
+   */
+  public Fdr jdhDeleteMain(FiQuery fiQuery, Handle handle) {
+
+    String txQuery = fiQuery.getTxQuery();
+    Map<String, Object> fiMapParams = fiQuery.getMapParams();
+
+    Fdr fdrMain = new Fdr();
+    try {
+      Integer rowCountUpdate = handle.createUpdate(FiQueTools.stoj(txQuery))
+          .bindMap(fiMapParams)
+          .execute(); // returns row count updated;
+      //Loghelperr.getInstance(getClass()).debug("Row Count Update:"+rowCountUpdate);
+      //fiDbResult.setLnSuccessWithUpBoResult(1, rowCountUpdate);
+      fdrMain.setBoResultAndRowsAff(true, rowCountUpdate);
+    } catch (Exception ex) {
+      fdrMain.setBoResult(false, ex);
+      Loghelper.get(getClass()).error(FiException.exToErrorLog(ex));
+    }
+    return fdrMain;
+  }
+
+  /**
+   * default impl : bind map
+   *
+   * @param fiQuery
+   * @param handle
+   * @return
+   */
+  public Fdr jdhUpdateMain(FiQuery fiQuery, Handle handle) {
+
+    String txQuery = fiQuery.getTxQuery();
+    Map<String, Object> fiMapParams = fiQuery.getMapParams();
+
+    Fdr fdrMain = new Fdr();
+    try {
+      Integer rowCountUpdate = handle.createUpdate(FiQueTools.stoj(txQuery))
+          .bindMap(fiMapParams)
+          .execute(); // returns row count updated;
+      //Loghelperr.getInstance(getClass()).debug("Row Count Update:"+rowCountUpdate);
+      //fiDbResult.setLnSuccessWithUpBoResult(1, rowCountUpdate);
+      fdrMain.setBoResultAndRowsAff(true, rowCountUpdate);
+    } catch (Exception ex) {
+      fdrMain.setBoResult(false, ex);
+      Loghelper.get(getClass()).error(FiException.exToErrorLog(ex));
+    }
+    return fdrMain;
+  }
+
+  /**
+   * default impl : bind map
+   *
+   * @param fiQuery
+   * @param handle
+   * @return
+   */
+  public Fdr jdhInsertMain(FiQuery fiQuery, Handle handle) {
+
+    String insertQuery = fiQuery.getTxQuery();
+    Map<String, Object> fiMapParams = fiQuery.getMapParams();
+
+    Fdr fdrMain = new Fdr();
+    try {
+      Integer rowCountUpdate = handle.createUpdate(FiQueTools.stoj(insertQuery))
+          .bindMap(fiMapParams)
+          .execute(); // returns row count updated;
+      //Loghelperr.getInstance(getClass()).debug("Row Count Update:"+rowCountUpdate);
+      //fiDbResult.setLnSuccessWithUpBoResult(1, rowCountUpdate);
+      fdrMain.setBoResultAndRowsAff(true, rowCountUpdate);
+    } catch (Exception ex) {
+      fdrMain.setBoResult(false, ex);
+      Loghelper.get(getClass()).error(FiException.exToErrorLog(ex));
+    }
+    return fdrMain;
+  }
 
   public <EntMethodClazz> Fdr<List<EntMethodClazz>> jdSelectListBindMapMain(String sqlQuery, Map<String, Object> mapBind, Class<EntMethodClazz> clazz) {
 

@@ -673,18 +673,12 @@ public class FiReflection {
 		try {
 			PropertyUtils.setProperty(objEntity, fieldName, objValue);
 			return true;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-			return false;
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-			return false;
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
+		} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+			Loghelper.get(getClassi()).debug(FiException.exToErrorLog(e));
 			return false;
 		}
 
-	}
+  }
 
 	public static <E> void bindKeyBeanToEntity(Fkb keyBean, E entity, Class<E> clazz, Boolean boAddOnlyNtnFields) {
 
@@ -740,6 +734,7 @@ public class FiReflection {
 		E finalEntity = entity;
 
 		fkb.forEach((key, value) -> {
+			// Entity de o alan var mı yok mu kontrolü eklenebilir
 			// Process each key-value pair in the Fkb
 			if (FiBool.isTrue(boAddOnlyNtnFields)) {
 				if (fkb.get(key) != null) {

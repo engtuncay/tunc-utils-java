@@ -5,7 +5,7 @@ import ozpasyazilim.utils.datatypes.Fkb;
 import ozpasyazilim.utils.entity.FiModule;
 import ozpasyazilim.utils.gui.fxcomponents.DialogConf;
 import ozpasyazilim.utils.gui.fxcomponents.FxStage;
-import ozpasyazilim.utils.gui.fxcomponents.FxWindow;
+import ozpasyazilim.utils.gui.fxcomponents.FiFxWindow;
 
 /**
  * Tüm Module Kontrollerde olması gereken alanlar ve metodlar
@@ -154,7 +154,7 @@ public abstract class AbsFiModBaseCont implements IFiModCont {
     }
 
     dialogConf.setCssFileName("main.css");
-    FxWindow.creNodeWindow(this, dialogConf);
+    FiFxWindow.creNodeWindow(this, dialogConf);
   }
 
   public String getConnProfile() {
