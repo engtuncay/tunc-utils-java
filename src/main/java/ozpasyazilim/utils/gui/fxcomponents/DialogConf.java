@@ -9,114 +9,143 @@ import ozpasyazilim.utils.fidbanno.FiTable;
 @FiTable
 public class DialogConf {
 
-    String txContent;
-    String title;
-    Double width;
-    Double height;
+  String txContent;
+  String title;
+  Double width;
+  Double height;
 
-    /**
-     * Modal Pencere : Uygulama Pasif Eder,Cevap Bekler
-     * <p>
-     * NonModal Pencere : Uygulama Pasif Etmez,Pencereyi arkaya alıp, başka çalışmalar yapmaya izin verir
-     */
-    Boolean boNonModal;
-    Node nodeRelative;
-    String cssFileName;
+  /**
+   * Modal Pencere : Uygulama Pasif Eder,Cevap Bekler
+   * <p>
+   * NonModal Pencere : Uygulama Pasif Etmez,Pencereyi arkaya alıp, başka çalışmalar yapmaya izin verir
+   */
+  Boolean boNonModal;
+  Node nodeRelative;
+  String cssFileName;
 
-    /**
-     * Başarılı işlemlerde sadece pop mesaj görüntüler
-     */
-    Boolean boShowPopOnlyIfSuccess;
+  /**
+   * Başarılı işlemlerde sadece pop mesaj görüntüler
+   */
+  Boolean boShowPopOnlyIfSuccess;
 
-    //Double nmPrefWidth;
+  String txErrorExtraInfo;
 
-    public DialogConf() {
-    }
+  Boolean boDiscreteOpsFdr;
 
-    public DialogConf(String txContent) {
-        this.txContent = txContent;
-    }
+  //Double nmPrefWidth;
 
-    public static DialogConf factory() {
-        return new DialogConf();
-    }
+  public DialogConf() {
+  }
 
-    public String getTitle() {
-        return title;
-    }
+  public DialogConf(String txContent) {
+    this.txContent = txContent;
+  }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+  public static DialogConf factory() {
+    return new DialogConf();
+  }
 
-    public DialogConf buildTitle(String title) {
-        setTitle(title);
-        return this;
-    }
+  public static DialogConf bui() {
+    return new DialogConf();
+  }
 
-    public DialogConf buiContent(String txContent) {
-        setTxContent(txContent);
-        return this;
-    }
+  public String getTitle() {
+    return title;
+  }
 
-    public Double getWidth() {
-        return width;
-    }
+  public void setTitle(String title) {
+    this.title = title;
+  }
 
-    public void setWidth(Double width) {
-        this.width = width;
-    }
+  public DialogConf buildTitle(String title) {
+    setTitle(title);
+    return this;
+  }
 
-    public Double getHeight() {
-        return height;
-    }
+  public DialogConf buiContent(String txContent) {
+    setTxContent(txContent);
+    return this;
+  }
 
-    public void setHeight(Double height) {
-        this.height = height;
-    }
+  public Double getWidth() {
+    return width;
+  }
 
-    public DialogConf buildWidth(double v) {
-        setWidth(v);
-        return this;
-    }
+  public void setWidth(Double width) {
+    this.width = width;
+  }
 
-    public String getTxContent() {
-        return txContent;
-    }
+  public Double getHeight() {
+    return height;
+  }
 
-    public void setTxContent(String txContent) {
-        this.txContent = txContent;
-    }
+  public void setHeight(Double height) {
+    this.height = height;
+  }
 
-    public Boolean getBoNonModal() {
-        return boNonModal;
-    }
+  public DialogConf buildWidth(double v) {
+    setWidth(v);
+    return this;
+  }
 
-    public void setBoNonModal(Boolean boNonModal) {
-        this.boNonModal = boNonModal;
-    }
+  public String getTxContent() {
+    return txContent;
+  }
 
-    public Node getNodeRelative() {
-        return nodeRelative;
-    }
+  public void setTxContent(String txContent) {
+    this.txContent = txContent;
+  }
 
-    public void setNodeRelative(Node nodeRelative) {
-        this.nodeRelative = nodeRelative;
-    }
+  public Boolean getBoNonModal() {
+    return boNonModal;
+  }
 
-    public String getCssFileName() {
-        return cssFileName;
-    }
+  public void setBoNonModal(Boolean boNonModal) {
+    this.boNonModal = boNonModal;
+  }
 
-    public void setCssFileName(String cssFileName) {
-        this.cssFileName = cssFileName;
-    }
+  public Node getNodeRelative() {
+    return nodeRelative;
+  }
 
-    public Boolean getBoShowPopOnlyIfSuccess() {
-        return boShowPopOnlyIfSuccess;
-    }
+  public void setNodeRelative(Node nodeRelative) {
+    this.nodeRelative = nodeRelative;
+  }
 
-    public void setBoShowPopOnlyIfSuccess(Boolean boShowPopOnlyIfSuccess) {
-        this.boShowPopOnlyIfSuccess = boShowPopOnlyIfSuccess;
-    }
+  public String getCssFileName() {
+    return cssFileName;
+  }
+
+  public void setCssFileName(String cssFileName) {
+    this.cssFileName = cssFileName;
+  }
+
+  public Boolean getBoShowPopOnlyIfSuccess() {
+    return boShowPopOnlyIfSuccess;
+  }
+
+  public void setBoShowPopOnlyIfSuccess(Boolean boShowPopOnlyIfSuccess) {
+    this.boShowPopOnlyIfSuccess = boShowPopOnlyIfSuccess;
+  }
+
+  public String getTxErrorExtraInfo() {
+    return txErrorExtraInfo;
+  }
+
+  public void setTxErrorExtraInfo(String txErrorExtraInfo) {
+    this.txErrorExtraInfo = txErrorExtraInfo;
+  }
+
+  public Boolean getBoDiscreteOpsFdr() {
+    return boDiscreteOpsFdr;
+  }
+
+  public void setBoDiscreteOpsFdr(Boolean boDiscreteOpsFdr) {
+    this.boDiscreteOpsFdr = boDiscreteOpsFdr;
+  }
+
+  public DialogConf buiBoDiscreteOpsFdr(Boolean boDiscreteOpsFdr) {
+    setBoDiscreteOpsFdr(boDiscreteOpsFdr);
+    return this;
+  }
 }

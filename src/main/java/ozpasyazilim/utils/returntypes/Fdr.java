@@ -1411,6 +1411,8 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
 
   public void logFdr() {
 
+    Loghelper.get(getClass()).debug("logFdr called...");
+
     if (getFdTxVal() != null) {
       Loghelper.get(getClass()).debug("FdTxValue:" + getFdTxVal());
     }

@@ -9,6 +9,9 @@ import ozpasyazilim.utils.core.FiBool;
 import ozpasyazilim.utils.core.FiString;
 import ozpasyazilim.utils.mvc.IFiModCont;
 
+/**
+ * Fx Window Utility Methods
+ */
 public class FiFxWindow {
 
     public static void creNodeWindow(Node nodeRelative, IFiModCont ifxSimpleModCont) {
