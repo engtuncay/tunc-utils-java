@@ -195,6 +195,11 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
    */
   Boolean fdBoOrCombined;
 
+  /**
+   * Fdr sonucu verildiğinde dialog'un kapatıp kapatılmayacağını belirtir
+   */
+  Boolean boCloseDialog;
+
   // --------------- Methods
 
   public Fdr() {
@@ -634,7 +639,6 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
       setFdBoFailExist(true);
     }
 
-
     if (FiBool.isTrue(fdrSubWork.getFdBoResult())) {
       setFdBoResult(true);
       appendLnTrueResult(1);
@@ -644,13 +648,14 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     if (fdrSubWork.getFdException() != null) {
       setFdException(fdrSubWork.getFdException());
       // exception birden fazla olma ihtimali var.
-      getFdListExceptionInit().add(fdrSubWork.getFdException());
+      // getFdListExceptionInit().add(fdrSubWork.getFdException());
     }
 
     if (fdrSubWork.getFdListFdrExcept() != null) {
       getFdListFdrExceptInit().addAll(fdrSubWork.getFdListFdrExceptInit());
     }
 
+    // !!! burada mantık değiştirildi rowsAffected 0 dan büyük çıkarsa boResult true yapılmıştı, iptal edildi
     appendRowsAffected(fdrSubWork.getRowsAffectedOrEmpty());
     // Tüm işlemlerde mesaj birleştirilir.
     appendMessageLn(fdrSubWork.getFdTxMessage());
@@ -783,7 +788,9 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     if (rowsAffected == null) return;
 
     if (rowsAffected > 0) {
-      setRowsAffectedWithUpBoResult(getRowsAffectedWithInit() + rowsAffected);
+      //setRowsAffectedWithUpBoResult(getRowsAffectedWithInit() + rowsAffected); 03/09/2026 yorum alındı
+      // bazı sorgularda rowsAffected göre yorumlanmış olabilir
+      setRowsAffected(getRowsAffectedWithInit() + rowsAffected);
     }
   }
 
@@ -1433,6 +1440,33 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
 
   }
 
+  public String textLogFdr() {
+
+    Loghelper.get(getClass()).debug("textLogFdr called...");
+
+    StringBuilder sb = new StringBuilder();
+
+    if (getFdTxVal() != null) {
+      sb.append("FdTxValue:").append(getFdTxVal()).append("\n");
+    }
+
+    if (getFdFkbVal() != null) {
+      sb.append("FdFkbVal:").append(getFdFkbVal()).append("\n");
+    }
+
+    if (!FiString.isEmptyTrim(getFdTxMessage())) {
+      sb.append("FdTxMessage:").append(getFdTxMessage()).append("\n");
+    }
+
+    if (!FiString.isEmptyTrim(getLogsAllTos())) {
+      sb.append("Logs:\n").append(getLogsAllTos()).append("\n");
+    }
+
+    sb.append("FdBoResult:").append(getFdBoResult()).append("\n");
+
+    return sb.toString();
+  }
+
   public boolean hasLogType(MetaLogType metaLogType) {
     for (FieLog fieLog : getFdLogListInit()) {
       if (metaLogType.toString().equals(fieLog.getFieTxLogType())) {
@@ -1500,4 +1534,11 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     return this;
   }
 
+  public Boolean getBoCloseDialog() {
+    return boCloseDialog;
+  }
+
+  public void setBoCloseDialog(Boolean boCloseDialog) {
+    this.boCloseDialog = boCloseDialog;
+  }
 }
