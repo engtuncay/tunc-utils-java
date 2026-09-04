@@ -891,6 +891,11 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     return this;
   }
 
+  public FiCol buiBoNullable(boolean boNullable) {
+    setBoNullable(boNullable);
+    return this;
+  }
+
   public enum ColStyle {alignment;}
 
   public void setupFiCol() {

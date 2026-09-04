@@ -139,7 +139,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
   /**
    * Fail Operation Count (Başarısız işlem sayısı)
    */
-  private Integer lnFailOprCount;
+  private Integer lnFailOpsCount;
 
   private String txQueryType;
 
@@ -281,7 +281,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
 //		fdrNew.setRowsAffectedExtraWorks(fdrOld.getRowsAffectedExtraWorks());
 //		fdrNew.setRowsAffectedExtraByEntity(fdrOld.getRowsAffectedExtraByEntity());
     fdrNew.setLnSuccessOpCount(fdrOld.getLnSuccessOpCountInit());
-    fdrNew.setLnFailOprCount(fdrOld.getLnFailOprCountInit());
+    fdrNew.setLnFailOpsCount(fdrOld.getLnFailOprCountInit());
   }
 
   public static Fdr creBoResult(Boolean boResult) {
@@ -482,7 +482,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
 
   public void appendLnFalseResult(Integer lnFailureCount) {
     if (lnFailureCount == null) return;
-    setLnFailOprCount(getLnFailOprCountInit() + lnFailureCount);
+    setLnFailOpsCount(getLnFailOprCountInit() + lnFailureCount);
   }
 
   public void appendLnInserted(Integer lnInsertedRows) {
@@ -564,7 +564,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     // And işlemi olduğu false sonuç, boResult false yapar
     if (FiBool.isFalse(fdrSubWork.getFdBoResult())) {
       setFdBoResult(false);
-      setLnFailOprCount(getLnFailOprCountInit() + 1);
+      setLnFailOpsCount(getLnFailOprCountInit() + 1);
     }
 
     if (FiBool.isTrue(fdrSubWork.getFdBoResult())) {
@@ -718,14 +718,14 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
   }
 
   public Integer getLnFailOprCountInit() {
-    if (lnFailOprCount == null) {
-      lnFailOprCount = 0;
+    if (lnFailOpsCount == null) {
+      lnFailOpsCount = 0;
     }
-    return lnFailOprCount;
+    return lnFailOpsCount;
   }
 
-  public void setLnFailOprCount(Integer lnFailOprCount) {
-    this.lnFailOprCount = lnFailOprCount;
+  public void setLnFailOpsCount(Integer lnFailOpsCount) {
+    this.lnFailOpsCount = lnFailOpsCount;
   }
 
   public Boolean getBoResultInit() {
@@ -1340,8 +1340,8 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     this.lnStatus = lnStatus;
   }
 
-  public Integer getLnFailOprCount() {
-    return lnFailOprCount;
+  public Integer getLnFailOpsCount() {
+    return lnFailOpsCount;
   }
 
   public List<Runnable> getObsMethodFinished() {
