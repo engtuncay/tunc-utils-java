@@ -149,22 +149,14 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
   private Integer lnDeletedRows;
 
   /**
-   * Kafa karışıklığı oluşturabilir, kullanılmaması tavsiye
+   * Fdr sonucu olarak boolean değer döndürmek için
    * <p>
-   * incelenecek, dikatli kullanılır
-   * <p>
-   * Operasyon sonucu nedir , true işlem sonucu pozitif, false işlem sonucu negatif olur.
-   * <p>
-   * boExec farkı : boExec, sorgunun veya yapılacak işlemin başarılı çalıştırıldığını gösterir
-   * <p>
-   * Örneğin checkExist yapılıyorsa, kayıt varsa opResutl true olur, yoksa false olur.
-   * <p>
-   * Daha sonra boResult olarak ismi değiştirilebilir
+   * xConfig db okununca fdBoResult true, konfigurasyon değeri fdBoVal değerine yazılabilir.
    */
-  @FiReview
-  Boolean boOpResult;
+  Boolean fdBoVal;
 
   // Sorgunun execute edildiğini göstermek için
+  @FiReview
   Boolean boQueryExecuted;
 
   /**
@@ -852,10 +844,19 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     }
   }
 
+  public Boolean getFdBoVal() {
+    return fdBoVal;
+  }
 
-  @Deprecated
-  public void setBoOpResult(Boolean boOpResult) {
-    this.boOpResult = boOpResult;
+  public Boolean getFdBoValNtn() {
+    if (fdBoVal == null) {
+      return false;
+    }
+    return fdBoVal;
+  }
+
+  public void setFdBoVal(Boolean fdBoVal) {
+    this.fdBoVal = fdBoVal;
   }
 
   public void setResValue(EntClazz value) {
@@ -1436,6 +1437,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
       Loghelper.get(getClass()).debug("Logs:\n" + getLogsAllTos());
     }
 
+    Loghelper.get(getClass()).debug("FdBoVal:" + getFdBoVal());
     Loghelper.get(getClass()).debug("FdBoResult:" + getFdBoResult());
 
   }
@@ -1541,4 +1543,6 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
   public void setBoCloseDialog(Boolean boCloseDialog) {
     this.boCloseDialog = boCloseDialog;
   }
+
+
 }

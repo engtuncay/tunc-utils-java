@@ -399,12 +399,11 @@ public class FiReflection {
 	}
 
 	public static <T extends Object> String getSimpleClassName(T object) {
+
 		if (object instanceof Integer) return Integer.class.getSimpleName();
-
 		if (object instanceof Double) return Double.class.getSimpleName();
-
 		if (object instanceof String) return String.class.getSimpleName();
-
+		if (object instanceof Boolean) return Boolean.class.getSimpleName();
 		if (object instanceof List) return List.class.getSimpleName();
 
 		return null;
@@ -749,5 +748,15 @@ public class FiReflection {
 	}
 
 
+  public static void logObject(Object objVal) {
+		Loghelper.get(getClassi()).debug("FiReflection.logObject");
 
+		if(objVal==null) {
+			Loghelper.get(getClassi()).debug("obj val: null");
+			return;
+		}
+
+		Loghelper.get(getClassi()).debug("Type Name:" + getSimpleTypeName(objVal.getClass()));
+
+  }
 }

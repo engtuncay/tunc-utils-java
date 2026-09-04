@@ -1,5 +1,6 @@
 package ozpasyazilim.utils.mvc;
 
+import javafx.application.Platform;
 import javafx.stage.Stage;
 import ozpasyazilim.utils.datatypes.Fkb;
 import ozpasyazilim.utils.entity.FiModule;
@@ -99,6 +100,10 @@ public abstract class AbsFiModBaseCont implements IFiModCont {
 
   public void closeStageWithDoneReason() {
     closeStage(getDoneText());
+  }
+
+  public void closeStageWithDoneReasonAsync() {
+    Platform.runLater(() -> closeStage(getDoneText()));
   }
 
   public static String getDoneText() {

@@ -683,6 +683,11 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
           throw fdr.getFdException();
         }
 
+        List<Exception> fdListExceptionInit = fdr.getFdListExceptionInit();
+        if (!fdListExceptionInit.isEmpty()) {
+          throw fdListExceptionInit.get(0);
+        }
+
         handle.commit();
         //Loghelper.get(getClass()).debug("handle commit edildi");
       });

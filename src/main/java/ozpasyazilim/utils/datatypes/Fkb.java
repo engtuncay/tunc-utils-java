@@ -430,7 +430,6 @@ public class Fkb extends LinkedHashMap<String, Object> {
   }
 
 
-
   public Date getFicAsDate(FiCol fiCol) {
     if (fiCol == null || FiString.isEmpty(fiCol.getFcTxFieldName())) return null;
 
@@ -452,16 +451,39 @@ public class Fkb extends LinkedHashMap<String, Object> {
     return null;
   }
 
+  /**
+   * değer boolean ise, boolean çevirir
+   * <p>
+   * değer string ise çevirmez
+   *
+   * @param fiCol
+   * @return
+   */
   public Boolean getFicAsBool(FiCol fiCol) {
     if (fiCol == null || FiString.isEmpty(fiCol.getFcTxFieldName())) return null;
 
     if (containsKey(fiCol.getFcTxFieldName())) {
-      if (get(fiCol.getFcTxFieldName()) instanceof Boolean) {
-        return (Boolean) get(fiCol.getFcTxFieldName());
+      Object objVal = get(fiCol.getFcTxFieldName());
+
+      if (objVal instanceof Boolean) {
+        return (Boolean) objVal;
       }
+
     }
 
     return null;
+  }
+
+  /**
+   * değer boolean ise, boolean çevirir
+   * <p>
+   * değer string veya integer'sa da boolean çevirir (true,false,0,1 yazısına göre)
+   *
+   * @param fiCol
+   * @return
+   */
+  public Boolean getFicAsBoolV2(FiCol fiCol) {
+    return getValueAsBoolV2(fiCol.getFcTxFieldName());
   }
 
   public Boolean getAsBool(String txKey) {
@@ -820,7 +842,7 @@ public class Fkb extends LinkedHashMap<String, Object> {
 
   public FkbList getAsFkbListNtn(String fcTxFieldName) {
     FkbList asFkbList = getAsFkbList(fcTxFieldName);
-    return asFkbList!=null?asFkbList:new FkbList();
+    return asFkbList != null ? asFkbList : new FkbList();
   }
 
 
