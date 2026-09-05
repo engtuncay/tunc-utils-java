@@ -27,6 +27,8 @@ import java.util.concurrent.atomic.AtomicReference;
  * Sql Sorgularında named parametrelere bind etmek için kullanılır.
  * <p>
  * Bir nevi key-object tipinde array dir.
+ * <p>
+ * Not: hashmap null key'i destekler !!! inceleme yapılmalı URREV
  */
 public class Fkb extends LinkedHashMap<String, Object> {
 
@@ -733,6 +735,7 @@ public class Fkb extends LinkedHashMap<String, Object> {
   }
 
   public Object getFicVal(FiCol fiCol) {
+    // not: hashmap null key'i destekler !!!
     return get(fiCol.getFcTxFieldName());
   }
 

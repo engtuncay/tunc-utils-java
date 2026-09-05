@@ -38,23 +38,8 @@ public class FicValidate {
 
       }
 
-      // boRequired True, BoNullable True ise sadece fkbEntity de olması yeterli
-      if (FiBool.isTrue(fiCol.getFcBoRequired()) && FiBool.isTrue(fiCol.getFcBoNullable())) {
-
-        if (!fkbEntity.containsFic(fiCol)) {
-          Fdr fdrReq1 = new Fdr();
-          String message = String.format("%s alanı zorunludur.", fiCol.getFcTxHeader());
-          fdrReq1.setFdTxMessage(message);
-          fdrReq1.setBoResult(false);
-          fdrMain.combineAnd(fdrReq1);
-        }
-
-      }
-
-      if ( // boRequired true, Nullable True değilse , zorunlu doldurulacak alan
-          (FiBool.isTrue(fiCol.getFcBoRequired()) && !FiBool.isTrue(fiCol.getFcBoNullable()))
-          || FiBool.isFalse(fiCol.getFcBoNullable()) // Nullable false ise boş olmamalı
-      ) {
+      // Nullable false ise boş olmamalı
+      if (FiBool.isFalse(fiCol.getFcBoNullable())) {
 
         Object cellValue = fkbEntity.getFicVal(fiCol);
         String message = String.format("%s Alanı Zorunludur.Boş olamaz.", fiCol.getFcTxHeader());
@@ -65,6 +50,7 @@ public class FicValidate {
           fdrReq.setFdTxMessage(message);
           fdrReq.setBoResult(false);
           fdrMain.combineAnd(fdrReq);
+          return fdrMain;
         }
 
         // String ise boşsa
@@ -73,6 +59,7 @@ public class FicValidate {
           fdrReq.setFdTxMessage(message);
           fdrReq.setBoResult(false);
           fdrMain.combineAnd(fdrReq);
+          return fdrMain;
         }
 
       }
