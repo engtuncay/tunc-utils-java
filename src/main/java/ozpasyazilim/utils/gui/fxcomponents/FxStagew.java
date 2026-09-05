@@ -4,7 +4,7 @@ import javafx.application.Platform;
 import javafx.stage.Stage;
 
 /**
- * Fx Stage Wrapped
+ * Stage Wrapper Class
  */
 public class FxStagew {
 
