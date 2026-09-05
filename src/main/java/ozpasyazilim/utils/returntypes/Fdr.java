@@ -96,10 +96,10 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
    */
   private Boolean fdBoFailExist;
 
-  /**
-   * listException olduğu için exception property çıkarılabilir
-   */
-  private Exception fdException;
+//  /**
+//   * listException olduğu için exception property çıkarılabilir
+//   */
+  //private Exception fdException;
 
   /**
    * Tekil ve Çoklu işlemlerde exception burada biriktirilir.
@@ -218,7 +218,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
 
   public Fdr(Integer rowCountUpdate, Exception ex) {
     setRowsAffectedWithUpBoResult(rowCountUpdate);
-    setFdException(ex);
+    addFdException(ex);
   }
 
   public Fdr(Integer rowCountUpdate, Boolean fdBoResult) {
@@ -228,7 +228,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
 
   public Fdr(Boolean fdBoResult, Exception ex) {
     setFdBoResult(fdBoResult);
-    setFdException(ex);
+    addFdException(ex);
   }
 
   public Fdr(FiResponse fiResponse) {
@@ -252,7 +252,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     this.fdTxMessage = txMessage;
 
     if (FiBool.isTrue(boAddException)) {
-      setFdException(new Exception(txMessage));
+      addFdException(new Exception(txMessage));
     }
 
   }
@@ -268,7 +268,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
   public static void cloneWithoutValue(Fdr fdrNew, Fdr fdrOld) {
     fdrNew.setFdBoResult(fdrOld.getFdBoResult());
     fdrNew.setRowsAffected(fdrOld.getRowsAffectedWithInit());
-    fdrNew.setFdException(fdrOld.getFdException());
+    fdrNew.addFdException(fdrOld.getFdException());
 //		fdrNew.setBoPartialSuccces(fdrOld.getBoPartialSuccces());
 //		fdrNew.setRowsAffectedExtraWorks(fdrOld.getRowsAffectedExtraWorks());
 //		fdrNew.setRowsAffectedExtraByEntity(fdrOld.getRowsAffectedExtraByEntity());
@@ -493,27 +493,27 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
   }
 
   public Exception getFdException() {
-    return fdException;
+    return getFdListExceptionInit().get(0);
   }
 
   public Exception getExceptionNtn() {
-    if (fdException == null) {
+    if (getFdException() == null) {
       return new Exception("exception boş,atanmamış.(ntn)");
     }
-    return fdException;
+    return getFdException();
   }
 
   public Boolean hasException() {
     return getFdException() != null;
   }
 
-  public void setFdException(Exception exception) {
-    this.fdException = exception;
+  public void addFdException(Exception exception) {
+    //this.fdException = exception;
     getFdListExceptionInit().add(exception);
   }
 
   public Fdr buildException(Exception e) {
-    this.setFdException(e);
+    this.addFdException(e);
     return this;
   }
 
@@ -570,12 +570,6 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     }
 
     // Tümü için yapılacaklar
-    if (fdrSubWork.getFdException() != null) {
-      setFdException(fdrSubWork.getFdException());
-      // exception birden fazla olma ihtimali var.
-      getFdListExceptionInit().add(fdrSubWork.getFdException());
-    }
-
     if (fdrSubWork.getFdListFdrExcept() != null) {
       getFdListFdrExceptInit().addAll(fdrSubWork.getFdListFdrExceptInit());
     }
@@ -638,7 +632,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     }
 
     if (fdrSubWork.getFdException() != null) {
-      setFdException(fdrSubWork.getFdException());
+      addFdException(fdrSubWork.getFdException());
       // exception birden fazla olma ihtimali var.
       // getFdListExceptionInit().add(fdrSubWork.getFdException());
     }
@@ -764,7 +758,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
 
   public Fdr buiBoResult(Boolean boExec, Exception ex) {
     setFdBoResult(boExec);
-    setFdException(ex);
+    addFdException(ex);
     if (FiString.isEmpty(getFdTxMessage())) {
       setFdrTxMessageWitAddLog(FiException.TosSummary(ex));
     }
@@ -788,7 +782,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
 
   public void setBoResult(Boolean boExec, Exception exError) {
     setFdBoResult(boExec);
-    setFdException(exError);
+    addFdException(exError);
     getFdListExceptionInit().add(exError);
   }
 
@@ -939,7 +933,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
   }
 
   public void copyValues(Fdr fdr) {
-    setFdException(fdr.getFdException());
+    addFdException(fdr.getFdException());
     setFdrTxMessageWitAddLog(fdr.getFdTxMessage());
     setFdBoResult(fdr.getFdBoResult());
   }

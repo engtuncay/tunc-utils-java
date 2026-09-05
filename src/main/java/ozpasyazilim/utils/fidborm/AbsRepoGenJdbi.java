@@ -2566,7 +2566,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
     } catch (Exception ex) {
       Loghelper.errorLog(getClass(), "Query Problem");
       Loghelper.errorException(getClass(), ex);
-      fdr.setFdException(ex);
+      fdr.addFdException(ex);
       fdr.setFdBoResult(false);
     }
 
@@ -2592,7 +2592,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
     } catch (Exception ex) {
       Loghelper.get(getClass()).debug("Query Problem");
       Loghelper.get(getClass()).debug(FiException.exTosMain(ex));
-      fdrMain.setFdException(ex);
+      fdrMain.addFdException(ex);
       fdrMain.setFdBoResult(false);
     }
     return fdrMain;
@@ -2681,7 +2681,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
       Loghelper.debugException(getClass(), ex);
       Loghelper.get(getClass()).debug("Genel Catch de Yakalandı");
       fdrBatch.setFdBoResult(false);
-      fdrBatch.setFdException(ex);
+      fdrBatch.addFdException(ex);
       return fdrBatch;
     }
     //fiDbResultBatch.setBoResult(boResult);
@@ -2754,7 +2754,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
       Loghelper.debugException(getClass(), ex);
       Loghelper.get(getClass()).debug("Genel Catch de Yakalandı");
       fdrBatch.setFdBoResult(false);
-      fdrBatch.setFdException(ex);
+      fdrBatch.addFdException(ex);
     }
 
     return fdrBatch;
@@ -2830,7 +2830,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
       Loghelper.debugException(getClass(), ex);
       Loghelper.get(getClass()).debug("Genel Catch de Yakalandı");
       fdrBatch.setFdBoResult(false);
-      fdrBatch.setFdException(ex);
+      fdrBatch.addFdException(ex);
     }
 
     return fdrBatch;
@@ -2921,7 +2921,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
         fdrMain.setFdBoResult(true);
       } catch (Exception ex) {
         fdrMain.setFdBoResult(false);
-        fdrMain.setFdException(ex);
+        fdrMain.addFdException(ex);
       }
       return fdrMain;
     } else { // generated keyler alınmasına gerek yoksa
@@ -2933,7 +2933,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
         fdrMain.setFdBoResult(true);
       } catch (Exception ex) {
         fdrMain.setFdBoResult(false);
-        fdrMain.setFdException(ex);
+        fdrMain.addFdException(ex);
       }
       return fdrMain;
     }
@@ -2993,7 +2993,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
     } catch (Exception ex) {
       Loghelper.get(getClass()).debug(FiException.exTosMain(ex));
       fdrMain.setFdBoResult(false);
-      fdrMain.setFdException(ex);
+      fdrMain.addFdException(ex);
     }
 
     return fdrMain;
@@ -3028,7 +3028,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
     } catch (Exception ex) {
       Loghelper.get(getClass()).debug(FiException.exTosMain(ex));
       fdrMain.setFdBoResult(false);
-      fdrMain.setFdException(ex);
+      fdrMain.addFdException(ex);
     }
     return fdrMain;
 
@@ -3200,7 +3200,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
         fdrMain.setFdBoResult(true);
 
       } catch (Exception ex) {
-        fdrMain.setFdException(ex);
+        fdrMain.addFdException(ex);
         fdrMain.setFdBoResult(false);
         return fdrMain;
       }
@@ -3222,7 +3222,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
         fdrMain.appendRowsAffected(execute);
         fdrMain.setFdBoResult(true);
       } catch (Exception ex) {
-        fdrMain.setFdException(ex);
+        fdrMain.addFdException(ex);
         fdrMain.setFdBoResult(false);
         return fdrMain;
       }

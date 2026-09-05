@@ -24,6 +24,20 @@ public class FicValidate {
 
     for (FiCol fiCol : fiCols) {
 
+      // Required ise Fkb'de bulunmalıdır (boş olmasına gerek yok)
+      if (FiBool.isTrue(fiCol.getFcBoRequired())) {
+
+        if (!fkbEntity.containsFic(fiCol)) {
+          Fdr fdrReq1 = new Fdr();
+          String message = String.format("%s alan bilgisi yoktur. Zorunludur.", fiCol.getFcTxHeader());
+          fdrReq1.setFdTxMessage(message);
+          fdrReq1.setBoResult(false);
+          fdrMain.combineAnd(fdrReq1);
+          return fdrMain;
+        }
+
+      }
+
       // boRequired True, BoNullable True ise sadece fkbEntity de olması yeterli
       if (FiBool.isTrue(fiCol.getFcBoRequired()) && FiBool.isTrue(fiCol.getFcBoNullable())) {
 
@@ -37,10 +51,9 @@ public class FicValidate {
 
       }
 
-      // boRequired true, Nullable True değilse , zorunlu doldurulacak alan
-      // Nullable false ise boş olmamalı
-      if ((FiBool.isTrue(fiCol.getFcBoRequired()) && !FiBool.isTrue(fiCol.getFcBoNullable()))
-          || FiBool.isFalse(fiCol.getFcBoNullable())
+      if ( // boRequired true, Nullable True değilse , zorunlu doldurulacak alan
+          (FiBool.isTrue(fiCol.getFcBoRequired()) && !FiBool.isTrue(fiCol.getFcBoNullable()))
+          || FiBool.isFalse(fiCol.getFcBoNullable()) // Nullable false ise boş olmamalı
       ) {
 
         Object cellValue = fkbEntity.getFicVal(fiCol);
@@ -54,6 +67,7 @@ public class FicValidate {
           fdrMain.combineAnd(fdrReq);
         }
 
+        // String ise boşsa
         if (cellValue instanceof String && FiString.isEmpty((String) cellValue)) {
           Fdr fdrReq = new Fdr();
           fdrReq.setFdTxMessage(message);

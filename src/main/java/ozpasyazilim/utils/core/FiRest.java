@@ -132,7 +132,7 @@ public class FiRest {
       Loghelper.get(FiRest.class).debug(FiException.exToErrorLog(exception));
       fdrMain.setFdBoResult(false);
       fdrMain.setFdrTxMessageWitAddLog("An error occurred during the REST request. Please check the exception details. / REST isteği gerçekleşirken hata oluştu. Detay için Exception inceleyiniz.");
-      fdrMain.setFdException(exception);
+      fdrMain.addFdException(exception);
     }
 
     return fdrMain;
