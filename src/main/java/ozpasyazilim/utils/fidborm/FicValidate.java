@@ -9,8 +9,9 @@ import ozpasyazilim.utils.table.FiCol;
 import java.util.List;
 
 public class FicValidate {
+
   /**
-   * Null , Required Checks
+   * Nullable , Required Checks
    * <p>
    * Form verileri kontrol edilirken kullanılıyor
    *
