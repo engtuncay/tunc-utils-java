@@ -3,6 +3,8 @@ package ozpasyazilim.utils.fipdf;
 import org.apache.pdfbox.io.MemoryUsageSetting;
 import org.apache.pdfbox.multipdf.PDFMergerUtility;
 import ozpasyazilim.utils.core.FiCollection;
+import ozpasyazilim.utils.core.FiException;
+import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.returntypes.Fdr;
 
 import java.io.File;
@@ -43,11 +45,12 @@ public class FiPdf {
             pdfMergerUtility.setDestinationFileName(yeniFileName);
             pdfMergerUtility.mergeDocuments(MemoryUsageSetting.setupMainMemoryOnly());
             fdrMain.setFdTxVal(yeniFileName);
+            fdrMain.setBoResult(true);
             //System.out.println("PDF dosyaları başarıyla birleştirildi.");
         } catch (IOException e) {
             //e.printStackTrace();
-
             fdrMain.buiBoResult(false,e);
+            Loghelper.get(FiPdf.class).error(FiException.exTosMain(e));
         }
 
         return fdrMain;

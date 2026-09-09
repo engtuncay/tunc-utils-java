@@ -69,7 +69,7 @@ public class FiFxCrudWindowCont extends FiFxWindowCont implements IFiModCont {
 	}
 
 	public void addCrudSaveButton() {
-		btnCrudSaveAndClose = new FxButton("Kaydet", FiIconPack.getSaveCloseIcon());
+		btnCrudSaveAndClose = new FxButton("Kaydet", FiIconPack.getSaveIcon());
 		getModView().getMigToolbar().add(btnCrudSaveAndClose);
 	}
 

@@ -89,7 +89,7 @@ public class FiIconPack {
     return Icons525.EDIT;
   }
 
-  public static Icons525 getSaveCloseIcon() {
+  public static Icons525 getSaveIcon() {
     return Icons525.MAIL_SEND;
   }
 

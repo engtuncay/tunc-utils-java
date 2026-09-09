@@ -10,37 +10,37 @@ import java.util.List;
 /**
  * Custom Data Type
  * <p>
- * Map<String,List<Ent>> DataTYpe
+ * Map<String,List<Ent>> DataType
  */
 public class FiKeyList<Ent> extends HashMap<String, List<Ent>> {
 
-	public FiKeyList() {
-		super();
-	}
+  public FiKeyList() {
+    super();
+  }
 
-	public static FiKeyList build() {
-		return new FiKeyList();
-	}
+  public static FiKeyList build() {
+    return new FiKeyList();
+  }
 
-	public void clearEmptyKeys() {
-		List<String> listToDelete = new ArrayList<>();
-		this.forEach((key,value) -> {
-			if(FiCollection.isEmpty(value)){
-				listToDelete.add(key);
-			}
-		});
-		for (String key : listToDelete) {
-			this.remove(key);
-		}
-	}
+  public void clearEmptyKeys() {
+    List<String> listToDelete = new ArrayList<>();
+    this.forEach((key, value) -> {
+      if (FiCollection.isEmpty(value)) {
+        listToDelete.add(key);
+      }
+    });
+    for (String key : listToDelete) {
+      this.remove(key);
+    }
+  }
 
-	public Boolean isEmptyKey(String txKey) {
-		if(this.containsKey(txKey)){
-			if (FiCollection.isEmpty(this.get(txKey))) {
-				return true;
-			}
-		}
-		return false;
-	}
+  public Boolean isEmptyKey(String txKey) {
+    if (this.containsKey(txKey)) {
+      if (FiCollection.isEmpty(this.get(txKey))) {
+        return true;
+      }
+    }
+    return false;
+  }
 
 }

@@ -493,12 +493,15 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
   }
 
   public Exception getFdException() {
-    return getFdListExceptionInit().get(0);
+    if(!getFdListExceptionInit().isEmpty()) {
+      return getFdListExceptionInit().get(0);
+    }
+    return null;
   }
 
   public Exception getExceptionNtn() {
     if (getFdException() == null) {
-      return new Exception("exception boş,atanmamış.(ntn)");
+      return new Exception("Exception boş, atanmamış.(ntn)");
     }
     return getFdException();
   }
