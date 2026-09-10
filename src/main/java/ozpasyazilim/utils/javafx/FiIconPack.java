@@ -2,6 +2,11 @@ package ozpasyazilim.utils.javafx;
 
 import de.jensd.fx.glyphs.icons525.Icons525;
 
+/**
+ * FiIconPack : Icon Pack
+ *
+ * EmhIcon deprecated
+ */
 public class FiIconPack {
 
   public static Icons525 getReportIcon() {
@@ -36,7 +41,7 @@ public class FiIconPack {
     return Icons525.EXCHANGE;
   }
 
-  public static Icons525 getPrintIcon() {
+  public static Icons525 print() {
     return Icons525.PRINTER;
   }
 
@@ -47,7 +52,6 @@ public class FiIconPack {
   public static Icons525 getAnaHesapIcon() {
     return Icons525.CIRCLE;
   }
-
 
   public static Icons525 getHareketSayiIcon() {
     return Icons525.DISC;
@@ -61,7 +65,7 @@ public class FiIconPack {
     return Icons525.REMOVE;
   }
 
-  public static Icons525 getDeleteIcon() {
+  public static Icons525 deleteIcon() {
     return Icons525.CIRCLEDELETE;
   }
 
@@ -73,25 +77,36 @@ public class FiIconPack {
     return Icons525.LOCK_OPEN;
   }
 
-  public static Icons525 getKilitIcon() {
+  public static Icons525 kilitIcon() {
     return Icons525.LOCK;
   }
 
-  public static Icons525 getOnayIcon() {
+  public static Icons525 onayIcon() {
     return Icons525.MOON;
   }
 
-  public static Icons525 getPreviewIcon() {
+  public static Icons525 previewIcon() {
     return Icons525.FILE_DOCX;
   }
 
-  public static Icons525 getUpdateIcon() {
+  public static Icons525 updateIcon() {
     return Icons525.EDIT;
   }
 
-  public static Icons525 getSaveIcon() {
+  public static Icons525 saveIcon() {
     return Icons525.MAIL_SEND;
   }
 
 
+  public static Icons525 database() {
+    return Icons525.DATABASE;
+  }
+
+  public static Icons525 link() {
+    return Icons525.LINK;
+  }
+
+  public static Icons525 send() {
+    return Icons525.MAIL_SEND;
+  }
 }

@@ -581,6 +581,28 @@ public class FiFile {
 
   }
 
+  public static Fdr openFileV2(String txPath) {
+
+    Fdr fdrMain = new Fdr();
+
+    if (FiString.isEmptyTrim(txPath)) {
+      fdrMain.addLogError("Dosya açılamadı.");
+      fdrMain.setBoResult(false);
+      return fdrMain;
+    }
+    // PDF dosyasını aç
+    try {
+      Process process = new ProcessBuilder("cmd", "/c", txPath).start();
+      fdrMain.setBoResult(true);
+    } catch (IOException e) {
+      Loghelper.get(FiFile.class).error(FiException.exTosMain(e));
+      fdrMain.addLogErrorFe("Dosya açılırken hata oluştu.");
+      fdrMain.setBoResult(false,e);
+      return fdrMain;
+    }
+    return fdrMain;
+  }
+
 
 }
 
