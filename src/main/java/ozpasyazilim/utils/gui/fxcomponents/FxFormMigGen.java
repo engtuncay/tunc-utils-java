@@ -466,6 +466,10 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> implement
     FxEditorFactory.updateFiColsCompsWitFkbEntityByEditorValue(getListFormElementsInit(), formFkbEntity);
   }
 
+  public void setFormFkbData(Fkb fkbForm) {
+    refreshData(fkbForm);
+  }
+
   /**
    * Formda null olanlar hariç şekilde Fkb döner
    *

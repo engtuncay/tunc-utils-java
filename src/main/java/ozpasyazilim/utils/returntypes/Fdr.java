@@ -13,11 +13,13 @@ import ozpasyazilim.utils.log.MetaLogType;
 import java.util.*;
 
 /**
- * Ana Alanlar : boResult,message,value,
+ * Fi-Data-Return Class
  * <p>
- * Sorgu başarılı bir şekilde çalıştırılmışsa boResult True olur, hata alırsa false olur.
+ * Ana Alanlar : fdBoResult,fdTxMessage,value, fdTxVal, fdFkbVal
  * <p>
- * İşlem yapılmamışsa boResult null olur !!!
+ * Sorgu başarılı bir şekilde çalıştırılmışsa fdBoResult True olur, hata alırsa false olur.
+ * <p>
+ * İşlem yapılmamışsa fdBoResult null olur !!!
  * <p>
  * Cre : 22-02-2019 torak
  * <p>
@@ -493,7 +495,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
   }
 
   public Exception getFdException() {
-    if(!getFdListExceptionInit().isEmpty()) {
+    if (!getFdListExceptionInit().isEmpty()) {
       return getFdListExceptionInit().get(0);
     }
     return null;
@@ -1541,5 +1543,8 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     this.boCloseDialog = boCloseDialog;
   }
 
-
+  public void appendFdTxVal(String fdTxVal) {
+    if(FiString.isEmptyTrim(fdTxVal)) return ;
+    setFdTxVal(FiString.orEmpty(getFdTxVal()) + fdTxVal);
+  }
 }

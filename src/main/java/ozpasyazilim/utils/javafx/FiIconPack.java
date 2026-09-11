@@ -109,4 +109,8 @@ public class FiIconPack {
   public static Icons525 send() {
     return Icons525.MAIL_SEND;
   }
+
+  public static Icons525 searchIcon() {
+    return Icons525.FINDER;
+    }
 }

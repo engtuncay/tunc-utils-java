@@ -1,6 +1,5 @@
 package ozpasyazilim.utils.gui.fxcomponents;
 
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -10,7 +9,11 @@ import ozpasyazilim.utils.datatypes.FiMeta;
 public class FxRadio extends RadioButton {
 
   private ObjectProperty objValue;
-  private StringProperty txValue;
+
+  /**
+   * Label olarak görünen değerin key değeri , ya da kodu olarak düşünülebilir
+   */
+  private StringProperty txKey;
   //private IntegerProperty intValue;
 
   public FxRadio() {
@@ -23,12 +26,12 @@ public class FxRadio extends RadioButton {
 
   public FxRadio(String text,String value) {
     super(text);
-    this.txValue = new SimpleStringProperty(value);
+    this.txKey = new SimpleStringProperty(value);
   }
 
   public FxRadio(FiMeta fiMeta) {
     super(fiMeta.getFtTxValue());
-    this.txValue = new SimpleStringProperty(fiMeta.getTxKey());
+    this.txKey = new SimpleStringProperty(fiMeta.getTxKey());
   }
 
   public Object getObjValue() {
@@ -43,18 +46,18 @@ public class FxRadio extends RadioButton {
     this.objValue.set(objValue);
   }
 
-  public String getTxValue() {
-    return txValue.get();
+  public String getTxKey() {
+    return txKey.get();
   }
 
-  public StringProperty txValueProperty() {
-    if (txValue == null) {
-      txValue = new SimpleStringProperty();
+  public StringProperty txKeyProperty() {
+    if (txKey == null) {
+      txKey = new SimpleStringProperty();
     }
-    return txValue;
+    return txKey;
   }
 
-  public void setTxValue(String txValue) {
-    this.txValue.set(txValue);
+  public void setTxKey(String txKey) {
+    this.txKey.set(txKey);
   }
 }
