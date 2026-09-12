@@ -468,12 +468,12 @@
       <version>23.0</version>
     </dependency>
 
-    <!-- Jdbc Sqlserver -->
+    <!-- Jdbc Sqlserver 6.4.0.jre8-->
 
     <dependency>
       <groupId>com.microsoft.sqlserver</groupId>
       <artifactId>mssql-jdbc</artifactId>
-      <version>6.4.0.jre8</version>
+      <version>10.2.3.jre8</version>
     </dependency>
 
     <!-- Jtds Jdbc -->
