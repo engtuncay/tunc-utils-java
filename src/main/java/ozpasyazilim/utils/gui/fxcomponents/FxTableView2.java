@@ -15,6 +15,7 @@ import javafx.scene.input.*;
 import javafx.scene.text.TextAlignment;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.tbee.javafx.scene.layout.MigPane;
+import ozpasyazilim.utils.FiFnInterface.TriConsumer;
 import ozpasyazilim.utils.annotations.FiDraft;
 import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.datatypes.Fkb;
@@ -67,6 +68,8 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
   private Map<String, Object> styleMap;
   private List<FxTableCol2> listFxTableCol;
   private FilteredList<EntClazz> filteredList;
+
+  private TriConsumer<TableRow,Boolean,Object> fnRowHighlight;
 
   /**
    * Tv:TableView LnId
@@ -670,7 +673,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     }
 
     //bydefault
-    FxTableViewCellFactoryModal.setupCellFactoryGeneral(fxTableCol, getEntityClass());
+    FxTableViewV2CellFactoryFi.setupCellFactoryGeneral(fxTableCol, getEntityClass());
     fxTableCol.setId(fxTableCol.getRefFiCol().getFcTxFieldName());
 
   }
@@ -681,7 +684,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     fxTableCol.setCellValueFactory(new TableValueFactoryForFkb<>(fxTableCol.getRefFiCol().getFcTxFieldName()));
 
     //bydefault idi
-    FxTableViewCellFactoryModal.setupCellFactoryGeneral(fxTableCol, getEntityClass());
+    FxTableViewV2CellFactoryFi.setupCellFactoryGeneral(fxTableCol, getEntityClass());
     fxTableCol.setId(fxTableCol.getRefFiCol().getFcTxFieldName());
     //fxTableCol.setAutoFormatter(fxTableCol.getFiTableCol().getColType());
   }
@@ -836,7 +839,17 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
     setRowFactory(tblview -> {
 
-      TableRow tableRow = new TableRow<>();  // TableRow<Entity>
+      TableRow tableRow = new TableRow(){
+        @Override
+        protected void updateItem(Object item, boolean empty) {
+          super.updateItem(item, empty);
+
+          if (getFnRowHighlight()!=null) {
+            getFnRowHighlight().accept(this,empty,item);
+          }
+
+        }
+      };  // TableRow<Entity>
 
       tableRow.setOnMouseClicked(event -> {
 
@@ -3220,5 +3233,13 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
   public void setTvLnId(Integer tvLnId) {
     this.tvLnId = tvLnId;
+  }
+
+  public TriConsumer<TableRow, Boolean, Object> getFnRowHighlight() {
+    return fnRowHighlight;
+  }
+
+  public void setFnRowHighlight(TriConsumer<TableRow, Boolean, Object> fnRowHighlight) {
+    this.fnRowHighlight = fnRowHighlight;
   }
 }

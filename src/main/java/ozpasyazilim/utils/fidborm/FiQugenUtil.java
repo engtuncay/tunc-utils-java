@@ -7,17 +7,48 @@ import javax.annotation.Nonnull;
 
 /**
  * Query Generation Util Methods
+ * <p>
+ * FiQuGenMs vs sınıflarda kulanılır
  */
 public class FiQugenUtil {
 
+  /**
+   * Uygulanan Şablon :
+   * <p>
+   * fcTxFieldName + " = @" + fcTxFieldName + getTxAnd()
+   *
+   * @param fcTxFieldName
+   * @return
+   */
   public static String formSqlAssignAnd(String fcTxFieldName) {
     return fcTxFieldName + " = @" + fcTxFieldName + getTxAnd();
+  }
+
+  /**
+   *
+   * fcTxFieldName + " IN ( @" + fcTxFieldName + " ) " şeklinde üretir
+   *
+   * @param fcTxFieldName
+   * @return
+   */
+  public static String formSqlAssignIn(String fcTxFieldName) {
+    return fcTxFieldName + " IN ( @" + fcTxFieldName + " ) " + getTxAnd();
   }
 
   public static String formSqlAssignAndByFic(FiCol fiCol) {
     return formSqlAssignAnd(fiCol.getFcTxFieldName());
   }
 
+  /**
+   *
+   * fcTxFieldName + " IN ( @" + fcTxFieldName + " ) " şeklinde üretir
+   *
+   * @param fiCol
+   * @return
+   */
+  public static String formSqlAssignInByFic(FiCol fiCol) {
+    return formSqlAssignIn(fiCol.getFcTxFieldName());
+  }
 
 
   /**
@@ -28,7 +59,7 @@ public class FiQugenUtil {
    */
   public static String formSqlAssignVarAndCommaByFic(FiCol fiCol) {
     // dbField tanımlanmışsa, dbFieldAlan ismi kullanılır
-    if(!FiString.isEmptyTrim(fiCol.getFcTxDbField())) {
+    if (!FiString.isEmptyTrim(fiCol.getFcTxDbField())) {
       return formSqlAssignVarAndComma(fiCol.getFcTxDbField());
     }
     return formSqlAssignVarAndComma(fiCol.getFcTxFieldName());

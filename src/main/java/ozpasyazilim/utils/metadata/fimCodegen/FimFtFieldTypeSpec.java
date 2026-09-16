@@ -29,6 +29,8 @@ public class FimFtFieldTypeSpec {
 
   public static boolean isBool(String txFieldType) {
     return FiString.equalsAny(txFieldType
-        , FimFtFieldType.fbool().getValue());
+        , FimFtFieldType.fBool().getValue()
+        , FimFtFieldType.fBit().getValue()
+    );
   }
 }

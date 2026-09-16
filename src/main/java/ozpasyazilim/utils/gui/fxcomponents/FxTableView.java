@@ -242,7 +242,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 	 */
 	private void autoFiCellEditorFactoryDefaultConfig(FxTableColDep fxTableColDep) {
 
-		// cell Factory
+		// cell Factory - colEditorClass varsa, colEditorClass'a göre
 		if (!FiString.isEmpty(fxTableColDep.getColEditorClass())) return;
 
 		if (fxTableColDep.getColType() == OzColType.Boolean) {

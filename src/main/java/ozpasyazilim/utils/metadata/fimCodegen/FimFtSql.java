@@ -1,10 +1,12 @@
 package ozpasyazilim.utils.metadata.fimCodegen;
-// Java FiMeta Class Generation - v0.4
 
+// Java FiMeta Class Generation - v0.4
 import ozpasyazilim.utils.datatypes.FiMeta;
 
+/**
+ * sf: sql-field (sql-meta)
+ */
 public class FimFtSql {
-
 
   public static FiMeta sfTableName() {
     FiMeta fim = new FiMeta("sfTableName");
@@ -104,4 +106,3 @@ public class FimFtSql {
 
 
 }
-

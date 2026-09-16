@@ -250,7 +250,7 @@ public class FxEditorFactory {
 
       // 26-04-21
       if (FiString.equalsAny(fcTxFieldType
-          , FimFtFieldType.fbool().getValue())
+          , FimFtFieldType.fBool().getValue())
       ) {
         txClassName = FxCheckBox.class.getName();
       }
@@ -260,6 +260,13 @@ public class FxEditorFactory {
           , FimFtFieldType.fdatetime().getValue())
       ) {
         txClassName = FxDatePicker.class.getName();
+      }
+
+      if (FiString.equalsAny(fcTxFieldType
+          , FimFtFieldType.fBool().getValue()
+          , FimFtFieldType.fBit().getValue())
+      ) {
+        txClassName = FxCheckBox.class.getName();
       }
 
     }
@@ -296,8 +303,9 @@ public class FxEditorFactory {
 
       // 26-04-21
       if (FiString.equalsAny(fcTxFieldType
-          , FimFtFieldType.fbool().getValue())
-      ) {
+          , FimFtFieldType.fBool().getValue()
+          , FimFtFieldType.fBit().getValue()
+      )) {
         txClassName = FxCheckBox.class.getName();
       }
 
@@ -844,7 +852,7 @@ public class FxEditorFactory {
     }
 
     if (colType == OzColType.Boolean) {
-      refFiCol.setFcTxFieldType(FimFtFieldType.fbool().getValue());
+      refFiCol.setFcTxFieldType(FimFtFieldType.fBool().getValue());
       return;
     }
 

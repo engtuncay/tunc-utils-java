@@ -34,8 +34,8 @@ public class FimFtFieldType {
     return fim;
   }
 
-  public static FiMeta fbool() {
-    FiMeta fim = new FiMeta("fbool");
+  public static FiMeta fBool() {
+    FiMeta fim = new FiMeta("fBool");
     fim.setFtTxValue("bool");
 
     return fim;
@@ -164,6 +164,13 @@ public class FimFtFieldType {
   public static FiMeta fFloat() {
     FiMeta fim = new FiMeta("fFloat");
     fim.setFtTxValue("float");
+
+    return fim;
+  }
+
+  public static FiMeta fBit() {
+    FiMeta fim = new FiMeta("fBit");
+    fim.setFtTxValue("bit");
 
     return fim;
   }

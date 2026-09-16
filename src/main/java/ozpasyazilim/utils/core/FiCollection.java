@@ -147,6 +147,20 @@ public class FiCollection {
     return mapList;
   }
 
+  public static <KeyVal,T> FiMap<KeyVal, Boolean> listToMapKeyToBoolean(List<T> listData, Function<T, KeyVal> fnKeyGetter, Function<T, Boolean> fnValueGetter) {
+
+    FiMap<KeyVal, Boolean> mapList = new FiMap<>();
+
+    for (Iterator iterator = listData.iterator(); iterator.hasNext(); ) {
+      T t = (T) iterator.next();
+      KeyVal keyVal = fnKeyGetter.apply(t);
+      if (keyVal == null) return null;
+      mapList.put(keyVal, fnValueGetter.apply(t));
+    }
+
+    return mapList;
+  }
+
   /**
    * fnKeyGetter ve fnKeyValueGetter ile map oluşturur.
    *

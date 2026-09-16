@@ -23,11 +23,13 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
+ * UBOM Table Cell Factory (V2)
+ * <p>
  * Cell Factory, TableView hücrelerinin içerisine yerleşecek componentlerin ayarlanmasını sağlar.
  * <p>
  * Değeri CellValueFactory verir, CellFactory component belirleyip, değeri gösterir
  */
-public class FxTableViewCellFactoryModal {
+public class FxTableViewV2CellFactoryFi {
 
   /**
    * Genel cellFactory 17-05-22 (iki metod birleştirildi) setupCellFactoryByDefault ve setupCellFactoryByEditorClass
@@ -49,17 +51,18 @@ public class FxTableViewCellFactoryModal {
 
       if (txColEditorClass.equals(CheckBox.class.getSimpleName())) {
 
-        //			fxTableCol.setCellFactory(new Callback<TableColumn<S, Boolean>, TableCell<S, Boolean>>() {
+        // fxTableCol.setCellFactory(new Callback<TableColumn<S, Boolean>, TableCell<S, Boolean>>() {
         //
-        //				@Override
-        //				public TableCell<S, Boolean> call(
-        //						TableColumn<S, Boolean> param) {
-        //					//return new CheckBoxCell(selectedItems);
-        //					CheckBoxTableCell<S, Boolean> cell = new CheckBoxTableCell<S, Boolean>();
-        //					cell.setAlignment(Pos.CENTER);
-        //					return cell;
-        //				}
-        //			});
+        // @Override
+        // public TableCell<S, Boolean> call(
+        //  TableColumn<S, Boolean> param) {
+        //	//return new CheckBoxCell(selectedItems);
+        //	CheckBoxTableCell<S, Boolean> cell = new CheckBoxTableCell<S, Boolean>();
+        //	cell.setAlignment(Pos.CENTER);
+        //	return cell;
+        // }
+        //	 });
+
         fxTableCol.setCellFactory(getCellFactoryForCheckBoxSimple());
         return;
       }
@@ -195,8 +198,8 @@ public class FxTableViewCellFactoryModal {
 
   }
 
-  private static Class<FxTableViewCellFactoryModal> getClassi() {
-    return FxTableViewCellFactoryModal.class;
+  private static Class<FxTableViewV2CellFactoryFi> getClassi() {
+    return FxTableViewV2CellFactoryFi.class;
   }
 
   private static void assignCellFactoryBooleanType(FxTableCol2 fxTableCol) {

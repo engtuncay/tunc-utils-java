@@ -1439,6 +1439,15 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     Loghelper.get(getClass()).debug("FdBoVal:" + getFdBoVal());
     Loghelper.get(getClass()).debug("FdBoResult:" + getFdBoResult());
 
+
+    Loghelper.get(getClass()).debug("FkbList Size:" + getFdFkbListValNtn().size());
+
+    if (!getFdFkbListValNtn().isEmpty()) {
+      for (Fkb fkb : getFdFkbListValNtn()) {
+        Loghelper.get(getClass()).debug("Fkb Entity \n" + FiConsole.textFkb(fkb));
+      }
+    }
+
   }
 
   public String textLogFdr() {
@@ -1544,7 +1553,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
   }
 
   public void appendFdTxVal(String fdTxVal) {
-    if(FiString.isEmptyTrim(fdTxVal)) return ;
+    if (FiString.isEmptyTrim(fdTxVal)) return;
     setFdTxVal(FiString.orEmpty(getFdTxVal()) + fdTxVal);
   }
 }
