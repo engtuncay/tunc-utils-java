@@ -119,7 +119,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 	}
 
 	// TableRow factory içerisine eklenecek eventlar bu map in içerisine tanımlanır
-	private Map<FxTableRowActions, Consumer<TableRow>> mapTableRowEvents;
+	private Map<FiFxTableRowActions, Consumer<TableRow>> mapTableRowEvents;
 
 	// Satır Actionları
 	//EventHandler<MouseEvent>
@@ -970,13 +970,13 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 		if (doubleClickEvent == null) return;
 		//getMapTableRowEvents().remove(TableRowActions.DoubleClick);
 
-		getMapTableRowEvents().put(FxTableRowActions.DoubleClick, doubleClickEvent);
+		getMapTableRowEvents().put(FiFxTableRowActions.DoubleClick, doubleClickEvent);
 
 	}
 
 	public void removeRowDoubleClickEvent() {
-		if (getMapTableRowEvents().containsKey(FxTableRowActions.DoubleClick))
-			getMapTableRowEvents().remove(FxTableRowActions.DoubleClick);
+		if (getMapTableRowEvents().containsKey(FiFxTableRowActions.DoubleClick))
+			getMapTableRowEvents().remove(FiFxTableRowActions.DoubleClick);
 	}
 
 	public void setupRowFactory() {
@@ -991,8 +991,8 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 			tableRow.setOnMouseClicked(event -> {
 
 				if (event.getClickCount() == 2 && (!tableRow.isEmpty())) {
-					if (this.mapTableRowEvents.containsKey(FxTableRowActions.DoubleClick)) {
-						this.mapTableRowEvents.get(FxTableRowActions.DoubleClick).accept(tableRow);
+					if (this.mapTableRowEvents.containsKey(FiFxTableRowActions.DoubleClick)) {
+						this.mapTableRowEvents.get(FiFxTableRowActions.DoubleClick).accept(tableRow);
 					}
 				}
 
@@ -2182,7 +2182,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 	// Getter and Setters
 
-	public Map<FxTableRowActions, Consumer<TableRow>> getMapTableRowEvents() {
+	public Map<FiFxTableRowActions, Consumer<TableRow>> getMapTableRowEvents() {
 		if (this.mapTableRowEvents == null) {
 			setupRowFactory();
 		}

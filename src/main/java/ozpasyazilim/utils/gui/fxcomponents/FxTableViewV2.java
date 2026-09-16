@@ -157,9 +157,9 @@ public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxC
   //private String headerSummaryClass = "tblHeaderSummary";
 
   // TableRow factory içerisine eklenecek eventlar bu map in içerisine tanımlanır
-  private Map<FxTableRowActions, Consumer<TableRow>> mapTableRowEvents;
+  private Map<FiFxTableRowActions, Consumer<TableRow>> mapTableRowEvents;
 
-  private Map<FxTableRowActions, Consumer<EntClazz>> mapTableRowEventsByEntity;
+  private Map<FiFxTableRowActions, Consumer<EntClazz>> mapTableRowEventsByEntity;
 
   // Satır Actionları
   //EventHandler<MouseEvent>
@@ -673,7 +673,7 @@ public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxC
     }
 
     //bydefault
-    FxTableViewV2CellFactoryFi.setupCellFactoryGeneral(fxTableCol, getEntityClass());
+    FiFxTableViewV2CellFactory.setupCellFactoryGeneral(fxTableCol, getEntityClass());
     fxTableCol.setId(fxTableCol.getRefFiCol().getFcTxFieldName());
 
   }
@@ -684,7 +684,7 @@ public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxC
     fxTableCol.setCellValueFactory(new TableValueFactoryForFkb<>(fxTableCol.getRefFiCol().getFcTxFieldName()));
 
     //bydefault idi
-    FxTableViewV2CellFactoryFi.setupCellFactoryGeneral(fxTableCol, getEntityClass());
+    FiFxTableViewV2CellFactory.setupCellFactoryGeneral(fxTableCol, getEntityClass());
     fxTableCol.setId(fxTableCol.getRefFiCol().getFcTxFieldName());
     //fxTableCol.setAutoFormatter(fxTableCol.getFiTableCol().getColType());
   }
@@ -807,7 +807,7 @@ public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxC
 
     if (doubleClickEvent == null) return;
     //getMapTableRowEvents().remove(TableRowActions.DoubleClick);
-    getMapTableRowEvents().put(FxTableRowActions.DoubleClick, doubleClickEvent);
+    getMapTableRowEventsInitSetup().put(FiFxTableRowActions.DoubleClick, doubleClickEvent);
 
   }
 
@@ -821,13 +821,13 @@ public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxC
 
     if (doubleClickEvent == null) return;
     //getMapTableRowEvents().remove(TableRowActions.DoubleClick);
-    getMapTableRowEventsByEntity().put(FxTableRowActions.DoubleClick, doubleClickEvent);
+    getMapTableRowEventsByEntity().put(FiFxTableRowActions.DoubleClick, doubleClickEvent);
 
   }
 
   public void removeRowDoubleClickEvent() {
-    if (getMapTableRowEvents().containsKey(FxTableRowActions.DoubleClick))
-      getMapTableRowEvents().remove(FxTableRowActions.DoubleClick);
+    if (getMapTableRowEventsInitSetup().containsKey(FiFxTableRowActions.DoubleClick))
+      getMapTableRowEventsInitSetup().remove(FiFxTableRowActions.DoubleClick);
   }
 
   public void setupRowFactory() {
@@ -854,13 +854,13 @@ public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxC
       tableRow.setOnMouseClicked(event -> {
 
         if (event.getClickCount() == 2 && (!tableRow.isEmpty())) {
-          if (this.mapTableRowEvents.containsKey(FxTableRowActions.DoubleClick)) {
-            this.mapTableRowEvents.get(FxTableRowActions.DoubleClick).accept(tableRow);
+          if (this.mapTableRowEvents.containsKey(FiFxTableRowActions.DoubleClick)) {
+            this.mapTableRowEvents.get(FiFxTableRowActions.DoubleClick).accept(tableRow);
           }
 
-          if (this.mapTableRowEventsByEntity.containsKey(FxTableRowActions.DoubleClick)) {
+          if (this.mapTableRowEventsByEntity.containsKey(FiFxTableRowActions.DoubleClick)) {
             EntClazz entClazz = (EntClazz) tableRow.getItem();
-            this.mapTableRowEventsByEntity.get(FxTableRowActions.DoubleClick).accept(entClazz);
+            this.mapTableRowEventsByEntity.get(FiFxTableRowActions.DoubleClick).accept(entClazz);
           }
         }
 
@@ -1005,7 +1005,7 @@ public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxC
     fxTableCol.getRefFiCol().setColFilterNode(node);
     //FxEditorFactory.registerKeyEventForNode(node,fxTableCol.getFiTableCol().getColFilterNodeClass(),getColFilterKeyDownEvent());
     // UBOM header componetlerde event triggers
-    node.addEventHandler(KeyEvent.KEY_PRESSED, getColFilterNodeKeyDownEvent());
+    node.addEventHandler(KeyEvent.KEY_PRESSED, getColFilterNodeKeyDownEventInit());
     node.addEventHandler(KeyEvent.KEY_PRESSED, getColFilterNodeEnterEventWrapper());
 
     activateFilterSearch(fxTableCol);
@@ -2108,15 +2108,15 @@ public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxC
   }
 
   public void appendToPredFilterExtraList(Predicate predFilterToAdd) {
-    if (!getPredFilterExtraList().contains(predFilterToAdd)) {
-      getPredFilterExtraList().add(predFilterToAdd);
+    if (!getPredFilterExtraListInit().contains(predFilterToAdd)) {
+      getPredFilterExtraListInit().add(predFilterToAdd);
       executeFiltersLocalAndExtra();
     }
   }
 
   public void removeFromPredFilterExtraList(Predicate predicateToRemove) {
-    if (getPredFilterExtraList().contains(predicateToRemove)) {
-      getPredFilterExtraList().remove(predicateToRemove);
+    if (getPredFilterExtraListInit().contains(predicateToRemove)) {
+      getPredFilterExtraListInit().remove(predicateToRemove);
       executeFiltersLocalAndExtra();
     }
   }
@@ -2145,7 +2145,7 @@ public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxC
     // harici modülden,dışarıdan eklenen filtreler
     if (getPredFilterSpec1() != null) predAll = predAll.and(getPredFilterSpec1());
     //Loghelperr.getInstance(getClass()).debug("Size Filter Out : "+ getListPredFilterExtra().size());
-    for (Predicate predItem : getPredFilterExtraList()) {
+    for (Predicate predItem : getPredFilterExtraListInit()) {
       predAll = predAll.and(predItem);
     }
     return predAll;
@@ -2486,7 +2486,7 @@ public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxC
   }
 
   public void extensionSelectAndClose(IFxTableSelectionCont iFxTableSelectionCont) {
-    EntClazz selectedItem = getSelectionModel().getSelectedItem();
+    Object selectedItem = getSelectionModel().getSelectedItem();
     if (selectedItem == null) return;
 
     iFxTableSelectionCont.setEntitySelected(selectedItem);
@@ -2494,48 +2494,20 @@ public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxC
     iFxTableSelectionCont.getFxStageInit().close();
   }
 
-//    public void extensionSelectAndClose(IFxSimpleEntityModule iFxMosCont) {
-//
-//        EntClazz selectedItem = getSelectionModel().getSelectedItem();
-//        if (selectedItem == null) return;
-//
-//        iFxMosCont.setSelectedEntity(selectedItem);
-//        iFxMosCont.setCloseReason("done");
-//        iFxMosCont.getFxStage().close();
-//    }
-
-//    public void activateExtensionFxTableSelectAndClose(IFxSimpleEntityModule iFxSimpleModule) {
-//
-//        setOnKeyReleased(event -> {
-//            if (event.getCode() == KeyCode.ENTER) {
-//                extensionSelectAndClose(iFxSimpleModule);
-//            }
-//        });
-//
-//        onRowDoubleClickEventFi(tableRow -> {
-//            extensionSelectAndClose(iFxSimpleModule);
-//        });
-//    }
-
-
-  //public Event getPropTblKeyEvent() {
-  //      return propTblKeyEvent.get();
-  //}
-
-  //public ObjectProperty<KeyEvent> propTblKeyEventProperty() {
-  //	return propTblKeyEvent;
-  //}
-
   // Getter and Setters
 
-  public Map<FxTableRowActions, Consumer<TableRow>> getMapTableRowEvents() {
+  public Map<FiFxTableRowActions, Consumer<TableRow>> getMapTableRowEventsInitSetup() {
     if (this.mapTableRowEvents == null) {
       setupRowFactory();
     }
     return mapTableRowEvents;
   }
 
-  public Map<FxTableRowActions, Consumer<EntClazz>> getMapTableRowEventsByEntity() {
+  public Map<FiFxTableRowActions, Consumer<TableRow>> getMapTableRowEvents() {
+    return mapTableRowEvents;
+  }
+
+  public Map<FiFxTableRowActions, Consumer<EntClazz>> getMapTableRowEventsByEntity() {
     if (this.mapTableRowEventsByEntity == null) {
       setupRowFactory();
     }
@@ -2568,7 +2540,7 @@ public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxC
     this.entityClass = entityClass;
   }
 
-  public List<Predicate> getPredFilterExtraList() {
+  public List<Predicate> getPredFilterExtraListInit() {
     if (predFilterExtraList == null) {
       predFilterExtraList = new ArrayList<>();
     }
@@ -2602,7 +2574,7 @@ public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxC
   }
 
 
-  public EventHandler<KeyEvent> getColFilterNodeKeyDownEvent() {
+  public EventHandler<KeyEvent> getColFilterNodeKeyDownEventInit() {
     if (colFilterNodeKeyDownEvent == null) {
       EventHandler<KeyEvent> customKeyEvent = keyEvent -> {
         if (keyEvent.getCode() == KeyCode.DOWN) {

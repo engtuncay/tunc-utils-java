@@ -16,8 +16,8 @@ public class FxTreeTableView<EntClazz> extends TreeTableView<EntClazz> {
   List<FxTreeTableCol> fxTreeTableColumnList;
   Map<String, Object> styleMap;
 
-  private Map<FxTableRowActions, Consumer<TreeTableRow>> mapTableRowEvents;
-  private Map<FxTableRowActions, Consumer<EntClazz>> mapTableRowEventsByEntity;
+  private Map<FiFxTableRowActions, Consumer<TreeTableRow>> mapTableRowEvents;
+  private Map<FiFxTableRowActions, Consumer<EntClazz>> mapTableRowEventsByEntity;
 
   public FxTreeTableView() {
     super();
@@ -39,7 +39,7 @@ public class FxTreeTableView<EntClazz> extends TreeTableView<EntClazz> {
     if (doubleClickEvent == null) return;
     //getMapTableRowEvents().remove(TableRowActions.DoubleClick);
 
-    getMapTableRowEvents().put(FxTableRowActions.DoubleClick, doubleClickEvent);
+    getMapTableRowEvents().put(FiFxTableRowActions.DoubleClick, doubleClickEvent);
 
   }
 
@@ -47,7 +47,7 @@ public class FxTreeTableView<EntClazz> extends TreeTableView<EntClazz> {
 
     if (doubleClickEvent == null) return;
     //getMapTableRowEvents().remove(TableRowActions.DoubleClick);
-    getMapTableRowEventsByEntity().put(FxTableRowActions.DoubleClick, doubleClickEvent);
+    getMapTableRowEventsByEntity().put(FiFxTableRowActions.DoubleClick, doubleClickEvent);
 
   }
 
@@ -220,7 +220,7 @@ public class FxTreeTableView<EntClazz> extends TreeTableView<EntClazz> {
     this.styleMap = styleMap;
   }
 
-  public Map<FxTableRowActions, Consumer<TreeTableRow>> getMapTableRowEvents() {
+  public Map<FiFxTableRowActions, Consumer<TreeTableRow>> getMapTableRowEvents() {
     if (this.mapTableRowEvents == null) {
       setupRowFactory();
     }
@@ -241,13 +241,13 @@ public class FxTreeTableView<EntClazz> extends TreeTableView<EntClazz> {
       tableRow.setOnMouseClicked(event -> {
 
         if (event.getClickCount() == 2 && (!tableRow.isEmpty())) {
-          if (this.mapTableRowEvents.containsKey(FxTableRowActions.DoubleClick)) {
-            this.mapTableRowEvents.get(FxTableRowActions.DoubleClick).accept(tableRow);
+          if (this.mapTableRowEvents.containsKey(FiFxTableRowActions.DoubleClick)) {
+            this.mapTableRowEvents.get(FiFxTableRowActions.DoubleClick).accept(tableRow);
           }
 
-          if (this.mapTableRowEventsByEntity.containsKey(FxTableRowActions.DoubleClick)) {
+          if (this.mapTableRowEventsByEntity.containsKey(FiFxTableRowActions.DoubleClick)) {
             EntClazz entClazz = (EntClazz) tableRow.getItem();
-            this.mapTableRowEventsByEntity.get(FxTableRowActions.DoubleClick).accept(entClazz);
+            this.mapTableRowEventsByEntity.get(FiFxTableRowActions.DoubleClick).accept(entClazz);
           }
         }
 
@@ -259,7 +259,7 @@ public class FxTreeTableView<EntClazz> extends TreeTableView<EntClazz> {
 
   }
 
-  public Map<FxTableRowActions, Consumer<EntClazz>> getMapTableRowEventsByEntity() {
+  public Map<FiFxTableRowActions, Consumer<EntClazz>> getMapTableRowEventsByEntity() {
     if (this.mapTableRowEventsByEntity == null) {
       setupRowFactory();
     }

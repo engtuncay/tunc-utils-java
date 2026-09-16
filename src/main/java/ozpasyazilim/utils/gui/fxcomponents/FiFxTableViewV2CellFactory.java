@@ -29,7 +29,7 @@ import java.util.Map;
  * <p>
  * Değeri CellValueFactory verir, CellFactory component belirleyip, değeri gösterir
  */
-public class FxTableViewV2CellFactoryFi {
+public class FiFxTableViewV2CellFactory {
 
   /**
    * Genel cellFactory 17-05-22 (iki metod birleştirildi) setupCellFactoryByDefault ve setupCellFactoryByEditorClass
@@ -198,8 +198,8 @@ public class FxTableViewV2CellFactoryFi {
 
   }
 
-  private static Class<FxTableViewV2CellFactoryFi> getClassi() {
-    return FxTableViewV2CellFactoryFi.class;
+  private static Class<FiFxTableViewV2CellFactory> getClassi() {
+    return FiFxTableViewV2CellFactory.class;
   }
 
   private static void assignCellFactoryBooleanType(FxTableCol2 fxTableCol) {

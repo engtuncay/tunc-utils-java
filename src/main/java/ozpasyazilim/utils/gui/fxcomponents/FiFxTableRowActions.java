@@ -1,5 +1,5 @@
 package ozpasyazilim.utils.gui.fxcomponents;
 
-public enum FxTableRowActions {
+public enum FiFxTableRowActions {
 	DoubleClick
 }
