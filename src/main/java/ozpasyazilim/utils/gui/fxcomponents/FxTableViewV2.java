@@ -60,7 +60,7 @@ import java.util.stream.Collectors;
  *
  * @param <EntClazz>
  */
-public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxComp {
+public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxComp {
 
   //private static final Logger log = LoggerFactory.getLogger(FxTableView2.class);
   private Class<EntClazz> entityClass;
@@ -189,7 +189,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
   // ******* constructors
 
-  public FxTableView2() {
+  public FxTableViewV2() {
     super();
     setupFxTableByConstructor();
   }
@@ -571,7 +571,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
 
   }
 
-  public FxTableView2 addAllFiColsAuto(List<FiCol> listFiCol) {
+  public FxTableViewV2 addAllFiColsAuto(List<FiCol> listFiCol) {
     for (FiCol fiCol : listFiCol) {
       addFiColAuto(fiCol);
     }
@@ -604,7 +604,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     return "boSecim";
   }
 
-  public FxTableView2 addFiColsAuto(FiCol fiCol) {
+  public FxTableViewV2 addFiColsAuto(FiCol fiCol) {
     addFiColAuto(fiCol);
     return this;
   }
@@ -620,7 +620,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
     setBoFkbEnabled(true);
   }
 
-  public FxTableView2 addAllFxTableCols2Auto(List<FxTableCol2> fxTableColList) {
+  public FxTableViewV2 addAllFxTableCols2Auto(List<FxTableCol2> fxTableColList) {
     for (int i = 0; i < fxTableColList.size(); i++) {
       FxTableCol2 fxTableCol = fxTableColList.get(i);
       addFxTableColAuto(fxTableCol);
@@ -647,7 +647,7 @@ public class FxTableView2<EntClazz> extends TableView<EntClazz> implements IFxCo
       try {
         this.entityClass = (Class<EntClazz>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
       } catch (Exception ex) {
-        Loghelper.get(FxTableView2.class).error("Generic Tip Sınıfı Tespit Edilirken Hata Oluştu. :" + FiException.exToErrorLog(ex));
+        Loghelper.get(FxTableViewV2.class).error("Generic Tip Sınıfı Tespit Edilirken Hata Oluştu. :" + FiException.exToErrorLog(ex));
       }
 
     }
