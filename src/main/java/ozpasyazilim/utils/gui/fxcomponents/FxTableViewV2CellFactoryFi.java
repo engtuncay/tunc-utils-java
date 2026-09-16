@@ -915,7 +915,7 @@ public class FxTableViewV2CellFactoryFi {
    *
    * @param fxTableCol
    */
-  public static <EntClazz> void setupCellFactoryByEditorClass(FxTableView2<EntClazz> fxTableView2, FxTableCol2 fxTableCol) {
+  public static <EntClazz> void setupCellFactoryByEditorClass(FxTableViewV2<EntClazz> fxTableViewV2, FxTableCol2 fxTableCol) {
 
     if (fxTableCol.getRefFiCol().getColEditorClass() == null) return;
 

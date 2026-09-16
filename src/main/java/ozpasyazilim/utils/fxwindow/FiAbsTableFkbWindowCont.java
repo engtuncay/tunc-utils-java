@@ -107,7 +107,7 @@ public abstract class FiAbsTableFkbWindowCont extends FiFxWindowCont {
     this.fkbLastSaved = fkbLastSaved;
   }
 
-  public FxTableView2<Fkb> getFxTableView() {
+  public FxTableViewV2<Fkb> getFxTableView() {
     //return getModView().getFxTableMig().getFxTableView();
     return getFxTableMig().getFxTableView();
   }

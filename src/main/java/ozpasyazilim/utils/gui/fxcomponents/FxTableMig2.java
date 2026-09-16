@@ -9,7 +9,7 @@ import ozpasyazilim.utils.windows.FiWinUtils;
 
 public class FxTableMig2<EntClazz> extends MigPane {
 
-	private FxTableView2<EntClazz> fxTableView;
+	private FxTableViewV2<EntClazz> fxTableView;
 
 	private FxMigPane paneFooter;
 	private FxButton btnExcel;
@@ -34,18 +34,18 @@ public class FxTableMig2<EntClazz> extends MigPane {
 
 	public FxTableMig2() {
 		super(FxMigHp.bui().lcgInset0Gap03().getLcg());
-		fxTableView = new FxTableView2<>();
+		fxTableView = new FxTableViewV2<>();
 		//fxTableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 		initComp(fxTableView);
 	}
 
-	public FxTableMig2(FxTableView2 fxTableView) {
+	public FxTableMig2(FxTableViewV2 fxTableView) {
 		super(FxMigHp.bui().lcgInset3Gap00().getLcg());
 		setFxTableView(fxTableView);
 		initComp(fxTableView);
 	}
 
-	public void initComp(FxTableView2<EntClazz> fxTableView) {
+	public void initComp(FxTableViewV2<EntClazz> fxTableView) {
 		fxTableView.setFxTableMig(this);
 		paneFooter = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().lcgNoGrid().getLcg());
 		lblFooterRowCount = new FxLabel("");
@@ -114,11 +114,11 @@ public class FxTableMig2<EntClazz> extends MigPane {
 
 
 
-	public FxTableView2<EntClazz> getFxTableView() {
+	public FxTableViewV2<EntClazz> getFxTableView() {
 		return fxTableView;
 	}
 
-	public void setFxTableView(FxTableView2<EntClazz> fxTableView) {
+	public void setFxTableView(FxTableViewV2<EntClazz> fxTableView) {
 		this.fxTableView = fxTableView;
 	}
 

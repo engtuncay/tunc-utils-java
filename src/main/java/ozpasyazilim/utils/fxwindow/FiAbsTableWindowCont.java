@@ -106,7 +106,7 @@ public abstract class FiAbsTableWindowCont<EntClazz> extends FiFxWindowCont {
     this.entityLastSaved = entityLastSaved;
   }
 
-  public FxTableView2<EntClazz> getFxTableView() {
+  public FxTableViewV2<EntClazz> getFxTableView() {
     //return getModView().getFxTableMig().getFxTableView();
     return getFxTableMig().getFxTableView();
   }

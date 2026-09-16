@@ -248,7 +248,7 @@ public class FxSimpleTableWindowCont<EntClazz> extends AbsFiModBaseCont implemen
 		return btnCrudSelect;
 	}
 
-	public FxTableView2<EntClazz> getFxTableView() {
+	public FxTableViewV2<EntClazz> getFxTableView() {
 		return getModView().getFxTableMig().getFxTableView();
 	}
 

@@ -1,10 +1,7 @@
 package ozpasyazilim.utils.fxwindow;
 
 import javafx.scene.layout.Pane;
-import ozpasyazilim.utils.gui.fxcomponents.FxMigHp;
-import ozpasyazilim.utils.gui.fxcomponents.FxMigPane;
-import ozpasyazilim.utils.gui.fxcomponents.FxTableMig2;
-import ozpasyazilim.utils.gui.fxcomponents.FxTableView2;
+import ozpasyazilim.utils.gui.fxcomponents.*;
 import ozpasyazilim.utils.mvc.IFiModViewEnt;
 import ozpasyazilim.utils.mvc.IFiModView;
 
@@ -70,7 +67,7 @@ public class FxSimpleTableWindowView<EntClazz> implements IFiModViewEnt, IFiModV
 		return fxTableMig;
 	}
 
-	public FxTableView2<EntClazz> getFxTableView() {
+	public FxTableViewV2<EntClazz> getFxTableView() {
 		return getFxTableMig().getFxTableView();
 	}
 

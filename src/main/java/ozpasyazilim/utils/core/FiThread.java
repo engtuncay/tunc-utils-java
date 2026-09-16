@@ -354,9 +354,9 @@ public class FiThread {
         Platform.runLater(runnable);
     }
 
-    public static Thread startThreadTable(Runnable runnable, FxTableView2 fxTableView2) {
+    public static Thread startThreadTable(Runnable runnable, FxTableViewV2 fxTableViewV2) {
 
-        FxLabel lblNodes = fxTableView2.getFiLblFooterMessage();
+        FxLabel lblNodes = fxTableViewV2.getFiLblFooterMessage();
         final String textOld = lblNodes.getText();
 
         Platform.runLater(() -> {
@@ -382,9 +382,9 @@ public class FiThread {
         return thread;
     }
 
-    public static Thread startThreadTable(Runnable runnable, FxTableView2 fxTableView2, FxButton btnReport) {
+    public static Thread startThreadTable(Runnable runnable, FxTableViewV2 fxTableViewV2, FxButton btnReport) {
 
-        FxLabel lblNodes = fxTableView2.getFiLblFooterMessage();
+        FxLabel lblNodes = fxTableViewV2.getFiLblFooterMessage();
         final String textOld = lblNodes.getText();
 
         Platform.runLater(() -> {
@@ -418,9 +418,9 @@ public class FiThread {
         return thread;
     }
 
-    public static Thread startThreadForFxTable(Runnable runnableStart, FxTableView2 fxTableView2) {
+    public static Thread startThreadForFxTable(Runnable runnableStart, FxTableViewV2 fxTableViewV2) {
 
-        FxLabel lblFooterMsg = fxTableView2.getFiLblFooterMessage();
+        FxLabel lblFooterMsg = fxTableViewV2.getFiLblFooterMessage();
 
         //final String textOld = lblFooterMsg.getText();
 
@@ -430,7 +430,7 @@ public class FiThread {
                 lblFooterMsg.setText("Veriler alınıyor.");
                 lblFooterMsg.setFxTextColor(Color.RED);
             }
-            fxTableView2.setPagingButtonsDisable(true);
+            fxTableViewV2.setPagingButtonsDisable(true);
         });
 
         Runnable runnableEnd = () -> {
@@ -439,7 +439,7 @@ public class FiThread {
                 //lblFooterMsg.setText(textOld);
                 lblFooterMsg.setText("");
                 //lblFooterMsg.setDisable(false);
-                fxTableView2.updatePageToolbarComps();
+                fxTableViewV2.updatePageToolbarComps();
             });
         };
 

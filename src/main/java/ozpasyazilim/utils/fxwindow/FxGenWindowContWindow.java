@@ -2,7 +2,7 @@ package ozpasyazilim.utils.fxwindow;
 
 import ozpasyazilim.utils.gui.fxcomponents.FxDialogShow;
 import ozpasyazilim.utils.gui.fxcomponents.FxEditorFactory;
-import ozpasyazilim.utils.gui.fxcomponents.FxTableView2;
+import ozpasyazilim.utils.gui.fxcomponents.FxTableViewV2;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.mvc.*;
 
@@ -88,7 +88,7 @@ public abstract class FxGenWindowContWindow<FormClazz, EntClazz> extends AbsFiMo
 		return getModView().getFxFormMig().getListFormElements();
 	}
 
-	public FxTableView2 getFxTableView() {
+	public FxTableViewV2 getFxTableView() {
 		return getModView().getFxTableMig().getFxTableView();
 	}
 

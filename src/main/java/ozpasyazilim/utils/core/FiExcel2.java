@@ -469,7 +469,7 @@ public class FiExcel2 {
 
     }
 
-    public void writeFxTableViewToExcelWithHeader2(FxTableView2 table, Path path, List<ExcelCell> listHeaders, Object footer, Boolean performanceEnabled) {
+    public void writeFxTableViewToExcelWithHeader2(FxTableViewV2 table, Path path, List<ExcelCell> listHeaders, Object footer, Boolean performanceEnabled) {
 
         //if (colsizes == null) colsizes = new HashMap<>();
         new WorkbookFactory();
