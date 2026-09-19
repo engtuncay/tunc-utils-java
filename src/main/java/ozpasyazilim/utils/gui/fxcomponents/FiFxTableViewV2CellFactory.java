@@ -23,9 +23,9 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * UBOM Table Cell Factory (V2)
+ * UBOM Table Cell Factory (V2) -
  * <p>
- * Cell Factory, TableView hücrelerinin içerisine yerleşecek componentlerin ayarlanmasını sağlar.
+ * Cell Factory, TableView hücrelerinin içerisine yerleşecek "componentlerin" (label,checkbox) ayarlanmasını sağlar.
  * <p>
  * Değeri CellValueFactory verir, CellFactory component belirleyip, değeri gösterir
  */

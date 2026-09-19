@@ -91,7 +91,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
     List<EntClazz> result = null;
     try {
       result = jdbi.withHandle(handle -> {
-        return handle.createQuery(FiQueTools.stoj(sqlQuery))
+        return handle.createQuery(FiQueryUtils.stoj(sqlQuery))
             .bindMap(mapBind)
             .mapToBean(getEntityClass())
             .list();
@@ -113,7 +113,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
 //        if (entityClass == null) setAutoClass();
 
-    sqlQuery = FiQueTools.fhrFixAndDeActivateOptParams(sqlQuery);
+    sqlQuery = FiQueryUtils.fhrFixAndDeActivateOptParams(sqlQuery);
 
     String sqlNew = convertSqlAndMapToMultiParam(sqlQuery, mapBind);
 
@@ -132,7 +132,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
     if (entityClass == null) setAutoClass();
 
-    sqlQuery = FiQueTools.fhrFixAndDeActivateOptParams(sqlQuery);
+    sqlQuery = FiQueryUtils.fhrFixAndDeActivateOptParams(sqlQuery);
 
     String sqlNew = convertSqlAndMapToMultiParam(sqlQuery, mapBind);
 
@@ -144,7 +144,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
     if (entityClass == null) setAutoClass();
 
-    sqlQuery = FiQueTools.fhrFixAndDeActivateOptParams(sqlQuery);
+    sqlQuery = FiQueryUtils.fhrFixAndDeActivateOptParams(sqlQuery);
 
     String sqlNew = convertSqlAndMapToMultiParam(sqlQuery, mapBind);
 
@@ -185,7 +185,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
     for (Map.Entry<String, List> entry : mapParamMulti.entrySet()) {
       //System.out.println(entry.getKey() + "/" + entry.getValue());
-      sqlQuery = FiQueTools.convertSqlForMultiParamByTemplate2(sqlQuery, entry.getKey(), entry.getValue().size());
+      sqlQuery = FiQueryUtils.convertSqlForMultiParamByTemplate2(sqlQuery, entry.getKey(), entry.getValue().size());
       mapBind.remove(entry.getKey());
     }
 
@@ -202,7 +202,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
     List<EntClazz> result = null;
     try {
       result = jdbi.withHandle(handle -> {
-        return handle.select(FiQueTools.stoj(sqlQuery))
+        return handle.select(FiQueryUtils.stoj(sqlQuery))
             .bindBean(bindEntity)
             .mapToBean(getEntityClass())
             .list();
@@ -326,7 +326,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
     try {
       result = getJdbi().withHandle(handle -> {
-        return handle.select(FiQueTools.stoj(FiQugen.selectDtoFieldsWithWhere1(getEntityClass())))
+        return handle.select(FiQueryUtils.stoj(FiQugen.selectDtoFieldsWithWhere1(getEntityClass())))
             .bindBean(entity)
             .mapToBean(getEntityClass())
             .list();
@@ -400,7 +400,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
     Optional<Integer> result = null;
     try {
       result = jdbi.withHandle(handle -> {
-        return handle.select(FiQueTools.stoj(FiQugen.selectQueryCountWherAllFields(getEntityClass(), entity)))
+        return handle.select(FiQueryUtils.stoj(FiQugen.selectQueryCountWherAllFields(getEntityClass(), entity)))
             .bindBean(entity)
             .mapTo(Integer.class)
             .findFirst();
@@ -460,7 +460,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
     try {
       Optional<Integer> result = getJdbi().withHandle(handle -> {
-        return handle.select(FiQueTools.fimSqlQueryWithDeActType1(sqlQuery))
+        return handle.select(FiQueryUtils.fimSqlQueryWithDeActType1(sqlQuery))
             .bindMap(map)
             .mapTo(Integer.class)
             .findFirst();
@@ -483,7 +483,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
     try {
       Optional<Integer> result = getJdbi().withHandle(handle -> {
-        return handle.select(FiQueTools.fimSqlQueryWithDeActType1(sqlQuery))
+        return handle.select(FiQueryUtils.fimSqlQueryWithDeActType1(sqlQuery))
             .bindBean(entClazz)
             .mapTo(Integer.class)
             .findFirst();
@@ -505,7 +505,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
     Fdr<Optional<Integer>> fdr = new Fdr<>();
 
     try {
-      Optional<Integer> result = handle.select(FiQueTools.stoj(sqlQuery))
+      Optional<Integer> result = handle.select(FiQueryUtils.stoj(sqlQuery))
           .bindMap(map)
           .mapTo(Integer.class)
           .findFirst();
@@ -704,7 +704,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
         for (String query : queryList) {
           if (FiString.isEmpty(query.trim())) continue;
-          Integer rowAffected = handle.createUpdate(FiQueTools.stoj(query))
+          Integer rowAffected = handle.createUpdate(FiQueryUtils.stoj(query))
               .bindMap(mapParams).execute();
           fdrMain.appendRowsAffected(rowAffected);
         }
@@ -761,7 +761,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
     try {
       getJdbi().useTransaction(handle -> {
-        int[] rowAffected = handle.createScript(FiQueTools.stoj(query)).bindMap(fiKeyBean).execute();
+        int[] rowAffected = handle.createScript(FiQueryUtils.stoj(query)).bindMap(fiKeyBean).execute();
         fdr.appendRowsAffected(rowAffected);
         //Loghelperr.getInstance(getClass()).debug("Affected:"+ rowAffectedLast);
       });
@@ -990,9 +990,9 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
         String sql = null;
         if (FiBool.isTrue(boIncludeIdFields)) {
-          sql = FiQueTools.stoj(FiQugen.insertQueryWithId(getEntityClass()));
+          sql = FiQueryUtils.stoj(FiQugen.insertQueryWithId(getEntityClass()));
         } else {
-          sql = FiQueTools.stoj(FiQugen.insertQueryWoutId(getEntityClass()));
+          sql = FiQueryUtils.stoj(FiQugen.insertQueryWoutId(getEntityClass()));
         }
 
         return handle.createUpdate(sql)
@@ -1033,9 +1033,9 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
       String sql; //= FiQueryTools.stoj(FiQueryGenerator.insertQueryWoutId(getEntityClass()));
 
       if (FiBool.isTrue(boIncludeIdFields)) {
-        sql = FiQueTools.stoj(FiQugen.insertQueryWithId(getEntityClass()));
+        sql = FiQueryUtils.stoj(FiQugen.insertQueryWithId(getEntityClass()));
       } else {
-        sql = FiQueTools.stoj(FiQugen.insertQueryWoutId(getEntityClass()));
+        sql = FiQueryUtils.stoj(FiQugen.insertQueryWoutId(getEntityClass()));
       }
 
       Integer rowCountUpdate = handle.createUpdate(sql)
@@ -1057,7 +1057,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
     try {
       Integer rowCountUpdate = getJdbi().withHandle(handle -> {
-        return handle.createUpdate(FiQueTools.stoj(sqlInsert))
+        return handle.createUpdate(FiQueryUtils.stoj(sqlInsert))
             .bindBean(entity)
             .execute(); // returns row count updated
       });
@@ -1076,7 +1076,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
     Fdr fdr = new Fdr();
 
     try {
-      Integer rowCountUpdate = handle.createUpdate(FiQueTools.stoj(sqlInsert))
+      Integer rowCountUpdate = handle.createUpdate(FiQueryUtils.stoj(sqlInsert))
           .bindBean(entity)
           .execute(); // returns row count updated
 
@@ -1121,7 +1121,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
         try {
           // transactions
           listEntity.forEach(ent -> {
-            handle.createUpdate(FiQueTools.stoj(FiQugen.insertQueryWoutId(getEntityClass())))
+            handle.createUpdate(FiQueryUtils.stoj(FiQugen.insertQueryWoutId(getEntityClass())))
                 .bindBean(ent)
                 .execute(); // returns row count updated
 
@@ -1270,7 +1270,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
     try {
       Integer rowCountUpdate = jdbi.withHandle(handle -> {
-        return handle.createUpdate(FiQueTools.stoj(updateQuery))
+        return handle.createUpdate(FiQueryUtils.stoj(updateQuery))
             .bindBean(bindEntity)
             .execute(); // returns row count updated
       });
@@ -1306,7 +1306,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
     try {
       Integer rowCountUpdate = jdbi.withHandle(handle -> {
-        return handle.createUpdate(FiQueTools.stoj(updateQuery))
+        return handle.createUpdate(FiQueryUtils.stoj(updateQuery))
             .bindMap(fiKeyBean)
             .bindBean(bindEntity)
             .execute(); // returns row count updated
@@ -1344,7 +1344,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
     try {
       Integer rowsAffected = jdbi.withHandle(handle -> {
-        return handle.createUpdate(FiQueTools.stoj(deleteQuery))
+        return handle.createUpdate(FiQueryUtils.stoj(deleteQuery))
             .bindBean(bindEntity)
             .execute(); // returns row count updated
       });
@@ -1384,7 +1384,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
     try {
       Integer rowCountUpdate = jdbi.withHandle(handle -> {
-        return handle.createUpdate(FiQueTools.stojExcludable1(updateQuery))
+        return handle.createUpdate(FiQueryUtils.stojExcludable1(updateQuery))
             .bindMap(fiMapParams)
             .execute(); // returns row count updated
       });
@@ -1406,7 +1406,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
     try {
       Integer rowCountUpdate = jdbi.withHandle(handle -> {
-        return handle.createUpdate(FiQueTools.stojExcludable1(insertQuery))
+        return handle.createUpdate(FiQueryUtils.stojExcludable1(insertQuery))
             .bindMap(mapParams)
             .execute(); // returns row count updated
       });
@@ -1427,7 +1427,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
     Fdr fdr = new Fdr();
 
     try {
-      Integer rowCountUpdate = handle.createUpdate(FiQueTools.stoj(updateQuery))
+      Integer rowCountUpdate = handle.createUpdate(FiQueryUtils.stoj(updateQuery))
           .bindMap(fiMapParams)
           .execute(); // returns row count updated
       //Loghelperr.getInstance(getClass()).debug("Row Count Update:"+rowCountUpdate);
@@ -1445,7 +1445,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
     Fdr fdr = new Fdr();
 
     try {
-      int rowsAffected = handle.createUpdate(FiQueTools.stojExcludable1(updateQuery))
+      int rowsAffected = handle.createUpdate(FiQueryUtils.stojExcludable1(updateQuery))
           .bindBean(bindEntity)
           .execute();
       fdr.setBoResultAndRowsAff(true, rowsAffected); // 16-01-20 added.
@@ -1462,7 +1462,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
     Fdr fdr = new Fdr();
 
     try {
-      int rowsAffected = handle.createUpdate(FiQueTools.stoj(updateQuery))
+      int rowsAffected = handle.createUpdate(FiQueryUtils.stoj(updateQuery))
           .bindBean(bindEntity)
           .execute();
       fdr.setBoResultAndRowsAff(true, rowsAffected);
@@ -1686,7 +1686,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
           // transactions
           listEntity.forEach(ent -> {
 
-            Integer rowsAffectedUpdate = handle.createUpdate(FiQueTools.stoj(sqlUpdate))
+            Integer rowsAffectedUpdate = handle.createUpdate(FiQueryUtils.stoj(sqlUpdate))
                 .bindBean(ent)
                 .execute(); // returns row count updated
 
@@ -1826,7 +1826,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
                 String idField = FiReflectClass.getListIdFields(getEntityClass()).get(0);
                 Class idClazz = FiReflection.getFieldClassType(getEntityClass(), idField);
 
-                Optional opId = handle.createUpdate(FiQueTools.stoj(FiQugen.insertQueryJParamWoutId(getEntityClass())))
+                Optional opId = handle.createUpdate(FiQueryUtils.stoj(FiQugen.insertQueryJParamWoutId(getEntityClass())))
                     .bindBean(ent)
                     .executeAndReturnGeneratedKeys(idField)
                     //.map(new FiBeanNestedRowMapper<>(getEntityClass())) // GENERATED_KEYS adında bir alana atama yapmaya çalışıyor
@@ -1838,7 +1838,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
                 });
 
               } else { // generated keyler alınmasına gerek yoksa
-                handle.createUpdate(FiQueTools.stoj(FiQugen.insertQueryJParamWoutId(getEntityClass())))
+                handle.createUpdate(FiQueryUtils.stoj(FiQugen.insertQueryJParamWoutId(getEntityClass())))
                     .bindBean(ent).execute();
               }
 
@@ -1848,7 +1848,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
             // id Null degilse, update yap
             if (FiBool.isFalse(boIdNull)) {
               Loghelper.get(getClass()).debug("Update AddOrUpdate");
-              handle.createUpdate(FiQueTools.stoj(sqlUpdate))
+              handle.createUpdate(FiQueryUtils.stoj(sqlUpdate))
                   .bindBean(ent)
                   .execute(); // returns row count updated
             }
@@ -1912,7 +1912,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
             // id Null degilse, update yap
             if (true) {
               //Loghelperr.getInstance(getClass()).debug("Update AddOrUpdate");
-              String sql = FiQueTools.stoj(fnSqlUpdatePerEntity.apply(ent));
+              String sql = FiQueryUtils.stoj(fnSqlUpdatePerEntity.apply(ent));
               //FiConsole.debug("sql:" + sql);
               if (!FiString.isEmpty(sql)) {
                 Integer rowsAffected1 = handle.createUpdate(sql)
@@ -1974,7 +1974,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
             // id Null degilse, update yap
             if (true) {
               //Loghelperr.getInstance(getClass()).debug("Update AddOrUpdate");
-              int execute = handle.createUpdate(FiQueTools.stoj(sqlUpdate))
+              int execute = handle.createUpdate(FiQueryUtils.stoj(sqlUpdate))
                   .bindMap(mapBind)
                   .bindBean(ent)
                   .execute();// returns row count updated
@@ -2047,7 +2047,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
             // id null ise insert yap
             if (FiBool.isTrue(boIdNull)) {
               //Loghelperr.getInstance(getClass()).debug("Insert AddOrUpdate");
-              handle.createUpdate(FiQueTools.stoj(new FiQugen().insertQueryJParamWoutId(getEntityClass())))
+              handle.createUpdate(FiQueryUtils.stoj(new FiQugen().insertQueryJParamWoutId(getEntityClass())))
                   .bindBean(ent)
                   .execute(); // returns row count updated
             }
@@ -2055,7 +2055,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
             // id Null degilse, update yap
             if (FiBool.isFalse(boIdNull)) {
               //Loghelperr.getInstance(getClass()).debug("Update AddOrUpdate");
-              handle.createUpdate(FiQueTools.stoj(fnSqlUpdatePerEntity.apply(ent)))
+              handle.createUpdate(FiQueryUtils.stoj(fnSqlUpdatePerEntity.apply(ent)))
                   .bindBean(ent)
                   .execute(); // returns row count updated
             }
@@ -2145,7 +2145,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
     try {
       result = jdbi.withHandle(handle -> {
-        return handle.select(FiQueTools.stoj(sql))
+        return handle.select(FiQueryUtils.stoj(sql))
             .bindMap(mapParam)
             .mapTo(String.class)
             .findFirst();
@@ -2178,7 +2178,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
     try {
       Optional<PrmEnt> result = getJdbi().withHandle(handle -> {
-        return handle.select(FiQueTools.stoj(sql))
+        return handle.select(FiQueryUtils.stoj(sql))
             .bindMap(mapParam)
             .mapTo(resultClazz)
             .findFirst();
@@ -2214,7 +2214,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
     try {
       Optional<PrmEnt> result = getJdbi().withHandle(handle -> {
-        return handle.select(FiQueTools.stoj(sql))
+        return handle.select(FiQueryUtils.stoj(sql))
             .bindMap(mapParam)
             .mapTo(resultClazz)
             .findFirst(); // if returns null or zero rows, then return Optional.empty()
@@ -2246,7 +2246,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
     try {
       Optional<String> result = getJdbi().withHandle(handle -> {
-        return handle.select(FiQueTools.stoj(sql))
+        return handle.select(FiQueryUtils.stoj(sql))
             .bindMap(mapParam)
             .mapTo(String.class)
             .findFirst(); // if returns null or zero rows, then return Optional.empty()
@@ -2355,7 +2355,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
     try {
       Optional<PrmEnt> result = jdbi.withHandle(handle -> {
-        return handle.select(FiQueTools.stoj(sql))
+        return handle.select(FiQueryUtils.stoj(sql))
             .bindBean(entClazz)
             .mapTo(resultClazz)
             .findFirst();
@@ -2380,7 +2380,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
     try {
       Optional<PrmEnt> result = getJdbi().withHandle(handle -> {
-        return handle.select(FiQueTools.stoj(sql))
+        return handle.select(FiQueryUtils.stoj(sql))
             .bindBean(entClazz)
             .mapTo(resultClazz)
             .findFirst();
@@ -2410,7 +2410,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
     try {
       Optional<Integer> result = getJdbi().withHandle(handle -> {
-        return handle.select(FiQueTools.stoj(sql))
+        return handle.select(FiQueryUtils.stoj(sql))
             .bindBean(entClazz)
             .mapTo(Integer.class)
             .findFirst();
@@ -2443,7 +2443,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
     try {
       Optional<EntClazz> result = getJdbi().withHandle(handle -> {
-        return handle.select(FiQueTools.stoj(sql))
+        return handle.select(FiQueryUtils.stoj(sql))
             .bindMap(mapParam)
             .mapToBean(getEntityClass())
             .findFirst();
@@ -2499,7 +2499,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
     try {
       Optional<EntClazz> result = getJdbi().withHandle(handle -> {
-        return handle.select(FiQueTools.stoj(sql))
+        return handle.select(FiQueryUtils.stoj(sql))
             .bindMap(mapParam)
             .mapToBean(getEntityClass())
             .findFirst();
@@ -2529,7 +2529,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
     try {
       List<Map<String, Object>> result = jdbi.withHandle(handle -> {
-        return handle.select(FiQueTools.stoj(sql))
+        return handle.select(FiQueryUtils.stoj(sql))
             .bindMap(mapParam)
             .mapToMap()
             .list();
@@ -2554,7 +2554,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
     try {
       Optional<EntClazz> result = getJdbi().withHandle(handle -> {
-        return handle.select(FiQueTools.stoj(sql))
+        return handle.select(FiQueryUtils.stoj(sql))
             .bindBean(entity)
             .mapToBean(getEntityClass())
             .findFirst();
@@ -2581,7 +2581,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
     try {
       Optional<EntClazz> result = getJdbi().withHandle(handle -> {
-        return handle.select(FiQueTools.stoj(sql))
+        return handle.select(FiQueryUtils.stoj(sql))
             .bindBean(entity)
             .mapToBean(getEntityClass())
             .findFirst();
@@ -2867,7 +2867,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
       String idField = FiReflectClass.getListIdFields(getEntityClass()).get(0);
       Class idClazz = FiReflection.getFieldClassType(getEntityClass(), idField);
 
-      Optional opId = handle.createUpdate(FiQueTools.stoj(sql1 + ";SET NOCOUNT ON;" + sql2))
+      Optional opId = handle.createUpdate(FiQueryUtils.stoj(sql1 + ";SET NOCOUNT ON;" + sql2))
           .bindBean(ent)
           .executeAndReturnGeneratedKeys(idField)
           .mapTo(idClazz)
@@ -2880,7 +2880,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
       fdrBatch.appendRowsAffected(1);
 
     } else { // generated keyler alınmasına gerek yoksa
-      int execute = handle.createUpdate(FiQueTools.stoj(sql1 + "; " + sql2))
+      int execute = handle.createUpdate(FiQueryUtils.stoj(sql1 + "; " + sql2))
           .bindBean(ent)
           .execute();// returns row count updated
       fdrBatch.appendRowsAffected(execute);
@@ -2908,7 +2908,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
       Class idClazz = FiReflection.getFieldClassType(getEntityClass(), idField);
 
       try {
-        Optional opId = handle.createUpdate(FiQueTools.stoj(sql1 + ";SET NOCOUNT ON;" + sql2))
+        Optional opId = handle.createUpdate(FiQueryUtils.stoj(sql1 + ";SET NOCOUNT ON;" + sql2))
             .bindBean(ent)
             .executeAndReturnGeneratedKeys(idField)
             .mapTo(idClazz)
@@ -2926,7 +2926,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
       return fdrMain;
     } else { // generated keyler alınmasına gerek yoksa
       try {
-        int execute = handle.createUpdate(FiQueTools.stoj(sql1 + "; " + sql2))
+        int execute = handle.createUpdate(FiQueryUtils.stoj(sql1 + "; " + sql2))
             .bindBean(ent)
             .execute();// returns row count updated
         fdrMain.appendRowsAffected(execute);
@@ -2970,13 +2970,13 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
     Fdr fdrMain = new Fdr();
 
-    String insertQuery = FiQueTools.stoj(FiQugen.insertQueryWoutId(getEntityClass()));
+    String insertQuery = FiQueryUtils.stoj(FiQugen.insertQueryWoutId(getEntityClass()));
 
     //String idField = FiEntity.getListIdFields(getEntityClass()).get(0);
     //Class idClazz = FiReflection.getFieldClassType(getEntityClass(), idField);
 
     try {
-      ResultBearing resultBearing = handle.createUpdate(FiQueTools.stoj(insertQuery)) //+ ";SET NOCOUNT ON;"
+      ResultBearing resultBearing = handle.createUpdate(FiQueryUtils.stoj(insertQuery)) //+ ";SET NOCOUNT ON;"
           .bindBean(entity)
           .executeAndReturnGeneratedKeys(idField);//
 
@@ -3011,12 +3011,12 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
     Fdr fdrMain = new Fdr();
 
-    String insertQuery = FiQueTools.stoj(FiQugen.insertQueryWoutId(getEntityClass()));
+    String insertQuery = FiQueryUtils.stoj(FiQugen.insertQueryWoutId(getEntityClass()));
 
     String idField = FiReflectClass.getListIdFields(getEntityClass()).get(0);
 
     try {
-      Optional<Map<String, Object>> opId = handle.createUpdate(FiQueTools.stoj(insertQuery + ";SET NOCOUNT ON;"))
+      Optional<Map<String, Object>> opId = handle.createUpdate(FiQueryUtils.stoj(insertQuery + ";SET NOCOUNT ON;"))
           .bindBean(entity)
           .executeAndReturnGeneratedKeys(idField)
           .mapToMap()
@@ -3098,7 +3098,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
           //Loghelper.debug(getClass(), "idClazz:" + idClazz);
           //Loghelper.debug(getClass(), "sql1:" + fimSqlAt(sql1));
 
-          Optional optId = handle.createUpdate(FiQueTools.stoj(sql1) + ";SET NOCOUNT ON;" + sql2)
+          Optional optId = handle.createUpdate(FiQueryUtils.stoj(sql1) + ";SET NOCOUNT ON;" + sql2)
               .bindBean(ent)
               .executeAndReturnGeneratedKeys(idField)
               .mapTo(idClazz)
@@ -3119,7 +3119,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
 
           String sqlUpScope = FiQugen.updateScopeIdFieldWithScopeIdFnById(getEntityClass(), fieldForScopeEntity);
 
-          int execute = handle.createUpdate(FiQueTools.stoj(sql1 + "; " + sqlUpScope))
+          int execute = handle.createUpdate(FiQueryUtils.stoj(sql1 + "; " + sqlUpScope))
               .bindBean(ent)
               .execute();// returns row count updated
           fdrBatch.appendRowsAffected(execute);
@@ -3186,7 +3186,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
       //Loghelper.debug(getClass(), "sql1:" + fimSqlAt(sql1));
 
       try {
-        Optional optId = handle.createUpdate(FiQueTools.stoj(sql1) + ";SET NOCOUNT ON;" + sql2)
+        Optional optId = handle.createUpdate(FiQueryUtils.stoj(sql1) + ";SET NOCOUNT ON;" + sql2)
             .bindBean(ent)
             .executeAndReturnGeneratedKeys(idField)
             .mapTo(idClazz)
@@ -3216,7 +3216,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
       String sqlUpScope = FiQugen.updateScopeIdFieldWithScopeIdFnById(getEntityClass(), fieldForScopeEntity);
 
       try {
-        int execute = handle.createUpdate(FiQueTools.stoj(sql1 + "; " + sqlUpScope))
+        int execute = handle.createUpdate(FiQueryUtils.stoj(sql1 + "; " + sqlUpScope))
             .bindBean(ent)
             .execute();// returns row count updated
         fdrMain.appendRowsAffected(execute);
@@ -3255,7 +3255,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
         String idField = FiReflectClass.getListIdFields(getEntityClass()).get(0);
         Class idClazz = FiReflection.getFieldClassType(getEntityClass(), idField);
 
-        Optional opId = handle.createUpdate(FiQueTools.stoj(sql1 + ";SET NOCOUNT ON;" + sql2))
+        Optional opId = handle.createUpdate(FiQueryUtils.stoj(sql1 + ";SET NOCOUNT ON;" + sql2))
             .bindBean(ent)
             .executeAndReturnGeneratedKeys(idField)
             .mapTo(idClazz)
@@ -3267,7 +3267,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
         fdrMain.appendRowsAffected(1);
 
       } else { // generated keyler alınmasına gerek yoksa
-        int execute = handle.createUpdate(FiQueTools.stoj(sql1 + "; " + sql2))
+        int execute = handle.createUpdate(FiQueryUtils.stoj(sql1 + "; " + sql2))
             .bindBean(ent)
             .execute();// returns row count updated
         fdrMain.appendRowsAffected(execute);
@@ -3296,7 +3296,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
         String idField = FiReflectClass.getListIdFields(getEntityClass()).get(0);
         Class idClazz = FiReflection.getFieldClassType(getEntityClass(), idField);
 
-        Optional opId = handle.createUpdate(FiQueTools.stoj(sql1))
+        Optional opId = handle.createUpdate(FiQueryUtils.stoj(sql1))
             .bindBean(ent)
             .executeAndReturnGeneratedKeys() //idField 18072023
             .mapTo(idClazz)
@@ -3308,7 +3308,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
         fdrMain.appendRowsAffected(1);
 
       } else { // generated keyler alınmasına gerek yoksa
-        int execute = handle.createUpdate(FiQueTools.stoj(sql1))
+        int execute = handle.createUpdate(FiQueryUtils.stoj(sql1))
             .bindBean(ent)
             .execute();// returns row count updated
         fdrMain.appendRowsAffected(execute);

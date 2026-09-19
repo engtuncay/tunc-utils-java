@@ -6,7 +6,7 @@ import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.ficols.FimFiCol;
 import ozpasyazilim.utils.fidborm.FiReflectClass;
 import ozpasyazilim.utils.fidborm.FiField;
-import ozpasyazilim.utils.fidborm.FiQueTools;
+import ozpasyazilim.utils.fidborm.FiQueryUtils;
 import ozpasyazilim.utils.fidborm.IFiTableMeta;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.mvc.IFiCol;
@@ -164,7 +164,7 @@ public class Fkb extends LinkedHashMap<String, Object> {
   public void bindAndActivateIfNotEmpty(Object objKey, Object value, AtomicReference<String> sql) {
     if (value != null) {
       this.put(objKey.toString(), value);
-      sql.set(FiQueTools.activateOptParamMain(sql.get(), objKey.toString()));
+      sql.set(FiQueryUtils.activateOptParamMain(sql.get(), objKey.toString()));
     }
   }
 
@@ -199,7 +199,7 @@ public class Fkb extends LinkedHashMap<String, Object> {
 
 //			Loghelper.get(getClass()).debug("Aktive edildi Param:" + objKey.toString());
       this.put(objKey.toString(), value);
-      FiQueTools.activateAndUpdateOptParam(sqlProp, objKey.toString());
+      FiQueryUtils.activateAndUpdateOptParam(sqlProp, objKey.toString());
 
     } else {
 //			Loghelper.get(getClass()).debug("Aktive edilmedi Param:" + objKey.toString());

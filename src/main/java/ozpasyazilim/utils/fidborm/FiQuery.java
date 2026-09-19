@@ -61,19 +61,19 @@ public class FiQuery {
 
 
   public void deActivateOptParam(String txOptParamName) {
-    setTxQuery(FiQueTools.deActivateOptParamMain(getTxQuery(), txOptParamName));
+    setTxQuery(FiQueryUtils.deActivateOptParamMain(getTxQuery(), txOptParamName));
   }
 
   public void deActivateSqlAtParam(String param) {
-    setTxQuery(FiQueTools.deactivateSqlAtParamMain(getTxQuery(), param));
+    setTxQuery(FiQueryUtils.deactivateSqlAtParamMain(getTxQuery(), param));
   }
 
   public void activateOptParam(String txOptParamName) {
-    setTxQuery(FiQueTools.activateOptParamMain(getTxQuery(), txOptParamName));
+    setTxQuery(FiQueryUtils.activateOptParamMain(getTxQuery(), txOptParamName));
   }
 
   public void activateSqlAtParam(String fieldName) {
-    setTxQuery(FiQueTools.activateSqlAtParamMain(getTxQuery(), fieldName));
+    setTxQuery(FiQueryUtils.activateSqlAtParamMain(getTxQuery(), fieldName));
   }
 
   /**
@@ -82,7 +82,7 @@ public class FiQuery {
   public void convertListParamsToMultiParams() {
     if (getMapParams() == null) return;
 
-    setTxQuery(FiQueTools.convertListParamsToMultiParams(getTxQuery(), getMapParams(), false));
+    setTxQuery(FiQueryUtils.convertListParamsToMultiParams(getTxQuery(), getMapParams(), false));
   }
 
 
@@ -92,7 +92,7 @@ public class FiQuery {
   public void convertListParamsToMultiParamsWithKeep() {
     if (getMapParams() == null) return;
 
-    setTxQuery(FiQueTools.convertListParamsToMultiParams(getTxQuery(), getMapParams(), true));
+    setTxQuery(FiQueryUtils.convertListParamsToMultiParams(getTxQuery(), getMapParams(), true));
   }
 
   /**
@@ -114,7 +114,7 @@ public class FiQuery {
   public void convertParamToMultiParamsWithSqlNewLine(String txParamName, Collection collParams) {
     if (getMapParams() == null) return;
     String txCombineSeperator = "+char(13)+char(10)+";
-    setTxQuery(FiQueTools.convertSingleParamToMultiParam2(getTxQuery(), getMapParams(), txParamName, collParams, false, txCombineSeperator));
+    setTxQuery(FiQueryUtils.convertSingleParamToMultiParam2(getTxQuery(), getMapParams(), txParamName, collParams, false, txCombineSeperator));
   }
 
   public Fkb getMapParams() {
@@ -142,7 +142,9 @@ public class FiQuery {
   /**
    * FiMapde olan parametreleri aktif eder
    * <p>
-   * Sorguda yoruma alınmamış(!) satır aynı şekilde kalır. DeAktivite yapılmaz.
+   * Sorguda yoruma alınmamış(!) satır aynı şekilde kalır.
+   *
+   * DeAktivite yapılmaz. (!!!)
    */
   public void activateParamsByMapParams() {
     activateParamsMain(false);
@@ -185,7 +187,7 @@ public class FiQuery {
   }
 
   private Set<String> getParamOptionalsFromQuery() {
-    return FiQueTools.findParamsOptional(getTxQuery());
+    return FiQueryUtils.findParamsOptional(getTxQuery());
   }
 
   /**
@@ -198,7 +200,7 @@ public class FiQuery {
    * @return
    */
   public void deActivateAllOptParams() {
-    setTxQuery(FiQueTools.deActivateAllOptParams(getTxQuery()));
+    setTxQuery(FiQueryUtils.deActivateAllOptParams(getTxQuery()));
   }
 
   /**
@@ -212,12 +214,12 @@ public class FiQuery {
    */
   public void activateParamsMain(Boolean boActivateOnlyFullParams) {
     if (getMapParams() != null) {
-      setTxQuery(FiQueTools.activateParamsMain(getTxQuery(), getMapParams(), boActivateOnlyFullParams));
+      setTxQuery(FiQueryUtils.activateParamsMain(getTxQuery(), getMapParams(), boActivateOnlyFullParams));
     }
   }
 
   public void deActivateOptParamsNotUsed() {
-    setTxQuery(FiQueTools.deActivateOptParamsNotUsed(getTxQuery(), getMapParamsInit()));
+    setTxQuery(FiQueryUtils.deActivateOptParamsNotUsed(getTxQuery(), getMapParamsInit()));
   }
 
 
@@ -303,10 +305,10 @@ public class FiQuery {
 
     StringBuilder customParam = new StringBuilder();
 
-    Integer indexParam = FiQueTools.getMultiParamStartIndex();
+    Integer indexParam = FiQueryUtils.getMultiParamStartIndex();
     for (int countPrm = 0; countPrm < count; countPrm++) {
       if (countPrm != 0) customParam.append(",");
-      String sablon = FiQueTools.makeMultiParamTemplate(param, indexParam);
+      String sablon = FiQueryUtils.makeMultiParamTemplate(param, indexParam);
       customParam.append("@" + sablon);
       indexParam++;
     }
@@ -347,10 +349,10 @@ public class FiQuery {
       getMapParams().forEach((key, value) -> {
         // Null olanlar deaktif olacak
         if (value != null) { // null degilse aktif edilir.
-          String newQuery = FiQueTools.activateOptParamMain(getTxQuery(), key);
+          String newQuery = FiQueryUtils.activateOptParamMain(getTxQuery(), key);
           setTxQuery(newQuery);
         } else { // param null ise,deaktif edilir
-          String newQuery = FiQueTools.deActivateOptParamMain(getTxQuery(), key);
+          String newQuery = FiQueryUtils.deActivateOptParamMain(getTxQuery(), key);
           setTxQuery(newQuery);
           listParamsWillDeactivate.add(key);
         }
@@ -448,9 +450,9 @@ public class FiQuery {
     //@ multi paramlar , yeni sablon parametresi şeklinde mapParamsNew Olarak oluşturulur.
     Map<String, Object> mapParamsNew = new HashMap<>();
 
-    Integer index = FiQueTools.getMultiParamStartIndex();
+    Integer index = FiQueryUtils.getMultiParamStartIndex();
     for (Object paramValue : listData) {
-      String paramNameTemplate = FiQueTools.makeMultiParamTemplate(paramName, index);
+      String paramNameTemplate = FiQueryUtils.makeMultiParamTemplate(paramName, index);
       mapParamsNew.put(paramNameTemplate, paramValue);
       index++;
     }
@@ -474,7 +476,7 @@ public class FiQuery {
   public void convertUserParamsToValue() {
 
     if (getMapParamsInit().isEmpty()) return;
-    setTxQuery(FiQueTools.convertUserParamsToValue(getTxQuery(), getMapParamsInit()));
+    setTxQuery(FiQueryUtils.convertUserParamsToValue(getTxQuery(), getMapParamsInit()));
 
   }
 

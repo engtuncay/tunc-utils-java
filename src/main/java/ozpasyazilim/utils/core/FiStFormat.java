@@ -1,6 +1,6 @@
 package ozpasyazilim.utils.core;
 
-import ozpasyazilim.utils.fidborm.FiQueTools;
+import ozpasyazilim.utils.fidborm.FiQueryUtils;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -36,7 +36,7 @@ public class FiStFormat {
     @Deprecated
     public static String fimSqlAtTire(String sqlQuery) {
         if (sqlQuery == null) return null;
-        sqlQuery = FiQueTools.fixSqlProblems(sqlQuery);
+        sqlQuery = FiQueryUtils.fixSqlProblems(sqlQuery);
         sqlQuery = sqlQuery.replaceAll("@_", ":");
         return sqlQuery;
     }
@@ -142,8 +142,8 @@ public class FiStFormat {
     @Deprecated
     public String sqlListAt() {
         //String regex = "(?s)\\(@(.*?)\\)";  //?s includes newline
-        this.value = FiQueTools.fixSqlProblems(this.value); //str.replaceAll("(--.*)(@)", "$1#");
-        this.value = FiQueTools.convertSqlParamToListJdbiParamMain(this.value); //value.replaceAll("\\(.*@(.*)\\)", "(<$1>)");
+        this.value = FiQueryUtils.fixSqlProblems(this.value); //str.replaceAll("(--.*)(@)", "$1#");
+        this.value = FiQueryUtils.convertSqlParamToListJdbiParamMain(this.value); //value.replaceAll("\\(.*@(.*)\\)", "(<$1>)");
         this.value = this.value.replaceAll("@", ":"); // [Ii][Nn].* başına eklenebilir
         return value;
     }
@@ -199,7 +199,7 @@ public class FiStFormat {
             this.value = this.value.replaceAll("--!" + key, "");
         }
 
-        this.value = FiQueTools.fixSqlProblems(value);   //value.replaceAll("(--.*)(@)", "$1#");
+        this.value = FiQueryUtils.fixSqlProblems(value);   //value.replaceAll("(--.*)(@)", "$1#");
         return this;
     }
 
@@ -244,7 +244,7 @@ public class FiStFormat {
     // use FiQueryTools
     @Deprecated
     public FiStFormat fhrConvertSqlParamToComment(String key) {
-        String newSql = FiQueTools.convertSqlParamToCommentMain(key, value);
+        String newSql = FiQueryUtils.convertSqlParamToCommentMain(key, value);
         if (newSql != null) this.value = newSql;
         return this;
     }

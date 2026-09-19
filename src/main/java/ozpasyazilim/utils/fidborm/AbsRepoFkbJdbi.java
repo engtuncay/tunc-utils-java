@@ -59,7 +59,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
 
     try {
       List<Fkb> result = getJdbi().withHandle(handle -> {
-        return handle.createQuery(FiQueTools.stoj(sqlQuery))
+        return handle.createQuery(FiQueryUtils.stoj(sqlQuery))
             .bindMap(mapBind)
             .map(new FiKeyBeanMapper(false))
             .list();
@@ -81,7 +81,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
 
     try {
       List<Fkb> result = getJdbi().withHandle(handle -> {
-        return handle.createQuery(FiQueTools.stoj(fiQuery.getTxQuery()))
+        return handle.createQuery(FiQueryUtils.stoj(fiQuery.getTxQuery()))
             .bindMap(fiQuery.getMapParams())
             .map(new FiKeyBeanMapper(false))
             .list();
@@ -104,7 +104,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
 
     try {
       List<Fkb> result = getJdbi().withHandle(handle -> {
-        return handle.createQuery(FiQueTools.stoj(fiQuery.getTxQuery()))
+        return handle.createQuery(FiQueryUtils.stoj(fiQuery.getTxQuery()))
             .bindMap(fiQuery.getMapParams())
             .map(new FiKeyBeanMapper(false))
             .list();
@@ -128,7 +128,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
 
     try {
       List<Fkb> result = getJdbi().withHandle(handle -> {
-        return handle.createQuery(FiQueTools.stoj(fiQuery.getTxQuery()))
+        return handle.createQuery(FiQueryUtils.stoj(fiQuery.getTxQuery()))
             .bindMap(fiQuery.getMapParams())
             .map(new FiKeyBeanMapper(false))
             .list();
@@ -157,7 +157,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
 
     try {
       List<Fkb> result = getJdbi().withHandle(handle -> {
-        return handle.createQuery(FiQueTools.stoj(sqlQuery))
+        return handle.createQuery(FiQueryUtils.stoj(sqlQuery))
             .bindMap(mapBind)
             .map(new FiKeyBeanMapper(false))
             .list();
@@ -201,7 +201,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
 
     try {
       Optional<Fkb> result = getJdbi().withHandle(handle -> {
-        return handle.createQuery(FiQueTools.stoj(sqlQuery))
+        return handle.createQuery(FiQueryUtils.stoj(sqlQuery))
             .bindMap(mapBind)
             .map(new FiKeyBeanMapper(false))
             .findOne();
@@ -227,7 +227,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
 
     try {
       Optional<Fkb> result = getJdbi().withHandle(handle -> {
-        return handle.createQuery(FiQueTools.stoj(sqlQuery))
+        return handle.createQuery(FiQueryUtils.stoj(sqlQuery))
             .bindMap(mapBind)
             .map(new FiKeyBeanMapper(false))
             .findOne();
@@ -264,7 +264,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
 
     try {
       Optional<PrmEnt> result = getJdbi().withHandle(handle -> {
-        return handle.select(FiQueTools.stoj(sql))
+        return handle.select(FiQueryUtils.stoj(sql))
             .bindMap(mapParam)
             .mapTo(resultClazz)
             .findFirst();
@@ -293,7 +293,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
 
     try {
       Optional<Integer> result = getJdbi().withHandle(handle -> {
-        return handle.select(FiQueTools.stoj(sql))
+        return handle.select(FiQueryUtils.stoj(sql))
             .bindMap(mapParam)
             .mapTo(Integer.class)
             .findFirst();
@@ -322,7 +322,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
 
     try {
       Optional<String> result = getJdbi().withHandle(handle -> {
-        return handle.select(FiQueTools.stoj(sql))
+        return handle.select(FiQueryUtils.stoj(sql))
             .bindMap(mapParam)
             .mapTo(String.class)
             .findFirst();
@@ -368,7 +368,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
     Fdr fdrMain = new Fdr();
     try {
       Integer rowCountUpdate = getJdbi().withHandle(handle -> {
-        return handle.createUpdate(FiQueTools.stojExcludable1(txUpdateQuery))
+        return handle.createUpdate(FiQueryUtils.stojExcludable1(txUpdateQuery))
             .bindMap(fiMapParams)
             .execute(); // returns row count updated
       });
@@ -397,7 +397,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
     Fdr fdrMain = new Fdr();
     try {
       Integer rowCountUpdate = getJdbi().withHandle(handle -> {
-        return handle.createUpdate(FiQueTools.stoj(insertQuery))
+        return handle.createUpdate(FiQueryUtils.stoj(insertQuery))
             .bindMap(fiMapParams)
             .execute(); // returns row count updated
       });
@@ -420,7 +420,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
     Fdr fdrMain = new Fdr();
     try {
       Integer rowCountUpdate = getJdbi().withHandle(handle -> {
-        return handle.createUpdate(FiQueTools.stoj(insertQuery))
+        return handle.createUpdate(FiQueryUtils.stoj(insertQuery))
             .bindMap(fiMapParams)
             .execute(); // returns row count updated
       });
@@ -449,7 +449,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
 
     Fdr fdrMain = new Fdr();
     try {
-      Integer rowCountUpdate = handle.createUpdate(FiQueTools.stoj(txQuery))
+      Integer rowCountUpdate = handle.createUpdate(FiQueryUtils.stoj(txQuery))
           .bindMap(fiMapParams)
           .execute(); // returns row count updated;
       //Loghelperr.getInstance(getClass()).debug("Row Count Update:"+rowCountUpdate);
@@ -476,7 +476,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
 
     Fdr fdrMain = new Fdr();
     try {
-      Integer rowCountUpdate = handle.createUpdate(FiQueTools.stoj(txQuery))
+      Integer rowCountUpdate = handle.createUpdate(FiQueryUtils.stoj(txQuery))
           .bindMap(fiMapParams)
           .execute(); // returns row count updated;
       //Loghelperr.getInstance(getClass()).debug("Row Count Update:"+rowCountUpdate);
@@ -503,7 +503,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
 
     Fdr fdrMain = new Fdr();
     try {
-      Integer rowCountUpdate = handle.createUpdate(FiQueTools.stoj(insertQuery))
+      Integer rowCountUpdate = handle.createUpdate(FiQueryUtils.stoj(insertQuery))
           .bindMap(fiMapParams)
           .execute(); // returns row count updated;
       //Loghelperr.getInstance(getClass()).debug("Row Count Update:"+rowCountUpdate);
@@ -523,7 +523,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
 
     try {
       List<EntMethodClazz> result = getJdbi().withHandle(handle -> {
-        return handle.createQuery(FiQueTools.stoj(sqlQuery))
+        return handle.createQuery(FiQueryUtils.stoj(sqlQuery))
             .bindMap(mapBind)
             .mapToBean(clazz)
             .list();
@@ -706,7 +706,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
     Fdr<Optional<Integer>> fdr = new Fdr<>();
 
     try {
-      Optional<Integer> result = handle.select(FiQueTools.stoj(sqlQuery))
+      Optional<Integer> result = handle.select(FiQueryUtils.stoj(sqlQuery))
           .bindMap(map)
           .mapTo(Integer.class)
           .findFirst();
@@ -745,11 +745,11 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
         // fqueconf
 
         Fdr fdrQueryIns = FiQugenMs.insQueryV2(fiQuconf);
-        sql = FiQueTools.stoj(fdrQueryIns.getFdTxVal());
+        sql = FiQueryUtils.stoj(fdrQueryIns.getFdTxVal());
       } else { // fdrQueryIns query without id fields
         Fdr fdrQueryIns = FiQugenMs.insQueryV2(fiQuconf);
         //fdrQueryIns.logFdr();
-        sql = FiQueTools.stoj(fdrQueryIns.getFdTxVal());
+        sql = FiQueryUtils.stoj(fdrQueryIns.getFdTxVal());
       }
 
       Integer rowCountUpdate = handle.createUpdate(sql)
