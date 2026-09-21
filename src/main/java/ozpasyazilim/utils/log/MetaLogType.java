@@ -29,6 +29,7 @@ public enum MetaLogType {
    */
   , DEV
   , INFO_IMP
+  , FAIL
   , WARN_IMP
 }
 

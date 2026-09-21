@@ -33,6 +33,10 @@ public class FiCal {
     return new Date();
   }
 
+  public static Date nowWoutTime() {
+    return FiDate.clearTimeFromDate(new Date());
+  }
+
   public FiCal(Date dateBuffer) {
     setDateBuffer(dateBuffer);
   }

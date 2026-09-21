@@ -1105,6 +1105,16 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     return this;
   }
 
+  public Fdr addLogFail(String txMessage) {
+
+    if (getBoLockAddLogNtn()) {
+      Loghelper.get(getClass()).debug("Error: Added Log to Blocked Fdr !!!!!!!!");
+    }
+    //if(getBoLockAddLogNtn()) throw new RuntimeException("Error: Added Log to Blocked Fdr !!!!!!!!");
+    getFdLogListInit().add(new FieLog(txMessage, MetaLogType.FAIL));
+    return this;
+  }
+
   public Fdr addLogInfoBack(String txMessage) {
     if (getBoLockAddLogNtn()) {
       Loghelper.get(getClass()).debug("Error: Added Log to Blocked Fdr !!!!!!!!");
