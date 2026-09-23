@@ -8,7 +8,7 @@ import ozpasyazilim.utils.returntypes.Fdr;
 import ozpasyazilim.utils.table.FicList;
 
 /**
- * abstract getRepoFkfAll eklendi
+ * abstract getRepoFkfAll eklendi (memory açısında daha iyi olması için abstract oldu, state yerine)
  */
 public abstract class AbsRepoFkbV2 extends AbsRepoFkbJdbi {
 
@@ -24,6 +24,10 @@ public abstract class AbsRepoFkbV2 extends AbsRepoFkbJdbi {
     super(jdbi);
   }
 
+  /**
+   * metod olarak kalması daha performanslı, state olarak tutmak memory maliyeti yapar
+   * @return
+   */
   public abstract Fkf getRepoFkfAll();
 
   public abstract Fkf getRepoFkfDto();

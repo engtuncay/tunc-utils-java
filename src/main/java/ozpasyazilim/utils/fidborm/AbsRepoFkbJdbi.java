@@ -24,7 +24,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
   private IFiTableMeta iFiTableMeta;
 
   private Fkf fkcDmFields;
-  private Fkf fkcFieldsAll;
+  private Fkf fkfAll;
   private FicList fclTable;
   private FiCol ficIdAuto;
 
@@ -633,12 +633,12 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
     this.fkcDmFields = fkcDmFields;
   }
 
-  public Fkf getFkcFieldsAll() {
-    return fkcFieldsAll;
+  public Fkf getFkfAll() {
+    return fkfAll;
   }
 
-  public void setFkcFieldsAll(Fkf fkcFieldsAll) {
-    this.fkcFieldsAll = fkcFieldsAll;
+  public void setFkfAll(Fkf fkfAll) {
+    this.fkfAll = fkfAll;
   }
 
   public FicList getFclTable() {
