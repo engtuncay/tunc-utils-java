@@ -2,6 +2,7 @@ package ozpasyazilim.utils.fidborm;
 
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
+import ozpasyazilim.utils.core.FiCollection;
 import ozpasyazilim.utils.datatypes.Fkb;
 import ozpasyazilim.utils.datatypes.Fkf;
 import ozpasyazilim.utils.returntypes.Fdr;
@@ -30,7 +31,9 @@ public abstract class AbsRepoFkbV2 extends AbsRepoFkbJdbi {
    */
   public abstract Fkf getRepoFkfAll();
 
-  public abstract Fkf getRepoFkfDto();
+  //public abstract Fkf getRepoFkfDto();
+
+  public abstract FicList getFclDto();
 
   public Fdr fkInsert(Fkb fkbEntity) {
     Fdr fdrMain = new Fdr();
@@ -95,6 +98,29 @@ public abstract class AbsRepoFkbV2 extends AbsRepoFkbJdbi {
     fiQuery.logQueryAndParams();
 
     return jdInsertFiQuery(fiQuery);
+  }
+
+  /**
+   * fkbList
+   * @return
+   */
+  public Fdr fkSelDtoList(Fkb fkbParams, FicList ficListExtra) {
+    FiQuconf fiQuconf = new FiQuconf();
+    FicList fclDto = getFclDto();
+
+    if(!FiCollection.isEmpty(ficListExtra)) {
+      fclDto.addAll(ficListExtra);
+    }
+
+    fiQuconf.setFclQuery(fclDto);
+
+    Fdr fdrSorgu = FiQugenMs.selQueryV2(fiQuconf);
+    if (fdrSorgu.isFalseBoResult()) return fdrSorgu;
+
+    FiQuery fiQuery = new FiQuery(fdrSorgu.getFdTxVal(), fkbParams);
+    fiQuery.logQueryAndParams();
+
+    return jdSelectFkbList(fiQuery);
   }
 
 }

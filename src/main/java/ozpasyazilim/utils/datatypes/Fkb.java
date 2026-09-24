@@ -621,7 +621,7 @@ public class Fkb extends LinkedHashMap<String, Object> {
   }
 
   public void logParams() {
-    Loghelper.get(getClass()).debug("FiKeyBean.logParams called");
+    Loghelper.get(getClass()).debug("fkb.logParams called");
     Loghelper.get(getClass()).debug(FiConsole.textFkb(this));
   }
 

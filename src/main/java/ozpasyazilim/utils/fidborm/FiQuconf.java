@@ -12,13 +12,16 @@ public class FiQuconf {
   // Main
   Fkf fkfAll;
 
+  Fkf fkfDto;
+
+
   // Alt-1
   Fkf fkfDataDef;
   // Alt-2
   IFiTableMeta iFiTableMeta;
   Boolean boUpdateFieldsOnly;
   FiCol ficIdAuto;
-  FicList ficListTable;
+  FicList fclQuery;
 
   // Update Query V1 de kullanıldı: qcfTxSqTableName,ficListUp,ficListWhere
 
@@ -42,8 +45,8 @@ public class FiQuconf {
   public FiQuconf() {
   }
 
-  public FiQuconf(FicList ficListTable) {
-    setFicListTable(ficListTable);
+  public FiQuconf(FicList fclQuery) {
+    setFclQuery(fclQuery);
   }
 
   public static FiQuconf bui(FicList ficList) {
@@ -77,12 +80,12 @@ public class FiQuconf {
     this.iFiTableMeta = iFiTableMeta;
   }
 
-  public FicList getFicListTable() {
-    return ficListTable;
+  public FicList getFclQuery() {
+    return fclQuery;
   }
 
-  public void setFicListTable(FicList ficListTable) {
-    this.ficListTable = ficListTable;
+  public void setFclQuery(FicList fclQuery) {
+    this.fclQuery = fclQuery;
   }
 
   public Boolean getBoUpdateFieldsOnly() {
@@ -139,5 +142,21 @@ public class FiQuconf {
 
   public void setFicListWhere(FicList ficListWhere) {
     this.ficListWhere = ficListWhere;
+  }
+
+  public Fkf getFkfDto() {
+    return fkfDto;
+  }
+
+  public void setFkfDto(Fkf fkfDto) {
+    this.fkfDto = fkfDto;
+  }
+
+  public Fkf getFkfDataDef() {
+    return fkfDataDef;
+  }
+
+  public void setFkfDataDef(Fkf fkfDataDef) {
+    this.fkfDataDef = fkfDataDef;
   }
 }

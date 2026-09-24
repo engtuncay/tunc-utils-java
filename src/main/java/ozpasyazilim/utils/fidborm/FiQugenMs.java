@@ -4,11 +4,13 @@ import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.datatypes.Fkb;
 //import ozpasyazilim.utils.ficRfcCoding;
 import ozpasyazilim.utils.datatypes.Fkf;
+import ozpasyazilim.utils.ficols.FicFiCol;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.metadata.fimCodegen.FimFtSpecFields;
 import ozpasyazilim.utils.metadata.fimCodegen.FimFtSql;
 import ozpasyazilim.utils.returntypes.Fdr;
 import ozpasyazilim.utils.table.FiCol;
+import ozpasyazilim.utils.table.FiColsUtil;
 import ozpasyazilim.utils.table.FicList;
 import ozpasyazilim.utils.table.FicUtil;
 
@@ -33,7 +35,7 @@ public class FiQugenMs {
 
     // arguments
     IFiTableMeta iFiTableMeta = fiQuconf.getiFiTableMeta();
-    FicList ficFields = fiQuconf.getFicListTable();
+    FicList ficFields = fiQuconf.getFclQuery();
 
     // FimOcSql.sfTableName();
     // FimOcSql.sfTxWhere();
@@ -94,7 +96,7 @@ public class FiQugenMs {
     Fdr fdr = new Fdr();
 
     // arguments
-    FicList ficFields = fiQuconf.getFicListTable();
+    FicList ficFields = fiQuconf.getFclQuery();
     Fkf fkbDataDef = fiQuconf.getFkficDataDef();
 
     // FimOcSql.sfTableName();
@@ -172,7 +174,7 @@ public class FiQugenMs {
    */
   public static Fdr upQueryV4(FicList ficList) {
     FiQuconf fiQuconf = new FiQuconf();
-    fiQuconf.setFicListTable(ficList);
+    fiQuconf.setFclQuery(ficList);
     return upQueryV4(fiQuconf);
   }
 
@@ -190,7 +192,7 @@ public class FiQugenMs {
     Fdr fdr = new Fdr();
 
     // arguments
-    FicList ficFields = fiQuconf.getFicListTable();
+    FicList ficFields = fiQuconf.getFclQuery();
 
     // FimOcSql.sfTableName();
     // FimOcSql.sfTxWhere();
@@ -464,7 +466,7 @@ public class FiQugenMs {
 
     // arguments
     IFiTableMeta iFiTableMeta = fiQuconf.getiFiTableMeta();
-    FicList ficList = fiQuconf.getFicListTable();
+    FicList ficList = fiQuconf.getFclQuery();
 
     String txTableName = null;
 
@@ -537,7 +539,7 @@ public class FiQugenMs {
     // Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
 
     // arguments
-    FicList ficList = fiQuconf.getFicListTable();
+    FicList ficList = fiQuconf.getFclQuery();
 
     String txTableName = null;
 
@@ -609,24 +611,32 @@ public class FiQugenMs {
     return fdrResult;
   }
 
+  /**
+   * fclQuery ile select alanları ve where alanlarını belirler
+   * <p>
+   * where alanları ayreten ficList'e eklenirken boWhereField true olarak işaretlenmeli
+   *
+   * @param fiQuconf
+   * @return
+   */
   public static Fdr selQueryV2(FiQuconf fiQuconf) {
     // Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
 
     // arguments
-    FicList ficList = fiQuconf.getFicListTable();
+    FicList ficListQuery = fiQuconf.getFclQuery();
 
     String txTableName = null;
 
     String template = "SELECT {{sfTxFields}}\n" +
-        "FROM {{sfTableName}}\n"
-        + "WHERE {{sfTxWhere}}";
+        "FROM {{sfTableName}}\n";
+
 
     StringBuilder sbTxFieldsBlock = new StringBuilder();
     StringBuilder sbTxWhereBlock = new StringBuilder();
 
     int indexWhereBlock = 0;
 
-    for (FiCol fiCol : ficList) {
+    for (FiCol fiCol : ficListQuery) {
 
       // Loghelper.get(getClassi()).debug("fiCol: " + fiCol.getFcTxFieldName() + " - BoWhereField " + fiCol.getFcBoWhereField());
 
@@ -643,13 +653,19 @@ public class FiQugenMs {
         indexWhereBlock++;
         //Loghelper.get(FiSqlGenMs.class).debug("where field: " + fiCol.getFcTxFieldName());
         sbTxWhereBlock.append(FiQugenUtil.formSqlAssignAndByFic(fiCol));
-      } else {
-        sbTxFieldsBlock.append(FiQugenUtil.formSqlFieldComma(fiCol.getFcTxFieldName()));
+        continue;
       }
 
+      sbTxFieldsBlock.append(FiQugenUtil.formSqlFieldComma(fiCol.getFcTxFieldName()));
+
+    } // end for
+
+    if (indexWhereBlock > 0) {
+      template += "WHERE {{sfTxWhere}}";
+      FiString.rtrimSb(sbTxWhereBlock, FiQugenUtil.getTxAnd());
     }
 
-    FiString.rtrimSb(sbTxWhereBlock, FiQugenUtil.getTxAnd());
+
     FiString.rtrimSb(sbTxFieldsBlock, FiQugenUtil.getTxComma());
 
     Fkb fkbParams = new Fkb();
@@ -664,10 +680,11 @@ public class FiQugenMs {
     fdrResult.setFdTxVal(sql);
 
     if (indexWhereBlock == 0) {
-      fdrResult.setFdTxVal("no where fields");
-      fdrResult.setBoResult(false);
-      fdrResult.setFdTxMessage("no where fields");
-      return fdrResult;
+      Loghelper.get(getClassi()).debug("no where fields");
+      // fdrResult.setFdTxVal("no where fields");
+      // fdrResult.setBoResult(false);
+      // fdrResult.setFdTxMessage("no where fields");
+      // return fdrResult;
     }
 
     if (FiString.isEmptyTrim(txTableName)) {
@@ -694,7 +711,7 @@ public class FiQugenMs {
 
     // arguments
     IFiTableMeta iFiTableMeta = fiQuconf.getiFiTableMeta();
-    FicList ficUpFields = fiQuconf.getFicListTable();
+    FicList ficUpFields = fiQuconf.getFclQuery();
 
     //FimOcgSql.sfTableName();
     //FimOcgSql.sfTxWhere();
@@ -774,7 +791,7 @@ public class FiQugenMs {
 
     // arguments
     IFiTableMeta iFiTableMeta = fiQuconf.getiFiTableMeta();
-    FicList ficList = fiQuconf.getFicListTable();
+    FicList ficList = fiQuconf.getFclQuery();
 
     String txTableName = null;
 
@@ -903,7 +920,7 @@ public class FiQugenMs {
 
     // arguments
     IFiTableMeta iFiTableMeta = fiQuconf.getiFiTableMeta();
-    FicList ficList = fiQuconf.getFicListTable();
+    FicList ficList = fiQuconf.getFclQuery();
 
     String txTableName = null;
 
@@ -1025,7 +1042,7 @@ public class FiQugenMs {
     // Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
 
     // arguments
-    FicList ficInsFields = fiQuconf.getFicListTable();
+    FicList ficInsFields = fiQuconf.getFclQuery();
     Fkf fkbDataDef = fiQuconf.getFkficDataDef();
 
     //FimQcSql.sfTableName();
@@ -1180,7 +1197,7 @@ public class FiQugenMs {
     // arguments
     Fkf fkfAllFields = fiQuconf.getFkfAll();
 
-    //FimQcSql.sfTableName();
+    //FimFtSql.sfTableName();
 
     String template = "INSERT INTO {{sfTableName}} ({{sfTxFields}})\n" +
         " VALUES ( {{sfTxFieldsVar}} )";
@@ -1318,7 +1335,7 @@ public class FiQugenMs {
 
   public static Fdr selQuery(FicList ficList) {
     FiQuconf fiQuconf = new FiQuconf();
-    fiQuconf.setFicListTable(ficList);
+    fiQuconf.setFclQuery(ficList);
 
     return selQuery(fiQuconf);
   }
@@ -1331,7 +1348,7 @@ public class FiQugenMs {
    */
   public static Fdr selQueryV2WhereIn(FicList ficList) {
     FiQuconf fiQuconf = new FiQuconf();
-    fiQuconf.setFicListTable(ficList);
+    fiQuconf.setFclQuery(ficList);
 
     return selQueryV2WhereIn(fiQuconf);
   }
