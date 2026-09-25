@@ -500,6 +500,20 @@
       <version>1.5.0</version>
     </dependency>
 
+    <!-- quartz (2 dependencies) -->
+
+    <dependency>
+      <groupId>org.quartz-scheduler</groupId>
+      <artifactId>quartz</artifactId>
+      <version>2.3.2</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.quartz-scheduler</groupId>
+      <artifactId>quartz-jobs</artifactId>
+      <version>2.3.2</version>
+    </dependency>
+
     <!-- JavaFx (4 libraries)-->
 
     <!--        <dependency>-->
