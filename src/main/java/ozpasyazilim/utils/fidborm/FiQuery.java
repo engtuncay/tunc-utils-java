@@ -44,7 +44,11 @@ public class FiQuery {
 
   public FiQuery(String sql, Fkb fkbParams) {
     this.txQuery = sql;
-    this.mapParams = new Fkb(fkbParams);
+
+    if (fkbParams != null) {
+      this.mapParams = new Fkb(fkbParams);
+    }
+
   }
 
   public static FiQuery bui() {
@@ -143,7 +147,7 @@ public class FiQuery {
    * FiMapde olan parametreleri aktif eder
    * <p>
    * Sorguda yoruma alınmamış(!) satır aynı şekilde kalır.
-   *
+   * <p>
    * DeAktivite yapılmaz. (!!!)
    */
   public void activateParamsByMapParams() {
