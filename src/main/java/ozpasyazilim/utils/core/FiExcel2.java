@@ -107,7 +107,7 @@ public class FiExcel2 {
         return new FiExcel2();
     }
 
-    public void writeFxTableViewToExcelWithHeader(FxTableView table, Path path, List<ExcelCell> listHeaders, Object footer) {
+    public void writeFxTableViewToExcelWithHeader(FxTableViewV1 table, Path path, List<ExcelCell> listHeaders, Object footer) {
 
         //if (colsizes == null) colsizes = new HashMap<>();
 
@@ -279,7 +279,7 @@ public class FiExcel2 {
 
     }
 
-    public void writeFxTableViewToExcelWithHeader2(FxTableView table, Path path, List<ExcelCell> listHeaders, Object footer, Boolean performanceEnabled) {
+    public void writeFxTableViewToExcelWithHeader2(FxTableViewV1 table, Path path, List<ExcelCell> listHeaders, Object footer, Boolean performanceEnabled) {
 
         //if (colsizes == null) colsizes = new HashMap<>();
         new WorkbookFactory();

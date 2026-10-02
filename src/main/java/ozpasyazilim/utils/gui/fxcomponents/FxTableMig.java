@@ -8,7 +8,7 @@ import ozpasyazilim.utils.windows.FiWinUtils;
 
 public class FxTableMig<S> extends MigPane {
 
-	FxTableView<S> fxTableView;
+	FxTableViewV1<S> fxTableViewV1;
 	FxMigPane paneFooter;
 	FxLabel lblFooter;
 	FxButton btnExcel;
@@ -16,13 +16,13 @@ public class FxTableMig<S> extends MigPane {
 	public FxTableMig() {
 		//super("insets 0,fill", "0[grow]", "0[grow]4[]");
 		super(new FxMigHp().lcgInset3Gap33().getLcg());
-		fxTableView = new FxTableView<>();
+		fxTableViewV1 = new FxTableViewV1<>();
 		//fxTableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
-		initComp(fxTableView);
+		initComp(fxTableViewV1);
 	}
 
-	public void initComp(FxTableView<S> fxTableView) {
-		fxTableView.setFxTableMig(this);
+	public void initComp(FxTableViewV1<S> fxTableViewV1) {
+		fxTableViewV1.setFxTableMig(this);
 		paneFooter = new FxMigPane(new FxMigHp().lcgInset0Gap55().getLcg());
 		lblFooter = new FxLabel("");
 
@@ -34,7 +34,7 @@ public class FxTableMig<S> extends MigPane {
 		paneFooter.add(btnExcel,"ay bottom");
 		paneFooter.add(lblFooter);
 
-		this.add(fxTableView, "span,grow,push,wrap");
+		this.add(fxTableViewV1, "span,grow,push,wrap");
 		this.add(paneFooter, "span");
 	}
 
@@ -49,20 +49,20 @@ public class FxTableMig<S> extends MigPane {
 
 	}
 
-	public FxTableMig(FxTableView fxTableView) {
+	public FxTableMig(FxTableViewV1 fxTableViewV1) {
 		//super("insets 0,fill", "0[grow]", "0[grow]4[]");
 		super(FxMigHp.bui().lcgInset3Gap33().getLcgPrepOnly());
-		setFxTableView(fxTableView);
-		initComp(fxTableView);
+		setFxTableView(fxTableViewV1);
+		initComp(fxTableViewV1);
 		//super.getChildren().add(fxTableMig);
 	}
 
-	public FxTableView<S> getFxTableView() {
-		return fxTableView;
+	public FxTableViewV1<S> getFxTableView() {
+		return fxTableViewV1;
 	}
 
-	public void setFxTableView(FxTableView<S> fxTableView) {
-		this.fxTableView = fxTableView;
+	public void setFxTableView(FxTableViewV1<S> fxTableViewV1) {
+		this.fxTableViewV1 = fxTableViewV1;
 	}
 
 	public FxMigPane getPaneFooter() {
