@@ -38,7 +38,7 @@ public abstract class FiAbsTableFkbWindowCont extends FiFxWindowCont {
   protected FxButton btnCrudReport;
   protected FxButton btnCrudRefresh;
 
-  private FxTableMig2<Fkb> fxTableMig;
+  private FxTableMigV2<Fkb> fxTableMig;
 
   public FiAbsTableFkbWindowCont() {
     super();
@@ -50,7 +50,7 @@ public abstract class FiAbsTableFkbWindowCont extends FiFxWindowCont {
   public void initCont() {
     super.initCont();
 
-    fxTableMig = new FxTableMig2<>();
+    fxTableMig = new FxTableMigV2<>();
     getModView().getMigContent().addGrowPushSpan(fxTableMig);
 
     //Loghelper.getInstance(getClass()).debug("MotTableWindowCont Init - View will init");
@@ -162,11 +162,11 @@ public abstract class FiAbsTableFkbWindowCont extends FiFxWindowCont {
     return btnCrudReport;
   }
 
-  public FxTableMig2<Fkb> getFxTableMig() {
+  public FxTableMigV2<Fkb> getFxTableMig() {
     return fxTableMig;
   }
 
-  public void setFxTableMig(FxTableMig2<Fkb> fxTableMig) {
+  public void setFxTableMig(FxTableMigV2<Fkb> fxTableMig) {
     this.fxTableMig = fxTableMig;
   }
 

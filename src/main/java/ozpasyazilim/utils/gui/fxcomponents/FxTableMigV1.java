@@ -6,14 +6,14 @@ import ozpasyazilim.utils.core.FiApp;
 import ozpasyazilim.utils.core.FiFile;
 import ozpasyazilim.utils.windows.FiWinUtils;
 
-public class FxTableMig<S> extends MigPane {
+public class FxTableMigV1<S> extends MigPane {
 
 	FxTableViewV1<S> fxTableViewV1;
 	FxMigPane paneFooter;
 	FxLabel lblFooter;
 	FxButton btnExcel;
 
-	public FxTableMig() {
+	public FxTableMigV1() {
 		//super("insets 0,fill", "0[grow]", "0[grow]4[]");
 		super(new FxMigHp().lcgInset3Gap33().getLcg());
 		fxTableViewV1 = new FxTableViewV1<>();
@@ -49,7 +49,7 @@ public class FxTableMig<S> extends MigPane {
 
 	}
 
-	public FxTableMig(FxTableViewV1 fxTableViewV1) {
+	public FxTableMigV1(FxTableViewV1 fxTableViewV1) {
 		//super("insets 0,fill", "0[grow]", "0[grow]4[]");
 		super(FxMigHp.bui().lcgInset3Gap33().getLcgPrepOnly());
 		setFxTableView(fxTableViewV1);

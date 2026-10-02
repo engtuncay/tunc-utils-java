@@ -4,7 +4,7 @@ import javafx.scene.layout.Pane;
 import ozpasyazilim.utils.gui.fxcomponents.FxFormMigDep;
 import ozpasyazilim.utils.gui.fxcomponents.FxMigHp;
 import ozpasyazilim.utils.gui.fxcomponents.FxMigPane;
-import ozpasyazilim.utils.gui.fxcomponents.FxTableMig2;
+import ozpasyazilim.utils.gui.fxcomponents.FxTableMigV2;
 import ozpasyazilim.utils.mvc.IFiModView;
 
 public class FxGenWindowView implements IFiModView {
@@ -15,7 +15,7 @@ public class FxGenWindowView implements IFiModView {
 	private FxMigPane fxContent;
 
 	private FxFormMigDep fxFormMig;
-	private FxTableMig2 fxTableMig;
+	private FxTableMigV2 fxTableMig;
 
 
 	public FxGenWindowView() {
@@ -40,7 +40,7 @@ public class FxGenWindowView implements IFiModView {
 		// Container Initial.
 		fxFormMig = new FxFormMigDep();
 		fxMigToolbar = new FxMigPane(FxMigHp.bui().lcgInset3Gap33().getLcgPrepOnly());
-		fxTableMig = new FxTableMig2();
+		fxTableMig = new FxTableMigV2();
 		fxContent = new FxMigPane(FxMigHp.bui().lcgInset0Gap50().getLcgPrepOnly());
 
 		// Comp Init
@@ -69,7 +69,7 @@ public class FxGenWindowView implements IFiModView {
 		return fxMigToolbar;
 	}
 
-	public FxTableMig2 getFxTableMig() {
+	public FxTableMigV2 getFxTableMig() {
 		return fxTableMig;
 	}
 

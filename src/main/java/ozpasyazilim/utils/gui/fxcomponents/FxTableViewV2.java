@@ -174,7 +174,7 @@ public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxC
   /**
    * FxTable comp'i , fxtableMig (parent reference) içerisinde ise buraya set edilir.
    */
-  private FxTableMig2 fxTableMig;
+  private FxTableMigV2 fxTableMig;
 
   /**
    * Header gelen fkb'ye ek olarak alanlar buraya eklenebilir.
@@ -2514,11 +2514,11 @@ public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxC
     return mapTableRowEventsByEntity;
   }
 
-  public FxTableMig2 getFxTableMig() {
+  public FxTableMigV2 getFxTableMig() {
     return fxTableMig;
   }
 
-  public void setFxTableMig(FxTableMig2 fxTableMig) {
+  public void setFxTableMig(FxTableMigV2 fxTableMig) {
     this.fxTableMig = fxTableMig;
   }
 
@@ -2733,7 +2733,7 @@ public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxC
 
   public void activateExtraFiltreButton() {
 
-    FxTableMig2 tableMig = getFxTableMig();
+    FxTableMigV2 tableMig = getFxTableMig();
 
     if (tableMig == null) {
       Loghelper.get(getClass()).debug("activateExtraFiltreButton fxTableMig null !!!");

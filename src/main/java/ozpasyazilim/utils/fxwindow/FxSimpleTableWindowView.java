@@ -11,7 +11,7 @@ public class FxSimpleTableWindowView<EntClazz> implements IFiModViewEnt, IFiModV
 	// rootMigPane super de
 	// private FxStackPane fxStackPane;
 	private FxMigPane fxMigPane;
-	private FxTableMig2<EntClazz> fxTableMig;
+	private FxTableMigV2<EntClazz> fxTableMig;
 	private FxMigPane fxMigToolbar;
 	private FxMigPane fxMigHeader;
 	private FxMigPane fxMigContent;
@@ -33,7 +33,7 @@ public class FxSimpleTableWindowView<EntClazz> implements IFiModViewEnt, IFiModV
 		fxMigHeader = new FxMigPane(FxMigHp.bui().lcgInset0Gap00().getLcgPrepOnly());
 
 		// Comp Init
-		fxTableMig = new FxTableMig2<>();
+		fxTableMig = new FxTableMigV2<>();
 		fxMigToolbar = new FxMigPane(FxMigHp.bui().lcgInset3Gap33().lcgNoGrid().getLcg()); // lcStandard2WithInset3
 		fxMigContent = new FxMigPane(FxMigHp.getLcgStd2Inset0Gap50());
 
@@ -63,7 +63,7 @@ public class FxSimpleTableWindowView<EntClazz> implements IFiModViewEnt, IFiModV
 		return fxMigToolbar;
 	}
 
-	public FxTableMig2<EntClazz> getFxTableMig() {
+	public FxTableMigV2<EntClazz> getFxTableMig() {
 		return fxTableMig;
 	}
 

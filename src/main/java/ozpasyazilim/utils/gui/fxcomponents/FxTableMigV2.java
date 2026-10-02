@@ -7,7 +7,7 @@ import ozpasyazilim.utils.core.FiFile;
 import ozpasyazilim.utils.mvc.IFiModCont;
 import ozpasyazilim.utils.windows.FiWinUtils;
 
-public class FxTableMig2<EntClazz> extends MigPane {
+public class FxTableMigV2<EntClazz> extends MigPane {
 
 	private FxTableViewV2<EntClazz> fxTableView;
 
@@ -32,14 +32,14 @@ public class FxTableMig2<EntClazz> extends MigPane {
 	private FxMigPane migFooterMain;
 
 
-	public FxTableMig2() {
+	public FxTableMigV2() {
 		super(FxMigHp.bui().lcgInset0Gap03().getLcg());
 		fxTableView = new FxTableViewV2<>();
 		//fxTableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 		initComp(fxTableView);
 	}
 
-	public FxTableMig2(FxTableViewV2 fxTableView) {
+	public FxTableMigV2(FxTableViewV2 fxTableView) {
 		super(FxMigHp.bui().lcgInset3Gap00().getLcg());
 		setFxTableView(fxTableView);
 		initComp(fxTableView);

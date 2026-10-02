@@ -48,7 +48,7 @@ import java.util.function.Predicate;
 
 /**
  *
- * FxTableView2 kullanın.
+ * FxTableViewV2 kullanın.
  *
  * @param <EntClazz>>
  */
@@ -90,7 +90,7 @@ public class FxTableViewV1<EntClazz> extends TableView<EntClazz> implements IFxC
 	private final String headerSummaryClass = "tblHeaderSummary";
 
 	// FxTable comp i , fxtable mig içerisinde ise buraya set edilir.
-	FxTableMig fxTableMig;
+	FxTableMigV1 fxTableMig;
 	private EventHandler<KeyEvent> colFilterKeyDownEvent;
 
 	public static void setFxColsFilterableNullToTrue(List<FxTableColDep> colTblMain) {
@@ -2189,11 +2189,11 @@ public class FxTableViewV1<EntClazz> extends TableView<EntClazz> implements IFxC
 		return mapTableRowEvents;
 	}
 
-	public FxTableMig getFxTableMig() {
+	public FxTableMigV1 getFxTableMig() {
 		return fxTableMig;
 	}
 
-	public void setFxTableMig(FxTableMig fxTableMig) {
+	public void setFxTableMig(FxTableMigV1 fxTableMig) {
 		this.fxTableMig = fxTableMig;
 	}
 
