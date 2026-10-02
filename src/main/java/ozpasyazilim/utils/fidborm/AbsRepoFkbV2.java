@@ -112,7 +112,7 @@ public abstract class AbsRepoFkbV2 extends AbsRepoFkbJdbi {
       fclDto.addAll(ficListExtra);
     }
 
-    fiQuconf.setFclQuery(fclDto);
+    fiQuconf.setFicListQuery(fclDto);
 
     Fdr fdrSorgu = FiQugenMs.selQueryV2(fiQuconf);
     if (fdrSorgu.isFalseBoResult()) return fdrSorgu;

@@ -4,6 +4,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.datatypes.Fkb;
+import ozpasyazilim.utils.datatypes.Fkf;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.table.FicList;
 
@@ -31,6 +32,10 @@ public class FiQuery {
   Class retClass;
 
   FicList fiCols;
+
+  // Query Oluşturmak için eklenen alanlar
+  Fkf fkfAll;
+
 
   //List<FiField> queryFieldList;
   //List<FiField> queryWhereList;

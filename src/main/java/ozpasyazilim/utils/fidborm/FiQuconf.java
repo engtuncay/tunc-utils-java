@@ -21,7 +21,7 @@ public class FiQuconf {
   IFiTableMeta iFiTableMeta;
   Boolean boUpdateFieldsOnly;
   FiCol ficIdAuto;
-  FicList fclQuery;
+  FicList ficListQuery;
 
   // Update Query V1 de kullanıldı: qcfTxSqTableName,ficListUp,ficListWhere
 
@@ -45,8 +45,8 @@ public class FiQuconf {
   public FiQuconf() {
   }
 
-  public FiQuconf(FicList fclQuery) {
-    setFclQuery(fclQuery);
+  public FiQuconf(FicList ficListQuery) {
+    setFicListQuery(ficListQuery);
   }
 
   public static FiQuconf bui(FicList ficList) {
@@ -80,12 +80,12 @@ public class FiQuconf {
     this.iFiTableMeta = iFiTableMeta;
   }
 
-  public FicList getFclQuery() {
-    return fclQuery;
+  public FicList getFicListQuery() {
+    return ficListQuery;
   }
 
-  public void setFclQuery(FicList fclQuery) {
-    this.fclQuery = fclQuery;
+  public void setFicListQuery(FicList ficListQuery) {
+    this.ficListQuery = ficListQuery;
   }
 
   public Boolean getBoUpdateFieldsOnly() {

@@ -4,13 +4,11 @@ import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.datatypes.Fkb;
 //import ozpasyazilim.utils.ficRfcCoding;
 import ozpasyazilim.utils.datatypes.Fkf;
-import ozpasyazilim.utils.ficols.FicFiCol;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.metadata.fimCodegen.FimFtSpecFields;
 import ozpasyazilim.utils.metadata.fimCodegen.FimFtSql;
 import ozpasyazilim.utils.returntypes.Fdr;
 import ozpasyazilim.utils.table.FiCol;
-import ozpasyazilim.utils.table.FiColsUtil;
 import ozpasyazilim.utils.table.FicList;
 import ozpasyazilim.utils.table.FicUtil;
 
@@ -35,7 +33,7 @@ public class FiQugenMs {
 
     // arguments
     IFiTableMeta iFiTableMeta = fiQuconf.getiFiTableMeta();
-    FicList ficFields = fiQuconf.getFclQuery();
+    FicList ficFields = fiQuconf.getFicListQuery();
 
     // FimOcSql.sfTableName();
     // FimOcSql.sfTxWhere();
@@ -96,7 +94,7 @@ public class FiQugenMs {
     Fdr fdr = new Fdr();
 
     // arguments
-    FicList ficFields = fiQuconf.getFclQuery();
+    FicList ficFields = fiQuconf.getFicListQuery();
     Fkf fkbDataDef = fiQuconf.getFkficDataDef();
 
     // FimOcSql.sfTableName();
@@ -174,7 +172,7 @@ public class FiQugenMs {
    */
   public static Fdr upQueryV4(FicList ficList) {
     FiQuconf fiQuconf = new FiQuconf();
-    fiQuconf.setFclQuery(ficList);
+    fiQuconf.setFicListQuery(ficList);
     return upQueryV4(fiQuconf);
   }
 
@@ -192,7 +190,7 @@ public class FiQugenMs {
     Fdr fdr = new Fdr();
 
     // arguments
-    FicList ficFields = fiQuconf.getFclQuery();
+    FicList ficFields = fiQuconf.getFicListQuery();
 
     // FimOcSql.sfTableName();
     // FimOcSql.sfTxWhere();
@@ -466,7 +464,7 @@ public class FiQugenMs {
 
     // arguments
     IFiTableMeta iFiTableMeta = fiQuconf.getiFiTableMeta();
-    FicList ficList = fiQuconf.getFclQuery();
+    FicList ficList = fiQuconf.getFicListQuery();
 
     String txTableName = null;
 
@@ -539,7 +537,7 @@ public class FiQugenMs {
     // Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
 
     // arguments
-    FicList ficList = fiQuconf.getFclQuery();
+    FicList ficList = fiQuconf.getFicListQuery();
 
     String txTableName = null;
 
@@ -623,7 +621,7 @@ public class FiQugenMs {
     // Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
 
     // arguments
-    FicList ficListQuery = fiQuconf.getFclQuery();
+    FicList ficListQuery = fiQuconf.getFicListQuery();
 
     String txTableName = null;
 
@@ -711,7 +709,7 @@ public class FiQugenMs {
 
     // arguments
     IFiTableMeta iFiTableMeta = fiQuconf.getiFiTableMeta();
-    FicList ficUpFields = fiQuconf.getFclQuery();
+    FicList ficUpFields = fiQuconf.getFicListQuery();
 
     //FimOcgSql.sfTableName();
     //FimOcgSql.sfTxWhere();
@@ -791,7 +789,7 @@ public class FiQugenMs {
 
     // arguments
     IFiTableMeta iFiTableMeta = fiQuconf.getiFiTableMeta();
-    FicList ficList = fiQuconf.getFclQuery();
+    FicList ficList = fiQuconf.getFicListQuery();
 
     String txTableName = null;
 
@@ -920,7 +918,7 @@ public class FiQugenMs {
 
     // arguments
     IFiTableMeta iFiTableMeta = fiQuconf.getiFiTableMeta();
-    FicList ficList = fiQuconf.getFclQuery();
+    FicList ficList = fiQuconf.getFicListQuery();
 
     String txTableName = null;
 
@@ -1042,7 +1040,7 @@ public class FiQugenMs {
     // Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
 
     // arguments
-    FicList ficInsFields = fiQuconf.getFclQuery();
+    FicList ficInsFields = fiQuconf.getFicListQuery();
     Fkf fkbDataDef = fiQuconf.getFkficDataDef();
 
     //FimQcSql.sfTableName();
@@ -1335,7 +1333,7 @@ public class FiQugenMs {
 
   public static Fdr selQuery(FicList ficList) {
     FiQuconf fiQuconf = new FiQuconf();
-    fiQuconf.setFclQuery(ficList);
+    fiQuconf.setFicListQuery(ficList);
 
     return selQuery(fiQuconf);
   }
@@ -1348,7 +1346,7 @@ public class FiQugenMs {
    */
   public static Fdr selQueryV2WhereIn(FicList ficList) {
     FiQuconf fiQuconf = new FiQuconf();
-    fiQuconf.setFclQuery(ficList);
+    fiQuconf.setFicListQuery(ficList);
 
     return selQueryV2WhereIn(fiQuconf);
   }
