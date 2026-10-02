@@ -3501,7 +3501,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
   }
 
   public Fdr updateFiColsByBoWhereFields(FiQuery fiQuery) {
-    String txSql = FiQugen.updateFiColsByBoWhereFields(fiQuery.getFiCols(), getiFiTableMeta());
+    String txSql = FiQugen.updateFiColsByBoWhereFields(fiQuery.getFicListQuery(), getiFiTableMeta());
     fiQuery.setTxQuery(txSql);
     return jdUpdateBindMapMain(fiQuery);
   }

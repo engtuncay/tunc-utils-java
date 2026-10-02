@@ -6,6 +6,7 @@ import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.datatypes.Fkb;
 import ozpasyazilim.utils.datatypes.Fkf;
 import ozpasyazilim.utils.log.Loghelper;
+import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.FicList;
 
 import java.util.*;
@@ -31,11 +32,16 @@ public class FiQuery {
    */
   Class retClass;
 
-  FicList fiCols;
-
   // Query Oluşturmak için eklenen alanlar
+  FicList ficListQuery;
+
+  // FicQuery
   Fkf fkfAll;
 
+  /**
+   * Tablo ismi buranın header alanından alınır
+   */
+  FiCol qcfTxSqTableName;
 
   //List<FiField> queryFieldList;
   //List<FiField> queryWhereList;
@@ -506,12 +512,27 @@ public class FiQuery {
     this.retClass = retClass;
   }
 
-  public FicList getFiCols() {
-    return fiCols;
+  public FicList getFicListQuery() {
+    return ficListQuery;
   }
 
-  public void setFiCols(FicList fiCols) {
-    this.fiCols = fiCols;
+  public void setFicListQuery(FicList ficListQuery) {
+    this.ficListQuery = ficListQuery;
   }
 
+  public Fkf getFkfAll() {
+    return fkfAll;
+  }
+
+  public void setFkfAll(Fkf fkfAll) {
+    this.fkfAll = fkfAll;
+  }
+
+  public FiCol getQcfTxSqTableName() {
+    return qcfTxSqTableName;
+  }
+
+  public void setQcfTxSqTableName(FiCol qcfTxSqTableName) {
+    this.qcfTxSqTableName = qcfTxSqTableName;
+  }
 }

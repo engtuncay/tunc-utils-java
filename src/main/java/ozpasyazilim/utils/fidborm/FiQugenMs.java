@@ -1251,6 +1251,77 @@ public class FiQugenMs {
   }
 
   /**
+   * fkfAll kullanarak Insert Sorgusu üretir
+   * <p>
+   * Params : fkfAll
+   *
+   * @param fiQuery
+   * @return fdTxVal sorgu sonucu
+   */
+  public static Fdr insQueryV4(FiQuery fiQuery) {
+    // Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
+
+    Fdr fdrMain = new Fdr();
+
+    // arguments
+    Fkf fkfAllFields = fiQuery.getFkfAll();
+
+    //FimFtSql.sfTableName();
+
+    String template = "INSERT INTO {{sfTableName}} ({{sfTxFields}})\n" +
+        " VALUES ( {{sfTxFieldsVar}} )";
+
+    StringBuilder sbTxFieldsBlock = new StringBuilder();
+    StringBuilder sbTxFieldsVar = new StringBuilder();
+
+    String txTableName = null;
+    int indexCol = 0;
+
+    if (fkfAllFields.containsKey(FimFtSpecFields.qcfTxSqTableName().getKey())) {
+      Loghelper.get(getClassi()).debug("tablo col mevcut");
+
+      txTableName = fkfAllFields.getFimValue(FimFtSpecFields.qcfTxSqTableName()).getFcTxHeader();
+    }
+
+    if (FiString.isEmpty(txTableName)) return fdrMain.buiBoResult(false, "Tablo ismi tanımlanmamış.");
+
+    for (FiCol ficItem : fkfAllFields.values()) {
+
+      if (FiBool.isTrue(ficItem.getFcBoTransient())) continue;
+      if (FicUtil.isIdAutoType(ficItem)) continue;
+      if (FicUtil.isDefField(ficItem)) continue;
+
+      indexCol++;
+      sbTxFieldsBlock.append(FiQugenUtil.formSqlFieldCommaByFic(ficItem));
+      sbTxFieldsVar.append(FiQugenUtil.formSqlVarCommaByFic(ficItem));
+
+    }
+
+    FiString.rtrimSb(sbTxFieldsBlock, getTxComma());
+    FiString.rtrimSb(sbTxFieldsVar, getTxComma());
+
+    Fkb fkbParams = new Fkb();
+    fkbParams.addFieldBy(FimFtSql.sfTableName(), txTableName);
+    fkbParams.addFieldBy(FimFtSql.sfTxFields(), sbTxFieldsBlock.toString());
+    //fkbParams.addFieldBy(FimQcSql.sfTxWhere(), sbTxWhereBlock.toString());
+    fkbParams.addFieldBy(FimFtSql.sfTxFieldsVar(), sbTxFieldsVar.toString());
+
+    String sql = FiString.substitutor(template, fkbParams);
+
+    fdrMain.setFdTxVal(sql);
+
+    if (indexCol == 0) {
+      fdrMain.setBoResult(false);
+      fdrMain.setFdTxVal("no insert fields");
+      fdrMain.setFdTxMessage("Sorgu oluştururken hata oluştu. (no insert fields)");
+      return fdrMain;
+    }
+
+    fdrMain.setBoResult(true);
+    return fdrMain;
+  }
+
+  /**
    * Args : fclInsert
    * <p>
    * Configs : getFkfAll,
