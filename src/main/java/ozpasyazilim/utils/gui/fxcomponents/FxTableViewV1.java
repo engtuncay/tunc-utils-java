@@ -53,7 +53,7 @@ import java.util.function.Predicate;
  * @param <EntClazz>>
  */
 @Deprecated
-public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxComp {
+public class FxTableViewV1<EntClazz> extends TableView<EntClazz> implements IFxComp {
 
 	private Class<EntClazz> entityClazz;
 
@@ -130,7 +130,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 	private ObjectProperty<KeyEvent> propTblKeyEvent = new SimpleObjectProperty<>();
 
-	public FxTableView() {
+	public FxTableViewV1() {
 		super();
 		setupFxTable();
 	}
@@ -146,7 +146,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 	}
 
 
-	public FxTableView(ObservableList items) {
+	public FxTableViewV1(ObservableList items) {
 		super(items);
 	}
 
@@ -197,7 +197,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 
 	}
 
-	public FxTableView addAllFxTableColsAuto(List<FxTableColDep> fxTableColDepList) {
+	public FxTableViewV1 addAllFxTableColsAuto(List<FxTableColDep> fxTableColDepList) {
 
 		for (int i = 0; i < fxTableColDepList.size(); i++) {
 
@@ -903,7 +903,7 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 		return getSelectionModel().getSelectedItem();
 	}
 
-	public FxTableView setActivateFxColsFilterableNullToTrue() {
+	public FxTableViewV1 setActivateFxColsFilterableNullToTrue() {
 		getFxTableColList().forEach(fxTableCol -> {
 			if (fxTableCol.getBoLocFilterable() == null) fxTableCol.setBoLocFilterable(true);
 		});
