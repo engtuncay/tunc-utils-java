@@ -39,7 +39,7 @@ public class FxComboBoxObj extends FxComboBox<ComboItemObj> {
 		getItems().add(comboItem);
 	}
 
-	public void addComboItem(Object objValue, String txLabel) {
+	public void addComboItem(String txLabel, Object objValue) {
 		addFiItem(new ComboItemObj(txLabel, objValue));
 	}
 

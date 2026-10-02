@@ -86,8 +86,8 @@ public class FxTableView<EntClazz> extends TableView<EntClazz> implements IFxCom
 	// Filter Node enter basılınca yapılacak işlem
 	private EventHandler<KeyEvent> colFilterNodeEnterFnGlobal;
 
-	private String headerFilterNodeStyleClass = "tblHeaderFilter";
-	private String headerSummaryClass = "tblHeaderSummary";
+	private final String headerFilterNodeStyleClass = "tblHeaderFilter";
+	private final String headerSummaryClass = "tblHeaderSummary";
 
 	// FxTable comp i , fxtable mig içerisinde ise buraya set edilir.
 	FxTableMig fxTableMig;

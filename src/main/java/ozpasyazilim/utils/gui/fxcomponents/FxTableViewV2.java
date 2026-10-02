@@ -2648,17 +2648,17 @@ public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxC
     lblPageNoIndex = new FxLabel("");
     btnPagePrev = new FxButton("<");
     btnPageForward = new FxButton(">");
-    btnPageBegin.setFiSimpleTooltip("Başa Dön");
+    btnPageBegin.setToolTipTextFi("Başa Dön");
     btnPageEnd = new FxButton(">>");
 
     FxComboBoxObj cmbPageSize = new FxComboBoxObj();
     cmbPageSize.setObjValue(30);
-    cmbPageSize.addComboItem(30, "30");
-    cmbPageSize.addComboItem(100, "100");
-    cmbPageSize.addComboItem(500, "500");
-    cmbPageSize.addComboItem(1000, "1000");
-    cmbPageSize.addComboItem(2000, "2000");
-    cmbPageSize.addComboItem(5000, "5000");
+    cmbPageSize.addComboItem("30", 30);
+    cmbPageSize.addComboItem("100", 100);
+    cmbPageSize.addComboItem("500", 500);
+    cmbPageSize.addComboItem("1000", 1000);
+    cmbPageSize.addComboItem("2000", 2000);
+    cmbPageSize.addComboItem("5000", 5000);
     cmbPageSize.setSelectedItemByObjValueFi();
 
     cmbPageSize.trigSelectedItemListenerFi((observable, oldValue, newValue) -> {

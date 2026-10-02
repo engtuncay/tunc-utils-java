@@ -2,39 +2,39 @@ package ozpasyazilim.utils.gui.components;
 
 /**
  *
- * Combo box eklenecek item , value değeri gerçek kendi değerinde tutar.
- *
+ * ComboBox eklenecek item'ın value değerini object olarak tutar. Label yine string.
+ * <p>
  * value gerçek değer olmalı,çevirime gerek duyulmamalı (string->int çevirme gibi)
  *
  * @author tunc270
  */
 public class ComboItemObj {
 
-	private String label;
-	private Object value;
+  private String label;
+  private Object value;
 
-	public ComboItemObj() {
-	}
+  public ComboItemObj() {
+  }
 
-	public ComboItemObj(String label, Object value) {
-		this.label = label;
-		this.value = value;
-	}
+  public ComboItemObj(String label, Object value) {
+    this.label = label;
+    this.value = value;
+  }
 
-	public String toString() {
-		return this.label;
-	}
+  public String toString() {
+    return this.label;
+  }
 
-	public String getLabel() {
-		return this.label;
-	}
+  public String getLabel() {
+    return this.label;
+  }
 
-	public Object getValue() {
-		return this.value;
-	}
+  public Object getValue() {
+    return this.value;
+  }
 
-	public void setLabel(String label) {
-		this.label = label;
-	}
+  public void setLabel(String label) {
+    this.label = label;
+  }
 
 }
