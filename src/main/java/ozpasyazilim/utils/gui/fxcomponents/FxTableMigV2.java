@@ -3,20 +3,24 @@ package ozpasyazilim.utils.gui.fxcomponents;
 import de.jensd.fx.glyphs.icons525.Icons525;
 import org.tbee.javafx.scene.layout.MigPane;
 import ozpasyazilim.utils.core.FiApp;
+import ozpasyazilim.utils.core.FiCollection;
 import ozpasyazilim.utils.core.FiFile;
+import ozpasyazilim.utils.datatypes.Fkb;
+import ozpasyazilim.utils.fxwindow.FxWindowFormCont;
 import ozpasyazilim.utils.mvc.IFiModCont;
+import ozpasyazilim.utils.returntypes.Fdr;
 import ozpasyazilim.utils.windows.FiWinUtils;
 
 public class FxTableMigV2<EntClazz> extends MigPane {
 
   private FxTableViewV2<EntClazz> fxTableView;
 
-  private FxMigPane paneFooter;
+  private FxMigPane migFooter1;
 
   /**
    * Sayfalama buttonların konulduğu panel. Sütun başlıkları paneli degil.
    */
-  private FxMigPane paneTablePagingHeader;
+  private FxMigPane migTablePagingHeader;
   private FxMigPane migFooterMain;
 
   private FxButton btnExcel;
@@ -32,6 +36,7 @@ public class FxTableMigV2<EntClazz> extends MigPane {
    *
    */
   private IFiModCont iFiModCont;
+  private FxButton btnEkKriter;
 
 
   public FxTableMigV2() {
@@ -49,7 +54,7 @@ public class FxTableMigV2<EntClazz> extends MigPane {
 
   public void initComp(FxTableViewV2<EntClazz> fxTableView) {
     fxTableView.setFxTableMig(this);
-    paneFooter = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().lcgNoGrid().getLcg());
+    migFooter1 = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().lcgNoGrid().getLcg());
 
     lblRowCount = new FxLabel("");
     lblFooterMsg = new FxLabel("");
@@ -61,29 +66,73 @@ public class FxTableMigV2<EntClazz> extends MigPane {
     // btnExcel.setMaxHeight(15d);
     btnExcel.setOnAction(event -> actBtnExcel());
 
+    btnEkKriter = new FxButton("", Icons525.LINE);
+    btnEkKriter.setOnAction(event -> actBtnEkKriterler());
+    btnEkKriter.setToolTipTextFi("Ek Kriterler");
+
     // btnSettings = new FxButton(Icons525.CIRCLE,"Ayarlar");
     // btnSettings.setPrefHeight(15d);
     // btnSettings.setMaxHeight(15d);
     // btnSettings.setOnAction(event -> actBtnSettings());
 
-    paneFooter.add(lblVersion);
+    migFooter1.add(lblVersion);
     // URNOTE ay bottom
-    paneFooter.add(btnExcel, "ay bottom");
-    paneFooter.add(lblRowCount);
-    paneFooter.add(lblFooterMsg);
-    paneFooter.add(lblFooterMsgSelection);
+    migFooter1.add(btnExcel, "ay bottom");
+    migFooter1.add(btnEkKriter, "");
+    migFooter1.add(lblRowCount);
+    migFooter1.add(lblFooterMsg);
+    migFooter1.add(lblFooterMsgSelection);
 
-    paneTablePagingHeader = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().lcgNoGrid().getLcg());
+    migTablePagingHeader = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().lcgNoGrid().getLcg());
 
     migFooterMain = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().lcgNoGrid().getLcg());
-    migFooterMain.add(paneTablePagingHeader, "");
-    migFooterMain.add(paneFooter, FxMigHp.bui().ccGapBefore("20").genCc());
+    migFooterMain.add(migTablePagingHeader, "");
+    migFooterMain.add(migFooter1, FxMigHp.bui().ccGapBefore("20").getCc());
 
     this.add(fxTableView, "span,grow,push");
     this.add(migFooterMain, "span");
 
     // this.add(paneTablePagingHeader, "span");
     // this.add(paneFooter, "span");
+
+  }
+
+  private void actBtnEkKriterler() {
+
+    if (FiCollection.isEmpty(getFxTableView().getFicListEkKriter())) {
+      FxDialogShow.showPopInfo("Ek Kriter Tanımlanmamış.");
+      return;
+    }
+
+    FxWindowFormCont formEkKriterlerCont = new FxWindowFormCont(null);
+    formEkKriterlerCont.initCont();
+    formEkKriterlerCont.addCrudSaveButtonAndAction();
+
+    formEkKriterlerCont.getFormMain().setListFormElements(getFxTableView().getFicListEkKriterInit());
+
+    // daha önceden girilen form değerleri yüklenir
+    if (getFxTableView().getFkbHeaderFilterExtra() != null) {
+      formEkKriterlerCont.getFormMain().getFxFormConfigInit().setFkbEntity(getFxTableView().getFkbHeaderFilterExtra());
+    }
+
+    formEkKriterlerCont.getFormMain().initCont();
+    //formEkKriterlerCont.getFormMain().setFormTypeSelected(FormType.PlainFormV1);
+
+    formEkKriterlerCont.setFnSaveClose(() -> {
+      Fkb formAsFkb = formEkKriterlerCont.getFormMain().getFormAsFkbNotNullFields();
+      //formAsFkb.logParams();
+      getFxTableView().setFkbHeaderFilterExtra(formAsFkb);
+      return Fdr.bui(true);
+    });
+
+    formEkKriterlerCont.openAsNonModal();
+
+    if (formEkKriterlerCont.checkClosedWithDone()) {
+      if (getFxTableView().getIfxTableCont() != null) {
+        getFxTableView().getIfxTableCont().pullTableData();
+      }
+    }
+
 
   }
 
@@ -125,12 +174,12 @@ public class FxTableMigV2<EntClazz> extends MigPane {
     this.fxTableView = fxTableView;
   }
 
-  public FxMigPane getPaneFooter() {
-    return paneFooter;
+  public FxMigPane getMigFooter1() {
+    return migFooter1;
   }
 
-  private void setPaneFooter(FxMigPane paneFooter) {
-    this.paneFooter = paneFooter;
+  private void setMigFooter1(FxMigPane migFooter1) {
+    this.migFooter1 = migFooter1;
   }
 
   public FxLabel getLblRowCount() {
@@ -157,12 +206,12 @@ public class FxTableMigV2<EntClazz> extends MigPane {
     this.lblFooterMsg = lblFooterMsg;
   }
 
-  public FxMigPane getPaneTablePagingHeader() {
-    return paneTablePagingHeader;
+  public FxMigPane getMigTablePagingHeader() {
+    return migTablePagingHeader;
   }
 
-  public void setPaneTablePagingHeader(FxMigPane paneTablePagingHeader) {
-    this.paneTablePagingHeader = paneTablePagingHeader;
+  public void setMigTablePagingHeader(FxMigPane migTablePagingHeader) {
+    this.migTablePagingHeader = migTablePagingHeader;
   }
 
   public IFiModCont getIFiModCont() {

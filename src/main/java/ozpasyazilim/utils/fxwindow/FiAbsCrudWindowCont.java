@@ -9,7 +9,7 @@ import ozpasyazilim.utils.mvc.IFiModCont;
 /**
  *
  */
-public abstract class FiAbsCrudWindowCont extends FiFxWindowCont implements IFiModCont {
+public abstract class FiAbsCrudWindowCont extends FxWindowCont implements IFiModCont {
 
 	protected FxButton btnCrudAdd;
 	protected FxButton btnCrudEdit;
@@ -102,15 +102,15 @@ public abstract class FiAbsCrudWindowCont extends FiFxWindowCont implements IFiM
 	}
 
 	protected void addSelectAndRefreshButton() {
-		btnCrudSelect = FiButtons.genBtnSecim();
-		btnCrudRefresh = FiButtons.genBtnRefresh();
+		btnCrudSelect = FxIcons.genBtnSecim();
+		btnCrudRefresh = FxIcons.genBtnRefresh();
 		// Add Layout
 		getModView().getMigToolbar().add(btnCrudSelect);
 		getModView().getMigToolbar().add(btnCrudRefresh);
 	}
 
 	protected void addRefreshButton() {
-		btnCrudRefresh = FiButtons.genBtnRefresh();
+		btnCrudRefresh = FxIcons.genBtnRefresh();
 		getModView().getMigContent().add(btnCrudRefresh);
 	}
 
@@ -148,7 +148,7 @@ public abstract class FiAbsCrudWindowCont extends FiFxWindowCont implements IFiM
 	 * Refrest Button, Default Action pullTableData metodu çalıştırılır (override edilebilir)
 	 */
 	protected void addRefreshButtonWithAction() {
-		btnCrudRefresh = FiButtons.genBtnRefresh();
+		btnCrudRefresh = FxIcons.genBtnRefresh();
 		getModView().getMigToolbar().add(btnCrudRefresh);
 		btnCrudRefresh.setOnAction((event) -> actCrudRefresh());
 	}
@@ -158,7 +158,7 @@ public abstract class FiAbsCrudWindowCont extends FiFxWindowCont implements IFiM
 	 * Thread olarak pullTableData yı çalıştırır.
 	 */
 	protected void addRefreshButtonWithActionThread() {
-		btnCrudRefresh = FiButtons.genBtnRefresh();
+		btnCrudRefresh = FxIcons.genBtnRefresh();
 		getModView().getMigToolbar().add(btnCrudRefresh);
 		btnCrudRefresh.setOnActionWithThread(this::actCrudRefresh);
 	}
@@ -179,9 +179,9 @@ public abstract class FiAbsCrudWindowCont extends FiFxWindowCont implements IFiM
 	}
 
 	protected void addCrudButtons() {
-		btnCrudAdd = FiButtons.genBtnAdd();
-		btnCrudEdit = FiButtons.genBtnEdit();
-		btnCrudDelete = FiButtons.genBtnDelete();
+		btnCrudAdd = FxIcons.genBtnAdd();
+		btnCrudEdit = FxIcons.genBtnEdit();
+		btnCrudDelete = FxIcons.genBtnDelete();
 
 		getModView().getMigToolbar().add(btnCrudAdd);
 		getModView().getMigContent().add(btnCrudEdit);
@@ -190,15 +190,15 @@ public abstract class FiAbsCrudWindowCont extends FiFxWindowCont implements IFiM
 
 	protected void addEditAndDeleteButtons() {
 
-		btnCrudEdit = FiButtons.genBtnEdit();
-		btnCrudDelete = FiButtons.genBtnDelete();
+		btnCrudEdit = FxIcons.genBtnEdit();
+		btnCrudDelete = FxIcons.genBtnDelete();
 
 		getModView().getMigToolbar().add(btnCrudEdit);
 		getModView().getMigToolbar().add(btnCrudDelete);
 	}
 
 	protected void addEditButton() {
-		btnCrudEdit = FiButtons.genBtnEdit();
+		btnCrudEdit = FxIcons.genBtnEdit();
 		getModView().getMigToolbar().add(btnCrudEdit);
 	}
 
@@ -210,7 +210,7 @@ public abstract class FiAbsCrudWindowCont extends FiFxWindowCont implements IFiM
 	}
 
 	protected void addEditButtonWithActionBoolArg() {
-		btnCrudEdit = FiButtons.genBtnEdit();
+		btnCrudEdit = FxIcons.genBtnEdit();
 		getModView().getMigToolbar().add(btnCrudEdit);
 		btnCrudEdit.setOnAction(event -> actBtnCrudAddEdit(true));
 	}

@@ -238,14 +238,7 @@ public class FxMigHp {
     return layColConst;
   }
 
-  /**
-   * Component constraint
-   *
-   * @return
-   */
-  public String genCc() {
-    return cellConst;
-  }
+
 
   public String getCcInit() {
     if (cellConst == null) {
@@ -254,6 +247,11 @@ public class FxMigHp {
     return cellConst;
   }
 
+  /**
+   * Component constraint
+   *
+   * @return
+   */
   public String getCc() {
     return cellConst;
   }

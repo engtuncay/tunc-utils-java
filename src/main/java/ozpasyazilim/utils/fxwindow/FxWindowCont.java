@@ -5,36 +5,35 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import ozpasyazilim.utils.gui.fxcomponents.FxButton;
 import ozpasyazilim.utils.mvc.AbsFiModBaseCont;
-import ozpasyazilim.utils.mvc.IFiModCont;
 
 /**
  * Common Window
  */
-public class FiFxWindowCont extends AbsFiModBaseCont {
+public class FxWindowCont extends AbsFiModBaseCont {
 
-  FiFxWindowView modView;
+  FxWindowView modView;
 
-  public FiFxWindowCont() {
+  public FxWindowCont() {
     //super.moduleAciklama = "Mos-Shared Form Window";
     //super.moduleCode = EntegreModules.ModContGen.getModuleCode();
   }
 
-  public FiFxWindowCont(String connProfile) {
+  public FxWindowCont(String connProfile) {
     super(connProfile);
   }
 
   @Override
   public void initCont() {
-    modView = new FiFxWindowView();
+    modView = new FxWindowView();
     modView.initGui();
   }
 
-  public FiFxWindowCont buiInit() {
+  public FxWindowCont buiInit() {
     initCont();
     return this;
   }
 
-  public FiFxWindowView getModView() {
+  public FxWindowView getModView() {
     return modView;
   }
 

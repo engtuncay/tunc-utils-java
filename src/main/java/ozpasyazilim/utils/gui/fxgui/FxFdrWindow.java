@@ -1,9 +1,9 @@
 package ozpasyazilim.utils.gui.fxgui;
 
-import ozpasyazilim.utils.fxwindow.FiFxWindowCont;
+import ozpasyazilim.utils.fxwindow.FxWindowCont;
 import ozpasyazilim.utils.returntypes.Fdr;
 
-public class FxFdrWindow extends FiFxWindowCont {
+public class FxFdrWindow extends FxWindowCont {
 
     Fdr fdr;
 

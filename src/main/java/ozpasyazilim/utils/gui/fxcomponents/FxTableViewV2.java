@@ -21,7 +21,6 @@ import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.datatypes.Fkb;
 import ozpasyazilim.utils.datatypes.FiListString;
 import ozpasyazilim.utils.fimetas.FicFtQuery;
-import ozpasyazilim.utils.fxwindow.FiFxFormWindowCont;
 import ozpasyazilim.utils.gui.components.TableValueFactoryForFkb;
 import ozpasyazilim.utils.gui.fxTableViewExtra.NestedPropertyValueFactory;
 import ozpasyazilim.utils.log.Loghelper;
@@ -30,7 +29,6 @@ import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.mvc.IFxTableCont;
 import ozpasyazilim.utils.mvc.IFxTableSelectionCont;
 import ozpasyazilim.utils.core.FiReflection;
-import ozpasyazilim.utils.returntypes.Fdr;
 import ozpasyazilim.utils.returntypes.FnResult;
 import ozpasyazilim.utils.table.FicList;
 import ozpasyazilim.utils.table.OzColSummaryType;
@@ -182,10 +180,15 @@ public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxC
   private Fkb fkbHeaderFilterExtra;
   private FicList ficsFormElemsHeaderFilterExtra;
 
-  IFxTableCont iFxTableInfc;
+  IFxTableCont ifxTableCont;
 
   private FxButton btnExtraFilter;
   private Fkb fkbPaging;
+
+  /**
+   * Ek Filtreleme Kriterleri
+   */
+  private FicList ficListEkKriter;
 
   // ******* constructors
 
@@ -2668,7 +2671,7 @@ public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxC
       }
     });
 
-    FxMigPane paneTableHeader = getFxTableMig().getPaneTablePagingHeader();
+    FxMigPane paneTableHeader = getFxTableMig().getMigTablePagingHeader();
 
     paneTableHeader.add(btnPageBegin);
     paneTableHeader.add(btnPagePrev);
@@ -2731,57 +2734,57 @@ public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxC
 
   }
 
-  public void activateExtraFiltreButton() {
-
-    FxTableMigV2 tableMig = getFxTableMig();
-
-    if (tableMig == null) {
-      Loghelper.get(getClass()).debug("activateExtraFiltreButton fxTableMig null !!!");
-      return;
-    }
-
-    if (getBtnExtraFilter() != null) {
-      return;
-    }
-
-    btnExtraFilter = new FxButton("Tablo Kriterler");
-
-    btnExtraFilter.setOnAction(event -> {
-
-      FiFxFormWindowCont emmFormWindowCont = new FiFxFormWindowCont(null);
-      emmFormWindowCont.initCont();
-      emmFormWindowCont.addCrudSaveButtonAndAction();
-
-      emmFormWindowCont.getFormMain().setListFormElements(ficsFormElemsHeaderFilterExtra);
-
-      // daha önceden girilen form değerleri yüklenir
-      if (getFkbHeaderFilterExtra() != null) {
-        emmFormWindowCont.getFormMain().setRefFormFkb(getFkbHeaderFilterExtra());
-      }
-
-      emmFormWindowCont.getFormMain().initCont();
-      //emmFormWindowCont.getFormMain().setFormTypeSelected(FormType.PlainFormV1);
-
-      emmFormWindowCont.setFnSaveClose(() -> {
-        Fkb formAsFkb = emmFormWindowCont.getFormMain().getFormAsFkbNotNullKeys();
-        //formAsFkb.logParams();
-        setFkbHeaderFilterExtra(formAsFkb);
-        return Fdr.bui(true);
-      });
-
-      emmFormWindowCont.openAsNonModal();
-
-      if (emmFormWindowCont.checkClosedWithDone()) {
-        if (getiFxTableInfc() != null) {
-          getiFxTableInfc().pullTableData();
-        }
-      }
-
-    });
-
-    getFxTableMig().getPaneTablePagingHeader().add(btnExtraFilter);
-
-  }
+//  public void activateExtraFiltreButton() {
+//
+//    FxTableMigV2 tableMig = getFxTableMig();
+//
+//    if (tableMig == null) {
+//      Loghelper.get(getClass()).debug("activateExtraFiltreButton fxTableMig null !!!");
+//      return;
+//    }
+//
+//    if (getBtnExtraFilter() != null) {
+//      return;
+//    }
+//
+//    btnExtraFilter = new FxButton("Tablo Kriterler");
+//
+//    btnExtraFilter.setOnAction(event -> {
+//
+//      FxWindowFormCont emmFormWindowCont = new FxWindowFormCont(null);
+//      emmFormWindowCont.initCont();
+//      emmFormWindowCont.addCrudSaveButtonAndAction();
+//
+//      emmFormWindowCont.getFormMain().setListFormElements(ficsFormElemsHeaderFilterExtra);
+//
+//      // daha önceden girilen form değerleri yüklenir
+//      if (getFkbHeaderFilterExtra() != null) {
+//        emmFormWindowCont.getFormMain().setRefFormFkb(getFkbHeaderFilterExtra());
+//      }
+//
+//      emmFormWindowCont.getFormMain().initCont();
+//      //emmFormWindowCont.getFormMain().setFormTypeSelected(FormType.PlainFormV1);
+//
+//      emmFormWindowCont.setFnSaveClose(() -> {
+//        Fkb formAsFkb = emmFormWindowCont.getFormMain().getFormAsFkbNotNullKeys();
+//        //formAsFkb.logParams();
+//        setFkbHeaderFilterExtra(formAsFkb);
+//        return Fdr.bui(true);
+//      });
+//
+//      emmFormWindowCont.openAsNonModal();
+//
+//      if (emmFormWindowCont.checkClosedWithDone()) {
+//        if (getiFxTableInfc() != null) {
+//          getiFxTableInfc().pullTableData();
+//        }
+//      }
+//
+//    });
+//
+//    getFxTableMig().getMigTablePagingHeader().add(btnExtraFilter);
+//
+//  }
 
   /**
    * RemoteFilter çalışmazdan önce Sayfalama güncellenmesi gereken işlemler
@@ -3119,17 +3122,17 @@ public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxC
     this.boFkbEnabled = boFkbEnabled;
   }
 
-  public IFxTableCont getiFxTableInfc() {
-    return iFxTableInfc;
+  public IFxTableCont getIfxTableCont() {
+    return ifxTableCont;
   }
 
   /**
-   * Table için Controller Metodlarını içeren interface
+   * Table için Controller Metodlarını içeren interface (Örneğin pullTableData gibi)
    *
-   * @param iFxTableInfc
+   * @param ifxTableCont
    */
-  public void setiFxTableInfc(IFxTableCont iFxTableInfc) {
-    this.iFxTableInfc = iFxTableInfc;
+  public void setIfxTableCont(IFxTableCont ifxTableCont) {
+    this.ifxTableCont = ifxTableCont;
   }
 
   public FxButton getBtnExtraFilter() {
@@ -3214,4 +3217,21 @@ public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxC
   public void setFnRowHighlight(TriConsumer<TableRow, Boolean, Object> fnRowHighlight) {
     this.fnRowHighlight = fnRowHighlight;
   }
+
+  public FicList getFicListEkKriter() {
+    return ficListEkKriter;
+  }
+
+  public FicList getFicListEkKriterInit() {
+    if (ficListEkKriter == null) {
+      ficListEkKriter = new FicList();
+    }
+    return ficListEkKriter;
+  }
+
+  public void setFicListEkKriter(FicList ficListEkKriter) {
+    this.ficListEkKriter = ficListEkKriter;
+  }
+
+
 }

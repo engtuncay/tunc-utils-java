@@ -1,9 +1,9 @@
 package ozpasyazilim.utils.gui.fxgui;
 
-import ozpasyazilim.utils.fxwindow.FiFxWindowCont;
+import ozpasyazilim.utils.fxwindow.FxWindowCont;
 import ozpasyazilim.utils.gui.fxcomponents.FxTableMigV2;
 
-public class FiCsvTableWindow extends FiFxWindowCont {
+public class FiCsvTableWindow extends FxWindowCont {
 
     @Override
     public void initCont() {

@@ -1,7 +1,7 @@
 package ozpasyazilim.utils.mvc;
 
 /**
- * İçerisinde tablo bulunan kontroller
+ * Table Component'in Controller içinde kullanabileceği metodlar
  *
  *
  */
@@ -11,6 +11,6 @@ public interface IFxTableCont {
 
     void pullTableData();
 
-    void pullTableDataThreadBody();
+    void pullTableDataThread();
 
 }

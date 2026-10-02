@@ -173,7 +173,7 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> implement
         add(node, txCc);
         //Loghelper.get(getClass()).debug("Field: " + fiCol.getFcTxFieldName() + " cc:" + txCc);
       } else {
-        String txCc = FxMigHp.bcc("growx,pushx,wrap").addCcByColTypeForFxForm(fiCol).genCc();
+        String txCc = FxMigHp.bcc("growx,pushx,wrap").addCcByColTypeForFxForm(fiCol).getCc();
         add(node, txCc);
         //Loghelper.get(getClass()).debug("Field: " + fiCol.getFcTxFieldName() + " cc:" + txCc);
       }
@@ -432,7 +432,7 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> implement
   }
 
   public void showAsDialog(String connProfile) {
-    FiFxCrudWindowCont fiCrudWindow = new FiFxCrudWindowCont(connProfile);
+    FxWindowCrudCont fiCrudWindow = new FxWindowCrudCont(connProfile);
     fiCrudWindow.initCont();
 
     fiCrudWindow.addCrudSaveButtonAndAction();

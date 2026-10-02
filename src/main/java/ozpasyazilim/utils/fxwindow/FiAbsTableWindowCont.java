@@ -18,7 +18,7 @@ import java.util.function.Function;
  *
  * @param <EntClazz>
  */
-public abstract class FiAbsTableWindowCont<EntClazz> extends FiFxWindowCont {
+public abstract class FiAbsTableWindowCont<EntClazz> extends FxWindowCont {
 
   private String txSelected;
   private List<EntClazz> listEntitySelected;
@@ -132,19 +132,19 @@ public abstract class FiAbsTableWindowCont<EntClazz> extends FiFxWindowCont {
   }
 
   protected FxButton addBtnMotReport() {
-    btnCrudReport = FiButtons.genBtnReport();
+    btnCrudReport = FxIcons.genBtnReport();
     getModView().getMigToolbar().add(btnCrudReport);
     return btnCrudReport;
   }
 
   protected void addBtnReportWithActionThread() {
-    btnCrudReport = FiButtons.genBtnReport();
+    btnCrudReport = FxIcons.genBtnReport();
     getModView().getMigToolbar().add(btnCrudReport);
     btnCrudReport.setOnActionWithThread(this::pullTableData);
   }
 
   protected void addBtnReportWithAction() {
-    btnCrudReport = FiButtons.genBtnReport();
+    btnCrudReport = FxIcons.genBtnReport();
     getModView().getMigToolbar().add(btnCrudReport);
     btnCrudReport.setOnAction((event) -> pullTableData());
   }
@@ -186,15 +186,15 @@ public abstract class FiAbsTableWindowCont<EntClazz> extends FiFxWindowCont {
   }
 
   protected void addSelectAndRefreshButton() {
-    btnCrudSelect = FiButtons.genBtnSecim();
-    btnCrudRefresh = FiButtons.genBtnRefresh();
+    btnCrudSelect = FxIcons.genBtnSecim();
+    btnCrudRefresh = FxIcons.genBtnRefresh();
     // Add Layout
     getModView().getMigToolbar().add(btnCrudSelect);
     getModView().getMigToolbar().add(btnCrudRefresh);
   }
 
   protected void addRefreshButton() {
-    btnCrudRefresh = FiButtons.genBtnRefresh();
+    btnCrudRefresh = FxIcons.genBtnRefresh();
     getModView().getMigToolbar().add(btnCrudRefresh);
   }
 

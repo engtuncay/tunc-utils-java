@@ -8,7 +8,7 @@ import ozpasyazilim.utils.mvc.IFiModView;
 /**
  * Toolbar-Content-Footer üç alandan oluşur.
  */
-public class FiFxWindowView implements IFiModView {
+public class FxWindowView implements IFiModView {
 
   // Containers
   private FxMigPane migRoot;
@@ -16,11 +16,11 @@ public class FiFxWindowView implements IFiModView {
   private FxMigPane migContent;
   private FxMigPane migFooter;
 
-  public FiFxWindowView() {
+  public FxWindowView() {
 
   }
 
-  public FiFxWindowView(Boolean withInit) {
+  public FxWindowView(Boolean withInit) {
     initGui();
   }
 
