@@ -6,6 +6,8 @@ import ozpasyazilim.utils.table.FicList;
 
 /**
  * {@link FiQuconf} : Fi-Query-Config : (For Query Generation)
+ * <p>
+ * Deprecated FiQuery kullans
  */
 public class FiQuconf {
 
