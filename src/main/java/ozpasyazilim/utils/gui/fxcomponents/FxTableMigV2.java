@@ -9,183 +9,199 @@ import ozpasyazilim.utils.windows.FiWinUtils;
 
 public class FxTableMigV2<EntClazz> extends MigPane {
 
-	private FxTableViewV2<EntClazz> fxTableView;
+  private FxTableViewV2<EntClazz> fxTableView;
 
-	private FxMigPane paneFooter;
-	private FxButton btnExcel;
-	private FxButton btnSettings;
+  private FxMigPane paneFooter;
 
-	private FxLabel lblFooterVer;
-	private FxLabel lblFooterRowCount;
-	private FxLabel lblFooterMsg;
-	private FxLabel lblFooterMessageSelection;
+  /**
+   * Sayfalama buttonların konulduğu panel. Sütun başlıkları paneli degil.
+   */
+  private FxMigPane paneTablePagingHeader;
+  private FxMigPane migFooterMain;
 
-	/**
-	 * Sayfalama buttonların konulduğu panel. Sütun başlıkları paneli degil.
-	 */
-	private FxMigPane paneTablePagingHeader;
+  private FxButton btnExcel;
+  private FxButton btnSettings;
 
-	/**
-	 *
-	 */
-	private IFiModCont iFiModCont;
-	private FxMigPane migFooterMain;
+  private FxLabel lblVersion;
+  private FxLabel lblRowCount;
+  private FxLabel lblFooterMsg;
+  private FxLabel lblFooterMsgSelection;
 
 
-	public FxTableMigV2() {
-		super(FxMigHp.bui().lcgInset0Gap03().getLcg());
-		fxTableView = new FxTableViewV2<>();
-		//fxTableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
-		initComp(fxTableView);
-	}
+  /**
+   *
+   */
+  private IFiModCont iFiModCont;
 
-	public FxTableMigV2(FxTableViewV2 fxTableView) {
-		super(FxMigHp.bui().lcgInset3Gap00().getLcg());
-		setFxTableView(fxTableView);
-		initComp(fxTableView);
-	}
 
-	public void initComp(FxTableViewV2<EntClazz> fxTableView) {
-		fxTableView.setFxTableMig(this);
-		paneFooter = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().lcgNoGrid().getLcg());
-		lblFooterRowCount = new FxLabel("");
-		lblFooterMsg = new FxLabel("");
-		lblFooterMessageSelection = new FxLabel("");
-		lblFooterVer = new FxLabel("V2");
+  public FxTableMigV2() {
+    super(FxMigHp.bui().lcgInset0Gap03().getLcg());
+    fxTableView = new FxTableViewV2<>();
+    //fxTableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+    initComp(fxTableView);
+  }
 
-		btnExcel = new FxButton(Icons525.EXCEL,"Excel");
-		// btnExcel.setPrefHeight(15d);
-		// btnExcel.setMaxHeight(15d);
-		btnExcel.setOnAction(event -> actBtnExcel());
+  public FxTableMigV2(FxTableViewV2 fxTableView) {
+    super(FxMigHp.bui().lcgInset3Gap00().getLcg());
+    setFxTableView(fxTableView);
+    initComp(fxTableView);
+  }
 
-//		btnSettings = new FxButton(Icons525.CIRCLE,"Ayarlar");
-//		btnSettings.setPrefHeight(15d);
-//		btnSettings.setMaxHeight(15d);
-//		btnSettings.setOnAction(event -> actBtnSettings());
+  public void initComp(FxTableViewV2<EntClazz> fxTableView) {
+    fxTableView.setFxTableMig(this);
+    paneFooter = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().lcgNoGrid().getLcg());
 
-		paneFooter.add(lblFooterVer);
-		paneFooter.add(btnExcel,"ay bottom");
-		//paneFooter.add(btnSettings,"ay bottom");
-		paneFooter.add(lblFooterRowCount);
-		paneFooter.add(lblFooterMsg);
-		paneFooter.add(lblFooterMessageSelection);
+    lblRowCount = new FxLabel("");
+    lblFooterMsg = new FxLabel("");
+    lblFooterMsgSelection = new FxLabel("");
+    lblVersion = new FxLabel("V2");
 
-		paneTablePagingHeader = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().lcgNoGrid().getLcg());
+    btnExcel = new FxButton(Icons525.EXCEL, "Excel");
+    // btnExcel.setPrefHeight(15d);
+    // btnExcel.setMaxHeight(15d);
+    btnExcel.setOnAction(event -> actBtnExcel());
 
-		migFooterMain = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().lcgNoGrid().getLcg());
-		migFooterMain.add(paneTablePagingHeader, "");
-		migFooterMain.add(paneFooter, FxMigHp.bui().ccGapBefore("20").genCc());
+    // btnSettings = new FxButton(Icons525.CIRCLE,"Ayarlar");
+    // btnSettings.setPrefHeight(15d);
+    // btnSettings.setMaxHeight(15d);
+    // btnSettings.setOnAction(event -> actBtnSettings());
 
-		this.add(fxTableView, "span,grow,push");
-		this.add(migFooterMain, "span");
+    paneFooter.add(lblVersion);
+    // URNOTE ay bottom
+    paneFooter.add(btnExcel, "ay bottom");
+    paneFooter.add(lblRowCount);
+    paneFooter.add(lblFooterMsg);
+    paneFooter.add(lblFooterMsgSelection);
 
-//		this.add(paneTablePagingHeader, "span");
-//		this.add(paneFooter, "span");
-	}
+    paneTablePagingHeader = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().lcgNoGrid().getLcg());
 
-	private void actBtnSettings() {
+    migFooterMain = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().lcgNoGrid().getLcg());
+    migFooterMain.add(paneTablePagingHeader, "");
+    migFooterMain.add(paneFooter, FxMigHp.bui().ccGapBefore("20").genCc());
+
+    this.add(fxTableView, "span,grow,push");
+    this.add(migFooterMain, "span");
+
+    // this.add(paneTablePagingHeader, "span");
+    // this.add(paneFooter, "span");
+
+  }
+
+  private void actBtnSettings() {
 
 //		FxSimpleCont fxSimpleCont = new FxSimpleCont();
 //		fxSimpleCont.openAsDialogSync(null,true);
-		FxDialogShow.showPopWarn("Ayarlar Henüz Aktif Degil.");
+    FxDialogShow.showPopWarn("Ayarlar Henüz Aktif Degil.");
 
-	}
-
-
-	private void actBtnExcel() {
-
-		String appDir = FiWinUtils.getUserDirOrDesktopDir();  //+ "\\" + AppParametersGeneral.entegreDirectory;
-
-		if(FiApp.appUserTempDir !=null) appDir = FiApp.appUserTempDir;
-
-		String windowName = "entegre_";
-
-		if(getIFiModCont()!=null){
-			windowName = getIFiModCont().getModuleLabel();
-		}
-
-		String fileName= windowName + FiFile.getCurrentTimeStampForFile() + ".xlsx";
-		//EntHelperFxWindow.DoJobWithDisable(getModView().getBtnExcel(), () -> {
-		//FiExcel2.build().writeFxTableViewToExcelWithHeader2(getFxTableView(),);
-		getFxTableView().excelOpen(appDir,fileName); //fxTableView.eexcelOpen(appDir,fileName);
-		//});
-
-	}
+  }
 
 
+  private void actBtnExcel() {
 
-	public FxTableViewV2<EntClazz> getFxTableView() {
-		return fxTableView;
-	}
+    String appDir = FiWinUtils.getUserDirOrDesktopDir();  //+ "\\" + AppParametersGeneral.entegreDirectory;
 
-	public void setFxTableView(FxTableViewV2<EntClazz> fxTableView) {
-		this.fxTableView = fxTableView;
-	}
+    if (FiApp.appUserTempDir != null) appDir = FiApp.appUserTempDir;
 
-	public FxMigPane getPaneFooter() {
-		return paneFooter;
-	}
+    String windowName = "entegre_";
 
-	private void setPaneFooter(FxMigPane paneFooter) {
-		this.paneFooter = paneFooter;
-	}
+    if (getIFiModCont() != null) {
+      windowName = getIFiModCont().getModuleLabel();
+    }
 
-	public FxLabel getLblFooterRowCount() {
-		return lblFooterRowCount;
-	}
+    String fileName = windowName + FiFile.getCurrentTimeStampForFile() + ".xlsx";
+    //EntHelperFxWindow.DoJobWithDisable(getModView().getBtnExcel(), () -> {
+    //FiExcel2.build().writeFxTableViewToExcelWithHeader2(getFxTableView(),);
+    getFxTableView().excelOpen(appDir, fileName); //fxTableView.eexcelOpen(appDir,fileName);
+    //});
 
-	public void setLblFooterRowCount(FxLabel lblFooterRowCount) {
-		this.lblFooterRowCount = lblFooterRowCount;
-	}
+  }
 
-	public FxButton getBtnExcel() {return btnExcel;}
 
-	public void setBtnExcel(FxButton btnExcel) {this.btnExcel = btnExcel;}
+  public FxTableViewV2<EntClazz> getFxTableView() {
+    return fxTableView;
+  }
 
-	public FxLabel getLblFooterMsg() {return lblFooterMsg;}
+  public void setFxTableView(FxTableViewV2<EntClazz> fxTableView) {
+    this.fxTableView = fxTableView;
+  }
 
-	public void setLblFooterMsg(FxLabel lblFooterMsg) {this.lblFooterMsg = lblFooterMsg;}
+  public FxMigPane getPaneFooter() {
+    return paneFooter;
+  }
 
-	public FxMigPane getPaneTablePagingHeader() {
-		return paneTablePagingHeader;
-	}
+  private void setPaneFooter(FxMigPane paneFooter) {
+    this.paneFooter = paneFooter;
+  }
 
-	public void setPaneTablePagingHeader(FxMigPane paneTablePagingHeader) {
-		this.paneTablePagingHeader = paneTablePagingHeader;
-	}
+  public FxLabel getLblRowCount() {
+    return lblRowCount;
+  }
 
-	public IFiModCont getIFiModCont() {
-		return iFiModCont;
-	}
+  public void setLblRowCount(FxLabel lblRowCount) {
+    this.lblRowCount = lblRowCount;
+  }
 
-	public void setIFiModCont(IFiModCont iFiModCont) {
-		this.iFiModCont = iFiModCont;
-	}
+  public FxButton getBtnExcel() {
+    return btnExcel;
+  }
 
-	public FxLabel getLblFooterVer() {
-		return lblFooterVer;
-	}
+  public void setBtnExcel(FxButton btnExcel) {
+    this.btnExcel = btnExcel;
+  }
 
-	public void setLblFooterVer(FxLabel lblFooterVer) {
-		this.lblFooterVer = lblFooterVer;
-	}
+  public FxLabel getLblFooterMsg() {
+    return lblFooterMsg;
+  }
 
-	public FxLabel getLblFooterMessageSelection() {return lblFooterMessageSelection;
-	}
+  public void setLblFooterMsg(FxLabel lblFooterMsg) {
+    this.lblFooterMsg = lblFooterMsg;
+  }
 
-	public void setLblFooterMessageSelection(FxLabel lblFooterMessageSelection) {
-		this.lblFooterMessageSelection = lblFooterMessageSelection;
-	}
+  public FxMigPane getPaneTablePagingHeader() {
+    return paneTablePagingHeader;
+  }
 
-	public FxButton getBtnSettings() {return btnSettings;}
+  public void setPaneTablePagingHeader(FxMigPane paneTablePagingHeader) {
+    this.paneTablePagingHeader = paneTablePagingHeader;
+  }
 
-	public void setBtnSettings(FxButton btnSettings) {this.btnSettings = btnSettings;}
+  public IFiModCont getIFiModCont() {
+    return iFiModCont;
+  }
 
-	public FxMigPane getMigFooterMain() {
-		return migFooterMain;
-	}
+  public void setIFiModCont(IFiModCont iFiModCont) {
+    this.iFiModCont = iFiModCont;
+  }
 
-	public void setMigFooterMain(FxMigPane migFooterMain) {
-		this.migFooterMain = migFooterMain;
-	}
+  public FxLabel getLblVersion() {
+    return lblVersion;
+  }
+
+  public void setLblVersion(FxLabel lblVersion) {
+    this.lblVersion = lblVersion;
+  }
+
+  public FxLabel getLblFooterMsgSelection() {
+    return lblFooterMsgSelection;
+  }
+
+  public void setLblFooterMsgSelection(FxLabel lblFooterMsgSelection) {
+    this.lblFooterMsgSelection = lblFooterMsgSelection;
+  }
+
+  public FxButton getBtnSettings() {
+    return btnSettings;
+  }
+
+  public void setBtnSettings(FxButton btnSettings) {
+    this.btnSettings = btnSettings;
+  }
+
+  public FxMigPane getMigFooterMain() {
+    return migFooterMain;
+  }
+
+  public void setMigFooterMain(FxMigPane migFooterMain) {
+    this.migFooterMain = migFooterMain;
+  }
 }

@@ -790,7 +790,7 @@ public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxC
 
   public FxLabel getFiLblFooterRowCount() {
     if (getFxTableMig() != null) {
-      return getFxTableMig().getLblFooterRowCount();
+      return getFxTableMig().getLblRowCount();
     }
     return null;
   }
@@ -1680,7 +1680,7 @@ public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxC
 
     if (getFxTableMig() != null) {
       Platform.runLater(() -> {
-        getFxTableMig().getLblFooterRowCount().setText(" Kayıt Sayısı : " + getFilteredList().size());
+        getFxTableMig().getLblRowCount().setText(" Kayıt Sayısı : " + getFilteredList().size());
       });
     }
 
