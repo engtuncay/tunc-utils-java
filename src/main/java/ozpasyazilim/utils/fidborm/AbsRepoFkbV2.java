@@ -65,7 +65,7 @@ public abstract class AbsRepoFkbV2 extends AbsRepoFkbJdbi {
     FiQuconf fiQuconf = new FiQuconf();
     fiQuconf.setFkfAll(getRepoFkfAll());
 
-    Fdr fdrSorgu = FiQugenMs.insQueryV3Selected(fiQuconf, fclInsert);
+    Fdr fdrSorgu = FiQugenMs.insQueryV3Custom(fiQuconf, fclInsert);
     fdrMain.combineAnd(fdrSorgu);
 
     if (fdrMain.isFalseBoResult()) return fdrMain;
@@ -105,20 +105,17 @@ public abstract class AbsRepoFkbV2 extends AbsRepoFkbJdbi {
    * @return
    */
   public Fdr fkSelDtoList(Fkb fkbParams, FicList ficListExtra) {
-    FiQuconf fiQuconf = new FiQuconf();
+    FiQuery fiQuery = new FiQuery(fkbParams);
     FicList fclDto = getFclDto();
 
     if(!FiCollection.isEmpty(ficListExtra)) {
       fclDto.addAll(ficListExtra);
     }
 
-    fiQuconf.setFicListQuery(fclDto);
+    fiQuery.setFicListQuery(fclDto);
 
-    Fdr fdrSorgu = FiQugenMs.selQueryV2(fiQuconf);
+    Fdr fdrSorgu = FiQugenMs.selQueryV2Main(fiQuery);
     if (fdrSorgu.isFalseBoResult()) return fdrSorgu;
-
-    FiQuery fiQuery = new FiQuery(fdrSorgu.getFdTxVal(), fkbParams);
-    fiQuery.logQueryAndParams();
 
     return jdSelectFkbList(fiQuery);
   }

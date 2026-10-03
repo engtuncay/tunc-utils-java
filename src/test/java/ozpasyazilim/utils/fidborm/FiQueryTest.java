@@ -49,6 +49,6 @@ class FiQueryTest {
 		fiQuery.convertListParamsToMultiParams();
 
 		System.out.println(fiQuery.getTxQuery());
-		FiConsole.printMapFi(fiQuery.getMapParams());
+		FiConsole.printMapFi(fiQuery.getFkbParams());
 	}
 }

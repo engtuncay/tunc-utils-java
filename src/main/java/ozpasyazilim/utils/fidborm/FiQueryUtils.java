@@ -554,7 +554,7 @@ public class FiQueryUtils {
    * @param txQuery
    * @return
    */
-  public static String getSqlCountQueryFromQuery(String txQuery) {
+  public static String genSqlCountQuery(String txQuery) {
     Pattern pattern = Pattern.compile("(?s)--sqlCount(.*)");
 
     Matcher matcher = pattern.matcher(txQuery);

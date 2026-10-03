@@ -82,7 +82,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
     try {
       List<Fkb> result = getJdbi().withHandle(handle -> {
         return handle.createQuery(FiQueryUtils.stoj(fiQuery.getTxQuery()))
-            .bindMap(fiQuery.getMapParams())
+            .bindMap(fiQuery.getFkbParams())
             .map(new FiKeyBeanMapper(false))
             .list();
       });
@@ -105,7 +105,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
     try {
       List<Fkb> result = getJdbi().withHandle(handle -> {
         return handle.createQuery(FiQueryUtils.stoj(fiQuery.getTxQuery()))
-            .bindMap(fiQuery.getMapParams())
+            .bindMap(fiQuery.getFkbParams())
             .map(new FiKeyBeanMapper(false))
             .list();
       });
@@ -129,7 +129,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
     try {
       List<Fkb> result = getJdbi().withHandle(handle -> {
         return handle.createQuery(FiQueryUtils.stoj(fiQuery.getTxQuery()))
-            .bindMap(fiQuery.getMapParams())
+            .bindMap(fiQuery.getFkbParams())
             .map(new FiKeyBeanMapper(false))
             .list();
       });
@@ -340,7 +340,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
 
 
   public Fdr jdUpdateBindMapMain(FiQuery fiQuery) {
-    return jdUpdateBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
+    return jdUpdateBindMapMain(fiQuery.getTxQuery(), fiQuery.getFkbParams());
   }
 
   /**
@@ -350,7 +350,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
    * @return
    */
   public Fdr jdExecute(FiQuery fiQuery) {
-    return jdUpdateBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
+    return jdUpdateBindMapMain(fiQuery.getTxQuery(), fiQuery.getFkbParams());
   }
 
   /**
@@ -382,7 +382,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
   }
 
   public Fdr jdInsertFiQuery(FiQuery fiQuery) {
-    return jdInsertBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
+    return jdInsertBindMapMain(fiQuery.getTxQuery(), fiQuery.getFkbParams());
   }
 
   /**
@@ -412,7 +412,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
   }
 
   public Fdr jdDeleteFiQuery(FiQuery fiQuery) {
-    return jdDeleteBindMapMain(fiQuery.getTxQuery(), fiQuery.getMapParams());
+    return jdDeleteBindMapMain(fiQuery.getTxQuery(), fiQuery.getFkbParams());
   }
 
   public Fdr jdDeleteBindMapMain(String insertQuery, Map<String, Object> fiMapParams) {
@@ -445,7 +445,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
   public Fdr jdhDeleteMain(FiQuery fiQuery, Handle handle) {
 
     String txQuery = fiQuery.getTxQuery();
-    Map<String, Object> fiMapParams = fiQuery.getMapParams();
+    Map<String, Object> fiMapParams = fiQuery.getFkbParams();
 
     Fdr fdrMain = new Fdr();
     try {
@@ -472,7 +472,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
   public Fdr jdhUpdateMain(FiQuery fiQuery, Handle handle) {
 
     String txQuery = fiQuery.getTxQuery();
-    Map<String, Object> fiMapParams = fiQuery.getMapParams();
+    Map<String, Object> fiMapParams = fiQuery.getFkbParams();
 
     Fdr fdrMain = new Fdr();
     try {
@@ -499,7 +499,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
   public Fdr jdhInsertMain(FiQuery fiQuery, Handle handle) {
 
     String insertQuery = fiQuery.getTxQuery();
-    Map<String, Object> fiMapParams = fiQuery.getMapParams();
+    Map<String, Object> fiMapParams = fiQuery.getFkbParams();
 
     Fdr fdrMain = new Fdr();
     try {

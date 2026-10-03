@@ -110,6 +110,9 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
   // For Excel Reading, the field shows whether or not column exists in the excel
   private Boolean boEnabled;
 
+  // Sql sorgusunda where'e eklenirken In ile eklenir (eşittir yerine)
+  private Boolean fcBoWhereIn;
+
   // phpde buraya kadar kopyalanadı
 
   // For Forms, entity is edit value for the field
@@ -888,6 +891,11 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
 
   public FiCol<EntClazz> buiBoWhereField(Boolean boWhereField) {
     setFcBoWhereField(boWhereField);
+    return this;
+  }
+
+  public FiCol<EntClazz> buiBoWhereIn(Boolean boWhereIn) {
+    setFcBoWhereIn(boWhereIn);
     return this;
   }
 
@@ -1946,6 +1954,13 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
 
   public void setFcLnId(Integer fcLnId) {this.fcLnId = fcLnId;}
 
+  public Boolean getFcBoWhereIn() {
+    return fcBoWhereIn;
+  }
+
+  public void setFcBoWhereIn(Boolean fcBoWhereIn) {
+    this.fcBoWhereIn = fcBoWhereIn;
+  }
 }
 
 

@@ -52,7 +52,7 @@ public class AbsRepoGenMainJdbi<EntClazz> extends AbsRepoJdbiCore {
   }
 
   public Fdr<List<EntClazz>> jdSelectListBindMapNtn(FiQuery fiQuery) {
-    return jdSelectListBindMapMainNtn(fiQuery.getTxQuery(), fiQuery.getMapParams());
+    return jdSelectListBindMapMainNtn(fiQuery.getTxQuery(), fiQuery.getFkbParams());
   }
 
   // Sorgu Metodları
@@ -91,7 +91,7 @@ public class AbsRepoGenMainJdbi<EntClazz> extends AbsRepoJdbiCore {
   }
 
   public <PrmEnt> Fdr<List<PrmEnt>> jdcSelectList(FiQuery fiQuery, Class<PrmEnt> clazz) {
-    return jdcSelectListBindMapMainNtn(fiQuery.getTxQuery(), fiQuery.getMapParams(), clazz);
+    return jdcSelectListBindMapMainNtn(fiQuery.getTxQuery(), fiQuery.getFkbParams(), clazz);
   }
 
   public <PrmEnt> Fdr<List<PrmEnt>> jdcSelectListBindMapMainNtn(String sqlQuery, Map<String, Object> mapBind, Class<PrmEnt> clazz) {

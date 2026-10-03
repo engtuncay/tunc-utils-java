@@ -23,7 +23,7 @@ import java.util.*;
 public class FiQuery {
 
   String txQuery;
-  Fkb mapParams;
+  Fkb fkbParams;
   String txCandIdFieldName;
   String txPrimaryKeyFieldName;
 
@@ -57,9 +57,23 @@ public class FiQuery {
     this.txQuery = sql;
 
     if (fkbParams != null) {
-      this.mapParams = new Fkb(fkbParams);
+      this.fkbParams = new Fkb(fkbParams);
     }
 
+  }
+
+  public FiQuery(FicList ficList) {
+    this.ficListQuery = ficList;
+  }
+
+  public FiQuery(Fkf fkfTable) {
+    this.fkfAll = fkfTable;
+  }
+
+  public FiQuery(Fkb fkbParams) {
+    if(fkbParams!=null) {
+      this.fkbParams = new Fkb(fkbParams);
+    }
   }
 
   public static FiQuery bui() {
@@ -95,9 +109,9 @@ public class FiQuery {
    * Collection (List,Set) Türündeki parametreleri multi param (abc_1,abc_2... gibi) çevirir
    */
   public void convertListParamsToMultiParams() {
-    if (getMapParams() == null) return;
+    if (getFkbParams() == null) return;
 
-    setTxQuery(FiQueryUtils.convertListParamsToMultiParams(getTxQuery(), getMapParams(), false));
+    setTxQuery(FiQueryUtils.convertListParamsToMultiParams(getTxQuery(), getFkbParams(), false));
   }
 
 
@@ -105,9 +119,9 @@ public class FiQuery {
    * listParametresini parametre listesinde tutar, listeden çıkarmaz.
    */
   public void convertListParamsToMultiParamsWithKeep() {
-    if (getMapParams() == null) return;
+    if (getFkbParams() == null) return;
 
-    setTxQuery(FiQueryUtils.convertListParamsToMultiParams(getTxQuery(), getMapParams(), true));
+    setTxQuery(FiQueryUtils.convertListParamsToMultiParams(getTxQuery(), getFkbParams(), true));
   }
 
   /**
@@ -116,7 +130,7 @@ public class FiQuery {
    * @param mapBind
    */
   public void convertListParamsToMultiParams(Fkb mapBind) {
-    setMapParams(mapBind);
+    setFkbParams(mapBind);
     convertListParamsToMultiParams();
   }
 
@@ -127,29 +141,29 @@ public class FiQuery {
    * @param collParams
    */
   public void convertParamToMultiParamsWithSqlNewLine(String txParamName, Collection collParams) {
-    if (getMapParams() == null) return;
+    if (getFkbParams() == null) return;
     String txCombineSeperator = "+char(13)+char(10)+";
-    setTxQuery(FiQueryUtils.convertSingleParamToMultiParam2(getTxQuery(), getMapParams(), txParamName, collParams, false, txCombineSeperator));
+    setTxQuery(FiQueryUtils.convertSingleParamToMultiParam2(getTxQuery(), getFkbParams(), txParamName, collParams, false, txCombineSeperator));
   }
 
-  public Fkb getMapParams() {
-    return mapParams;
+  public Fkb getFkbParams() {
+    return fkbParams;
   }
 
   public Fkb getMapParamsInit() {
-    if (mapParams == null) {
-      mapParams = new Fkb();
+    if (fkbParams == null) {
+      fkbParams = new Fkb();
     }
-    return mapParams;
+    return fkbParams;
   }
 
-  public FiQuery setMapParams(Fkb mapParams) {
-    this.mapParams = mapParams;
+  public FiQuery setFkbParams(Fkb fkbParams) {
+    this.fkbParams = fkbParams;
     return this;
   }
 
   public void activateFiSqlFieldIfExists(String txFieldName) {
-    if (getMapParams() != null && getMapParams().containsKey(txFieldName)) {
+    if (getFkbParams() != null && getFkbParams().containsKey(txFieldName)) {
       activateOptParam(txFieldName);
     }
   }
@@ -228,8 +242,8 @@ public class FiQuery {
    * Dolu olma Şartları : String boş string degilse, Collection larda size > 0 olmalı, Diger türler için null olmamalı
    */
   public void activateParamsMain(Boolean boActivateOnlyFullParams) {
-    if (getMapParams() != null) {
-      setTxQuery(FiQueryUtils.activateParamsMain(getTxQuery(), getMapParams(), boActivateOnlyFullParams));
+    if (getFkbParams() != null) {
+      setTxQuery(FiQueryUtils.activateParamsMain(getTxQuery(), getFkbParams(), boActivateOnlyFullParams));
     }
   }
 
@@ -333,8 +347,8 @@ public class FiQuery {
   }
 
   public void activateFiSqlFieldIfNotEmpty(String txFieldName) {
-    if (getMapParams() != null) {
-      Object value = getMapParams().getOrDefault(txFieldName, null);
+    if (getFkbParams() != null) {
+      Object value = getFkbParams().getOrDefault(txFieldName, null);
 
       if (value instanceof String) {
         if (!FiString.isEmpty((String) value)) {
@@ -357,11 +371,11 @@ public class FiQuery {
    */
   public void activateParamsNotNull() {
 
-    if (getMapParams() != null) {
+    if (getFkbParams() != null) {
 
       List<String> listParamsWillDeactivate = new ArrayList<>();
 
-      getMapParams().forEach((key, value) -> {
+      getFkbParams().forEach((key, value) -> {
         // Null olanlar deaktif olacak
         if (value != null) { // null degilse aktif edilir.
           String newQuery = FiQueryUtils.activateOptParamMain(getTxQuery(), key);
@@ -375,7 +389,7 @@ public class FiQuery {
 
       // deAktif edilen parametreler çıkarıldı.
       for (String deActivatedParam : listParamsWillDeactivate) {
-        getMapParams().remove(deActivatedParam);
+        getFkbParams().remove(deActivatedParam);
       }
     }
   }
@@ -388,13 +402,13 @@ public class FiQuery {
    * 3. List tipinde parametre varsa, çoklu parametreye (convertMultiToSingle) çevirir
    */
   public void processParamsC1() {
-    if (getMapParams() != null) {
+    if (getFkbParams() != null) {
 
       // list değer varsa işlem sonunda list paramları single paramlara çevrilecek
       BooleanProperty boListDegerVarMi = new SimpleBooleanProperty(false);
 
       // MapParams olan parametreler aktif edilir ve collection olan parametre olup olmadığı kontrol edilir
-      getMapParams().forEach((key, value) -> {
+      getFkbParams().forEach((key, value) -> {
         //Optional Param'ın sorguda olup olmadığının kontrolüne gerek yok.
         activateOptParam(key);
 
@@ -408,7 +422,7 @@ public class FiQuery {
       Set<String> setParams = getParamOptionalsFromQuery();
 
       for (String setParam : setParams) {
-        if (!getMapParams().containsKey(setParam)) {
+        if (!getFkbParams().containsKey(setParam)) {
           deActivateOptParam(setParam);
         }
       }
