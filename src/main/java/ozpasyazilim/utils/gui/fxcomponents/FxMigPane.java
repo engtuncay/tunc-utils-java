@@ -55,19 +55,19 @@ public class FxMigPane extends MigPane {
     return ",h " + height;
   }
 
-  public static String ccHeightPerc(int heightPercentage) {
-    return ",h " + heightPercentage + "%";
-  }
+//  public static String ccHeightPerc(int heightPercentage) {
+//    return ",h " + heightPercentage + "%";
+//  }
 
-  public static String ccWidth(int width) {
-    return ",w " + width;
-  }
+//  public static String ccWidth(int width) {
+//    return ",w " + width;
+//  }
 
-  public static String ccPrefWidth(int i) {
-    return ",w :" + i + ":" + i;
-  }
+//  public static String ccPrefWidth(int i) {
+//    return ",w :" + i + ":" + i;
+//  }
 
-  public static FxMigPane buiStandard() {
+  public static FxMigPane buiStandard1() {
     return new FxMigPane(FxMigHp.getLcgStd1InsetGap0());
   }
 
@@ -90,10 +90,6 @@ public class FxMigPane extends MigPane {
   public void addSpanWrap(Node node) {
     add(node, "span,wrap");
   }
-
-//  public void addGrowXPushXSpan(Node node, String extra) {
-//    add(node, appendExtra("growx,pushx,span", extra));
-//  }
 
   /**
    * {@link FxMigHp} cc (cell constraint) yardımcı sınıfı kullan

@@ -92,6 +92,24 @@ public class FxMigHp {
     return this;
   }
 
+  public FxMigHp ccWidth(Integer lnWidth) {
+    addCommaToCc();
+    cellConst += "w " + lnWidth;
+    return this;
+  }
+
+  public FxMigHp ccHeight(Integer lnHeight) {
+    addCommaToCc();
+    cellConst += "h " + lnHeight;
+    return this;
+  }
+
+  public FxMigHp ccWidthPercent(Integer lnPercent) {
+    addCommaToCc();
+    cellConst += "w " + lnPercent + "%";
+    return this;
+  }
+
   public FxMigHp lcgInsetAndGap(Integer inset, Integer gapx, Integer gapy) {
     appendToLcg(String.format("insets %s,gap %s %s", inset, gapx, gapy));
     return this;
