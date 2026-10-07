@@ -82,6 +82,7 @@ public class FxButton extends Button implements IFxSecureNode {
 	public FxButton(String text, Icons525 icon525) {
 		super(text);
 		setFxIcon(icon525);
+		setTranslateY(-5);
 	}
 
 

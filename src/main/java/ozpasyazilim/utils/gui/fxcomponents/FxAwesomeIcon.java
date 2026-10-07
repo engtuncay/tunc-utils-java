@@ -39,7 +39,6 @@ public class FxAwesomeIcon {
 
 		Icons525View iconSample = new Icons525View(icon525); //Icons525.EXCEL
 		//iconSample.setGlyphStyle(String.format("-glyph-name:'%s';-fx-fill: %s;-fx-stroke:%s;-glyph-size: %dpx; ", name, fillColor, strokeColor, length));
-
 		String format = "";
 
 		if(length!=null)  format = String.format( format + "-glyph-size: %dpx;", length);
