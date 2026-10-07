@@ -347,6 +347,12 @@ public class FxMigHp {
     setCellConst(getCcInit() + value);
   }
 
+  public FxMigHp ccAppend(String value) {
+    addCommaToCc();
+    setCellConst(getCcInit() + value);
+    return this;
+  }
+
   public FxMigHp ccAlignYTop() {
     appendCc("aligny top");
     return this;
@@ -381,4 +387,6 @@ public class FxMigHp {
     appendCc("gapbefore " + txGapxPx);
     return this;
   }
+
+
 }
