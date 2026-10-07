@@ -2462,7 +2462,7 @@ public abstract class AbsRepoGenJdbi<EntClazz> extends AbsRepoGenMainJdbi<EntCla
     if (getJdbi() == null) {
       Loghelper.get(getClass()).error("Null jdbi:" + getDatabaseName());
       fdr.setFdBoResult(false);
-      fdr.setFdrTxMessageWitAddLog("Jdbi Tanımlı Değil :" + getDatabaseName());
+      fdr.setFdrTxMessageWitAddInfoLog("Jdbi Tanımlı Değil :" + getDatabaseName());
       return fdr;
     }
     return fdr;

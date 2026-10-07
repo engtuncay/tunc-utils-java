@@ -382,23 +382,23 @@ public class FiReflection {
 		return mapFields;
 	}
 
-	public static Fkb convertEntityToFiKeybean(Class clazz, Object entity) {
+	public static Fkb convertToFkb(Class clazz, Object entity) {
 
 		if (clazz == null) return null;
 
 		Field[] fields = clazz.getDeclaredFields();
 
-		Fkb fiKeyBean = new Fkb();
+		Fkb fkb = new Fkb();
 
 		for (Field field : fields) {
 			Object property = FiReflection.getProperty(entity, field.getName());
-			fiKeyBean.add(field.getName(),property);
+			fkb.add(field.getName(),property);
 		}
 
-		return fiKeyBean;
+		return fkb;
 	}
 
-	public static <T extends Object> String getSimpleClassName(T object) {
+	public static <T> String getSimpleClassName(T object) {
 
 		if (object instanceof Integer) return Integer.class.getSimpleName();
 		if (object instanceof Double) return Double.class.getSimpleName();

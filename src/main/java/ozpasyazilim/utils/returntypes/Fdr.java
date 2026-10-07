@@ -206,7 +206,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
 
   public Fdr(FnResultGen fnKayitSonuc) {
     setFdBoResult(fnKayitSonuc.getBResult());
-    setFdrTxMessageWitAddLog(fnKayitSonuc.getSMessage());
+    setFdrTxMessageWitAddInfoLog(fnKayitSonuc.getSMessage());
   }
 
   public Fdr(Integer rowCountUpdateWithUpBoResult) {
@@ -414,7 +414,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     return fdTxMessage;
   }
 
-  public void setFdrTxMessageWitAddLog(String fdrTxMessage) {
+  public void setFdrTxMessageWitAddInfoLog(String fdrTxMessage) {
     this.fdTxMessage = fdrTxMessage;
     addLogInfo(fdrTxMessage);
   }
@@ -528,7 +528,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
   }
 
   public Fdr<EntClazz> buiMessageWitLogV1(String message) {
-    this.setFdrTxMessageWitAddLog(message);
+    this.setFdrTxMessageWitAddInfoLog(message);
     return this;
   }
 
@@ -538,7 +538,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
   }
 
   public Fdr<EntClazz> buiMessageWitLog(String message) {
-    this.setFdrTxMessageWitAddLog(message);
+    this.setFdrTxMessageWitAddInfoLog(message);
     addLogInfo(message);
     return this;
   }
@@ -758,14 +758,14 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
 
   public void setBoResultAndMsg(Boolean boResult, String message) {
     setFdBoResult(boResult);
-    setFdrTxMessageWitAddLog(message);
+    setFdrTxMessageWitAddInfoLog(message);
   }
 
   public Fdr buiBoResult(Boolean boExec, Exception ex) {
     setFdBoResult(boExec);
     addFdException(ex);
     if (FiString.isEmpty(getFdTxMessage())) {
-      setFdrTxMessageWitAddLog(FiException.TosSummary(ex));
+      setFdrTxMessageWitAddInfoLog(FiException.TosSummary(ex));
     }
     return this;
   }
@@ -939,7 +939,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
 
   public void copyValues(Fdr fdr) {
     addFdException(fdr.getFdException());
-    setFdrTxMessageWitAddLog(fdr.getFdTxMessage());
+    setFdrTxMessageWitAddInfoLog(fdr.getFdTxMessage());
     setFdBoResult(fdr.getFdBoResult());
   }
 

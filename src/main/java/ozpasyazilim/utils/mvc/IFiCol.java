@@ -91,9 +91,9 @@ public interface IFiCol<N> {
 
 	public void setSummaryCalculateFn(Function summaryCalculateFn);
 
-	public Boolean getBoLocFilterable();
+	public Boolean getBoFilterableLocal();
 
-	public void setBoLocFilterable(Boolean boLocFilterable);
+	public void setBoFilterableLocal(Boolean boFilterableLocal);
 
 	public String getFilterNodeClass();
 

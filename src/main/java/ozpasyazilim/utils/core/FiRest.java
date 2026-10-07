@@ -125,13 +125,13 @@ public class FiRest {
           });
         } catch (Exception ignore) {
         }
-        fdrMain.setFdrTxMessageWitAddLog("!!! Error Code: " + code + "; Response headers: " + hdrs);
+        fdrMain.setFdrTxMessageWitAddInfoLog("!!! Error Code: " + code + "; Response headers: " + hdrs);
       }
 
     } catch (Exception exception) {
       Loghelper.get(FiRest.class).debug(FiException.exToErrorLog(exception));
       fdrMain.setFdBoResult(false);
-      fdrMain.setFdrTxMessageWitAddLog("An error occurred during the REST request. Please check the exception details. / REST isteği gerçekleşirken hata oluştu. Detay için Exception inceleyiniz.");
+      fdrMain.setFdrTxMessageWitAddInfoLog("An error occurred during the REST request. Please check the exception details. / REST isteği gerçekleşirken hata oluştu. Detay için Exception inceleyiniz.");
       fdrMain.addFdException(exception);
     }
 

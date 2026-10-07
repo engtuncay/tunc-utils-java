@@ -3,6 +3,7 @@ package ozpasyazilim.utils.fidborm;
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 import ozpasyazilim.utils.core.FiBool;
+import ozpasyazilim.utils.core.FiCollection;
 import ozpasyazilim.utils.core.FiException;
 import ozpasyazilim.utils.datatypes.Fkb;
 import ozpasyazilim.utils.datatypes.FkbList;
@@ -21,11 +22,14 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
 
   private Handle handleRepo;
 
+  @Deprecated
   private IFiTableMeta iFiTableMeta;
 
+  @Deprecated
   private Fkf fkcDmFields;
-  private Fkf fkfAll;
-  private FicList fclTable;
+  //private Fkf fkfAll;
+  //private FicList fclTable;
+  @Deprecated
   private FiCol ficIdAuto;
 
   public AbsRepoFkbJdbi(Jdbi jdbi) {
@@ -37,6 +41,20 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
   }
 
   public void setAutoClass() {
+  }
+
+  /**
+   * metod olarak kalması daha performanslı, state olarak tutmak memory maliyeti yapar
+   * @return
+   */
+  public Fkf getRepoFkfAll(){
+    return null;
+  }
+
+  //public abstract Fkf getRepoFkfDto();
+
+  public FicList getFclDto(){
+    return null;
   }
 
   public Handle getHandleRepo() {
@@ -633,21 +651,21 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
     this.fkcDmFields = fkcDmFields;
   }
 
-  public Fkf getFkfAll() {
-    return fkfAll;
-  }
+//  public Fkf getFkfAll() {
+//    return fkfAll;
+//  }
 
-  public void setFkfAll(Fkf fkfAll) {
-    this.fkfAll = fkfAll;
-  }
+//  public void setFkfAll(Fkf fkfAll) {
+//    this.fkfAll = fkfAll;
+//  }
 
-  public FicList getFclTable() {
-    return fclTable;
-  }
+//  public FicList getFclTable() {
+//    return fclTable;
+//  }
 
-  public void setFclTable(FicList fclTable) {
-    this.fclTable = fclTable;
-  }
+//  public void setFclTable(FicList fclTable) {
+//    this.fclTable = fclTable;
+//  }
 
   public FiCol getFicIdAuto() {
     return ficIdAuto;
@@ -763,6 +781,93 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
     }
 
     return fdrMain;
+  }
+
+
+  public Fdr fkInsert(Fkb fkbEntity) {
+    Fdr fdrMain = new Fdr();
+
+    FiQuconf fiQuconf = new FiQuconf();
+    fiQuconf.setFkfAll(getRepoFkfAll());
+
+    Fdr fdrSorgu = FiQugenMs.insQueryV3(fiQuconf);
+    fdrMain.combineAnd(fdrSorgu);
+
+    if (fdrMain.isFalseBoResult()) return fdrMain;
+
+    FiQuery fiQuery = new FiQuery(fdrSorgu.getFdTxVal(), fkbEntity);
+    fiQuery.logQueryAndParams();
+
+    return jdInsertFiQuery(fiQuery);
+  }
+
+  /**
+   * Sadece FicList'deki alanlara göre insert yapar (id dahil etmez)
+   *
+   * @param fkbEntity
+   * @param fclInsert
+   * @return
+   */
+  public Fdr fkInsert(Fkb fkbEntity, FicList fclInsert) {
+    Fdr fdrMain = new Fdr();
+
+    FiQuconf fiQuconf = new FiQuconf();
+    fiQuconf.setFkfAll(getRepoFkfAll());
+
+    Fdr fdrSorgu = FiQugenMs.insQueryV3Custom(fiQuconf, fclInsert);
+    fdrMain.combineAnd(fdrSorgu);
+
+    if (fdrMain.isFalseBoResult()) return fdrMain;
+
+    FiQuery fiQuery = new FiQuery(fdrSorgu.getFdTxVal(), fkbEntity);
+    fiQuery.logQueryAndParams();
+
+    return jdInsertFiQuery(fiQuery);
+  }
+
+  /**
+   * Delete Entities By Where Params
+   *
+   * @param fkbEntity
+   * @param fclWhere
+   * @return
+   */
+  public Fdr fkDeleteV1(Fkb fkbEntity, FicList fclWhere) {
+    Fdr fdrMain = new Fdr();
+
+    FiQuconf fiQuconf = new FiQuconf();
+    fiQuconf.setFkfAll(getRepoFkfAll());
+    fiQuconf.setFicListWhere(fclWhere);
+
+    Fdr fdrSorgu = FiQugenMs.delQueryV2(fiQuconf);
+    fdrMain.combineAnd(fdrSorgu);
+
+    if (fdrMain.isFalseBoResult()) return fdrMain;
+
+    FiQuery fiQuery = new FiQuery(fdrSorgu.getFdTxVal(), fkbEntity);
+    fiQuery.logQueryAndParams();
+
+    return jdInsertFiQuery(fiQuery);
+  }
+
+  /**
+   * fkbList
+   * @return
+   */
+  public Fdr fkSelDtoList(Fkb fkbParams, FicList ficListExtra) {
+    FiQuery fiQuery = new FiQuery(fkbParams);
+    FicList fclDto = getFclDto();
+
+    if(!FiCollection.isEmpty(ficListExtra)) {
+      fclDto.addAll(ficListExtra);
+    }
+
+    fiQuery.setFicListQuery(fclDto);
+
+    Fdr fdrSorgu = FiQugenMs.selQueryV2Main(fiQuery);
+    if (fdrSorgu.isFalseBoResult()) return fdrSorgu;
+
+    return jdSelectFkbList(fiQuery);
   }
 
 
