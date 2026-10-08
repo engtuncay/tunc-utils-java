@@ -389,4 +389,9 @@ public class FxMigHp {
   }
 
 
+  public FxMigHp ccWrap() {
+    appendCc("wrap");
+    return this;
+  }
+
 }
