@@ -41,7 +41,7 @@ public class ComboItemText {
 		return comboItem;
 	}
 
-	public static ComboItemText buildWitAction(String label, Runnable onAction) {
+	public static ComboItemText buiWitAction(String label, Runnable onAction) {
 		ComboItemText comboItem = new ComboItemText(label);
 		comboItem.setOnAction(onAction);
 		return comboItem;
