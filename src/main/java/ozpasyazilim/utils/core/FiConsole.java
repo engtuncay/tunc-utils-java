@@ -4,7 +4,7 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import ozpasyazilim.utils.datatypes.Fkb;
 import ozpasyazilim.utils.datatypes.FkbList;
-import ozpasyazilim.utils.datatypes.FiListKeyString;
+import ozpasyazilim.utils.datatypes.FksList;
 import ozpasyazilim.utils.datatypes.Fks;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.table.FiCol;
@@ -108,7 +108,7 @@ public class FiConsole {
     Loghelper.get(FiConsole.class).debug(String.format("Map Detail (Not Null) - Debug Class: %s\n\n%s", clazz.getSimpleName(), textMapNotNull(map)));
   }
 
-  public static void debugListMap(FiListKeyString listMap, Class clazz, Boolean boShowNulls) {
+  public static void debugListMap(FksList listMap, Class clazz, Boolean boShowNulls) {
     if (listMap == null) {
       Loghelper.debugLog(clazz, String.format("Map Null"));
       return;
@@ -979,12 +979,12 @@ public class FiConsole {
   }
 
 
-  public static void logFiListKeyString(FiListKeyString fiListKeyString) {
+  public static void logFiListKeyString(FksList fksList) {
     StringBuilder sbLog = new StringBuilder();
 
     sbLog.append("FiListKeyString Content\n\n");
 
-    for (Fks fks : fiListKeyString) {
+    for (Fks fks : fksList) {
       sbLog.append(FiConsole.textFiKeytext(fks)).append("\n");
     }
 

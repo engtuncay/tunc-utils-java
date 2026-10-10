@@ -125,7 +125,7 @@ public class FiExcel {
 
   }
 
-  public FiListKeyString readExcelFileAsMap(File excelfile, List<? extends IFiCol> listColumns) {
+  public FksList readExcelFileAsMap(File excelfile, List<? extends IFiCol> listColumns) {
 
     if (excelfile == null) {
       Loghelper.get(getClass()).debug("Excel File Null");
@@ -558,12 +558,12 @@ public class FiExcel {
     return bindEntityExcelToFkb(listrows, listColumns);
   }
 
-  public FiListKeyString readExcelXLSXAsMapString(File fileExcelXlsx, List<? extends IFiCol> listColumns) {
+  public FksList readExcelXLSXAsMapString(File fileExcelXlsx, List<? extends IFiCol> listColumns) {
 
     // Get first sheet from the workbook
     XSSFSheet sheet = getWorkbookFromExcelXlsxFile(fileExcelXlsx).getSheetAt(0);
 
-    FiListKeyString listrows = new FiListKeyString();
+    FksList listrows = new FksList();
     //Not old usage //Iterator rows = sheet.rowIterator();
 
     // exceldeki son satır nosu (satır no 1 den başlar)
@@ -575,7 +575,7 @@ public class FiExcel {
 
     Boolean colFound = false;
     if (pairHeaderExcel != null) colFound = true;
-    if (!colFound) return new FiListKeyString();
+    if (!colFound) return new FksList();
 
     List<String> finalHeaders = pairHeaderExcel.getValue1();
 
@@ -1211,9 +1211,9 @@ public class FiExcel {
   }
 
 
-  public FiListKeyString bindExcelToListMapStr(FiListKeyString listmapData, List<? extends IFiCol> listColumns) {
+  public FksList bindExcelToListMapStr(FksList listmapData, List<? extends IFiCol> listColumns) {
 
-    FiListKeyString fiListMapEntity = new FiListKeyString();
+    FksList fiListMapEntity = new FksList();
 
     for (Iterator iterator = listmapData.iterator(); iterator.hasNext(); ) {
       Map<String, String> mapExcelRow = (Map<String, String>) iterator.next();
