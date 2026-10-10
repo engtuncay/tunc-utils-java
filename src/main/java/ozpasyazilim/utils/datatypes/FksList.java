@@ -8,13 +8,13 @@ import java.util.Collection;
 import java.util.List;
 
 
-public class FiListKeyString extends ArrayList<Fks> {
+public class FksList extends ArrayList<Fks> {
 
-	public FiListKeyString() {
+	public FksList() {
 		super();
 	}
 
-	public FiListKeyString(Collection<? extends Fks> c) {
+	public FksList(Collection<? extends Fks> c) {
 		super(c);
 	}
 
