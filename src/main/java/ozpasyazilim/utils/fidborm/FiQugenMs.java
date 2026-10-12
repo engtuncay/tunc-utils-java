@@ -5,6 +5,7 @@ import ozpasyazilim.utils.datatypes.Fkb;
 //import ozpasyazilim.utils.ficRfcCoding;
 import ozpasyazilim.utils.datatypes.Fkf;
 import ozpasyazilim.utils.log.Loghelper;
+import ozpasyazilim.utils.metadata.fimCodegen.FimFtFieldTypeSpec;
 import ozpasyazilim.utils.metadata.fimCodegen.FimFtSpecFields;
 import ozpasyazilim.utils.metadata.fimCodegen.FimFtSql;
 import ozpasyazilim.utils.returntypes.Fdr;
@@ -15,7 +16,7 @@ import ozpasyazilim.utils.table.FicUtil;
 import javax.annotation.Nonnull;
 
 /**
- * FiSql Query Generation Class for Ms-sql
+ * FiSql Query Generation Class for Ms-Sql
  */
 public class FiQugenMs {
 
@@ -815,6 +816,123 @@ public class FiQugenMs {
     //  insert ederken id den başka alan yoksa böyle kayıt edilmeli
     //  INSERT INTO TabloAdı DEFAULT VALUES
     // sfTxFieldsIns, sfTxFieldsVarIns sonradan parantez içine alınıyor
+    String template = "--sq202604221135 v1\n" +
+        "DECLARE @__count AS int = 0\n" +
+        "\n" +
+        "SELECT @__count = count(*) FROM {{sfTableName}}\n" +
+        "WHERE {{sfTxWhere}}\n" +
+        "\n" +
+        "IF @__count = 0 \n" +
+        "BEGIN\n" +
+        "  INSERT INTO {{sfTableName}} ({{sfTxFieldsIns}}) \n" +
+        "  VALUES ({{sfTxFieldsVarIns}}) \n" +
+        "END;\n" +
+        "\n" +
+        "UPDATE {{sfTableName}}\n" +
+        "SET {{sfTxFieldsVarUp}}\n" +
+        "WHERE {{sfTxWhere}}\n";
+
+
+    StringBuilder sbTxWhereBlock = new StringBuilder();
+    // boş degilse parantez eklenecek
+    StringBuilder sbTxFieldsIns = new StringBuilder();
+    StringBuilder sbTxFieldsVarIns = new StringBuilder();
+
+    StringBuilder sbTxFieldsVarUp = new StringBuilder();
+
+    int indexWhereBlock = 0;
+
+    for (FiCol fiCol : ficList) {
+
+      Loghelper.get(getClassi()).debug("fiCol: " + fiCol.getFcTxFieldName() + " - BoWhereField " + fiCol.getFcBoWhereField());
+
+      if (fiCol.getFcTxFieldName().equals(FimFtSpecFields.qcfTxSqTableName().getKey())) {
+        txTableName = fiCol.getFcTxHeader();
+        continue;
+      }
+
+      // transient alanlar atlanmalı
+      if (FiBool.isTrue(fiCol.getFcBoTransient())) {
+        continue;
+      }
+      // bazı özel alanlar atlanmalı
+//      if (fiCol.getFcTxFieldName().equals(FimQcSpecFields.qcfTxSqTableName().getKey())) {
+//        txTableName = fiCol.getFcTxHeader();
+//        continue;
+//      }
+
+      if (FiBool.isTrue(fiCol.getFcBoWhereField())) {
+        indexWhereBlock++;
+        //Loghelper.get(FiSqlGenMs.class).debug("where field: " + fiCol.getFcTxFieldName());
+        sbTxWhereBlock.append(FiQugenUtil.formSqlAssignAndByFic(fiCol));
+
+        // MEDFIX auto fimE eklenmeli
+        // identity alan inserte eklenemez
+        if (fiCol.getFcTxIdTypeNtn().equals("auto")) {
+          continue;
+        }
+        sbTxFieldsIns.append(FiQugenUtil.formSqlFieldCommaByFic(fiCol));
+        sbTxFieldsVarIns.append(FiQugenUtil.formSqlVarCommaByFic(fiCol));
+      } else {
+        // auto identity alan update'e eklenemez
+        if (fiCol.getFcTxIdTypeNtn().equals("auto")) {
+          continue;
+        }
+        sbTxFieldsVarUp.append(FiQugenUtil.formSqlAssignVarAndCommaByFic(fiCol));
+      }
+
+    }
+
+    FiString.rtrimSb(sbTxWhereBlock, getTxAnd());
+    FiString.rtrimSb(sbTxFieldsIns, getTxComma());
+    FiString.rtrimSb(sbTxFieldsVarIns, getTxComma());
+    FiString.rtrimSb(sbTxFieldsVarUp, getTxComma());
+
+    Fkb fkbParams = new Fkb();
+    fkbParams.addFim(FimFtSql.sfTableName(), txTableName);
+    fkbParams.addFim(FimFtSql.sfTxWhere(), sbTxWhereBlock.toString());
+    // Insert argümanları
+    fkbParams.addFim(FimFtSql.sfTxFieldsIns(), sbTxFieldsIns.toString());
+    fkbParams.addFim(FimFtSql.sfTxFieldsVarIns(), sbTxFieldsVarIns.toString());
+    // Update argümanları
+    fkbParams.addFim(FimFtSql.sfTxFieldsVarUp(), sbTxFieldsVarUp.toString());
+    // where ortak kullanılır
+
+    String sql = FiString.substitutor(template, fkbParams);
+
+    Fdr fdrResult = new Fdr();
+    fdrResult.setFdTxVal(sql);
+
+    if (indexWhereBlock == 0) {
+      fdrResult.setFdTxVal("no where fields");
+      fdrResult.setBoResult(false);
+      fdrResult.setFdTxMessage("no where fields");
+      return fdrResult;
+    }
+
+    fdrResult.setBoResult(true);
+    return fdrResult;
+  }
+
+  public static Fdr insUpdateV1(FiQuery fiQuery) {
+    // Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
+
+    // arguments
+    // IFiTableMeta iFiTableMeta = fiQuery.getiFiTableMeta();
+    FicList ficList = fiQuery.getFicListQuery();
+
+    String txTableName = fiQuery.getFkfAll().getSpecTxTableName();
+
+    // FimQcSql.sfTableName();
+
+    //  insert ederken id den başka alan yoksa böyle kayıt edilmeli
+    //  INSERT INTO TabloAdı DEFAULT VALUES
+    // sfTxFieldsIns, sfTxFieldsVarIns sonradan parantez içine alınıyor
+
+    FimFtSql.sfTableName();
+    //FimFtSql.sfTxWhere();
+
+
     String template = "--sq202604221135 v1\n" +
         "DECLARE @__count AS int = 0\n" +
         "\n" +

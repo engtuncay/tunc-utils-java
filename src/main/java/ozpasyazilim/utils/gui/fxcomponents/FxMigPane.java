@@ -127,12 +127,12 @@ public class FxMigPane extends MigPane {
     add(node, appendExtra("grow,span", extra));
   }
 
-  public void addBtnIcon(Node node, String extra) {
+  public void addBtnWitIcon(Node node, String extra) {
     add(node, FxMigHp.bui().ccAppend("aligny center").ccAppend(extra).getCc());
   }
 
-  public void addBtnIcon(Node node) {
-    addBtnIcon(node, "");
+  public void addBtnWitIcon(Node node) {
+    addBtnWitIcon(node, "");
   }
 
   public void addSpan(Node node) {

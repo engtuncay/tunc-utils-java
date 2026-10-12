@@ -22,6 +22,11 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
 
   private Handle handleRepo;
 
+  /**
+   * bağlantı kurulurken hata alınırsa set edilir
+   */
+  private Fdr fdrConnErr;
+
   @Deprecated
   private IFiTableMeta iFiTableMeta;
 
@@ -870,5 +875,11 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
     return jdSelectFkbList(fiQuery);
   }
 
+  public Fdr getFdrConnErr() {
+    return fdrConnErr;
+  }
 
+  public void setFdrConnErr(Fdr fdrConnErr) {
+    this.fdrConnErr = fdrConnErr;
+  }
 }

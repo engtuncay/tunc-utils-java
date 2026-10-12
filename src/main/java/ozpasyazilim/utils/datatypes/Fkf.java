@@ -1,5 +1,6 @@
 package ozpasyazilim.utils.datatypes;
 
+import ozpasyazilim.utils.metadata.fimCodegen.FimFtSpecFields;
 import ozpasyazilim.utils.table.FiCol;
 
 import java.util.LinkedHashMap;
@@ -40,6 +41,14 @@ public class Fkf extends LinkedHashMap<String, FiCol> {
 
   public String getFimHeaderValNtn(FiMeta fiCol) {
     FiCol fieldValue = getFieldValue(fiCol.getFtTxKey());
+    if (fieldValue != null) {
+      return fieldValue.getFcTxHeader();
+    }
+    return "";
+  }
+
+  public String getSpecTxTableName() {
+    FiCol fieldValue = getFieldValue(FimFtSpecFields.qcfTxSqTableName().getKey());
     if (fieldValue != null) {
       return fieldValue.getFcTxHeader();
     }
