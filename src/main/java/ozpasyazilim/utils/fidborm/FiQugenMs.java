@@ -41,7 +41,7 @@ public class FiQugenMs {
     // FimQcSql.sfTxUpSetBlock();
 
     String template = "UPDATE {{sfTableName}} SET {{sfTxUpSetBlock}} \n"
-        + " WHERE {{sfTxWhere}} ";
+        + " WHERE {{sfWhere}} ";
 
     StringBuilder sbTxSetBlock = new StringBuilder();
     StringBuilder sbTxWhereBlock = new StringBuilder();
@@ -69,7 +69,7 @@ public class FiQugenMs {
     Fkb fkbParams = new Fkb();
     fkbParams.addFieldBy(FimFcSql.sfTableName(), iFiTableMeta.getITxTableName());
     fkbParams.addFieldBy(FimFcSql.sfTxUpSetBlock(), sbTxSetBlock.toString());
-    fkbParams.addFieldBy(FimFcSql.sfTxWhere(), sbTxWhereBlock.toString());
+    fkbParams.addFieldBy(FimFcSql.sfWhere(), sbTxWhereBlock.toString());
 
     String sql = FiString.substitutor(template, fkbParams);
 
