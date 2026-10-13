@@ -114,6 +114,9 @@ public class FicList extends ArrayList<FiCol>{
 		this.fkbParams = fkbParams;
 	}
 
+  public void addFic(FiCol fiCol) {
+		add(fiCol);
+  }
 
 
   //	public void equalsKey(String txKey, Object value) {

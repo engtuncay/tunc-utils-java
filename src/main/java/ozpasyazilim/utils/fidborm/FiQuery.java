@@ -43,6 +43,11 @@ public class FiQuery {
    */
   FiCol qcfTxSqTableName;
 
+  /**
+   * Insert sorgusunda sadece insert fields lar kullanılır
+   */
+  private Boolean boUseInsFieldsForInsQuery;
+
   //List<FiField> queryFieldList;
   //List<FiField> queryWhereList;
 
@@ -71,7 +76,7 @@ public class FiQuery {
   }
 
   public FiQuery(Fkb fkbParams) {
-    if(fkbParams!=null) {
+    if (fkbParams != null) {
       this.fkbParams = new Fkb(fkbParams);
     }
   }
@@ -538,6 +543,13 @@ public class FiQuery {
     return fkfAll;
   }
 
+  public Fkf getFkfAllNtn() {
+    if (fkfAll == null) {
+      return new Fkf();
+    }
+    return fkfAll;
+  }
+
   public void setFkfAll(Fkf fkfAll) {
     this.fkfAll = fkfAll;
   }
@@ -548,5 +560,13 @@ public class FiQuery {
 
   public void setQcfTxSqTableName(FiCol qcfTxSqTableName) {
     this.qcfTxSqTableName = qcfTxSqTableName;
+  }
+
+  public Boolean getBoUseInsFieldsForInsQuery() {
+    return boUseInsFieldsForInsQuery;
+  }
+
+  public void setBoUseInsFieldsForInsQuery(Boolean boUseInsFieldsForInsQuery) {
+    this.boUseInsFieldsForInsQuery = boUseInsFieldsForInsQuery;
   }
 }

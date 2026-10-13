@@ -5,7 +5,7 @@ import ozpasyazilim.utils.datatypes.Fkb;
 //import ozpasyazilim.utils.ficRfcCoding;
 import ozpasyazilim.utils.datatypes.Fkf;
 import ozpasyazilim.utils.log.Loghelper;
-import ozpasyazilim.utils.metadata.fimCodegen.FimFtSpecFields;
+import ozpasyazilim.utils.metadata.fimCodegen.FimFcSpecFields;
 import ozpasyazilim.utils.metadata.fimCodegen.FimFcSql;
 import ozpasyazilim.utils.returntypes.Fdr;
 import ozpasyazilim.utils.table.FiCol;
@@ -114,7 +114,7 @@ public class FiQugenMs {
     int indexWhereBlock = 0;
 
     if (fkbDataDef != null) {
-      txTableName = fkbDataDef.getFimHeaderValNtn(FimFtSpecFields.qcfTxSqTableName());
+      txTableName = fkbDataDef.getFimHeaderValNtn(FimFcSpecFields.qcfTxSqTableName());
     }
 
     for (FiCol fiCol : ficFields) {
@@ -123,7 +123,7 @@ public class FiQugenMs {
       // if (FiBool.isTrue(boUpdateFieldsOnly)) {
       // if (FiBool.isTrue(fiCol.getBoUpdateFieldForQuery())) {
 
-      if (txTableName == null && fiCol.getFcTxFieldName().equals(FimFtSpecFields.qcfTxSqTableName().getKey())) {
+      if (txTableName == null && fiCol.getFcTxFieldName().equals(FimFcSpecFields.qcfTxSqTableName().getKey())) {
         txTableName = fiCol.getFcTxHeader();
         continue;
       }
@@ -219,7 +219,7 @@ public class FiQugenMs {
       // if (FiBool.isTrue(boUpdateFieldsOnly)) {
       // if (FiBool.isTrue(fiCol.getBoUpdateFieldForQuery())) {
 
-      if (FimFtSpecFields.qcfTxSqTableName().getKey().equals(fiCol.getFcTxFieldName())) {
+      if (FimFcSpecFields.qcfTxSqTableName().getKey().equals(fiCol.getFcTxFieldName())) {
         txTableName = fiCol.getFcTxHeader();
         continue;
       }
@@ -422,8 +422,8 @@ public class FiQugenMs {
 
     String txTableName = null; // qcfTxSqTableName.getFcTxHeader();
 
-    if (fkfAllFields.containsKey(FimFtSpecFields.qcfTxSqTableName().getKey())) {
-      txTableName = fkfAllFields.getFimValue(FimFtSpecFields.qcfTxSqTableName()).getFcTxHeader();
+    if (fkfAllFields.containsKey(FimFcSpecFields.qcfTxSqTableName().getKey())) {
+      txTableName = fkfAllFields.getFimValue(FimFcSpecFields.qcfTxSqTableName()).getFcTxHeader();
     }
 
     if (FiString.isEmptyTrim(txTableName)) return fdrMain.buiBoResult(false, "Tablo ismi tanımlanmamış.");
@@ -643,7 +643,7 @@ public class FiQugenMs {
 
       // Loghelper.get(getClassi()).debug("fiCol: " + fiCol.getFcTxFieldName() + " - BoWhereField " + fiCol.getFcBoWhereField());
 
-      if (fiCol.getFcTxFieldName().equals(FimFtSpecFields.qcfTxSqTableName().getKey())) {
+      if (fiCol.getFcTxFieldName().equals(FimFcSpecFields.qcfTxSqTableName().getKey())) {
         txTableName = fiCol.getFcTxHeader();
         continue;
       }
@@ -653,11 +653,11 @@ public class FiQugenMs {
       }
 
       if (FiBool.isTrue(fiCol.getFcBoWhereField())
-      || FiBool.isTrue(fiCol.getFcBoWhereIn())
+          || FiBool.isTrue(fiCol.getFcBoWhereIn())
       ) {
         indexWhereBlock++;
         //Loghelper.get(FiSqlGenMs.class).debug("where field: " + fiCol.getFcTxFieldName());
-        if(FiBool.isTrue(fiCol.getFcBoWhereIn())) {
+        if (FiBool.isTrue(fiCol.getFcBoWhereIn())) {
           sbTxWhereBlock.append(FiQugenUtil.formSqlAssignInByFic(fiCol));
           continue;
         }
@@ -845,7 +845,7 @@ public class FiQugenMs {
 
       Loghelper.get(getClassi()).debug("fiCol: " + fiCol.getFcTxFieldName() + " - BoWhereField " + fiCol.getFcBoWhereField());
 
-      if (fiCol.getFcTxFieldName().equals(FimFtSpecFields.qcfTxSqTableName().getKey())) {
+      if (fiCol.getFcTxFieldName().equals(FimFcSpecFields.qcfTxSqTableName().getKey())) {
         txTableName = fiCol.getFcTxHeader();
         continue;
       }
@@ -918,100 +918,113 @@ public class FiQugenMs {
 
     // arguments
     // IFiTableMeta iFiTableMeta = fiQuery.getiFiTableMeta();
-    FicList ficList = fiQuery.getFicListQuery();
+    FicList ficListQuery = fiQuery.getFicListQuery();
 
-    String txTableName = fiQuery.getFkfAll().getSpecTxTableName();
+    String txTableName = "";
 
-    // FimQcSql.sfTableName();
+    if (fiQuery.getFkfAll() != null) {
+      txTableName = fiQuery.getFkfAll().getSpecTxTableName();
+    }
 
     //  insert ederken id den başka alan yoksa böyle kayıt edilmeli
     //  INSERT INTO TabloAdı DEFAULT VALUES
-    // sfTxFieldsIns, sfTxFieldsVarIns sonradan parantez içine alınıyor
+    //  sfFieldsIns, sfFieldsVarIns sonradan parantez içine alınıyor
 
+    // Sorguda kullanılan placeholderlar
     FimFcSql.sfTableName();
-    //FimFtSql.sfTxWhere();
-
+    FimFcSql.sfFieldsIns();
+    // Variable Fields For Ins Query
+    FimFcSql.sfVarFieldsIns();
+    FimFcSql.sfWhere();
+    // Variable Fields For Up Query
+    FimFcSql.sfVarFieldsUp();
 
     String template = "--sq202604221135 v1\n" +
         "DECLARE @__count AS int = 0\n" +
         "\n" +
         "SELECT @__count = count(*) FROM {{sfTableName}}\n" +
-        "WHERE {{sfTxWhere}}\n" +
+        "WHERE {{sfWhere}}\n" +
         "\n" +
         "IF @__count = 0 \n" +
         "BEGIN\n" +
-        "  INSERT INTO {{sfTableName}} ({{sfTxFieldsIns}}) \n" +
-        "  VALUES ({{sfTxFieldsVarIns}}) \n" +
+        "  INSERT INTO {{sfTableName}} ({{sfFieldsIns}}) \n" +
+        "  VALUES ({{sfVarFieldsIns}}) \n" +
         "END;\n" +
         "\n" +
         "UPDATE {{sfTableName}}\n" +
-        "SET {{sfTxFieldsVarUp}}\n" +
-        "WHERE {{sfTxWhere}}\n";
+        "SET {{sfVarFieldsUp}}\n" +
+        "WHERE {{sfWhere}}\n";
 
-
-    StringBuilder sbTxWhereBlock = new StringBuilder();
+    StringBuilder sbWhereBlock = new StringBuilder();
     // boş degilse parantez eklenecek
-    StringBuilder sbTxFieldsIns = new StringBuilder();
-    StringBuilder sbTxFieldsVarIns = new StringBuilder();
-
-    StringBuilder sbTxFieldsVarUp = new StringBuilder();
+    StringBuilder sbFieldsIns = new StringBuilder();
+    // for insert query
+    StringBuilder sbFieldsVarIns = new StringBuilder();
+    // for update query
+    StringBuilder sbFieldsVarUp = new StringBuilder();
 
     int indexWhereBlock = 0;
 
-    for (FiCol fiCol : ficList) {
+    for (FiCol fiCol : ficListQuery) {
 
-      Loghelper.get(getClassi()).debug("fiCol: " + fiCol.getFcTxFieldName() + " - BoWhereField " + fiCol.getFcBoWhereField());
+      //Loghelper.get(getClassi()).debug("fiCol: " + fiCol.getFcTxFieldName() + " - BoWhereField " + fiCol.getFcBoWhereField());
 
-      if (fiCol.getFcTxFieldName().equals(FimFtSpecFields.qcfTxSqTableName().getKey())) {
+      // bazı özel alanlar atlanmalı
+      if (FiString.isEmptyTrim(txTableName) && FimFcSpecFields.qcfTxSqTableName().getKey().equals(fiCol.getFcTxFieldName())) {
         txTableName = fiCol.getFcTxHeader();
         continue;
       }
 
-      // transient alanlar atlanmalı
-      if (FiBool.isTrue(fiCol.getFcBoTransient())) {
-        continue;
-      }
-      // bazı özel alanlar atlanmalı
-//      if (fiCol.getFcTxFieldName().equals(FimQcSpecFields.qcfTxSqTableName().getKey())) {
-//        txTableName = fiCol.getFcTxHeader();
-//        continue;
-//      }
+      if (fiCol.isTransient()) continue;
+      if (fiCol.isDefCols()) continue;
 
       if (FiBool.isTrue(fiCol.getFcBoWhereField())) {
         indexWhereBlock++;
         //Loghelper.get(FiSqlGenMs.class).debug("where field: " + fiCol.getFcTxFieldName());
-        sbTxWhereBlock.append(FiQugenUtil.formSqlAssignAndByFic(fiCol));
+        sbWhereBlock.append(FiQugenUtil.formSqlAssignAndByFic(fiCol));
 
-        // MEDFIX auto fimE eklenmeli
         // identity alan inserte eklenemez
-        if (fiCol.getFcTxIdTypeNtn().equals("auto")) {
-          continue;
-        }
-        sbTxFieldsIns.append(FiQugenUtil.formSqlFieldCommaByFic(fiCol));
-        sbTxFieldsVarIns.append(FiQugenUtil.formSqlVarCommaByFic(fiCol));
-      } else {
-        // auto identity alan update'e eklenemez
-        if (fiCol.getFcTxIdTypeNtn().equals("auto")) {
-          continue;
-        }
-        sbTxFieldsVarUp.append(FiQugenUtil.formSqlAssignVarAndCommaByFic(fiCol));
+        if (fiCol.isIdAuto()) continue;
+
+        continue;
       }
+
+      // auto identity alan update ve insert'e eklenemez
+      if (fiCol.isIdAuto()) continue;
+
+      if (FiBool.isTrue(fiQuery.getBoUseInsFieldsForInsQuery())) {
+        if (fiCol.isInsertField()) {
+          sbFieldsIns.append(FiQugenUtil.formSqlFieldCommaByFic(fiCol));
+          sbFieldsVarIns.append(FiQugenUtil.formSqlVarCommaByFic(fiCol));
+        }
+        // else durumunda insert'e alan eklenmez
+      } else { // buUseInsFieldsOnly değilse direk eklenir
+        sbFieldsIns.append(FiQugenUtil.formSqlFieldCommaByFic(fiCol));
+        sbFieldsVarIns.append(FiQugenUtil.formSqlVarCommaByFic(fiCol));
+      }
+
+      if (fiCol.isIdKey()) {
+        continue;
+      }
+      sbFieldsVarUp.append(FiQugenUtil.formSqlAssignVarAndCommaByFic(fiCol));
 
     }
 
-    FiString.rtrimSb(sbTxWhereBlock, getTxAnd());
-    FiString.rtrimSb(sbTxFieldsIns, getTxComma());
-    FiString.rtrimSb(sbTxFieldsVarIns, getTxComma());
-    FiString.rtrimSb(sbTxFieldsVarUp, getTxComma());
+    Loghelper.get(getClassi()).debug("tableName:" + txTableName);
+
+    FiString.rtrimSb(sbWhereBlock, getTxAnd());
+    FiString.rtrimSb(sbFieldsIns, getTxComma());
+    FiString.rtrimSb(sbFieldsVarIns, getTxComma());
+    FiString.rtrimSb(sbFieldsVarUp, getTxComma());
 
     Fkb fkbParams = new Fkb();
     fkbParams.addFim(FimFcSql.sfTableName(), txTableName);
-    fkbParams.addFim(FimFcSql.sfTxWhere(), sbTxWhereBlock.toString());
+    fkbParams.addFim(FimFcSql.sfWhere(), sbWhereBlock.toString());
     // Insert argümanları
-    fkbParams.addFim(FimFcSql.sfTxFieldsIns(), sbTxFieldsIns.toString());
-    fkbParams.addFim(FimFcSql.sfTxFieldsVarIns(), sbTxFieldsVarIns.toString());
+    fkbParams.addFim(FimFcSql.sfFieldsIns(), sbFieldsIns.toString());
+    fkbParams.addFim(FimFcSql.sfVarFieldsIns(), sbFieldsVarIns.toString());
     // Update argümanları
-    fkbParams.addFim(FimFcSql.sfTxFieldsVarUp(), sbTxFieldsVarUp.toString());
+    fkbParams.addFim(FimFcSql.sfVarFieldsUp(), sbFieldsVarUp.toString());
     // where ortak kullanılır
 
     String sql = FiString.substitutor(template, fkbParams);
@@ -1019,6 +1032,7 @@ public class FiQugenMs {
     Fdr fdrResult = new Fdr();
     fdrResult.setFdTxVal(sql);
 
+    // update sorgusu olduğu için whereBlock olmak zorunda
     if (indexWhereBlock == 0) {
       fdrResult.setFdTxVal("no where fields");
       fdrResult.setBoResult(false);
@@ -1026,6 +1040,7 @@ public class FiQugenMs {
       return fdrResult;
     }
 
+    fiQuery.setTxQuery(fdrResult.getFdTxVal());
     fdrResult.setBoResult(true);
     return fdrResult;
   }
@@ -1092,7 +1107,7 @@ public class FiQugenMs {
 
       Loghelper.get(getClassi()).debug("fiCol: " + fiCol.getFcTxFieldName() + " - BoWhereField " + fiCol.getFcBoWhereField());
 
-      if (fiCol.getFcTxFieldName().equals(FimFtSpecFields.qcfTxSqTableName().getKey())) {
+      if (fiCol.getFcTxFieldName().equals(FimFcSpecFields.qcfTxSqTableName().getKey())) {
         txTableName = fiCol.getFcTxHeader();
         continue;
       }
@@ -1186,12 +1201,12 @@ public class FiQugenMs {
     int indexCol = 0;
 
     if (fkbDataDef != null) {
-      txTableName = fkbDataDef.getFimHeaderValNtn(FimFtSpecFields.qcfTxSqTableName());
+      txTableName = fkbDataDef.getFimHeaderValNtn(FimFcSpecFields.qcfTxSqTableName());
     }
 
     for (FiCol ficItem : ficInsFields) {
 
-      if (txTableName == null && ficItem.getFcTxFieldName().equals(FimFtSpecFields.qcfTxSqTableName().getKey())) {
+      if (txTableName == null && ficItem.getFcTxFieldName().equals(FimFcSpecFields.qcfTxSqTableName().getKey())) {
         txTableName = ficItem.getFcTxHeader();
         continue;
       }
@@ -1261,12 +1276,12 @@ public class FiQugenMs {
     int indexCol = 0;
 
     if (fkbDataDefs != null) {
-      txTableName = fkbDataDefs.getFimHeaderValNtn(FimFtSpecFields.qcfTxSqTableName());
+      txTableName = fkbDataDefs.getFimHeaderValNtn(FimFcSpecFields.qcfTxSqTableName());
     }
 
     for (FiCol ficItem : fkfAllFields.values()) {
 
-      if (txTableName == null && ficItem.getFcTxFieldName().equals(FimFtSpecFields.qcfTxSqTableName().getKey())) {
+      if (txTableName == null && ficItem.getFcTxFieldName().equals(FimFcSpecFields.qcfTxSqTableName().getKey())) {
         txTableName = ficItem.getFcTxHeader();
         continue;
       }
@@ -1339,10 +1354,10 @@ public class FiQugenMs {
     String txTableName = null;
     int indexCol = 0;
 
-    if (fkfAllFields.containsKey(FimFtSpecFields.qcfTxSqTableName().getKey())) {
+    if (fkfAllFields.containsKey(FimFcSpecFields.qcfTxSqTableName().getKey())) {
       Loghelper.get(getClassi()).debug("tablo col mevcut");
 
-      txTableName = fkfAllFields.getFimValue(FimFtSpecFields.qcfTxSqTableName()).getFcTxHeader();
+      txTableName = fkfAllFields.getFimValue(FimFcSpecFields.qcfTxSqTableName()).getFcTxHeader();
     }
 
     if (FiString.isEmpty(txTableName)) return fdrMain.buiBoResult(false, "Tablo ismi tanımlanmamış.");
@@ -1410,10 +1425,10 @@ public class FiQugenMs {
     String txTableName = null;
     int indexCol = 0;
 
-    if (fkfAllFields.containsKey(FimFtSpecFields.qcfTxSqTableName().getKey())) {
+    if (fkfAllFields.containsKey(FimFcSpecFields.qcfTxSqTableName().getKey())) {
       Loghelper.get(getClassi()).debug("tablo col mevcut");
 
-      txTableName = fkfAllFields.getFimValue(FimFtSpecFields.qcfTxSqTableName()).getFcTxHeader();
+      txTableName = fkfAllFields.getFimValue(FimFcSpecFields.qcfTxSqTableName()).getFcTxHeader();
     }
 
     if (FiString.isEmpty(txTableName)) return fdrMain.buiBoResult(false, "Tablo ismi tanımlanmamış.");
@@ -1484,9 +1499,9 @@ public class FiQugenMs {
     String txTableName = null;
     int indexCol = 0;
 
-    if (fkfAllFields.containsKey(FimFtSpecFields.qcfTxSqTableName().getKey())) {
+    if (fkfAllFields.containsKey(FimFcSpecFields.qcfTxSqTableName().getKey())) {
       //Loghelper.get(getClassi()).debug("tablo col mevcut");
-      txTableName = fkfAllFields.getFimValue(FimFtSpecFields.qcfTxSqTableName()).getFcTxHeader();
+      txTableName = fkfAllFields.getFimValue(FimFcSpecFields.qcfTxSqTableName()).getFcTxHeader();
     }
 
     if (FiString.isEmpty(txTableName)) return fdrMain.buiBoResult(false, "Tablo ismi tanımlanmamış.");
@@ -1546,9 +1561,9 @@ public class FiQugenMs {
     String txTableName = null;
     int indexCol = 0;
 
-    if (fkfAllFields.containsKey(FimFtSpecFields.qcfTxSqTableName().getKey())) {
+    if (fkfAllFields.containsKey(FimFcSpecFields.qcfTxSqTableName().getKey())) {
       //Loghelper.get(getClassi()).debug("tablo col mevcut");
-      txTableName = fkfAllFields.getFimValue(FimFtSpecFields.qcfTxSqTableName()).getFcTxHeader();
+      txTableName = fkfAllFields.getFimValue(FimFcSpecFields.qcfTxSqTableName()).getFcTxHeader();
     }
 
     if (FiString.isEmpty(txTableName)) return fdrMain.buiBoResult(false, "Tablo ismi tanımlanmamış.");
@@ -1625,7 +1640,6 @@ public class FiQugenMs {
 //
 //    return selQueryV2WhereIn(fiQuconf);
 //  }
-
 
 
 }

@@ -2032,7 +2032,9 @@ public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxC
   }
 
   public Boolean getEnableLocalFilterEditorNtn() {
-    if (this.boEnableLocalFilterEditor == null) return false;
+    // URMARK sonucları incelenmeli
+    // default true yapıldı 2026-10-13
+    if (this.boEnableLocalFilterEditor == null) return true;
     return boEnableLocalFilterEditor;
   }
 

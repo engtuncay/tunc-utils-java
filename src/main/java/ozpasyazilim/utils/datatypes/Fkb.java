@@ -820,7 +820,8 @@ public class Fkb extends LinkedHashMap<String, Object> {
   }
 
   public FkbList getFicAsFkbListNtn(FiCol fiCol) {
-    return getAsFkbListNtn(fiCol.getFcTxFieldName());
+    FkbList asFkbList = getAsFkbList(fiCol.getFcTxFieldName());
+    return asFkbList != null ? asFkbList : new FkbList();
   }
 
   public FkbList getAsFkbList(String fcTxFieldName) {

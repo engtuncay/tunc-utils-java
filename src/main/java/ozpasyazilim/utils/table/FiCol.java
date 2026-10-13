@@ -17,6 +17,7 @@ import ozpasyazilim.utils.fidbanno.FiTable;
 import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.fidborm.IFiField;
 import ozpasyazilim.utils.gui.fxcomponents.*;
+import ozpasyazilim.utils.metadata.fimCodegen.FimFcSpecFields;
 import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.core.FiString;
 import ozpasyazilim.utils.returntypes.Fdr;
@@ -112,6 +113,11 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
 
   // Sql sorgusunda where'e eklenirken In ile eklenir (eşittir yerine)
   private Boolean fcBoWhereIn;
+
+  /**
+   * Sorguda insert bloğunda olacak
+   */
+  private Boolean fcBoInsField;
 
   // phpde buraya kadar kopyalanadı
 
@@ -894,6 +900,11 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     return this;
   }
 
+  public FiCol<EntClazz> buiBoInsField(Boolean boInsField) {
+    setFcBoInsField(boInsField);
+    return this;
+  }
+
   public FiCol<EntClazz> buiBoWhereIn(Boolean boWhereIn) {
     setFcBoWhereIn(boWhereIn);
     return this;
@@ -902,6 +913,30 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
   public FiCol buiBoNullable(boolean boNullable) {
     setBoNullable(boNullable);
     return this;
+  }
+
+  public Boolean isDefCols() {
+    if(FimFcSpecFields.qcfTxSqTableName().getFtTxKey().equals(getFcTxFieldName())) {
+      return true;
+    }
+    return false;
+  }
+
+  public Boolean isTransient() {
+    return FiBool.isTrue(getFcBoTransient());
+  }
+
+  public Boolean isIdAuto() {
+    return getFcTxIdTypeNtn().equals("auto");
+  }
+
+  public boolean isIdKey() {
+    // Id Type boş değilse key alanıdır
+    return !FiString.isEmptyTrim(getFcTxIdType());
+  }
+
+  public boolean isInsertField() {
+    return FiBool.isTrue(getFcBoInsField());
   }
 
   public enum ColStyle {alignment;}
@@ -1972,6 +2007,14 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
 
   public void setFcBoWhereIn(Boolean fcBoWhereIn) {
     this.fcBoWhereIn = fcBoWhereIn;
+  }
+
+  public Boolean getFcBoInsField() {
+    return fcBoInsField;
+  }
+
+  public void setFcBoInsField(Boolean fcBoInsField) {
+    this.fcBoInsField = fcBoInsField;
   }
 }
 
