@@ -5,9 +5,8 @@ import ozpasyazilim.utils.datatypes.Fkb;
 //import ozpasyazilim.utils.ficRfcCoding;
 import ozpasyazilim.utils.datatypes.Fkf;
 import ozpasyazilim.utils.log.Loghelper;
-import ozpasyazilim.utils.metadata.fimCodegen.FimFtFieldTypeSpec;
 import ozpasyazilim.utils.metadata.fimCodegen.FimFtSpecFields;
-import ozpasyazilim.utils.metadata.fimCodegen.FimFtSql;
+import ozpasyazilim.utils.metadata.fimCodegen.FimFcSql;
 import ozpasyazilim.utils.returntypes.Fdr;
 import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.FicList;
@@ -68,9 +67,9 @@ public class FiQugenMs {
     FiString.rtrimSb(sbTxSetBlock, getTxComma());
 
     Fkb fkbParams = new Fkb();
-    fkbParams.addFieldBy(FimFtSql.sfTableName(), iFiTableMeta.getITxTableName());
-    fkbParams.addFieldBy(FimFtSql.sfTxUpSetBlock(), sbTxSetBlock.toString());
-    fkbParams.addFieldBy(FimFtSql.sfTxWhere(), sbTxWhereBlock.toString());
+    fkbParams.addFieldBy(FimFcSql.sfTableName(), iFiTableMeta.getITxTableName());
+    fkbParams.addFieldBy(FimFcSql.sfTxUpSetBlock(), sbTxSetBlock.toString());
+    fkbParams.addFieldBy(FimFcSql.sfTxWhere(), sbTxWhereBlock.toString());
 
     String sql = FiString.substitutor(template, fkbParams);
 
@@ -144,9 +143,9 @@ public class FiQugenMs {
     FiString.rtrimSb(sbTxUpSetBlock, getTxComma());
 
     Fkb fkbParams = new Fkb();
-    fkbParams.addFieldBy(FimFtSql.sfTableName(), txTableName);
-    fkbParams.addFieldBy(FimFtSql.sfTxUpSetBlock(), sbTxUpSetBlock.toString());
-    fkbParams.addFieldBy(FimFtSql.sfTxWhere(), sbTxWhereBlock.toString());
+    fkbParams.addFieldBy(FimFcSql.sfTableName(), txTableName);
+    fkbParams.addFieldBy(FimFcSql.sfTxUpSetBlock(), sbTxUpSetBlock.toString());
+    fkbParams.addFieldBy(FimFcSql.sfTxWhere(), sbTxWhereBlock.toString());
 
     String sql = FiString.substitutor(template, fkbParams);
 
@@ -240,9 +239,9 @@ public class FiQugenMs {
     FiString.rtrimSb(sbTxUpSetBlock, getTxComma());
 
     Fkb fkbParams = new Fkb();
-    fkbParams.addFieldBy(FimFtSql.sfTableName(), txTableName);
-    fkbParams.addFieldBy(FimFtSql.sfTxUpSetBlock(), sbTxUpSetBlock.toString());
-    fkbParams.addFieldBy(FimFtSql.sfTxWhere(), sbTxWhereBlock.toString());
+    fkbParams.addFieldBy(FimFcSql.sfTableName(), txTableName);
+    fkbParams.addFieldBy(FimFcSql.sfTxUpSetBlock(), sbTxUpSetBlock.toString());
+    fkbParams.addFieldBy(FimFcSql.sfTxWhere(), sbTxWhereBlock.toString());
 
     String sql = FiString.substitutor(template, fkbParams);
 
@@ -311,9 +310,9 @@ public class FiQugenMs {
     FiString.rtrimSb(sbUpSetBlock, getTxComma());
 
     Fkb fkbParams = new Fkb();
-    fkbParams.addFieldBy(FimFtSql.sfTableName(), txTableName);
-    fkbParams.addFieldBy(FimFtSql.sfTxUpSetBlock(), sbUpSetBlock.toString());
-    fkbParams.addFieldBy(FimFtSql.sfTxWhere(), sbWhereBlock.toString());
+    fkbParams.addFieldBy(FimFcSql.sfTableName(), txTableName);
+    fkbParams.addFieldBy(FimFcSql.sfTxUpSetBlock(), sbUpSetBlock.toString());
+    fkbParams.addFieldBy(FimFcSql.sfTxWhere(), sbWhereBlock.toString());
 
     String sql = FiString.substitutor(template, fkbParams);
 
@@ -373,8 +372,8 @@ public class FiQugenMs {
     FiString.rtrimSb(sbWhereBlock, getTxAnd());
 
     Fkb fkbParams = new Fkb();
-    fkbParams.addFieldBy(FimFtSql.sfTableName(), txTableName);
-    fkbParams.addFieldBy(FimFtSql.sfTxWhere(), sbWhereBlock.toString());
+    fkbParams.addFieldBy(FimFcSql.sfTableName(), txTableName);
+    fkbParams.addFieldBy(FimFcSql.sfTxWhere(), sbWhereBlock.toString());
 
     String sql = FiString.substitutor(template, fkbParams);
 
@@ -442,8 +441,8 @@ public class FiQugenMs {
     FiString.rtrimSb(sbWhereBlock, getTxAnd());
 
     Fkb fkbParams = new Fkb();
-    fkbParams.addFieldBy(FimFtSql.sfTableName(), txTableName);
-    fkbParams.addFieldBy(FimFtSql.sfTxWhere(), sbWhereBlock.toString());
+    fkbParams.addFieldBy(FimFcSql.sfTableName(), txTableName);
+    fkbParams.addFieldBy(FimFcSql.sfTxWhere(), sbWhereBlock.toString());
 
     String sql = FiString.substitutor(template, fkbParams);
 
@@ -680,9 +679,9 @@ public class FiQugenMs {
 
     Fkb fkbParams = new Fkb();
 
-    fkbParams.addFieldBy(FimFtSql.sfTableName(), txTableName);
-    fkbParams.addFieldBy(FimFtSql.sfTxFields(), sbTxFieldsBlock.toString());
-    fkbParams.addFieldBy(FimFtSql.sfTxWhere(), sbTxWhereBlock.toString());
+    fkbParams.addFieldBy(FimFcSql.sfTableName(), txTableName);
+    fkbParams.addFieldBy(FimFcSql.sfTxFields(), sbTxFieldsBlock.toString());
+    fkbParams.addFieldBy(FimFcSql.sfTxWhere(), sbTxWhereBlock.toString());
 
     String sql = FiString.substitutor(template, fkbParams);
 
@@ -766,10 +765,10 @@ public class FiQugenMs {
     FiString.rtrimSb(sbTxFieldsVar, getTxComma());
 
     Fkb fkbParams = new Fkb();
-    fkbParams.addFieldBy(FimFtSql.sfTableName(), iFiTableMeta.getITxTableName());
-    fkbParams.addFieldBy(FimFtSql.sfTxFields(), sbTxFieldsBlock.toString());
-    fkbParams.addFieldBy(FimFtSql.sfTxWhere(), sbTxWhereBlock.toString());
-    fkbParams.addFieldBy(FimFtSql.sfTxFieldsVar(), sbTxFieldsVar.toString());
+    fkbParams.addFieldBy(FimFcSql.sfTableName(), iFiTableMeta.getITxTableName());
+    fkbParams.addFieldBy(FimFcSql.sfTxFields(), sbTxFieldsBlock.toString());
+    fkbParams.addFieldBy(FimFcSql.sfTxWhere(), sbTxWhereBlock.toString());
+    fkbParams.addFieldBy(FimFcSql.sfTxFieldsVar(), sbTxFieldsVar.toString());
 
     String sql = FiString.substitutor(template, fkbParams);
 
@@ -889,13 +888,13 @@ public class FiQugenMs {
     FiString.rtrimSb(sbTxFieldsVarUp, getTxComma());
 
     Fkb fkbParams = new Fkb();
-    fkbParams.addFim(FimFtSql.sfTableName(), txTableName);
-    fkbParams.addFim(FimFtSql.sfTxWhere(), sbTxWhereBlock.toString());
+    fkbParams.addFim(FimFcSql.sfTableName(), txTableName);
+    fkbParams.addFim(FimFcSql.sfTxWhere(), sbTxWhereBlock.toString());
     // Insert argümanları
-    fkbParams.addFim(FimFtSql.sfTxFieldsIns(), sbTxFieldsIns.toString());
-    fkbParams.addFim(FimFtSql.sfTxFieldsVarIns(), sbTxFieldsVarIns.toString());
+    fkbParams.addFim(FimFcSql.sfTxFieldsIns(), sbTxFieldsIns.toString());
+    fkbParams.addFim(FimFcSql.sfTxFieldsVarIns(), sbTxFieldsVarIns.toString());
     // Update argümanları
-    fkbParams.addFim(FimFtSql.sfTxFieldsVarUp(), sbTxFieldsVarUp.toString());
+    fkbParams.addFim(FimFcSql.sfTxFieldsVarUp(), sbTxFieldsVarUp.toString());
     // where ortak kullanılır
 
     String sql = FiString.substitutor(template, fkbParams);
@@ -929,7 +928,7 @@ public class FiQugenMs {
     //  INSERT INTO TabloAdı DEFAULT VALUES
     // sfTxFieldsIns, sfTxFieldsVarIns sonradan parantez içine alınıyor
 
-    FimFtSql.sfTableName();
+    FimFcSql.sfTableName();
     //FimFtSql.sfTxWhere();
 
 
@@ -1006,13 +1005,13 @@ public class FiQugenMs {
     FiString.rtrimSb(sbTxFieldsVarUp, getTxComma());
 
     Fkb fkbParams = new Fkb();
-    fkbParams.addFim(FimFtSql.sfTableName(), txTableName);
-    fkbParams.addFim(FimFtSql.sfTxWhere(), sbTxWhereBlock.toString());
+    fkbParams.addFim(FimFcSql.sfTableName(), txTableName);
+    fkbParams.addFim(FimFcSql.sfTxWhere(), sbTxWhereBlock.toString());
     // Insert argümanları
-    fkbParams.addFim(FimFtSql.sfTxFieldsIns(), sbTxFieldsIns.toString());
-    fkbParams.addFim(FimFtSql.sfTxFieldsVarIns(), sbTxFieldsVarIns.toString());
+    fkbParams.addFim(FimFcSql.sfTxFieldsIns(), sbTxFieldsIns.toString());
+    fkbParams.addFim(FimFcSql.sfTxFieldsVarIns(), sbTxFieldsVarIns.toString());
     // Update argümanları
-    fkbParams.addFim(FimFtSql.sfTxFieldsVarUp(), sbTxFieldsVarUp.toString());
+    fkbParams.addFim(FimFcSql.sfTxFieldsVarUp(), sbTxFieldsVarUp.toString());
     // where ortak kullanılır
 
     String sql = FiString.substitutor(template, fkbParams);
@@ -1136,13 +1135,13 @@ public class FiQugenMs {
     FiString.rtrimSb(sbTxFieldsVarUp, getTxComma());
 
     Fkb fkbParams = new Fkb();
-    fkbParams.addFim(FimFtSql.sfTableName(), txTableName);
-    fkbParams.addFim(FimFtSql.sfTxWhere(), sbTxWhereBlock.toString());
+    fkbParams.addFim(FimFcSql.sfTableName(), txTableName);
+    fkbParams.addFim(FimFcSql.sfTxWhere(), sbTxWhereBlock.toString());
     // Insert argümanları
-    fkbParams.addFim(FimFtSql.sfTxFieldsIns(), sbTxFieldsIns.toString());
-    fkbParams.addFim(FimFtSql.sfTxFieldsVarIns(), sbTxFieldsVarIns.toString());
+    fkbParams.addFim(FimFcSql.sfTxFieldsIns(), sbTxFieldsIns.toString());
+    fkbParams.addFim(FimFcSql.sfTxFieldsVarIns(), sbTxFieldsVarIns.toString());
     // Update argümanları
-    fkbParams.addFim(FimFtSql.sfTxFieldsVarUp(), sbTxFieldsVarUp.toString());
+    fkbParams.addFim(FimFcSql.sfTxFieldsVarUp(), sbTxFieldsVarUp.toString());
     // where ortak kullanılır
 
     String sql = FiString.substitutor(template, fkbParams);
@@ -1216,10 +1215,10 @@ public class FiQugenMs {
     FiString.rtrimSb(sbTxFieldsVar, getTxComma());
 
     Fkb fkbParams = new Fkb();
-    fkbParams.addFieldBy(FimFtSql.sfTableName(), txTableName);
-    fkbParams.addFieldBy(FimFtSql.sfTxFields(), sbTxFieldsBlock.toString());
+    fkbParams.addFieldBy(FimFcSql.sfTableName(), txTableName);
+    fkbParams.addFieldBy(FimFcSql.sfTxFields(), sbTxFieldsBlock.toString());
     //fkbParams.addFieldBy(FimQcSql.sfTxWhere(), sbTxWhereBlock.toString());
-    fkbParams.addFieldBy(FimFtSql.sfTxFieldsVar(), sbTxFieldsVar.toString());
+    fkbParams.addFieldBy(FimFcSql.sfTxFieldsVar(), sbTxFieldsVar.toString());
 
     String sql = FiString.substitutor(template, fkbParams);
 
@@ -1291,10 +1290,10 @@ public class FiQugenMs {
     FiString.rtrimSb(sbTxFieldsVar, getTxComma());
 
     Fkb fkbParams = new Fkb();
-    fkbParams.addFieldBy(FimFtSql.sfTableName(), txTableName);
-    fkbParams.addFieldBy(FimFtSql.sfTxFields(), sbTxFieldsBlock.toString());
+    fkbParams.addFieldBy(FimFcSql.sfTableName(), txTableName);
+    fkbParams.addFieldBy(FimFcSql.sfTxFields(), sbTxFieldsBlock.toString());
     //fkbParams.addFieldBy(FimQcSql.sfTxWhere(), sbTxWhereBlock.toString());
-    fkbParams.addFieldBy(FimFtSql.sfTxFieldsVar(), sbTxFieldsVar.toString());
+    fkbParams.addFieldBy(FimFcSql.sfTxFieldsVar(), sbTxFieldsVar.toString());
 
     String sql = FiString.substitutor(template, fkbParams);
 
@@ -1364,10 +1363,10 @@ public class FiQugenMs {
     FiString.rtrimSb(sbTxFieldsVar, getTxComma());
 
     Fkb fkbParams = new Fkb();
-    fkbParams.addFieldBy(FimFtSql.sfTableName(), txTableName);
-    fkbParams.addFieldBy(FimFtSql.sfTxFields(), sbTxFieldsBlock.toString());
+    fkbParams.addFieldBy(FimFcSql.sfTableName(), txTableName);
+    fkbParams.addFieldBy(FimFcSql.sfTxFields(), sbTxFieldsBlock.toString());
     //fkbParams.addFieldBy(FimQcSql.sfTxWhere(), sbTxWhereBlock.toString());
-    fkbParams.addFieldBy(FimFtSql.sfTxFieldsVar(), sbTxFieldsVar.toString());
+    fkbParams.addFieldBy(FimFcSql.sfTxFieldsVar(), sbTxFieldsVar.toString());
 
     String sql = FiString.substitutor(template, fkbParams);
 
@@ -1435,10 +1434,10 @@ public class FiQugenMs {
     FiString.rtrimSb(sbTxFieldsVar, getTxComma());
 
     Fkb fkbParams = new Fkb();
-    fkbParams.addFieldBy(FimFtSql.sfTableName(), txTableName);
-    fkbParams.addFieldBy(FimFtSql.sfTxFields(), sbTxFieldsBlock.toString());
+    fkbParams.addFieldBy(FimFcSql.sfTableName(), txTableName);
+    fkbParams.addFieldBy(FimFcSql.sfTxFields(), sbTxFieldsBlock.toString());
     //fkbParams.addFieldBy(FimQcSql.sfTxWhere(), sbTxWhereBlock.toString());
-    fkbParams.addFieldBy(FimFtSql.sfTxFieldsVar(), sbTxFieldsVar.toString());
+    fkbParams.addFieldBy(FimFcSql.sfTxFieldsVar(), sbTxFieldsVar.toString());
 
     String sql = FiString.substitutor(template, fkbParams);
 
@@ -1508,10 +1507,10 @@ public class FiQugenMs {
     FiString.rtrimSb(sbTxFieldsVar, getTxComma());
 
     Fkb fkbParams = new Fkb();
-    fkbParams.addFieldBy(FimFtSql.sfTableName(), txTableName);
-    fkbParams.addFieldBy(FimFtSql.sfTxFields(), sbTxFieldsBlock.toString());
+    fkbParams.addFieldBy(FimFcSql.sfTableName(), txTableName);
+    fkbParams.addFieldBy(FimFcSql.sfTxFields(), sbTxFieldsBlock.toString());
     //fkbParams.addFieldBy(FimQcSql.sfTxWhere(), sbTxWhereBlock.toString());
-    fkbParams.addFieldBy(FimFtSql.sfTxFieldsVar(), sbTxFieldsVar.toString());
+    fkbParams.addFieldBy(FimFcSql.sfTxFieldsVar(), sbTxFieldsVar.toString());
 
     String sql = FiString.substitutor(template, fkbParams);
 
@@ -1570,10 +1569,10 @@ public class FiQugenMs {
     FiString.rtrimSb(sbTxFieldsVar, getTxComma());
 
     Fkb fkbParams = new Fkb();
-    fkbParams.addFieldBy(FimFtSql.sfTableName(), txTableName);
-    fkbParams.addFieldBy(FimFtSql.sfTxFields(), sbTxFieldsBlock.toString());
+    fkbParams.addFieldBy(FimFcSql.sfTableName(), txTableName);
+    fkbParams.addFieldBy(FimFcSql.sfTxFields(), sbTxFieldsBlock.toString());
     //fkbParams.addFieldBy(FimQcSql.sfTxWhere(), sbTxWhereBlock.toString());
-    fkbParams.addFieldBy(FimFtSql.sfTxFieldsVar(), sbTxFieldsVar.toString());
+    fkbParams.addFieldBy(FimFcSql.sfTxFieldsVar(), sbTxFieldsVar.toString());
 
     String sql = FiString.substitutor(template, fkbParams);
 

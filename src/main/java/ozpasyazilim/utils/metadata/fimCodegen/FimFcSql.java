@@ -6,7 +6,7 @@ import ozpasyazilim.utils.datatypes.FiMeta;
 /**
  * sf: sql-field (sql-meta)
  */
-public class FimFtSql {
+public class FimFcSql {
 
   public static FiMeta sfTableName() {
     FiMeta fim = new FiMeta("sfTableName");
