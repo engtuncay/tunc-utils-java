@@ -913,6 +913,12 @@ public class FiQugenMs {
     return fdrResult;
   }
 
+  /**
+   * tabloda yoksa öncesinde insert yapar , daha sonra update sorgusu çalıştırır
+   *
+   * @param fiQuery
+   * @return
+   */
   public static Fdr insUpdateV1(FiQuery fiQuery) {
     // Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
 
