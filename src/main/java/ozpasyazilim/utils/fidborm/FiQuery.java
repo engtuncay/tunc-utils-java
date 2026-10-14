@@ -185,7 +185,7 @@ public class FiQuery {
   }
 
   /**
-   * FiMapde olan parametreleri aktif eder
+   * FiMapParams olan parametreleri aktif eder
    * <p>
    * Sorguda yoruma alınmamış(!) satır aynı şekilde kalır. DeAktivite yapılmaz.
    */

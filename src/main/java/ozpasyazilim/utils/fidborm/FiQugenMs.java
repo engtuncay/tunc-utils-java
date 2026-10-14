@@ -459,6 +459,79 @@ public class FiQugenMs {
     return fdrMain;
   }
 
+  /**
+   * params: getFicListQuery
+   * <p>
+   * optional: getFkfAll (for table name)
+   *
+   * @param fiQuery
+   * @return
+   */
+  @Deprecated
+  public static Fdr delQueryV3(FiQuery fiQuery) {
+
+    // Oluşturulan update sorgu formatı
+    // DELETE EnmCariEvrakEk
+    // WHERE ceveEvrakSeri = @ceveEvrakSeri AND ceveEvrakSira = @ceveEvrakSira AND ceveEvrakTip = @ceveEvrakTip
+
+    Fdr fdrMain = new Fdr();
+
+    Fkf fkfAllFields = fiQuery.getFkfAll();
+    FicList ficListQuery = fiQuery.getFicListQuery();
+
+    // FimFcSql.sfTableName();
+    // FimFcSql.sfWhere();
+
+    String template = "DELETE {{sfTableName}} \n"
+        + " WHERE {{sfWhere}} ";
+
+    StringBuilder sbWhereBlock = new StringBuilder();
+
+    String txTableName = null;
+
+    if (fkfAllFields!=null ) {
+      txTableName = fkfAllFields.getSpecTxTableName();
+    }
+
+    int indexWhereBlock = 0;
+
+    for (FiCol fiCol : ficListQuery) {
+
+      if (fiCol.isTableNameCol()) {
+        txTableName = fiCol.getFcTxHeader();
+      }
+
+      if (fiCol.isTransient()) continue;
+
+      if (fiCol.isWhereField()) {
+        indexWhereBlock++;
+        sbWhereBlock.append(FiQugenUtil.formSqlAssignAnd(fiCol.getFcTxFieldName()));
+      }
+
+    }
+
+    FiString.rtrimSb(sbWhereBlock, getTxAnd());
+
+    Fkb fkbParams = new Fkb();
+    fkbParams.addFieldBy(FimFcSql.sfTableName(), txTableName);
+    fkbParams.addFieldBy(FimFcSql.sfWhere(), sbWhereBlock.toString());
+
+    String sql = FiString.substitutor(template, fkbParams);
+
+    if (indexWhereBlock == 0) {
+      sql = "no where fields";
+      fdrMain.setFdTxVal(sql);
+      fdrMain.setBoResult(false);
+      return fdrMain;
+    }
+
+    if (FiString.isEmptyTrim(txTableName)) return fdrMain.buiBoResult(false, "Tablo ismi tanımlanmamış.");
+
+    fdrMain.setBoResult(true);
+    fdrMain.setFdTxVal(sql);
+    return fdrMain;
+  }
+
 //  /**
 //   * IFiTableMeta ve FicList'ten Select Query Generation
 //   *

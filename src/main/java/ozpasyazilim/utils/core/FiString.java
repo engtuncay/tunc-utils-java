@@ -1078,4 +1078,8 @@ public class FiString {
   public static String trim(String txSeri) {
     return txSeri==null ? "" : txSeri.trim();
   }
+
+  public static boolean startWith(String txServer, String tunchp) {
+    return txServer != null && txServer.startsWith(tunchp);
+  }
 }

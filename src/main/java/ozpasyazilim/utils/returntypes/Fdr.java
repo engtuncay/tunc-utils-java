@@ -6,6 +6,7 @@ import ozpasyazilim.utils.core.*;
 
 import ozpasyazilim.utils.datatypes.Fkb;
 import ozpasyazilim.utils.datatypes.FkbList;
+import ozpasyazilim.utils.datatypes.Fks;
 import ozpasyazilim.utils.log.FieLog;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.log.MetaLogType;
@@ -50,6 +51,8 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
   private FkbList fdFkbListVal;
 
   private Fkb fdFkbVal;
+
+  private Fks fdFksVal;
 
   private Integer fdLnVal;
 
@@ -1565,5 +1568,13 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
   public void appendFdTxVal(String fdTxVal) {
     if (FiString.isEmptyTrim(fdTxVal)) return;
     setFdTxVal(FiString.orEmpty(getFdTxVal()) + fdTxVal);
+  }
+
+  public Fks getFdFksVal() {
+    return fdFksVal;
+  }
+
+  public void setFdFksVal(Fks fdFksVal) {
+    this.fdFksVal = fdFksVal;
   }
 }

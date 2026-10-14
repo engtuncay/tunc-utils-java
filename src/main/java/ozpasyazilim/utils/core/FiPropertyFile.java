@@ -15,9 +15,9 @@ import java.util.stream.Stream;
 
 public class FiPropertyFile {
 
-  public static Fdr<Fks> readPropFile(String fileName) {
+  public static Fdr readPropFile(String fileName) {
 
-    Fdr<Fks> fdrMain = new Fdr<>();
+    Fdr fdrMain = new Fdr<>();
 
     Path path = Paths.get(fileName);
     System.out.println("Prop File Path:" + path.toAbsolutePath());
@@ -40,13 +40,15 @@ public class FiPropertyFile {
         }
       }
       //FiConsole.printMap(propMap);
-      fdrMain.setValue(propMap);
+      //fdrMain.setValue(propMap);
+      fdrMain.setFdFksVal(propMap);
       fdrMain.setBoResult(true);
       return fdrMain;
     } catch (IOException exception) {
       System.out.println("Prop File Okunurken Hata oluştu.");
       fdrMain.setMessageForAppend("Prop File Okunurken Hata Oluştu :" + fileName);
-      fdrMain.setValue(new Fks());
+      //fdrMain.setValue(new Fks());
+      fdrMain.setFdFksVal(new Fks());
       fdrMain.setBoResult(false);
       return fdrMain;
     }
