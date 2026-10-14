@@ -1,6 +1,7 @@
 package ozpasyazilim.utils.metadata.fimCodegen;
 
 // Java FiMeta Class Generation - v0.4
+
 import ozpasyazilim.utils.datatypes.FiMeta;
 import ozpasyazilim.utils.table.FiCol;
 
@@ -11,19 +12,11 @@ public class FimFcSql {
 
   public static FiMeta sfTableName() {
     FiMeta fim = new FiMeta("sfTableName");
-
-    return fim;
-  }
-
-  public static FiMeta sfTableFields() {
-    FiMeta fim = new FiMeta("sfTableFields");
-
     return fim;
   }
 
   public static FiMeta sfTxFields() {
     FiMeta fim = new FiMeta("sfTxFields");
-
     return fim;
   }
 
@@ -33,39 +26,25 @@ public class FimFcSql {
     return fim;
   }
 
+  @Deprecated
   public static FiMeta sfTxWhere() {
     FiMeta fim = new FiMeta("sfTxWhere");
 
     return fim;
   }
 
-  public static FiMeta sfTxFieldName() {
-    FiMeta fim = new FiMeta("sfTxFieldName");
-
-    return fim;
-  }
-
   public static FiMeta sfTxUpSetBlock() {
     FiMeta fim = new FiMeta("sfTxUpSetBlock");
-
     return fim;
   }
 
   public static FiMeta sfLnCount() {
     FiMeta fim = new FiMeta("sfLnCount");
-
-    return fim;
-  }
-
-  public static FiMeta sfTxIdentifName() {
-    FiMeta fim = new FiMeta("sfTxIdentifName");
-
     return fim;
   }
 
   public static FiMeta sfTxFieldsVar() {
     FiMeta fim = new FiMeta("sfTxFieldsVar");
-
     return fim;
   }
 
