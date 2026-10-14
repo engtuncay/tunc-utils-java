@@ -831,6 +831,51 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
   }
 
   /**
+   * getRepoFkfAll kullanarak insert yapar
+   *
+   * @param fkbEntity
+   * @return
+   */
+  public Fdr fkInserByFkfAll(Fkb fkbEntity) {
+    Fdr fdrMain = new Fdr();
+
+    FiQuery fiQuery = new FiQuery(fkbEntity);
+    fiQuery.setFkfAll(getRepoFkfAll());
+
+    Fdr fdrSorgu = FiQugenMs.insQueryByFkfAll(fiQuery);
+    fdrMain.combineAnd(fdrSorgu);
+
+    if (fdrMain.isFalseBoResult()) return fdrMain;
+
+    fiQuery.logQueryAndParams();
+
+    return jdInsertFiQuery(fiQuery);
+  }
+
+  /**
+   * Sadece FicList'deki alanlara göre insert yapar (id dahil etmez)
+   *
+   * @param fkbEntity
+   * @param fclInsert
+   * @return
+   */
+  public Fdr fkInsertV2(Fkb fkbEntity, FicList fclInsert) {
+    Fdr fdrMain = new Fdr();
+
+    FiQuery fiQuery = new FiQuery(fkbEntity);
+    fiQuery.setFicListQuery(fclInsert);
+
+    Fdr fdrSorgu = FiQugenMs.insQueryV4ByFicList(fiQuery);
+    fdrMain.combineAnd(fdrSorgu);
+
+    if (fdrMain.isFalseBoResult()) return fdrMain;
+
+    fiQuery.logQueryAndParams();
+
+    return jdInsertFiQuery(fiQuery);
+  }
+
+  /**
    * Delete Entities By Where Params
    *
    * @param fkbEntity
@@ -872,6 +917,14 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
     Fdr fdrSorgu = FiQugenMs.selQueryV2Main(fiQuery);
     if (fdrSorgu.isFalseBoResult()) return fdrSorgu;
 
+    return jdSelectFkbList(fiQuery);
+  }
+
+  /**
+   *
+   * @return fkbList
+   */
+  public Fdr fkSelect(FiQuery fiQuery) {
     return jdSelectFkbList(fiQuery);
   }
 

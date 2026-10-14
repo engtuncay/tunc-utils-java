@@ -489,7 +489,7 @@ public class FiQugenMs {
 
     String txTableName = null;
 
-    if (fkfAllFields!=null ) {
+    if (fkfAllFields != null) {
       txTableName = fkfAllFields.getSpecTxTableName();
     }
 
@@ -704,7 +704,7 @@ public class FiQugenMs {
 
     String txTableName = null;
 
-    String template = "SELECT {{sfTxFields}}\n" +
+    String template = "SELECT {{sfFields}}\n" +
         "FROM {{sfTableName}}\n";
 
     StringBuilder sbTxFieldsBlock = new StringBuilder();
@@ -716,21 +716,17 @@ public class FiQugenMs {
 
       // Loghelper.get(getClassi()).debug("fiCol: " + fiCol.getFcTxFieldName() + " - BoWhereField " + fiCol.getFcBoWhereField());
 
-      if (fiCol.getFcTxFieldName().equals(FimFcSpecFields.qcfTxSqTableName().getKey())) {
+      if (fiCol.isTableNameCol()) {
         txTableName = fiCol.getFcTxHeader();
         continue;
       }
 
-      if (FiBool.isTrue(fiCol.getFcBoTransient())) {
-        continue;
-      }
+      if (fiCol.isTransient()) continue;
 
-      if (FiBool.isTrue(fiCol.getFcBoWhereField())
-          || FiBool.isTrue(fiCol.getFcBoWhereIn())
-      ) {
+      if (fiCol.isWhereField() || fiCol.isWhereInField()) {
         indexWhereBlock++;
         //Loghelper.get(FiSqlGenMs.class).debug("where field: " + fiCol.getFcTxFieldName());
-        if (FiBool.isTrue(fiCol.getFcBoWhereIn())) {
+        if (fiCol.isWhereInField()) {
           sbTxWhereBlock.append(FiQugenUtil.formSqlAssignInByFic(fiCol));
           continue;
         }
@@ -744,7 +740,7 @@ public class FiQugenMs {
     } // end for
 
     if (indexWhereBlock > 0) {
-      template += "WHERE {{sfTxWhere}}";
+      template += "WHERE {{sfWhere}}";
       FiString.rtrimSb(sbTxWhereBlock, FiQugenUtil.getTxAnd());
     }
 
@@ -753,8 +749,8 @@ public class FiQugenMs {
     Fkb fkbParams = new Fkb();
 
     fkbParams.addFieldBy(FimFcSql.sfTableName(), txTableName);
-    fkbParams.addFieldBy(FimFcSql.sfTxFields(), sbTxFieldsBlock.toString());
-    fkbParams.addFieldBy(FimFcSql.sfTxWhere(), sbTxWhereBlock.toString());
+    fkbParams.addFieldBy(FimFcSql.sfFields(), sbTxFieldsBlock.toString());
+    fkbParams.addFieldBy(FimFcSql.sfWhere(), sbTxWhereBlock.toString());
 
     String sql = FiString.substitutor(template, fkbParams);
 
@@ -762,11 +758,7 @@ public class FiQugenMs {
     fdrResult.setFdTxVal(sql);
 
     if (indexWhereBlock == 0) {
-      Loghelper.get(getClassi()).debug("no where fields");
-      // fdrResult.setFdTxVal("no where fields");
-      // fdrResult.setBoResult(false);
-      // fdrResult.setFdTxMessage("no where fields");
-      // return fdrResult;
+      Loghelper.get(getClassi()).debug("warn:no where fields for select query");
     }
 
     if (FiString.isEmptyTrim(txTableName)) {
@@ -1485,18 +1477,20 @@ public class FiQugenMs {
    * @param fiQuery
    * @return fdTxVal sorgu sonucu
    */
-  public static Fdr insQueryV3(FiQuery fiQuery) {
+  public static Fdr insQueryByFkfAll(FiQuery fiQuery) {
     // Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
 
     Fdr fdrMain = new Fdr();
 
     // arguments
-    Fkf fkfAllFields = fiQuery.getFkfAll();
+    Fkf fkfAll = fiQuery.getFkfAll();
 
-    //FimFtSql.sfTableName();
+    //FimFcSql.sfTableName();
+    //FimFcSql.sfFields();
+    //FimFcSql.sfVarFields();
 
-    String template = "INSERT INTO {{sfTableName}} ({{sfTxFields}})\n" +
-        " VALUES ( {{sfTxFieldsVar}} )";
+    String template = "INSERT INTO {{sfTableName}} ({{sfFields}})\n" +
+        " VALUES ( {{sfVarFields}} )";
 
     StringBuilder sbTxFieldsBlock = new StringBuilder();
     StringBuilder sbTxFieldsVar = new StringBuilder();
@@ -1504,23 +1498,22 @@ public class FiQugenMs {
     String txTableName = null;
     int indexCol = 0;
 
-    if (fkfAllFields.containsKey(FimFcSpecFields.qcfTxSqTableName().getKey())) {
-      Loghelper.get(getClassi()).debug("tablo col mevcut");
-
-      txTableName = fkfAllFields.getFimValue(FimFcSpecFields.qcfTxSqTableName()).getFcTxHeader();
+    if (fkfAll != null) {
+      //Loghelper.get(getClassi()).debug("tablo col mevcut");
+      txTableName = fkfAll.getSpecTxTableName();
     }
 
     if (FiString.isEmpty(txTableName)) return fdrMain.buiBoResult(false, "Tablo ismi tanımlanmamış.");
 
-    for (FiCol ficItem : fkfAllFields.values()) {
+    for (FiCol fiCol : fkfAll.values()) {
 
-      if (FiBool.isTrue(ficItem.getFcBoTransient())) continue;
-      if (FicUtil.isIdAutoType(ficItem)) continue;
-      if (FicUtil.isDefField(ficItem)) continue;
+      if (FiBool.isTrue(fiCol.getFcBoTransient())) continue;
+      if (FicUtil.isIdAutoType(fiCol)) continue;
+      if (FicUtil.isDefField(fiCol)) continue;
 
       indexCol++;
-      sbTxFieldsBlock.append(FiQugenUtil.formSqlFieldCommaByFic(ficItem));
-      sbTxFieldsVar.append(FiQugenUtil.formSqlVarCommaByFic(ficItem));
+      sbTxFieldsBlock.append(FiQugenUtil.formSqlFieldCommaByFic(fiCol));
+      sbTxFieldsVar.append(FiQugenUtil.formSqlVarCommaByFic(fiCol));
 
     }
 
@@ -1529,9 +1522,9 @@ public class FiQugenMs {
 
     Fkb fkbParams = new Fkb();
     fkbParams.addFieldBy(FimFcSql.sfTableName(), txTableName);
-    fkbParams.addFieldBy(FimFcSql.sfTxFields(), sbTxFieldsBlock.toString());
+    fkbParams.addFieldBy(FimFcSql.sfFields(), sbTxFieldsBlock.toString());
     //fkbParams.addFieldBy(FimQcSql.sfTxWhere(), sbTxWhereBlock.toString());
-    fkbParams.addFieldBy(FimFcSql.sfTxFieldsVar(), sbTxFieldsVar.toString());
+    fkbParams.addFieldBy(FimFcSql.sfVarFields(), sbTxFieldsVar.toString());
 
     String sql = FiString.substitutor(template, fkbParams);
 
@@ -1679,6 +1672,73 @@ public class FiQugenMs {
       return fdrMain;
     }
 
+    fdrMain.setBoResult(true);
+    return fdrMain;
+  }
+
+  public static Fdr insQueryV4ByFicList(FiQuery fiQuery) {
+    // Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
+
+    Fdr fdrMain = new Fdr();
+
+    // arguments
+    // Fkf fkfAllFields = fiQuery.getFkfAll();
+
+//    FimFcSql.sfTableName();
+//    FimFcSql.sfFields();
+//    FimFcSql.sfVarFieldsIns();
+
+    String template = "INSERT INTO {{sfTableName}} ({{sfFields}})\n" +
+        " VALUES ( {{sfVarFieldsIns}} )";
+
+    StringBuilder sbTxFieldsBlock = new StringBuilder();
+    StringBuilder sbTxVarFieldsIns = new StringBuilder();
+
+    String txTableName = null;
+    int indexCol = 0;
+
+    if (fiQuery.getFkfAll() != null) {
+      txTableName = fiQuery.getFkfAll().getSpecTxTableName();
+    }
+
+    for (FiCol ficItem : fiQuery.getFicListQueryInit()) {
+
+      if (ficItem.isTableNameCol()) {
+        txTableName = ficItem.getFcTxHeader();
+        continue;
+      }
+
+      if (FiBool.isTrue(ficItem.getFcBoTransient())) continue;
+      if (FicUtil.isIdAutoType(ficItem)) continue;
+      if (FicUtil.isDefField(ficItem)) continue;
+
+      indexCol++;
+      sbTxFieldsBlock.append(FiQugenUtil.formSqlFieldCommaByFic(ficItem));
+      sbTxVarFieldsIns.append(FiQugenUtil.formSqlVarCommaByFic(ficItem));
+
+    }
+
+    if (FiString.isEmpty(txTableName)) return fdrMain.buiBoResult(false, "Tablo ismi tanımlanmamış.");
+
+    FiString.rtrimSb(sbTxFieldsBlock, getTxComma());
+    FiString.rtrimSb(sbTxVarFieldsIns, getTxComma());
+
+    Fkb fkbParams = new Fkb();
+    fkbParams.addFieldBy(FimFcSql.sfTableName(), txTableName);
+    fkbParams.addFieldBy(FimFcSql.sfFields(), sbTxFieldsBlock.toString());
+    fkbParams.addFieldBy(FimFcSql.sfVarFieldsIns(), sbTxVarFieldsIns.toString());
+
+    String sql = FiString.substitutor(template, fkbParams);
+
+    if (indexCol == 0) {
+      fdrMain.setBoResult(false);
+      fdrMain.setFdTxVal("no insert fields");
+      fdrMain.setFdTxMessage("Sorgu oluştururken hata oluştu. (no insert fields)");
+      return fdrMain;
+    }
+
+    fdrMain.setFdTxVal(sql);
+    fiQuery.setTxQuery(sql);
     fdrMain.setBoResult(true);
     return fdrMain;
   }

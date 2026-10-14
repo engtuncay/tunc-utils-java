@@ -947,6 +947,10 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     return FimFcSpecFields.qcfTxSqTableName().getFtTxKey().equals(getFcTxFieldName());
   }
 
+  public boolean isWhereInField() {
+    return FiBool.isTrue(getFcBoWhereIn());
+  }
+
   public enum ColStyle {alignment;}
 
   public void setupFiCol() {

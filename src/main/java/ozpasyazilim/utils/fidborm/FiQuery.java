@@ -535,6 +535,13 @@ public class FiQuery {
     return ficListQuery;
   }
 
+  public FicList getFicListQueryInit() {
+    if (ficListQuery == null) {
+      ficListQuery = new FicList();
+    }
+    return ficListQuery;
+  }
+
   public void setFicListQuery(FicList ficListQuery) {
     this.ficListQuery = ficListQuery;
   }

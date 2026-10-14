@@ -906,6 +906,10 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     return FiBool.isTrue(getFdBoResult());
   }
 
+  public boolean isNotTrueBoResult() {
+    return !FiBool.isTrue(getFdBoResult());
+  }
+
   public boolean isTrueResultAndValueNtn() {
     if (FiBool.isTrue(getFdBoResult()) && getValue() != null) return true;
     return false;

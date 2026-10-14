@@ -141,7 +141,7 @@ public class FxComboBox<T> extends ComboBox<T> {
         getSelectionModel().select(index);
     }
 
-    public void clearSelectionFi() {
+    public void clearSelectionFiAsyn() {
         Platform.runLater(() -> {
             getSelectionModel().clearSelection();
         });

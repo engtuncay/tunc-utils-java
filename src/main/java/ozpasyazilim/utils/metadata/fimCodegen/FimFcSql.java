@@ -2,6 +2,7 @@ package ozpasyazilim.utils.metadata.fimCodegen;
 
 // Java FiMeta Class Generation - v0.4
 import ozpasyazilim.utils.datatypes.FiMeta;
+import ozpasyazilim.utils.table.FiCol;
 
 /**
  * sf: sql-field (sql-meta)
@@ -103,6 +104,16 @@ public class FimFcSql {
 
   public static FiMeta sfWhere() {
     FiMeta fim = new FiMeta("sfWhere");
+    return fim;
+  }
+
+  public static FiMeta sfFields() {
+    FiMeta fim = new FiMeta("sfFields");
+    return fim;
+  }
+
+  public static FiMeta sfVarFields() {
+    FiMeta fim = new FiMeta("sfVarFields");
     return fim;
   }
 }
