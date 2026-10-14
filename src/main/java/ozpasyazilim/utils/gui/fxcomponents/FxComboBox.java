@@ -131,7 +131,12 @@ public class FxComboBox<T> extends ComboBox<T> {
 
     }
 
-    public void setSelectedItemFiSync(Integer index) {
+    /**
+     * index 0 dan başlıyor
+     *
+     * @param index
+     */
+    public void setSelectedItemFiByIndex(Integer index) {
         if (index == null) return;
         getSelectionModel().select(index);
     }
