@@ -32,8 +32,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
 
   @Deprecated
   private Fkf fkcDmFields;
-  //private Fkf fkfAll;
-  //private FicList fclTable;
+
   @Deprecated
   private FiCol ficIdAuto;
 
@@ -655,22 +654,6 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
   public void setFkcDmFields(Fkf fkcDmFields) {
     this.fkcDmFields = fkcDmFields;
   }
-
-//  public Fkf getFkfAll() {
-//    return fkfAll;
-//  }
-
-//  public void setFkfAll(Fkf fkfAll) {
-//    this.fkfAll = fkfAll;
-//  }
-
-//  public FicList getFclTable() {
-//    return fclTable;
-//  }
-
-//  public void setFclTable(FicList fclTable) {
-//    this.fclTable = fclTable;
-//  }
 
   public FiCol getFicIdAuto() {
     return ficIdAuto;
