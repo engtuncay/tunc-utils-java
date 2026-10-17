@@ -3,12 +3,10 @@ package ozpasyazilim.utils.fidborm;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import ozpasyazilim.utils.core.FiCollection;
-import ozpasyazilim.utils.table.FiCol;
-import ozpasyazilim.utils.table.FiColsUtil;
 
 import java.util.List;
 
-class FiQugenTest {
+class FiQugenClsTest {
 
 	public static void main(String[] args) {
 
@@ -25,7 +23,7 @@ class FiQugenTest {
 				+ "IN ( select distinct ch2.cari_vdaire_no FROM CARI_HESAPLAR ch2 WHERE ch2.cari_kod <> ch2.cari_Ana_cari_kodu )\n"
 				+ "ORDER BY cari_Ana_cari_kodu";
 
-		List<FiField> queryFields = FiQugen.getQueryFields(string);
+		List<FiField> queryFields = FiQugenCls.getQueryFields(string);
 
 //		for (FiField queryField : queryFields) {
 //			System.out.println(queryField.getName());

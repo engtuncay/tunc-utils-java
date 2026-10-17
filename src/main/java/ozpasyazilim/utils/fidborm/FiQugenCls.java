@@ -32,7 +32,7 @@ import static java.util.stream.Collectors.toList;
  * <p>
  * Fiqugen -> FiQueryGenerator kısaltması
  */
-public class FiQugen {
+public class FiQugenCls {
 
   public static String deleteById(Class clazz) {
 
@@ -770,7 +770,7 @@ public class FiQugen {
       query.append("\n WHERE " + queryWhere);
     }
 
-    Loghelper.get(FiQugen.class).debug(" Query:" + query.toString());
+    Loghelper.get(FiQugenCls.class).debug(" Query:" + query.toString());
 
     return query.toString();
   }
@@ -1957,7 +1957,7 @@ public class FiQugen {
     return FiString.substitutor(template, fkbTemplate);
   }
 
-  public static String insertFiCols2(IFiTableMeta iFiTableMeta, List<FiCol> listFields, Boolean boInserFieldsOnly) {
+  public static String insertFiColsV2(IFiTableMeta iFiTableMeta, List<FiCol> listFields, Boolean boInserFieldsOnly) {
 
     String template = "INSERT INTO {{tableName}} ( {{csvFields}} ) \n"
         + " VALUES ( {{paramFields}} )";
@@ -2871,7 +2871,7 @@ public class FiQugen {
       });
     } catch (Exception ex) {
       //ex.printStackTrace();
-      Loghelper.get(FiQugen.class).error(FiException.exToErrorLog(ex));
+      Loghelper.get(FiQugenCls.class).error(FiException.exToErrorLog(ex));
     }
     return result;
   }
@@ -3123,8 +3123,8 @@ public class FiQugen {
 
   }
 
-  private static Class<FiQugen> getClassi() {
-    return FiQugen.class;
+  private static Class<FiQugenCls> getClassi() {
+    return FiQugenCls.class;
   }
 
   public static Boolean runCreateQuery(Class clazz, Jdbi jdbi, Boolean onlyPrintConsole) {
@@ -3397,7 +3397,7 @@ public class FiQugen {
   public static void assignSqlTypeAndDef(FicList ficList) {
 
     //System.out.println("List Field Size:" + iFiTableMeta.size());
-    Loghelper.get(FiQugen.class).debug(FiConsole.textCollection(ficList));
+    Loghelper.get(FiQugenCls.class).debug(FiConsole.textCollection(ficList));
 
     for (FiCol ficol : ficList) {
 
@@ -3569,7 +3569,7 @@ public class FiQugen {
 
     String txSqlFieldType = getMapTypeConvertorJavaToSqlServer().getOrDefault(txOzColType + suffix, null);
 
-    Loghelper.get(FiQugen.class).debug(txSqlFieldType);
+    Loghelper.get(FiQugenCls.class).debug(txSqlFieldType);
 
     // suffix li dönüş olmamışsa, suffix siz tür dönüşü almaya çalışır
     if (txSqlFieldType == null) {
@@ -3579,7 +3579,7 @@ public class FiQugen {
 
     // suffix li veya suffix siz txSqlFieldType tanımlanmamışsa null döner
     if (txSqlFieldType == null) {
-      Loghelper.get(FiQugen.class).debug("Sql field type null 2 field:" + field.getFcTxFieldName() + " " + field.getColTypeNtn().toString());
+      Loghelper.get(FiQugenCls.class).debug("Sql field type null 2 field:" + field.getFcTxFieldName() + " " + field.getColTypeNtn().toString());
       return null;
     }
 
@@ -3881,7 +3881,7 @@ public class FiQugen {
     for (FiField fiField : listFiFieldsSummary) {
 
       if (!mapDbFields.containsKey(fiField.getFcTxDbField())) { // veritabanında ilgili alan yok
-        Loghelper.debugLog(FiQugen.class, "Veritabanında ilgili alan yok:" + fiField.getFcTxDbField());
+        Loghelper.debugLog(FiQugenCls.class, "Veritabanında ilgili alan yok:" + fiField.getFcTxDbField());
         // ALTER TABLE [dbo].[EntAktarimFirma] ADD [afrTxFirmaHavaleBanka] varchar(25) COLLATE Turkish_CI_AS NULL
         String addQuery = String.format("ALTER TABLE %s ADD %s %s", getTableName(clazz), fiField.getFcTxDbField(), fiField.getSqlFieldDefinition());
         listAlterQueries.add(addQuery);

@@ -506,7 +506,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
 
     if (iFiTableMeta == null) iFiTableMeta = getiFiTableMeta();
 
-    String sql = FiQugen.insertFiCols2(iFiTableMeta, formAsFkb.getListFiColInit(), boInserFieldsOnly);
+    String sql = FiQugenCls.insertFiColsV2(iFiTableMeta, formAsFkb.getListFiColInit(), boInserFieldsOnly);
 
     FiQuery fiQuery = new FiQuery(sql, formAsFkb);
     //fiQuery.logQueryAndParams();
@@ -521,7 +521,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
    * @return
    */
   public Fdr jdUpFkbByIdFields(Fkb formAsFkb, Boolean boUpdateFieldsOnly) {
-    String sql = FiQugen.updateFiColsArb(getiFiTableMeta(), formAsFkb.getListFiColInit(), boUpdateFieldsOnly);
+    String sql = FiQugenCls.updateFiColsArb(getiFiTableMeta(), formAsFkb.getListFiColInit(), boUpdateFieldsOnly);
 
     FiQuery fiQuery = new FiQuery(sql, formAsFkb);
     //fiQuery.logQueryAndParams();
@@ -531,7 +531,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
 
   public Fdr jdDeleteFkbByIdCols(Fkb fiKeyBean, IFiTableMeta iFiTableMeta) {
 
-    String sql = FiQugen.deleteWhereIdFiColsV2(iFiTableMeta, fiKeyBean.getListFiColInit());
+    String sql = FiQugenCls.deleteWhereIdFiColsV2(iFiTableMeta, fiKeyBean.getListFiColInit());
 
     FiQuery fiQuery = new FiQuery(sql, fiKeyBean);
     //fiQuery.logQueryAndParams();
@@ -541,7 +541,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
 
   public Fdr jdDeleteFkbByIdColsV2(Fkb fiKeyBean, IFiTableMeta iFiTableMeta, List<FiCol> fiCols) {
 
-    String sql = FiQugen.deleteWhereIdFiColsV2(iFiTableMeta, fiCols);
+    String sql = FiQugenCls.deleteWhereIdFiColsV2(iFiTableMeta, fiCols);
 
     FiQuery fiQuery = new FiQuery(sql, fiKeyBean);
     //fiQuery.logQueryAndParams();

@@ -6,7 +6,7 @@ import ozpasyazilim.utils.fidbanno.FiIdGenerationType;
 import ozpasyazilim.utils.fidbanno.FiTable;
 import ozpasyazilim.utils.fidborm.FiReflectClass;
 import ozpasyazilim.utils.fidborm.FiField;
-import ozpasyazilim.utils.fidborm.FiQugen;
+import ozpasyazilim.utils.fidborm.FiQugenCls;
 import ozpasyazilim.utils.table.OzColType;
 
 import javax.persistence.Table;
@@ -433,7 +433,7 @@ public class FiCodeGen {
 
 	private static void createTable(Jdbi jdbi, Class clazz) {
 
-		String sqlCreate = FiQugen.createQuery20(clazz);
+		String sqlCreate = FiQugenCls.createQuery20(clazz);
 
 		//System.out.println("db:"+jdbi.toString());
 
