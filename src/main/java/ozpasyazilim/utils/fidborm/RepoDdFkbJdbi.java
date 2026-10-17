@@ -16,9 +16,10 @@ public class RepoDdFkbJdbi extends AbsRepoFkbJdbi {
         super(jdbi);
     }
 
-    public Fdr<FkbList> selAll(String txTableName) {
+    public Fdr selAll(String txTableName) {
         String sql = FiQugen.selectAllSimple(txTableName);
-        return jdSelectListFkb1BindMapMain(sql, null);
+        FiQuery fiQuery = new FiQuery(sql);
+        return jdSelectAsFkbList(fiQuery);
     }
 
     public Fdr<Fkb> checkTable(Fkb fkbParams) {
