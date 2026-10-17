@@ -95,7 +95,7 @@ public class FiQugenMs {
    * @param fiQuery
    * @return
    */
-  public static Fdr selQueryV2Main(FiQuery fiQuery) {
+  public static Fdr selQueryByFicList(FiQuery fiQuery) {
     // Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
 
     // arguments
@@ -154,7 +154,7 @@ public class FiQugenMs {
     String sql = FiString.substitutor(template, fkbParams);
 
     Fdr fdrResult = new Fdr();
-    fdrResult.setFdTxVal(sql);
+
 
     if (indexWhereBlock == 0) {
       Loghelper.get(FiQugenMs.getClassi()).debug("warn:no where fields for select query");
@@ -170,7 +170,9 @@ public class FiQugenMs {
     //SELECT cha_cinsi
     //FROM CARI_HESAP_HAREKETLERI
     //WHERE cha_evrakno_seri = @cha_evrakno_seri AND cha_evrakno_sira = @cha_evrakno_sira AND cha_evrak_tip = @cha_evrak_tip
+
     fiQuery.setTxQuery(fdrResult.getFdTxVal());
+    fdrResult.setFdTxVal(sql);
     fdrResult.setBoResult(true);
     return fdrResult;
   }
@@ -394,14 +396,14 @@ public class FiQugenMs {
     FiQuery fiQuery = new FiQuery();
     fiQuery.setFicListQuery(ficList);
 
-    return selQueryV2Main(fiQuery);
+    return selQueryByFicList(fiQuery);
   }
 
-  public static Fdr selQueryV2Main(FicList ficList) {
+  public static Fdr selQueryByFicList(FicList ficList) {
     FiQuery fiQuconf = new FiQuery();
     fiQuconf.setFicListQuery(ficList);
 
-    return selQueryV2Main(fiQuconf);
+    return selQueryByFicList(fiQuconf);
   }
 
   public static Fdr insQueryV3Custom(FiQuery fiQuery, FicList fclInsert) {

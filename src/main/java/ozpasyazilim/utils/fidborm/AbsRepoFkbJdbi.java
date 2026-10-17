@@ -98,7 +98,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
     return fdr;
   }
 
-  public FdrFkbList jdSelectFkbList(FiQuery fiQuery) {
+  public FdrFkbList jdSelectFdrFkbList(FiQuery fiQuery) {
     FdrFkbList fdr = new FdrFkbList();
     fdr.setValue(new FkbList());
 
@@ -196,10 +196,10 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
     return fdr;
   }
 
-  public FdrFkbList jdSelectFkbList(String sqlQuery, Map<String, Object> mapBind) {
+  public FdrFkbList jdSelectFdrFkbList(String sqlQuery, Map<String, Object> mapBind) {
     Fkb fkbParams = new Fkb(mapBind);
     FiQuery fiQuery = new FiQuery(sqlQuery, fkbParams);
-    return jdSelectFkbList(fiQuery);
+    return jdSelectFdrFkbList(fiQuery);
   }
 
   /**
@@ -900,18 +900,19 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
 
     fiQuery.setFicListQuery(fclDto);
 
-    Fdr fdrSorgu = FiQugenMs.selQueryV2Main(fiQuery);
+    Fdr fdrSorgu = FiQugenMs.selQueryByFicList(fiQuery);
     if (fdrSorgu.isFalseBoResult()) return fdrSorgu;
 
-    return jdSelectFkbList(fiQuery);
+    return jdSelectFdrFkbList(fiQuery);
   }
 
   /**
+   * FkbList döndüren Select Sorgusunu çalıştırır
    *
    * @return fkbList
    */
   public Fdr fkSelect(FiQuery fiQuery) {
-    return jdSelectFkbList(fiQuery);
+    return jdSelectAsFkbList(fiQuery);
   }
 
   public Fdr getFdrConnErr() {
@@ -920,5 +921,13 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
 
   public void setFdrConnErr(Fdr fdrConnErr) {
     this.fdrConnErr = fdrConnErr;
+  }
+
+  private Fdr fkSelectByFicList(FiQuery fiQuery) {
+    Fdr fdrSql = FiQugenMs.selQueryByFicList(fiQuery);
+
+    if(fdrSql.isNotTrueBoResult()) return fdrSql;
+
+    return jdSelectAsFkbList(fiQuery);
   }
 }
