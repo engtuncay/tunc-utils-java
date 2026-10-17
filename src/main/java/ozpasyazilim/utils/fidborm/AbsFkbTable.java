@@ -2,6 +2,9 @@ package ozpasyazilim.utils.fidborm;
 
 import ozpasyazilim.utils.datatypes.Fkb;
 
+/**
+ *
+ */
 public abstract class AbsFkbTable {
 
   public static Fkb sqTableName() {

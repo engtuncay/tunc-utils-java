@@ -47,17 +47,18 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
   public void setAutoClass() {
   }
 
-  /**
-   * metod olarak kalması daha performanslı, state olarak tutmak memory maliyeti yapar
-   * @return
-   */
-  public Fkf getRepoFkfAll(){
-    return null;
-  }
+//  /**
+//   * metod olarak kalması daha performanslı, state olarak tutmak memory maliyeti yapar
+//   *
+//   * @return
+//   */
+//  public Fkf getRepoFkfAll() {
+//    return null;
+//  }
 
   //public abstract Fkf getRepoFkfDto();
 
-  public FicList getFclDto(){
+  public FicList getRepoFclDto() {
     return null;
   }
 
@@ -883,14 +884,17 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
   }
 
   /**
-   * fkbList
+   * Select DTO List
+   *
+   * @param fkbParams
+   * @param ficListExtra
    * @return
    */
-  public Fdr fkSelDtoList(Fkb fkbParams, FicList ficListExtra) {
+  public Fdr osSelDtoList(Fkb fkbParams, FicList ficListExtra) {
     FiQuery fiQuery = new FiQuery(fkbParams);
-    FicList fclDto = getFclDto();
+    FicList fclDto = getRepoFclDto();
 
-    if(!FiCollection.isEmpty(ficListExtra)) {
+    if (!FiCollection.isEmpty(ficListExtra)) {
       fclDto.addAll(ficListExtra);
     }
 
