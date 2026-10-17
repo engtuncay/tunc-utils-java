@@ -750,10 +750,10 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
         // includeId Fields
         // fqueconf
 
-        Fdr fdrQueryIns = FiQugenMs.insQueryV2(fiQuconf);
+        Fdr fdrQueryIns = FiQugenMsOld.insQueryV2(fiQuconf);
         sql = FiQueryUtils.stoj(fdrQueryIns.getFdTxVal());
       } else { // fdrQueryIns query without id fields
-        Fdr fdrQueryIns = FiQugenMs.insQueryV2(fiQuconf);
+        Fdr fdrQueryIns = FiQugenMsOld.insQueryV2(fiQuconf);
         //fdrQueryIns.logFdr();
         sql = FiQueryUtils.stoj(fdrQueryIns.getFdTxVal());
       }
@@ -775,15 +775,14 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
   public Fdr fkInsert(Fkb fkbEntity) {
     Fdr fdrMain = new Fdr();
 
-    FiQuconf fiQuconf = new FiQuconf();
-    fiQuconf.setFkfAll(getRepoFkfAll());
+    FiQuery fiQuery = new FiQuery(fkbEntity);
+    fiQuery.setFkfAll(getRepoFkfAll());
 
-    Fdr fdrSorgu = FiQugenMs.insQueryV3(fiQuconf);
+    Fdr fdrSorgu = FiQugenMs.insQueryByFkfAll(fiQuery);
     fdrMain.combineAnd(fdrSorgu);
 
     if (fdrMain.isFalseBoResult()) return fdrMain;
 
-    FiQuery fiQuery = new FiQuery(fdrSorgu.getFdTxVal(), fkbEntity);
     fiQuery.logQueryAndParams();
 
     return jdInsertFiQuery(fiQuery);
@@ -802,7 +801,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
     FiQuconf fiQuconf = new FiQuconf();
     fiQuconf.setFkfAll(getRepoFkfAll());
 
-    Fdr fdrSorgu = FiQugenMs.insQueryV3Custom(fiQuconf, fclInsert);
+    Fdr fdrSorgu = FiQugenMsOld.insQueryV3Custom(fiQuconf, fclInsert);
     fdrMain.combineAnd(fdrSorgu);
 
     if (fdrMain.isFalseBoResult()) return fdrMain;
@@ -872,7 +871,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
     fiQuconf.setFkfAll(getRepoFkfAll());
     fiQuconf.setFicListWhere(fclWhere);
 
-    Fdr fdrSorgu = FiQugenMs.delQueryV2(fiQuconf);
+    Fdr fdrSorgu = FiQugenMsOld.delQueryV2(fiQuconf);
     fdrMain.combineAnd(fdrSorgu);
 
     if (fdrMain.isFalseBoResult()) return fdrMain;
