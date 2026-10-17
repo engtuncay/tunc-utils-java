@@ -15,11 +15,14 @@ public class AbsRepoJdbiCore {
   protected Jdbi jdbi;
   // Optional (bilgi amaçlı)
   protected String databaseName;
-  IFiTableMeta iFiTableMeta;
+  protected IFiTableMeta iFiTableMeta;
 
-  private Fkf repoFkfAll;
+  /**
+   *
+   */
+  protected Fkf repoFkfAll;
 
-  private FicList repoFclDto;
+  protected FicList repoFclDto;
 
   // Getter and Setter
   public Jdbi getJdbi() {
