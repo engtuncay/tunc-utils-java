@@ -393,6 +393,19 @@ public class FiNumber {
     return lnValue.toString();
   }
 
+  /**
+   * 0 veya null değilse true olur
+   *
+   * @param dbValue
+   * @return
+   */
+  public static boolean isNotZero(Double dbValue) {
+    if(dbValue == null) return false;
+    if(dbValue == 0d) return false;
+
+    return true;
+  }
+
 
   public FiNumber buildNullCheckOrZero(Double dmValue) {
     if (dmValue == null) {

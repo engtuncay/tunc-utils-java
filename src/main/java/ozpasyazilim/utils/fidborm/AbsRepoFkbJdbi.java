@@ -718,7 +718,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
 
     if (fdrMain.isFalseBoResult()) return fdrMain;
 
-    fiQuery.logQueryAndParams();
+    //fiQuery.logQueryAndParams();
 
     return jdInsertFiQuery(fiQuery);
   }
@@ -742,7 +742,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
     if (fdrMain.isFalseBoResult()) return fdrMain;
 
     FiQuery fiQuery = new FiQuery(fdrSorgu.getFdTxVal(), fkbEntity);
-    fiQuery.logQueryAndParams();
+    //fiQuery.logQueryAndParams();
 
     return jdInsertFiQuery(fiQuery);
   }
@@ -764,7 +764,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
 
     if (fdrMain.isFalseBoResult()) return fdrMain;
 
-    fiQuery.logQueryAndParams();
+    //fiQuery.logQueryAndParams();
 
     return jdInsertFiQuery(fiQuery);
   }
@@ -787,7 +787,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
 
     if (fdrMain.isFalseBoResult()) return fdrMain;
 
-    fiQuery.logQueryAndParams();
+    //fiQuery.logQueryAndParams();
 
     return jdInsertFiQuery(fiQuery);
   }
@@ -812,7 +812,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
     if (fdrMain.isFalseBoResult()) return fdrMain;
 
     FiQuery fiQuery = new FiQuery(fdrSorgu.getFdTxVal(), fkbEntity);
-    fiQuery.logQueryAndParams();
+    //fiQuery.logQueryAndParams();
 
     return jdInsertFiQuery(fiQuery);
   }
@@ -857,8 +857,10 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
     this.fdrConnErr = fdrConnErr;
   }
 
-  private Fdr fkSelectByFicList(FiQuery fiQuery) {
+  public Fdr fkSelectByFicList(FiQuery fiQuery) {
     Fdr fdrSql = FiQugenMs.selQueryByFicList(fiQuery);
+
+    //fiQuery.logQueryAndParams();
 
     if(fdrSql.isNotTrueBoResult()) return fdrSql;
 

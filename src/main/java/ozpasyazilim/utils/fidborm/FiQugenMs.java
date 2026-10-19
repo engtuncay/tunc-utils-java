@@ -106,8 +106,8 @@ public class FiQugenMs {
     String template = "SELECT {{sfFields}}\n" +
         "FROM {{sfTableName}}\n";
 
-    StringBuilder sbTxFieldsBlock = new StringBuilder();
-    StringBuilder sbTxWhereBlock = new StringBuilder();
+    StringBuilder sbTxFields = new StringBuilder();
+    StringBuilder sbTxWhere = new StringBuilder();
 
     int indexWhereBlock = 0;
 
@@ -126,35 +126,34 @@ public class FiQugenMs {
         indexWhereBlock++;
         //Loghelper.get(FiSqlGenMs.class).debug("where field: " + fiCol.getFcTxFieldName());
         if (fiCol.isWhereInField()) {
-          sbTxWhereBlock.append(FiQugenUtil.formSqlAssignInByFic(fiCol));
+          sbTxWhere.append(FiQugenUtil.formSqlAssignInByFic(fiCol));
           continue;
         }
 
-        sbTxWhereBlock.append(FiQugenUtil.formSqlAssignAndByFic(fiCol));
+        sbTxWhere.append(FiQugenUtil.formSqlAssignAndByFic(fiCol));
         continue;
       }
 
-      sbTxFieldsBlock.append(FiQugenUtil.formSqlFieldComma(fiCol.getFcTxFieldName()));
+      sbTxFields.append(FiQugenUtil.formSqlFieldComma(fiCol.getFcTxFieldName()));
 
     } // end for
 
     if (indexWhereBlock > 0) {
       template += "WHERE {{sfWhere}}";
-      FiString.rtrimSb(sbTxWhereBlock, FiQugenUtil.getTxAnd());
+      FiString.rtrimSb(sbTxWhere, FiQugenUtil.getTxAnd());
     }
 
-    FiString.rtrimSb(sbTxFieldsBlock, FiQugenUtil.getTxComma());
+    FiString.rtrimSb(sbTxFields, FiQugenUtil.getTxComma());
 
     Fkb fkbParams = new Fkb();
 
     fkbParams.addFieldBy(FimFcSql.sfTableName(), txTableName);
-    fkbParams.addFieldBy(FimFcSql.sfFields(), sbTxFieldsBlock.toString());
-    fkbParams.addFieldBy(FimFcSql.sfWhere(), sbTxWhereBlock.toString());
+    fkbParams.addFieldBy(FimFcSql.sfFields(), sbTxFields.toString());
+    fkbParams.addFieldBy(FimFcSql.sfWhere(), sbTxWhere.toString());
 
     String sql = FiString.substitutor(template, fkbParams);
 
     Fdr fdrResult = new Fdr();
-
 
     if (indexWhereBlock == 0) {
       Loghelper.get(FiQugenMs.getClassi()).debug("warn:no where fields for select query");
@@ -171,7 +170,7 @@ public class FiQugenMs {
     //FROM CARI_HESAP_HAREKETLERI
     //WHERE cha_evrakno_seri = @cha_evrakno_seri AND cha_evrakno_sira = @cha_evrakno_sira AND cha_evrak_tip = @cha_evrak_tip
 
-    fiQuery.setTxQuery(fdrResult.getFdTxVal());
+    fiQuery.setTxQuery(sql);
     fdrResult.setFdTxVal(sql);
     fdrResult.setBoResult(true);
     return fdrResult;
