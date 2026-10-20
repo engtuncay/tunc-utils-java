@@ -352,13 +352,12 @@ public class FiQugenMs {
    * tabloda yoksa öncesinde insert yapar , daha sonra update sorgusu çalıştırır
    *
    * @param fiQuery
-   * @return
+   * @return Fdr fdTxVal ve fiQuery txSql alanını atama yapar
    */
   public static Fdr insUpdateV1(FiQuery fiQuery) {
     // Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
 
     // arguments
-    // IFiTableMeta iFiTableMeta = fiQuery.getiFiTableMeta();
     FicList ficListQuery = fiQuery.getFicListQuery();
 
     String txTableName = "";
@@ -372,13 +371,13 @@ public class FiQugenMs {
     //  sfFieldsIns, sfFieldsVarIns sonradan parantez içine alınıyor
 
     // Sorguda kullanılan placeholderlar
-    FimFcSql.sfTableName();
-    FimFcSql.sfFieldsIns();
+//    FimFcSql.sfTableName();
+//    FimFcSql.sfFieldsIns();
     // Variable Fields For Ins Query
-    FimFcSql.sfVarFieldsIns();
-    FimFcSql.sfWhere();
+//    FimFcSql.sfVarFieldsIns();
+//    FimFcSql.sfWhere();
     // Variable Fields For Up Query
-    FimFcSql.sfVarFieldsUp();
+//    FimFcSql.sfVarFieldsUp();
 
     String template = "--sq202604221135 v1\n" +
         "DECLARE @__count AS int = 0\n" +
@@ -453,10 +452,10 @@ public class FiQugenMs {
 
     Loghelper.get(FiQugenMs.getClassi()).debug("tableName:" + txTableName);
 
-    FiString.rtrimSb(sbWhereBlock, FiQugenMsOld.getTxAnd());
-    FiString.rtrimSb(sbFieldsIns, FiQugenMsOld.getTxComma());
-    FiString.rtrimSb(sbFieldsVarIns, FiQugenMsOld.getTxComma());
-    FiString.rtrimSb(sbFieldsVarUp, FiQugenMsOld.getTxComma());
+    FiString.rtrimSb(sbWhereBlock, FiQugenMs.getTxAnd());
+    FiString.rtrimSb(sbFieldsIns, FiQugenMs.getTxComma());
+    FiString.rtrimSb(sbFieldsVarIns, FiQugenMs.getTxComma());
+    FiString.rtrimSb(sbFieldsVarUp, FiQugenMs.getTxComma());
 
     Fkb fkbParams = new Fkb();
     fkbParams.addFim(FimFcSql.sfTableName(), txTableName);
@@ -538,8 +537,8 @@ public class FiQugenMs {
 
     }
 
-    FiString.rtrimSb(sbTxFieldsBlock, FiQugenMsOld.getTxComma());
-    FiString.rtrimSb(sbTxFieldsVar, FiQugenMsOld.getTxComma());
+    FiString.rtrimSb(sbTxFieldsBlock, FiQugenMs.getTxComma());
+    FiString.rtrimSb(sbTxFieldsVar, FiQugenMs.getTxComma());
 
     Fkb fkbParams = new Fkb();
     fkbParams.addFieldBy(FimFcSql.sfTableName(), txTableName);

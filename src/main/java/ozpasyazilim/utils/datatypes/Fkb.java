@@ -319,14 +319,12 @@ public class Fkb extends LinkedHashMap<String, Object> {
   }
 
   public Integer getFicAsInt(FiCol fiCol) {
-
     if (fiCol == null) return null;
 
     return getAsInt(fiCol.getFcTxFieldName());
   }
 
   public Integer getFimAsInt(FiMeta fiMeta) {
-
     if (fiMeta == null) return null;
 
     return getAsInt(fiMeta.getKey());
