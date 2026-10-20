@@ -919,6 +919,10 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     return FiBool.isTrue(getFdBoResult()) && getValue() != null;
   }
 
+  /**
+   * Sadece False'ları kapsar , null false olarak kabul edilmez
+   * @return
+   */
   public boolean isFalseBoResult() {
     return FiBool.isFalse(getFdBoResult());
   }

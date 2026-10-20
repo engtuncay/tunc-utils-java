@@ -112,8 +112,12 @@ public class FxMigPane extends MigPane {
   }
 
   public void addGrowPushSpan(Node node) {
-    add(node, "grow,push,span");
+    add(node, "grow,push,span,wrap");
   }
+
+  //public void addGrowPushSpanWrap(Node node) {
+//    add(node, "grow,push,span,wrap");
+//  }
 
   public void addWitWrap(Node node) {
     add(node, "wrap");

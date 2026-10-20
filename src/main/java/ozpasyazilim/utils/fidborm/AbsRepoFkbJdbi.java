@@ -306,7 +306,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
 
   public Fdr jdUpdateBindMap(String txUpdateQuery, Map<String, Object> fiMapParams) {
     Fkb fkbParams = new Fkb(fiMapParams);
-    FiQuery fiQuery = new FiQuery(txUpdateQuery,fkbParams);
+    FiQuery fiQuery = new FiQuery(txUpdateQuery, fkbParams);
     return jdUpdateBindMapMain(fiQuery);
   }
 
@@ -603,6 +603,8 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
   /**
    * Transactionlar AbsRepoJdbi ve Handle ile yönetilir.
    * <p>
+   * fnTransaction içerisinde exception kayıt edilirse thrown edilip catch edilir. commit başarısız olur.
+   * <p>
    * Transaction Catch'i dışarıda yakalanıyor.
    *
    * @param fnTransaction (handle)->(fdr)
@@ -865,7 +867,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
 
     //fiQuery.logQueryAndParams();
 
-    if(fdrSql.isNotTrueBoResult()) return fdrSql;
+    if (fdrSql.isNotTrueBoResult()) return fdrSql;
 
     return jdSelectAsFkbList(fiQuery);
   }
