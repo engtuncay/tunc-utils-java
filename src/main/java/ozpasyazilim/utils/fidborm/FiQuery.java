@@ -48,6 +48,8 @@ public class FiQuery {
    */
   private Boolean boUseInsFieldsForInsQuery;
 
+  private AbsFecTable absFecTable;
+
   //List<FiField> queryFieldList;
   //List<FiField> queryWhereList;
 
@@ -576,4 +578,20 @@ public class FiQuery {
   public void setBoUseInsFieldsForInsQuery(Boolean boUseInsFieldsForInsQuery) {
     this.boUseInsFieldsForInsQuery = boUseInsFieldsForInsQuery;
   }
+
+  public AbsFecTable getAbsFecTable() {
+    return absFecTable;
+  }
+
+  public AbsFecTable getAbsFecTableNtn() {
+    if (absFecTable == null) {
+      return new VirFecTable();
+    }
+    return absFecTable;
+  }
+
+  public void setAbsFecTable(AbsFecTable absFecTable) {
+    this.absFecTable = absFecTable;
+  }
+
 }

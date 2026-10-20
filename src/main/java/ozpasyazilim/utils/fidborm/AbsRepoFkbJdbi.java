@@ -35,6 +35,8 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
   @Deprecated
   private FiCol ficIdAuto;
 
+  private AbsFecTable absFecTable;
+
   public AbsRepoFkbJdbi(Jdbi jdbi) {
     setJdbi(jdbi);
   }
@@ -46,14 +48,14 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
   public void setAutoClass() {
   }
 
-//  /**
-//   * metod olarak kalması daha performanslı, state olarak tutmak memory maliyeti yapar
-//   *
-//   * @return
-//   */
-//  public Fkf getRepoFkfAll() {
-//    return null;
-//  }
+  /**
+   * AbsFicTableV2().getFkfAll() metodunu döndürür
+   *
+   * @return
+   */
+  public Fkf getRepoFkfAll() {
+    return getAbsFecTable().getFkfAll();
+  }
 
   //public abstract Fkf getRepoFkfDto();
 
@@ -866,4 +868,20 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
 
     return jdSelectAsFkbList(fiQuery);
   }
+
+  public AbsFecTable getAbsFecTable() {
+    return absFecTable;
+  }
+
+  public AbsFecTable getAbsFecTableNtn() {
+    if (absFecTable == null) {
+      return new VirFecTable();
+    }
+    return absFecTable;
+  }
+
+  public void setAbsFecTable(AbsFecTable absFecTable) {
+    this.absFecTable = absFecTable;
+  }
+
 }
