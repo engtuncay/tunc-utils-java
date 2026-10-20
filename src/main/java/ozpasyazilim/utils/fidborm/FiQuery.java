@@ -35,6 +35,9 @@ public class FiQuery {
   // Query Oluşturmak için eklenen alanlar
   FicList ficListQuery;
 
+  // Sorguda where alanına eklenecek
+  FicList ficListWhere;
+
   // FicQuery
   Fkf fkfAll;
 
@@ -594,4 +597,11 @@ public class FiQuery {
     this.absFecTable = absFecTable;
   }
 
+  public FicList getFicListWhere() {
+    return ficListWhere;
+  }
+
+  public void setFicListWhere(FicList ficListWhere) {
+    this.ficListWhere = ficListWhere;
+  }
 }

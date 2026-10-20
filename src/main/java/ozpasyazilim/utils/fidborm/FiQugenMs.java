@@ -12,6 +12,8 @@ import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.FicList;
 import ozpasyazilim.utils.table.FicUtil;
 
+import javax.annotation.Nonnull;
+
 public class FiQugenMs {
 
 
@@ -65,7 +67,7 @@ public class FiQugenMs {
 
     }
 
-    FiString.rtrimSb(sbWhereBlock, FiQugenMsOld.getTxAnd());
+    FiString.rtrimSb(sbWhereBlock, FiQugenMs.getTxAnd());
 
     Fkb fkbParams = new Fkb();
     fkbParams.addFieldBy(FimFcSql.sfTableName(), txTableName);
@@ -184,7 +186,7 @@ public class FiQugenMs {
    * @param fiQuery
    * @return
    */
-  public static Fdr selQueryByFicListV2(FiQuery fiQuery) {
+  public static Fdr selQueryByFicListV2Fec(FiQuery fiQuery) {
     // Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
 
     // arguments
@@ -321,8 +323,8 @@ public class FiQugenMs {
 
     }
 
-    FiString.rtrimSb(sbTxFieldsBlock, FiQugenMsOld.getTxComma());
-    FiString.rtrimSb(sbTxFieldsVar, FiQugenMsOld.getTxComma());
+    FiString.rtrimSb(sbTxFieldsBlock, FiQugenMs.getTxComma());
+    FiString.rtrimSb(sbTxFieldsVar, FiQugenMs.getTxComma());
 
     Fkb fkbParams = new Fkb();
     fkbParams.addFieldBy(FimFcSql.sfTableName(), txTableName);
@@ -581,12 +583,17 @@ public class FiQugenMs {
     String txTableName = null;
     int indexCol = 0;
 
-    if (fiQuery.getFkfAll() != null) {
+    if (fiQuery.getAbsFecTable() != null) {
+      txTableName = fiQuery.getAbsFecTable().getFkfAllNtn().getSpecTxTableName();
+    }
+
+    if (FiString.isEmptyTrim(txTableName) &&  fiQuery.getFkfAll() != null) {
       txTableName = fiQuery.getFkfAll().getSpecTxTableName();
     }
 
     for (FiCol ficItem : fiQuery.getFicListQueryInit()) {
 
+      // ficList'e eklenmişse qcfTxTableName, ficList'den kullanıldı
       if (ficItem.isTableNameCol()) {
         txTableName = ficItem.getFcTxHeader();
         continue;
@@ -624,6 +631,84 @@ public class FiQugenMs {
     fdrMain.setFdTxVal(sql);
     fiQuery.setTxQuery(sql);
     fdrMain.setBoResult(true);
+    return fdrMain;
+  }
+
+  @Nonnull
+  public static String getTxComma() {
+    return ", ";
+  }
+
+  @Nonnull
+  public static String getTxAnd() {
+    return " AND ";
+  }
+
+  /**
+   * configs : absFecTable,getFicListWhere (!!)
+   *
+   * @param fiQuery
+   * @return
+   */
+  public static Fdr delQueryV1(FiQuery fiQuery) {
+
+    // Oluşturulan update sorgu formatı
+    // DELETE EnmCariEvrakEk
+    // WHERE ceveEvrakSeri = @ceveEvrakSeri AND ceveEvrakSira = @ceveEvrakSira AND ceveEvrakTip = @ceveEvrakTip
+
+    // Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
+
+    Fdr fdrMain = new Fdr();
+
+    Fkf fkfAllFields = fiQuery.getAbsFecTableNtn().getFkfAllNtn();
+    FicList fclWhereFields = fiQuery.getFicListWhere();
+
+    if (fclWhereFields.isEmpty()) return fdrMain.buiBoResult(false, "where alanları tanımlanmamış.");
+
+//     FimFcSql.sfTableName();
+//     FimFcSql.sfTxWhere();
+
+    String template = "DELETE {{sfTableName}} \n"
+        + " WHERE {{sfWhere}} ";
+
+    StringBuilder sbWhereBlock = new StringBuilder();
+
+    String txTableName = null; // qcfTxSqTableName.getFcTxHeader();
+
+    if (fkfAllFields!=null) {
+      txTableName = fkfAllFields.getSpecTxTableName();
+    }
+
+    if (FiString.isEmptyTrim(txTableName)) return fdrMain.buiBoResult(false, "Tablo ismi tanımlanmamış.");
+
+    int indexWhereBlock = 0;
+
+    for (FiCol ficWhereField : fclWhereFields) {
+
+      if (ficWhereField.isTransient()) continue;
+
+      indexWhereBlock++;
+      sbWhereBlock.append(FiQugenUtil.formSqlAssignAnd(ficWhereField.getFcTxFieldName()));
+    }
+
+    FiString.rtrimSb(sbWhereBlock, FiQugenMs.getTxAnd());
+
+    Fkb fkbParams = new Fkb();
+    fkbParams.addFieldBy(FimFcSql.sfTableName(), txTableName);
+    fkbParams.addFieldBy(FimFcSql.sfWhere(), sbWhereBlock.toString());
+
+    String sql = FiString.substitutor(template, fkbParams);
+
+    if (indexWhereBlock == 0) {
+      sql = "no where fields";
+      fdrMain.setFdTxVal(sql);
+      fdrMain.setBoResult(false);
+      return fdrMain;
+    }
+
+    fiQuery.setTxQuery(sql);
+    fdrMain.setBoResult(true);
+    fdrMain.setFdTxVal(sql);
     return fdrMain;
   }
 }

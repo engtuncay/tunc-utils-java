@@ -783,6 +783,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
 
     FiQuery fiQuery = new FiQuery(fkbEntity);
     fiQuery.setFicListQuery(fclInsert);
+    fiQuery.setAbsFecTable(getAbsFecTable());
 
     Fdr fdrSorgu = FiQugenMs.insQueryV4ByFicList(fiQuery);
     fdrMain.combineAnd(fdrSorgu);
@@ -804,19 +805,19 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
   public Fdr fkDeleteV1(Fkb fkbEntity, FicList fclWhere) {
     Fdr fdrMain = new Fdr();
 
-    FiQuconf fiQuconf = new FiQuconf();
-    fiQuconf.setFkfAll(getRepoFkfAll());
-    fiQuconf.setFicListWhere(fclWhere);
+    FiQuery fiQuery1 = new FiQuery(fkbEntity);
+    //fiQuery1.setFkfAll(getRepoFkfAll());
+    fiQuery1.setFicListWhere(fclWhere);
+    fiQuery1.setAbsFecTable(getAbsFecTable());
 
-    Fdr fdrSorgu = FiQugenMsOld.delQueryV2(fiQuconf);
+    Fdr fdrSorgu = FiQugenMs.delQueryV1(fiQuery1);
     fdrMain.combineAnd(fdrSorgu);
 
     if (fdrMain.isFalseBoResult()) return fdrMain;
 
-    FiQuery fiQuery = new FiQuery(fdrSorgu.getFdTxVal(), fkbEntity);
-    //fiQuery.logQueryAndParams();
+    fiQuery1.logQueryAndParams();
 
-    return jdInsertFiQuery(fiQuery);
+    return jdInsertFiQuery(fiQuery1);
   }
 
   /**
