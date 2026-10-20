@@ -62,6 +62,10 @@ public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxC
 
   //private static final Logger log = LoggerFactory.getLogger(FxTableView2.class);
   private Class<EntClazz> entityClass;
+
+  /**
+   * Table Id
+   */
   private String fxId;
   private Map<String, Object> styleMap;
   private List<FxTableCol2> listFxTableCol;
@@ -73,6 +77,8 @@ public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxC
    * Tv:TableView LnId
    */
   private Integer tvLnId;
+
+  private String tvTxId;
 
   // gereksiz çıkartılabilir
   private Boolean boFilteredListActive;
@@ -3205,9 +3211,18 @@ public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxC
   }
 
   public void setFiColsAsFkbAsyncByTvLnId(List<FiCol> colsTable, Integer tvLnId) {
+    // ilk kontrolde boş/null olacağı için boştayken yapılması lazım
     if (tvLnId == null || getTvLnIdNtn() != tvLnId) {
       setFiColsAsFkbAsync(colsTable);
       setTvLnId(tvLnId);
+    }
+  }
+
+  public void setFiColsAsFkbAsyncByTvTxId(List<FiCol> colsTable, String tvTxId) {
+    // ilk kontrolde boş olacağı için boştayken yapılması lazım
+    if (!FiString.isEmptyTrim(tvTxId) && !getTvTxIdNtn().equals(tvTxId)) {
+      setFiColsAsFkbAsync(colsTable);
+      setTvTxId(tvTxId);
     }
   }
 
@@ -3218,8 +3233,8 @@ public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxC
     return tvLnId;
   }
 
-  public void setTvLnId(Integer tvLnId) {
-    this.tvLnId = tvLnId;
+  public void setTvLnId(Integer tvTxId) {
+    this.tvLnId = tvTxId;
   }
 
   public TriConsumer<TableRow, Boolean, Object> getFnRowHighlight() {
@@ -3245,5 +3260,18 @@ public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxC
     this.ficListEkKriter = ficListEkKriter;
   }
 
+  public String getTvTxId() {
+    return tvTxId;
+  }
 
+  public String getTvTxIdNtn() {
+    if (tvTxId == null) {
+      return "";
+    }
+    return tvTxId;
+  }
+
+  public void setTvTxId(String tvTxId) {
+    this.tvTxId = tvTxId;
+  }
 }

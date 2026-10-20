@@ -867,5 +867,26 @@ public class Fkb extends LinkedHashMap<String, Object> {
     return null;
   }
 
-
+  @Override
+  public String toString() {
+    //if (this == null) return "null";
+    StringBuilder sb = new StringBuilder("{");
+    boolean first = true;
+    for (Map.Entry<String, Object> entry : entrySet()) {
+      if (!first) sb.append(", ");
+      first = false;
+      sb.append(entry.getKey()).append("=");
+      Object val = entry.getValue();
+      if (val instanceof FkbList) {
+        sb.append("[FkbList size=").append(((FkbList) val).size()).append("]");
+      } else if (val instanceof Collection) {
+        sb.append("[Collection size=").append(((Collection<?>) val).size()).append("]");
+      } else if (val instanceof Map) {
+        sb.append("[Map size=").append(((Map<?, ?>) val).size()).append("]");
+      } else {
+        sb.append(val);
+      }
+    }
+    return sb.append("}").toString();
+  }
 }
