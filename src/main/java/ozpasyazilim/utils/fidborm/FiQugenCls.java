@@ -30,7 +30,7 @@ import static java.util.stream.Collectors.toList;
 /**
  * Not : Normal şartlarda transient alanlar eklenmez, özel olarak belirtmek lazım
  * <p>
- * Fiqugen -> FiQueryGenerator kısaltması
+ * FiQugen -> Fi-Query-Generator kısaltması
  */
 public class FiQugenCls {
 
