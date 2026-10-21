@@ -24,7 +24,6 @@ public class FiThread {
         return startThread(runnable, btnArray, null, fiObserver);
     }
 
-
     /**
      * With Tc -> With Try Catch for Runnable
      *
