@@ -5,7 +5,7 @@ import ozpasyazilim.utils.core.FiString;
 /**
  * {@link FimFcFiTypes} için yardımcı metodlar
  */
-public class FimFtFieldTypeSpec {
+public class FimFcFiTypesSpec {
 
 
   public static boolean isDouble(String txFieldType) {

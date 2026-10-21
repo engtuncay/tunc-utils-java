@@ -1,7 +1,7 @@
 package ozpasyazilim.utils.gui.fxcomponents;
 
 import ozpasyazilim.utils.core.FiString;
-import ozpasyazilim.utils.metadata.fimCodegen.FimFtFieldTypeSpec;
+import ozpasyazilim.utils.metadata.fimCodegen.FimFcFiTypesSpec;
 import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.OzColType;
 
@@ -298,20 +298,20 @@ public class FxMigHp {
   public FxMigHp addCcByColTypeForFxForm(FiCol fiCol) {
 
     if (fiCol.getColType() == OzColType.Date || fiCol.getColEditorClass().equals(FxDatePicker.class.getName())
-        || FimFtFieldTypeSpec.isDate(fiCol.getFcTxFieldType())
+        || FimFcFiTypesSpec.isDate(fiCol.getFcTxFieldType())
     ) {
       ccWmax(150);
       ccWmin(100);
     }
 
     if (fiCol.getColType() == OzColType.Double
-        || FimFtFieldTypeSpec.isDouble(fiCol.getFcTxFieldType())
+        || FimFcFiTypesSpec.isDouble(fiCol.getFcTxFieldType())
     ) {
       ccWmax(200);
     }
 
     if (fiCol.getColType() == OzColType.Integer
-        || FimFtFieldTypeSpec.isInteger(fiCol.getFcTxFieldType())) {
+        || FimFcFiTypesSpec.isInteger(fiCol.getFcTxFieldType())) {
       ccWmax(200);
     }
 
