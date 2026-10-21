@@ -1082,4 +1082,12 @@ public class FiString {
   public static boolean startWith(String txServer, String tunchp) {
     return txServer != null && txServer.startsWith(tunchp);
   }
+
+  public static String cropStringFromBegin(Object objText, int cropAmount) {
+    if(objText == null) return null;
+
+    if(objText instanceof String) return cropStringFromBegin((String)objText, cropAmount);
+
+    return null;
+  }
 }
