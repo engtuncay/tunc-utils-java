@@ -20,6 +20,7 @@ import ozpasyazilim.utils.annotations.FiDraft;
 import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.datatypes.Fkb;
 import ozpasyazilim.utils.datatypes.FiListString;
+import ozpasyazilim.utils.datatypes.FkbList;
 import ozpasyazilim.utils.fimetas.FicFtQuery;
 import ozpasyazilim.utils.gui.components.TableValueFactoryForFkb;
 import ozpasyazilim.utils.gui.fxTableViewExtra.NestedPropertyValueFactory;
@@ -359,6 +360,8 @@ public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxC
 
     return list;
   }
+
+
 
   public List<EntClazz> getItemsChecked() {
     return getItemsCheckedCurrentByBoolField(getSelectionColName());
@@ -724,7 +727,6 @@ public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxC
   }
 
   public List<EntClazz> getSelectedItemGenAsListFi() {
-
     EntClazz selectedItem = getSelectionModel().getSelectedItem();
 
     List<EntClazz> list = new ArrayList<>();
