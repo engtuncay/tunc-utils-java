@@ -601,6 +601,13 @@ public class FiQuery {
     return ficListWhere;
   }
 
+  public FicList getFicListWhereInit() {
+    if (ficListWhere == null) {
+      ficListWhere = new FicList();
+    }
+    return ficListWhere;
+  }
+
   public void setFicListWhere(FicList ficListWhere) {
     this.ficListWhere = ficListWhere;
   }

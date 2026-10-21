@@ -887,4 +887,17 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
     this.absFecTable = absFecTable;
   }
 
+  public Fdr osSelStarByFt(Fkb fkbParams, FicList ficListWhere) {
+    FiQuery fiQuery = new FiQuery(fkbParams);
+    fiQuery.setFicListWhere(ficListWhere);
+    fiQuery.setAbsFecTable(getAbsFecTable());
+
+    FiQugenMs.selStarByFecAndFclWhere(fiQuery);
+
+    fiQuery.logQueryAndParams();
+
+    return jdSelectAsFkbList(fiQuery);
+  }
+
+
 }

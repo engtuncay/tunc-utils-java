@@ -1437,7 +1437,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     this.fdListVal = fdListVal;
   }
 
-  public void logFdr() {
+  public void logFdr2() {
 
     Loghelper.get(getClass()).debug("logFdr called...");
 
@@ -1471,11 +1471,50 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
 
   }
 
+  public void logFdr1() {
+
+    Loghelper.get(getClass()).debug("logFdr called...");
+
+    if (getFdTxVal() != null) {
+      Loghelper.get(getClass()).debug("FdTxValue:" + getFdTxVal());
+    }
+
+    if (getFdFkbVal() != null) {
+      Loghelper.get(getClass()).debug("FdFkbVal:" + getFdFkbVal());
+    }
+
+    if (!FiString.isEmptyTrim(getFdTxMessage())) {
+      Loghelper.get(getClass()).debug("FdTxMessage:" + getFdTxMessage());
+    }
+
+    if (!FiString.isEmptyTrim(getLogsAllTos())) {
+      Loghelper.get(getClass()).debug("Logs:\n" + getLogsAllTos());
+    }
+
+    Loghelper.get(getClass()).debug("FdBoVal:" + getFdBoVal());
+    Loghelper.get(getClass()).debug("FdBoResult:" + getFdBoResult());
+
+    Loghelper.get(getClass()).debug("FkbList Size:" + getFdFkbListValNtn().size());
+
+    if(!getFdFkbListValNtn().isEmpty()) {
+      Loghelper.get(getClass()).debug("Fkb Entity (1):\n"+FiConsole.textFkb(getFdFkbListValNtn().get(0)));
+    }
+
+//    if (!getFdFkbListValNtn().isEmpty()) {
+//      for (Fkb fkb : getFdFkbListValNtn()) {
+//        Loghelper.get(getClass()).debug("Fkb Entity \n" + FiConsole.textFkb(fkb));
+//      }
+//    }
+
+  }
+
   public String textLogFdr() {
 
     Loghelper.get(getClass()).debug("textLogFdr called...");
 
     StringBuilder sb = new StringBuilder();
+
+    sb.append("FdBoResult:").append(getFdBoResult()).append("\n");
 
     if (getFdTxVal() != null) {
       sb.append("FdTxValue:").append(getFdTxVal()).append("\n");
@@ -1493,7 +1532,10 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
       sb.append("Logs:\n").append(getLogsAllTos()).append("\n");
     }
 
-    sb.append("FdBoResult:").append(getFdBoResult()).append("\n");
+    if(!getFdFkbListValNtn().isEmpty()) {
+      sb.append("FkbList Size:").append(getFdFkbListValNtn().size()).append("\n");
+      sb.append("Fkb Entity (1) \n").append(FiConsole.textFkb(getFdFkbListValNtn().get(0))).append("\n");
+    }
 
     return sb.toString();
   }

@@ -271,6 +271,103 @@ public class FiQugenMs {
     return fdrResult;
   }
 
+  public static Fdr selStarByFecAndFclWhere(FiQuery fiQuery) {
+    // Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
+
+    // arguments
+    FicList ficListQuery = fiQuery.getFicListQueryInit();
+
+    String txTableName = null;
+
+    String template = "SELECT *\n" +
+        "FROM {{sfTableName}}\n";
+
+    if (fiQuery.getAbsFecTable() != null) {
+      txTableName = fiQuery.getAbsFecTable().qcfTxSqTableName().getFcTxHeader();
+    }
+
+    StringBuilder sbTxWhere = new StringBuilder();
+
+    int indexWhereBlock = 0;
+
+    for (FiCol fiCol : ficListQuery) {
+
+      // Loghelper.get(getClassi()).debug("fiCol: " + fiCol.getFcTxFieldName() + " - BoWhereField " + fiCol.getFcBoWhereField());
+
+      if (FiString.isEmptyTrim(txTableName) && fiCol.isTableNameCol()) {
+        txTableName = fiCol.getFcTxHeader();
+        continue;
+      }
+
+      if (fiCol.isTransient()) continue;
+
+      if (fiCol.isWhereField() || fiCol.isWhereInField()) {
+        indexWhereBlock++;
+        //Loghelper.get(FiSqlGenMs.class).debug("where field: " + fiCol.getFcTxFieldName());
+        if (fiCol.isWhereInField()) {
+          sbTxWhere.append(FiQugenUtil.formSqlAssignInByFic(fiCol));
+          continue;
+        }
+
+        sbTxWhere.append(FiQugenUtil.formSqlAssignAndByFic(fiCol));
+        continue;
+      }
+
+      //sbTxFields.append(FiQugenUtil.formSqlFieldComma(fiCol.getFcTxFieldName()));
+    } // end for
+
+    for (FiCol fiCol : fiQuery.getFicListWhereInit()) {
+
+      // Loghelper.get(getClassi()).debug("fiCol: " + fiCol.getFcTxFieldName() + " - BoWhereField " + fiCol.getFcBoWhereField());
+
+      if (fiCol.isTransient()) continue;
+
+      indexWhereBlock++;
+      //Loghelper.get(FiSqlGenMs.class).debug("where field: " + fiCol.getFcTxFieldName());
+      if (fiCol.isWhereInField()) {
+        sbTxWhere.append(FiQugenUtil.formSqlAssignInByFic(fiCol));
+        continue;
+      }
+      sbTxWhere.append(FiQugenUtil.formSqlAssignAndByFic(fiCol));
+    }
+
+    if (indexWhereBlock > 0) {
+      template += "WHERE {{sfWhere}}";
+      FiString.rtrimSb(sbTxWhere, FiQugenUtil.getTxAnd());
+    }
+
+    FiString.rtrimSb(sbTxWhere, FiQugenUtil.getTxAnd());
+
+    Fkb fkbParams = new Fkb();
+
+    fkbParams.addFieldBy(FimFcSql.sfTableName(), txTableName);
+    fkbParams.addFieldBy(FimFcSql.sfWhere(), sbTxWhere.toString());
+
+    String sql = FiString.substitutor(template, fkbParams);
+
+    Fdr fdrResult = new Fdr();
+
+    if (indexWhereBlock == 0) {
+      Loghelper.get(FiQugenMs.getClassi()).debug("warn:no where fields for select query");
+    }
+
+    if (FiString.isEmptyTrim(txTableName)) {
+      fdrResult.setFdTxVal("no table name");
+      fdrResult.setBoResult(false);
+      fdrResult.setFdTxMessage("no table name");
+      return fdrResult;
+    }
+
+    //SELECT cha_cinsi
+    //FROM CARI_HESAP_HAREKETLERI
+    //WHERE cha_evrakno_seri = @cha_evrakno_seri AND cha_evrakno_sira = @cha_evrakno_sira AND cha_evrak_tip = @cha_evrak_tip
+
+    fiQuery.setTxQuery(sql);
+    fdrResult.setFdTxVal(sql);
+    fdrResult.setBoResult(true);
+    return fdrResult;
+  }
+
   private static Class<FiQugenMs> getClassi() {
     return FiQugenMs.class;
   }
@@ -586,7 +683,7 @@ public class FiQugenMs {
       txTableName = fiQuery.getAbsFecTable().getFkfAllNtn().getSpecTxTableName();
     }
 
-    if (FiString.isEmptyTrim(txTableName) &&  fiQuery.getFkfAll() != null) {
+    if (FiString.isEmptyTrim(txTableName) && fiQuery.getFkfAll() != null) {
       txTableName = fiQuery.getFkfAll().getSpecTxTableName();
     }
 
@@ -674,7 +771,7 @@ public class FiQugenMs {
 
     String txTableName = null; // qcfTxSqTableName.getFcTxHeader();
 
-    if (fkfAllFields!=null) {
+    if (fkfAllFields != null) {
       txTableName = fkfAllFields.getSpecTxTableName();
     }
 
