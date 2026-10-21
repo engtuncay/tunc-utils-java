@@ -4,7 +4,12 @@ package ozpasyazilim.utils.metadata.fimCodegen;
 
 import ozpasyazilim.utils.datatypes.FiMeta;
 
-public class FimFtFieldType {
+/**
+ * Fc : Code Generation Library
+ * <p>
+ * Fi : Field
+ */
+public class FimFcFiTypes {
 
   public static FiMeta fDouble() {
     FiMeta fim = new FiMeta("fdouble");

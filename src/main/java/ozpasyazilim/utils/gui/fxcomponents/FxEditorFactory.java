@@ -18,7 +18,7 @@ import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.gui.components.ComboItemText;
 import ozpasyazilim.utils.gui.components.ComboItemObj;
 import ozpasyazilim.utils.log.Loghelper;
-import ozpasyazilim.utils.metadata.fimCodegen.FimFtFieldType;
+import ozpasyazilim.utils.metadata.fimCodegen.FimFcFiTypes;
 import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.core.FiReflection;
 import ozpasyazilim.utils.returntypes.Fdr;
@@ -250,21 +250,21 @@ public class FxEditorFactory {
 
       // 26-04-21
       if (FiString.equalsAny(fcTxFieldType
-          , FimFtFieldType.fBool().getValue())
+          , FimFcFiTypes.fBool().getValue())
       ) {
         txClassName = FxCheckBox.class.getName();
       }
 
       if (FiString.equalsAny(fcTxFieldType
-          , FimFtFieldType.fdate().getValue()
-          , FimFtFieldType.fdatetime().getValue())
+          , FimFcFiTypes.fdate().getValue()
+          , FimFcFiTypes.fdatetime().getValue())
       ) {
         txClassName = FxDatePicker.class.getName();
       }
 
       if (FiString.equalsAny(fcTxFieldType
-          , FimFtFieldType.fBool().getValue()
-          , FimFtFieldType.fBit().getValue())
+          , FimFcFiTypes.fBool().getValue()
+          , FimFcFiTypes.fBit().getValue())
       ) {
         txClassName = FxCheckBox.class.getName();
       }
@@ -303,8 +303,8 @@ public class FxEditorFactory {
 
       // 26-04-21
       if (FiString.equalsAny(fcTxFieldType
-          , FimFtFieldType.fBool().getValue()
-          , FimFtFieldType.fBit().getValue()
+          , FimFcFiTypes.fBool().getValue()
+          , FimFcFiTypes.fBit().getValue()
       )) {
         txClassName = FxCheckBox.class.getName();
       }
@@ -837,22 +837,22 @@ public class FxEditorFactory {
     OzColType colType = refFiCol.getColType();
 
     if (colType == OzColType.Double) {
-      refFiCol.setFcTxFieldType(FimFtFieldType.fDouble().getValue());
+      refFiCol.setFcTxFieldType(FimFcFiTypes.fDouble().getValue());
       return;
     }
 
     if (colType == OzColType.Integer) {
-      refFiCol.setFcTxFieldType(FimFtFieldType.fint().getValue());
+      refFiCol.setFcTxFieldType(FimFcFiTypes.fint().getValue());
       return;
     }
 
     if (colType == OzColType.Date) {
-      refFiCol.setFcTxFieldType(FimFtFieldType.fdate().getValue());
+      refFiCol.setFcTxFieldType(FimFcFiTypes.fdate().getValue());
       return;
     }
 
     if (colType == OzColType.Boolean) {
-      refFiCol.setFcTxFieldType(FimFtFieldType.fBool().getValue());
+      refFiCol.setFcTxFieldType(FimFcFiTypes.fBool().getValue());
       return;
     }
 
@@ -1408,15 +1408,15 @@ public class FxEditorFactory {
 
     String fcTxFieldType = fiCol.getFcTxFieldType();
 
-    if (FiString.equalsAny(fcTxFieldType, FimFtFieldType.fint().getValue())) {
+    if (FiString.equalsAny(fcTxFieldType, FimFcFiTypes.fint().getValue())) {
       fiCol.setColType(OzColType.Integer);
     }
 
-    if (FiString.equalsAny(fcTxFieldType, FimFtFieldType.fdate().getValue())) {
+    if (FiString.equalsAny(fcTxFieldType, FimFcFiTypes.fdate().getValue())) {
       fiCol.setColType(OzColType.Date);
     }
 
-    if (FiString.equalsAny(fcTxFieldType, FimFtFieldType.fDouble().getValue())) {
+    if (FiString.equalsAny(fcTxFieldType, FimFcFiTypes.fDouble().getValue())) {
       fiCol.setColType(OzColType.Double);
     }
 
