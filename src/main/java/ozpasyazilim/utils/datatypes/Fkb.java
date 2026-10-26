@@ -822,6 +822,15 @@ public class Fkb extends LinkedHashMap<String, Object> {
     return asFkbList != null ? asFkbList : new FkbList();
   }
 
+  public FkbList getFicAsFkbListInit(FiCol fiCol) {
+    FkbList asFkbList = getAsFkbList(fiCol.getFcTxFieldName());
+    if (asFkbList == null) {
+      asFkbList = new FkbList();
+      addFic(fiCol, asFkbList);
+    }
+    return asFkbList;
+  }
+
   public FkbList getAsFkbList(String fcTxFieldName) {
 
     if (FiString.isEmpty(fcTxFieldName)) return null;
