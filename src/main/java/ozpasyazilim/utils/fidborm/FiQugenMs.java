@@ -13,6 +13,8 @@ import ozpasyazilim.utils.table.FicList;
 import ozpasyazilim.utils.table.FicUtil;
 
 import javax.annotation.Nonnull;
+import java.util.HashSet;
+import java.util.Set;
 
 public class FiQugenMs {
 
@@ -40,7 +42,7 @@ public class FiQugenMs {
     // FimFcSql.sfWhere();
 
     String template = "DELETE {{sfTableName}} \n"
-        + " WHERE {{sfWhere}} ";
+      + " WHERE {{sfWhere}} ";
 
     StringBuilder sbWhereBlock = new StringBuilder();
 
@@ -106,7 +108,7 @@ public class FiQugenMs {
     String txTableName = null;
 
     String template = "SELECT {{sfFields}}\n" +
-        "FROM {{sfTableName}}\n";
+      "FROM {{sfTableName}}\n";
 
     StringBuilder sbTxFields = new StringBuilder();
     StringBuilder sbTxWhere = new StringBuilder();
@@ -195,7 +197,7 @@ public class FiQugenMs {
     String txTableName = null;
 
     String template = "SELECT {{sfFields}}\n" +
-        "FROM {{sfTableName}}\n";
+      "FROM {{sfTableName}}\n";
 
     if (fiQuery.getAbsFecTable() != null) {
       txTableName = fiQuery.getAbsFecTable().qcfTxSqTableName().getFcTxHeader();
@@ -280,7 +282,7 @@ public class FiQugenMs {
     String txTableName = null;
 
     String template = "SELECT *\n" +
-        "FROM {{sfTableName}}\n";
+      "FROM {{sfTableName}}\n";
 
     if (fiQuery.getAbsFecTable() != null) {
       txTableName = fiQuery.getAbsFecTable().qcfTxSqTableName().getFcTxHeader();
@@ -393,7 +395,7 @@ public class FiQugenMs {
     //FimFcSql.sfVarFields();
 
     String template = "INSERT INTO {{sfTableName}} ({{sfFields}})\n" +
-        " VALUES ( {{sfVarFields}} )";
+      " VALUES ( {{sfVarFields}} )";
 
     StringBuilder sbTxFieldsBlock = new StringBuilder();
     StringBuilder sbTxFieldsVar = new StringBuilder();
@@ -446,6 +448,176 @@ public class FiQugenMs {
   }
 
   /**
+   * fkfAll kullanarak Insert Sorgusu üretir
+   * <p>
+   * Params : fkfAll
+   *
+   * @param fiQuery
+   * @return fdTxVal sorgu sonucu
+   */
+  public static Fdr insQueryByFec(FiQuery fiQuery) {
+    // Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
+
+    Fdr fdrMain = new Fdr();
+
+    // arguments
+    Fkf fkfAll = fiQuery.getAbsFecTableNtn().getFkfAll();
+
+    //FimFcSql.sfTableName();
+    //FimFcSql.sfFields();
+    //FimFcSql.sfVarFields();
+
+    String template = "INSERT INTO {{sfTableName}} ({{sfFields}})\n" +
+      " VALUES ( {{sfVarFields}} )";
+
+    StringBuilder sbTxFieldsBlock = new StringBuilder();
+    StringBuilder sbTxFieldsVar = new StringBuilder();
+
+    String txTableName = null;
+    int indexCol = 0;
+
+    if (fkfAll != null) {
+      //Loghelper.get(getClassi()).debug("tablo col mevcut");
+      txTableName = fkfAll.getSpecTxTableName();
+    }
+
+    if (FiString.isEmpty(txTableName)) return fdrMain.buiBoResult(false, "Tablo ismi tanımlanmamış.");
+
+    for (FiCol fiCol : fkfAll.values()) {
+
+      if (FiBool.isTrue(fiCol.getFcBoTransient())) continue;
+      if (FicUtil.isIdAutoType(fiCol)) continue;
+      if (FicUtil.isDefField(fiCol)) continue;
+
+      indexCol++;
+      sbTxFieldsBlock.append(FiQugenUtil.formSqlFieldCommaByFic(fiCol));
+      sbTxFieldsVar.append(FiQugenUtil.formSqlVarCommaByFic(fiCol));
+
+    }
+
+    FiString.rtrimSb(sbTxFieldsBlock, FiQugenMs.getTxComma());
+    FiString.rtrimSb(sbTxFieldsVar, FiQugenMs.getTxComma());
+
+    Fkb fkbParams = new Fkb();
+    fkbParams.addFieldBy(FimFcSql.sfTableName(), txTableName);
+    fkbParams.addFieldBy(FimFcSql.sfFields(), sbTxFieldsBlock.toString());
+    fkbParams.addFieldBy(FimFcSql.sfVarFields(), sbTxFieldsVar.toString());
+
+    String sql = FiString.substitutor(template, fkbParams);
+
+    fdrMain.setFdTxVal(sql);
+
+    if (indexCol == 0) {
+      fdrMain.setBoResult(false);
+      fdrMain.setFdTxVal("no insert fields");
+      fdrMain.setFdTxMessage("Sorgu oluştururken hata oluştu. (no insert fields)");
+      return fdrMain;
+    }
+
+    fdrMain.setBoResult(true);
+    fiQuery.setTxQuery(fdrMain.getFdTxVal());
+    return fdrMain;
+  }
+
+  /**
+   * fkfAll ve fkbParams da ortak bulunan alanlarla update Sorgusu üretir
+   * <p>
+   * where alanları fiQuery.getFicListWhereInit() ile belirtilmelidir
+   * <p>
+   * Params : absFecTable , fkbParams , ficListWhere
+   *
+   * @param fiQuery absFecTable , fkbParams , ficListWhere bulunmalıdır.
+   * @return fdTxVal sorgu sonucu
+   */
+  public static Fdr upQueryByFec(FiQuery fiQuery) {
+    // Loghelper.get(FiSqlGenMs.class).debug("upQuery called");
+
+    Fdr fdrMain = new Fdr();
+
+    // arguments
+    Fkf fkfAll = fiQuery.getAbsFecTableNtn().getFkfAll();
+
+    //FimFcSql.sfTableName();
+    //FimFcSql.sfFields();
+    //FimFcSql.sfVarFields();
+    // FimFcSql.sfVarFieldsUp();
+
+    String template = "UPDATE {{sfTableName}} SET {{sfVarFieldsUp}} WHERE {{sfWhere}}";
+
+    StringBuilder sbVarFieldsUp = new StringBuilder();
+    StringBuilder sbWhere = new StringBuilder();
+
+    String txTableName = null;
+    int indexCol = 0;
+    int indexWhere = 0;
+
+    if (fkfAll != null) {
+      //Loghelper.get(getClassi()).debug("tablo col mevcut");
+      txTableName = fkfAll.getSpecTxTableName();
+    }
+
+    if (FiString.isEmpty(txTableName)) return fdrMain.buiBoResult(false, "Tablo ismi tanımlanmamış.");
+
+    Set<String> setWhere = new HashSet<>();
+    for (FiCol fiCol : fiQuery.getFicListWhereInit()) {
+      setWhere.add(fiCol.getFcTxFieldName());
+    }
+
+    for (FiCol fiCol : fkfAll.values()) {
+
+      if (FiBool.isTrue(fiCol.getFcBoTransient())) continue;
+      if (FicUtil.isIdAutoType(fiCol)) continue;
+      //if (FicUtil.isDefField(fiCol)) continue;
+
+      // where içindeki alanlar update alanları içinde olmamalı
+      if(setWhere.contains(fiCol.getFcTxFieldName())) continue;
+
+      if (fiQuery.getFkbParams().containsFic(fiCol)) {
+        indexCol++;
+        sbVarFieldsUp.append(FiQugenUtil.formSqlAssignVarAndCommaByFic(fiCol));
+      }
+
+
+    }
+
+    for (FiCol fiCol : fiQuery.getFicListWhereInit()) {
+      indexWhere++;
+      sbWhere.append(FiQugenUtil.formSqlAssignAndByFic(fiCol));
+    }
+
+    FiString.rtrimSb(sbVarFieldsUp, FiQugenMs.getTxComma());
+    FiString.rtrimSb(sbWhere, FiQugenMs.getTxAnd());
+
+    Fkb fkbParams = new Fkb();
+    fkbParams.addFieldBy(FimFcSql.sfTableName(), txTableName);
+    fkbParams.addFieldBy(FimFcSql.sfVarFieldsUp(), sbVarFieldsUp.toString());
+    fkbParams.addFieldBy(FimFcSql.sfWhere(), sbWhere.toString());
+
+    String sql = FiString.substitutor(template, fkbParams);
+
+    if (indexCol == 0) {
+      sql = "no update fields";
+      fdrMain.setBoResult(false);
+      fdrMain.setFdTxVal(sql);
+      fdrMain.setFdTxMessage("Sorgu oluştururken hata oluştu. (no update fields)");
+      return fdrMain;
+    }
+
+    if (indexWhere == 0) {
+      sql = "no where fields";
+      fdrMain.setBoResult(false);
+      fdrMain.setFdTxVal(sql);
+      fdrMain.setFdTxMessage("Sorgu oluştururken hata oluştu. (no where fields)");
+      return fdrMain;
+    }
+
+    fdrMain.setFdTxVal(sql);
+    fdrMain.setBoResult(true);
+    fiQuery.setTxQuery(sql);
+    return fdrMain;
+  }
+
+  /**
    * tabloda yoksa öncesinde insert yapar , daha sonra update sorgusu çalıştırır
    *
    * @param fiQuery
@@ -477,20 +649,20 @@ public class FiQugenMs {
 //    FimFcSql.sfVarFieldsUp();
 
     String template = "--sq202604221135 v1\n" +
-        "DECLARE @__count AS int = 0\n" +
-        "\n" +
-        "SELECT @__count = count(*) FROM {{sfTableName}}\n" +
-        "WHERE {{sfWhere}}\n" +
-        "\n" +
-        "IF @__count = 0 \n" +
-        "BEGIN\n" +
-        "  INSERT INTO {{sfTableName}} ({{sfFieldsIns}}) \n" +
-        "  VALUES ({{sfVarFieldsIns}}) \n" +
-        "END;\n" +
-        "\n" +
-        "UPDATE {{sfTableName}}\n" +
-        "SET {{sfVarFieldsUp}}\n" +
-        "WHERE {{sfWhere}}\n";
+      "DECLARE @__count AS int = 0\n" +
+      "\n" +
+      "SELECT @__count = count(*) FROM {{sfTableName}}\n" +
+      "WHERE {{sfWhere}}\n" +
+      "\n" +
+      "IF @__count = 0 \n" +
+      "BEGIN\n" +
+      "  INSERT INTO {{sfTableName}} ({{sfFieldsIns}}) \n" +
+      "  VALUES ({{sfVarFieldsIns}}) \n" +
+      "END;\n" +
+      "\n" +
+      "UPDATE {{sfTableName}}\n" +
+      "SET {{sfVarFieldsUp}}\n" +
+      "WHERE {{sfWhere}}\n";
 
     StringBuilder sbWhereBlock = new StringBuilder();
     // boş degilse parantez eklenecek
@@ -607,7 +779,7 @@ public class FiQugenMs {
     //FimQcSql.sfTableName();
 
     String template = "INSERT INTO {{sfTableName}} ({{sfTxFields}})\n" +
-        " VALUES ( {{sfTxFieldsVar}} )";
+      " VALUES ( {{sfTxFieldsVar}} )";
 
     StringBuilder sbTxFieldsBlock = new StringBuilder();
     StringBuilder sbTxFieldsVar = new StringBuilder();
@@ -671,7 +843,7 @@ public class FiQugenMs {
 //    FimFcSql.sfVarFieldsIns();
 
     String template = "INSERT INTO {{sfTableName}} ({{sfFields}})\n" +
-        " VALUES ( {{sfVarFieldsIns}} )";
+      " VALUES ( {{sfVarFieldsIns}} )";
 
     StringBuilder sbTxFieldsBlock = new StringBuilder();
     StringBuilder sbTxVarFieldsIns = new StringBuilder();
@@ -765,7 +937,7 @@ public class FiQugenMs {
 //     FimFcSql.sfTxWhere();
 
     String template = "DELETE {{sfTableName}} \n"
-        + " WHERE {{sfWhere}} ";
+      + " WHERE {{sfWhere}} ";
 
     StringBuilder sbWhereBlock = new StringBuilder();
 
@@ -806,6 +978,22 @@ public class FiQugenMs {
     fdrMain.setBoResult(true);
     fdrMain.setFdTxVal(sql);
     return fdrMain;
+  }
+
+  /**
+   * fkfAll daki transient olmayan alanlar fkbParams'da yoksa null olarak ekler
+   *
+   * @param fiQuery
+   */
+  public static void addMissingParamsToFkbParams(FiQuery fiQuery) {
+    fiQuery.getAbsFecTableNtn().getFkfAllNtn().forEach((txFieldName, fiCol) -> {
+
+      if (fiCol.isTransient()) return;
+
+      if (fiQuery.getFkbParams().containsKey(txFieldName)) return;
+
+      fiQuery.getFkbParams().addField(txFieldName, null);
+    });
   }
 }
 

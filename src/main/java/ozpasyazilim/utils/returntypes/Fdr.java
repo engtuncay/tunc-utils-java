@@ -497,6 +497,10 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     setLnUpdatedRows(FiNumber.orZero(getLnUpdatedRows()) + FiNumber.orZero(lnUpdatedRows));
   }
 
+  /**
+   * Exception listesindeki ilk exception döner, yoksa null döner
+   * @return
+   */
   public Exception getFdException() {
     if (!getFdListExceptionInit().isEmpty()) {
       return getFdListExceptionInit().get(0);
@@ -582,6 +586,10 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
       getFdListFdrExceptInit().addAll(fdrSubWork.getFdListFdrExceptInit());
     }
 
+    if (! fdrSubWork.getFdListExceptionNtn().isEmpty() ) {
+      getFdListExceptionInit().addAll(fdrSubWork.getFdListExceptionInit());
+    }
+
     // Tüm işlemlerde mesaj birleştirilir.
     if (!FiString.isEmptyTrim(fdrSubWork.getFdTxMessage())) appendMessageLnOnly(fdrSubWork.getFdTxMessage());
 
@@ -639,10 +647,14 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
       //getResMessage().append(fiDbResult.getResMessage().toString());
     }
 
-    if (fdrSubWork.getFdException() != null) {
-      addFdException(fdrSubWork.getFdException());
-      // exception birden fazla olma ihtimali var.
-      // getFdListExceptionInit().add(fdrSubWork.getFdException());
+//    if (fdrSubWork.getFdException() != null) {
+//      addFdException(fdrSubWork.getFdException());
+//      // exception birden fazla olma ihtimali var.
+//      // getFdListExceptionInit().add(fdrSubWork.getFdException());
+//    }
+
+    if (! fdrSubWork.getFdListExceptionNtn().isEmpty() ) {
+      getFdListExceptionInit().addAll(fdrSubWork.getFdListExceptionInit());
     }
 
     if (fdrSubWork.getFdListFdrExcept() != null) {
@@ -791,7 +803,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
   public void setBoResult(Boolean boExec, Exception exError) {
     setFdBoResult(boExec);
     addFdException(exError);
-    getFdListExceptionInit().add(exError);
+    //getFdListExceptionInit().add(exError);
   }
 
   public void setBoResult(Boolean fdrBoResult) {

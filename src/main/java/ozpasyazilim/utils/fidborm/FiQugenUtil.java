@@ -35,6 +35,13 @@ public class FiQugenUtil {
     return fcTxFieldName + " IN ( @" + fcTxFieldName + " ) " + getTxAnd();
   }
 
+  /**
+   *
+   * fcTxFieldName + " = @" + fcTxFieldName + " AND " şeklinde üretir
+   *
+   * @param fiCol
+   * @return
+   */
   public static String formSqlAssignAndByFic(FiCol fiCol) {
     return formSqlAssignAnd(fiCol.getFcTxFieldName());
   }
@@ -85,6 +92,12 @@ public class FiQugenUtil {
     return " @" + fcTxFieldName + getTxComma();
   }
 
+  /**
+   * "@varName ," template oluşturur
+   *
+   * @param fiCol fiCol.getFcTxFieldName() kullanılır
+   * @return
+   */
   public static String formSqlVarCommaByFic(FiCol fiCol) {
     return formSqlVarComma(fiCol.getFcTxFieldName());
   }
