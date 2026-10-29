@@ -20,7 +20,7 @@ public class FiQugenUtil {
    * @param fcTxFieldName
    * @return
    */
-  public static String formSqlAssignAnd(String fcTxFieldName) {
+  public static String formSqlAssignWitAnd(String fcTxFieldName) {
     return fcTxFieldName + " = @" + fcTxFieldName + getTxAnd();
   }
 
@@ -31,19 +31,19 @@ public class FiQugenUtil {
    * @param fcTxFieldName
    * @return
    */
-  public static String formSqlAssignIn(String fcTxFieldName) {
+  public static String formSqlAssignInWitAnd(String fcTxFieldName) {
     return fcTxFieldName + " IN ( @" + fcTxFieldName + " ) " + getTxAnd();
   }
 
   /**
    *
-   * fcTxFieldName + " = @" + fcTxFieldName + " AND " şeklinde üretir
+   * "fcTxFieldName = @fcTxFieldName AND " şeklinde şablon üretir
    *
    * @param fiCol
    * @return
    */
-  public static String formSqlAssignAndByFic(FiCol fiCol) {
-    return formSqlAssignAnd(fiCol.getFcTxFieldName());
+  public static String formSqlAssignWitAndByFic(FiCol fiCol) {
+    return formSqlAssignWitAnd(fiCol.getFcTxFieldName());
   }
 
   /**
@@ -54,7 +54,7 @@ public class FiQugenUtil {
    * @return
    */
   public static String formSqlAssignInByFic(FiCol fiCol) {
-    return formSqlAssignIn(fiCol.getFcTxFieldName());
+    return formSqlAssignInWitAnd(fiCol.getFcTxFieldName());
   }
 
 
@@ -64,12 +64,12 @@ public class FiQugenUtil {
    * @param fiCol
    * @return
    */
-  public static String formSqlAssignVarAndCommaByFic(FiCol fiCol) {
+  public static String formSqlAssignVarWitCommaByFic(FiCol fiCol) {
     // dbField tanımlanmışsa, dbFieldAlan ismi kullanılır
     if (!FiString.isEmptyTrim(fiCol.getFcTxDbField())) {
-      return formSqlAssignVarAndComma(fiCol.getFcTxDbField());
+      return formSqlAssignVarWitComma(fiCol.getFcTxDbField());
     }
-    return formSqlAssignVarAndComma(fiCol.getFcTxFieldName());
+    return formSqlAssignVarWitComma(fiCol.getFcTxFieldName());
   }
 
   /**
@@ -78,7 +78,7 @@ public class FiQugenUtil {
    * @param fcTxFieldName
    * @return
    */
-  public static String formSqlAssignVarAndComma(String fcTxFieldName) {
+  public static String formSqlAssignVarWitComma(String fcTxFieldName) {
     return fcTxFieldName + " = @" + fcTxFieldName + getTxComma();
   }
 
@@ -88,7 +88,7 @@ public class FiQugenUtil {
    * @param fcTxFieldName
    * @return
    */
-  public static String formSqlVarComma(String fcTxFieldName) {
+  public static String formSqlVarWitComma(String fcTxFieldName) {
     return " @" + fcTxFieldName + getTxComma();
   }
 
@@ -98,16 +98,16 @@ public class FiQugenUtil {
    * @param fiCol fiCol.getFcTxFieldName() kullanılır
    * @return
    */
-  public static String formSqlVarCommaByFic(FiCol fiCol) {
-    return formSqlVarComma(fiCol.getFcTxFieldName());
+  public static String formSqlVarWitCommaByFic(FiCol fiCol) {
+    return formSqlVarWitComma(fiCol.getFcTxFieldName());
   }
 
-  public static String formSqlFieldComma(String fcTxFieldName) {
+  public static String formSqlFieldWitComma(String fcTxFieldName) {
     return fcTxFieldName + getTxComma();
   }
 
-  public static String formSqlFieldCommaByFic(FiCol fiCol) {
-    return formSqlFieldComma(fiCol.getFcTxFieldName());
+  public static String formSqlFieldWitCommaByFic(FiCol fiCol) {
+    return formSqlFieldWitComma(fiCol.getFcTxFieldName());
   }
 
   @Nonnull

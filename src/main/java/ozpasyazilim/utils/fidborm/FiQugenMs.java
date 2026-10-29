@@ -64,7 +64,7 @@ public class FiQugenMs {
 
       if (fiCol.isWhereField()) {
         indexWhereBlock++;
-        sbWhereBlock.append(FiQugenUtil.formSqlAssignAnd(fiCol.getFcTxFieldName()));
+        sbWhereBlock.append(FiQugenUtil.formSqlAssignWitAnd(fiCol.getFcTxFieldName()));
       }
 
     }
@@ -134,11 +134,11 @@ public class FiQugenMs {
           continue;
         }
 
-        sbTxWhere.append(FiQugenUtil.formSqlAssignAndByFic(fiCol));
+        sbTxWhere.append(FiQugenUtil.formSqlAssignWitAndByFic(fiCol));
         continue;
       }
 
-      sbTxFields.append(FiQugenUtil.formSqlFieldComma(fiCol.getFcTxFieldName()));
+      sbTxFields.append(FiQugenUtil.formSqlFieldWitComma(fiCol.getFcTxFieldName()));
 
     } // end for
 
@@ -227,11 +227,11 @@ public class FiQugenMs {
           continue;
         }
 
-        sbTxWhere.append(FiQugenUtil.formSqlAssignAndByFic(fiCol));
+        sbTxWhere.append(FiQugenUtil.formSqlAssignWitAndByFic(fiCol));
         continue;
       }
 
-      sbTxFields.append(FiQugenUtil.formSqlFieldComma(fiCol.getFcTxFieldName()));
+      sbTxFields.append(FiQugenUtil.formSqlFieldWitComma(fiCol.getFcTxFieldName()));
 
     } // end for
 
@@ -311,7 +311,7 @@ public class FiQugenMs {
           continue;
         }
 
-        sbTxWhere.append(FiQugenUtil.formSqlAssignAndByFic(fiCol));
+        sbTxWhere.append(FiQugenUtil.formSqlAssignWitAndByFic(fiCol));
         continue;
       }
 
@@ -330,7 +330,7 @@ public class FiQugenMs {
         sbTxWhere.append(FiQugenUtil.formSqlAssignInByFic(fiCol));
         continue;
       }
-      sbTxWhere.append(FiQugenUtil.formSqlAssignAndByFic(fiCol));
+      sbTxWhere.append(FiQugenUtil.formSqlAssignWitAndByFic(fiCol));
     }
 
     if (indexWhereBlock > 0) {
@@ -417,8 +417,8 @@ public class FiQugenMs {
       if (FicUtil.isDefField(fiCol)) continue;
 
       indexCol++;
-      sbTxFieldsBlock.append(FiQugenUtil.formSqlFieldCommaByFic(fiCol));
-      sbTxFieldsVar.append(FiQugenUtil.formSqlVarCommaByFic(fiCol));
+      sbTxFieldsBlock.append(FiQugenUtil.formSqlFieldWitCommaByFic(fiCol));
+      sbTxFieldsVar.append(FiQugenUtil.formSqlVarWitCommaByFic(fiCol));
 
     }
 
@@ -490,8 +490,8 @@ public class FiQugenMs {
       if (FicUtil.isDefField(fiCol)) continue;
 
       indexCol++;
-      sbTxFieldsBlock.append(FiQugenUtil.formSqlFieldCommaByFic(fiCol));
-      sbTxFieldsVar.append(FiQugenUtil.formSqlVarCommaByFic(fiCol));
+      sbTxFieldsBlock.append(FiQugenUtil.formSqlFieldWitCommaByFic(fiCol));
+      sbTxFieldsVar.append(FiQugenUtil.formSqlVarWitCommaByFic(fiCol));
 
     }
 
@@ -538,9 +538,8 @@ public class FiQugenMs {
     Fkf fkfAll = fiQuery.getAbsFecTableNtn().getFkfAll();
 
     //FimFcSql.sfTableName();
-    //FimFcSql.sfFields();
-    //FimFcSql.sfVarFields();
-    // FimFcSql.sfVarFieldsUp();
+    //FimFcSql.sfVarFieldsUp();
+    //FimFcSql.sfWhere();
 
     String template = "UPDATE {{sfTableName}} SET {{sfVarFieldsUp}} WHERE {{sfWhere}}";
 
@@ -551,13 +550,18 @@ public class FiQugenMs {
     int indexCol = 0;
     int indexWhere = 0;
 
+    // tablo ismi elde edilir
     if (fkfAll != null) {
       //Loghelper.get(getClassi()).debug("tablo col mevcut");
       txTableName = fkfAll.getSpecTxTableName();
     }
 
-    if (FiString.isEmpty(txTableName)) return fdrMain.buiBoResult(false, "Tablo ismi tanımlanmamış.");
+    if (FiString.isEmptyTrim(txTableName)) {
+      fiQuery.setTxQuery("no table name");
+      return fdrMain.buiBoResult(false, "Tablo ismi tanımlanmamış.");
+    }
 
+    // where alanları update alanları içinde olmamalı, where alanlarını bu set'de topluyoruz
     Set<String> setWhere = new HashSet<>();
     for (FiCol fiCol : fiQuery.getFicListWhereInit()) {
       setWhere.add(fiCol.getFcTxFieldName());
@@ -574,15 +578,14 @@ public class FiQugenMs {
 
       if (fiQuery.getFkbParams().containsFic(fiCol)) {
         indexCol++;
-        sbVarFieldsUp.append(FiQugenUtil.formSqlAssignVarAndCommaByFic(fiCol));
+        sbVarFieldsUp.append(FiQugenUtil.formSqlAssignVarWitCommaByFic(fiCol));
       }
-
 
     }
 
     for (FiCol fiCol : fiQuery.getFicListWhereInit()) {
       indexWhere++;
-      sbWhere.append(FiQugenUtil.formSqlAssignAndByFic(fiCol));
+      sbWhere.append(FiQugenUtil.formSqlAssignWitAndByFic(fiCol));
     }
 
     FiString.rtrimSb(sbVarFieldsUp, FiQugenMs.getTxComma());
@@ -597,6 +600,7 @@ public class FiQugenMs {
 
     if (indexCol == 0) {
       sql = "no update fields";
+      fiQuery.setTxQuery(sql);
       fdrMain.setBoResult(false);
       fdrMain.setFdTxVal(sql);
       fdrMain.setFdTxMessage("Sorgu oluştururken hata oluştu. (no update fields)");
@@ -605,15 +609,16 @@ public class FiQugenMs {
 
     if (indexWhere == 0) {
       sql = "no where fields";
+      fiQuery.setTxQuery(sql);
       fdrMain.setBoResult(false);
       fdrMain.setFdTxVal(sql);
       fdrMain.setFdTxMessage("Sorgu oluştururken hata oluştu. (no where fields)");
       return fdrMain;
     }
 
+    fiQuery.setTxQuery(sql);
     fdrMain.setFdTxVal(sql);
     fdrMain.setBoResult(true);
-    fiQuery.setTxQuery(sql);
     return fdrMain;
   }
 
@@ -690,7 +695,7 @@ public class FiQugenMs {
       if (FiBool.isTrue(fiCol.getFcBoWhereField())) {
         indexWhereBlock++;
         //Loghelper.get(FiSqlGenMs.class).debug("where field: " + fiCol.getFcTxFieldName());
-        sbWhereBlock.append(FiQugenUtil.formSqlAssignAndByFic(fiCol));
+        sbWhereBlock.append(FiQugenUtil.formSqlAssignWitAndByFic(fiCol));
 
         // identity alan inserte eklenemez
         if (fiCol.isIdAuto()) continue;
@@ -703,19 +708,19 @@ public class FiQugenMs {
 
       if (FiBool.isTrue(fiQuery.getBoUseInsFieldsForInsQuery())) {
         if (fiCol.isInsertField()) {
-          sbFieldsIns.append(FiQugenUtil.formSqlFieldCommaByFic(fiCol));
-          sbFieldsVarIns.append(FiQugenUtil.formSqlVarCommaByFic(fiCol));
+          sbFieldsIns.append(FiQugenUtil.formSqlFieldWitCommaByFic(fiCol));
+          sbFieldsVarIns.append(FiQugenUtil.formSqlVarWitCommaByFic(fiCol));
         }
         // else durumunda insert'e alan eklenmez
       } else { // buUseInsFieldsOnly değilse direk eklenir
-        sbFieldsIns.append(FiQugenUtil.formSqlFieldCommaByFic(fiCol));
-        sbFieldsVarIns.append(FiQugenUtil.formSqlVarCommaByFic(fiCol));
+        sbFieldsIns.append(FiQugenUtil.formSqlFieldWitCommaByFic(fiCol));
+        sbFieldsVarIns.append(FiQugenUtil.formSqlVarWitCommaByFic(fiCol));
       }
 
       if (fiCol.isIdKey()) {
         continue;
       }
-      sbFieldsVarUp.append(FiQugenUtil.formSqlAssignVarAndCommaByFic(fiCol));
+      sbFieldsVarUp.append(FiQugenUtil.formSqlAssignVarWitCommaByFic(fiCol));
 
     }
 
@@ -801,8 +806,8 @@ public class FiQugenMs {
       if (FicUtil.isDefField(ficItem)) continue;
 
       indexCol++;
-      sbTxFieldsBlock.append(FiQugenUtil.formSqlFieldCommaByFic(ficItem));
-      sbTxFieldsVar.append(FiQugenUtil.formSqlVarCommaByFic(ficItem));
+      sbTxFieldsBlock.append(FiQugenUtil.formSqlFieldWitCommaByFic(ficItem));
+      sbTxFieldsVar.append(FiQugenUtil.formSqlVarWitCommaByFic(ficItem));
 
     }
 
@@ -872,8 +877,8 @@ public class FiQugenMs {
       if (FicUtil.isDefField(ficItem)) continue;
 
       indexCol++;
-      sbTxFieldsBlock.append(FiQugenUtil.formSqlFieldCommaByFic(ficItem));
-      sbTxVarFieldsIns.append(FiQugenUtil.formSqlVarCommaByFic(ficItem));
+      sbTxFieldsBlock.append(FiQugenUtil.formSqlFieldWitCommaByFic(ficItem));
+      sbTxVarFieldsIns.append(FiQugenUtil.formSqlVarWitCommaByFic(ficItem));
 
     }
 
@@ -956,7 +961,7 @@ public class FiQugenMs {
       if (ficWhereField.isTransient()) continue;
 
       indexWhereBlock++;
-      sbWhereBlock.append(FiQugenUtil.formSqlAssignAnd(ficWhereField.getFcTxFieldName()));
+      sbWhereBlock.append(FiQugenUtil.formSqlAssignWitAnd(ficWhereField.getFcTxFieldName()));
     }
 
     FiString.rtrimSb(sbWhereBlock, FiQugenMs.getTxAnd());

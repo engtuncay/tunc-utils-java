@@ -69,13 +69,13 @@ public class FiString {
 
   public static boolean isEmptyTrim(String strvalue) {
     if (strvalue == null) return true;
-    if (strvalue.trim().equals("")) return true;
+    if (strvalue.trim().isEmpty()) return true;
     return false;
   }
 
   public static boolean isEmptyToString(Object strvalue) {
     if (strvalue == null) return true;
-    if (strvalue.toString().equals("")) return true;
+    if (strvalue.toString().isEmpty()) return true;
     return false;
   }
 
