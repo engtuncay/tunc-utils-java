@@ -128,7 +128,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
    * <p>
    * (sonuca dahil edilmeyip, bilgi olarak)
    */
-  private List<Fdr> fdListFdrExcept;
+  private List<Fdr> fdListFdrCustom;
 
   // Advanced Configurations
 
@@ -582,7 +582,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     }
 
     // Tümü için yapılacaklar
-    if (fdrSubWork.getFdListFdrExcept() != null) {
+    if (fdrSubWork.getFdListFdrCustom() != null) {
       getFdListFdrExceptInit().addAll(fdrSubWork.getFdListFdrExceptInit());
     }
 
@@ -653,11 +653,11 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
 //      // getFdListExceptionInit().add(fdrSubWork.getFdException());
 //    }
 
-    if (! fdrSubWork.getFdListExceptionNtn().isEmpty() ) {
+    if (!fdrSubWork.getFdListExceptionNtn().isEmpty() ) {
       getFdListExceptionInit().addAll(fdrSubWork.getFdListExceptionInit());
     }
 
-    if (fdrSubWork.getFdListFdrExcept() != null) {
+    if (fdrSubWork.getFdListFdrCustom() != null) {
       getFdListFdrExceptInit().addAll(fdrSubWork.getFdListFdrExceptInit());
     }
 
@@ -1586,19 +1586,19 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     Loghelper.get(getClass()).debug(getLogsAllTos());
   }
 
-  public List<Fdr> getFdListFdrExcept() {
-    return fdListFdrExcept;
+  public List<Fdr> getFdListFdrCustom() {
+    return fdListFdrCustom;
   }
 
   public List<Fdr> getFdListFdrExceptInit() {
-    if (fdListFdrExcept == null) {
-      fdListFdrExcept = new ArrayList<>();
+    if (fdListFdrCustom == null) {
+      fdListFdrCustom = new ArrayList<>();
     }
-    return fdListFdrExcept;
+    return fdListFdrCustom;
   }
 
-  public void setFdListFdrExcept(List<Fdr> fdListFdrExcept) {
-    this.fdListFdrExcept = fdListFdrExcept;
+  public void setFdListFdrCustom(List<Fdr> fdListFdrCustom) {
+    this.fdListFdrCustom = fdListFdrCustom;
   }
 
   public String getFdTxFdrType() {
