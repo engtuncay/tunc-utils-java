@@ -522,7 +522,7 @@ public class FiQugenMs {
   /**
    * fkfAll ve fkbParams da ortak bulunan alanlarla update Sorgusu üretir
    * <p>
-   * where alanları fiQuery.getFicListWhereInit() ile belirtilmelidir
+   * where alanları fiQuery.getFicListWhere() ile belirtilmelidir
    * <p>
    * Params : absFecTable , fkbParams , ficListWhere
    *
