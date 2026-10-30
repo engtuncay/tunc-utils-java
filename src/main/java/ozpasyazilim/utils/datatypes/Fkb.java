@@ -288,6 +288,12 @@ public class Fkb extends LinkedHashMap<String, Object> {
     return getValueAsString(fiCol.getFcTxFieldName());
   }
 
+  public String getFicAsStringNtn(FiCol fiCol) {
+    if (fiCol == null || FiString.isEmpty(fiCol.getFcTxFieldName())) return "";
+
+    return getValueAsStringNtn(fiCol.getFcTxFieldName());
+  }
+
   public String getValueAsString(String txKey) {
     if (FiString.isEmpty(txKey)) return null;
 
