@@ -1415,7 +1415,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
   }
 
 
-  public FkbList getFdFkbListValNtn() {
+  public FkbList getFdFkbListValInit() {
     if (fdFkbListVal == null) {
       fdFkbListVal = new FkbList();
     }
@@ -1473,10 +1473,10 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     Loghelper.get(getClass()).debug("FdBoResult:" + getFdBoResult());
 
 
-    Loghelper.get(getClass()).debug("FkbList Size:" + getFdFkbListValNtn().size());
+    Loghelper.get(getClass()).debug("FkbList Size:" + getFdFkbListValInit().size());
 
-    if (!getFdFkbListValNtn().isEmpty()) {
-      for (Fkb fkb : getFdFkbListValNtn()) {
+    if (!getFdFkbListValInit().isEmpty()) {
+      for (Fkb fkb : getFdFkbListValInit()) {
         Loghelper.get(getClass()).debug("Fkb Entity \n" + FiConsole.textFkb(fkb));
       }
     }
@@ -1506,10 +1506,10 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     Loghelper.get(getClass()).debug("FdBoVal:" + getFdBoVal());
     Loghelper.get(getClass()).debug("FdBoResult:" + getFdBoResult());
 
-    Loghelper.get(getClass()).debug("FkbList Size:" + getFdFkbListValNtn().size());
+    Loghelper.get(getClass()).debug("FkbList Size:" + getFdFkbListValInit().size());
 
-    if(!getFdFkbListValNtn().isEmpty()) {
-      Loghelper.get(getClass()).debug("Fkb Entity (1):\n"+FiConsole.textFkb(getFdFkbListValNtn().get(0)));
+    if(!getFdFkbListValInit().isEmpty()) {
+      Loghelper.get(getClass()).debug("Fkb Entity (1):\n"+FiConsole.textFkb(getFdFkbListValInit().get(0)));
     }
 
 //    if (!getFdFkbListValNtn().isEmpty()) {
@@ -1544,9 +1544,9 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
       sb.append("Logs:\n").append(getLogsAllTos()).append("\n");
     }
 
-    if(!getFdFkbListValNtn().isEmpty()) {
-      sb.append("FkbList Size:").append(getFdFkbListValNtn().size()).append("\n");
-      sb.append("Fkb Entity (1) \n").append(FiConsole.textFkb(getFdFkbListValNtn().get(0))).append("\n");
+    if(!getFdFkbListValInit().isEmpty()) {
+      sb.append("FkbList Size:").append(getFdFkbListValInit().size()).append("\n");
+      sb.append("Fkb Entity (1) \n").append(FiConsole.textFkb(getFdFkbListValInit().get(0))).append("\n");
     }
 
     return sb.toString();
@@ -1610,7 +1610,7 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
   }
 
   public void combineFkbList(Fdr fdrSub) {
-    this.getFdFkbListValNtn().addAll(fdrSub.getFdFkbListValNtn());
+    this.getFdFkbListValInit().addAll(fdrSub.getFdFkbListValInit());
   }
 
   public Fdr buiBoResult(Boolean boResult, String txMessage) {
