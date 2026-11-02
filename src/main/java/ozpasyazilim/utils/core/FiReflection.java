@@ -19,9 +19,9 @@ import java.util.*;
 
 public class FiReflection {
 
-	public static void main(String[] args) {
+  public static void main(String[] args) {
 
-		PersonEntityTest personEntityTest = new PersonEntityTest("Ali", "Kaya");
+    PersonEntityTest personEntityTest = new PersonEntityTest("Ali", "Kaya");
 //
 //		PersonEntityTest personEntityTest3 = new PersonEntityTest("Mehmet", "Kaya");
 //
@@ -31,118 +31,118 @@ public class FiReflection {
 //
 //		FiConsole.printFieldsNotNull(personEntityTest2);
 
-	}
+  }
 
 
-	public static <T> Object getProperty(T entity, String field) {
+  public static <T> Object getProperty(T entity, String field) {
 
-		//if (entity == null) Loghelperr.getInstance(FiProperty.class).debug("entity null");
-		//if (field == null) Loghelperr.getInstance(FiProperty.class).debug("field null");
+    //if (entity == null) Loghelperr.getInstance(FiProperty.class).debug("entity null");
+    //if (field == null) Loghelperr.getInstance(FiProperty.class).debug("field null");
 
-		Object objectt = null;
-		try {
-			objectt = PropertyUtils.getProperty(entity, field);
-		} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException ex) {
-			Loghelper.get(FiReflection.class).debug(FiException.exToErrorLog(ex));
-		}
+    Object objectt = null;
+    try {
+      objectt = PropertyUtils.getProperty(entity, field);
+    } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException ex) {
+      Loghelper.get(FiReflection.class).debug(FiException.exToErrorLog(ex));
+    }
 
     return objectt;
-	}
+  }
 
-	public static String getSimpleTypeName(Class<?> aClass) {
-		return aClass.getSimpleName();
-	}
+  public static String getSimpleTypeName(Class<?> aClass) {
+    return aClass.getSimpleName();
+  }
 
-	public static <T> Object getPropertyy(T entity, String field) {
+  public static <T> Object getPropertyy(T entity, String field) {
 
-		//if (entity == null) Loghelperr.getInstance(FiProperty.class).debug("entity null");
-		//if (field == null) Loghelperr.getInstance(FiProperty.class).debug("field null");
+    //if (entity == null) Loghelperr.getInstance(FiProperty.class).debug("entity null");
+    //if (field == null) Loghelperr.getInstance(FiProperty.class).debug("field null");
 
-		Object objectt = null;
-		try {
-			objectt = PropertyUtils.getProperty(entity, field);
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
-		}
+    Object objectt = null;
+    try {
+      objectt = PropertyUtils.getProperty(entity, field);
+    } catch (IllegalAccessException e) {
+      e.printStackTrace();
+    } catch (InvocationTargetException e) {
+      e.printStackTrace();
+    } catch (NoSuchMethodException e) {
+      e.printStackTrace();
+    }
 
-		return objectt;
-	}
+    return objectt;
+  }
 
-	public static <T> Object getPropertyNested(T entity, String field) {
+  public static <T> Object getPropertyNested(T entity, String field) {
 
-		//if (entity == null) Loghelperr.getInstance(FiProperty.class).debug("entity null");
-		//if (field == null) Loghelperr.getInstance(FiProperty.class).debug("field null");
+    //if (entity == null) Loghelperr.getInstance(FiProperty.class).debug("entity null");
+    //if (field == null) Loghelperr.getInstance(FiProperty.class).debug("field null");
 
-		Object objectt = null;
-		try {
-			objectt = PropertyUtils.getNestedProperty(entity, field);
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
-		}
+    Object objectt = null;
+    try {
+      objectt = PropertyUtils.getNestedProperty(entity, field);
+    } catch (IllegalAccessException e) {
+      e.printStackTrace();
+    } catch (InvocationTargetException e) {
+      e.printStackTrace();
+    } catch (NoSuchMethodException e) {
+      e.printStackTrace();
+    }
 
-		return objectt;
-	}
+    return objectt;
+  }
 
-	public static <T> Class getPropertyType(T objectt, String fieldName) {
+  public static <T> Class getPropertyType(T objectt, String fieldName) {
 
-		//if (objectt == null) Loghelperr.getInstance(getClass()).debug("Object Null");
-		//if (fieldName == null) Loghelperr.getInstance(getClass()).debug("FieldName Null");
+    //if (objectt == null) Loghelperr.getInstance(getClass()).debug("Object Null");
+    //if (fieldName == null) Loghelperr.getInstance(getClass()).debug("FieldName Null");
 
-		Class clazz = null;
+    Class clazz = null;
 
-		// olmayan property için hata dönmedi !!!!
-		try {
-			PropertyDescriptor propertyDescriptor = PropertyUtils.getPropertyDescriptor(objectt, fieldName);
-			if (propertyDescriptor == null) return null;
-			clazz = propertyDescriptor.getPropertyType();
-			//clazz = PropertyUtils.getPropertyType(objectt, fieldName);
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
-		}
+    // olmayan property için hata dönmedi !!!!
+    try {
+      PropertyDescriptor propertyDescriptor = PropertyUtils.getPropertyDescriptor(objectt, fieldName);
+      if (propertyDescriptor == null) return null;
+      clazz = propertyDescriptor.getPropertyType();
+      //clazz = PropertyUtils.getPropertyType(objectt, fieldName);
+    } catch (IllegalAccessException e) {
+      e.printStackTrace();
+    } catch (InvocationTargetException e) {
+      e.printStackTrace();
+    } catch (NoSuchMethodException e) {
+      e.printStackTrace();
+    }
 
-		return clazz;
-	}
+    return clazz;
+  }
 
-	public static <T> Boolean setter(IFiCol fiCol, T objectt, String value) {
+  public static <T> Boolean setter(IFiCol fiCol, T objectt, String value) {
 
-		if (objectt == null) return false;
-		if (value == null) return false;
+    if (objectt == null) return false;
+    if (value == null) return false;
 
-		try {
+    try {
 
-			Object cellvalue = null;
+      Object cellvalue = null;
 
-			String strCellvalue = value;  //fiCol.getHeader();
+      String strCellvalue = value;  //fiCol.getHeader();
 
-			if (fiCol.getColType() == OzColType.String) {
-				cellvalue = strCellvalue;
-			} else if (fiCol.getColType() == OzColType.Double) {
-				cellvalue = FiNumber.strToDouble(strCellvalue);
-			} else if (fiCol.getColType() == OzColType.Date) {
-				cellvalue = FiDate.strToDateGeneric2(strCellvalue);
-			} else if (fiCol.getColType() == OzColType.Integer) {
-				cellvalue = Integer.parseInt(strCellvalue);
-			} else { // eğer tip belirtilmemişse String olarak varsayılır
-				cellvalue = strCellvalue;
-			}
+      if (fiCol.getColType() == OzColType.String) {
+        cellvalue = strCellvalue;
+      } else if (fiCol.getColType() == OzColType.Double) {
+        cellvalue = FiNumber.strToDouble(strCellvalue);
+      } else if (fiCol.getColType() == OzColType.Date) {
+        cellvalue = FiDate.strToDateGeneric2(strCellvalue);
+      } else if (fiCol.getColType() == OzColType.Integer) {
+        cellvalue = Integer.parseInt(strCellvalue);
+      } else { // eğer tip belirtilmemişse String olarak varsayılır
+        cellvalue = strCellvalue;
+      }
 
-			PropertyUtils.setProperty(objectt, fiCol.getFcTxFieldName(), cellvalue); //cellvalue == null ? strCellvalue : cellvalue
-			return true;
-		} catch (Exception e) {
-			Loghelper.get(FiReflection.class).debug(FiException.exTosMain(e));
-		}
+      PropertyUtils.setProperty(objectt, fiCol.getFcTxFieldName(), cellvalue); //cellvalue == null ? strCellvalue : cellvalue
+      return true;
+    } catch (Exception e) {
+      Loghelper.get(FiReflection.class).debug(FiException.exTosMain(e));
+    }
 //		} catch (IllegalAccessException e) {
 //			Loghelper.get(FiReflection.class).debug(FiException.exceptiontostring(e));
 //		} catch (InvocationTargetException e) {
@@ -150,312 +150,312 @@ public class FiReflection {
 //		} catch (NoSuchMethodException e) {
 //			Loghelper.get(FiReflection.class).debug(FiException.exceptiontostring(e));
 //		}
-		return false;
-	}
+    return false;
+  }
 
 
-	public static <R> R generateObject(Class<R> clazz) {
+  public static <R> R generateObject(Class<R> clazz) {
 
-		R objectt = null;
-		try {
-			objectt = clazz.newInstance();
-		} catch (InstantiationException | IllegalAccessException e) {
-			Loghelper.get(getClassi()).error(FiException.exTosMain(e));
-		}
+    R objectt = null;
+    try {
+      objectt = clazz.newInstance();
+    } catch (InstantiationException | IllegalAccessException e) {
+      Loghelper.get(getClassi()).error(FiException.exTosMain(e));
+    }
 
-        return objectt;
-	}
+    return objectt;
+  }
 
-	private static Class<FiReflection> getClassi() {
-		return FiReflection.class;
-	}
+  private static Class<FiReflection> getClassi() {
+    return FiReflection.class;
+  }
 
-	public static <T> Boolean setterByString(FiCol fiTableCol, T objectt, String value) {
+  public static <T> Boolean setterByString(FiCol fiTableCol, T objectt, String value) {
 
-		if (objectt == null) return false;
-		if (value == null) return false;
+    if (objectt == null) return false;
+    if (value == null) return false;
 
-		try {
+    try {
 
-			String strCellvalue = value;  //ozTableCol.getHeader();
+      String strCellvalue = value;  //ozTableCol.getHeader();
 
-			Object cellvalue = convertObjectByOzColType(fiTableCol.getColType(), strCellvalue);
+      Object cellvalue = convertObjectByOzColType(fiTableCol.getColType(), strCellvalue);
 
-			PropertyUtils.setProperty(objectt, fiTableCol.getFcTxFieldName(), cellvalue == null ? strCellvalue : cellvalue);
-			return true;
-		} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-			Loghelper.get(FiReflection.class).error(FiException.exTosMain(e));
-		}
+      PropertyUtils.setProperty(objectt, fiTableCol.getFcTxFieldName(), cellvalue == null ? strCellvalue : cellvalue);
+      return true;
+    } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+      Loghelper.get(FiReflection.class).error(FiException.exTosMain(e));
+    }
 
     return false;
 
-	}
+  }
 
-	public static Object convertObjectByOzColType(OzColType ozColType, String strValue) {
+  public static Object convertObjectByOzColType(OzColType ozColType, String strValue) {
 
-		Object cellvalue = null;
+    Object cellvalue = null;
 
-		if (ozColType == OzColType.Double) {
-			cellvalue = FiNumber.strToDouble(strValue);
-		}
+    if (ozColType == OzColType.Double) {
+      cellvalue = FiNumber.strToDouble(strValue);
+    }
 
-		if (ozColType == OzColType.Date) {
-			cellvalue = FiDate.strToDateGeneric2(strValue);
-		}
+    if (ozColType == OzColType.Date) {
+      cellvalue = FiDate.strToDateGeneric2(strValue);
+    }
 
-		if (ozColType == OzColType.Integer) {
-			cellvalue = Integer.parseInt(strValue);
-		}
+    if (ozColType == OzColType.Integer) {
+      cellvalue = Integer.parseInt(strValue);
+    }
 
-		return cellvalue;
-	}
+    return cellvalue;
+  }
 
 
-	public static <T> Boolean setter(T objectt, IFiCol ozTableCol, Object value) {
+  public static <T> Boolean setter(T objectt, IFiCol ozTableCol, Object value) {
 
-		try {
-			PropertyUtils.setProperty(objectt, ozTableCol.getFcTxFieldName(), value);
-			return true;
-		} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-			Loghelper.get(FiReflection.class).error(FiException.exTosMain(e));
-		}
+    try {
+      PropertyUtils.setProperty(objectt, ozTableCol.getFcTxFieldName(), value);
+      return true;
+    } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+      Loghelper.get(FiReflection.class).error(FiException.exTosMain(e));
+    }
 
     return false;
 
-	}
+  }
 
-	public static <T> Boolean setter(T objectt, String fieldName, Object value) {
+  public static <T> Boolean setter(T objectt, String fieldName, Object value) {
 
-		try {
-			PropertyUtils.setProperty(objectt, fieldName, value);
-			return true;
-		} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-			Loghelper.get(FiReflection.class).error(FiException.exTosMain(e));
-		}
+    try {
+      PropertyUtils.setProperty(objectt, fieldName, value);
+      return true;
+    } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+      Loghelper.get(FiReflection.class).error(FiException.exTosMain(e));
+    }
     return false;
-	}
+  }
 
-	public static <E> List<E> bindEntity(List<Map<String, String>> listDataMap, List<FiCol> listColumns, Class<E> entityclass) {
+  public static <E> List<E> bindEntity(List<Map<String, String>> listDataMap, List<FiCol> listColumns, Class<E> entityclass) {
 
-		List<E> list = new ArrayList<>();
+    List<E> list = new ArrayList<>();
 
-		for (Iterator iterator = listDataMap.iterator(); iterator.hasNext(); ) {
+    for (Iterator iterator = listDataMap.iterator(); iterator.hasNext(); ) {
 
-			Map<String, String> map = (Map<String, String>) iterator.next();
+      Map<String, String> map = (Map<String, String>) iterator.next();
 
-			E entity = null;
-			try {
-				entity = entityclass.newInstance();
-			} catch (InstantiationException | IllegalAccessException e) {
-				Loghelper.get(FiReflection.class).error(FiException.exTosMain(e));
-			}
+      E entity = null;
+      try {
+        entity = entityclass.newInstance();
+      } catch (InstantiationException | IllegalAccessException e) {
+        Loghelper.get(FiReflection.class).error(FiException.exTosMain(e));
+      }
 
 
       for (int i = 0; i < listColumns.size(); i++) {
 
-				FiCol fiTableCol = listColumns.get(i);
+        FiCol fiTableCol = listColumns.get(i);
 
-				// Excelden gelen veride bu sütun yoksa atlanır
-				if (!map.containsKey(fiTableCol.getFcTxHeader())) {
-					// FIXME bir defa gösterilmeli
-					//Loghelper.getInstance(getClass()).debug(" Sütun bulunamadı:" + ozTableCol.getHeader());
-					continue;
-				}
+        // Excelden gelen veride bu sütun yoksa atlanır
+        if (!map.containsKey(fiTableCol.getFcTxHeader())) {
+          // FIXME bir defa gösterilmeli
+          //Loghelper.getInstance(getClass()).debug(" Sütun bulunamadı:" + ozTableCol.getHeader());
+          continue;
+        }
 
-				try {
-					Object cellvalue = map.get(fiTableCol.getFcTxHeader());
+        try {
+          Object cellvalue = map.get(fiTableCol.getFcTxHeader());
 
-					if (cellvalue != null && ((String) cellvalue).isEmpty()) cellvalue = null;
+          if (cellvalue != null && ((String) cellvalue).isEmpty()) cellvalue = null;
 
-					if (cellvalue != null && fiTableCol.getColType() == OzColType.Date) {
+          if (cellvalue != null && fiTableCol.getColType() == OzColType.Date) {
 
-						String strDate = cellvalue.toString();
-						//Loghelper.getInstance(getClass()).debug(" tarih:" + cellvalue.toString());
-						cellvalue = FiDate.strToDateGeneric2(strDate);
+            String strDate = cellvalue.toString();
+            //Loghelper.getInstance(getClass()).debug(" tarih:" + cellvalue.toString());
+            cellvalue = FiDate.strToDateGeneric2(strDate);
 
-					}
+          }
 
-					if (cellvalue != null && fiTableCol.getColType() == OzColType.Integer) {
-						cellvalue = Integer.parseInt(cellvalue.toString());
-					}
+          if (cellvalue != null && fiTableCol.getColType() == OzColType.Integer) {
+            cellvalue = Integer.parseInt(cellvalue.toString());
+          }
 
-					if (cellvalue != null && fiTableCol.getColType() == OzColType.Double) {
-						cellvalue = FiNumber.strToDouble(cellvalue.toString());
-					}
+          if (cellvalue != null && fiTableCol.getColType() == OzColType.Double) {
+            cellvalue = FiNumber.strToDouble(cellvalue.toString());
+          }
 
-					PropertyUtils.setProperty(entity, fiTableCol.getFcTxFieldName().trim(), cellvalue);
+          PropertyUtils.setProperty(entity, fiTableCol.getFcTxFieldName().trim(), cellvalue);
 
-				} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-					Loghelper.get(FiReflection.class).error(FiException.exTosMain(e));
-				}
+        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+          Loghelper.get(FiReflection.class).error(FiException.exTosMain(e));
+        }
       }
 
-			if (entity != null) list.add(entity);
+      if (entity != null) list.add(entity);
 
 
-		}
+    }
 
-		return list;
-	}
+    return list;
+  }
 
-	public static <E> E bindKeyBeanToEntity(Fkb keyBean, Class<E> entityclass) {
-		return bindKeyBeanToEntityMain(keyBean, entityclass, false);
-	}
+  public static <E> E bindKeyBeanToEntity(Fkb keyBean, Class<E> entityclass) {
+    return bindKeyBeanToEntityMain(keyBean, entityclass, false);
+  }
 
-	public static <E> E bindKeyBeanToEntityMain(Fkb keyBean, Class<E> entityclass, Boolean boDoNotShowNotSuchMethodException) {
+  public static <E> E bindKeyBeanToEntityMain(Fkb keyBean, Class<E> entityclass, Boolean boDoNotShowNotSuchMethodException) {
 
-		E entity = createObject(entityclass);
+    E entity = createObject(entityclass);
 
-		E finalEntity = entity;
-		keyBean.forEach((key, value) -> {
+    E finalEntity = entity;
+    keyBean.forEach((key, value) -> {
 
-			try {
-				Object cellvalue = value;
-				PropertyUtils.setProperty(finalEntity, key, cellvalue);
+      try {
+        Object cellvalue = value;
+        PropertyUtils.setProperty(finalEntity, key, cellvalue);
 
-			} catch (IllegalAccessException | InvocationTargetException e) {
-				Loghelper.get(FiReflection.class).debug(FiException.exceptionIfToString(e));
-			} catch (NoSuchMethodException e) {
-				if (!FiBool.isTrue(boDoNotShowNotSuchMethodException)) {
-					Loghelper.get(FiReflection.class).debug("Objenin Metodu Yok:" + key);
-				}
-			}
+      } catch (IllegalAccessException | InvocationTargetException e) {
+        Loghelper.get(FiReflection.class).debug(FiException.exceptionIfToString(e));
+      } catch (NoSuchMethodException e) {
+        if (!FiBool.isTrue(boDoNotShowNotSuchMethodException)) {
+          Loghelper.get(FiReflection.class).debug("Objenin Metodu Yok:" + key);
+        }
+      }
 
-		});
+    });
 
-		return entity;
-	}
-
-	public static <E> E createObject(Class<E> entityclass) {
-		E entity = null;
-		try {
-			entity = entityclass.newInstance();
-		} catch (InstantiationException | IllegalAccessException e) {
-			Loghelper.get(FiReflection.class).error(FiException.exTosMain(e));
-		}
     return entity;
-	}
+  }
 
-	/**
-	 * @param clazz
-	 * @return
-	 */
-	public static Map<String, FiField> getFieldsAsMap(Class clazz) {
+  public static <E> E createObject(Class<E> entityclass) {
+    E entity = null;
+    try {
+      entity = entityclass.newInstance();
+    } catch (InstantiationException | IllegalAccessException e) {
+      Loghelper.get(FiReflection.class).error(FiException.exTosMain(e));
+    }
+    return entity;
+  }
 
-		if (clazz == null) return new HashMap<>();
+  /**
+   * @param clazz
+   * @return
+   */
+  public static Map<String, FiField> getFieldsAsMap(Class clazz) {
 
-		Field[] fields = clazz.getDeclaredFields();
-		Map<String, FiField> mapFields = new HashMap<>();
+    if (clazz == null) return new HashMap<>();
 
-		for (Field field : fields) {
+    Field[] fields = clazz.getDeclaredFields();
+    Map<String, FiField> mapFields = new HashMap<>();
 
-			FiField fiField = new FiField();
+    for (Field field : fields) {
 
-			fiField.setFcTxFieldName(field.getName());
-			fiField.setClassNameSimple(field.getType().getSimpleName());
+      FiField fiField = new FiField();
 
-			mapFields.put(field.getName(), fiField);
-		}
+      fiField.setFcTxFieldName(field.getName());
+      fiField.setClassNameSimple(field.getType().getSimpleName());
 
-		return mapFields;
-	}
+      mapFields.put(field.getName(), fiField);
+    }
 
-	public static Map<String, FiField> getFieldsNtnAsMap(Class clazz, Object entity) {
+    return mapFields;
+  }
 
-		if (clazz == null) return new HashMap<>();
+  public static Map<String, FiField> getFieldsNtnAsMap(Class clazz, Object entity) {
 
-		Field[] fields = clazz.getDeclaredFields();
-		Map<String, FiField> mapFields = new HashMap<>();
+    if (clazz == null) return new HashMap<>();
 
-		for (Field field : fields) {
-			FiField fiField = new FiField();
+    Field[] fields = clazz.getDeclaredFields();
+    Map<String, FiField> mapFields = new HashMap<>();
 
-			Object property = FiReflection.getProperty(entity, field.getName());
-			if(property!=null) {
-				fiField.setFcTxFieldName(field.getName());
-				fiField.setClassNameSimple(field.getType().getSimpleName());
+    for (Field field : fields) {
+      FiField fiField = new FiField();
 
-				mapFields.put(field.getName(), fiField);
-			}
-		}
+      Object property = FiReflection.getProperty(entity, field.getName());
+      if (property != null) {
+        fiField.setFcTxFieldName(field.getName());
+        fiField.setClassNameSimple(field.getType().getSimpleName());
 
-		return mapFields;
-	}
+        mapFields.put(field.getName(), fiField);
+      }
+    }
 
-	public static Fkb convertToFkb(Class clazz, Object entity) {
+    return mapFields;
+  }
 
-		if (clazz == null) return null;
+  public static Fkb convertToFkb(Class clazz, Object entity) {
 
-		Field[] fields = clazz.getDeclaredFields();
+    if (clazz == null) return null;
 
-		Fkb fkb = new Fkb();
+    Field[] fields = clazz.getDeclaredFields();
 
-		for (Field field : fields) {
-			Object property = FiReflection.getProperty(entity, field.getName());
-			fkb.add(field.getName(),property);
-		}
+    Fkb fkb = new Fkb();
 
-		return fkb;
-	}
+    for (Field field : fields) {
+      Object property = FiReflection.getProperty(entity, field.getName());
+      fkb.add(field.getName(), property);
+    }
 
-	public static <T> String getSimpleClassName(T object) {
+    return fkb;
+  }
 
-		if (object instanceof Integer) return Integer.class.getSimpleName();
-		if (object instanceof Double) return Double.class.getSimpleName();
-		if (object instanceof String) return String.class.getSimpleName();
-		if (object instanceof Boolean) return Boolean.class.getSimpleName();
-		if (object instanceof List) return List.class.getSimpleName();
+  public static <T> String getSimpleClassName(T object) {
 
-		return null;
-	}
+    if (object instanceof Integer) return Integer.class.getSimpleName();
+    if (object instanceof Double) return Double.class.getSimpleName();
+    if (object instanceof String) return String.class.getSimpleName();
+    if (object instanceof Boolean) return Boolean.class.getSimpleName();
+    if (object instanceof List) return List.class.getSimpleName();
 
-	/**
-	 * Nested field is supported. Seperator is dot (.)
-	 *
-	 * @param clazz
-	 * @param fieldName
-	 * @return
-	 */
-	public static Class<?> getFieldClassType(Class clazz, String fieldName) {
-		Field field = null;
-		try {
-			if (fieldName.contains(".")) {
-				//Loghelperr.getInstance(FiProperty.class).debug("Field:"+fieldName);
+    return null;
+  }
 
-				String[] split = fieldName.split("\\.");
-				//Loghelperr.getInstance(FiProperty.class).debug("Split Size:"+split.length);
-				if (split.length < 2) return null;
+  /**
+   * Nested field is supported. Seperator is dot (.)
+   *
+   * @param clazz
+   * @param fieldName
+   * @return
+   */
+  public static Class<?> getFieldClassType(Class clazz, String fieldName) {
+    Field field = null;
+    try {
+      if (fieldName.contains(".")) {
+        //Loghelperr.getInstance(FiProperty.class).debug("Field:"+fieldName);
 
-				String nestedEntityName = split[0];
-				String nestedFieldName = split[1];
+        String[] split = fieldName.split("\\.");
+        //Loghelperr.getInstance(FiProperty.class).debug("Split Size:"+split.length);
+        if (split.length < 2) return null;
 
-				if (FiString.isEmpty(nestedEntityName) || FiString.isEmpty(nestedFieldName)) return null;
+        String nestedEntityName = split[0];
+        String nestedFieldName = split[1];
 
-				Field fieldNestedEntiy = clazz.getDeclaredField(nestedEntityName);
-				//Loghelperr.getInstance(FiProperty.class).debug("Field Class:"+fieldNestedEntiy.getType().getSimpleName());
-				Field fieldNested = fieldNestedEntiy.getType().getDeclaredField(nestedFieldName);
-				return fieldNested.getType();
+        if (FiString.isEmpty(nestedEntityName) || FiString.isEmpty(nestedFieldName)) return null;
 
-			} else {
+        Field fieldNestedEntiy = clazz.getDeclaredField(nestedEntityName);
+        //Loghelperr.getInstance(FiProperty.class).debug("Field Class:"+fieldNestedEntiy.getType().getSimpleName());
+        Field fieldNested = fieldNestedEntiy.getType().getDeclaredField(nestedFieldName);
+        return fieldNested.getType();
 
-				final Class<?>[] clazzField = {null};
-				ReflectionUtils.doWithFields(clazz, field1 -> {
-				//Loghelper.get(FiReflection.class).debug("Field:"+field1.getName());
-					if (field1.getName().equals(fieldName)) {
-						clazzField[0] = field1.getType();
-					}
-				});
-				//field = clazz.getDeclaredField(fieldName);
-				//Class<?> clazzField = field.getType(); // Class object for java.lang.String
-				// return clazzField;
-				return clazzField[0];
-			}
+      } else {
 
-		} catch (NoSuchFieldException e) {
-			Loghelper.get(FiReflection.class).error(FiException.exceptionIfToString(e));
-		}
-		return null;
-	}
+        final Class<?>[] clazzField = {null};
+        ReflectionUtils.doWithFields(clazz, field1 -> {
+          //Loghelper.get(FiReflection.class).debug("Field:"+field1.getName());
+          if (field1.getName().equals(fieldName)) {
+            clazzField[0] = field1.getType();
+          }
+        });
+        //field = clazz.getDeclaredField(fieldName);
+        //Class<?> clazzField = field.getType(); // Class object for java.lang.String
+        // return clazzField;
+        return clazzField[0];
+      }
+
+    } catch (NoSuchFieldException e) {
+      Loghelper.get(FiReflection.class).error(FiException.exceptionIfToString(e));
+    }
+    return null;
+  }
 
 //	public static Class<?> getFieldTypeNested(Class clazz, String fieldName) {
 //		Field field = null;
@@ -484,279 +484,279 @@ public class FiReflection {
 //	}
 
 
-	public static <T> Boolean setterNested(T bean, String fieldName, Object value) {
+  public static <T> Boolean setterNested(T bean, String fieldName, Object value) {
 
-		try {
-			PropertyUtils.setNestedProperty(bean, fieldName, value);
-		} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-			Loghelper.get(FiReflection.class).error(FiException.exToErrorLog(e));
-			return false;
-		}
+    try {
+      PropertyUtils.setNestedProperty(bean, fieldName, value);
+    } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+      Loghelper.get(FiReflection.class).error(FiException.exToErrorLog(e));
+      return false;
+    }
     return true;
-	}
+  }
 
-	public static <T> T cloneObject(T t) { //throws InstantiationException, IllegalAccessException, NoSuchFieldException
+  public static <T> T cloneObject(T t) { //throws InstantiationException, IllegalAccessException, NoSuchFieldException
 
-		Class<?> clazzRoot = t.getClass();
+    Class<?> clazzRoot = t.getClass();
 
-		Object newInstance = null;
+    Object newInstance = null;
 
-		try {
-			newInstance = clazzRoot.newInstance();
-		} catch (InstantiationException | IllegalAccessException e) {
-			Loghelper.get(FiReflection.class).error(FiException.exToErrorLog(e));
-		}
+    try {
+      newInstance = clazzRoot.newInstance();
+    } catch (InstantiationException | IllegalAccessException e) {
+      Loghelper.get(FiReflection.class).error(FiException.exToErrorLog(e));
+    }
 
     Field[] fieldsClone = newInstance.getClass().getDeclaredFields();
 
-		for (Field fieldClone : fieldsClone) {
-			fieldClone.setAccessible(true);
+    for (Field fieldClone : fieldsClone) {
+      fieldClone.setAccessible(true);
 
-			// statik ve final değişkenler kopyalamadık
-			if (checkStatic(fieldClone) || checkFinal(fieldClone)) {
-				continue;
-			}
+      // statik ve final değişkenler kopyalamadık
+      if (checkStatic(fieldClone) || checkFinal(fieldClone)) {
+        continue;
+      }
 
-			try {
-				fieldClone.set(newInstance, getFieldContent(t, fieldClone.getName()));
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			}
+      try {
+        fieldClone.set(newInstance, getFieldContent(t, fieldClone.getName()));
+      } catch (IllegalAccessException e) {
+        e.printStackTrace();
+      }
 
-		}
+    }
 
-		return (T) newInstance;
-
-	}
-
-	public static <T> T cloneObjectByClass(Object t, Class<T> clazz) {
-		//throws InstantiationException, IllegalAccessException, NoSuchFieldException
-
-		Class clazzRoot = clazz;
-
-		Object newInstance = null;
-
-		try {
-			newInstance = clazzRoot.newInstance();
-		} catch (InstantiationException | IllegalAccessException e) {
-			Loghelper.get(FiReflection.class).error(FiException.exToErrorLog(e));
-		}
-
-    Field[] fieldsClone = clazz.getDeclaredFields();
-
-		for (Field fieldClone : fieldsClone) {
-			fieldClone.setAccessible(true);
-
-			// statik ve final değişkenler kopyalamadık
-			if (checkStatic(fieldClone) || checkFinal(fieldClone)) {
-				continue;
-			}
-
-			try {
-				fieldClone.set(newInstance, getProperty(t, fieldClone.getName()));
-			} catch (IllegalAccessException e) {
-				Loghelper.get(FiReflection.class).error(FiException.exToErrorLog(e));
-			}
-
-		}
-
-		return (T) newInstance;
-	}
-
-	public static Object getFieldContent(Object entityObject, String fieldName) { //throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException
-
-		Field declaredField = null;
-
-		try {
-			declaredField = entityObject.getClass().getDeclaredField(fieldName);
-		} catch (NoSuchFieldException e) {
-			e.printStackTrace();
-		}
-
-		declaredField.setAccessible(true);
-
-		Object objValue = null;
-
-		try {
-			objValue = declaredField.get(entityObject);
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		}
-
-		return objValue;
-	}
-
-
-	// FIXME field ile control edilebilir - optionala çevrilebilr
-	public static boolean hasProperty(Object entity, String field) {
-
-		Object objectt = null;
-		try {
-			objectt = PropertyUtils.getProperty(entity, field);
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
-	}
-
-	/**
-	 * statik ve final değişkenler kopyalamadık
-	 * <br>
-	 *
-	 * @param fromObj
-	 * @param toObj
-	 */
-	public static void copyFields(Object fromObj, Object toObj) {
-
-		Field[] fieldsToObj = toObj.getClass().getDeclaredFields();
-
-		for (Field fieldToObj : fieldsToObj) {
-
-			// statik ve final değişkenler kopyalamadık
-			if (checkStatic(fieldToObj) || checkFinal(fieldToObj)) {
-				continue;
-			}
-
-			fieldToObj.setAccessible(true);
-
-			try {
-				fieldToObj.set(toObj, getFieldContent(fromObj, fieldToObj.getName()));
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			}
-		}
-
-	}
-
-	public static Boolean checkStatic(Field field) {
-		return Modifier.isStatic(field.getModifiers());
-	}
-
-	public static Boolean checkFinal(Field field) {
-		return Modifier.isFinal(field.getModifiers());
-	}
-
-	public static <PrmClazz> List<PrmClazz> cloneList(List<PrmClazz> prmClazzList) {
-		List<PrmClazz> listClone = new ArrayList<>();
-
-		for (PrmClazz prmClazz : prmClazzList) {
-			listClone.add(cloneObject(prmClazz));
-		}
-		return listClone;
-	}
-
-	public static <EntClazz> Object getCandId(EntClazz next, Class<EntClazz> clazz) {
-
-		List<FiField> listFiFieldsCandId = FiReflectClass.getListFieldsCandId(clazz);
-
-		if (listFiFieldsCandId.size() == 1) {
-			Object property = getProperty(next, listFiFieldsCandId.get(0).getFcTxFieldName());
-			return property;
-		}
-		return null;
-	}
-
-	public static <EntClazz> Object getIdValue(EntClazz next, Class<EntClazz> clazz) {
-
-		List<FiField> listFieldsId = FiReflectClass.getListFieldsId(clazz);
-
-		if (listFieldsId.size() == 1) {
-			Object property = getProperty(next, listFieldsId.get(0).getFcTxFieldName());
-			return property;
-		}
-		return null;
-	}
-
-	public static Boolean setProperty(Object objEntity, String fieldName, Object objValue) {
-
-		try {
-			PropertyUtils.setProperty(objEntity, fieldName, objValue);
-			return true;
-		} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-			Loghelper.get(getClassi()).debug(FiException.exToErrorLog(e));
-			return false;
-		}
+    return (T) newInstance;
 
   }
 
-	public static <E> void bindKeyBeanToEntity(Fkb keyBean, E entity, Class<E> clazz, Boolean boAddOnlyNtnFields) {
+  public static <T> T cloneObjectByClass(Object t, Class<T> clazz) {
+    //throws InstantiationException, IllegalAccessException, NoSuchFieldException
 
-		Field[] fields = clazz.getDeclaredFields();
+    Class clazzRoot = clazz;
 
-		for (Field field : fields) {
-			Object property = FiReflection.getProperty(entity, field.getName());
+    Object newInstance = null;
 
-			if(FiBool.isTrue(boAddOnlyNtnFields)){
-				if(property!=null) {
-					keyBean.put(field.getName(), property);
-				}
-			}else{
-				keyBean.put(field.getName(), property);
-			}
-		}
+    try {
+      newInstance = clazzRoot.newInstance();
+    } catch (InstantiationException | IllegalAccessException e) {
+      Loghelper.get(FiReflection.class).error(FiException.exToErrorLog(e));
+    }
 
-	} // end-bindKeyBeanToEntity
+    Field[] fieldsClone = clazz.getDeclaredFields();
 
-	public static <E> Fkb convertToFkb(E entity, Class<E> clazz, Boolean boAddOnlyNtnFields) {
+    for (Field fieldClone : fieldsClone) {
+      fieldClone.setAccessible(true);
 
-		Fkb fkb = new Fkb();
+      // statik ve final değişkenler kopyalamadık
+      if (checkStatic(fieldClone) || checkFinal(fieldClone)) {
+        continue;
+      }
 
-		Field[] fields = clazz.getDeclaredFields();
+      try {
+        fieldClone.set(newInstance, getProperty(t, fieldClone.getName()));
+      } catch (IllegalAccessException e) {
+        Loghelper.get(FiReflection.class).error(FiException.exToErrorLog(e));
+      }
 
-		for (Field field : fields) {
-			Object property = FiReflection.getProperty(entity, field.getName());
+    }
 
-			if (FiBool.isTrue(boAddOnlyNtnFields)) {
-				if (property != null) {
-					fkb.put(field.getName(), property);
-				}
-			} else {
-				fkb.put(field.getName(), property);
-			}
-		}
+    return (T) newInstance;
+  }
 
-		return fkb;
-	}
+  public static Object getFieldContent(Object entityObject, String fieldName) { //throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException
 
-	public static <E> E convertToEntity(Fkb fkb, Class<E> clazz, Boolean boAddOnlyNtnFields) {
+    Field declaredField = null;
 
-		E entity = null;
+    try {
+      declaredField = entityObject.getClass().getDeclaredField(fieldName);
+    } catch (NoSuchFieldException e) {
+      e.printStackTrace();
+    }
 
-		try {
-			entity = clazz.newInstance();
-		} catch (InstantiationException | IllegalAccessException e) {
-			Loghelper.get(FiReflection.class).error(FiException.exTosMain(e));
-		}
+    declaredField.setAccessible(true);
 
-		if(entity==null) return null;
+    Object objValue = null;
 
-		E finalEntity = entity;
+    try {
+      objValue = declaredField.get(entityObject);
+    } catch (IllegalAccessException e) {
+      e.printStackTrace();
+    }
 
-		fkb.forEach((key, value) -> {
-			// Entity de o alan var mı yok mu kontrolü eklenebilir
-			// Process each key-value pair in the Fkb
-			if (FiBool.isTrue(boAddOnlyNtnFields)) {
-				if (fkb.get(key) != null) {
-					FiReflection.setProperty(finalEntity, key, fkb.get(key));
-				}
-			} else {
-				FiReflection.setProperty(finalEntity, key, fkb.get(key));
-			}
-		});
+    return objValue;
+  }
 
-		return finalEntity;
-	}
+
+  // FIXME field ile control edilebilir - optionala çevrilebilr
+  public static boolean hasProperty(Object entity, String field) {
+
+    Object objectt = null;
+    try {
+      objectt = PropertyUtils.getProperty(entity, field);
+      return true;
+    } catch (Exception e) {
+      return false;
+    }
+  }
+
+  /**
+   * statik ve final değişkenler kopyalamadık
+   * <br>
+   *
+   * @param fromObj
+   * @param toObj
+   */
+  public static void copyFields(Object fromObj, Object toObj) {
+
+    Field[] fieldsToObj = toObj.getClass().getDeclaredFields();
+
+    for (Field fieldToObj : fieldsToObj) {
+
+      // statik ve final değişkenler kopyalamadık
+      if (checkStatic(fieldToObj) || checkFinal(fieldToObj)) {
+        continue;
+      }
+
+      fieldToObj.setAccessible(true);
+
+      try {
+        fieldToObj.set(toObj, getFieldContent(fromObj, fieldToObj.getName()));
+      } catch (IllegalAccessException e) {
+        e.printStackTrace();
+      }
+    }
+
+  }
+
+  public static Boolean checkStatic(Field field) {
+    return Modifier.isStatic(field.getModifiers());
+  }
+
+  public static Boolean checkFinal(Field field) {
+    return Modifier.isFinal(field.getModifiers());
+  }
+
+  public static <PrmClazz> List<PrmClazz> cloneList(List<PrmClazz> prmClazzList) {
+    List<PrmClazz> listClone = new ArrayList<>();
+
+    for (PrmClazz prmClazz : prmClazzList) {
+      listClone.add(cloneObject(prmClazz));
+    }
+    return listClone;
+  }
+
+  public static <EntClazz> Object getCandId(EntClazz next, Class<EntClazz> clazz) {
+
+    List<FiField> listFiFieldsCandId = FiReflectClass.getListFieldsCandId(clazz);
+
+    if (listFiFieldsCandId.size() == 1) {
+      Object property = getProperty(next, listFiFieldsCandId.get(0).getFcTxFieldName());
+      return property;
+    }
+    return null;
+  }
+
+  public static <EntClazz> Object getIdValue(EntClazz next, Class<EntClazz> clazz) {
+
+    List<FiField> listFieldsId = FiReflectClass.getListFieldsId(clazz);
+
+    if (listFieldsId.size() == 1) {
+      Object property = getProperty(next, listFieldsId.get(0).getFcTxFieldName());
+      return property;
+    }
+    return null;
+  }
+
+  public static Boolean setProperty(Object objEntity, String fieldName, Object objValue) {
+
+    try {
+      PropertyUtils.setProperty(objEntity, fieldName, objValue);
+      return true;
+    } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+      Loghelper.get(getClassi()).debug(FiException.exToErrorLog(e));
+      return false;
+    }
+
+  }
+
+  public static <E> void bindKeyBeanToEntity(Fkb keyBean, E entity, Class<E> clazz, Boolean boAddOnlyNtnFields) {
+
+    Field[] fields = clazz.getDeclaredFields();
+
+    for (Field field : fields) {
+      Object property = FiReflection.getProperty(entity, field.getName());
+
+      if (FiBool.isTrue(boAddOnlyNtnFields)) {
+        if (property != null) {
+          keyBean.put(field.getName(), property);
+        }
+      } else {
+        keyBean.put(field.getName(), property);
+      }
+    }
+
+  } // end-bindKeyBeanToEntity
+
+  public static <E> Fkb convertToFkb(E entity, Class<E> clazz, Boolean boExcludeNullFields) {
+
+    Fkb fkb = new Fkb();
+
+    Field[] fields = clazz.getDeclaredFields();
+
+    for (Field field : fields) {
+      Object property = FiReflection.getProperty(entity, field.getName());
+
+      if (FiBool.isTrue(boExcludeNullFields)) {
+        if (property != null) {
+          fkb.put(field.getName(), property);
+        }
+      } else {
+        fkb.put(field.getName(), property);
+      }
+    }
+
+    return fkb;
+  }
+
+  public static <E> E convertToEntity(Fkb fkb, Class<E> clazz, Boolean boAddOnlyNtnFields) {
+
+    E entity = null;
+
+    try {
+      entity = clazz.newInstance();
+    } catch (InstantiationException | IllegalAccessException e) {
+      Loghelper.get(FiReflection.class).error(FiException.exTosMain(e));
+    }
+
+    if (entity == null) return null;
+
+    E finalEntity = entity;
+
+    fkb.forEach((key, value) -> {
+      // Entity de o alan var mı yok mu kontrolü eklenebilir
+      // Process each key-value pair in the Fkb
+      if (FiBool.isTrue(boAddOnlyNtnFields)) {
+        if (fkb.get(key) != null) {
+          FiReflection.setProperty(finalEntity, key, fkb.get(key));
+        }
+      } else {
+        FiReflection.setProperty(finalEntity, key, fkb.get(key));
+      }
+    });
+
+    return finalEntity;
+  }
 
 
   public static void logObject(Object objVal) {
-		Loghelper.get(getClassi()).debug("FiReflection.logObject");
+    Loghelper.get(getClassi()).debug("FiReflection.logObject");
 
-		if(objVal==null) {
-			Loghelper.get(getClassi()).debug("obj val: null");
-			return;
-		}
+    if (objVal == null) {
+      Loghelper.get(getClassi()).debug("obj val: null");
+      return;
+    }
 
-		Loghelper.get(getClassi()).debug("Type Name:" + getSimpleTypeName(objVal.getClass()));
+    Loghelper.get(getClassi()).debug("Type Name:" + getSimpleTypeName(objVal.getClass()));
 
   }
 }
