@@ -298,7 +298,7 @@ public class FiReflection {
     return list;
   }
 
-  public static <E> E bindKeyBeanToEntity(Fkb keyBean, Class<E> entityclass) {
+  public static <E> E bindFkbToEntity(Fkb keyBean, Class<E> entityclass) {
     return bindKeyBeanToEntityMain(keyBean, entityclass, false);
   }
 
@@ -360,7 +360,14 @@ public class FiReflection {
     return mapFields;
   }
 
-  public static Map<String, FiField> getFieldsNtnAsMap(Class clazz, Object entity) {
+  /**
+   * maps fieldName to FiField
+   *
+   * @param clazz
+   * @param entity
+   * @return
+   */
+  public static Map<String, FiField> getMapFieldsNtn(Class clazz, Object entity) {
 
     if (clazz == null) return new HashMap<>();
 
@@ -679,19 +686,19 @@ public class FiReflection {
 
   }
 
-  public static <E> void bindKeyBeanToEntity(Fkb keyBean, E entity, Class<E> clazz, Boolean boAddOnlyNtnFields) {
+  public static <E> void bindFkbToEntity(Fkb fkbEntity, E entity, Class<E> clazz, Boolean boExcludeNullFields) {
 
     Field[] fields = clazz.getDeclaredFields();
 
     for (Field field : fields) {
       Object property = FiReflection.getProperty(entity, field.getName());
 
-      if (FiBool.isTrue(boAddOnlyNtnFields)) {
+      if (FiBool.isTrue(boExcludeNullFields)) {
         if (property != null) {
-          keyBean.put(field.getName(), property);
+          fkbEntity.put(field.getName(), property);
         }
       } else {
-        keyBean.put(field.getName(), property);
+        fkbEntity.put(field.getName(), property);
       }
     }
 
@@ -718,7 +725,7 @@ public class FiReflection {
     return fkb;
   }
 
-  public static <E> E convertToEntity(Fkb fkb, Class<E> clazz, Boolean boAddOnlyNtnFields) {
+  public static <E> E convertToEntity(Fkb fkb, Class<E> clazz, Boolean boExcludeNullFields) {
 
     E entity = null;
 
@@ -735,7 +742,7 @@ public class FiReflection {
     fkb.forEach((key, value) -> {
       // Entity de o alan var mı yok mu kontrolü eklenebilir
       // Process each key-value pair in the Fkb
-      if (FiBool.isTrue(boAddOnlyNtnFields)) {
+      if (FiBool.isTrue(boExcludeNullFields)) {
         if (fkb.get(key) != null) {
           FiReflection.setProperty(finalEntity, key, fkb.get(key));
         }
