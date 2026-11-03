@@ -1118,6 +1118,12 @@ public class FxEditorFactory {
 
   }
 
+  public static void bindFormToEntityObjectByEditorNode(List<FiCol> listColumns, Object entity) {
+    bindFormToEntityObjectMainByNodeByFiCol(listColumns, entity, fiCol -> {
+      return getNodeObjValue(fiCol, fiCol.getColEditorClass());
+    });
+  }
+
   public static <E> E bindFormToEntityMainByNode(List<? extends IFiCol> listColumns, Class<E> clazz, Function<IFiCol, Object> fnGetCellObjectValue) {
 
     E entity = null;
@@ -1478,6 +1484,7 @@ public class FxEditorFactory {
       convertFcTxFieldTypeToOzColType(fiCol);
     }
 
+    // MEDFIX bu parametreleri config objesine taşıyabiliriz
     return getValueNodeCompMain(fiCol.getColType(), txEditorClass, fiCol.getColEditorNode(), fiCol.getColValue());
   }
 

@@ -222,6 +222,12 @@ public class FxFormMigGen<EntClazz> extends FxMigPaneGenView<EntClazz> implement
     return formEntity;
   }
 
+  public EntClazz bindFormToEntityObject(Object entity) {
+    if (getEntityClazz() == null) setAutoClass();
+    EntClazz formEntity = FxEditorFactory.bindFormToEntityByEditorNode(getListFormElementsInit(), getEntityClazz());
+    return formEntity;
+  }
+
   public <PrmEntClazz> PrmEntClazz bindFormToEntity(Class<PrmEntClazz> entClazz) {
     if (entClazz == null) return null;
     PrmEntClazz formEntity = FxEditorFactory.bindFormToEntityByEditorNode(getListFormElementsInit(), entClazz);

@@ -20,7 +20,6 @@ import ozpasyazilim.utils.annotations.FiDraft;
 import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.datatypes.Fkb;
 import ozpasyazilim.utils.datatypes.FiListString;
-import ozpasyazilim.utils.datatypes.FkbList;
 import ozpasyazilim.utils.fimetas.FicFtQuery;
 import ozpasyazilim.utils.gui.components.TableValueFactoryForFkb;
 import ozpasyazilim.utils.gui.fxTableViewExtra.NestedPropertyValueFactory;
@@ -3275,5 +3274,28 @@ public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxC
 
   public void setTvTxId(String tvTxId) {
     this.tvTxId = tvTxId;
+  }
+
+  public void setupStandartFkb(FicList ficList) {
+    setBoEnableRemoteFilterEditor(true);
+    setBoEnableLocalFilterEditor(true);
+    setBoEnableSummaryHeader(true);
+    //setEntityClass(MkCariHar.class);
+
+    if (ficList != null) {
+      addAllFiColsAutoAsFkb(ficList);
+    }
+
+    //setLnPageSize(30);
+    //setColRemoteFilterEnterEvent(event -> pullTableData());
+    //setFnPageChanged(this::pullTableData);
+    //activatePageToolbar();
+
+//    getFxTableView().onRowDoubleClickEventByEntityFi(carihar -> {
+//      ModBelgeIcerik modBelgeIcerik = new ModBelgeIcerik(carihar, true);
+//      modBelgeIcerik.openAsNonModal();
+//    });
+
+    //pullTableData();
   }
 }
