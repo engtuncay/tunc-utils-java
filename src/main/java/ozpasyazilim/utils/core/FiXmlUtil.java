@@ -22,13 +22,13 @@ public class FiXmlUtil {
             InputSource is = new InputSource(new StringReader(txXml));
             return db.parse(is);
         } catch (ParserConfigurationException e) {
-            Loghelper.get(getClassi()).debug(FiException.exceptionIfToString(e));
+            Loghelper.get(getClassi()).debug(FiException.exceptionToStringNtn(e));
             //throw new RuntimeException(e);
         } catch (SAXException e) {
-            Loghelper.get(getClassi()).debug(FiException.exceptionIfToString(e));
+            Loghelper.get(getClassi()).debug(FiException.exceptionToStringNtn(e));
             //throw new RuntimeException(e);
         } catch (IOException e) {
-            Loghelper.get(getClassi()).debug(FiException.exceptionIfToString(e));
+            Loghelper.get(getClassi()).debug(FiException.exceptionToStringNtn(e));
             //throw new RuntimeException(e);
         }
         return null;

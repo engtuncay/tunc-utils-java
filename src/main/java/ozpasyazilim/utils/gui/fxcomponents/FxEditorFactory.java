@@ -76,7 +76,7 @@ public class FxEditorFactory {
     // txClassName belirlendikten comp oluşturma süreci
 
     if (txClassName.equals(FxTextField.class.getSimpleName())
-        || txClassName.equals(FxTextField.class.getName())) {
+      || txClassName.equals(FxTextField.class.getName())) {
 
       FxTextField txfComp = new FxTextField();
 
@@ -157,7 +157,7 @@ public class FxEditorFactory {
     }
 
     if (txClassName.equals(DatePicker.class.getName())
-        || txClassName.equals(FxDatePicker.class.getName())) {
+      || txClassName.equals(FxDatePicker.class.getName())) {
       FxDatePicker dtpComp = new FxDatePicker();
       //if (iFiCol.getColFilterKeyEvent() != null) dtpComp.setOnKeyReleased(iFiCol.getColFilterKeyEvent());
       return dtpComp;
@@ -250,21 +250,21 @@ public class FxEditorFactory {
 
       // 26-04-21
       if (FiString.equalsAny(fcTxFieldType
-          , FimFcFiTypes.fBool().getValue())
+        , FimFcFiTypes.fBool().getValue())
       ) {
         txClassName = FxCheckBox.class.getName();
       }
 
       if (FiString.equalsAny(fcTxFieldType
-          , FimFcFiTypes.fdate().getValue()
-          , FimFcFiTypes.fdatetime().getValue())
+        , FimFcFiTypes.fdate().getValue()
+        , FimFcFiTypes.fdatetime().getValue())
       ) {
         txClassName = FxDatePicker.class.getName();
       }
 
       if (FiString.equalsAny(fcTxFieldType
-          , FimFcFiTypes.fBool().getValue()
-          , FimFcFiTypes.fBit().getValue())
+        , FimFcFiTypes.fBool().getValue()
+        , FimFcFiTypes.fBit().getValue())
       ) {
         txClassName = FxCheckBox.class.getName();
       }
@@ -303,8 +303,8 @@ public class FxEditorFactory {
 
       // 26-04-21
       if (FiString.equalsAny(fcTxFieldType
-          , FimFcFiTypes.fBool().getValue()
-          , FimFcFiTypes.fBit().getValue()
+        , FimFcFiTypes.fBool().getValue()
+        , FimFcFiTypes.fBit().getValue()
       )) {
         txClassName = FxCheckBox.class.getName();
       }
@@ -376,11 +376,11 @@ public class FxEditorFactory {
     //*** Text Value (String) değer olan componentlerin değeri burada belirlenir.
 
     if (txNodeClassName.equals(FxTextField.class.getName())
-        || txNodeClassName.equals(FxTextFieldBtn.class.getName())
-        || txNodeClassName.equals(FxLabel.class.getName())
-        || txNodeClassName.equals(FxLabelData.class.getName())
-        || txNodeClassName.equals(FxTextFieldBtnWitLblV3.class.getName())
-        || txNodeClassName.equals(FxTextArea.class.getName())
+      || txNodeClassName.equals(FxTextFieldBtn.class.getName())
+      || txNodeClassName.equals(FxLabel.class.getName())
+      || txNodeClassName.equals(FxLabelData.class.getName())
+      || txNodeClassName.equals(FxTextFieldBtnWitLblV3.class.getName())
+      || txNodeClassName.equals(FxTextArea.class.getName())
     ) {
 
       String textValue = null;
@@ -477,7 +477,7 @@ public class FxEditorFactory {
     //*** Diger Componentler
 
     if (txNodeClassName.equals(FxComboBox.class.getName())
-        || txNodeClassName.equals(ComboBox.class.getName())) {
+      || txNodeClassName.equals(ComboBox.class.getName())) {
 
       if (txNodeClassName.equals(FxComboBox.class.getName())) {
         FxComboBox<ComboItemText> comp = (FxComboBox<ComboItemText>) nodeComp;
@@ -706,7 +706,7 @@ public class FxEditorFactory {
             } else {
               fdr.setFdBoResult(false);
               fdr.appendMsg(String.format("Alan %s karakter fazla olamaz %s : %s"
-                  , fiField.getFcLnLength(), txProperty.length(), fiField.getFcTxFieldName()));
+                , fiField.getFcLnLength(), txProperty.length(), fiField.getFcTxFieldName()));
             }
 
           }
@@ -748,7 +748,7 @@ public class FxEditorFactory {
             } else {
               fdr.setFdBoResult(false);
               fdr.appendMsg(String.format("Alan %s karakter fazla olamaz %s : %s"
-                  , fiField.getFcLnLength(), txProperty.length(), fiField.getFcTxFieldName()));
+                , fiField.getFcLnLength(), txProperty.length(), fiField.getFcTxFieldName()));
             }
 
           }
@@ -997,7 +997,7 @@ public class FxEditorFactory {
   public static void setNodeValueByCompClass(Node component, String compClass, Object compValue) {
 
     if (compClass.equals(DatePicker.class.getName())
-        || compClass.equals(FxDatePicker.class.getName())) {
+      || compClass.equals(FxDatePicker.class.getName())) {
 
       FxDatePicker comp = (FxDatePicker) component;
       //if (iFiTableCol.getColFilterKeyEvent() != null) comp.setOnKeyReleased(iFiTableCol.getColFilterKeyEvent());
@@ -1163,6 +1163,89 @@ public class FxEditorFactory {
     return entity;
   }
 
+  public static <E> E bindFormToEntityMainByNodeByFiCol(List<FiCol> listColumns, Class<E> clazz, Function<FiCol, Object> fnGetCellObjectValue) {
+
+    E entity = null;
+
+    try {
+      entity = clazz.newInstance();
+    } catch (InstantiationException | IllegalAccessException e) {
+      e.printStackTrace();
+      Loghelper.get(getClassi()).error(FiException.exceptionToStringNtn(e));
+    }
+
+    for (int i = 0; i < listColumns.size(); i++) {
+
+      FiCol iFiTableCol = listColumns.get(i);
+
+//			Loghelper.get(FxEditorFactory.class).debug("FiCol:"+ iFiTableCol.getFieldName());
+
+      if (iFiTableCol.getFcTxFieldName() == null) {
+        continue;
+      }
+
+      // Object cellvalue = getEditorObjValueByEditorNode(iFiTableCol, iFiTableCol.getColEditorClass());
+      // map.get(iFiTableCol.getHeader());
+      Object cellvalue = fnGetCellObjectValue.apply(iFiTableCol);
+
+//			Loghelper.get(FxEditorFactory.class).debug("FiCol Value:"+ FiString.toStringOrNull(cellvalue));
+
+      try {
+        PropertyUtils.setProperty(entity, iFiTableCol.getFcTxFieldName().trim(), cellvalue);
+
+        // if (cellvalue != null && ((String) cellvalue).isEmpty()) cellvalue = null;
+
+      } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+        //e.printStackTrace();
+        Loghelper.get(getClassi()).error(FiException.exceptionToStringNtn(e));
+      }
+    }
+
+    return entity;
+  }
+
+  /**
+   * fnGetCellObjectValue'dan gelen değeri entity objesine set eder.
+   *
+   * @param listColumns
+   * @param objEntity
+   * @param fnGetCellObjectValue
+   */
+  public static void bindFormToEntityObjectMainByNodeByFiCol(List<FiCol> listColumns, Object objEntity, Function<FiCol, Object> fnGetCellObjectValue) {
+
+    if (objEntity == null) {
+      return;
+    }
+
+    for (FiCol fiCol : listColumns) {
+      //Loghelper.get(FxEditorFactory.class).debug("FiCol:"+ fiCol.getFieldName());
+
+      if (fiCol.getFcTxFieldName() == null) {
+        continue;
+      }
+      // map.get(fiCol.getHeader());
+      Object cellvalue = fnGetCellObjectValue.apply(fiCol);
+//			Loghelper.get(FxEditorFactory.class).debug("FiCol Value:"+ FiString.toStringOrNull(cellvalue));
+
+      try {
+        PropertyUtils.setProperty(objEntity, fiCol.getFcTxFieldName().trim(), cellvalue);
+        // if (cellvalue != null && ((String) cellvalue).isEmpty()) cellvalue = null;
+      } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+        Loghelper.get(getClassi()).debug("Objenin alanı yok :" + fiCol.getFcTxFieldName() + " , " + e.getMessage());
+        //e.printStackTrace();
+        //Loghelper.get(getClassi()).error(FiException.exceptionToStringNtn(e));
+      }
+    }
+
+    //return entity;
+  }
+
+
+  private static Class<FxEditorFactory> getClassi() {
+    return FxEditorFactory.class;
+  }
+
+
   public static <E> void bindEntityToFormCompsByFilterValue(List<? extends IFiCol> listColumns, E entity) {
 
     if (entity == null) return;
@@ -1200,6 +1283,7 @@ public class FxEditorFactory {
     }
 
   }
+
 
   /**
    * Kullanım Alanları
@@ -1720,8 +1804,8 @@ public class FxEditorFactory {
       FxTextField comp = (FxTextField) node;
 
       EventStreams.valuesOf(comp.textProperty())
-          .successionEnds(Duration.ofMillis(durationMilis))
-          .subscribe(consumerStrProp);
+        .successionEnds(Duration.ofMillis(durationMilis))
+        .subscribe(consumerStrProp);
 
       //comp.textProperty().addListener(consumerStrProp);
     }
@@ -1731,8 +1815,8 @@ public class FxEditorFactory {
       //comp.getFxTextField().textProperty().addListener(consumerStrProp);
 
       EventStreams.valuesOf(comp.getFxTextField().textProperty())
-          .successionEnds(Duration.ofMillis(durationMilis))
-          .subscribe(consumerStrProp);
+        .successionEnds(Duration.ofMillis(durationMilis))
+        .subscribe(consumerStrProp);
       //.subscribe(s -> consumerStrProp.accept(s));
     }
 
@@ -1742,8 +1826,8 @@ public class FxEditorFactory {
       //comp.getEditor().textProperty().addListener(consumerStrProp);
 
       EventStreams.valuesOf(comp.getEditor().textProperty())
-          .successionEnds(Duration.ofMillis(durationMilis))
-          .subscribe(consumerStrProp);
+        .successionEnds(Duration.ofMillis(durationMilis))
+        .subscribe(consumerStrProp);
 
     }
 
@@ -1753,8 +1837,8 @@ public class FxEditorFactory {
       //comp.getEditor().textProperty().addListener(consumerStrProp);
 
       EventStreams.valuesOf(comp.getEditor().textProperty())
-          .successionEnds(Duration.ofMillis(durationMilis))
-          .subscribe(consumerStrProp);
+        .successionEnds(Duration.ofMillis(durationMilis))
+        .subscribe(consumerStrProp);
     }
 
     if (colNodeClass.equals(TextField.class.getName())) {
@@ -1762,8 +1846,8 @@ public class FxEditorFactory {
       //comp.textProperty().addListener(consumerStrProp);
 
       EventStreams.valuesOf(comp.textProperty())
-          .successionEnds(Duration.ofMillis(durationMilis))
-          .subscribe(consumerStrProp);
+        .successionEnds(Duration.ofMillis(durationMilis))
+        .subscribe(consumerStrProp);
 
     }
   }
@@ -1833,7 +1917,7 @@ public class FxEditorFactory {
 
         // Null ve Boş Alan Kontrolü
         if (cellValue == null ||
-            (cellValue instanceof String && FiString.isEmpty((String) cellValue))) {
+          (cellValue instanceof String && FiString.isEmpty((String) cellValue))) {
 //					return new FdrResult(false, "Lütfen Gerekli Alanları Doldurunuz");
           return new Fdr(false, String.format("%s Alanı Zorunludur.Boş Geçilemez.", fiTableCol.getFcTxHeader()));
         }
@@ -1862,7 +1946,7 @@ public class FxEditorFactory {
 
         // Null ve Boş Alan Kontrolü
         if (cellValue == null ||
-            (cellValue instanceof String && FiString.isEmpty((String) cellValue))) {
+          (cellValue instanceof String && FiString.isEmpty((String) cellValue))) {
 //					return new FdrResult(false, "Lütfen Gerekli Alanları Doldurunuz");
           return new Fdr(false, String.format("%s Alanı Zorunludur. Geçerli bir değer giriniz.", fiTableCol.getFcTxHeader()));
         }

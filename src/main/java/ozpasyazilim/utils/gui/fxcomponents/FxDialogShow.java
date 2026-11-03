@@ -864,7 +864,7 @@ public class FxDialogShow {
       String message = fdr.getFdTxMessage();
 
       if (fdr.getFdException() != null) {
-        message += "\n Exception Tanımı \n\n" + FiException.exceptionIfToString(fdr.getFdException());
+        message += "\n Exception Tanımı \n\n" + FiException.exceptionToStringNtn(fdr.getFdException());
       }
 
       FxSimpleDialog fxSimpleDialog = new FxSimpleDialog(FiDialogMetaType.DialogError, message, messageHeader);
@@ -1277,7 +1277,7 @@ public class FxDialogShow {
     } else {
 
       if (dbResult.isEmptyMessage()) {
-        dbResult.setFdrTxMessageWitAddInfoLog("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getFdException()));
+        dbResult.setFdrTxMessageWitAddInfoLog("Hata Oluştu !!! : " + FiException.exceptionToStringNtn(dbResult.getFdException()));
       }
 
       showModalWarningAlert(dbResult.getFdTxMessage());
@@ -1301,7 +1301,7 @@ public class FxDialogShow {
 
       if (dbResult.isFalseBoResult()) {
         if (dbResult.getFdTxMessage() == null) {
-          dbResult.setFdrTxMessageWitAddInfoLog("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getFdException()));
+          dbResult.setFdrTxMessageWitAddInfoLog("Hata Oluştu !!! : " + FiException.exceptionToStringNtn(dbResult.getFdException()));
         }
       }
 
@@ -1330,7 +1330,7 @@ public class FxDialogShow {
     } else {
 
       if (dbResult.getFdTxMessage() == null) {
-        dbResult.setFdrTxMessageWitAddInfoLog("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getFdException()));
+        dbResult.setFdrTxMessageWitAddInfoLog("Hata Oluştu !!! : " + FiException.exceptionToStringNtn(dbResult.getFdException()));
       }
 
       showModalWarningAlert(dbResult.getFdTxMessage());
@@ -1359,7 +1359,7 @@ public class FxDialogShow {
     } else {
 
       if (dbResult.getFdTxMessage() == null) {
-        dbResult.setFdrTxMessageWitAddInfoLog("Hata Oluştu !!! : " + FiException.exceptionIfToString(dbResult.getFdException()));
+        dbResult.setFdrTxMessageWitAddInfoLog("Hata Oluştu !!! : " + FiException.exceptionToStringNtn(dbResult.getFdException()));
       }
       showModalWarningAlert(dbResult.getFdTxMessage());
 

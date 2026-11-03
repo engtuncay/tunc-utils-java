@@ -70,7 +70,7 @@ public class FiException {
 		return sb.toString();
 	}
 
-	public static String exceptionIfToString(Exception exception) {
+	public static String exceptionToStringNtn(Exception exception) {
 		if (exception == null) return "Tanımsız Exception";
 		return exception.toString();
 	}

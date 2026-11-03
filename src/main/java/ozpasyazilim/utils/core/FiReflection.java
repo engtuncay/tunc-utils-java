@@ -314,7 +314,7 @@ public class FiReflection {
         PropertyUtils.setProperty(finalEntity, key, cellvalue);
 
       } catch (IllegalAccessException | InvocationTargetException e) {
-        Loghelper.get(FiReflection.class).debug(FiException.exceptionIfToString(e));
+        Loghelper.get(FiReflection.class).debug(FiException.exceptionToStringNtn(e));
       } catch (NoSuchMethodException e) {
         if (!FiBool.isTrue(boDoNotShowNotSuchMethodException)) {
           Loghelper.get(FiReflection.class).debug("Objenin Metodu Yok:" + key);
@@ -459,7 +459,7 @@ public class FiReflection {
       }
 
     } catch (NoSuchFieldException e) {
-      Loghelper.get(FiReflection.class).error(FiException.exceptionIfToString(e));
+      Loghelper.get(FiReflection.class).error(FiException.exceptionToStringNtn(e));
     }
     return null;
   }

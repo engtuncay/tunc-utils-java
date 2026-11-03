@@ -433,7 +433,7 @@ public class FiFile {
       String result = new String(Files.readAllBytes(Paths.get(filePath)), StandardCharsets.UTF_8);
       return result;
     } catch (IOException e) {
-      Loghelper.get(getClassi()).error(FiException.exceptionIfToString(e));
+      Loghelper.get(getClassi()).error(FiException.exceptionToStringNtn(e));
       e.printStackTrace();
       return null;
     }
@@ -444,7 +444,7 @@ public class FiFile {
       String result = new String(Files.readAllBytes(Paths.get(file.getAbsolutePath())), StandardCharsets.UTF_8);
       return result;
     } catch (IOException e) {
-      Loghelper.get(getClassi()).error(FiException.exceptionIfToString(e));
+      Loghelper.get(getClassi()).error(FiException.exceptionToStringNtn(e));
       return null;
     }
   }
@@ -455,7 +455,7 @@ public class FiFile {
       String result = new String(Files.readAllBytes(Paths.get(filePath)), StandardCharsets.UTF_8);
       return result;
     } catch (IOException e) {
-      Loghelper.get(getClassi()).error(FiException.exceptionIfToString(e));
+      Loghelper.get(getClassi()).error(FiException.exceptionToStringNtn(e));
       e.printStackTrace();
       return null;
     }
