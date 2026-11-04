@@ -199,6 +199,11 @@ public class FiCal {
     return false;
   }
 
+  public static Boolean isEqual(Date selectedDate1, Date selectedDate2) {
+    Integer lnResult = compareDate(selectedDate1, selectedDate2);
+    return lnResult == 0;
+  }
+
   public static Integer compareDate(Date selectedDate1, Date selectedDate2) {
 
     final LocalDate firstDate = FiDate.dateToLocalDate(selectedDate1);
@@ -590,7 +595,7 @@ public class FiCal {
     return result;
   }
 
-  public static Date getDateDiffFromDate(Date date, int dayDifference) {
+  public static Date getDateDiff(Date date, int dayDifference) {
     Calendar aCalendar = FiDate.dateToCalender(date);
     clearTime(aCalendar);
     // Calendar.Date günü belirtiyor
