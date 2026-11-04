@@ -1613,6 +1613,11 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     this.getFdFkbListValInit().addAll(fdrSub.getFdFkbListValInit());
   }
 
+  public void combineAndWitFkbList(Fdr fdrSub) {
+    combineAnd(fdrSub);
+    combineFkbList(fdrSub);
+  }
+
   public Fdr buiBoResult(Boolean boResult, String txMessage) {
     setBoResult(boResult);
     setFdTxMessage(txMessage);

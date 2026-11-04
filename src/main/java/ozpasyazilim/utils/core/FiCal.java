@@ -7,8 +7,10 @@ import java.time.Year;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -81,6 +83,17 @@ public class FiCal {
 
   public static Date getNow() {
     return new Date();
+  }
+
+  public static List<Date> getDateList(Date dtBas, Date dtSon) {
+    List<Date> listDate = new ArrayList<>();
+
+    for (Date dtBasIndex = dtBas; dtBasIndex.before(FiCal.getDateDiff(dtSon, 1)); dtBasIndex = FiCal.getDateDiff(dtBasIndex, 1)) {
+      //System.out.println(dtBasIndex);
+      listDate.add(dtBasIndex);
+    }
+
+    return listDate;
   }
 
   public FiCal buildDateDiffNow(int dayDifference) {
