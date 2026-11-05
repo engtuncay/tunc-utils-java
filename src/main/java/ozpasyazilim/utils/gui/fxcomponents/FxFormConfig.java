@@ -136,4 +136,5 @@ public class FxFormConfig<EntClazz> {
   public void setFnFormSave2(Function<FxFormMig, Fdr> fnFormSave2) {
     this.fnFormSave2 = fnFormSave2;
   }
+
 }

@@ -124,7 +124,7 @@ public class FiReflection {
 //      Object cellvalue = null;
 //
 //      String strCellvalue = value;  //fiCol.getHeader();
-//      // URFIX burada kontroller int gibi metoda çekilecek
+//      //  burada kontroller int gibi metoda çekilecek
 //      if (fiCol.getColType() == OzColType.String) {
 //        cellvalue = strCellvalue;
 //      } else if (fiCol.getColType() == OzColType.Double) {
@@ -207,45 +207,45 @@ public class FiReflection {
     return FiReflection.class;
   }
 
-  public static <T> Boolean setterByString(FiCol fiTableCol, T objectt, String value) {
+//  public static <T> Boolean setterByString(FiCol fiCol, T objectt, String value) {
+//
+//    if (objectt == null) return false;
+//    if (value == null) return false;
+//
+//    try {
+//
+//      String strCellvalue = value;  //ozTableCol.getHeader();
+//
+//      Object cellvalue = convertObjectByOzColType(fiCol.getColType(), strCellvalue);
+//
+//      PropertyUtils.setProperty(objectt, fiCol.getFcTxFieldName(), cellvalue == null ? strCellvalue : cellvalue);
+//      return true;
+//    } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+//      Loghelper.get(FiReflection.class).error(FiException.exTosMain(e));
+//    }
+//
+//    return false;
+//
+//  }
 
-    if (objectt == null) return false;
-    if (value == null) return false;
-
-    try {
-
-      String strCellvalue = value;  //ozTableCol.getHeader();
-
-      Object cellvalue = convertObjectByOzColType(fiTableCol.getColType(), strCellvalue);
-
-      PropertyUtils.setProperty(objectt, fiTableCol.getFcTxFieldName(), cellvalue == null ? strCellvalue : cellvalue);
-      return true;
-    } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-      Loghelper.get(FiReflection.class).error(FiException.exTosMain(e));
-    }
-
-    return false;
-
-  }
-
-  public static Object convertObjectByOzColType(OzColType ozColType, String strValue) {
-
-    Object cellvalue = null;
-
-    if (ozColType == OzColType.Double) {
-      cellvalue = FiNumber.strToDouble(strValue);
-    }
-
-    if (ozColType == OzColType.Date) {
-      cellvalue = FiDate.strToDateGeneric2(strValue);
-    }
-
-    if (ozColType == OzColType.Integer) {
-      cellvalue = Integer.parseInt(strValue);
-    }
-
-    return cellvalue;
-  }
+//  public static Object convertObjectByOzColType(OzColType ozColType, String strValue) {
+//
+//    Object cellvalue = null;
+//
+//    if (ozColType == OzColType.Double) {
+//      cellvalue = FiNumber.strToDouble(strValue);
+//    }
+//
+//    if (ozColType == OzColType.Date) {
+//      cellvalue = FiDate.strToDateGeneric2(strValue);
+//    }
+//
+//    if (ozColType == OzColType.Integer) {
+//      cellvalue = Integer.parseInt(strValue);
+//    }
+//
+//    return cellvalue;
+//  }
 
 
 //  public static <T> Boolean setter(T objectt, IFiCol ozTableCol, Object value) {

@@ -299,6 +299,19 @@ public class Fkb extends LinkedHashMap<String, Object> {
     return getValueAsStringNtn(fiCol.getFcTxFieldName());
   }
 
+  /**
+   * null ise boş string döner, null değilse croplanmış string döner
+   *
+   * @param fiCol fiCol.getFieldName() key olarak kullanılır
+   * @param cropAmount crop miktarı
+   * @return
+   */
+  public String getFicAsStringNtnWitCrop(FiCol fiCol, Integer cropAmount) {
+    if (fiCol == null || FiString.isEmpty(fiCol.getFcTxFieldName())) return "";
+
+    return FiString.cropStringFromBegin(getValueAsStringNtn(fiCol.getFcTxFieldName()), cropAmount);
+  }
+
   public String getValueAsString(String txKey) {
     if (FiString.isEmpty(txKey)) return null;
 
@@ -801,6 +814,35 @@ public class Fkb extends LinkedHashMap<String, Object> {
     if (fiCol == null || FiString.isEmpty(fiCol.getFcTxFieldName())) return;
 
     addFieldIfNotExist(fiCol.getFcTxFieldName(), value);
+  }
+
+  /**
+   * Eğer key yoksa ekler, veya value null ise ekler
+   *
+   * @param fiCol
+   * @param value
+   */
+  public void addFicIfNull(FiCol fiCol, Object value) {
+    if (fiCol == null || FiString.isEmpty(fiCol.getFcTxFieldName())) return;
+
+    addFieldIfNull(fiCol.getFcTxFieldName(), value);
+  }
+
+  /**
+   * Eğer key yoksa ekler, veya value null ise ekler
+   *
+   * @param fcTxFieldName
+   * @param value
+   */
+  private void addFieldIfNull(String fcTxFieldName, Object value) {
+    if (!containsKey(fcTxFieldName)) {
+      add(fcTxFieldName, value);
+    } else {
+      Object objValue = get(fcTxFieldName);
+      if (objValue == null) {
+        add(fcTxFieldName, value);
+      }
+    }
   }
 
   public void addFieldIfNotExist(String txKey, Object value) {

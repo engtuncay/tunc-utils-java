@@ -737,7 +737,7 @@ public class FiString {
    * @param txtValueArr
    * @return
    */
-  public static boolean equalsSomeIgnoreCase(String txCheckValue, String... txtValueArr) {
+  public static boolean equalsSomeCI(String txCheckValue, String... txtValueArr) {
     if (txCheckValue == null) return false;
     for (String val : txtValueArr) {
 
