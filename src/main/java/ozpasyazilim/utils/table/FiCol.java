@@ -17,6 +17,7 @@ import ozpasyazilim.utils.fidbanno.FiTable;
 import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.fidborm.IFiField;
 import ozpasyazilim.utils.gui.fxcomponents.*;
+import ozpasyazilim.utils.metadata.fimCodegen.FimFcFiTypes;
 import ozpasyazilim.utils.metadata.fimCodegen.FimFcSpecFields;
 import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.core.FiString;
@@ -282,8 +283,6 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
   private BiConsumer<EntClazz, Button> fnColButton;
 
   // ****** Sql Sorgular ile ilgili alanlar
-
-
 
 
   /**
@@ -554,9 +553,11 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
       if (FiBool.isTrue(fiField.getBoExcludeFromAutoColList())) continue;
       FiCol fiTableCol = new FiCol(fiField.getFcTxFieldName(), fiField.getFcTxFieldName());
       fiTableCol.setColType(convertOzColType(fiField.getClassNameSimple()));
+
       if (fiTableCol.getColTypeNtn().equals(OzColType.Double) || fiTableCol.getColTypeNtn().equals(OzColType.Integer)) {
         fiTableCol.setSummaryType(OzColSummaryType.SUM);
       }
+
       fiTableColList.add(fiTableCol);
     }
     return fiTableColList;
@@ -887,6 +888,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
 
   /**
    * URFIX fcBoWhereField'e çevrilmeli
+   *
    * @param boValue
    * @return
    */
@@ -916,7 +918,7 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
   }
 
   public Boolean isDefCols() {
-    if(FimFcSpecFields.qcfTxSqTableName().getFtTxKey().equals(getFcTxFieldName())) {
+    if (FimFcSpecFields.qcfTxSqTableName().getFtTxKey().equals(getFcTxFieldName())) {
       return true;
     }
     return false;
@@ -950,6 +952,9 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
   public boolean isWhereInField() {
     return FiBool.isTrue(getFcBoWhereIn());
   }
+
+
+
 
   public enum ColStyle {alignment;}
 
@@ -1660,6 +1665,43 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     this.colValue = colValue;
   }
 
+  /**
+   * Alan integer tipinde mi
+   *
+   * @return boolean
+   */
+  @Override
+  public boolean isTypeInts() {
+    if (getFcTxFieldTypeNtn().equals(FimFcFiTypes.fint().getFtTxValue())) return true;
+    if (getFcTxFieldTypeNtn().equals(FimFcFiTypes.ftinyint().getFtTxValue())) return true;
+    if (getColTypeNtn() == OzColType.Integer) return true;
+    return false;
+  }
+
+  public boolean isTypeStrings() {
+    if (getFcTxFieldTypeNtn().equals(FimFcFiTypes.fstring().getFtTxValue())) return true;
+    if (getFcTxFieldTypeNtn().equals(FimFcFiTypes.fnvarchar().getFtTxValue())) return true;
+    if (getFcTxFieldTypeNtn().equals(FimFcFiTypes.fvarchar().getFtTxValue())) return true;
+    if (getFcTxFieldTypeNtn().equals(FimFcFiTypes.ftext().getFtTxValue())) return true;
+    if (getColTypeNtn() == OzColType.String) return true;
+    return false;
+  }
+
+  public boolean isTypeDoubles() {
+    if (getFcTxFieldTypeNtn().equals(FimFcFiTypes.fdouble().getFtTxValue())) return true;
+    if (getFcTxFieldTypeNtn().equals(FimFcFiTypes.fDecimal().getFtTxValue())) return true;
+    if (getFcTxFieldTypeNtn().equals(FimFcFiTypes.fFloat().getFtTxValue())) return true;
+    if (getColTypeNtn() == OzColType.Double) return true;
+    return false;
+  }
+
+  public boolean isTypeDates() {
+    if (getFcTxFieldTypeNtn().equals(FimFcFiTypes.fdate().getFtTxValue())) return true;
+    if (getFcTxFieldTypeNtn().equals(FimFcFiTypes.fdatetime().getFtTxValue())) return true;
+    if (getColTypeNtn() == OzColType.Date) return true;
+    return false;
+  }
+
   public Boolean getBoUpdateFieldForQuery() {
     return boUpdateFieldForQuery;
   }
@@ -2005,13 +2047,21 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     this.boWhereField = boWhereField;
   }
 
-  public Fkb getFkbData() {return fkbData;}
+  public Fkb getFkbData() {
+    return fkbData;
+  }
 
-  public void setFkbData(Fkb fkbData) {this.fkbData = fkbData;}
+  public void setFkbData(Fkb fkbData) {
+    this.fkbData = fkbData;
+  }
 
-  public Integer getFcLnId() {return fcLnId;}
+  public Integer getFcLnId() {
+    return fcLnId;
+  }
 
-  public void setFcLnId(Integer fcLnId) {this.fcLnId = fcLnId;}
+  public void setFcLnId(Integer fcLnId) {
+    this.fcLnId = fcLnId;
+  }
 
   public Boolean getFcBoWhereIn() {
     return fcBoWhereIn;
@@ -2028,6 +2078,8 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
   public void setFcBoInsField(Boolean fcBoInsField) {
     this.fcBoInsField = fcBoInsField;
   }
+
+
 }
 
 

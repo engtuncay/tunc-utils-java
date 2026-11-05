@@ -10,7 +10,7 @@ public class FimFcFiTypesSpec {
 
   public static boolean isDouble(String txFieldType) {
     return FiString.equalsAny(txFieldType
-        , FimFcFiTypes.fDouble().getValue()
+        , FimFcFiTypes.fdouble().getValue()
         , FimFcFiTypes.fDecimal().getValue()
         , FimFcFiTypes.fFloat().getValue());
   }

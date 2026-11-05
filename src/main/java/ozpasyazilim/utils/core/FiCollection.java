@@ -6,7 +6,7 @@ import mark.utils.collections.filter.Filter;
 import org.apache.commons.beanutils.PropertyUtils;
 import ozpasyazilim.utils.datatypes.*;
 import ozpasyazilim.utils.log.Loghelper;
-import ozpasyazilim.utils.mvc.IFiCol;
+import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.OzColType;
 
 import java.util.*;
@@ -881,7 +881,7 @@ public class FiCollection {
     return false;
   }
 
-  public static <T> List<T> groupByField(List<T> listData, String field, List<IFiCol> listCol, Class<T> clazz) {
+  public static <T> List<T> groupByField(List<T> listData, String field, List<FiCol> listCol, Class<T> clazz) {
 
     Map<String, List<T>> mapData = new HashMap<>();
 
@@ -904,14 +904,14 @@ public class FiCollection {
 
       T filteredEntity = new FiReflection().generateObject(clazz);
 
-      for (IFiCol oztablecol : listCol) {
+      for (FiCol oztablecol : listCol) {
 
         T exampleObj = listDataByKey.get(0);
 
         Object objectColValue = FiReflection.getProperty(exampleObj, oztablecol.getFcTxFieldName());
 
         if (oztablecol.getColType() == null || oztablecol.getColType() == OzColType.String) {
-          new FiReflection().setter(filteredEntity, oztablecol, objectColValue);
+          FiReflection.setter(filteredEntity, oztablecol, objectColValue);
         }
 
         if (objectColValue instanceof Double) {
@@ -922,7 +922,7 @@ public class FiCollection {
             return (Double) objectByField;
           });
 
-          new FiReflection().setter(filteredEntity, oztablecol, sumDouble);
+          FiReflection.setter(filteredEntity, oztablecol, sumDouble);
 
         }
 
@@ -936,7 +936,7 @@ public class FiCollection {
     return listFiltered;
   }
 
-  public static <T> List<T> groupByField(List<T> listData, List<String> listGroupbyfields, List<IFiCol> listCol, Class<T> clazz) {
+  public static <T> List<T> groupByField(List<T> listData, List<String> listGroupbyfields, List<FiCol> listCol, Class<T> clazz) {
 
     if (FiCollection.isEmpty(listGroupbyfields)) return null;
 
@@ -970,7 +970,7 @@ public class FiCollection {
         new FiReflection().setter(filteredEntity, fieldGrouped, objectColValue);
       }
 
-      for (IFiCol oztablecol : listCol) {
+      for (FiCol oztablecol : listCol) {
 
         Object objectColValue = FiReflection.getProperty(exampleObj, oztablecol.getFcTxFieldName());
 
@@ -988,7 +988,7 @@ public class FiCollection {
             return (Double) objectByField;
           });
 
-          new FiReflection().setter(filteredEntity, oztablecol, sumDouble);
+          FiReflection.setter(filteredEntity, oztablecol, sumDouble);
         }
 
       }

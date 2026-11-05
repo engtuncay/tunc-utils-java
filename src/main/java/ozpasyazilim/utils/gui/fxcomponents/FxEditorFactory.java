@@ -837,7 +837,7 @@ public class FxEditorFactory {
     OzColType colType = refFiCol.getColType();
 
     if (colType == OzColType.Double) {
-      refFiCol.setFcTxFieldType(FimFcFiTypes.fDouble().getValue());
+      refFiCol.setFcTxFieldType(FimFcFiTypes.fdouble().getValue());
       return;
     }
 
@@ -1507,7 +1507,7 @@ public class FxEditorFactory {
       fiCol.setColType(OzColType.Date);
     }
 
-    if (FiString.equalsAny(fcTxFieldType, FimFcFiTypes.fDouble().getValue())) {
+    if (FiString.equalsAny(fcTxFieldType, FimFcFiTypes.fdouble().getValue())) {
       fiCol.setColType(OzColType.Double);
     }
 

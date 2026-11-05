@@ -161,6 +161,11 @@ public class IFiColHelper {
 		return findColumnByFieldName(fieldName);
 	}
 
+	public FiCol findColumnByFieldNameV2(List<FiCol> listColumns, String fieldName) {
+		setListIFiCol(listColumns);
+		return findColumnByFieldNameV2(fieldName);
+	}
+
 	public IFiCol findColumnByFieldName(Object objFieldName) {
 		return findColumnByFieldName(objFieldName.toString());
 	}
@@ -178,12 +183,37 @@ public class IFiColHelper {
 		return null;
 	}
 
+	public FiCol findColumnByFieldNameV2(String fieldName) {
+
+		if (!getListFiColInit().isEmpty()) {
+
+			for (FiCol fiCol : getListFiColInit()) {
+				if (fiCol.getFcTxFieldName().equals(fieldName)) {
+					return fiCol;
+				}
+			}
+		}
+		return null;
+	}
+
 	public List<FiCol> getListFiCol() {
+		return listFiCol;
+	}
+
+	public List<FiCol> getListFiColInit() {
+		if (listFiCol == null) {
+			listFiCol = new ArrayList<>();
+		}
 		return listFiCol;
 	}
 
 	public void setListFiCol(List<FiCol> listFiCol) {
 		this.listFiCol = listFiCol;
 	}
+
+	public List<? extends IFiCol> getListIFiCol() {
+		return listIFiCol;
+	}
+
 
 }

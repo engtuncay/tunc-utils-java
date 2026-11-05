@@ -221,4 +221,6 @@ public interface IFiCol<N> {
 
 	public void setColValue(Object colValue);
 
+  boolean isTypeInts();
+
 }

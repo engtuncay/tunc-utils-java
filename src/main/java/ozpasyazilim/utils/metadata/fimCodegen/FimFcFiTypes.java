@@ -11,7 +11,7 @@ import ozpasyazilim.utils.datatypes.FiMeta;
  */
 public class FimFcFiTypes {
 
-  public static FiMeta fDouble() {
+  public static FiMeta fdouble() {
     FiMeta fim = new FiMeta("fdouble");
     fim.setFtTxValue("double");
 

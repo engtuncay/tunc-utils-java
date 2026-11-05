@@ -6,7 +6,6 @@ import ozpasyazilim.utils.datatypes.Fkb;
 import ozpasyazilim.utils.datatypes.PersonEntityTest;
 import ozpasyazilim.utils.fidborm.FiReflectClass;
 import ozpasyazilim.utils.log.Loghelper;
-import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.fidborm.FiField;
 import ozpasyazilim.utils.table.OzColType;
 import ozpasyazilim.utils.table.FiCol;
@@ -115,7 +114,45 @@ public class FiReflection {
     return clazz;
   }
 
-  public static <T> Boolean setter(IFiCol fiCol, T objectt, String value) {
+//  public static <T> Boolean setter(IFiCol fiCol, T objectt, String value) {
+//
+//    if (objectt == null) return false;
+//    if (value == null) return false;
+//
+//    try {
+//
+//      Object cellvalue = null;
+//
+//      String strCellvalue = value;  //fiCol.getHeader();
+//      // URFIX burada kontroller int gibi metoda çekilecek
+//      if (fiCol.getColType() == OzColType.String) {
+//        cellvalue = strCellvalue;
+//      } else if (fiCol.getColType() == OzColType.Double) {
+//        cellvalue = FiNumber.strToDouble(strCellvalue);
+//      } else if (fiCol.getColType() == OzColType.Date) {
+//        cellvalue = FiDate.strToDateGeneric2(strCellvalue);
+//      } else if (fiCol.isTypeInt()) { // fiCol.getColType() == OzColType.Integer
+//        cellvalue = Integer.parseInt(strCellvalue);
+//      } else { // eğer tip belirtilmemişse String olarak varsayılır
+//        cellvalue = strCellvalue;
+//      }
+//
+//      PropertyUtils.setProperty(objectt, fiCol.getFcTxFieldName(), cellvalue); //cellvalue == null ? strCellvalue : cellvalue
+//      return true;
+//    } catch (Exception e) {
+//      Loghelper.get(FiReflection.class).debug(FiException.exTosMain(e));
+//    }
+////		} catch (IllegalAccessException e) {
+////			Loghelper.get(FiReflection.class).debug(FiException.exceptiontostring(e));
+////		} catch (InvocationTargetException e) {
+////			Loghelper.get(FiReflection.class).debug(FiException.exceptiontostring(e));
+////		} catch (NoSuchMethodException e) {
+////			Loghelper.get(FiReflection.class).debug(FiException.exceptiontostring(e));
+////		}
+//    return false;
+//  }
+
+  public static <T> Boolean setterV2(T objectt, FiCol fiCol, String value) {
 
     if (objectt == null) return false;
     if (value == null) return false;
@@ -126,13 +163,13 @@ public class FiReflection {
 
       String strCellvalue = value;  //fiCol.getHeader();
 
-      if (fiCol.getColType() == OzColType.String) {
+      if (fiCol.isTypeStrings()) {
         cellvalue = strCellvalue;
-      } else if (fiCol.getColType() == OzColType.Double) {
+      } else if (fiCol.isTypeDoubles()) {
         cellvalue = FiNumber.strToDouble(strCellvalue);
-      } else if (fiCol.getColType() == OzColType.Date) {
+      } else if (fiCol.isTypeDates()) {
         cellvalue = FiDate.strToDateGeneric2(strCellvalue);
-      } else if (fiCol.getColType() == OzColType.Integer) {
+      } else if (fiCol.isTypeInts()) { // fiCol.getColType() == OzColType.Integer
         cellvalue = Integer.parseInt(strCellvalue);
       } else { // eğer tip belirtilmemişse String olarak varsayılır
         cellvalue = strCellvalue;
@@ -211,17 +248,21 @@ public class FiReflection {
   }
 
 
-  public static <T> Boolean setter(T objectt, IFiCol ozTableCol, Object value) {
+//  public static <T> Boolean setter(T objectt, IFiCol ozTableCol, Object value) {
+//
+//    try {
+//      PropertyUtils.setProperty(objectt, ozTableCol.getFcTxFieldName(), value);
+//      return true;
+//    } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+//      Loghelper.get(FiReflection.class).error(FiException.exTosMain(e));
+//    }
+//
+//    return false;
+//
+//  }
 
-    try {
-      PropertyUtils.setProperty(objectt, ozTableCol.getFcTxFieldName(), value);
-      return true;
-    } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-      Loghelper.get(FiReflection.class).error(FiException.exTosMain(e));
-    }
-
-    return false;
-
+  public static <T> Boolean setter(T objectt, FiCol fiCol, Object value) {
+    return setter(objectt, fiCol.getFcTxFieldName(), value);
   }
 
   public static <T> Boolean setter(T objectt, String fieldName, Object value) {

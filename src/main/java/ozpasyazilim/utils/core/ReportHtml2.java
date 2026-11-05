@@ -98,7 +98,7 @@ public class ReportHtml2 {
 
 	}
 
-	public <T> ReportHtml2 reportBasicHtmlAutoFooter(List<T> listdata, List<IFiCol> listColumns, Class<T> clazz) {
+	public <T> ReportHtml2 reportBasicHtmlAutoFooter(List<T> listdata, List<FiCol> listColumns, Class<T> clazz) {
 
 		Integer numberofcol = listColumns.size();
 
@@ -182,14 +182,14 @@ public class ReportHtml2 {
 
 	}
 
-	private <T> T prepFooter(List<T> listdata, List<IFiCol> listColumns, Class<T> clazz) {
+	private <T> T prepFooter(List<T> listdata, List<FiCol> listColumns, Class<T> clazz) {
 
-		T footer= new FiReflection().generateObject(clazz);
+		T footer= FiReflection.generateObject(clazz);
 
-		for (IFiCol ozTableCol : listColumns ) {
+		for (FiCol ozTableCol : listColumns ) {
 
 			if (ozTableCol.getSummaryType() != null && ozTableCol.getSummaryType() == OzColSummaryType.HEADINGFORTOTAL) {
-				new FiReflection().setter(ozTableCol, footer, "TOPLAM");
+				FiReflection.setterV2(footer, ozTableCol, "TOPLAM");
 			}
 
 
@@ -213,7 +213,7 @@ public class ReportHtml2 {
 
 					//Loghelperr.getInstance(getClass()).debug(" Toplam:"+ sumDouble.toString());
 
-					new FiReflection().setter(footer, ozTableCol, sumDouble);
+					FiReflection.setter(footer, ozTableCol, sumDouble);
 
 				}
 
@@ -229,7 +229,7 @@ public class ReportHtml2 {
 
 					//Loghelperr.getInstance(getClass()).debug(" Toplam:"+ sumDouble.toString());
 
-					new FiReflection().setter(footer, ozTableCol, sumDouble);
+					FiReflection.setter(footer, ozTableCol, sumDouble);
 
 				}
 
@@ -249,7 +249,7 @@ public class ReportHtml2 {
 
 					//Loghelperr.getInstance(getClass()).debug(" Toplam:"+ sumDouble.toString());
 
-					new FiReflection().setter(footer, ozTableCol, summaryvalue);
+					FiReflection.setter(footer, ozTableCol, summaryvalue);
 
 
 				}

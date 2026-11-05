@@ -1032,6 +1032,12 @@ public class FxTableColDep<Clazz> extends TableColumn implements IFiCol<Clazz> {
 	public void setColValue(Object colValue) {
 		this.colEditorValue = colValue;
 	}
+
+	@Override
+	public boolean isTypeInts() {
+		return false;
+	}
+
 	public void setIfxNodeEditor(IFiNode IFiNodeEditor) {
 		this.IFiNodeEditor = IFiNodeEditor;
 	}

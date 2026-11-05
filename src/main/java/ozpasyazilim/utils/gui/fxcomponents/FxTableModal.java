@@ -20,14 +20,14 @@ public class FxTableModal {
         return null;
     }
 
-    public <T> T prepSummaryHelper(List<T> listdata, List<IFiCol> listColumns, Class<T> clazz) {
+    public <T> T prepSummaryHelper(List<T> listdata, List<FiCol> listColumns, Class<T> clazz) {
 
         T summaryEntity = FiReflection.generateObject(clazz);
 
-        for (IFiCol ozTableCol : listColumns) {
+        for (FiCol ozTableCol : listColumns) {
 
             if (ozTableCol.getSummaryType() != null && ozTableCol.getSummaryType() == OzColSummaryType.HEADINGFORTOTAL) {
-                FiReflection.setter(ozTableCol, summaryEntity, "TOPLAM");
+                FiReflection.setterV2(summaryEntity, ozTableCol, "TOPLAM");
             }
 
 
