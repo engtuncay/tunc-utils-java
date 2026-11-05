@@ -46,6 +46,11 @@ public class Fkb extends LinkedHashMap<String, Object> {
 
   HashMap<String, FiCol> mapFiCol;
 
+  /**
+   * fkb için bir isim verilmek istenirse
+   */
+  String txName;
+
 
   public Fkb() {
   }
@@ -626,6 +631,9 @@ public class Fkb extends LinkedHashMap<String, Object> {
 
   public void logParams() {
     Loghelper.get(getClass()).debug("fkb.logParams called");
+    if(getTxName()!=null) {
+      Loghelper.get(getClass()).debug("fkb.txName:" + getTxName());
+    }
     Loghelper.get(getClass()).debug(FiConsole.textFkb(this));
   }
 
@@ -904,4 +912,13 @@ public class Fkb extends LinkedHashMap<String, Object> {
     }
     return sb.append("}").toString();
   }
+
+  public String getTxName() {
+    return txName;
+  }
+
+  public void setTxName(String txName) {
+    this.txName = txName;
+  }
+
 }
