@@ -152,9 +152,17 @@ public class FiReflection {
 //    return false;
 //  }
 
-  public static <T> Boolean setterV2(T objectt, FiCol fiCol, String value) {
+  /**
+   *
+   *
+   * @param objEntity
+   * @param fiCol
+   * @param value
+   * @return
+   */
+  public static Boolean setterV2(Object objEntity, FiCol fiCol, String value) {
 
-    if (objectt == null) return false;
+    if (objEntity == null) return false;
     if (value == null) return false;
 
     try {
@@ -175,7 +183,7 @@ public class FiReflection {
         cellvalue = strCellvalue;
       }
 
-      PropertyUtils.setProperty(objectt, fiCol.getFcTxFieldName(), cellvalue); //cellvalue == null ? strCellvalue : cellvalue
+      PropertyUtils.setProperty(objEntity, fiCol.getFcTxFieldName(), cellvalue); //cellvalue == null ? strCellvalue : cellvalue
       return true;
     } catch (Exception e) {
       Loghelper.get(FiReflection.class).debug(FiException.exTosMain(e));
@@ -340,10 +348,10 @@ public class FiReflection {
   }
 
   public static <E> E bindFkbToEntity(Fkb keyBean, Class<E> entityclass) {
-    return bindKeyBeanToEntityMain(keyBean, entityclass, false);
+    return bindFkbToEntityMain(keyBean, entityclass, false);
   }
 
-  public static <E> E bindKeyBeanToEntityMain(Fkb keyBean, Class<E> entityclass, Boolean boDoNotShowNotSuchMethodException) {
+  public static <E> E bindFkbToEntityMain(Fkb keyBean, Class<E> entityclass, Boolean boDoNotShowNotSuchMethodException) {
 
     E entity = createObject(entityclass);
 
