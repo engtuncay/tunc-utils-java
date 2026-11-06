@@ -168,7 +168,7 @@ public class FiXmlParser {
 
 			String text = $(xmlElement).find(ozTableCol.getFcTxHeader()).text();
 			//println(" CellValue:"+text);
-			FiReflection.setterV2(objectt, ozTableCol, text);
+			FiReflection.setterForString(objectt, ozTableCol, text);
 
 		}
 
@@ -217,7 +217,7 @@ public class FiXmlParser {
 
 			if (fiColParent.getColGenTypeNtn().equals(OzColType.XmlAttribute)) {
 				String text = xmlMatch.attr(fiColParent.getFcTxHeader());
-				FiReflection.setterV2(entity, fiColParent, text);
+				FiReflection.setterForString(entity, fiColParent, text);
 //			Loghelper.get(FiXmlParser.class).debug("Attr HeaderName:"+ fiColParent.getHeaderName());
 //			Loghelper.get(FiXmlParser.class).debug("Attr Value:" + text);
 				continue;
@@ -227,7 +227,7 @@ public class FiXmlParser {
 
 			Match elementChild = xmlMatch.find(fiColParent.getFcTxHeader());
 			String text = elementChild.text();
-			FiReflection.setterV2(entity, fiColParent, text);
+			FiReflection.setterForString(entity, fiColParent, text);
 		}
 
 		return entity;
@@ -350,7 +350,7 @@ public class FiXmlParser {
 
 			if (ficL1.getColGenTypeNtn().equals(OzColType.XmlAttribute)) {
 				String text = xmlMatch.attr(ficL1.getFcTxHeader());
-				FiReflection.setterV2(fkbEntity, ficL1, text);
+				FiReflection.setterForString(fkbEntity, ficL1, text);
 //			Loghelper.get(FiXmlParser.class).debug("Attr HeaderName:"+ ficL1.getHeaderName());
 //			Loghelper.get(FiXmlParser.class).debug("Attr Value:" + text);
 				continue;
@@ -361,7 +361,7 @@ public class FiXmlParser {
 			//Varsayılan olarak, header değerinde, xml elementin değeri okunur
 			Match elementChild = xmlMatch.find(ficL1.getFcTxHeader());
 			String text = elementChild.text();
-			FiReflection.setterV2(fkbEntity, ficL1, text);
+			FiReflection.setterForString(fkbEntity, ficL1, text);
 		}
 
 		return fkbEntity;

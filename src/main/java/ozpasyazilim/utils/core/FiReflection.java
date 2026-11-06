@@ -153,14 +153,14 @@ public class FiReflection {
 //  }
 
   /**
-   *
+   * String değeri FiCol alan tipine göre dönüştürür ve setter ile objeye set eder
    *
    * @param objEntity
    * @param fiCol
    * @param value
    * @return
    */
-  public static Boolean setterV2(Object objEntity, FiCol fiCol, String value) {
+  public static Boolean setterForString(Object objEntity, FiCol fiCol, String value) {
 
     if (objEntity == null) return false;
     if (value == null) return false;

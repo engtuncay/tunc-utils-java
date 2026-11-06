@@ -189,7 +189,7 @@ public class ReportHtml2 {
 		for (FiCol ozTableCol : listColumns ) {
 
 			if (ozTableCol.getSummaryType() != null && ozTableCol.getSummaryType() == OzColSummaryType.HEADINGFORTOTAL) {
-				FiReflection.setterV2(footer, ozTableCol, "TOPLAM");
+				FiReflection.setterForString(footer, ozTableCol, "TOPLAM");
 			}
 
 

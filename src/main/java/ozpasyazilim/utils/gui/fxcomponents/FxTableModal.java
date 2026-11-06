@@ -27,7 +27,7 @@ public class FxTableModal {
         for (FiCol ozTableCol : listColumns) {
 
             if (ozTableCol.getSummaryType() != null && ozTableCol.getSummaryType() == OzColSummaryType.HEADINGFORTOTAL) {
-                FiReflection.setterV2(summaryEntity, ozTableCol, "TOPLAM");
+                FiReflection.setterForString(summaryEntity, ozTableCol, "TOPLAM");
             }
 
 
