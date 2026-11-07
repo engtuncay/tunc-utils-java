@@ -695,7 +695,7 @@ public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxC
     }
 
     //bydefault
-    FxTableViewV2CellFactory.setupCellFactoryGeneral(fxTableCol, getEntityClass());
+    FxTblCellCompFactory.setupCellFactoryGeneral(fxTableCol, getEntityClass());
     fxTableCol.setId(fxTableCol.getRefFiCol().getFcTxFieldName());
 
   }
@@ -706,7 +706,7 @@ public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxC
     fxTableCol.setCellValueFactory(new TableValueFactoryForFkb<>(fxTableCol.getRefFiCol().getFcTxFieldName()));
 
     //bydefault idi
-    FxTableViewV2CellFactory.setupCellFactoryGeneral(fxTableCol, getEntityClass());
+    FxTblCellCompFactory.setupCellFactoryGeneral(fxTableCol, getEntityClass());
     fxTableCol.setId(fxTableCol.getRefFiCol().getFcTxFieldName());
     //fxTableCol.setAutoFormatter(fxTableCol.getFiTableCol().getColType());
   }
