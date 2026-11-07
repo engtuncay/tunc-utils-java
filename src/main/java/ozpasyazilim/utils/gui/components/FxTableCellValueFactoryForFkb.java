@@ -32,6 +32,7 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.util.Callback;
+import ozpasyazilim.utils.core.FiString;
 import ozpasyazilim.utils.datatypes.Fkb;
 
 // * @see TableColumn
@@ -83,8 +84,12 @@ public class FxTableCellValueFactoryForFkb<S> implements Callback<CellDataFeatur
 			Fkb fkbRow = (Fkb) rowData;
 
 			if (fkbRow.containsKey(getProperty())) {
-				Object value = fkbRow.get(getProperty());
-				return new ReadOnlyObjectWrapper<Object>(value);
+				Object cellValue = fkbRow.get(getProperty());
+				if(cellValue instanceof Fkb) {
+					String txValue = ((Fkb) cellValue).toString();
+					cellValue = FiString.cropStringFromBegin(txValue, 100);
+				}
+				return new ReadOnlyObjectWrapper<Object>(cellValue);
 			}
 		}
 
