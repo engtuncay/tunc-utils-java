@@ -41,7 +41,7 @@ import ozpasyazilim.utils.datatypes.Fkb;
 // * @see MapValueFactory
 // * @param <S> The type of the class contained within the TableView.items list.
 // * @param <T> The type of the class contained within the TableColumn cells.
-public class TableValueFactoryForFkb<S> implements Callback<CellDataFeatures<S, Object>, ObservableValue<Object>> {
+public class FxTableCellValueFactoryForFkb<S> implements Callback<CellDataFeatures<S, Object>, ObservableValue<Object>> {
 
 	private final String property;
 
@@ -56,7 +56,7 @@ public class TableValueFactoryForFkb<S> implements Callback<CellDataFeatures<S, 
 	 * @param property The name of the property with which to attempt to
 	 *                 reflectively extract a corresponding value for in a given object.
 	 */
-	public TableValueFactoryForFkb(@NamedArg("property") String property) {
+	public FxTableCellValueFactoryForFkb(@NamedArg("property") String property) {
 		this.property = property;
 	}
 
@@ -80,10 +80,10 @@ public class TableValueFactoryForFkb<S> implements Callback<CellDataFeatures<S, 
 
 		if (rowData instanceof Fkb) {
 
-			Fkb fiKeyBean = (Fkb) rowData;
+			Fkb fkbRow = (Fkb) rowData;
 
-			if (fiKeyBean.containsKey(getProperty())) {
-				Object value = fiKeyBean.get(getProperty());
+			if (fkbRow.containsKey(getProperty())) {
+				Object value = fkbRow.get(getProperty());
 				return new ReadOnlyObjectWrapper<Object>(value);
 			}
 		}

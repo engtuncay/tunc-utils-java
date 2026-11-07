@@ -21,7 +21,7 @@ import ozpasyazilim.utils.core.*;
 import ozpasyazilim.utils.datatypes.Fkb;
 import ozpasyazilim.utils.datatypes.FiListString;
 import ozpasyazilim.utils.fimetas.FicFtQuery;
-import ozpasyazilim.utils.gui.components.TableValueFactoryForFkb;
+import ozpasyazilim.utils.gui.components.FxTableCellValueFactoryForFkb;
 import ozpasyazilim.utils.gui.fxTableViewExtra.NestedPropertyValueFactory;
 import ozpasyazilim.utils.log.Loghelper;
 import ozpasyazilim.utils.metadata.fimOther.FimFicTxFilterType;
@@ -652,14 +652,14 @@ public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxC
 
   public void addFxTableColAuto(FxTableCol2 fxTableCol) {
     // Cell Value Factory and Editor Factory leri ayarlanır
-    setupCellValueAndEditorFactory(fxTableCol);
+    setupCellValueAndCompFactory(fxTableCol);
     //Loghelperr.getInstance(getClass()).debug(" Fx TableView col id:"+fxTableCol.getId());
     addFxTableColFi(fxTableCol);
   }
 
   public void addColumnAutoAsFkb(FxTableCol2 fxTableCol) {
     // Cell Value Factory and Editor Factory leri ayarlanır
-    setupCellValueAndEditorFactoryAsFkb(fxTableCol);
+    setupCellValueAndCompFactoryForFkb(fxTableCol);
     //Loghelperr.getInstance(getClass()).debug(" Fx TableView col id:"+fxTableCol.getId());
     addFxTableColFi(fxTableCol);
   }
@@ -682,7 +682,7 @@ public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxC
    *
    * @param fxTableCol FxTableCol2
    */
-  private void setupCellValueAndEditorFactory(FxTableCol2 fxTableCol) {
+  private void setupCellValueAndCompFactory(FxTableCol2 fxTableCol) {
     //Loghelperr.getInstance(getClass()).debug("added "+ fxTableCol.getFieldName());
     fxTableCol.setText(fxTableCol.getRefFiCol().getFcTxHeader());
 
@@ -695,18 +695,18 @@ public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxC
     }
 
     //bydefault
-    FxTblCellCompFactory.setupCellFactoryGeneral(fxTableCol, getEntityClass());
+    FxTableCellCompFactory.setupGeneral(fxTableCol, getEntityClass());
     fxTableCol.setId(fxTableCol.getRefFiCol().getFcTxFieldName());
 
   }
 
-  private void setupCellValueAndEditorFactoryAsFkb(FxTableCol2 fxTableCol) {
+  private void setupCellValueAndCompFactoryForFkb(FxTableCol2 fxTableCol) {
     //Loghelperr.getInstance(getClass()).debug("added "+ fxTableCol.getFieldName());
     fxTableCol.setText(fxTableCol.getRefFiCol().getFcTxHeader());
-    fxTableCol.setCellValueFactory(new TableValueFactoryForFkb<>(fxTableCol.getRefFiCol().getFcTxFieldName()));
+    fxTableCol.setCellValueFactory(new FxTableCellValueFactoryForFkb<>(fxTableCol.getRefFiCol().getFcTxFieldName()));
 
     //bydefault idi
-    FxTblCellCompFactory.setupCellFactoryGeneral(fxTableCol, getEntityClass());
+    FxTableCellCompFactory.setupGeneral(fxTableCol, getEntityClass());
     fxTableCol.setId(fxTableCol.getRefFiCol().getFcTxFieldName());
     //fxTableCol.setAutoFormatter(fxTableCol.getFiTableCol().getColType());
   }
