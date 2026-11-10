@@ -2,9 +2,11 @@ package ozpasyazilim.utils.fidborm;
 
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
+import org.jdbi.v3.core.statement.Query;
 import ozpasyazilim.utils.core.FiBool;
 import ozpasyazilim.utils.core.FiCollection;
 import ozpasyazilim.utils.core.FiException;
+import ozpasyazilim.utils.core.FiRunTime;
 import ozpasyazilim.utils.datatypes.Fkb;
 import ozpasyazilim.utils.datatypes.FkbList;
 import ozpasyazilim.utils.datatypes.Fkf;
@@ -83,15 +85,17 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
     fdr.setValue(new FkbList());
 
     try {
-      List<Fkb> result = getJdbi().withHandle(handle -> {
-        return handle.createQuery(FiQueryUtils.stoj(fiQuery.getTxQuery()))
-            .bindMap(fiQuery.getFkbParams())
+      FiRunTime fiRunTime1 = new FiRunTime("Sorgu Çalıştırma");
+      FkbList fkbListResult = getJdbi().withHandle(handle -> {
+          Query query = handle.createQuery(FiQueryUtils.stoj(fiQuery.getTxQuery()));
+          List<Fkb> list = query.bindMap(fiQuery.getFkbParams())
             .map(new FiKeyBeanMapper(false))
             .list();
+          return new FkbList(list);
       });
-      FkbList fkbList = new FkbList(result);
+      fiRunTime1.endTimerAndLog();
       fdr.setFdBoResult(true);
-      fdr.setFdFkbListVal(fkbList);
+      fdr.setFdFkbListVal(fkbListResult);
       //fdr.setRowsAffected(1);
     } catch (Exception ex) {
       Loghelper.get(getClass()).error("Query Problem. Hata (Exception):\n" + FiException.exTosMain(ex));

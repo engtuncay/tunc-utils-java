@@ -1,7 +1,6 @@
 package ozpasyazilim.utils.core;
 
-import mark.utils.formatter.DoubleFormatter;
-import mark.utils.formatter.DoubletoStringFormatter;
+import ozpasyazilim.utils.log.Loghelper;
 
 public class FiRunTime {
 
@@ -11,22 +10,30 @@ public class FiRunTime {
 
 	Long totalTime;   // = endTime - startTime;
 
-	public FiRunTime(Boolean b) {
-		startTime();
-	}
+	String txName;
 
 	public FiRunTime() {
-		startTime();
+		startTimer();
+	}
+
+	public FiRunTime(String txName) {
+		setTxName(txName);
+		startTimer();
 	}
 
 
-	public void startTime(){
+	public void startTimer(){
 		setStartTime(System.nanoTime());
 	}
 
 
-	public void  endTime(){
+	public void endTimer(){
 		setEndTime(System.nanoTime());
+	}
+
+	public void endTimerAndLog(){
+		endTimer();
+		Loghelper.get(getClass()).debug("FiRunTime: " + getTxName() + " Miliseconds: " + getRunningTimeMiliseconds() + " ms");
 	}
 
 	public Long getRunningTimeMiliseconds(){
@@ -63,4 +70,17 @@ public class FiRunTime {
 	public void setTotalTime(long totalTime) {
 		this.totalTime = totalTime;
 	}
+
+	public String getTxName() {
+		return txName;
+	}
+
+	public String getTxNameNtn() {
+		return FiString.orEmpty(getTxName());
+	}
+
+	public void setTxName(String txName) {
+		this.txName = txName;
+	}
+
 }
