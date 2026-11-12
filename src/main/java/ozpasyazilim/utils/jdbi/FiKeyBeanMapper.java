@@ -31,7 +31,7 @@ import org.jdbi.v3.core.statement.StatementContext;
 import ozpasyazilim.utils.datatypes.Fkb;
 
 /**
- * MapMapper , FiKeyBean'e uyarlandı.
+ * MapMapper , Fkb'ye uyarlandı.
  * <p>
  * Yo dawg, I heard you like maps, so I made you a mapper that maps rows into {@code Map<String,Object>}. Map
  * keys are column names, while map values are the values in those columns. Map keys are converted to lowercase by
@@ -53,12 +53,12 @@ public class FiKeyBeanMapper implements RowMapper<Fkb> {
 		caseStrategy = ctx -> ctx.getConfig(MapMappers.class).getCaseChange();
 	}
 
+	// TODO deprecate when MapMappers.caseChange is out of beta
 	/**
 	 * Constructs a new MapMapper
 	 *
 	 * @param toLowerCase if true, column names are converted to lowercase in the mapped {@link Map}. If false, nothing is done. Use the other constructor to delegate case control to MapMappers instead.
 	 */
-	// TODO deprecate when MapMappers.caseChange is out of beta
 	public FiKeyBeanMapper(boolean toLowerCase) {
 		caseStrategy = toLowerCase ? ctx -> CaseStrategy.LOCALE_LOWER : ctx -> CaseStrategy.NOP;
 	}

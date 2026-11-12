@@ -2681,6 +2681,9 @@ public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxC
     cmbPageSize.addComboItem("1000", 1000);
     cmbPageSize.addComboItem("2000", 2000);
     cmbPageSize.addComboItem("5000", 5000);
+    cmbPageSize.addComboItem("10000", 10000);
+    cmbPageSize.addComboItem("50000", 50000);
+
     cmbPageSize.setSelectedItemByObjValueFi();
 
     cmbPageSize.trigSelectedItemListenerFi((observable, oldValue, newValue) -> {
