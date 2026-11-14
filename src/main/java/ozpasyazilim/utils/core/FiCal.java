@@ -244,8 +244,8 @@ public class FiCal {
    */
   public static Integer compareDate2(Date date1, Date date2) {
 
-    final String txDate1 = FiDate.toStringTimestamptPlain(date1);
-    final String txDate2 = FiDate.toStringTimestamptPlain(date2);
+    final String txDate1 = FiDate.tosAsTimestamptPlain(date1);
+    final String txDate2 = FiDate.tosAsTimestamptPlain(date2);
 
     return txDate1.compareTo(txDate2);
   }

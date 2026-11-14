@@ -206,7 +206,7 @@ public class FiHtmlReport {
 
           if (objCellValue instanceof Date) {
             Date dbValue = (Date) objCellValue;
-            txCellValue = FiDate.dateToStrAsddmmyyyyWitDot(dbValue);
+            txCellValue = FiDate.tosAsddmmyyyyWitDot(dbValue);
           }
 
           htmlContent += tagTdNum + txCellValue + tagTdEnd;
@@ -243,9 +243,9 @@ public class FiHtmlReport {
 
   }
 
-  public static <T> String reportBasicHtmlByFiTableColByFkl(FkbList listData, List<FiCol> colList, FiReportConfig fiReportConfig) {
+  public static String reportBasicHtmlByFiColsAndFkbList(FkbList listData, List<FiCol> ficList, FiReportConfig fiReportConfig) {
 
-    //Integer numberofcol = colList.size();
+    //Integer numberofcol = ficList.size();
     //Loghelper.get(FiHtmlReport.class).info("col size:" + numberofcol);
 
     // başlık sütunları
@@ -278,8 +278,8 @@ public class FiHtmlReport {
     htmlContent.append("<tr>\r\n");
 
     // sütunlar bastırılır
-    for (FiCol fiTableCol : colList) {
-      htmlContent.append(tagTh).append(FiString.orEmpty(fiTableCol.getFcTxHeader())).append("</th>");
+    for (FiCol fiCol : ficList) {
+      htmlContent.append(tagTh).append(FiString.orEmpty(fiCol.getFcTxHeader())).append("</th>");
     }
 
     // satırlar bastırılır
@@ -289,7 +289,7 @@ public class FiHtmlReport {
       htmlContent.append("<tr>\r\n");
 
       // FIXME numara satırlarını yazdırmak için
-      for (FiCol fiCol : colList) {
+      for (FiCol fiCol : ficList) {
 
         //Loghelper.get(FiHtmlReport.class).debug("Field:" + fiCol.getFieldName());
 
@@ -319,7 +319,7 @@ public class FiHtmlReport {
 
           if (objCellValue instanceof Date) {
             Date dbValue = (Date) objCellValue;
-            txCellValue = FiDate.dateToStrAsddmmyyyyWitDot(dbValue);
+            txCellValue = FiDate.tosAsddmmyyyyWitDot(dbValue);
           }
 
           htmlContent.append(tagTdNum).append(txCellValue).append(tagTdEnd);
@@ -338,10 +338,10 @@ public class FiHtmlReport {
     if (FiBool.isTrue(fiReportConfig.getBoSummaryEnabled())) {
 
       htmlContent.append("<tr>\r\n");
-      for (FiCol fiTableCol : colList) {
+      for (FiCol fiCol : ficList) {
 
-        if (fiTableCol.getSummaryType() != null) {
-          String sumValue = FiNumber.formatNumber(FxTableModal.calcSummaryValueFi(listData, fiTableCol, fiReportConfig));
+        if (fiCol.getSummaryType() != null) {
+          String sumValue = FiNumber.formatNumber(FxTableModal.calcSummaryValueFi(listData, fiCol, fiReportConfig));
           htmlContent.append(tagTdNumSum).append(sumValue).append(tagTdEnd);
         } else {
           htmlContent.append(tagTdStringSum).append(tagTdEnd);

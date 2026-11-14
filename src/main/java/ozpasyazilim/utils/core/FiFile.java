@@ -342,7 +342,7 @@ public class FiFile {
     // File file = new File("y:\\ornekhtml-" + timestamp + ".html");
 
     // Get the file reference
-    Path path = Paths.get("y://ornekthtml-" + timestamp + ".html");
+    Path path = Paths.get("c://temp//ornekthtml-" + timestamp + ".html");
 
     // Use try-with-resource to get auto-closeable writer instance
     try (BufferedWriter writer = Files.newBufferedWriter(path)) {

@@ -596,13 +596,13 @@ public class FxEditorFactory {
     if (colNodeClass.equals(FxDatePicker.class.getName())) {
       FxDatePicker comp = (FxDatePicker) colNode;
       comp.setValue(FiDate.dateToLocalDate((Date) compValue));
-      comp.getEditor().setText(FiDate.dateToStrAsddmmyyyyWitDot((Date) compValue));
+      comp.getEditor().setText(FiDate.tosAsddmmyyyyWitDot((Date) compValue));
     }
 
     if (colNodeClass.equals(DatePicker.class.getName())) {
       DatePicker comp = (DatePicker) colNode;
       comp.setValue(FiDate.dateToLocalDate((Date) compValue));
-      comp.getEditor().setText(FiDate.dateToStrAsddmmyyyyWitDot((Date) compValue));
+      comp.getEditor().setText(FiDate.tosAsddmmyyyyWitDot((Date) compValue));
     }
 
     if (colNodeClass.equals(FxLabel.class.getName())) {
@@ -1644,7 +1644,7 @@ public class FxEditorFactory {
 
       DatePicker comp = (DatePicker) IFiTableCol.getColFilterNode();
       if (comp.getValue() != null) {
-        cellvalue = FiDate.dateToStrGlobalFormatAsyyyyHmmHdd(FiDate.convertLocalDateToSimpleDate(comp.getValue()));
+        cellvalue = FiDate.tosAsGlobalFormatAsyyyyHmmHdd(FiDate.convertLocalDateToSimpleDate(comp.getValue()));
         return cellvalue;
       } else {
         String txValueEditor = comp.getEditor().getText();
@@ -1661,7 +1661,7 @@ public class FxEditorFactory {
       FxDatePicker comp = (FxDatePicker) IFiTableCol.getColFilterNode();
       if (comp.getValue() != null) {
         //Loghelperr.getInstance(getClass()).debug("comp getvalue"+ comp.getValue());
-        cellvalue = FiDate.dateToStrGlobalFormatAsyyyyHmmHdd(FiDate.convertLocalDateToSimpleDate(comp.getValue()));
+        cellvalue = FiDate.tosAsGlobalFormatAsyyyyHmmHdd(FiDate.convertLocalDateToSimpleDate(comp.getValue()));
         return cellvalue;
       } else {
         String txValueEditor = comp.getEditor().getText();

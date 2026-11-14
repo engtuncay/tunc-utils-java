@@ -1461,11 +1461,11 @@ public class FxTableViewV1<EntClazz> extends TableView<EntClazz> implements IFxC
 
 						Date dtCellValue = (Date) objCellValue;
 
-						String strDateCell = FiDate.toStringYmd(dtCellValue);
+						String strDateCell = FiDate.tosAsYmd(dtCellValue);
 						String strDateFilter = "";
 
 						if (objFilterValue instanceof Date) {
-							strDateFilter = FiDate.toStringYmd((Date) objFilterValue);
+							strDateFilter = FiDate.tosAsYmd((Date) objFilterValue);
 						} else {
 							strDateFilter = objFilterValue.toString();
 						}

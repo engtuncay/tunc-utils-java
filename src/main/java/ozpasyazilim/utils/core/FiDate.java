@@ -159,7 +159,7 @@ public class FiDate {
   }
 
 
-  public static String toStringYmd(Date date) {
+  public static String tosAsYmd(Date date) {
     if (date == null) return "";
     SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
     return formatter.format(date);
@@ -177,54 +177,66 @@ public class FiDate {
    * @param date
    * @return
    */
-  public static String dateToStrGlobalFormatAsyyyyHmmHdd(Date date) {
+  public static String tosAsGlobalFormatAsyyyyHmmHdd(Date date) {
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
     return formatter.format(date);
   }
 
-  public static String toStringAsYmdtire(Date date) {
+  public static String tosAsYmdtire(Date date) {
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
     return formatter.format(date);
   }
 
-  public static String dateToStrGlobalDateTimeFormat(Date date) {
+  public static String tosAsGlobalDateTimeFormat(Date date) {
     //SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS");
     LocalDateTime localDateTime = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
     return formatter.format(localDateTime);
   }
 
-  public static String dateToStrAsddmmyyyyWitSlash(Date date) {
+  /**
+   * dd/MM/yyyy formatında string'e çevirir
+   *
+   * @param date
+   * @return
+   */
+  public static String tosAsddmmyyyyWitSlash(Date date) {
     SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
     return formatter.format(date);
   }
 
-  public static String dateToStrAsddmmyyyyWitDot(Date date) {
+  /**
+   * dd.MM.yyyy formatında string'e çevirir
+   *
+   * @param date
+   * @return
+   */
+  public static String tosAsddmmyyyyWitDot(Date date) {
     SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
     return formatter.format(date);
   }
 
-  public static String dateToStrAsddmmyyyyTime(Date date) {
+  public static String tosAsddmmyyyyTime(Date date) {
     SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy kk:mm:ss EEE");
     return formatter.format(date);
   }
 
-  public static String tosTimestamptText(Date date) {
+  public static String tosAsTimestamptText(Date date) {
     SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd_kkmm_ss");
     return formatter.format(date);
   }
 
-  public static String toStringTimestamptPlain(Date date) {
+  public static String tosAsTimestamptPlain(Date date) {
     SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddkkmmss");
     return formatter.format(date);
   }
 
-  public static String datetoString_timeHourMinute(Date date) {
+  public static String tosAsTimeHourMinute(Date date) {
     SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd_kkmm");
     return formatter.format(date);
   }
 
-  public static String toStringDateTimeDotFormat(Date date) {
+  public static String tosAsDateTimeDotFormat(Date date) {
     SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy kk:mm");
     return formatter.format(date);
   }
@@ -235,25 +247,14 @@ public class FiDate {
    * @param date
    * @return
    */
-  public static String toStringDateTimeSecDotFormat(Date date) {
+  public static String tosAsDateTimeSecDotFormat(Date date) {
     SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy kk:mm:ss");
     return formatter.format(date);
   }
 
-  public static String datetoString_timestamptShort(Date date) {
+  public static String tosAsTimestamptShort(Date date) {
     SimpleDateFormat sdfDateAndTimeShortFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm");
     return sdfDateAndTimeShortFormat.format(date);
-  }
-
-  public static Date parseDate_yyyymmdd(String date) {
-    SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
-    try {
-      return formatter.parse(date);
-    } catch (ParseException e) {
-      // Loghelper.getInstance(UtilDate.class).info("Hata :" + UtilModel.exceptiontostring(e));
-      return null;
-    }
-
   }
 
   /**
@@ -765,14 +766,14 @@ public class FiDate {
 
 
   public static Date buildDate(String value) {
-    return FiDate.parseDate_yyyymmdd(value);
+    return FiDate.strToDateYmd(value);
   }
 
 
   public static Boolean isEqualAsYmd(Date dt1, Date dt2) {
     if (dt1 == null || dt2 == null) return false;
 
-    if (FiDate.toStringYmd(dt1).equals(FiDate.toStringYmd(dt2))) {
+    if (FiDate.tosAsYmd(dt1).equals(FiDate.tosAsYmd(dt2))) {
       return true;
     }
     return false;
