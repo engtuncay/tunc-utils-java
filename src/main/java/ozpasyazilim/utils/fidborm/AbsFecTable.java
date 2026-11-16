@@ -4,6 +4,10 @@ import ozpasyazilim.utils.datatypes.Fkf;
 import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.FicList;
 
+/**
+ * metod ağırlıklı olduğu içim ramde az yer tutar
+ * 
+ */
 public abstract class AbsFecTable {
 
   public abstract FiCol qcfTxSqTableName();

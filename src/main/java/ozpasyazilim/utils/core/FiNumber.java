@@ -400,8 +400,8 @@ public class FiNumber {
    * @return
    */
   public static boolean isNotZero(Double dbValue) {
-    if(dbValue == null) return false;
-    if(dbValue == 0d) return false;
+    if (dbValue == null) return false;
+    if (dbValue == 0d) return false;
 
     return true;
   }
@@ -673,7 +673,22 @@ public class FiNumber {
     return this;
   }
 
+  public static Double roundWitMode(Double dbValue, int scale, RoundingMode roundingMode) {
+    if (dbValue == null) return null;
+    return BigDecimal.valueOf(dbValue)
+        .setScale(scale, roundingMode).doubleValue();
+  }
+
   public FiNumber buildScaleHalfUp(int scale) {
     return buildScale(scale, RoundingMode.HALF_UP);
+  }
+
+  public static Double roundHalfUp(Double dbValue, int scale) {
+    return roundWitMode(dbValue, scale, RoundingMode.HALF_UP);
+  }
+
+  public static Double roundHalfUpNtn(Double dbValue, int scale) {
+    Double dbResult = roundWitMode(dbValue, scale, RoundingMode.HALF_UP);
+    return dbResult != null ? dbResult : 0.0d;
   }
 }

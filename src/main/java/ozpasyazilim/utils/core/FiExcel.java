@@ -74,6 +74,10 @@ public class FiExcel {
     return readExcelFileMain(excelfile, listColumns, entityclass, null);
   }
 
+  public <E> List<E> readExcelFileFiCol(File excelfile, List<FiCol> listColumns, Class<E> entityclass) {
+    return readExcelFileMain(excelfile, listColumns, entityclass, null);
+  }
+
   public FkbList readExcelFileAsFkbList(File excelfile, List<FiCol> listColumns) {
     return readExcelFileMainAsFkbList(excelfile, listColumns, null);
   }
@@ -92,6 +96,24 @@ public class FiExcel {
 
     if (extension.equalsIgnoreCase("xls"))
       return readExcelXlsV3(excelfile, listColumns, entityclass);
+
+    return null;
+  }
+
+  public <E> List<E> readExcelFileMainFiCol(File excelfile, List<FiCol> listColumns, Class<E> entityclass, String txSheetName) {
+
+    if (excelfile == null) {
+      Loghelper.get(getClass()).debug("Excel File Null");
+      return null;
+    }
+
+    String extension = FilenameUtils.getExtension(excelfile.getName());
+
+    if (extension.equalsIgnoreCase("xlsx"))
+      return readExcelXLSXFiCol(excelfile, listColumns, entityclass, txSheetName);
+
+    if (extension.equalsIgnoreCase("xls"))
+      return readExcelXlsV3FiCol(excelfile, listColumns, entityclass);
 
     return null;
   }
@@ -328,6 +350,121 @@ public class FiExcel {
   }
 
   public <E> List<E> readExcelXLSX(File fileExcelXlsx, List<? extends IFiCol> listColumns, Class<E> entityclass, String txSheetName) {
+
+    XSSFSheet sheet;
+
+    XSSFWorkbook workbookXlsx = getWorkbookFromExcelXlsxFile(fileExcelXlsx);
+
+    if (!FiString.isEmptyTrim(txSheetName)) {
+      sheet = workbookXlsx.getSheet(txSheetName);
+      if (sheet == null) {
+        sheet = workbookXlsx.getSheetAt(0);
+      }
+    } else {
+      sheet = workbookXlsx.getSheetAt(0);
+    }
+
+    // Get first sheet from the workbook
+    //XSSFSheet sheet = getWorkbookFromExcelXlsxFile(fileExcelXlsx).getSheetAt(0);
+
+    List<Map<String, String>> listrows = new ArrayList<>();
+    //Not old usage //Iterator rows = sheet.rowIterator();
+
+    // exceldeki son satır nosu (satır no 1 den başlar)
+    Integer lastRowNumber = sheet.getLastRowNum();
+
+    //Excel başlık satırlarını arar , kaçıncı satırda bulduğunu ve satır listesini verir
+    //Excelde listColumns daki sütunları arar required ve bir tane sütun bulursa eğer bulundu yapar
+    Pair<Integer, List<String>> excelHeadersXLSX = findHeadersInExcel(sheet, listColumns);
+
+    Boolean colFound = false;
+
+    if (excelHeadersXLSX != null) colFound = true;
+
+    if (!colFound) return new ArrayList<>();
+
+    List<String> finalHeaders = excelHeadersXLSX.getValue1();
+
+    // ?? finalheaders null olarak dönmüşse , başlık satırlarını bulamamış
+    if (finalHeaders == null) {
+      Loghelper.get(getClass()).debug("Başlık Satırları bulunamadı...");
+      return null;
+    }
+
+    listColumns.forEach(fiTableCol -> {
+      if (fiTableCol.getFcTxHeader() == null) return;
+
+      if (finalHeaders.contains(fiTableCol.getFcTxHeader().trim())) {
+        fiTableCol.setBoEnabled(true);
+      }
+    });
+
+    // not : alternatif yol : for (Row row : sheet)
+    Integer rowIndexExcel = excelHeadersXLSX.getValue0();
+
+    // Exceldeki Data Satırları Okunuyor
+    Integer lastColNumber = finalHeaders.size();  //rowHeader.length;              //rowHeaderExcel.getLastCellNum(); // 1 başlayarak, son sütün hücre numarası
+
+    // index = Excel Satır - 1 dir. ( Index 0 dan başlar ) (Excel 1 den başlar)
+    // Loghelper.getInstance(getClass()).debug(" Row Index (Header Index)(Satır Sıralaması 0 dan başlar):"+ rowIndexExcel);
+    rowIndexExcel++;
+    for (; rowIndexExcel <= lastRowNumber; rowIndexExcel++) {
+      XSSFRow rowContent = sheet.getRow(rowIndexExcel);
+      if (rowContent == null) continue;
+      Map<String, String> maprow = new HashMap<>();
+      Boolean empty = true;
+
+      for (int cn = 0; cn < lastColNumber; cn++) {   //rowContent.getLastCellNum()
+        //Loghelper.getInstance(getClass()).debug(" col:"+cn);
+        String header = "";
+        if (finalHeaders.get(cn) == null) {
+          //Loghelper.getInstance(getClass()).debug(" header cn null"+ cn);
+          continue;
+        }
+
+        header = finalHeaders.get(cn).toString();
+
+        //if (rowHeader.length > cn) arsiv
+        //if(!iterRowCells.hasNext()) arsiv
+
+        XSSFCell cell = rowContent.getCell(cn);
+
+        if (cell == null) {
+          //Loghelper.getInstance(getClass()).debug(" header cell null"+ header);
+          maprow.put(header, "");
+          continue;
+        }
+
+        //cell = (XSSFCell) iterRowCells.next();
+
+        String strCellValue = getCellStringValueXLSX(cell);
+        maprow.put(header, strCellValue);
+
+        if (!strCellValue.equals("")) empty = false;
+
+      }
+
+      if (!empty) {
+        //Loghelper.getInstance(getClass()).debug("eklendi");
+        listrows.add(maprow);
+      }
+
+    }
+
+    if (getFileInputStream() != null) {
+
+      try {
+        getFileInputStream().close();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
+
+    return bindEntityExcel(listrows, listColumns, entityclass);
+
+  }
+
+  public <E> List<E> readExcelXLSXFiCol(File fileExcelXlsx, List<FiCol> listColumns, Class<E> entityclass, String txSheetName) {
 
     XSSFSheet sheet;
 
@@ -1641,6 +1778,112 @@ public class FiExcel {
     return bindEntityExcel(listrows, listColumns, entityclass);
 
   }
+
+  public <E> List<E> readExcelXlsV3FiCol(File excelXlsFile, List<FiCol> listColumns, Class<E> entityclass) {
+
+    // Get first sheet from the workbook
+    HSSFSheet sheet = getWorkbookFromExcelXlsFile(excelXlsFile).getSheetAt(0);   //  workbook.getSheetAt(0);
+
+    List<Map<String, String>> listrows = new ArrayList<>();
+
+    //Not Iterator rows = sheet.rowIterator();
+
+    // 1 başlayarak, exceldeki son satır nosu
+    Integer lastRowNumber = sheet.getLastRowNum();
+
+    // Pair prm1: headerların bulunduğu satır indexi
+    Pair<Integer, List<String>> excelHeadersXLSX = findHeadersInExcel(sheet, listColumns);
+
+    Boolean colHeadersFound = false;
+
+    if (excelHeadersXLSX != null) colHeadersFound = true;
+
+    if (!colHeadersFound) return new ArrayList<>();
+
+    List<String> finalHeaders = excelHeadersXLSX.getValue1();
+
+    listColumns.forEach(entity -> {
+      if (finalHeaders.contains(entity.getFcTxHeader().trim())) {
+        entity.setBoEnabled(true);
+      }
+    });
+
+
+    // not : alternatif yol : for (Row row : sheet)
+    Integer rowIndexExcel = excelHeadersXLSX.getValue0();
+
+    // Exceldeki Data Satırları Okunuyor
+    Integer lastColNumber = finalHeaders.size();  //rowHeader.length;              //rowHeaderExcel.getLastCellNum(); // 1 başlayarak, son sütün hücre numarası
+
+    // index = Excel Satır - 1 dir. ( Index 0 dan başlar ) (Excel 1 den başlar)
+    // Loghelper.getInstance(getClass()).debug(" Row Index (Header Index)(Satır Sıralaması 0 dan başlar):"+ rowIndexExcel);
+    // Loghelper.getInstance(getClass()).debug(" Row Headers Col Length:"+ lastColNumber);
+
+    rowIndexExcel++;
+
+    for (; rowIndexExcel <= lastRowNumber; rowIndexExcel++) {
+
+      HSSFRow rowContent = sheet.getRow(rowIndexExcel);
+
+      if (rowContent == null) continue;
+
+      Map<String, String> maprow = new HashMap<>();
+
+      Boolean empty = true;
+
+      for (int cn = 0; cn < lastColNumber; cn++) {   //rowContent.getLastCellNum()
+
+        //Loghelper.getInstance(getClass()).debug(" col:"+cn);
+
+        String header = "";
+
+        if (finalHeaders.get(cn) == null) {
+          //Loghelper.getInstance(getClass()).debug(" header cn null"+ cn);
+          continue;
+        }
+
+        header = finalHeaders.get(cn).toString();
+
+        //if (rowHeader.length > cn) arsiv
+        //if(!iterRowCells.hasNext()) arsiv
+
+        HSSFCell cell = rowContent.getCell(cn);
+
+        if (cell == null) {
+          //Loghelper.getInstance(getClass()).debug(" header cell null"+ header);
+          maprow.put(header, "");
+          continue;
+        }
+
+        //cell = (XSSFCell) iterRowCells.next();
+
+        String strCellValue = getCellStringValueXls(cell);
+        maprow.put(header, strCellValue);
+
+        if (!strCellValue.equals("")) empty = false;
+
+      }
+
+      if (!empty) {
+        //Loghelper.getInstance(getClass()).debug("eklendi");
+        listrows.add(maprow);
+      }
+
+    }
+
+    if (getFileInputStream() != null) {
+
+      try {
+        getFileInputStream().close();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
+
+    return bindEntityExcel(listrows, listColumns, entityclass);
+
+  }
+
 
   public FkbList readExcelXlsV3AsFkbList(File excelXlsFile, List<? extends IFiCol> listColumns) {
 
