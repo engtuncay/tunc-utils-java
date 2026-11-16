@@ -167,12 +167,12 @@ public class FxTableModal {
                     //Loghelperr.getInstance(getClass()).debug(" Double type Field: "+ fiCol.getFieldName());
 
                     Double sumDouble = FiNumberToText.avgDoubleValues(listdata, ent -> {
-                        Object objectByField = new FiReflection().getPropertyNested(ent, fiCol.getFcTxFieldName());
+                        Object objectByField = FiReflection.getPropertyNested(ent, fiCol.getFcTxFieldName());
                         if (objectByField == null) return 0d;
                         return (Double) objectByField;
                     });
 
-                    sumDouble = new FiNumber().truncateByHalfUp(sumDouble, fiReportConfig.getLnDecimalScale());
+                    sumDouble = FiNumber.truncateByHalfUp(sumDouble, fiReportConfig.getLnDecimalScale());
 
                     //Loghelperr.getInstance(getClass()).debug(" Toplam:"+ sumDouble.toString());
 
@@ -308,7 +308,7 @@ public class FxTableModal {
                     return (Double) objectByField;
                 });
 
-                sumDouble = new FiNumber().truncateByHalfUp(sumDouble, fiReportConfig.getLnDecimalScale());
+                sumDouble = FiNumber.truncateByHalfUp(sumDouble, fiReportConfig.getLnDecimalScale());
 
                 //Loghelperr.getInstance(getClass()).debug(" Toplam:"+ sumDouble.toString());
                 //new FiProperty().setter(exampleEntity, fiTableCol, sumDouble);
@@ -326,7 +326,7 @@ public class FxTableModal {
                     return (Double) objectByField;
                 });
 
-                sumDouble = new FiNumber().truncateByHalfUp(sumDouble, fiReportConfig.getLnDecimalScale());
+                sumDouble = FiNumber.truncateByHalfUp(sumDouble, fiReportConfig.getLnDecimalScale());
 
                 //Loghelperr.getInstance(getClass()).debug(" Toplam:"+ sumDouble.toString());
                 //new FiProperty().setter(exampleEntity, fiTableCol, sumDouble);
@@ -363,7 +363,7 @@ public class FxTableModal {
                     return (Double) objectByField;
                 });
 
-                sumDouble = new FiNumber().truncateByHalfUp(sumDouble, fiReportConfig.getLnDecimalScale());
+                sumDouble = FiNumber.truncateByHalfUp(sumDouble, fiReportConfig.getLnDecimalScale());
 
                 //Loghelperr.getInstance(getClass()).debug(" Toplam:"+ sumDouble.toString());
 

@@ -15,28 +15,28 @@ import java.util.regex.Pattern;
 
 public class FiNumber {
 
-  Number value;
+  //  Number value;
 
   public static Locale locale = new Locale("tr", "TR");
 
-  public FiNumber(BigDecimal dmValue) {
-    if (dmValue == null) {
-      this.value = BigDecimal.ZERO;
-    } else {
-      this.value = dmValue;
-    }
-  }
+//  public FiNumber(BigDecimal dmValue) {
+//    if (dmValue == null) {
+//      this.value = BigDecimal.ZERO;
+//    } else {
+//      this.value = dmValue;
+//    }
+//  }
+//
+//  public FiNumber(Double dmValue) {
+//    if (dmValue == null) {
+//      this.value = 0.0d;
+//    } else {
+//      this.value = dmValue;
+//    }
+//  }
 
-  public FiNumber(Double dmValue) {
-    if (dmValue == null) {
-      this.value = 0.0d;
-    } else {
-      this.value = dmValue;
-    }
-  }
-
-  public FiNumber() {
-  }
+//  public FiNumber() {
+//  }
 
   public static Double orZero(Double dmValue) {
     if (dmValue == null) return 0d;
@@ -407,27 +407,27 @@ public class FiNumber {
   }
 
 
-  public FiNumber buildNullCheckOrZero(Double dmValue) {
-    if (dmValue == null) {
-      this.value = 0d;
-    } else {
-      this.value = dmValue;
-    }
-    return this;
-  }
+//  public FiNumber buildNullCheckOrZero(Double dmValue) {
+//    if (dmValue == null) {
+//      this.value = 0d;
+//    } else {
+//      this.value = dmValue;
+//    }
+//    return this;
+//  }
 
-  public FiNumber buildNullCheckOrZero(BigDecimal dmValue) {
-    if (dmValue == null) {
-      this.value = BigDecimal.ZERO;
-    } else {
-      this.value = dmValue;
-    }
-    return this;
-  }
+//  public FiNumber buildNullCheckOrZero(BigDecimal dmValue) {
+//    if (dmValue == null) {
+//      this.value = BigDecimal.ZERO;
+//    } else {
+//      this.value = dmValue;
+//    }
+//    return this;
+//  }
 
-  public Double getValueAsDouble() {
-    return this.value.doubleValue();
-  }
+//  public Double getValueAsDouble() {
+//    return this.value.doubleValue();
+//  }
 
   /**
    * Rounding Half Up
@@ -664,23 +664,10 @@ public class FiNumber {
 
   }
 
-
-  public FiNumber buildScale(int scale, RoundingMode roundingMode) {
-
-    this.value = BigDecimal.valueOf(getValueAsDouble())
-        .setScale(scale, roundingMode).doubleValue();
-
-    return this;
-  }
-
   public static Double roundWitMode(Double dbValue, int scale, RoundingMode roundingMode) {
     if (dbValue == null) return null;
     return BigDecimal.valueOf(dbValue)
         .setScale(scale, roundingMode).doubleValue();
-  }
-
-  public FiNumber buildScaleHalfUp(int scale) {
-    return buildScale(scale, RoundingMode.HALF_UP);
   }
 
   public static Double roundHalfUp(Double dbValue, int scale) {
@@ -689,6 +676,12 @@ public class FiNumber {
 
   public static Double roundHalfUpNtn(Double dbValue, int scale) {
     Double dbResult = roundWitMode(dbValue, scale, RoundingMode.HALF_UP);
+    return dbResult != null ? dbResult : 0.0d;
+  }
+
+  public static Double roundHalfUpNtn(BigDecimal dbValue, int scale) {
+    if (dbValue == null) return 0.0d;
+    Double dbResult = roundWitMode(dbValue.doubleValue(), scale, RoundingMode.HALF_UP);
     return dbResult != null ? dbResult : 0.0d;
   }
 }

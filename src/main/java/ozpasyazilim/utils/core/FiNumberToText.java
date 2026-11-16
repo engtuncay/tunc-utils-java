@@ -319,7 +319,7 @@ public class FiNumberToText {
 			if (myfunction.getValue(myentity) == null) {
 				continue;
 			}
-			sumvalue += new FiNumber(myfunction.getValue(myentity)).buildScaleHalfUp(scale).getValueAsDouble();
+			sumvalue += FiNumber.roundHalfUpNtn(myfunction.getValue(myentity),scale);
 		}
 
 		return sumvalue;
