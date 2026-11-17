@@ -42,7 +42,7 @@ public class FiQugenMs {
     // FimFcSql.sfWhere();
 
     String template = "DELETE {{sfTableName}} \n"
-      + " WHERE {{sfWhere}} ";
+        + " WHERE {{sfWhere}} ";
 
     StringBuilder sbWhereBlock = new StringBuilder();
 
@@ -108,7 +108,7 @@ public class FiQugenMs {
     String txTableName = null;
 
     String template = "SELECT {{sfFields}}\n" +
-      "FROM {{sfTableName}}\n";
+        "FROM {{sfTableName}}\n";
 
     StringBuilder sbTxFields = new StringBuilder();
     StringBuilder sbTxWhere = new StringBuilder();
@@ -197,7 +197,7 @@ public class FiQugenMs {
     String txTableName = null;
 
     String template = "SELECT {{sfFields}}\n" +
-      "FROM {{sfTableName}}\n";
+        "FROM {{sfTableName}}\n";
 
     if (fiQuery.getAbsFecTable() != null) {
       txTableName = fiQuery.getAbsFecTable().qcfTxSqTableName().getFcTxHeader();
@@ -282,7 +282,7 @@ public class FiQugenMs {
     String txTableName = null;
 
     String template = "SELECT *\n" +
-      "FROM {{sfTableName}}\n";
+        "FROM {{sfTableName}}\n";
 
     if (fiQuery.getAbsFecTable() != null) {
       txTableName = fiQuery.getAbsFecTable().qcfTxSqTableName().getFcTxHeader();
@@ -395,7 +395,7 @@ public class FiQugenMs {
     //FimFcSql.sfVarFields();
 
     String template = "INSERT INTO {{sfTableName}} ({{sfFields}})\n" +
-      " VALUES ( {{sfVarFields}} )";
+        " VALUES ( {{sfVarFields}} )";
 
     StringBuilder sbTxFieldsBlock = new StringBuilder();
     StringBuilder sbTxFieldsVar = new StringBuilder();
@@ -468,7 +468,7 @@ public class FiQugenMs {
     //FimFcSql.sfVarFields();
 
     String template = "INSERT INTO {{sfTableName}} ({{sfFields}})\n" +
-      " VALUES ( {{sfVarFields}} )";
+        " VALUES ( {{sfVarFields}} )";
 
     StringBuilder sbTxFieldsBlock = new StringBuilder();
     StringBuilder sbTxFieldsVar = new StringBuilder();
@@ -574,7 +574,7 @@ public class FiQugenMs {
       //if (FicUtil.isDefField(fiCol)) continue;
 
       // where içindeki alanlar update alanları içinde olmamalı
-      if(setWhere.contains(fiCol.getFcTxFieldName())) continue;
+      if (setWhere.contains(fiCol.getFcTxFieldName())) continue;
 
       if (fiQuery.getFkbParams().containsFic(fiCol)) {
         indexCol++;
@@ -623,7 +623,7 @@ public class FiQugenMs {
   }
 
   /**
-   * tabloda yoksa öncesinde insert yapar , daha sonra update sorgusu çalıştırır
+   * tabloda yoksa öncesinde insert yapar , daha sonra update sorgusu çalıştırır.
    *
    * @param fiQuery
    * @return Fdr fdTxVal ve fiQuery txSql alanını atama yapar
@@ -640,6 +640,10 @@ public class FiQugenMs {
       txTableName = fiQuery.getFkfAll().getSpecTxTableName();
     }
 
+    if (FiString.isEmptyTrim(txTableName) && fiQuery.getAbsFecTable() != null) {
+      txTableName = fiQuery.getAbsFecTable().getTxTableNameByFec();
+    }
+
     //  insert ederken id den başka alan yoksa böyle kayıt edilmeli
     //  INSERT INTO TabloAdı DEFAULT VALUES
     //  sfFieldsIns, sfFieldsVarIns sonradan parantez içine alınıyor
@@ -654,20 +658,20 @@ public class FiQugenMs {
 //    FimFcSql.sfVarFieldsUp();
 
     String template = "--sq202604221135 v1\n" +
-      "DECLARE @__count AS int = 0\n" +
-      "\n" +
-      "SELECT @__count = count(*) FROM {{sfTableName}}\n" +
-      "WHERE {{sfWhere}}\n" +
-      "\n" +
-      "IF @__count = 0 \n" +
-      "BEGIN\n" +
-      "  INSERT INTO {{sfTableName}} ({{sfFieldsIns}}) \n" +
-      "  VALUES ({{sfVarFieldsIns}}) \n" +
-      "END;\n" +
-      "\n" +
-      "UPDATE {{sfTableName}}\n" +
-      "SET {{sfVarFieldsUp}}\n" +
-      "WHERE {{sfWhere}}\n";
+        "DECLARE @__count AS int = 0\n" +
+        "\n" +
+        "SELECT @__count = count(*) FROM {{sfTableName}}\n" +
+        "WHERE {{sfWhere}}\n" +
+        "\n" +
+        "IF @__count = 0 \n" +
+        "BEGIN\n" +
+        "  INSERT INTO {{sfTableName}} ({{sfFieldsIns}}) \n" +
+        "  VALUES ({{sfVarFieldsIns}}) \n" +
+        "END;\n" +
+        "\n" +
+        "UPDATE {{sfTableName}}\n" +
+        "SET {{sfVarFieldsUp}}\n" +
+        "WHERE {{sfWhere}}\n";
 
     StringBuilder sbWhereBlock = new StringBuilder();
     // boş degilse parantez eklenecek
@@ -684,7 +688,7 @@ public class FiQugenMs {
       //Loghelper.get(getClassi()).debug("fiCol: " + fiCol.getFcTxFieldName() + " - BoWhereField " + fiCol.getFcBoWhereField());
 
       // bazı özel alanlar atlanmalı
-      if (FiString.isEmptyTrim(txTableName) && FimFcSpecFields.qcfTxSqTableName().getKey().equals(fiCol.getFcTxFieldName())) {
+      if (fiCol.isQcfTxSqTableName()) {
         txTableName = fiCol.getFcTxHeader();
         continue;
       }
@@ -696,30 +700,33 @@ public class FiQugenMs {
         indexWhereBlock++;
         //Loghelper.get(FiSqlGenMs.class).debug("where field: " + fiCol.getFcTxFieldName());
         sbWhereBlock.append(FiQugenUtil.formSqlAssignWitAndByFic(fiCol));
-
-        // identity alan inserte eklenemez
-        if (fiCol.isIdAuto()) continue;
-
         continue;
       }
 
       // auto identity alan update ve insert'e eklenemez
       if (fiCol.isIdAuto()) continue;
 
+      // InsFieldsForInsQuery true ise sadece insert alanları eklenir , false ise tüm alanlar insert'e eklenir
       if (FiBool.isTrue(fiQuery.getBoUseInsFieldsForInsQuery())) {
         if (fiCol.isInsertField()) {
           sbFieldsIns.append(FiQugenUtil.formSqlFieldWitCommaByFic(fiCol));
           sbFieldsVarIns.append(FiQugenUtil.formSqlVarWitCommaByFic(fiCol));
+          // insert sorgusuna eklendikten sonra update sorgusuna eklenmez
+          continue;
         }
         // else durumunda insert'e alan eklenmez
       } else { // buUseInsFieldsOnly değilse direk eklenir
         sbFieldsIns.append(FiQugenUtil.formSqlFieldWitCommaByFic(fiCol));
         sbFieldsVarIns.append(FiQugenUtil.formSqlVarWitCommaByFic(fiCol));
+        // insert sorgusuna eklendikten sonra update sorgusuna eklenmez
+        continue;
       }
 
+      // update sorgusu içine identity alan eklenemez
       if (fiCol.isIdKey()) {
         continue;
       }
+
       sbFieldsVarUp.append(FiQugenUtil.formSqlAssignVarWitCommaByFic(fiCol));
 
     }
@@ -759,6 +766,20 @@ public class FiQugenMs {
     return fdrResult;
   }
 
+  /**
+   *
+   * tabloda yoksa öncesinde insert yapar , daha sonra update sorgusu çalıştırır.
+   * <p>
+   * default olara buUseInsFieldsForInsQuery true olarak ayarlanır. Bu durumda insert sorgusu sadece insert alanları ile oluşturulur.
+   *
+   * @param fiQuery
+   * @return
+   */
+  public static Fdr insUpdateV2(FiQuery fiQuery) {
+    fiQuery.setBoUseInsFieldsForInsQuery(true);
+    return insUpdateV1(fiQuery);
+  }
+
   public static Fdr selQuery(FicList ficList) {
     FiQuery fiQuery = new FiQuery();
     fiQuery.setFicListQuery(ficList);
@@ -784,7 +805,7 @@ public class FiQugenMs {
     //FimQcSql.sfTableName();
 
     String template = "INSERT INTO {{sfTableName}} ({{sfTxFields}})\n" +
-      " VALUES ( {{sfTxFieldsVar}} )";
+        " VALUES ( {{sfTxFieldsVar}} )";
 
     StringBuilder sbTxFieldsBlock = new StringBuilder();
     StringBuilder sbTxFieldsVar = new StringBuilder();
@@ -848,7 +869,7 @@ public class FiQugenMs {
 //    FimFcSql.sfVarFieldsIns();
 
     String template = "INSERT INTO {{sfTableName}} ({{sfFields}})\n" +
-      " VALUES ( {{sfVarFieldsIns}} )";
+        " VALUES ( {{sfVarFieldsIns}} )";
 
     StringBuilder sbTxFieldsBlock = new StringBuilder();
     StringBuilder sbTxVarFieldsIns = new StringBuilder();
@@ -942,7 +963,7 @@ public class FiQugenMs {
 //     FimFcSql.sfTxWhere();
 
     String template = "DELETE {{sfTableName}} \n"
-      + " WHERE {{sfWhere}} ";
+        + " WHERE {{sfWhere}} ";
 
     StringBuilder sbWhereBlock = new StringBuilder();
 

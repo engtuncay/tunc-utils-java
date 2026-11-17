@@ -924,6 +924,13 @@ public class FiCol<EntClazz> implements IFiCol<EntClazz>, IFiField {
     return false;
   }
 
+  public Boolean isQcfTxSqTableName() {
+    if (FimFcSpecFields.qcfTxSqTableName().getFtTxKey().equals(getFcTxFieldName())) {
+      return true;
+    }
+    return false;
+  }
+
   public Boolean isTransient() {
     return FiBool.isTrue(getFcBoTransient());
   }

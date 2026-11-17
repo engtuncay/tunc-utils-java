@@ -539,6 +539,11 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     return this;
   }
 
+  public Fdr<EntClazz> buiAddInfoLog(String message) {
+    this.addLogInfo(message);
+    return this;
+  }
+
   public Fdr<EntClazz> buiMessOnly(String message) {
     this.setFdTxMessage(message);
     return this;
@@ -1196,11 +1201,11 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     getFdLogListInit().add(new FieLog(txMessage, MetaLogType.LOG));
   }
 
-  public String getLogAndMessageWitErrorInfo() {
+  public String getTxLogsAndMessage() {
     return FiString.addNewLineToEndIfNotEmpty(getFdTxMessage()) + getLogPlain();
   }
 
-  public String getLogPlainWitErrorInfo() {
+  public String getLogPlainWitErrorFlag() {
 
     StringBuilder sb = new StringBuilder();
     int index = 0;

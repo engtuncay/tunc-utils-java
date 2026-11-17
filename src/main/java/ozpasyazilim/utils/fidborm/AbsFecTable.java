@@ -6,11 +6,22 @@ import ozpasyazilim.utils.table.FicList;
 
 /**
  * metod ağırlıklı olduğu içim ramde az yer tutar
- * 
+ *
  */
 public abstract class AbsFecTable {
 
   public abstract FiCol qcfTxSqTableName();
+
+  /**
+   * Primary Key alanlarını döndürür
+   * <p>
+   * alt sınıflarda override edilmelidir
+   *
+   * @return
+   */
+  public FicList getFicListPk() {
+    return new FicList();
+  }
 
   public abstract Fkf getFkfAll();
 
@@ -51,4 +62,7 @@ public abstract class AbsFecTable {
     return new FicList();
   }
 
+  public String getTxTableNameByFec() {
+    return qcfTxSqTableNameNtn().getFcTxHeader();
+  }
 }

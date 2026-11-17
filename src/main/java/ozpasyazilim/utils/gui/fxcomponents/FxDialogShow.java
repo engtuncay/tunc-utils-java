@@ -385,9 +385,9 @@ public class FxDialogShow {
   public static void showModalForLogIfNotTrue(Fdr fdr) {
 
     if (fdr.isTrueBoResult()) {
-      FxDialogShow.showModalInfoAsyn(fdr.getTxName(), fdr.getLogPlainWitErrorInfo());
+      FxDialogShow.showModalInfoAsyn(fdr.getTxName(), fdr.getLogPlainWitErrorFlag());
     } else {
-      FxDialogShow.showModalErrorAsyn(fdr.getTxName(), fdr.getLogPlainWitErrorInfo());
+      FxDialogShow.showModalErrorAsyn(fdr.getTxName(), fdr.getLogPlainWitErrorFlag());
     }
 
   }
@@ -876,7 +876,7 @@ public class FxDialogShow {
     Platform.runLater(() -> {
       String message = "";
 
-      String logAsString = fdr.getLogPlainWitErrorInfo();
+      String logAsString = fdr.getLogPlainWitErrorFlag();
       if (!FiString.isEmptyTrim(logAsString)) {
         message += "\n" + logAsString;
       }
@@ -1137,20 +1137,20 @@ public class FxDialogShow {
 
       if (FiBool.isTrue(boPopInfo)) {
         if (logAsStringAndErrorExist.getValue()) {
-          showPopInfo(grup + "İşlem Başarılı, fakat bazı yerlerde hata oluştu.\n" + fdr.getLogPlainWitErrorInfo());
+          showPopInfo(grup + "İşlem Başarılı, fakat bazı yerlerde hata oluştu.\n" + fdr.getLogPlainWitErrorFlag());
         } else {
-          showPopInfo(grup + "İşlem Başarılı\n" + fdr.getLogPlainWitErrorInfo());
+          showPopInfo(grup + "İşlem Başarılı\n" + fdr.getLogPlainWitErrorFlag());
         }
 
       } else {
         if (logAsStringAndErrorExist.getValue()) {
-          showModalInfoAsyn(grup + "İşlem Başarılı, fakat bazı yerlerde hata oluştu. Detayı inceleyiniz. !!\n", fdr.getLogPlainWitErrorInfo());
+          showModalInfoAsyn(grup + "İşlem Başarılı, fakat bazı yerlerde hata oluştu. Detayı inceleyiniz. !!\n", fdr.getLogPlainWitErrorFlag());
         } else {
-          showModalInfoAsyn(grup + "İşlem Başarılı\n", fdr.getLogPlainWitErrorInfo());
+          showModalInfoAsyn(grup + "İşlem Başarılı\n", fdr.getLogPlainWitErrorFlag());
         }
       }
     } else {
-      showModalErrorAlert(grup + "Hata Oluştu.", fdr.getLogPlainWitErrorInfo());
+      showModalErrorAlert(grup + "Hata Oluştu.", fdr.getLogPlainWitErrorFlag());
     }
   }
 
