@@ -293,6 +293,37 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
     return fdr;
   }
 
+  /**
+   * Sorgudan gelen sonuç FdLnVal alanına değeri girer
+   *
+   * @param fiQuery
+   * @return
+   */
+  public Fdr jdSelectLnValBindMap(FiQuery fiQuery) {
+
+    String sql = fiQuery.getTxQuery();
+    Fkb fkbParams = fiQuery.getFkbParams();
+
+    Fdr fdr = new Fdr<>();
+
+    try {
+      Optional<Integer> result = getJdbi().withHandle(handle -> {
+        return handle.select(FiQueryUtils.stoj(sql))
+            .bindMap(fkbParams)
+            .mapTo(Integer.class)
+            .findFirst();
+      });
+
+      result.ifPresent(fdr::setFdLnVal);
+      fdr.setFdBoResult(true);
+    } catch (Exception ex) {
+      Loghelper.get(getClass()).error(FiException.exTosMain(ex));
+      fdr.setFdBoResult(false);
+    }
+
+    return fdr;
+  }
+
 
 //  public Fdr jdUpdateBindMapMain(FiQuery fiQuery) {
 //    return jdUpdateBindMapMain(fiQuery.getTxQuery(), fiQuery.getFkbParams());

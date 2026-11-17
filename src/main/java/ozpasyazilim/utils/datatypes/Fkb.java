@@ -302,7 +302,7 @@ public class Fkb extends LinkedHashMap<String, Object> {
   /**
    * null ise boş string döner, null değilse croplanmış string döner
    *
-   * @param fiCol fiCol.getFieldName() key olarak kullanılır
+   * @param fiCol      fiCol.getFieldName() key olarak kullanılır
    * @param cropAmount crop miktarı
    * @return
    */
@@ -644,7 +644,7 @@ public class Fkb extends LinkedHashMap<String, Object> {
 
   public void logParams() {
     Loghelper.get(getClass()).debug("fkb.logParams called");
-    if(getTxName()!=null) {
+    if (getTxName() != null) {
       Loghelper.get(getClass()).debug("fkb.txName:" + getTxName());
     }
     Loghelper.get(getClass()).debug(FiConsole.textFkb(this));
@@ -793,6 +793,16 @@ public class Fkb extends LinkedHashMap<String, Object> {
 
   public void addFic(FiCol fiCol, Object value) {
     addField(fiCol.getFcTxFieldName(), value);
+  }
+
+  /**
+   * fiColValue alanının value'sını alır ve fiCol.getFcTxFieldName() alanına ekler
+   *
+   * @param fiCol
+   * @param fiColValue
+   */
+  public void addFicByFicVal(FiCol fiCol, FiCol fiColValue) {
+    addField(fiCol.getFcTxFieldName(), getFicVal(fiColValue));
   }
 
   /**

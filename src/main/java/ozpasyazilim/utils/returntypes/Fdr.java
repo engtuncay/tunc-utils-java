@@ -1458,12 +1458,16 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
 
     Loghelper.get(getClass()).debug("logFdr called...");
 
+    if (getFdFkbVal() != null) {
+      Loghelper.get(getClass()).debug("FdFkbVal:" + getFdFkbVal());
+    }
+
     if (getFdTxVal() != null) {
       Loghelper.get(getClass()).debug("FdTxValue:" + getFdTxVal());
     }
 
-    if (getFdFkbVal() != null) {
-      Loghelper.get(getClass()).debug("FdFkbVal:" + getFdFkbVal());
+    if (getFdLnVal() != null) {
+      Loghelper.get(getClass()).debug("FdLnVal:" + getFdLnVal());
     }
 
     if (!FiString.isEmptyTrim(getFdTxMessage())) {
@@ -1476,7 +1480,6 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
 
     Loghelper.get(getClass()).debug("FdBoVal:" + getFdBoVal());
     Loghelper.get(getClass()).debug("FdBoResult:" + getFdBoResult());
-
 
     Loghelper.get(getClass()).debug("FkbList Size:" + getFdFkbListValInit().size());
 
