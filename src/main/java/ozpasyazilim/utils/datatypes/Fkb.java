@@ -827,30 +827,30 @@ public class Fkb extends LinkedHashMap<String, Object> {
   }
 
   /**
-   * Eğer key yoksa ekler, veya value null ise ekler
+   * Eğer key yoksa ekler, veya oldValue null ise yeni değeri ekler
    *
    * @param fiCol
-   * @param value
+   * @param newValue
    */
-  public void addFicIfNull(FiCol fiCol, Object value) {
+  public void addFicIfNull(FiCol fiCol, Object newValue) {
     if (fiCol == null || FiString.isEmpty(fiCol.getFcTxFieldName())) return;
 
-    addFieldIfNull(fiCol.getFcTxFieldName(), value);
+    addFieldIfNull(fiCol.getFcTxFieldName(), newValue);
   }
 
   /**
-   * Eğer key yoksa ekler, veya value null ise ekler
+   * Eğer key yoksa ekler, veya oldValue null ise yeni değeri ekler
    *
    * @param fcTxFieldName
-   * @param value
+   * @param newValue
    */
-  private void addFieldIfNull(String fcTxFieldName, Object value) {
+  private void addFieldIfNull(String fcTxFieldName, Object newValue) {
     if (!containsKey(fcTxFieldName)) {
-      add(fcTxFieldName, value);
+      add(fcTxFieldName, newValue);
     } else {
-      Object objValue = get(fcTxFieldName);
-      if (objValue == null) {
-        add(fcTxFieldName, value);
+      Object oldValue = get(fcTxFieldName);
+      if (oldValue == null) {
+        add(fcTxFieldName, newValue);
       }
     }
   }

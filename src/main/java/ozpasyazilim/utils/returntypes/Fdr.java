@@ -1411,6 +1411,13 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
     return fdLnVal;
   }
 
+  public Integer getFdLnValNtn() {
+    if (fdLnVal == null) {
+      return -1;
+    }
+    return fdLnVal;
+  }
+
   public void setFdLnVal(Integer fdLnVal) {
     this.fdLnVal = fdLnVal;
   }

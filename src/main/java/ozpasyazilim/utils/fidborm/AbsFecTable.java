@@ -23,6 +23,10 @@ public abstract class AbsFecTable {
     return new FicList();
   }
 
+  public FiCol getFicIdentity() {
+    return null;
+  }
+
   public FicList getFicListCandId() {
     return new FicList();
   }

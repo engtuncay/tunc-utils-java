@@ -2689,7 +2689,7 @@ public class FxTableViewV2<EntClazz> extends TableView<EntClazz> implements IFxC
     cmbPageSize.trigSelectedItemListenerFi((observable, oldValue, newValue) -> {
       if (newValue != null && newValue.getValue() instanceof Integer) {
         setLnPageSizeAndLnCurrentPageNo((Integer) newValue.getValue(), 1);
-        if (getFnPageChanged() != null) getFnPageChanged().run();
+        //if (getFnPageChanged() != null) getFnPageChanged().run();
       }
     });
 

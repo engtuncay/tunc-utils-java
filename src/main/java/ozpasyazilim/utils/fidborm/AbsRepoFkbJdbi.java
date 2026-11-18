@@ -922,16 +922,49 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
     this.absFecTable = absFecTable;
   }
 
-  public Fdr osSelStarByFt(Fkb fkbParams, FicList ficListWhere) {
+  /**
+   * Select * From (Optional) Where (FicListWhere)
+   *
+   * FicListWhere tanımlanırsa ekler, optionaldır.
+   *
+   * @param fkbParams
+   * @param ficListWhere
+   * @return
+   */
+  public Fdr osSelAllByOptFclWhere(Fkb fkbParams, FicList ficListWhere) {
     FiQuery fiQuery = new FiQuery(fkbParams);
     fiQuery.setFicListWhere(ficListWhere);
     fiQuery.setAbsFecTable(getAbsFecTable());
 
-    FiQugenMs.selStarByFecAndFclWhere(fiQuery);
+    FiQugenMs.selAllByOptFclWhere(fiQuery);
 
     fiQuery.logQueryAndParams();
 
     return jdSelectAsFkbList(fiQuery);
+  }
+
+  /**
+   * FdLnVal ile count sorgusu sonucu döner (candId'ye göre).
+   * <p>
+   * count sorgusu için FiQuery'deki FecTable.getFicListCandId() kullanılır.
+   *
+   * @param fkbCariEvrak
+   * @return
+   */
+  public Fdr osSelCountByCandId(Fkb fkbCariEvrak) {
+
+    FiQuery fiQuery = new FiQuery(fkbCariEvrak);
+    fiQuery.setAbsFecTable(getAbsFecTable());
+
+    Fdr fdrCountQuery = FiQugenMs.genCountQueryByCandId(fiQuery);
+
+    fiQuery.logQueryAndParams();
+
+    if(fdrCountQuery.isFalseBoResult()) {
+      return fdrCountQuery;
+    }
+
+    return jdSelectLnValBindMap(fiQuery);
   }
 
 
