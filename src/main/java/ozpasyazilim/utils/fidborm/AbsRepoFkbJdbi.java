@@ -787,7 +787,7 @@ public abstract class AbsRepoFkbJdbi extends AbsRepoJdbiCore { //implements IRep
   }
 
   /**
-   * getRepoFkfAll kullanarak insert yapar
+   * getRepoFkfAll ( getAbsFecTable().getFkfAll() )  kullanarak insert yapar
    *
    * @param fkbEntity
    * @return

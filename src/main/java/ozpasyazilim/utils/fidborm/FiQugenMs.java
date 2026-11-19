@@ -1050,7 +1050,7 @@ public class FiQugenMs {
     }
 
     //StringBuilder sbTxFields = new StringBuilder();
-    StringBuilder sbTxWhere = new StringBuilder();
+    StringBuilder sbWhere = new StringBuilder();
 
     int indexWhereBlock = 0;
 
@@ -1069,26 +1069,20 @@ public class FiQugenMs {
       indexWhereBlock++;
       //Loghelper.get(FiSqlGenMs.class).debug("where field: " + fiCol.getFcTxFieldName());
       if (fiCol.isWhereInField()) {
-        sbTxWhere.append(FiQugenUtil.formSqlAssignInByFic(fiCol));
+        sbWhere.append(FiQugenUtil.formSqlAssignInByFic(fiCol));
         continue;
       }
 
-      sbTxWhere.append(FiQugenUtil.formSqlAssignWitAndByFic(fiCol));
-
+      sbWhere.append(FiQugenUtil.formSqlAssignWitAndByFic(fiCol));
       continue;
-      //}
-
-      //sbTxFields.append(FiQugenUtil.formSqlFieldWitComma(fiCol.getFcTxFieldName()));
-
     } // end for
 
 //    if (indexWhereBlock > 0) {
 //      //template += "WHERE {{sfWhere}}";
-//      FiString.rtrimSb(sbTxWhere, FiQugenUtil.getTxAnd());
+//      FiString.rtrimSb(sbWhere, FiQugenUtil.getTxAnd());
 //    }
 
-    FiString.rtrimSb(sbTxWhere, FiQugenUtil.getTxAnd());
-
+    FiString.rtrimSb(sbWhere, FiQugenUtil.getTxAnd());
     //FiString.rtrimSb(sbTxFields, FiQugenUtil.getTxComma());
 
     String selField = "*";
@@ -1101,7 +1095,7 @@ public class FiQugenMs {
 
     fkbParams.addFim(FimFcSql.sfTableName(), txTableName);
     fkbParams.addFim(FimFcSql.sfSelField(), selField);
-    fkbParams.addFim(FimFcSql.sfWhere(), sbTxWhere.toString());
+    fkbParams.addFim(FimFcSql.sfWhere(), sbWhere.toString());
 
     String sql = FiString.substitutor(template, fkbParams);
 
@@ -1109,7 +1103,7 @@ public class FiQugenMs {
 
     if (indexWhereBlock == 0) {
       String msg = "warn:no where fields for select query";
-      Loghelper.get(FiQugenMs.getClassi()).debug(msg);
+      Loghelper.get(getClassi()).debug(msg);
       fdrResult.setFdTxVal(msg);
       fdrResult.setBoResult(false);
       fdrResult.setFdTxMessage(msg);
@@ -1118,6 +1112,7 @@ public class FiQugenMs {
 
     if (FiString.isEmptyTrim(txTableName)) {
       String msg = "warn:no table name";
+      Loghelper.get(getClassi()).debug(msg);
       fdrResult.setFdTxVal(msg);
       fdrResult.setBoResult(false);
       fdrResult.setFdTxMessage(msg);

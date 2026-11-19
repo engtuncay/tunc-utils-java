@@ -197,6 +197,13 @@ public class Fdr<EntClazz> implements IFdr<EntClazz> {
    */
   Boolean boCloseDialog;
 
+  /**
+   * Form kaydedilirken hatalı sonuç olduğunda, error dialogu gösterilmemesi için kullanılır
+   *
+   * default olarak hatalı sonucu gösterir şeklinde ayarlı (
+   */
+  Boolean boDontShowErrorDialog;
+
   // --------------- Methods
 
   public Fdr() {
