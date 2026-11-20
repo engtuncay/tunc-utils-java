@@ -15,7 +15,7 @@ public class FxFormConfig<EntClazz> {
   private EntClazz formEntity; // 21-10-30 eklendi
   private Fkb fkbEntity; // 26-04-29
 
-  private Function<FxFormMigGen,Fdr> fnFormSave;
+  private Function<FxFormMig,Fdr> fnFormSave;
 
   private Function<FxFormMig,Fdr> fnFormSave2;
 
@@ -26,7 +26,7 @@ public class FxFormConfig<EntClazz> {
 
   private Boolean boReadOnlyForm;
 
-  private Function<FxFormMigGen, Fdr> fnValidateForm;
+  private Function<FxFormMig, Fdr> fnValidateForm;
 
   // Miggen için yapılmış
   private Function<FxFormMigaGen, Fdr> fnValidateFormForFormMigaGen;
@@ -97,11 +97,11 @@ public class FxFormConfig<EntClazz> {
     this.boReadOnlyForm = boReadOnlyForm;
   }
 
-  public Function<FxFormMigGen, Fdr> getFnValidateForm() {
+  public Function<FxFormMig, Fdr> getFnValidateForm() {
     return fnValidateForm;
   }
 
-  public void setFnValidateForm(Function<FxFormMigGen, Fdr> fnValidateForm) {
+  public void setFnValidateForm(Function<FxFormMig, Fdr> fnValidateForm) {
     this.fnValidateForm = fnValidateForm;
   }
 
@@ -113,11 +113,11 @@ public class FxFormConfig<EntClazz> {
     this.fnValidateFormForFormMigaGen = fnValidateFormForFormMigaGen;
   }
 
-  public Function<FxFormMigGen, Fdr> getFnFormSave() {
+  public Function<FxFormMig, Fdr> getFnFormSave() {
     return fnFormSave;
   }
 
-  public void setFnFormSave(Function<FxFormMigGen, Fdr> fnFormSave) {
+  public void setFnFormSave(Function<FxFormMig, Fdr> fnFormSave) {
     this.fnFormSave = fnFormSave;
   }
 

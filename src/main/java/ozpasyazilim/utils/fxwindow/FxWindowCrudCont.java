@@ -3,7 +3,7 @@ package ozpasyazilim.utils.fxwindow;
 import de.jensd.fx.glyphs.icons525.Icons525;
 import javafx.scene.input.KeyCode;
 import ozpasyazilim.utils.gui.fxcomponents.FxButton;
-import ozpasyazilim.utils.gui.fxcomponents.FxFormMigGen;
+import ozpasyazilim.utils.gui.fxcomponents.FxFormMig;
 import ozpasyazilim.utils.javafx.FiIconPack;
 import ozpasyazilim.utils.metadata.metaOther.MetaCrudConstant;
 import ozpasyazilim.utils.mvc.IFiModCont;
@@ -25,7 +25,7 @@ public class FxWindowCrudCont extends FxWindowCont implements IFiModCont {
 	Function<Boolean,Fdr> fnAddEdit;
 	Supplier<Fdr> fnDelete;
 	Supplier<Fdr> fnSaveClose;
-	private FxFormMigGen crudForm;
+	private FxFormMig crudForm;
 
 	/**
 	 * Seçim Düğmesi
@@ -291,11 +291,11 @@ public class FxWindowCrudCont extends FxWindowCont implements IFiModCont {
 		this.fnSaveClose = fnSaveClose;
 	}
 
-	public FxFormMigGen getCrudForm() {
+	public FxFormMig getCrudForm() {
 		return crudForm;
 	}
 
-	public void setCrudForm(FxFormMigGen crudForm) {
+	public void setCrudForm(FxFormMig crudForm) {
 		this.crudForm = crudForm;
 	}
 

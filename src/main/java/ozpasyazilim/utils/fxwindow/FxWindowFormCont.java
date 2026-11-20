@@ -1,7 +1,6 @@
 package ozpasyazilim.utils.fxwindow;
 
 import ozpasyazilim.utils.gui.fxcomponents.FxFormMig;
-import ozpasyazilim.utils.gui.fxcomponents.FxFormMiga;
 
 public class FxWindowFormCont extends FxWindowCrudCont {
 

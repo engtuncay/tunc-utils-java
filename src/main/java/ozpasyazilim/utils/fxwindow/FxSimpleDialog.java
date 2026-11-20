@@ -39,7 +39,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFiModBaseCont {
     private Class entityClass;
 
     @Deprecated
-    private FxFormMigGen fxFormcMig;
+    private FxFormMig fxFormcMig;
     private FxFormMigaGen fxFormMigaGen;
 
     private List<FiCol> fiColList;
@@ -351,7 +351,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFiModBaseCont {
 
         FxMigPane fxContent = new FxMigPane(FxMigHp.bui().lcgInset0Gap55().getLcg());
 
-        fxFormcMig = new FxFormMigGen();
+        fxFormcMig = new FxFormMig();
 
         List<FiField> listFiFieldsCandId = FiReflectClass.getListFieldsCandId(getEntityClass());
 
@@ -756,11 +756,11 @@ public class FxSimpleDialog<EntClazz> extends AbsFiModBaseCont {
         this.entityClass = entityClass;
     }
 
-    public FxFormMigGen getFxFormcMig() {
+    public FxFormMig getFxFormcMig() {
         return fxFormcMig;
     }
 
-    public void setFxFormcMig(FxFormMigGen fxFormcMig) {
+    public void setFxFormcMig(FxFormMig fxFormcMig) {
         this.fxFormcMig = fxFormcMig;
     }
 
