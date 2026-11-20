@@ -14,6 +14,7 @@ import ozpasyazilim.utils.mvc.IFiCol;
 import ozpasyazilim.utils.returntypes.Fdr;
 import ozpasyazilim.utils.table.FiCol;
 import ozpasyazilim.utils.table.FiColsUtil;
+import ozpasyazilim.utils.table.FicList;
 import ozpasyazilim.utils.table.OzColType;
 import ozpasyazilim.utils.fxwindow.FxSimpleDialog;
 
@@ -393,6 +394,10 @@ public class FxFormMiga<EntClazz> extends FxMigPaneGenView<EntClazz> {
     }
 
     public void setListFormElements(List<FiCol> listFormElements) {
+        this.listFormElements = listFormElements;
+    }
+
+    public void setListFormElementsV2(FicList listFormElements) {
         this.listFormElements = listFormElements;
     }
 
