@@ -40,7 +40,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFiModBaseCont {
 
     @Deprecated
     private FxFormMig fxFormcMig;
-    private FxFormMigaGen fxFormMigaGen;
+    private FxFormMiga fxFormMiga;
 
     private List<FiCol> fiColList;
     private Predicate<String> predValidateString;
@@ -50,7 +50,7 @@ public class FxSimpleDialog<EntClazz> extends AbsFiModBaseCont {
     // Experimental
     private Predicate<EntClazz> predValidate;
 
-    private Predicate<FxFormMigaGen> predValidateForm;
+    private Predicate<FxFormMiga> predValidateForm;
 
     /**
      * Dialog penceresinde ok tıklandıktan sonra çalıştırılacak
@@ -851,18 +851,18 @@ public class FxSimpleDialog<EntClazz> extends AbsFiModBaseCont {
 //		return fxFormMigGen;
 //	}
 
-    public FxFormMigaGen getFxFormMigGenInit() {
-        if (fxFormMigaGen == null) {
-            fxFormMigaGen = new FxFormMigaGen<>();
+    public FxFormMiga getFxFormMigGenInit() {
+        if (fxFormMiga == null) {
+            fxFormMiga = new FxFormMiga<>();
         }
-        return fxFormMigaGen;
+        return fxFormMiga;
     }
 
-    public Predicate<FxFormMigaGen> getPredValidateForm() {
+    public Predicate<FxFormMiga> getPredValidateForm() {
         return predValidateForm;
     }
 
-    public void setPredValidateForm(Predicate<FxFormMigaGen> predValidateForm) {
+    public void setPredValidateForm(Predicate<FxFormMiga> predValidateForm) {
         this.predValidateForm = predValidateForm;
     }
 
@@ -874,12 +874,12 @@ public class FxSimpleDialog<EntClazz> extends AbsFiModBaseCont {
         this.runAfterOkEvent = runAfterOkEvent;
     }
 
-    public FxFormMigaGen getFxFormMigGen() {
-        return fxFormMigaGen;
+    public FxFormMiga getFxFormMigGen() {
+        return fxFormMiga;
     }
 
-    public void setFxFormMigGen(FxFormMigaGen fxFormMigaGen) {
-        this.fxFormMigaGen = fxFormMigaGen;
+    public void setFxFormMigGen(FxFormMiga fxFormMiga) {
+        this.fxFormMiga = fxFormMiga;
     }
 
 }

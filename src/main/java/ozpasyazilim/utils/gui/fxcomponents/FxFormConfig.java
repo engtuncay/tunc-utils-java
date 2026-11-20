@@ -29,7 +29,7 @@ public class FxFormConfig<EntClazz> {
   private Function<FxFormMig, Fdr> fnValidateForm;
 
   // Miggen için yapılmış
-  private Function<FxFormMigaGen, Fdr> fnValidateFormForFormMigaGen;
+  private Function<FxFormMiga, Fdr> fnValidateFormForFormMigaGen;
 
   public FxFormConfig() {
   }
@@ -105,11 +105,11 @@ public class FxFormConfig<EntClazz> {
     this.fnValidateForm = fnValidateForm;
   }
 
-  public Function<FxFormMigaGen, Fdr> getFnValidateFormForFormMigaGen() {
+  public Function<FxFormMiga, Fdr> getFnValidateFormForFormMigaGen() {
     return fnValidateFormForFormMigaGen;
   }
 
-  public void setFnValidateFormForFormMigaGen(Function<FxFormMigaGen, Fdr> fnValidateFormForFormMigaGen) {
+  public void setFnValidateFormForFormMigaGen(Function<FxFormMiga, Fdr> fnValidateFormForFormMigaGen) {
     this.fnValidateFormForFormMigaGen = fnValidateFormForFormMigaGen;
   }
 
